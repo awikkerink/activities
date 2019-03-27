@@ -249,7 +249,7 @@ class D2lActivityListItem extends mixinBehaviors([IronResizableBehavior, D2L.Pol
 							</div>
 							<div hidden$="[[_textPlaceholder]]">
 								<h2 class="d2l-activity-list-item-title">
-									<d2l-organization-name href="[[_organizationUrl]]"></d2l-organization-name>
+									<d2l-organization-name href="[[_organizationUrl]]" token="[[token]]></d2l-organization-name>
 								</h2>
 							</div>
 						</div>
