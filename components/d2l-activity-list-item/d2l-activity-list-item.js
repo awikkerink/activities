@@ -18,12 +18,17 @@ import './d2l-activity-list-item-enroll.js';
 import SirenParse from 'siren-parser';
 import {ActivityListItemResponsiveConstants} from './ActivityListItemResponsiveConstants.js';
 import 'd2l-colors/d2l-colors.js';
+import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
+
 
 /**
  * @customElement
  * @polymer
  */
-class D2lActivityListItem extends mixinBehaviors([IronResizableBehavior, D2L.PolymerBehaviors.FocusableBehavior], ActivityListItemResponsiveConstants(MutableData(PolymerElement))) {
+class D2lActivityListItem extends mixinBehaviors([
+	IronResizableBehavior,
+	D2L.PolymerBehaviors.Siren.EntityBehavior,
+	D2L.PolymerBehaviors.FocusableBehavior], ActivityListItemResponsiveConstants(MutableData(PolymerElement))) {
 	static get template() {
 		return html`
 			<style include="d2l-typography-shared-styles"></style>
