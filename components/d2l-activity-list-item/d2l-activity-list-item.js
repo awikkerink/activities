@@ -20,7 +20,6 @@ import {ActivityListItemResponsiveConstants} from './ActivityListItemResponsiveC
 import 'd2l-colors/d2l-colors.js';
 import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
 
-
 /**
  * @customElement
  * @polymer
