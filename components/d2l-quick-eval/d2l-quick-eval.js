@@ -70,10 +70,10 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 						category-whitelist="[[_filterIds]]"
 						result-size="[[_numberOfActivitiesToShow]]">
 					</d2l-hm-filter>
-					<d2l-hm-search 
-						hidden$="[[!searchEnabled]]" 
-						token="[[token]]" 
-						search-action="[[_searchAction]]" 
+					<d2l-hm-search
+						hidden$="[[!searchEnabled]]"
+						token="[[token]]"
+						search-action="[[_searchAction]]"
 						placeholder="[[localize('search')]]"
 						result-size="[[_numberOfActivitiesToShow]]"
 						aria-label$="[[localize('search')]]">
@@ -86,8 +86,9 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 			<d2l-alert type="critical" hidden$="[[!_showSearchError]]" id="d2l-quick-eval-search-error-alert">
 				[[localize('failedToSearch')]]
 			</d2l-alert>
-			<d2l-quick-eval-search-results-summary-container 
-				search-results-count="[[_searchResultsCount]]" 
+			<d2l-quick-eval-search-results-summary-container
+				search-results-count="[[_searchResultsCount]]"
+				more-results="[[_moreSearchResults]]"
 				hidden$="[[!_searchResultsMessageEnabled(_showSearchResultSummary, searchEnabled)]]">
 			</d2l-quick-eval-search-results-summary-container>
 			<d2l-quick-eval-activities-list href="[[href]]" token="[[token]]" master-teacher="[[masterTeacher]]"></d2l-quick-eval-activities-list>
@@ -140,6 +141,10 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 			_searchResultsCount: {
 				type: Number,
 				value: 0
+			},
+			_moreSearchResults: {
+				type: Boolean,
+				value: false
 			}
 		};
 	}
@@ -254,6 +259,13 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 		this.entity = e.detail.results;
 		this._showSearchResultSummary = !e.detail.searchIsCleared;
 		this._searchResultsCount = this.entity.entities && this.entity.entities.length ? this.entity.entities.length : 0;
+
+		this._moreSearchResults = false;
+		const next = this.entity.getLinkByRel('next');
+		if (next) {
+			this._moreSearchResults = true;
+		}
+
 		list.searchApplied = !e.detail.searchIsCleared;
 		this._clearErrors();
 	}
