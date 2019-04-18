@@ -18,6 +18,12 @@ import './d2l-quick-eval-no-submissions-image.js';
 import './d2l-quick-eval-no-criteria-results-image.js';
 import './d2l-quick-eval-skeleton.js';
 import 'd2l-loading-spinner/d2l-loading-spinner.js';
+import {
+	DictToQueryString,
+	StringEndsWith,
+	GetQueryStringParams,
+	GetQueryStringParam
+} from './compatability/ie11shims.js';
 
 /**
  * @customElement
@@ -358,7 +364,7 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Si
 	}
 
 	_handleNameSwap(entry) {
-		if (entry && entry.path.endsWith('1.sorted')) {
+		if (entry && StringEndsWith(entry.path, '1.sorted')) {
 			const tmp = this._headerColumns[0].headers[0];
 			this.set('_headerColumns.0.headers.0', this._headerColumns[0].headers[1]);
 			this.set('_headerColumns.0.headers.1', tmp);
@@ -839,14 +845,14 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Si
 
 	_performSirenActionWithQueryParams(action, customParams) {
 		const url = new URL(action.href, window.location.origin);
-
+		const searchParams = GetQueryStringParams(url.search);
 		if (!action.fields) {
 			action.fields = [];
 		}
 
-		url.searchParams.forEach(function(value, key) {
+		Object.keys(searchParams).forEach(function(key) {
 			if (!action.fields.filter(x => x.name === key)[0]) {
-				action.fields.push({name: key, value: value, type: 'hidden'});
+				action.fields.push({name: key, value: searchParams[key], type: 'hidden'});
 			}
 		});
 
@@ -863,8 +869,9 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Si
 		if (!url || url === '') return [];
 
 		const extraParams = [];
+		const parsedUrl = new URL(url);
 
-		const filterVal = this._getQueryStringParam('filter', url);
+		const filterVal = GetQueryStringParam('filter', parsedUrl);
 		if (filterVal) {
 			extraParams.push(
 				{
@@ -873,7 +880,7 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Si
 				}
 			);
 		}
-		const sortVal = this._getQueryStringParam('sort', url);
+		const sortVal = GetQueryStringParam('sort', parsedUrl);
 		if (sortVal) {
 			extraParams.push(
 				{
@@ -886,23 +893,18 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Si
 		return extraParams;
 	}
 
-	_getQueryStringParam(name, url) {
-		const parsedUrl = new window.URL(url);
-		return parsedUrl.searchParams.get(name);
-	}
-
 	_buildRelativeUri(url, extraParams) {
 		if (extraParams.length === 0) {
 			return url;
 		}
 
 		const parsedUrl = new window.URL(url, 'https://notused.com');
+		const searchParams = GetQueryStringParams(parsedUrl.search);
 
 		extraParams.forEach(param => {
-			parsedUrl.searchParams.set(param.name, param.value);
+			searchParams[param.name] = param.value;
 		});
-
-		return parsedUrl.pathname + parsedUrl.search;
+		return parsedUrl.pathname + DictToQueryString(searchParams);
 	}
 
 	_dispatchPageSizeEvent(numberOfActivitiesToShow) {
