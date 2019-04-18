@@ -545,8 +545,6 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Si
 						}
 					}
 				}.bind(this))
-				.then(this._clearAlerts.bind(this))
-				.catch(function() {
 				.then(x => {
 					this._clearAlerts.bind(x);
 					this._dispatchPageSizeEvent(this._data.length);
