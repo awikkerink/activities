@@ -541,6 +541,10 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Si
 				}.bind(this))
 				.then(this._clearAlerts.bind(this))
 				.catch(function() {
+				.then(result => {
+					this._clearAlerts.bind(result);
+					this._dispatchPageSizeEvent(this._data.length);
+				}).catch(function() {
 					this._loading = false;
 					this._handleLoadMoreFailure();
 				}.bind(this));
@@ -915,7 +919,6 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Si
 			)
 		);
 	}
-
 }
 
 window.customElements.define(D2LQuickEvalActivitiesList.is, D2LQuickEvalActivitiesList);

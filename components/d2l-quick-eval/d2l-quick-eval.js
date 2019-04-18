@@ -191,6 +191,7 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 	_updateNumberOfActivitiesToShow(e) {
 		if (e && e.detail) {
 			this.set('_numberOfActivitiesToShow', e.detail.count);
+			this._updateSearchResultsCount(e.detail.count);
 		}
 	}
 
@@ -234,7 +235,10 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 		const list = this.shadowRoot.querySelector('d2l-quick-eval-activities-list');
 		list.entity = e.detail.filteredActivities;
 		this.entity = e.detail.filteredActivities;
-		this._updateSearchResultsCount();
+
+		if (this.entity && this.entity.entities) {
+			this._updateSearchResultsCount(this.entity.entities.length);
+		}
 		this._clearErrors();
 	}
 
@@ -260,7 +264,10 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 		this.entity = e.detail.results;
 		this._showSearchResultSummary = !e.detail.searchIsCleared;
 		list.searchApplied = !e.detail.searchIsCleared;
-		this._updateSearchResultsCount();
+
+		if (this.entity && this.entity.entities) {
+			this._updateSearchResultsCount(this.entity.entities.length);
+		}
 		this._clearErrors();
 	}
 
@@ -280,12 +287,12 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 		this._showFilterError = false;
 	}
 
-	_updateSearchResultsCount() {
-		this._searchResultsCount = this.entity.entities && this.entity.entities.length ? this.entity.entities.length : 0;
+	_updateSearchResultsCount(count) {
+		this._searchResultsCount = count;
 
 		this._moreSearchResults = false;
-		const next = this.entity.getLinkByRel('next');
-		if (next) {
+		const next = 'next';
+		if (this.entity && this.entity.hasLinkByRel && this.entity.hasLinkByRel(next) && this.entity.getLinkByRel(next)) {
 			this._moreSearchResults = true;
 		}
 	}
