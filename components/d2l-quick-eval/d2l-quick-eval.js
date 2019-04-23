@@ -267,6 +267,8 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 
 		if (this.entity && this.entity.entities) {
 			this._updateSearchResultsCount(this.entity.entities.length);
+		} else {
+			this._updateSearchResultsCount(0);
 		}
 		this._clearErrors();
 	}
@@ -291,8 +293,8 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 		this._searchResultsCount = count;
 
 		this._moreSearchResults = false;
-		const next = 'next';
-		if (this.entity && this.entity.hasLinkByRel && this.entity.hasLinkByRel(next) && this.entity.getLinkByRel(next)) {
+		const nextHref = this._getHref(this.entity, 'next');
+		if (nextHref) {
 			this._moreSearchResults = true;
 		}
 	}
