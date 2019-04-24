@@ -51,10 +51,10 @@ class D2LQuickEvalSearchResultsSummaryContainer extends QuickEvalLocalize(Polyme
 	}
 
 	_getSummaryString(searchResults, moreResults) {
-		if (moreResults) {
-			return this.localize('searchResultsMore', 'num', searchResults);
-		} else if (searchResults === 1) {
+		if (searchResults === 1 && !moreResults) {
 			return this.localize('searchResultsSingle');
+		} else if (moreResults) {
+			return this.localize('searchResultsMore', 'num', searchResults);
 		}
 		return this.localize('searchResultsMultiple', 'num', searchResults);
 	}
