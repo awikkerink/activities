@@ -157,6 +157,7 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 		this.addEventListener('d2l-quick-eval-search-results-summary-container-clear-search', this._clearSearchResults);
 		this.addEventListener('d2l-hm-search-error', this._searchError);
 		this.addEventListener('d2l-quick-eval-activities-list-activities-shown-number-updated', this._updateNumberOfActivitiesToShow);
+		this.addEventListener('d2l-quick-eval-activities-list-search-results-count-updated-load-more', this._updateSearchResultsCountOnLoadMore);
 	}
 
 	detached() {
@@ -170,6 +171,7 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 		this.removeEventListener('d2l-quick-eval-search-results-summary-container-clear-search', this._clearSearchResults);
 		this.removeEventListener('d2l-hm-search-error', this._searchError);
 		this.removeEventListener('d2l-quick-eval-activities-list-activities-shown-number-updated', this._updateNumberOfActivitiesToShow);
+		this.removeEventListener('d2l-quick-eval-activities-list-search-results-count-updated-load-more', this._updateSearchResultsCountOnLoadMore);
 	}
 
 	_getSearchAction(entity) {
@@ -284,13 +286,20 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 		this._showFilterError = false;
 	}
 
+	_updateSearchResultsCountOnLoadMore(e) {
+		if (e && e.detail) {
+			this._updateSearchResultsCount(e.detail.count);
+		}
+	}
+
 	_updateSearchResultsCount(count) {
 		this._searchResultsCount = count;
-		this._moreSearchResults = false;
 
 		const list = this.shadowRoot.querySelector('d2l-quick-eval-activities-list');
 		if (list._pageNextHref) {
 			this._moreSearchResults = true;
+		} else {
+			this._moreSearchResults = false;
 		}
 	}
 }

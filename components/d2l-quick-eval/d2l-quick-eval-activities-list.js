@@ -534,8 +534,10 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Qu
 						}
 					}
 				}.bind(this))
-				.then(this._clearAlerts.bind(this))
-				.catch(function() {
+				.then(x => {
+					this._clearAlerts.bind(x);
+					this._dispatchSearchResultsCountUpdatedLoadMoreEvent(this._data.length);
+				}).catch(function() {
 					this._loading = false;
 					this._handleLoadMoreFailure();
 				}.bind(this));
@@ -710,6 +712,21 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Qu
 				{
 					detail: {
 						count: numberOfActivitiesToShow
+					},
+					composed: true,
+					bubbles: true
+				}
+			)
+		);
+	}
+
+	_dispatchSearchResultsCountUpdatedLoadMoreEvent(countOfSearchResults) {
+		this.dispatchEvent(
+			new CustomEvent(
+				'd2l-quick-eval-activities-list-search-results-count-updated-load-more',
+				{
+					detail: {
+						count: countOfSearchResults
 					},
 					composed: true,
 					bubbles: true
