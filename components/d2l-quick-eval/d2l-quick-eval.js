@@ -25,14 +25,6 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 					@apply --d2l-heading-1;
 					margin: 0;
 				}
-				.d2l-quick-eval-activity-list-modifiers {
-					position: absolute;
-					right: 0;
-					bottom: 0;
-				}
-				:host(:dir(rtl)) .d2l-quick-eval-activity-list-modifiers {
-					left: 0;
-				}
 				d2l-hm-search {
 					display: inline-block;
 					width: 250px;
@@ -40,7 +32,10 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 				}
 				.d2l-quick-eval-top-bar {
 					padding-top: 0.25rem;
-					position: relative;
+					display: flex;
+					flex-wrap: wrap;
+					justify-content: space-between;
+					align-items: flex-end;
 				}
 				d2l-quick-eval-activities-list {
 					display: block;
