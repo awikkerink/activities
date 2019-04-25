@@ -298,6 +298,11 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Qu
 				computed: '_computeNumberOfActivitiesToShow(_data, _numberOfActivitiesToShow)',
 				value: 20
 			},
+			_numberOfActivitiesShownInSearchResults: {
+				type: Number,
+				computed: '_computeNumberOfActivitiesShownInSearchResults(_data)',
+				value: 20
+			},
 			_fullListLoading: {
 				type: Boolean,
 				value: true
@@ -328,7 +333,8 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Qu
 			'_loadData(entity)',
 			'_loadSorts(entity)',
 			'_handleNameSwap(_headerColumns.0.headers.*)',
-			'_dispatchPageSizeEvent(_numberOfActivitiesToShow)'
+			'_dispatchPageSizeEvent(_numberOfActivitiesToShow)',
+			'_dispatchActivitiesShownInSearchResultsEvent(_numberOfActivitiesShownInSearchResults)'
 		];
 	}
 	ready() {
@@ -354,6 +360,10 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Qu
 
 	_computeNumberOfActivitiesToShow(data, currentNumberOfActivitiesShown) {
 		return Math.max(data.length, currentNumberOfActivitiesShown);
+	}
+
+	_computeNumberOfActivitiesShownInSearchResults(data) {
+		return data.length;
 	}
 
 	_handleNameSwap(entry) {
@@ -534,10 +544,8 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Qu
 						}
 					}
 				}.bind(this))
-				.then(x => {
-					this._clearAlerts.bind(x);
-					this._dispatchSearchResultsCountUpdatedLoadMoreEvent(this._data.length);
-				}).catch(function() {
+				.then(this._clearAlerts.bind(this))
+				.catch(function() {
 					this._loading = false;
 					this._handleLoadMoreFailure();
 				}.bind(this));
@@ -720,10 +728,10 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Qu
 		);
 	}
 
-	_dispatchSearchResultsCountUpdatedLoadMoreEvent(countOfSearchResults) {
+	_dispatchActivitiesShownInSearchResultsEvent(countOfSearchResults) {
 		this.dispatchEvent(
 			new CustomEvent(
-				'd2l-quick-eval-activities-list-search-results-count-updated-load-more',
+				'd2l-quick-eval-activities-list-search-results-count',
 				{
 					detail: {
 						count: countOfSearchResults

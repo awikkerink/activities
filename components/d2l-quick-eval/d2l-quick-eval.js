@@ -157,7 +157,7 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 		this.addEventListener('d2l-quick-eval-search-results-summary-container-clear-search', this._clearSearchResults);
 		this.addEventListener('d2l-hm-search-error', this._searchError);
 		this.addEventListener('d2l-quick-eval-activities-list-activities-shown-number-updated', this._updateNumberOfActivitiesToShow);
-		this.addEventListener('d2l-quick-eval-activities-list-search-results-count-updated-load-more', this._updateSearchResultsCountOnLoadMore);
+		this.addEventListener('d2l-quick-eval-activities-list-search-results-count', this._updateNumberOfActivitiesShownInSearchResults);
 	}
 
 	detached() {
@@ -171,7 +171,7 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 		this.removeEventListener('d2l-quick-eval-search-results-summary-container-clear-search', this._clearSearchResults);
 		this.removeEventListener('d2l-hm-search-error', this._searchError);
 		this.removeEventListener('d2l-quick-eval-activities-list-activities-shown-number-updated', this._updateNumberOfActivitiesToShow);
-		this.removeEventListener('d2l-quick-eval-activities-list-search-results-count-updated-load-more', this._updateSearchResultsCountOnLoadMore);
+		this.removeEventListener('d2l-quick-eval-activities-list-search-results-count', this._updateNumberOfActivitiesShownInSearchResults);
 	}
 
 	_getSearchAction(entity) {
@@ -188,6 +188,12 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 	_updateNumberOfActivitiesToShow(e) {
 		if (e && e.detail) {
 			this.set('_numberOfActivitiesToShow', e.detail.count);
+		}
+	}
+
+	_updateNumberOfActivitiesShownInSearchResults(e) {
+		if (e && e.detail) {
+			this.set('_numberOfActivitiesShownInSearchResults', e.detail.count);
 			this._updateSearchResultsCount(e.detail.count);
 		}
 	}
@@ -284,12 +290,6 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 	_clearErrors() {
 		this._showSearchError = false;
 		this._showFilterError = false;
-	}
-
-	_updateSearchResultsCountOnLoadMore(e) {
-		if (e && e.detail) {
-			this._updateSearchResultsCount(e.detail.count);
-		}
 	}
 
 	_updateSearchResultsCount(count) {
