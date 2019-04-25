@@ -300,8 +300,7 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Qu
 			},
 			_numberOfActivitiesShownInSearchResults: {
 				type: Number,
-				computed: '_computeNumberOfActivitiesShownInSearchResults(_data)',
-				value: 20
+				computed: '_computeNumberOfActivitiesShownInSearchResults(_data)'
 			},
 			_fullListLoading: {
 				type: Boolean,

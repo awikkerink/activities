@@ -193,7 +193,6 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 
 	_updateNumberOfActivitiesShownInSearchResults(e) {
 		if (e && e.detail) {
-			this.set('_numberOfActivitiesShownInSearchResults', e.detail.count);
 			this._updateSearchResultsCount(e.detail.count);
 		}
 	}
