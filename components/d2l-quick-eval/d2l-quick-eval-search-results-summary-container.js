@@ -30,7 +30,7 @@ class D2LQuickEvalSearchResultsSummaryContainer extends QuickEvalLocalize(Polyme
 		<div class="d2l-msg-container">
 			<div class="d2l-msg-container-inner">
 				<div class="d2l-msg-container-text">
-					<span class="d2l-quick-eval-search-results-summary">[[_getSummaryString(searchResultsCount)]]</span>
+					<span class="d2l-quick-eval-search-results-summary">[[_getSummaryString(searchResultsCount, moreResults)]]</span>
 					<d2l-link on-click="_linkClicked">[[localize('clearSearch')]]</d2l-link>
 				</div>
 			</div>
@@ -42,15 +42,23 @@ class D2LQuickEvalSearchResultsSummaryContainer extends QuickEvalLocalize(Polyme
 			searchResultsCount: {
 				type: Number,
 				value: 0
+			},
+			moreResults: {
+				type: Boolean,
+				value: false
 			}
 		};
 	}
 
-	_getSummaryString(num) {
-		if (num === 1) {
+	_getSummaryString(searchResults, moreResults) {
+		if (searchResults === 0) {
+			return this.localize('searchResultsMultiple', 'num', searchResults);
+		} else if (searchResults === 1 && !moreResults) {
 			return this.localize('searchResultsSingle');
+		} else if (moreResults) {
+			return this.localize('searchResultsMore', 'num', searchResults);
 		}
-		return this.localize('searchResultsMultiple', 'num', num);
+		return this.localize('searchResultsMultiple', 'num', searchResults);
 	}
 
 	_linkClicked() {

@@ -1,0 +1,85 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+	<title>d2l-quick-eval test</title>
+
+	<script src="../../../@babel/polyfill/browser.js"></script>
+	<script src="../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+	<script src="../../../wct-browser-legacy/browser.js"></script>
+	<script type="module" src="../../components/d2l-quick-eval/d2l-quick-eval-search-results-summary-container.js"></script>
+</head>
+<body>
+	<test-fixture id="basic">
+		<template strip-whitespace>
+			<d2l-quick-eval-search-results-summary-container search-results-count="5"></d2l-quick-eval-search-results-summary-container>
+		</template>
+	</test-fixture>
+
+	<test-fixture id="moreResults">
+		<template strip-whitespace>
+			<d2l-quick-eval-search-results-summary-container search-results-count="25" more-results></d2l-quick-eval-search-results-summary-container>
+		</template>
+	</test-fixture>
+
+	<script type="module">
+		let searchResultsSummary;
+		suite('d2l-quick-eval-search-results-summary-container', function() {
+			setup(function() {
+				searchResultsSummary = fixture('basic');
+			});
+			test('instantiating the element works', function() {
+				assert.equal(searchResultsSummary.tagName.toLowerCase(), 'd2l-quick-eval-search-results-summary-container');
+			});
+			test('Default values are correct', function() {
+				assert.equal(5, searchResultsSummary.searchResultsCount);
+				assert.equal(false, searchResultsSummary.moreResults);
+			});
+			test('_getSummaryString: 0 results, moreResults = false', function() {
+				const result = searchResultsSummary._getSummaryString(0, false);
+				assert.equal('0 Search Results', result);
+			});
+			test('_getSummaryString: 1 result, moreResults = false', function() {
+				const result = searchResultsSummary._getSummaryString(1, false);
+				assert.equal('1 Search Result', result);
+			});
+			test('_getSummaryString: 17 results, moreResults = false', function() {
+				const result = searchResultsSummary._getSummaryString(17, false);
+				assert.equal('17 Search Results', result);
+			});
+			test('_getSummaryString: 97 results, moreResults = false', function() {
+				const result = searchResultsSummary._getSummaryString(97, false);
+				assert.equal('97 Search Results', result);
+			});
+			test('_getSummaryString: 0 results, moreResults = true', function() {
+				const result = searchResultsSummary._getSummaryString(0, true);
+				assert.equal('0 Search Results', result);
+			});
+			test('_getSummaryString: 1 result, moreResults = true', function() {
+				const result = searchResultsSummary._getSummaryString(1, true);
+				assert.equal('1+ Search Results', result);
+			});
+			test('_getSummaryString: 17 results, moreResults = true', function() {
+				const result = searchResultsSummary._getSummaryString(17, true);
+				assert.equal('17+ Search Results', result);
+			});
+			test('_getSummaryString: 97 results, moreResults = true', function() {
+				const result = searchResultsSummary._getSummaryString(97, true);
+				assert.equal('97+ Search Results', result);
+			});
+		});
+		suite('d2l-quick-eval-search-results-summary-container with moreResults', function() {
+			setup(function() {
+				searchResultsSummary = fixture('moreResults');
+			});
+			test('Default values are correct', function() {
+				assert.equal(25, searchResultsSummary.searchResultsCount);
+				assert.equal(true, searchResultsSummary.moreResults);
+			});
+		});
+	</script>
+</body>
+</html>
