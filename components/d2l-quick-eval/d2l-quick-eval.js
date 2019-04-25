@@ -65,10 +65,10 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 						category-whitelist="[[_filterIds]]"
 						result-size="[[_numberOfActivitiesToShow]]">
 					</d2l-hm-filter>
-					<d2l-hm-search 
-						hidden$="[[!searchEnabled]]" 
-						token="[[token]]" 
-						search-action="[[_searchAction]]" 
+					<d2l-hm-search
+						hidden$="[[!searchEnabled]]"
+						token="[[token]]"
+						search-action="[[_searchAction]]"
 						placeholder="[[localize('search')]]"
 						result-size="[[_numberOfActivitiesToShow]]"
 						aria-label$="[[localize('search')]]">
@@ -81,8 +81,9 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 			<d2l-alert type="critical" hidden$="[[!_showSearchError]]" id="d2l-quick-eval-search-error-alert">
 				[[localize('failedToSearch')]]
 			</d2l-alert>
-			<d2l-quick-eval-search-results-summary-container 
-				search-results-count="[[_searchResultsCount]]" 
+			<d2l-quick-eval-search-results-summary-container
+				search-results-count="[[_searchResultsCount]]"
+				more-results="[[_moreSearchResults]]"
 				hidden$="[[!_searchResultsMessageEnabled(_showSearchResultSummary, searchEnabled)]]">
 			</d2l-quick-eval-search-results-summary-container>
 			<d2l-quick-eval-activities-list href="[[href]]" token="[[token]]" master-teacher="[[masterTeacher]]"></d2l-quick-eval-activities-list>
@@ -135,6 +136,10 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 			_searchResultsCount: {
 				type: Number,
 				value: 0
+			},
+			_moreSearchResults: {
+				type: Boolean,
+				value: false
 			}
 		};
 	}
@@ -152,6 +157,7 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 		this.addEventListener('d2l-quick-eval-search-results-summary-container-clear-search', this._clearSearchResults);
 		this.addEventListener('d2l-hm-search-error', this._searchError);
 		this.addEventListener('d2l-quick-eval-activities-list-activities-shown-number-updated', this._updateNumberOfActivitiesToShow);
+		this.addEventListener('d2l-quick-eval-activities-list-search-results-count', this._updateNumberOfActivitiesShownInSearchResults);
 	}
 
 	detached() {
@@ -165,6 +171,7 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 		this.removeEventListener('d2l-quick-eval-search-results-summary-container-clear-search', this._clearSearchResults);
 		this.removeEventListener('d2l-hm-search-error', this._searchError);
 		this.removeEventListener('d2l-quick-eval-activities-list-activities-shown-number-updated', this._updateNumberOfActivitiesToShow);
+		this.removeEventListener('d2l-quick-eval-activities-list-search-results-count', this._updateNumberOfActivitiesShownInSearchResults);
 	}
 
 	_getSearchAction(entity) {
@@ -181,6 +188,12 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 	_updateNumberOfActivitiesToShow(e) {
 		if (e && e.detail) {
 			this.set('_numberOfActivitiesToShow', e.detail.count);
+		}
+	}
+
+	_updateNumberOfActivitiesShownInSearchResults(e) {
+		if (e && e.detail) {
+			this._updateSearchResultsCount(e.detail.count);
 		}
 	}
 
@@ -224,6 +237,10 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 		const list = this.shadowRoot.querySelector('d2l-quick-eval-activities-list');
 		list.entity = e.detail.filteredActivities;
 		this.entity = e.detail.filteredActivities;
+
+		if (this.entity && this.entity.entities) {
+			this._updateSearchResultsCount(this.entity.entities.length);
+		}
 		this._clearErrors();
 	}
 
@@ -248,8 +265,13 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 		list.entity = e.detail.results;
 		this.entity = e.detail.results;
 		this._showSearchResultSummary = !e.detail.searchIsCleared;
-		this._searchResultsCount = this.entity.entities && this.entity.entities.length ? this.entity.entities.length : 0;
 		list.searchApplied = !e.detail.searchIsCleared;
+
+		if (this.entity && this.entity.entities) {
+			this._updateSearchResultsCount(this.entity.entities.length);
+		} else {
+			this._updateSearchResultsCount(0);
+		}
 		this._clearErrors();
 	}
 
@@ -267,6 +289,17 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 	_clearErrors() {
 		this._showSearchError = false;
 		this._showFilterError = false;
+	}
+
+	_updateSearchResultsCount(count) {
+		this._searchResultsCount = count;
+
+		const list = this.shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		if (list._pageNextHref) {
+			this._moreSearchResults = true;
+		} else {
+			this._moreSearchResults = false;
+		}
 	}
 }
 
