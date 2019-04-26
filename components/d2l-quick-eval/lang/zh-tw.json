@@ -19,7 +19,7 @@
    "noResults" : "這裡沒有任何結果。",
    "noSubmissions" : "沒有提交項目需要您注意。",
    "search" : "搜尋",
-   "searchResultsMore" : "{num}+ Search Results",
+   "searchResultsMore" : "{num}+ 個搜尋結果",
    "searchResultsMultiple" : "{num} 個搜尋結果",
    "searchResultsSingle" : "1 個搜尋結果",
    "sortBy" : "排序方式：{columnName}",
