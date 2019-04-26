@@ -27,7 +27,7 @@ const LangArImpl = (superClass) => class extends superClass {
 			'noResults': 'لا تتوفر أي نتائج هنا.',
 			'noSubmissions': 'لا تتوفر أي عمليات إرسال تتطلب اهتمامك.',
 			'search': 'بحث',
-			'searchResultsMore': '{num}+ Search Results',
+			'searchResultsMore': 'أكثر من {num} من نتائج البحث',
 			'searchResultsMultiple': '{num} من نتائج البحث',
 			'searchResultsSingle': 'نتيجة بحث واحدة',
 			'sortBy': 'الفرز بحسب {columnName}',
