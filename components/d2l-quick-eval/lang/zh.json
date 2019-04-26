@@ -19,7 +19,7 @@
    "noResults" : "此处没有结果。",
    "noSubmissions" : "没有需要您注意的提交。",
    "search" : "搜索",
-   "searchResultsMore" : "{num}+ Search Results",
+   "searchResultsMore" : "{Num}+ 搜索结果",
    "searchResultsMultiple" : "LOR 搜索结果",
    "searchResultsSingle" : "个搜索结果",
    "sortBy" : "Sort by {columnName}",
