@@ -27,7 +27,7 @@ const LangEsImpl = (superClass) => class extends superClass {
 			'noResults': 'No hay resultados aquí.',
 			'noSubmissions': 'No hay envíos que requieran su atención.',
 			'search': 'Buscar',
-			'searchResultsMore': '{num}+ Search Results',
+			'searchResultsMore': 'Más de {num} resultados de búsqueda',
 			'searchResultsMultiple': '{num} resultados de búsqueda',
 			'searchResultsSingle': '1 resultado de búsqueda',
 			'sortBy': 'Ordenar por {columnName}',

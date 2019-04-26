@@ -27,7 +27,7 @@ const LangDeImpl = (superClass) => class extends superClass {
 			'noResults': 'Keine Ergebnisse',
 			'noSubmissions': 'Es gibt keine Abgaben, die Ihre Aufmerksamkeit erfordern.',
 			'search': 'Suchen',
-			'searchResultsMore': '{num}+ Search Results',
+			'searchResultsMore': 'Über {num} Suchergebnisse',
 			'searchResultsMultiple': '{num} Suchergebnisse',
 			'searchResultsSingle': '1 Suchergebnis',
 			'sortBy': 'Sortieren nach {columnName}',

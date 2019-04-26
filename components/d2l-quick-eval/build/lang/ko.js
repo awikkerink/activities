@@ -27,7 +27,7 @@ const LangKoImpl = (superClass) => class extends superClass {
 			'noResults': '결과가 없습니다.',
 			'noSubmissions': '주목할 제출 항목이 없습니다.',
 			'search': '검색',
-			'searchResultsMore': '{num}+ Search Results',
+			'searchResultsMore': '{num}+ 탐색 결과',
 			'searchResultsMultiple': '{num} 탐색 결과',
 			'searchResultsSingle': '1 탐색 결과',
 			'sortBy': '{columnName}으로 정렬',
