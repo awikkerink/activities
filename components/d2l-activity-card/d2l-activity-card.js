@@ -1,5 +1,7 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 import {Classes, Rels} from 'd2l-hypermedia-constants';
+import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
+import { EntityMixin } from 'siren-sdk/mixin/entity-mixin.js';
 import 'fastdom/fastdom.min.js';
 import 'd2l-card/d2l-card.js';
 import 'd2l-card/d2l-card-content-meta.js';
@@ -10,12 +12,14 @@ import 'd2l-organizations/components/d2l-organization-info/d2l-organization-info
 import 'd2l-organizations/components/d2l-organization-name/d2l-organization-name.js';
 import 'd2l-typography/d2l-typography.js';
 import SirenParse from 'siren-parser';
+import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
 
 /**
  * @customElement
  * @polymer
  */
-class D2lActivityCard extends PolymerElement {
+class D2lActivityCard extends mixinBehaviors([
+	D2L.PolymerBehaviors.Siren.EntityBehavior], EntityMixin(PolymerElement)) {
 	static get template() {
 		return html`
 			<style include="d2l-typography-shared-styles">
