@@ -18,12 +18,16 @@ import './d2l-activity-list-item-enroll.js';
 import SirenParse from 'siren-parser';
 import {ActivityListItemResponsiveConstants} from './ActivityListItemResponsiveConstants.js';
 import 'd2l-colors/d2l-colors.js';
+import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
 
 /**
  * @customElement
  * @polymer
  */
-class D2lActivityListItem extends mixinBehaviors([IronResizableBehavior, D2L.PolymerBehaviors.FocusableBehavior], ActivityListItemResponsiveConstants(MutableData(PolymerElement))) {
+class D2lActivityListItem extends mixinBehaviors([
+	IronResizableBehavior,
+	D2L.PolymerBehaviors.Siren.EntityBehavior,
+	D2L.PolymerBehaviors.FocusableBehavior], ActivityListItemResponsiveConstants(MutableData(PolymerElement))) {
 	static get template() {
 		return html`
 			<style include="d2l-typography-shared-styles"></style>
@@ -254,7 +258,7 @@ class D2lActivityListItem extends mixinBehaviors([IronResizableBehavior, D2L.Pol
 							</div>
 							<div hidden$="[[_textPlaceholder]]">
 								<h2 class="d2l-activity-list-item-title">
-									<d2l-organization-name href="[[_organizationUrl]]"></d2l-organization-name>
+									<d2l-organization-name href="[[_organizationUrl]]" token="[[token]]"></d2l-organization-name>
 								</h2>
 							</div>
 						</div>
