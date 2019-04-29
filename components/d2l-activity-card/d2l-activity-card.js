@@ -69,12 +69,13 @@ class D2lActivityCard extends PolymerElement {
 				</div>
 
 				<div class="d2l-activity-card-content-container" slot="content">
-					<d2l-organization-name href="[[_organizationUrl]]"></d2l-organization-name>
+					<d2l-organization-name href="[[_organizationUrl]]" token="[[token]]"></d2l-organization-name>
 					<d2l-card-content-meta>
 						<d2l-organization-info
 							class="d2l-activity-card-content-organization-info"
 							href="[[_organizationUrl]]"
 							presentation-href="[[presentationHref]]"
+							token="[[token]]"
 						></d2l-organization-info>
 					</d2l-card-content-meta>
 				</div>
@@ -170,6 +171,7 @@ class D2lActivityCard extends PolymerElement {
 			.then((sirenEntity) => this.entity = sirenEntity);
 	}
 	_fetchEntity(url) {
+
 		if (!url) {
 			return;
 		}
