@@ -1,6 +1,6 @@
-import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
-import {Classes, Rels} from 'd2l-hypermedia-constants';
-import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
+import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { Classes, Rels } from 'd2l-hypermedia-constants';
+import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 import { EntityMixin } from 'siren-sdk/mixin/entity-mixin.js';
 import 'fastdom/fastdom.min.js';
 import 'd2l-card/d2l-card.js';
@@ -80,6 +80,15 @@ class D2lActivityCard extends mixinBehaviors([
 							href="[[_organizationUrl]]"
 							presentation-href="[[presentationHref]]"
 							token="[[token]]"
+							show-organization-code="[[_showOrganizationCode]]"
+							show-semester-name="[[_showSemesterName]]"
+							show-dropbox-unread-feedback="[[_showDropboxUnreadFeedback]]"
+							show-unattempted-quizzes="[[_showUnattemptedQuizzes]]"
+							show-ungraded-quiz-attempts="[[_showUngradedQuizAttempts]]"
+							show-unread-discussion-messages="[[_showUnreadDiscussionMessages]]"
+							show-unread-dropbox-submissions="[[_showUnreadDropboxSubmissions]]"
+							hide-course-start-date="[[_hideCourseStartDate]]"
+							hide-course-end-date="[[_hideCourseEndDate]]"
 						></d2l-organization-info>
 					</d2l-card-content-meta>
 				</div>
@@ -90,7 +99,8 @@ class D2lActivityCard extends mixinBehaviors([
 	static get properties() {
 		return {
 			presentationHref: {
-				type: String
+				type: String,
+				observer: '_onPresentationEntityChange'
 			},
 			href: {
 				type: String,
@@ -144,8 +154,73 @@ class D2lActivityCard extends mixinBehaviors([
 				type: String,
 				value: 'javascript:void(0)',
 				computed: '_cardHrefComputed(sendEventOnClick, _activityHomepage)'
+			},
+			/*
+			* Presentation Attributes
+			*/
+			_showOrganizationCode: {
+				type: Boolean,
+				value: false
+			},
+			_showSemesterName: {
+				type: Boolean,
+				value: false
+			},
+			_hideCourseStartDate: {
+				type: Boolean,
+				value: false
+			},
+			_hideCourseEndDate: {
+				type: Boolean,
+				value: false
+			},
+			_showDropboxUnreadFeedback: {
+				type: Boolean,
+				value: false
+			},
+			_showUnattemptedQuizzes: {
+				type: Boolean,
+				value: false
+			},
+			_showUngradedQuizAttempts: {
+				type: Boolean,
+				value: false
+			},
+			_showUnreadDiscussionMessages: {
+				type: Boolean,
+				value: false
+			},
+			_showUnreadDropboxSubmissions: {
+				type: Boolean,
+				value: false
 			}
 		};
+	}
+	_onPresentationEntityChange(href) {
+		return window.D2L.Siren.EntityStore.fetch(href, this.token)
+			.then(function(entity) {
+				if (!entity || !entity.entity) {
+					return Promise.resolve;
+				}
+				entity = entity.entity;
+
+				this._hideCourseEndDate = entity && entity.properties
+					&& entity.properties.HideCourseEndDate;
+				this._showOrganizationCode = entity && entity.properties
+					&& entity.properties.ShowCourseCode;
+				this._showSemesterName = entity && entity.properties
+					&& entity.properties.ShowSemester;
+				this._showDropboxUnreadFeedback = entity && entity.properties
+					&& entity.properties.ShowDropboxUnreadFeedback;
+				this._showUnattemptedQuizzes = entity && entity.properties
+					&& entity.properties.ShowUnattemptedQuizzes;
+				this._showUngradedQuizAttempts = entity && entity.properties
+					&& entity.properties.ShowUngradedQuizAttempts;
+				this._showUnreadDiscussionMessages = entity && entity.properties
+					&& entity.properties.ShowUnreadDiscussionMessages;
+				this._showUnreadDropboxSubmissions = entity && entity.properties
+					&& entity.properties.ShowUnreadDropboxSubmissions;
+		}.bind(this));
 	}
 	connectedCallback() {
 		super.connectedCallback();
@@ -175,7 +250,6 @@ class D2lActivityCard extends mixinBehaviors([
 			.then((sirenEntity) => this.entity = sirenEntity);
 	}
 	_fetchEntity(url) {
-
 		if (!url) {
 			return;
 		}

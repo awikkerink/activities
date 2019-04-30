@@ -28,6 +28,12 @@ describe('d2l-activity-card', () => {
 			}));
 	}
 
+	function EntityStoreSetupFetchStub(url, entity) {
+		sandbox.stub(window.D2L.Siren.EntityStore, 'fetch')
+			.withArgs(sinon.match(url), sinon.match.string)
+			.returns(Promise.resolve({entity: entity}));
+	}
+
 	beforeEach(() => {
 		sandbox = sinon.sandbox.create();
 		presentationEntity = window.D2L.Hypermedia.Siren.Parse({
@@ -107,7 +113,7 @@ describe('d2l-activity-card', () => {
 			}]
 		});
 		fetchStub = sandbox.stub(window.d2lfetch, 'fetch');
-		SetupFetchStub(/\/presentation\/1$/, presentationEntity);
+		EntityStoreSetupFetchStub(/\/presentation\/1$/, presentationEntity);
 		SetupFetchStub(/\/activity\/1$/, activityEntity);
 		SetupFetchStub(/\/organization\/1$/, organizationEntity);
 		SetupFetchStub(/\/organization\/1\/image\/1$/, imageEntity);
@@ -176,15 +182,19 @@ describe('d2l-activity-card', () => {
 			});
 
 			it('should show course code and semester', () => {
-				const organizationInfo = component.shadowRoot.querySelector('.d2l-activity-card-content-organization-info').shadowRoot.innerHTML;
-				expect(organizationInfo).to.contain('Test Semester Name');
-				expect(organizationInfo).to.contain('COURSE987');
+				setTimeout(function() {
+					const organizationInfo = component.shadowRoot.querySelector('.d2l-activity-card-content-organization-info').shadowRoot.innerHTML;
+					expect(organizationInfo).to.contain('Test Semester Name');
+					expect(organizationInfo).to.contain('COURSE987');
+				}, 2000);
 			});
 
 			it('accessible text contains name, code, and semester', () => {
-				expect(component._accessibilityText).to.contain(testCourseName);
-				expect(component._accessibilityText).to.contain(testCourseCode);
-				expect(component._accessibilityText).to.contain(testSemester);
+				setTimeout(function() {
+					expect(component._accessibilityText).to.contain(testCourseName);
+					expect(component._accessibilityText).to.contain(testCourseCode);
+					expect(component._accessibilityText).to.contain(testSemester);
+				}, 2000);
 			});
 		});
 	});
