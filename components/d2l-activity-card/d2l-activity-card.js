@@ -220,7 +220,7 @@ class D2lActivityCard extends mixinBehaviors([
 					&& entity.properties.ShowUnreadDiscussionMessages;
 				this._showUnreadDropboxSubmissions = entity && entity.properties
 					&& entity.properties.ShowUnreadDropboxSubmissions;
-		}.bind(this));
+			}.bind(this));
 	}
 	connectedCallback() {
 		super.connectedCallback();
