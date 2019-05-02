@@ -4,14 +4,12 @@ describe('d2l-activity-card', () => {
 	var component,
 		fetchStub,
 		sandbox,
-		presentationEntity,
 		activityEntity,
 		organizationEntity,
 		imageEntity,
 		semesterEntity;
 
-	const testPresentationHref = '/presentation/1',
-		testActivityHref = '/activity/1',
+	const testActivityHref = '/activity/1',
 		testOrganizationHref =  '/organization/1',
 		testImageHref = '/organization/1/image/1',
 		testSemesterHref = '/organization/1/semester/1',
@@ -28,24 +26,8 @@ describe('d2l-activity-card', () => {
 			}));
 	}
 
-	function EntityStoreSetupFetchStub(url, entity) {
-		sandbox.stub(window.D2L.Siren.EntityStore, 'fetch')
-			.withArgs(sinon.match(url), sinon.match.string)
-			.returns(Promise.resolve({entity: entity}));
-	}
-
 	beforeEach(() => {
 		sandbox = sinon.sandbox.create();
-		presentationEntity = window.D2L.Hypermedia.Siren.Parse({
-			properties: {
-				ShowCourseCode: true,
-				ShowSemester: true
-			},
-			links: [{
-				rel: ['self'],
-				href: testPresentationHref
-			}]
-		});
 		activityEntity = window.D2L.Hypermedia.Siren.Parse({
 			class:['activity'],
 			links: [{
@@ -113,7 +95,6 @@ describe('d2l-activity-card', () => {
 			}]
 		});
 		fetchStub = sandbox.stub(window.d2lfetch, 'fetch');
-		EntityStoreSetupFetchStub(/\/presentation\/1$/, presentationEntity);
 		SetupFetchStub(/\/activity\/1$/, activityEntity);
 		SetupFetchStub(/\/organization\/1$/, organizationEntity);
 		SetupFetchStub(/\/organization\/1\/image\/1$/, imageEntity);
@@ -134,14 +115,16 @@ describe('d2l-activity-card', () => {
 			name: 'Setting the href attribute',
 			beforeEachFn: () => {
 				component = fixture('d2l-activity-card-href-fixture');
-				component.presentationHref = testPresentationHref;
+				component.showOrganizationCode = true;
+				component.showSemesterName = true;
 			}
 		},
 		{
 			name: 'Setting the entity attribute',
 			beforeEachFn: () => {
 				component = fixture('d2l-activity-card-empty-fixture');
-				component.presentationHref = testPresentationHref;
+				component.showOrganizationCode = true;
+				component.showSemesterName = true;
 				component.entity = activityEntity;
 			}
 		}
@@ -151,10 +134,6 @@ describe('d2l-activity-card', () => {
 			beforeEach(done => {
 				testCase.beforeEachFn();
 				afterNextRender(component, done);
-			});
-
-			it ('should set the presentation href', () => {
-				expect(component.presentationHref).to.equal(testPresentationHref);
 			});
 
 			it('should set the href', () => {

@@ -12,14 +12,12 @@ import 'd2l-organizations/components/d2l-organization-info/d2l-organization-info
 import 'd2l-organizations/components/d2l-organization-name/d2l-organization-name.js';
 import 'd2l-typography/d2l-typography.js';
 import SirenParse from 'siren-parser';
-import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
 
 /**
  * @customElement
  * @polymer
  */
-class D2lActivityCard extends mixinBehaviors([
-	D2L.PolymerBehaviors.Siren.EntityBehavior], EntityMixin(PolymerElement)) {
+class D2lActivityCard extends mixinBehaviors([], EntityMixin(PolymerElement)) {
 	static get template() {
 		return html`
 			<style include="d2l-typography-shared-styles">
@@ -78,10 +76,9 @@ class D2lActivityCard extends mixinBehaviors([
 						<d2l-organization-info
 							class="d2l-activity-card-content-organization-info"
 							href="[[_organizationUrl]]"
-							presentation-href="[[presentationHref]]"
 							token="[[token]]"
-							show-organization-code="[[_showOrganizationCode]]"
-							show-semester-name="[[_showSemesterName]]"
+							show-organization-code="[[showOrganizationCode]]"
+							show-semester-name="[[showSemesterName]]"
 						></d2l-organization-info>
 					</d2l-card-content-meta>
 				</div>
@@ -91,10 +88,6 @@ class D2lActivityCard extends mixinBehaviors([
 
 	static get properties() {
 		return {
-			presentationHref: {
-				type: String,
-				observer: '_onPresentationEntityChange'
-			},
 			href: {
 				type: String,
 				observer: '_onHrefChange'
@@ -105,6 +98,17 @@ class D2lActivityCard extends mixinBehaviors([
 					return {};
 				},
 				observer: '_onEntityChange'
+			},
+			/*
+			* Presentation Attributes
+			*/
+			showOrganizationCode: {
+				type: Boolean,
+				value: false
+			},
+			showSemesterName: {
+				type: Boolean,
+				value: false
 			},
 			_tileSizes: {
 				type: Object,
@@ -148,31 +152,7 @@ class D2lActivityCard extends mixinBehaviors([
 				value: 'javascript:void(0)',
 				computed: '_cardHrefComputed(sendEventOnClick, _activityHomepage)'
 			},
-			/*
-			* Presentation Attributes
-			*/
-			_showOrganizationCode: {
-				type: Boolean,
-				value: false
-			},
-			_showSemesterName: {
-				type: Boolean,
-				value: false
-			}
 		};
-	}
-	_onPresentationEntityChange(href) {
-		return window.D2L.Siren.EntityStore.fetch(href, this.token)
-			.then(function(entity) {
-				if (!entity || !entity.entity) {
-					return Promise.resolve;
-				}
-				entity = entity.entity;
-				this._showOrganizationCode = entity && entity.properties
-					&& entity.properties.ShowCourseCode;
-				this._showSemesterName = entity && entity.properties
-					&& entity.properties.ShowSemester;
-			}.bind(this));
 	}
 	connectedCallback() {
 		super.connectedCallback();
