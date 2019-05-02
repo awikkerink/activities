@@ -150,7 +150,7 @@ class D2lActivityCard extends EntityMixin(PolymerElement) {
 				type: String,
 				value: 'javascript:void(0)',
 				computed: '_cardHrefComputed(sendEventOnClick, _activityHomepage)'
-			},
+			}
 		};
 	}
 	connectedCallback() {
