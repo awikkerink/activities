@@ -17,7 +17,7 @@ import SirenParse from 'siren-parser';
  * @customElement
  * @polymer
  */
-class D2lActivityCard extends mixinBehaviors([], EntityMixin(PolymerElement)) {
+class D2lActivityCard extends EntityMixin(PolymerElement) {
 	static get template() {
 		return html`
 			<style include="d2l-typography-shared-styles">
