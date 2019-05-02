@@ -1,5 +1,6 @@
-import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
-import {Classes, Rels} from 'd2l-hypermedia-constants';
+import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { Classes, Rels } from 'd2l-hypermedia-constants';
+import { EntityMixin } from 'siren-sdk/mixin/entity-mixin.js';
 import 'fastdom/fastdom.min.js';
 import 'd2l-card/d2l-card.js';
 import 'd2l-card/d2l-card-content-meta.js';
@@ -15,7 +16,7 @@ import SirenParse from 'siren-parser';
  * @customElement
  * @polymer
  */
-class D2lActivityCard extends PolymerElement {
+class D2lActivityCard extends EntityMixin(PolymerElement) {
 	static get template() {
 		return html`
 			<style include="d2l-typography-shared-styles">
@@ -69,12 +70,14 @@ class D2lActivityCard extends PolymerElement {
 				</div>
 
 				<div class="d2l-activity-card-content-container" slot="content">
-					<d2l-organization-name href="[[_organizationUrl]]"></d2l-organization-name>
+					<d2l-organization-name href="[[_organizationUrl]]" token="[[token]]"></d2l-organization-name>
 					<d2l-card-content-meta>
 						<d2l-organization-info
 							class="d2l-activity-card-content-organization-info"
 							href="[[_organizationUrl]]"
-							presentation-href="[[presentationHref]]"
+							token="[[token]]"
+							show-organization-code="[[showOrganizationCode]]"
+							show-semester-name="[[showSemesterName]]"
 						></d2l-organization-info>
 					</d2l-card-content-meta>
 				</div>
@@ -84,9 +87,6 @@ class D2lActivityCard extends PolymerElement {
 
 	static get properties() {
 		return {
-			presentationHref: {
-				type: String
-			},
 			href: {
 				type: String,
 				observer: '_onHrefChange'
@@ -97,6 +97,17 @@ class D2lActivityCard extends PolymerElement {
 					return {};
 				},
 				observer: '_onEntityChange'
+			},
+			/*
+			* Presentation Attributes
+			*/
+			showOrganizationCode: {
+				type: Boolean,
+				value: false
+			},
+			showSemesterName: {
+				type: Boolean,
+				value: false
 			},
 			_tileSizes: {
 				type: Object,
