@@ -27,7 +27,7 @@ const LangFrfrImpl = (superClass) => class extends superClass {
 			'noResults': 'Aucun résultat.',
 			'noSubmissions': 'Aucune soumission ne nécessite votre attention.',
 			'search': 'Rechercher',
-			'searchResultsMore': '{num}+ Search Results',
+			'searchResultsMore': '{num}+ Résultats de recherche',
 			'searchResultsMultiple': '{num} Search Results',
 			'searchResultsSingle': '1 Search Result',
 			'sortBy': 'Sort by {columnName}',

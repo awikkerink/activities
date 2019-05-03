@@ -27,7 +27,7 @@ const LangNlImpl = (superClass) => class extends superClass {
 			'noResults': 'Geen resultaten hier.',
 			'noSubmissions': 'Er zijn geen indieningen via postvak die uw aandacht nodig hebben.',
 			'search': 'Zoeken',
-			'searchResultsMore': '{num}+ Search Results',
+			'searchResultsMore': '{num}+ zoekresultaten',
 			'searchResultsMultiple': '{num} zoekresultaten',
 			'searchResultsSingle': '1 zoekresultaat',
 			'sortBy': 'Sorteren op {columnName}',

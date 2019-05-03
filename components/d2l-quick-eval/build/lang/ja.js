@@ -27,7 +27,7 @@ const LangJaImpl = (superClass) => class extends superClass {
 			'noResults': 'ここには結果がありません。',
 			'noSubmissions': '確認が必要な送信物はありません。',
 			'search': '検索',
-			'searchResultsMore': '{num}+ Search Results',
+			'searchResultsMore': '{num} 件以上の検索結果',
 			'searchResultsMultiple': '{num} 件の検索結果',
 			'searchResultsSingle': '1 件の検索結果',
 			'sortBy': '{columnName} で並べ替え',
