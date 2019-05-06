@@ -1,5 +1,6 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 import {QuickEvalLocalize} from './QuickEvalLocalize.js';
+import {QuickEvalLogging} from './QuickEvalLogging.js';
 import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
 import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
 import {Rels} from 'd2l-hypermedia-constants';
@@ -15,7 +16,10 @@ import './d2l-quick-eval-view-toggle.js';
  * @customElement
  * @polymer
  */
-class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBehavior], QuickEvalLocalize(PolymerElement)) {
+class D2LQuickEval extends mixinBehaviors(
+	[D2L.PolymerBehaviors.Siren.EntityBehavior],
+	QuickEvalLogging(QuickEvalLocalize(PolymerElement))
+) {
 	static get template() {
 		return html`
 			<style>
@@ -95,7 +99,7 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 				more-results="[[_moreSearchResults]]"
 				hidden$="[[!_searchResultsMessageEnabled(_showSearchResultSummary, searchEnabled)]]">
 			</d2l-quick-eval-search-results-summary-container>
-			<d2l-quick-eval-activities-list href="[[href]]" token="[[token]]" master-teacher="[[masterTeacher]]"></d2l-quick-eval-activities-list>
+			<d2l-quick-eval-activities-list href="[[href]]" token="[[token]]" logger="[[logger]]" master-teacher="[[masterTeacher]]"></d2l-quick-eval-activities-list>
 		`;
 	}
 

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+	<title>d2l-quick-eval test</title>
+
+	<script src="../../../@babel/polyfill/browser.js"></script>
+	<script src="../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+	<script src="../../../wct-browser-legacy/browser.js"></script>
+	<script type="module" src="./quick-eval-logging-test-component.js"></script>
+</head>
+
+<body>
+	<test-fixture id="logger">
+		<template strip-whitespace>
+			<quick-eval-logging-test-component logger="expectedLogger"></quick-eval-logging-test-component>
+		</template>
+	</test-fixture>
+	<test-fixture id="no-logger">
+		<template strip-whitespace>
+			<quick-eval-logging-test-component></quick-eval-logging-test-component>
+		</template>
+	</test-fixture>
+	<script type="module">
+		suite('quick-eval-logging-test-component', function() {
+
+			let logger;
+			let noLogger;
+			let sandbox;
+			setup(function() {
+				logger = fixture('logger');
+				noLogger = fixture('no-logger');
+				sandbox = sinon.sandbox.create();
+			});
+
+			teardown(function() {
+				sandbox.restore();
+			});
+
+			test('sends POST request with expected options formatted in the correct way', function(done) {
+
+				sandbox.stub(window, 'fetch', function(logger, options) {
+
+					assert.equal('expectedLogger', logger);
+
+					assert.equal('POST', options.method);
+					assert.equal('no-cors', options.mode);
+					assert.equal('application/json', options.headers['Content-Type']);
+
+					const messageBody = JSON.parse(options.body);
+					assert.equal(Array, messageBody.constructor);
+
+					done();
+				});
+				logger._logError();
+
+			});
+
+			test('sends POST request with additional context and expected standard error fields when provided', function(done) {
+
+				const testErrorMessage = 'expectedTestErrorMessage';
+				const expectedInfo = 'expectedInfo';
+
+				sandbox.stub(window, 'fetch', function(logger, options) {
+
+					const messageBody = JSON.parse(options.body);
+					assert.equal(Array, messageBody.constructor);
+
+					const message = messageBody[0];
+					assert.equal(testErrorMessage, message.errorMessage);
+					assert.isTrue(message.stackTrace !== null && message.stackTrace !== undefined);
+					assert.equal(expectedInfo, message.moreInfo);
+
+					done();
+				});
+
+				logger._logError(new Error(testErrorMessage), { moreInfo: expectedInfo });
+			});
+
+			test('does not send POST when no longer is specified', function() {
+				const stub = sandbox.stub(window, 'fetch');
+
+				noLogger._logError(new Error('ErrorWithNoLogger'));
+
+				expect(stub.notCalled, 'fetch should not be called').to.be.true;
+			});
+
+			test('When not given an Error object, just try to use what is given', function(done) {
+
+				const throwingMessage = 'expectedThrowingMessage';
+
+				sandbox.stub(window, 'fetch', function(logger, options) {
+
+					const messageBody = JSON.parse(options.body);
+					assert.equal(Array, messageBody.constructor);
+
+					const message = messageBody[0];
+					assert.deepEqual({errorMessage: throwingMessage}, message);
+
+					done();
+				});
+
+				try {
+					throw throwingMessage;
+				}
+				catch (e) {
+					logger._logError(e);
+				}
+			});
+		});
+	</script>
+</body>
+
+</html>
