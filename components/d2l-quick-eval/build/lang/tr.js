@@ -27,7 +27,7 @@ const LangTrImpl = (superClass) => class extends superClass {
 			'noResults': 'Sonuç yok.',
 			'noSubmissions': 'İlgilenmeniz gereken gönderi yok.',
 			'search': 'Ara',
-			'searchResultsMore': '{num}+ Search Results',
+			'searchResultsMore': '{num}+ Arama Sonucu',
 			'searchResultsMultiple': '{num} Arama Sonucu',
 			'searchResultsSingle': '1 Arama Sonucu',
 			'sortBy': 'Şuna göre sırala: {columnName}',

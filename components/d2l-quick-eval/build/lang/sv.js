@@ -27,7 +27,7 @@ const LangSvImpl = (superClass) => class extends superClass {
 			'noResults': 'Det finns inga resultat här.',
 			'noSubmissions': 'Det finns inga inlämningar som du behöver utföra någon åtgärd på.',
 			'search': 'Sökning',
-			'searchResultsMore': '{num}+ Search Results',
+			'searchResultsMore': '{num}+ sökresultat',
 			'searchResultsMultiple': '{num} sökresultat',
 			'searchResultsSingle': '1 sökresultat',
 			'sortBy': 'Sortera efter {columnName}',

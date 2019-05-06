@@ -27,7 +27,7 @@ const LangDadkImpl = (superClass) => class extends superClass {
 			'noResults': 'Ingen resultater her.',
 			'noSubmissions': 'Der er ingen afleveringer, der kræver din opmærksomhed.',
 			'search': 'Søg',
-			'searchResultsMore': '{num}+ Search Results',
+			'searchResultsMore': '{num}+ søgeresultater',
 			'searchResultsMultiple': '{num} søgeresultater',
 			'searchResultsSingle': '1 søgeresultat',
 			'sortBy': 'Sortér efter {columnName}',

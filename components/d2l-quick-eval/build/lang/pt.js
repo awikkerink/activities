@@ -27,7 +27,7 @@ const LangPtImpl = (superClass) => class extends superClass {
 			'noResults': 'Nenhum resultado aqui.',
 			'noSubmissions': 'Não há envios que precisem de sua atenção.',
 			'search': 'Pesquisar',
-			'searchResultsMore': '{num}+ Search Results',
+			'searchResultsMore': '{num}+ resultados da pesquisa',
 			'searchResultsMultiple': '{num} resultados da pesquisa',
 			'searchResultsSingle': '1 resultado da pesquisa',
 			'sortBy': 'Classificar por {columnName}',
