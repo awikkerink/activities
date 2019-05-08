@@ -7,6 +7,7 @@ const LangEnImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.en = {
+			'activities': 'Activities',
 			'activityName': 'Activity Name',
 			'caughtUp': 'You\'re all caught up!',
 			'checkBackOften': 'Check back often for new submissions.',
@@ -32,6 +33,7 @@ const LangEnImpl = (superClass) => class extends superClass {
 			'searchResultsMore': '{num}+ Search Results',
 			'sortBy': 'Sort by {columnName}',
 			'submissionDate': 'Submission Date',
+			'submissions': 'Submissions',
 			'tableTitle': 'List of unevaluated Learner submissions from across courses and tools',
 			'tryAgain': 'Try Again'
 		};

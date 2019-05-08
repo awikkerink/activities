@@ -7,6 +7,7 @@ const LangNlImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.nl = {
+			'activities': 'Activities',
 			'activityName': 'Naam activiteit',
 			'caughtUp': 'U bent weer helemaal bij!',
 			'checkBackOften': 'Kijk regelmatig of er nieuwe indieningen via postvak zijn.',
@@ -32,6 +33,7 @@ const LangNlImpl = (superClass) => class extends superClass {
 			'searchResultsSingle': '1 zoekresultaat',
 			'sortBy': 'Sorteren op {columnName}',
 			'submissionDate': 'Datum van indiening via postvak',
+			'submissions': 'Submissions',
 			'tableTitle': 'Lijst van niet-geëvalueerde indieningen via postvak van cursisten van alle cursussen en tools',
 			'tryAgain': 'Probeer het opnieuw'
 		};

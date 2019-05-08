@@ -7,6 +7,7 @@ const LangKoImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.ko = {
+			'activities': 'Activities',
 			'activityName': '활동 이름',
 			'caughtUp': '거의 따라잡았습니다!',
 			'checkBackOften': '새로운 제출 항목이 있는지 자주 다시 확인하십시오.',
@@ -32,6 +33,7 @@ const LangKoImpl = (superClass) => class extends superClass {
 			'searchResultsSingle': '1 탐색 결과',
 			'sortBy': '{columnName}으로 정렬',
 			'submissionDate': '제출일',
+			'submissions': 'Submissions',
 			'tableTitle': '강의 및 도구 전체의 평가되지 않은 학습자 제출 항목 목록',
 			'tryAgain': '다시 시도'
 		};
