@@ -53,8 +53,8 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 				}
 			</style>
 			<div>
-				<button class="d2l-quick-eval-view-toggle-left" on-click="_selectSubmissions" selected$="[[_isSelected('submissions')]]">[[localize('submissions')]]</button>
-				<button class="d2l-quick-eval-view-toggle-right" on-click="_selectActivities" selected$="[[_isSelected('activities')]]">[[localize('activities')]]</button>
+				<button class="d2l-quick-eval-view-toggle-left" on-click="_selectSubmissions" selected$="[[_submissionsSelected]]">[[localize('submissions')]]</button>
+				<button class="d2l-quick-eval-view-toggle-right" on-click="_selectActivities" selected$="[[_activitiesSelected]]">[[localize('activities')]]</button>
 			<div>
 		`;
 		temp.setAttribute('strip-whitespace', 'strip-whitespace');
@@ -64,6 +64,14 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 		return {
 			currentSelected: {
 				type: String
+			},
+			_submissionsSelected: {
+				type: Boolean,
+				computed: '_isSelected("submissions", currentSelected)'
+			},
+			_activitiesSelected: {
+				type: Boolean,
+				computed: '_isSelected("activities", currentSelected)'
 			},
 			_viewTypes: {
 				type: Object,
