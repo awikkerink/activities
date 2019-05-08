@@ -55,8 +55,8 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 				}
 			</style>
 			<div>
-				<button class="d2l-quick-eval-view-toggle-left" on-click="_selectSubmissions" selected$="[[_submissionsSelected]]">[[localize('submissions')]]</button>
-				<button class="d2l-quick-eval-view-toggle-right" on-click="_selectActivities" selected$="[[_activitiesSelected]]">[[localize('activities')]]</button>
+				<button class="d2l-quick-eval-view-toggle-left" on-click="_selectSubmissions" selected$="[[_isSelected(_viewTypes.submissions, currentSelected)]]">[[localize('submissions')]]</button>
+				<button class="d2l-quick-eval-view-toggle-right" on-click="_selectActivities" selected$="[[_isSelected(_viewTypes.activities, currentSelected)]]">[[localize('activities')]]</button>
 			<div>
 		`;
 		toggleTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
@@ -65,15 +65,8 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 	static get properties() {
 		return {
 			currentSelected: {
-				type: String
-			},
-			_submissionsSelected: {
-				type: Boolean,
-				computed: '_isSelected("submissions", currentSelected)'
-			},
-			_activitiesSelected: {
-				type: Boolean,
-				computed: '_isSelected("activities", currentSelected)'
+				type: String,
+				observer: '_dispatchSelectionChanged'
 			},
 			_viewTypes: {
 				type: Object,
@@ -85,16 +78,10 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 		};
 	}
 	_selectSubmissions() {
-		if (this.currentSelected !== this._viewTypes.submissions) {
-			this.currentSelected = this._viewTypes.submissions;
-			this._dispatchSelectionChanged(this._viewTypes.submissions);
-		}
+		this.currentSelected = this._viewTypes.submissions;
 	}
 	_selectActivities() {
-		if (this.currentSelected !== this._viewTypes.activities) {
-			this.currentSelected = this._viewTypes.activities;
-			this._dispatchSelectionChanged(this._viewTypes.activities);
-		}
+		this.currentSelected = this._viewTypes.activities;
 	}
 	_isSelected(view) {
 		return this.currentSelected === view;
