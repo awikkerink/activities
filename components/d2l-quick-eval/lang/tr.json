@@ -1,4 +1,5 @@
 {
+   "activities": "Activities",
    "activityName" : "Etkinlik Adı",
    "caughtUp" : "Yetiştin!",
    "checkBackOften" : "Yeni gönderiler için belirli aralıklarla tekrar kontrol edin.",
@@ -24,6 +25,7 @@
    "searchResultsSingle" : "1 Arama Sonucu",
    "sortBy" : "Şuna göre sırala: {columnName}",
    "submissionDate" : "Gönderme Tarihi",
+   "submissions": "Submissions",
    "tableTitle" : "Dersler ve araçlar genelinde değerlendirilmemiş Öğrenci gönderilerinin listesi",
    "tryAgain" : "Tekrar Dene"
 }
