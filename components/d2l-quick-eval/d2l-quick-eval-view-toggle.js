@@ -9,7 +9,7 @@ import 'd2l-colors/d2l-colors.js';
 class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 	static get is() { return 'd2l-quick-eval-view-toggle'; }
 	static get template() {
-		const temp = html`
+		const toggleTemplate = html`
 			<style>
 				.d2l-quick-eval-view-toggle-left,
 				:host(:dir(rtl)) .d2l-quick-eval-view-toggle-right {
@@ -59,8 +59,8 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 				<button class="d2l-quick-eval-view-toggle-right" on-click="_selectActivities" selected$="[[_activitiesSelected]]">[[localize('activities')]]</button>
 			<div>
 		`;
-		temp.setAttribute('strip-whitespace', 'strip-whitespace');
-		return temp;
+		toggleTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
+		return toggleTemplate;
 	}
 	static get properties() {
 		return {
