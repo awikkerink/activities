@@ -16,7 +16,6 @@ import './d2l-quick-eval-no-criteria-results-image.js';
 import './d2l-quick-eval-skeleton.js';
 import './behaviors/d2l-quick-eval-siren-helper-behavior.js';
 import 'd2l-loading-spinner/d2l-loading-spinner.js';
-import {StringEndsWith} from './compatability/ie11shims.js';
 
 /**
  * @customElement
@@ -105,7 +104,7 @@ class D2LQuickEvalActivities extends mixinBehaviors([D2L.PolymerBehaviors.QuickE
 	}
 
 	async _parseActivities(entity) {
-		const result = [];
+		const result = entity;
 		return result;
 	}
 }
