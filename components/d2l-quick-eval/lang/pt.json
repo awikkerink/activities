@@ -1,4 +1,5 @@
 {
+   "activities": "Activities",
    "activityName" : "Nome da Atividade",
    "caughtUp" : "Você está em dia!",
    "checkBackOften" : "Verifique com frequência se há novos envios.",
@@ -24,6 +25,7 @@
    "searchResultsSingle" : "1 resultado da pesquisa",
    "sortBy" : "Classificar por {columnName}",
    "submissionDate" : "Data do Envio",
+   "submissions": "Submissions",
    "tableTitle" : "Lista de envios de alunos não avaliados de todos os cursos e ferramentas",
    "tryAgain" : "Tentar novamente"
 }

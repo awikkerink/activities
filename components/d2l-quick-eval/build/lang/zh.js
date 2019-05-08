@@ -7,6 +7,7 @@ const LangZhImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.zh = {
+			'activities': 'Activities',
 			'activityName': '活动名称',
 			'caughtUp': '您已跟上进度！',
 			'checkBackOften': '请稍后时常查看新的提交。',
@@ -32,6 +33,7 @@ const LangZhImpl = (superClass) => class extends superClass {
 			'searchResultsSingle': '个搜索结果',
 			'sortBy': 'Sort by {columnName}',
 			'submissionDate': '提交日期',
+			'submissions': 'Submissions',
 			'tableTitle': '来自各个课程和工具的未评估学员提交的列表',
 			'tryAgain': '请重试'
 		};

@@ -7,6 +7,7 @@ const LangDeImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.de = {
+			'activities': 'Activities',
 			'activityName': 'Name der Aktivität',
 			'caughtUp': 'Sie sind auf dem neuesten Stand!',
 			'checkBackOften': 'Sehen Sie regelmäßig nach, ob neue Abgaben verfügbar sind.',
@@ -32,6 +33,7 @@ const LangDeImpl = (superClass) => class extends superClass {
 			'searchResultsSingle': '1 Suchergebnis',
 			'sortBy': 'Sortieren nach {columnName}',
 			'submissionDate': 'Abgabedatum',
+			'submissions': 'Submissions',
 			'tableTitle': 'Liste nicht bewerteter Abgaben von Lernern in allen Kursen und Tools',
 			'tryAgain': 'Erneut versuchen'
 		};

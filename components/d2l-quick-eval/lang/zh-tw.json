@@ -1,4 +1,5 @@
 {
+   "activities": "Activities",
    "activityName" : "活動名稱",
    "caughtUp" : "您已趕上最新進度！",
    "checkBackOften" : "請經常返回查看新的提交項目。",
@@ -24,6 +25,7 @@
    "searchResultsSingle" : "1 個搜尋結果",
    "sortBy" : "排序方式：{columnName}",
    "submissionDate" : "提交日期",
+   "submissions": "Submissions",
    "tableTitle" : "此清單包含所有課程和工具中未評估的學習者提交項目",
    "tryAgain" : "再試一次"
 }

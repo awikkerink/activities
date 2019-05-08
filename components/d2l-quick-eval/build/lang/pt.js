@@ -7,6 +7,7 @@ const LangPtImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.pt = {
+			'activities': 'Activities',
 			'activityName': 'Nome da Atividade',
 			'caughtUp': 'Você está em dia!',
 			'checkBackOften': 'Verifique com frequência se há novos envios.',
@@ -32,6 +33,7 @@ const LangPtImpl = (superClass) => class extends superClass {
 			'searchResultsSingle': '1 resultado da pesquisa',
 			'sortBy': 'Classificar por {columnName}',
 			'submissionDate': 'Data do Envio',
+			'submissions': 'Submissions',
 			'tableTitle': 'Lista de envios de alunos não avaliados de todos os cursos e ferramentas',
 			'tryAgain': 'Tentar novamente'
 		};
