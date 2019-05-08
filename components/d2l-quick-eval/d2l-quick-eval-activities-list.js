@@ -455,7 +455,7 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors(
 				}.bind(this))
 				.then(this._clearAlerts.bind(this))
 				.catch(function(e) {
-					this._logError(e);
+					this._logError(e, {developerMessage: 'Unable to load more.'});
 					this._loading = false;
 					this._handleLoadMoreFailure();
 				}.bind(this));

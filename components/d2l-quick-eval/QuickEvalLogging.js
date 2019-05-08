@@ -6,13 +6,10 @@ import {dedupingMixin} from '@polymer/polymer/lib/utils/mixin.js';
  */
 const QuickEvalLoggingImpl = (superClass) => {
 	return class extends superClass {
-		constructor() {
-			super();
-		}
 
 		static get properties() {
 			return {
-				logger: {
+				loggingEndpoint: {
 					type: String
 				}
 			};
@@ -20,11 +17,12 @@ const QuickEvalLoggingImpl = (superClass) => {
 
 		_logError(error, additionalContext) {
 
-			if (!this.logger) {
+			if (!this.loggingEndpoint) {
 				return;
 			}
 
-			const message = additionalContext || {};
+			const message = {};
+			message.additionalContext = additionalContext || {};
 
 			if (error) {
 				if (!error.message && !error.stack) {
@@ -39,7 +37,7 @@ const QuickEvalLoggingImpl = (superClass) => {
 			}
 
 			window.fetch(
-				this.logger,
+				this.loggingEndpoint,
 				{
 					method: 'POST',
 					mode: 'no-cors',

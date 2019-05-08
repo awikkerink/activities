@@ -16,7 +16,7 @@
 <body>
 	<test-fixture id="logger">
 		<template strip-whitespace>
-			<quick-eval-logging-test-component logger="expectedLogger"></quick-eval-logging-test-component>
+			<quick-eval-logging-test-component logging-endpoint="expectedLogger"></quick-eval-logging-test-component>
 		</template>
 	</test-fixture>
 	<test-fixture id="no-logger">
@@ -51,7 +51,7 @@
 					assert.equal('application/json', options.headers['Content-Type']);
 
 					const messageBody = JSON.parse(options.body);
-					assert.equal(Array, messageBody.constructor);
+					assert.isTrue(Array.isArray(messageBody));
 
 					done();
 				});
@@ -67,12 +67,13 @@
 				sandbox.stub(window, 'fetch', function(logger, options) {
 
 					const messageBody = JSON.parse(options.body);
-					assert.equal(Array, messageBody.constructor);
+					assert.isTrue(Array.isArray(messageBody));
 
 					const message = messageBody[0];
+
 					assert.equal(testErrorMessage, message.errorMessage);
 					assert.isTrue(message.stackTrace !== null && message.stackTrace !== undefined);
-					assert.equal(expectedInfo, message.moreInfo);
+					assert.deepEqual({moreInfo: expectedInfo}, message.additionalContext);
 
 					done();
 				});
@@ -95,10 +96,10 @@
 				sandbox.stub(window, 'fetch', function(logger, options) {
 
 					const messageBody = JSON.parse(options.body);
-					assert.equal(Array, messageBody.constructor);
+					assert.isTrue(Array.isArray(messageBody));
 
 					const message = messageBody[0];
-					assert.deepEqual({errorMessage: throwingMessage}, message);
+					assert.deepEqual({errorMessage: throwingMessage, additionalContext: {}}, message);
 
 					done();
 				});
