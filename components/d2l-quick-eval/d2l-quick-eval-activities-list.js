@@ -331,7 +331,7 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Qu
 	static get observers() {
 		return [
 			'_loadData(entity)',
-			'_loadSorts(entity)',
+			'_handleSorts(entity)',
 			'_handleNameSwap(_headerColumns.0.headers.*)',
 			'_dispatchPageSizeEvent(_numberOfActivitiesToShow)',
 			'_dispatchActivitiesShownInSearchResultsEvent(_numberOfActivitiesShownInSearchResults)'
@@ -348,6 +348,10 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Qu
 	}
 
 	constructor() { super(); }
+
+	_handleSorts(entity) {
+		return this._loadSorts(entity);
+	}
 
 	setLoadingState(state) {
 		this.set('_fullListLoading', state);

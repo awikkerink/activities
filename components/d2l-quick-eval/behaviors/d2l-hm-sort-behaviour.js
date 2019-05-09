@@ -5,6 +5,10 @@ window.D2L = window.D2L || {};
 window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
 window.D2L.PolymerBehaviors.QuickEval = window.D2L.PolymerBehaviors.QuickEval || {};
 
+/*
+* Behavior for interacting with hm sort
+* @polymerBehavior
+*/
 D2L.PolymerBehaviors.QuickEval.D2LHMSortBehaviourImpl = {
 
 	_getSortsPromise: function(entity) {
