@@ -25,7 +25,6 @@ import {StringEndsWith} from './compatability/ie11shims.js';
  * @polymer
  */
 
-
 class D2LQuickEvalActivitiesList extends mixinBehaviors(
 	[D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior, D2L.PolymerBehaviors.QuickEval.D2LHMSortBehaviour],
 	QuickEvalLogging(QuickEvalLocalize(PolymerElement))

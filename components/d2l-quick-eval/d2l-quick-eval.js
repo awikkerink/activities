@@ -263,6 +263,7 @@ class D2LQuickEval extends mixinBehaviors(
 	}
 
 	_filterError() {
+		this._logError('Failed to retrieve filter results');
 		const list = this.shadowRoot.querySelector('d2l-quick-eval-activities-list');
 		list.setLoadingState(false);
 		this._showFilterError = true;
@@ -299,6 +300,7 @@ class D2LQuickEval extends mixinBehaviors(
 	}
 
 	_searchError() {
+		this._logError('Failed to retrieve search results.');
 		const list = this.shadowRoot.querySelector('d2l-quick-eval-activities-list');
 		list.setLoadingState(false);
 		this._showSearchError = true;
