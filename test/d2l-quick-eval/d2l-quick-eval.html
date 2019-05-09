@@ -366,6 +366,15 @@
 						performSearch('test');
 					});
 				});
+				test('toggle and flex-break are hidden when toggleEnabled is false', function() {
+					assert.isTrue(toggle.hidden);
+					assert.isTrue(quickEval.shadowRoot.querySelector('.flex-break').hidden);
+				});
+				test('toggle and flex-break are not hidden when toggleEnabled is true', function() {
+					quickEval.toggleEnabled = true;
+					assert.isFalse(toggle.hidden);
+					assert.isFalse(quickEval.shadowRoot.querySelector('.flex-break').hidden);
+				});
 			});
 
 			suite('d2l-quick-eval with master-teacher', function() {

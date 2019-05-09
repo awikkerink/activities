@@ -37,6 +37,7 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 					color: var(--d2l-color-ferrite);
 					cursor: pointer;
 					display: inline;
+					font-family: inherit;
 					margin: 0;
 					min-height: calc(2rem + 2px);
 					outline: none;
@@ -61,9 +62,19 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 				}
 			</style>
 			<div>
-				[[localize('viewBy')]]
-				<button class="d2l-quick-eval-view-toggle-left" on-click="_selectSubmissions" selected$="[[_isSelected(_viewTypes.submissions, currentSelected)]]">[[localize('submissions')]]</button>
-				<button class="d2l-quick-eval-view-toggle-right" on-click="_selectActivities" selected$="[[_isSelected(_viewTypes.activities, currentSelected)]]">[[localize('activities')]]</button>
+				<label id="d2l-quick-eval-view-toggle-label">[[localize('viewBy')]]</label>
+				<button 
+					class="d2l-quick-eval-view-toggle-left" 
+					on-click="_selectSubmissions" 
+					selected$="[[_isSelected(_viewTypes.submissions, currentSelected)]]"
+					aria-labelledby="d2l-quick-eval-view-toggle-label"
+				>[[localize('submissions')]]</button>
+				<button 
+					class="d2l-quick-eval-view-toggle-right" 
+					on-click="_selectActivities" 
+					selected$="[[_isSelected(_viewTypes.activities, currentSelected)]]"
+					aria-labelledby="d2l-quick-eval-view-toggle-label"
+				>[[localize('activities')]]</button>
 			<div>
 		`;
 		toggleTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
