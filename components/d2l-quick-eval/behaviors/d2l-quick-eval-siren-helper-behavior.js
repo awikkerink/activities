@@ -83,10 +83,6 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 			}.bind(this));
 	},
 
-	_getSortsPromise: function(entity) {
-		return this._followLink(entity, Rels.sorts);
-	},
-
 	_getUserHref: function(entity) {
 		if (entity.hasLinkByRel(Rels.user)) {
 			const link = entity.getLinkByRel(Rels.user);
