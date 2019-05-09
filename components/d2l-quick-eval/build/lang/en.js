@@ -35,7 +35,8 @@ const LangEnImpl = (superClass) => class extends superClass {
 			'submissionDate': 'Submission Date',
 			'submissions': 'Submissions',
 			'tableTitle': 'List of unevaluated Learner submissions from across courses and tools',
-			'tryAgain': 'Try Again'
+			'tryAgain': 'Try Again',
+			'viewBy': 'View by:'
 		};
 	}
 };

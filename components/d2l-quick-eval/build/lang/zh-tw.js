@@ -35,7 +35,8 @@ const LangZhtwImpl = (superClass) => class extends superClass {
 			'submissionDate': '提交日期',
 			'submissions': 'Submissions',
 			'tableTitle': '此清單包含所有課程和工具中未評估的學習者提交項目',
-			'tryAgain': '再試一次'
+			'tryAgain': '再試一次',
+			'viewBy': 'View by:'
 		};
 	}
 };

@@ -35,7 +35,8 @@ const LangPtImpl = (superClass) => class extends superClass {
 			'submissionDate': 'Data do Envio',
 			'submissions': 'Submissions',
 			'tableTitle': 'Lista de envios de alunos não avaliados de todos os cursos e ferramentas',
-			'tryAgain': 'Tentar novamente'
+			'tryAgain': 'Tentar novamente',
+			'viewBy': 'View by:'
 		};
 	}
 };

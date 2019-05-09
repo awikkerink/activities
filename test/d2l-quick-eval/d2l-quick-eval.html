@@ -27,7 +27,7 @@
 		<script type="module">
 			import '@polymer/iron-test-helpers/mock-interactions.js';
 
-			var quickEval, filter, filterDropdown, list, search;
+			var quickEval, filter, filterDropdown, list, search, toggle;
 
 			var expectedFirstCellData = 'Special User Name';
 			var expectedFilters = ['Activity Name', 'Course', 'Date'];
@@ -101,6 +101,7 @@
 					filterDropdown = filter.shadowRoot.querySelector('d2l-filter-dropdown');
 					list = quickEval.shadowRoot.querySelector('d2l-quick-eval-activities-list');
 					search = quickEval.shadowRoot.querySelector('d2l-hm-search');
+					toggle = quickEval.shadowRoot.querySelector('d2l-quick-eval-view-toggle');
 				});
 				test('instantiating the element works', function() {
 					assert.equal(quickEval.tagName.toLowerCase(), 'd2l-quick-eval');
@@ -126,7 +127,8 @@
 						)
 					);
 				});
-				test('the filter, search, and list exist', function() {
+				test('the toggle, filter, search, and list exist', function() {
+					assert.isNotNull(toggle);
 					assert.isNotNull(filter);
 					assert.isNotNull(search);
 					assert.isNotNull(list);

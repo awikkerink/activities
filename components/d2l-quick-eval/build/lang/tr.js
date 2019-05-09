@@ -35,7 +35,8 @@ const LangTrImpl = (superClass) => class extends superClass {
 			'submissionDate': 'Gönderme Tarihi',
 			'submissions': 'Submissions',
 			'tableTitle': 'Dersler ve araçlar genelinde değerlendirilmemiş Öğrenci gönderilerinin listesi',
-			'tryAgain': 'Tekrar Dene'
+			'tryAgain': 'Tekrar Dene',
+			'viewBy': 'View by:'
 		};
 	}
 };

@@ -17,6 +17,12 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 					border-bottom-left-radius: 0.3em;
 					border-width: 1px;
 				}
+				:host button.d2l-quick-eval-view-toggle-left {
+					margin-left: 0.9rem;
+				}
+				:host(:dir(rtl)) button.d2l-quick-eval-view-toggle-left {
+					margin-right: 0.9rem;
+				}
 				.d2l-quick-eval-view-toggle-right,
 				:host(:dir(rtl)) .d2l-quick-eval-view-toggle-left {
 					border-top-right-radius: 0.3em;
@@ -55,6 +61,7 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 				}
 			</style>
 			<div>
+				[[localize('viewBy')]]
 				<button class="d2l-quick-eval-view-toggle-left" on-click="_selectSubmissions" selected$="[[_isSelected(_viewTypes.submissions, currentSelected)]]">[[localize('submissions')]]</button>
 				<button class="d2l-quick-eval-view-toggle-right" on-click="_selectActivities" selected$="[[_isSelected(_viewTypes.activities, currentSelected)]]">[[localize('activities')]]</button>
 			<div>

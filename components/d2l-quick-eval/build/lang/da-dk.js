@@ -35,7 +35,8 @@ const LangDadkImpl = (superClass) => class extends superClass {
 			'submissionDate': 'Afleveringsdato',
 			'submissions': 'Submissions',
 			'tableTitle': 'Liste over ikke-evaluerede elevafleveringer på tværs af kurser og værktøjer',
-			'tryAgain': 'Prøv igen'
+			'tryAgain': 'Prøv igen',
+			'viewBy': 'View by:'
 		};
 	}
 };

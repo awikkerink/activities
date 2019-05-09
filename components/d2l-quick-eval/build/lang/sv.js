@@ -35,7 +35,8 @@ const LangSvImpl = (superClass) => class extends superClass {
 			'submissionDate': 'Inlämningsdatum',
 			'submissions': 'Submissions',
 			'tableTitle': 'Lista över ej utvärderade elevinlämningar från kurser och verktyg',
-			'tryAgain': 'Försök på nytt'
+			'tryAgain': 'Försök på nytt',
+			'viewBy': 'View by:'
 		};
 	}
 };

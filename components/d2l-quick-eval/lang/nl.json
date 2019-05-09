@@ -27,5 +27,6 @@
    "submissionDate" : "Datum van indiening via postvak",
    "submissions": "Submissions",
    "tableTitle" : "Lijst van niet-geëvalueerde indieningen via postvak van cursisten van alle cursussen en tools",
-   "tryAgain" : "Probeer het opnieuw"
+   "tryAgain" : "Probeer het opnieuw",
+   "viewBy": "View by:"
 }
