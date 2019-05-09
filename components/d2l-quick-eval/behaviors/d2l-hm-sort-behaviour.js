@@ -1,4 +1,4 @@
-import { Rels, Classes } from 'd2l-hypermedia-constants';
+import { Rels } from 'd2l-hypermedia-constants';
 import './d2l-siren-helper-behavior.js';
 
 window.D2L = window.D2L || {};
