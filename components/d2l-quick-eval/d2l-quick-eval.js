@@ -9,6 +9,7 @@ import 'd2l-common/components/d2l-hm-filter/d2l-hm-filter.js';
 import 'd2l-common/components/d2l-hm-search/d2l-hm-search.js';
 import './d2l-quick-eval-activities-list.js';
 import './d2l-quick-eval-search-results-summary-container.js';
+import './d2l-quick-eval-view-toggle.js';
 
 /**
  * @customElement
@@ -53,11 +54,19 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 				[hidden] {
 					display: none;
 				}
+				.flex-break {
+					flex-basis: 100%;
+					width: 0px;
+					height: 36px;
+					overflow: hidden;
+				}
 			</style>
 			<div class="d2l-quick-eval-top-bar">
 				<template is="dom-if" if="[[headerText]]">
 					<h1>[[headerText]]</h1>
 				</template>
+				<div class="flex-break" hidden$="[[!toggleEnabled]]"></div>
+				<d2l-quick-eval-view-toggle hidden$="[[!toggleEnabled]]"></d2l-quick-eval-view-toggle>
 				<div class="d2l-quick-eval-activity-list-modifiers">
 					<d2l-hm-filter
 						href="[[_filterHref]]"
@@ -101,6 +110,11 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 				reflectToAttribute: true
 			},
 			searchEnabled: {
+				type: Boolean,
+				value: false,
+				reflectToAttribute: true
+			},
+			toggleEnabled: {
 				type: Boolean,
 				value: false,
 				reflectToAttribute: true

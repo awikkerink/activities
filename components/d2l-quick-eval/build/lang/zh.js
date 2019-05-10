@@ -35,7 +35,8 @@ const LangZhImpl = (superClass) => class extends superClass {
 			'submissionDate': '提交日期',
 			'submissions': 'Submissions',
 			'tableTitle': '来自各个课程和工具的未评估学员提交的列表',
-			'tryAgain': '请重试'
+			'tryAgain': '请重试',
+			'viewBy': 'View by:'
 		};
 	}
 };

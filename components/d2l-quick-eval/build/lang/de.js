@@ -35,7 +35,8 @@ const LangDeImpl = (superClass) => class extends superClass {
 			'submissionDate': 'Abgabedatum',
 			'submissions': 'Submissions',
 			'tableTitle': 'Liste nicht bewerteter Abgaben von Lernern in allen Kursen und Tools',
-			'tryAgain': 'Erneut versuchen'
+			'tryAgain': 'Erneut versuchen',
+			'viewBy': 'View by:'
 		};
 	}
 };

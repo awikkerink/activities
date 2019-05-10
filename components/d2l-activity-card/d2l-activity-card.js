@@ -4,7 +4,6 @@ import { EntityMixin } from 'siren-sdk/mixin/entity-mixin.js';
 import 'fastdom/fastdom.min.js';
 import 'd2l-card/d2l-card.js';
 import 'd2l-card/d2l-card-content-meta.js';
-import 'd2l-card/d2l-card-loading-shimmer.js';
 import 'd2l-course-image/d2l-course-image.js';
 import 'd2l-fetch/d2l-fetch.js';
 import 'd2l-organizations/components/d2l-organization-info/d2l-organization-info.js';
@@ -47,26 +46,28 @@ class D2lActivityCard extends EntityMixin(PolymerElement) {
 					display: block;
 				}
 
-				.d2l-activity-card-loading-shimmer {
+				@keyframes pulsingAnimation {
+					0% { background-color: var(--d2l-color-sylvite); }
+					50% { background-color: var(--d2l-color-regolith); }
+					100% { background-color: var(--d2l-color-sylvite); }
+				}
+				.d2l-activity-list-item-pulse-placeholder {
+					animation: pulsingAnimation 1.8s linear infinite;
+					border-radius: 4px;
 					height: 100%;
 					width: 100%;
 				}
-
-				.d2l-activity-card-text-placeholder {
-					background-color: var(--d2l-color-sylvite);
-					border-radius: 4px;
-				}
 			</style>
 
-			<d2l-card text="[[_accessibilityText]]" href$="[[_cardHref]]" on-click="_sendClickEvent">
+			<d2l-card text="[[_accessibilityText]]" href$="[[_activityHomepage]]" on-click="_sendClickEvent">
 				<div class="d2l-activity-card-header-container" slot="header">
-					<d2l-card-loading-shimmer class="d2l-activity-card-loading-shimmer" loading="[[_imageLoading]]">
-						<d2l-course-image
-							image="[[_image]]"
-							sizes="[[_tileSizes]]"
-							type="tile">
-						</d2l-course-image>
-					</d2l-card-loading-shimmer>
+					<div class="d2l-activity-list-item-pulse-placeholder" hidden$="[[!_imageLoading]]"></div>
+					<d2l-course-image
+						hidden$="[[_imageLoading]]"
+						image="[[_image]]"
+						sizes="[[_tileSizes]]"
+						type="tile">
+					</d2l-course-image>
 				</div>
 
 				<div class="d2l-activity-card-content-container" slot="content">
@@ -145,11 +146,6 @@ class D2lActivityCard extends EntityMixin(PolymerElement) {
 			sendEventOnClick: {
 				type: Boolean,
 				value: false,
-			},
-			_cardHref: {
-				type: String,
-				value: 'javascript:void(0)',
-				computed: '_cardHrefComputed(sendEventOnClick, _activityHomepage)'
 			}
 		};
 	}
@@ -271,14 +267,11 @@ class D2lActivityCard extends EntityMixin(PolymerElement) {
 	_activityImageLoaded() {
 		this._imageLoading = false;
 	}
-	_cardHrefComputed(sendEventOnClick, activityHomepage) {
-		if (sendEventOnClick) {
-			return 'javascript:void(0)';
-		} else {
-			return activityHomepage;
+	_sendClickEvent(event) {
+		if (!this.sendEventOnClick || !this._activityHomepage) {
+			return;
 		}
-	}
-	_sendClickEvent() {
+
 		this.dispatchEvent(new CustomEvent('d2l-activity-card-clicked', {
 			detail: {
 				path: this._activityHomepage,
@@ -287,6 +280,7 @@ class D2lActivityCard extends EntityMixin(PolymerElement) {
 			bubbles: true,
 			composed: true
 		}));
+		event.preventDefault();
 	}
 	_getOrgUnitId() {
 		if (!this._organizationUrl) {

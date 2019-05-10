@@ -15,6 +15,7 @@ import './d2l-quick-eval-no-submissions-image.js';
 import './d2l-quick-eval-no-criteria-results-image.js';
 import './d2l-quick-eval-skeleton.js';
 import './behaviors/d2l-quick-eval-siren-helper-behavior.js';
+import './behaviors/d2l-hm-sort-behaviour.js';
 import 'd2l-loading-spinner/d2l-loading-spinner.js';
 import {StringEndsWith} from './compatability/ie11shims.js';
 
@@ -23,7 +24,7 @@ import {StringEndsWith} from './compatability/ie11shims.js';
  * @polymer
  */
 
-class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior], QuickEvalLocalize(PolymerElement)) {
+class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior, D2L.PolymerBehaviors.QuickEval.D2LHMSortBehaviour], QuickEvalLocalize(PolymerElement)) {
 	static get template() {
 		const quickEvalActivitiesListTemplate = html`
 			<style include="d2l-table-style">
@@ -330,7 +331,7 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Qu
 	static get observers() {
 		return [
 			'_loadData(entity)',
-			'_loadSorts(entity)',
+			'_handleSorts(entity)',
 			'_handleNameSwap(_headerColumns.0.headers.*)',
 			'_dispatchPageSizeEvent(_numberOfActivitiesToShow)',
 			'_dispatchActivitiesShownInSearchResultsEvent(_numberOfActivitiesShownInSearchResults)'
@@ -347,6 +348,10 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Qu
 	}
 
 	constructor() { super(); }
+
+	_handleSorts(entity) {
+		return this._loadSorts(entity);
+	}
 
 	setLoadingState(state) {
 		this.set('_fullListLoading', state);
@@ -386,106 +391,6 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Qu
 
 	_shouldShowNoCriteriaResults(dataLength, isLoading, isHealthy, filterApplied, searchApplied) {
 		return !dataLength && !isLoading && isHealthy && (filterApplied || searchApplied);
-	}
-
-	_loadSorts(entity) {
-		// entity is null on initial load
-		if (!entity) {
-			return Promise.resolve();
-		}
-
-		return this._getSortsPromise(entity)
-			.then(sortsEntity => {
-				if (!sortsEntity || !sortsEntity.entity) {
-					return Promise.reject(new Error('Could not load sorts endpoint'));
-				}
-
-				this._headerColumns.forEach((headerColumn, i) => {
-					headerColumn.headers.forEach((header, j) => {
-						if (header.sortClass) {
-							const sort = sortsEntity.entity.getSubEntityByClass(header.sortClass);
-							if (sort) {
-								this.set(`_headerColumns.${i}.headers.${j}.canSort`, true);
-								if (sort.properties && sort.properties.applied && (sort.properties.priority === 0)) {
-									const descending = sort.properties.direction === 'descending';
-									this.set(`_headerColumns.${i}.headers.${j}.sorted`, true);
-									this.set(`_headerColumns.${i}.headers.${j}.desc`, descending);
-
-								} else {
-									this.set(`_headerColumns.${i}.headers.${j}.sorted`, false);
-									this.set(`_headerColumns.${i}.headers.${j}.desc`, false);
-								}
-							}
-						}
-					});
-				});
-				return Promise.resolve();
-			});
-	}
-
-	_updateSortState(event) {
-
-		let result;
-		const headerId = event.currentTarget.id;
-
-		this._headerColumns.forEach((headerColumn, i) => {
-			headerColumn.headers.forEach((header, j) => {
-				if ((header.key === headerId) && header.canSort) {
-					const descending = header.sorted && !header.desc;
-					this.set(`_headerColumns.${i}.headers.${j}.sorted`, true);
-					this.set(`_headerColumns.${i}.headers.${j}.desc`, descending);
-
-					result = this._fetchSortedData(header.sortClass, descending);
-				}
-				else {
-					this.set(`_headerColumns.${i}.headers.${j}.sorted`, false);
-				}
-			});
-		});
-
-		if (result) {
-			return result;
-		} else {
-			return Promise.reject(new Error(`Could not find sortable header for ${headerId}`));
-		}
-	}
-
-	_fetchSortedData(sortClass, descending) {
-		return this._getSortsPromise(this.entity)
-			.then((sortsEntity => {
-				if (!sortsEntity || !sortsEntity.entity) {
-					return Promise.reject(new Error('Could not load sorts endpoint'));
-				}
-
-				const sort = sortsEntity.entity.getSubEntityByClass(sortClass);
-				if (!sort) {
-					return Promise.reject(new Error(`Could not find sort class ${sortClass}`));
-				}
-
-				const actionName = descending ? 'sort-descending' : 'sort-ascending';
-				const action = sort.getActionByName(actionName);
-				if (!action) {
-					return Promise.reject(new Error(`Could not find sort action ${actionName} for sort ${JSON.stringify(sort)}`));
-				}
-
-				return this._performSirenActionWithQueryParams(action);
-			}).bind(this))
-			.then((sortsEntity => {
-				if (!sortsEntity) {
-					return Promise.reject(new Error('Could not load sorts endpoint after sort is applied'));
-				}
-				const action = sortsEntity.getActionByName('apply');
-				if (!action) {
-					return Promise.reject(new Error(`Could not find apply action in ${sortsEntity}`));
-				}
-				const customParams = this._numberOfActivitiesToShow > 0 ? {pageSize: this._numberOfActivitiesToShow} : undefined;
-				return this._performSirenActionWithQueryParams(action, customParams);
-			}).bind(this))
-			.then((collection => {
-				this.entity = collection;
-				this._dispatchSortUpdatedEvent(collection);
-				return Promise.resolve(collection);
-			}).bind(this));
 	}
 
 	async _loadData(entity) {
