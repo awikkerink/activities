@@ -95,12 +95,12 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 		};
 	}
 	_selectSubmissions() {
-		if (this.currentSelected != this._viewTypes.submissions) {
+		if (this.currentSelected !== this._viewTypes.submissions) {
 			this._dispatchSelectionChanged(this._viewTypes.submissions);
 		}
 	}
 	_selectActivities() {
-		if (this.currentSelected != this._viewTypes.activities) {
+		if (this.currentSelected !== this._viewTypes.activities) {
 			this._dispatchSelectionChanged(this._viewTypes.activities);
 		}
 	}
