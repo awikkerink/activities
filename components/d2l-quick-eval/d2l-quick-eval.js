@@ -10,6 +10,7 @@ import 'd2l-common/components/d2l-hm-search/d2l-hm-search.js';
 import './d2l-quick-eval-activities-list.js';
 import './d2l-quick-eval-search-results-summary-container.js';
 import './d2l-quick-eval-view-toggle.js';
+import './d2l-quick-eval-activities.js';
 
 /**
  * @customElement
@@ -66,36 +67,42 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 					<h1>[[headerText]]</h1>
 				</template>
 				<div class="flex-break" hidden$="[[!toggleEnabled]]"></div>
-				<d2l-quick-eval-view-toggle hidden$="[[!toggleEnabled]]"></d2l-quick-eval-view-toggle>
-				<div class="d2l-quick-eval-activity-list-modifiers">
-					<d2l-hm-filter
-						href="[[_filterHref]]"
-						token="[[token]]"
-						category-whitelist="[[_filterIds]]"
-						result-size="[[_numberOfActivitiesToShow]]">
-					</d2l-hm-filter>
-					<d2l-hm-search
-						hidden$="[[!searchEnabled]]"
-						token="[[token]]"
-						search-action="[[_searchAction]]"
-						placeholder="[[localize('search')]]"
-						result-size="[[_numberOfActivitiesToShow]]"
-						aria-label$="[[localize('search')]]">
-					</d2l-hm-search>
-				</div>
+				<template is="dom-if" if=[[_showActivitiesView]]>
+					<d2l-quick-eval-activities></d2l-quick-eval-activities>
+				</template>
+				<template is="dom-if" if=[[!_showActivitiesView]]>
+					<d2l-quick-eval-view-toggle current-selected="submissions" hidden$="[[!toggleEnabled]]"></d2l-quick-eval-view-toggle>
+					<div class="d2l-quick-eval-activity-list-modifiers">
+						<d2l-hm-filter
+							href="[[_filterHref]]"
+							token="[[token]]"
+							category-whitelist="[[_filterIds]]"
+							result-size="[[_numberOfActivitiesToShow]]">
+						</d2l-hm-filter>
+						<d2l-hm-search
+							hidden$="[[!searchEnabled]]"
+							token="[[token]]"
+							search-action="[[_searchAction]]"
+							placeholder="[[localize('search')]]"
+							result-size="[[_numberOfActivitiesToShow]]"
+							aria-label$="[[localize('search')]]">
+						</d2l-hm-search>
+					</div>
+
+					<d2l-alert type="critical" hidden$="[[!_showFilterError]]" id="d2l-quick-eval-filter-error-alert">
+						[[localize('failedToFilter')]]
+					</d2l-alert>
+					<d2l-alert type="critical" hidden$="[[!_showSearchError]]" id="d2l-quick-eval-search-error-alert">
+						[[localize('failedToSearch')]]
+					</d2l-alert>
+					<d2l-quick-eval-search-results-summary-container
+						search-results-count="[[_searchResultsCount]]"
+						more-results="[[_moreSearchResults]]"
+						hidden$="[[!_searchResultsMessageEnabled(_showSearchResultSummary, searchEnabled)]]">
+					</d2l-quick-eval-search-results-summary-container>
+					<d2l-quick-eval-activities-list href="[[href]]" token="[[token]]" master-teacher="[[masterTeacher]]"></d2l-quick-eval-activities-list>
+				</template>
 			</div>
-			<d2l-alert type="critical" hidden$="[[!_showFilterError]]" id="d2l-quick-eval-filter-error-alert">
-				[[localize('failedToFilter')]]
-			</d2l-alert>
-			<d2l-alert type="critical" hidden$="[[!_showSearchError]]" id="d2l-quick-eval-search-error-alert">
-				[[localize('failedToSearch')]]
-			</d2l-alert>
-			<d2l-quick-eval-search-results-summary-container
-				search-results-count="[[_searchResultsCount]]"
-				more-results="[[_moreSearchResults]]"
-				hidden$="[[!_searchResultsMessageEnabled(_showSearchResultSummary, searchEnabled)]]">
-			</d2l-quick-eval-search-results-summary-container>
-			<d2l-quick-eval-activities-list href="[[href]]" token="[[token]]" master-teacher="[[masterTeacher]]"></d2l-quick-eval-activities-list>
 		`;
 	}
 
@@ -154,6 +161,10 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 			_moreSearchResults: {
 				type: Boolean,
 				value: false
+			},
+			_showActivitiesView: {
+				type: Boolean,
+				value: false
 			}
 		};
 	}
@@ -172,6 +183,8 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 		this.addEventListener('d2l-hm-search-error', this._searchError);
 		this.addEventListener('d2l-quick-eval-activities-list-activities-shown-number-updated', this._updateNumberOfActivitiesToShow);
 		this.addEventListener('d2l-quick-eval-activities-list-search-results-count', this._updateNumberOfActivitiesShownInSearchResults);
+		this.addEventListener('d2l-quick-eval-view-toggle-changed', this._toggleView);
+		this.addEventListener('d2l-quick-eval-activities-change-to-submissions', this._showSubmissionView);
 	}
 
 	detached() {
@@ -186,6 +199,8 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 		this.removeEventListener('d2l-hm-search-error', this._searchError);
 		this.removeEventListener('d2l-quick-eval-activities-list-activities-shown-number-updated', this._updateNumberOfActivitiesToShow);
 		this.removeEventListener('d2l-quick-eval-activities-list-search-results-count', this._updateNumberOfActivitiesShownInSearchResults);
+		this.removeEventListener('d2l-quick-eval-view-toggle-changed', this._toggleView);
+		this.removeEventListener('d2l-quick-eval-activities-change-to-submissions', this._showSubmissionView);
 	}
 
 	_getSearchAction(entity) {
@@ -313,6 +328,20 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 			this._moreSearchResults = true;
 		} else {
 			this._moreSearchResults = false;
+		}
+	}
+
+	_toggleView(e) {
+		if (e.detail.view === 'submissions') {
+			this._showActivitiesView = false;
+		} else {
+			this._showActivitiesView = true;
+		}
+	}
+
+	_showSubmissionView(e) {
+		if (e.detail.changeToSubmissions) {
+			this._showActivitiesView = false;
 		}
 	}
 }

@@ -25,8 +25,18 @@ import 'd2l-loading-spinner/d2l-loading-spinner.js';
 class D2LQuickEvalActivities extends mixinBehaviors([D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior], QuickEvalLocalize(PolymerElement)) {
 	static get template() {
 		const quickEvalActivitiesTemplate = html`
-			<style include="d2l-table-style">
+			<style>
+				.d2l-quick-eval-top-bar {
+					padding-top: 0.25rem;
+					display: flex;
+					flex-wrap: wrap;
+					justify-content: space-between;
+					align-items: flex-end;
+				}
 			</style>
+			<div class="d2l-quick-eval-top-bar">
+				<d2l-quick-eval-view-toggle current-selected="activities"></d2l-quick-eval-view-toggle>
+			</div>
 		`;
 
 		quickEvalActivitiesTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
@@ -67,6 +77,14 @@ class D2LQuickEvalActivities extends mixinBehaviors([D2L.PolymerBehaviors.QuickE
 
 	constructor() { super(); }
 
+	attached() {
+		this.addEventListener('d2l-quick-eval-view-toggle-changed', this._toggleSelected);
+	}
+
+	detached() {
+		this.removeEventListener('d2l-quick-eval-view-toggle-changed', this._toggleSelected);
+	}
+
 	setLoadingState(state) {
 		this.set('_loading', state);
 	}
@@ -106,6 +124,27 @@ class D2LQuickEvalActivities extends mixinBehaviors([D2L.PolymerBehaviors.QuickE
 	async _parseActivities(entity) {
 		const result = entity;
 		return result;
+	}
+
+	_toggleSelected(e) {
+		if (e.detail.view === 'submissions') {
+			this._dispatchChangeToSubmissions();
+		}
+	}
+
+	_dispatchChangeToSubmissions() {
+		this.dispatchEvent(
+			new CustomEvent(
+				'd2l-quick-eval-activities-change-to-submissions',
+				{
+					detail: {
+						changeToSubmissions: true
+					},
+					composed: true,
+					bubbles: true
+				}
+			)
+		);
 	}
 }
 
