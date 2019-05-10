@@ -88,21 +88,22 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 							aria-label$="[[localize('search')]]">
 						</d2l-hm-search>
 					</div>
-
-					<d2l-alert type="critical" hidden$="[[!_showFilterError]]" id="d2l-quick-eval-filter-error-alert">
-						[[localize('failedToFilter')]]
-					</d2l-alert>
-					<d2l-alert type="critical" hidden$="[[!_showSearchError]]" id="d2l-quick-eval-search-error-alert">
-						[[localize('failedToSearch')]]
-					</d2l-alert>
-					<d2l-quick-eval-search-results-summary-container
-						search-results-count="[[_searchResultsCount]]"
-						more-results="[[_moreSearchResults]]"
-						hidden$="[[!_searchResultsMessageEnabled(_showSearchResultSummary, searchEnabled)]]">
-					</d2l-quick-eval-search-results-summary-container>
-					<d2l-quick-eval-activities-list href="[[href]]" token="[[token]]" master-teacher="[[masterTeacher]]"></d2l-quick-eval-activities-list>
 				</template>
 			</div>
+			<template is="dom-if" if=[[!_showActivitiesView]]>
+				<d2l-alert type="critical" hidden$="[[!_showFilterError]]" id="d2l-quick-eval-filter-error-alert">
+					[[localize('failedToFilter')]]
+				</d2l-alert>
+				<d2l-alert type="critical" hidden$="[[!_showSearchError]]" id="d2l-quick-eval-search-error-alert">
+					[[localize('failedToSearch')]]
+				</d2l-alert>
+				<d2l-quick-eval-search-results-summary-container
+					search-results-count="[[_searchResultsCount]]"
+					more-results="[[_moreSearchResults]]"
+					hidden$="[[!_searchResultsMessageEnabled(_showSearchResultSummary, searchEnabled)]]">
+				</d2l-quick-eval-search-results-summary-container>
+				<d2l-quick-eval-activities-list href="[[href]]" token="[[token]]" master-teacher="[[masterTeacher]]"></d2l-quick-eval-activities-list>
+			</template>
 		`;
 	}
 
