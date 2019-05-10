@@ -35,7 +35,8 @@ const LangJaImpl = (superClass) => class extends superClass {
 			'submissionDate': '送信日',
 			'submissions': 'Submissions',
 			'tableTitle': 'コースやツールをまたいだ、受講者からの未評価の送信物リスト',
-			'tryAgain': 'もう一度試してください'
+			'tryAgain': 'もう一度試してください',
+			'viewBy': 'View by:'
 		};
 	}
 };

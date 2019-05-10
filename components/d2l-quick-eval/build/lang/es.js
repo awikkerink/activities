@@ -35,7 +35,8 @@ const LangEsImpl = (superClass) => class extends superClass {
 			'submissionDate': 'Fecha del material enviado',
 			'submissions': 'Submissions',
 			'tableTitle': 'Lista de envíos no evaluados del estudiante de todos los cursos y herramientas',
-			'tryAgain': 'Volver a intentarlo'
+			'tryAgain': 'Volver a intentarlo',
+			'viewBy': 'View by:'
 		};
 	}
 };

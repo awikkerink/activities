@@ -35,7 +35,8 @@ const LangArImpl = (superClass) => class extends superClass {
 			'submissionDate': 'تاريخ الإرسال',
 			'submissions': 'Submissions',
 			'tableTitle': 'قائمة بعمليات إرسال المتعلّم غير المقيّمة من المقررات التعليمية والأدوات',
-			'tryAgain': 'المحاولة مرة أخرى'
+			'tryAgain': 'المحاولة مرة أخرى',
+			'viewBy': 'View by:'
 		};
 	}
 };
