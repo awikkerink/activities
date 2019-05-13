@@ -510,6 +510,8 @@ class D2lActivityListItem extends mixinBehaviors([
 	_onLinkTrigger(event) {
 		if (!this.sendOnTriggerEvent ||
 			!this._activityHomepage ||
+			event.ctrlKey ||
+			event.metaKey ||
 			(event.type === 'keydown' && event.keyCode !== 13 && event.keyCode !== 32)) {
 			return;
 		}

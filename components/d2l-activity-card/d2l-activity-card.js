@@ -268,7 +268,7 @@ class D2lActivityCard extends EntityMixin(PolymerElement) {
 		this._imageLoading = false;
 	}
 	_sendClickEvent(event) {
-		if (!this.sendEventOnClick || !this._activityHomepage) {
+		if (!this.sendEventOnClick || !this._activityHomepage || event.ctrlKey || event.metaKey) {
 			return;
 		}
 
