@@ -65,8 +65,8 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 				<template is="dom-if" if="[[headerText]]">
 					<h1>[[headerText]]</h1>
 				</template>
-				<div class="flex-break" hidden$="[[!toggleEnabled]]"></div>
-				<d2l-quick-eval-view-toggle hidden$="[[!toggleEnabled]]"></d2l-quick-eval-view-toggle>
+				<div class="flex-break" hidden$="[[!activitiesViewEnabled]]"></div>
+				<d2l-quick-eval-view-toggle hidden$="[[!activitiesViewEnabled]]"></d2l-quick-eval-view-toggle>
 				<div class="d2l-quick-eval-activity-list-modifiers">
 					<d2l-hm-filter
 						href="[[_filterHref]]"
@@ -114,7 +114,7 @@ class D2LQuickEval extends mixinBehaviors([D2L.PolymerBehaviors.Siren.EntityBeha
 				value: false,
 				reflectToAttribute: true
 			},
-			toggleEnabled: {
+			activitiesViewEnabled: {
 				type: Boolean,
 				value: false,
 				reflectToAttribute: true
