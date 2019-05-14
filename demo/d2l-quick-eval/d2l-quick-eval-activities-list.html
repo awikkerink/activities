@@ -17,13 +17,6 @@
 			import '@polymer/iron-demo-helpers/demo-snippet';
 			import 'd2l-typography/d2l-typography.js';
 			import './update-direction.js';
-			import startMockServer from './interceptor';
-			import mappingsParser from './demo-data-parser';
-			import data from './table';
-
-			const mappings = mappingsParser(data);
-			// Parameters: data, network logging, api request delay
-			startMockServer(mappings, true, 100);
 
 			// For IE11, we need to import the component after we've started the mock observer
 			import '../../components/d2l-quick-eval/d2l-quick-eval-activities-list.js';
@@ -49,17 +42,8 @@
 		<div class="vertical-section-container fixedSize">
 			<h3>Basic d2l-quick-eval-activities-list demo</h3>
 			<demo-snippet>
-				<h4>Note: Load more button is expected to fail on last click, but should resolve itself when clicking it again</h4>
-				<hr/><br/>
 				<template strip-whitespace>
-					<d2l-quick-eval-activities-list href="pages/?sort=bydate-a" token="whatever"></d2l-quick-eval-activities-list>
-				</template>
-			</demo-snippet>
-			<demo-snippet>
-				<h4>Note: This will always show an error. It demonstrates how the component looks when failing to load data</h4>
-				<hr/><br/>
-				<template strip-whitespace>
-					<d2l-quick-eval-activities-list href="invalid" token="whatever"></d2l-quick-eval-activities-list>
+					<d2l-quick-eval-activities-list href="https://ea8ffd34-b879-4df6-939d-5ded43c88037.activities.api.dev.brightspace.com/my-unassessed-activities" token="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImMzZDIzYmM5LWEyMzctNGRjMi04NGY4LWIwZjk3ODQzNTUwNCJ9.eyJzdWIiOiIzMTY3MSIsInRlbmFudGlkIjoiZWE4ZmZkMzQtYjg3OS00ZGY2LTkzOWQtNWRlZDQzYzg4MDM3Iiwic2NvcGUiOiIqOio6KiIsImp0aSI6ImNmNDkyYzQ0LWQyMDItNGFjMi1hNTc1LTY5YjA0OTIyNGZlNiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyaWdodHNwYWNlLmNvbS9hdXRoIiwiYXVkIjoiaHR0cHM6Ly9hcGkuYnJpZ2h0c3BhY2UuY29tL2F1dGgvdG9rZW4iLCJleHAiOjE1NTc4NTMyNjgsIm5iZiI6MTU1Nzg0OTY2OH0.Xcirg7CwNZAr1T9PnugudRNSuqw8UykDtjFG0FFTdoPV5W56eL-8TVwMCaGYfrjYgd1B3Xx9sNkxnflD20hE7SbwTpycyhBCIeDCQkAxyWSp-vY2vECCaWeImXkRYiP0wMJHkKJfiDNLPWbNdfMQg5KEcOQ00SozOIcwdRZDH_vcYeK_4B-k-jXvk-c7YbTSoj7ECWg43EAdCpaoxCQUAwxrsk-pegvhlLYZfz25_1gWr5_H654mU4_2VxN-JOccDmGkqvgAMNbCHTVaBur7_xMSBoz-yacBFMc-4BGmjzVptKLe1JLSk5zIIx2XyDBE653Uiveh8rYySBnDYacokg"></d2l-quick-eval-activities-list>
 				</template>
 			</demo-snippet>
 		</div>
