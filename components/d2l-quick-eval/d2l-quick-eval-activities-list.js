@@ -151,7 +151,7 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors(
 													<d2l-table-col-sort-button
 														nosort$="[[!header.sorted]]"
 														desc$="[[header.desc]]"
-														on-click="_updateSortState"
+														on-click="_sortClickHandler"
 														id="[[header.key]]"
 														title="[[_localizeSortText(header.key)]]"
 														aria-label$="[[_localizeSortText(header.key)]]"
@@ -354,7 +354,59 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors(
 	constructor() { super(); }
 
 	_handleSorts(entity) {
-		return this._loadSorts(entity);
+		// entity is null on initial load
+		if (!entity) {
+			return Promise.resolve();
+		}
+
+		return this._loadSorts(entity).then(sortsEntity => {
+			this._headerColumns.forEach((headerColumn, i) => {
+				headerColumn.headers.forEach((header, j) => {
+					if (header.sortClass) {
+						const sort = sortsEntity.getSubEntityByClass(header.sortClass);
+						if (sort) {
+							this.set(`_headerColumns.${i}.headers.${j}.canSort`, true);
+							if (sort.properties && sort.properties.applied && (sort.properties.priority === 0)) {
+								const descending = sort.properties.direction === 'descending';
+								this.set(`_headerColumns.${i}.headers.${j}.sorted`, true);
+								this.set(`_headerColumns.${i}.headers.${j}.desc`, descending);
+
+							} else {
+								this.set(`_headerColumns.${i}.headers.${j}.sorted`, false);
+								this.set(`_headerColumns.${i}.headers.${j}.desc`, false);
+							}
+						}
+					}
+				});
+			});
+		});
+	}
+
+	_sortClickHandler(event) {
+
+		let result;
+		const headerId = event.currentTarget.id;
+
+		this._headerColumns.forEach((headerColumn, i) => {
+			headerColumn.headers.forEach((header, j) => {
+				if ((header.key === headerId) && header.canSort) {
+					const descending = header.sorted && !header.desc;
+					this.set(`_headerColumns.${i}.headers.${j}.sorted`, true);
+					this.set(`_headerColumns.${i}.headers.${j}.desc`, descending);
+
+					result = this._applySortAndFetchData(header.sortClass, descending);
+				}
+				else {
+					this.set(`_headerColumns.${i}.headers.${j}.sorted`, false);
+				}
+			});
+		});
+
+		if (result) {
+			return result;
+		} else {
+			return Promise.reject(new Error(`Could not find sortable header for ${headerId}`));
+		}
 	}
 
 	setLoadingState(state) {
