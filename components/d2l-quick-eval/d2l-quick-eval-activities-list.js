@@ -1,5 +1,6 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 import {QuickEvalLocalize} from './QuickEvalLocalize.js';
+import {QuickEvalLogging} from './QuickEvalLogging.js';
 import 'd2l-alert/d2l-alert.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import 'd2l-table/d2l-table.js';
@@ -24,7 +25,10 @@ import {StringEndsWith} from './compatability/ie11shims.js';
  * @polymer
  */
 
-class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior, D2L.PolymerBehaviors.QuickEval.D2LHMSortBehaviour], QuickEvalLocalize(PolymerElement)) {
+class D2LQuickEvalActivitiesList extends mixinBehaviors(
+	[D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior, D2L.PolymerBehaviors.QuickEval.D2LHMSortBehaviour],
+	QuickEvalLogging(QuickEvalLocalize(PolymerElement))
+) {
 	static get template() {
 		const quickEvalActivitiesListTemplate = html`
 			<style include="d2l-table-style">
@@ -411,7 +415,7 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Qu
 			this._clearAlerts();
 
 		} catch (e) {
-			// Unable to load activities from entity.
+			this._logError(e, {developerMessage: 'Unable to load activities from entity.'});
 			this._handleFullLoadFailure();
 			return Promise.reject(e);
 		} finally {
@@ -449,7 +453,8 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Qu
 					}
 				}.bind(this))
 				.then(this._clearAlerts.bind(this))
-				.catch(function() {
+				.catch(function(e) {
+					this._logError(e, {developerMessage: 'Unable to load more.'});
 					this._loading = false;
 					this._handleLoadMoreFailure();
 				}.bind(this));
