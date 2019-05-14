@@ -105,6 +105,10 @@ class D2lActivityListItem extends mixinBehaviors([
 					border: 1px solid var(--d2l-color-gypsum);
 					border-radius: 6px;
 				}
+				:host(:dir(rtl)) .d2l-activity-list-item-image {
+					margin-right: 0;
+					margin-left: 1.2rem;
+				}
 				.d2l-activity-list-item-title {
 					flex-shrink: 0;
 					@apply --d2l-heading-2;
@@ -203,6 +207,10 @@ class D2lActivityListItem extends mixinBehaviors([
 					margin-bottom: 0.25rem;
 					margin-top: 0.7rem;
 					margin-right: 0.5rem;
+				}
+				:host(:dir(rtl)) .d2l-activity-list-item-footer-placeholder {
+					margin-right: 0;
+					margin-left: 0.5rem;
 				}
 				.d2l-activity-list-item-header-no-margin {
 					margin: 0;
@@ -315,7 +323,10 @@ class D2lActivityListItem extends mixinBehaviors([
 				observer: '_onDescriptionChange'
 			},
 			_organizationUrl: String,
-			_tags: String,
+			_tags: {
+				type: String,
+				observer: '_onTagsChange'
+			},
 			_showDescription: Boolean,
 			_image: Object,
 			_imageLoading: {
@@ -384,6 +395,7 @@ class D2lActivityListItem extends mixinBehaviors([
 	constructor() {
 		super();
 		this._currentResponsiveConfig = undefined;
+		this._isRTL = document.dir === 'rtl';
 	}
 
 	ready() {
@@ -479,7 +491,7 @@ class D2lActivityListItem extends mixinBehaviors([
 			const image = this.shadowRoot.querySelector('.d2l-activity-list-item-image');
 			image.style.width = currentConfig.image.width + 'px';
 			image.style.height = currentConfig.image.height + 'px';
-			image.style.marginRight = currentConfig.image.marginRight;
+			image.style[this._isRTL ? 'margin-left' : 'margin-right'] = currentConfig.image.marginRight;
 
 			const title = this.shadowRoot.querySelector('.d2l-activity-list-item-title');
 			title.style.fontSize = currentConfig.title.fontSize + 'rem';
@@ -488,9 +500,9 @@ class D2lActivityListItem extends mixinBehaviors([
 			title.style.maxHeight = 2 * currentConfig.title.lineHeight + 'rem';
 			title.style.margin = currentConfig.title.margin;
 			title.style.marginTop = currentConfig.title.marginTop + 'rem';
-			title.style.marginRight = currentConfig.title.marginRight + 'rem';
+			title.style[this._isRTL ? 'margin-left' : 'margin-right'] = currentConfig.title.marginRight + 'rem';
 			title.style.marginBottom = currentConfig.title.marginBottom + 'rem';
-			title.style.marginLeft = currentConfig.title.marginLeft + 'rem';
+			title.style[this._isRTL ? 'margin-right' : 'margin-left'] = currentConfig.title.marginLeft + 'rem';
 
 			if (this.textPlaceholder) {
 				this._setTextPlaceholderStyles(currentConfig);
@@ -726,6 +738,11 @@ class D2lActivityListItem extends mixinBehaviors([
 					footer.style.width = currentConfig.placeholder.footer.width;
 				});
 			}
+		}
+	}
+	_onTagsChange() {
+		if (this._isRTL) {
+			this._tags.reverse();
 		}
 	}
 }
