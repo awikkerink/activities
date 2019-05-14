@@ -366,12 +366,12 @@
 						performSearch('test');
 					});
 				});
-				test('toggle and flex-break are hidden when toggleEnabled is false', function() {
+				test('toggle and flex-break are hidden when activitiesViewEnabled is false', function() {
 					assert.isTrue(toggle.hidden);
 					assert.isTrue(quickEval.shadowRoot.querySelector('.flex-break').hidden);
 				});
-				test('toggle and flex-break are not hidden when toggleEnabled is true', function() {
-					quickEval.toggleEnabled = true;
+				test('toggle and flex-break are not hidden when activitiesViewEnabled is true', function() {
+					quickEval.activitiesViewEnabled = true;
 					assert.isFalse(toggle.hidden);
 					assert.isFalse(quickEval.shadowRoot.querySelector('.flex-break').hidden);
 				});
