@@ -56,11 +56,6 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSortBehaviourImpl = {
 				}
 				const customParams = this._numberOfActivitiesToShow > 0 ? {pageSize: this._numberOfActivitiesToShow} : undefined;
 				return this._performSirenActionWithQueryParams(action, customParams);
-			}).bind(this))
-			.then((collection => {
-				this.entity = collection;
-				this._dispatchSortUpdatedEvent(collection);
-				return Promise.resolve(collection);
 			}).bind(this));
 	}
 };

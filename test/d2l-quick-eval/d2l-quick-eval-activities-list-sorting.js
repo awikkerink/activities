@@ -238,9 +238,6 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 
 			const followLinkStub = sinon.stub(list, '_followLink');
 			const performActionStub = sinon.stub(list, '_performSirenActionWithQueryParams');
-			const sortUpdatedStub = sinon.stub(list, '_dispatchSortUpdatedEvent');
-			const loadDataStub = sinon.stub(list, '_loadData');
-			const loadSortsStub = sinon.stub(list, '_handleSorts');
 
 			followLinkStub.withArgs(list.entity, Rels.sorts).returns(Promise.resolve({ entity: sorts }));
 			performActionStub.withArgs(sortAction).returns(sorts);
@@ -248,9 +245,6 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 
 			return list._applySortAndFetchData('activity-name', false)
 				.then(actual => {
-					expect(sortUpdatedStub.withArgs(collection).calledOnce).to.be.true;
-					expect(loadDataStub.withArgs(collection).calledOnce).to.be.true;
-					expect(loadSortsStub.withArgs(collection).calledOnce).to.be.true;
 					expect(actual).to.deep.equal(collection);
 				});
 		});

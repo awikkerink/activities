@@ -403,7 +403,10 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors(
 		});
 
 		if (result) {
-			return result;
+			return result.then(sortedCollection => {
+				this.entity = sortedCollection;
+				this._dispatchSortUpdatedEvent(sortedCollection);
+			});
 		} else {
 			return Promise.reject(new Error(`Could not find sortable header for ${headerId}`));
 		}
