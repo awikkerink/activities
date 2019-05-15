@@ -36,7 +36,7 @@ class D2lActivityCard extends EntityMixin(PolymerElement) {
 				.d2l-activity-card-content-container {
 					display: flex;
 					flex-direction: column;
-					margin: -0.35rem 0 -0.1rem -0.05rem;
+					margin: -0.35rem 0 -0.1rem;
 					overflow-wrap: break-word; /* replaces 'word-wrap' in Firefox, Chrome, Safari */
 					overflow: hidden;
 					word-wrap: break-word; /* IE/Edge */
@@ -268,7 +268,7 @@ class D2lActivityCard extends EntityMixin(PolymerElement) {
 		this._imageLoading = false;
 	}
 	_sendClickEvent(event) {
-		if (!this.sendEventOnClick || !this._activityHomepage) {
+		if (!this.sendEventOnClick || !this._activityHomepage || event.ctrlKey || event.metaKey) {
 			return;
 		}
 

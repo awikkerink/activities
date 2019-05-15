@@ -57,16 +57,16 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 		expect(keyToSortClassHeaderMappings).to.deep.equal(expectedKeyToSortClassHeaderMappings);
 	});
 
-	suite('_loadSorts', () => {
-		test('_loadSorts does not call _followLink on null entity', () => {
+	suite('_handleSorts', () => {
+		test('_handleSorts does not call _followLink on null entity', () => {
 			const stub = sinon.stub(list, '_followLink');
-			return list._loadSorts(null)
+			return list._handleSorts(null)
 				.then(() => {
 					expect(stub.notCalled).to.be.true;
 				});
 		});
 
-		suite('_loadSorts error cases', () => {
+		suite('_handleSorts error cases', () => {
 			const testData = [
 				{
 					name: 'null sortEntity',
@@ -83,16 +83,16 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 			];
 
 			testData.forEach(testCase => {
-				test('_loadSorts rejects on ' + testCase.name, (done) => {
+				test('_handleSorts rejects on ' + testCase.name, (done) => {
 					const stub = sinon.stub(list, '_followLink');
 					const entity = {};
 
 					stub.withArgs(entity, Rels.sorts)
 						.returns(testCase.sortEntity);
 
-					list._loadSorts(entity)
+					list._handleSorts(entity)
 						.then(() => {
-							done('_loadSorts should have rejected');
+							done('_handleSorts should have rejected');
 						})
 						.catch(() => {
 							done();
@@ -101,13 +101,13 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 			});
 		});
 
-		test('_loadSorts determines which headers are sortable', () => {
+		test('_handleSorts determines which headers are sortable', () => {
 			const enabledSortClasses = [{ className:'activity-name' }, {className: 'course-name' }];
 			const entity = {};
 
 			stubLoadSorts(list, entity, enabledSortClasses);
 
-			return list._loadSorts(entity)
+			return list._handleSorts(entity)
 				.then(() => {
 					const enabledSorts = list._headerColumns
 						.map(column => column.headers)
@@ -118,7 +118,7 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 					expect(enabledSorts).to.have.same.members(enabledSortClasses.map(x => x.className));
 				});
 		});
-		test('_loadSorts only sets the primary sort header to sorted', () => {
+		test('_handleSorts only sets the primary sort header to sorted', () => {
 			const enabledSortClasses = [
 				{ className: 'first-name', applied: true, direction: 'descending', priority: 0 },
 				{ className: 'completion-date', applied: true, direction: 'ascending', priority: 1 },
@@ -128,7 +128,7 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 
 			stubLoadSorts(list, entity, enabledSortClasses);
 
-			return list._loadSorts(entity)
+			return list._handleSorts(entity)
 				.then(() => {
 					const activeSorts = list._headerColumns
 						.map(column => column.headers)
@@ -142,8 +142,8 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 		});
 	});
 
-	suite('_updateSortState', () => {
-		suite('_updateSortState error cases', () => {
+	suite('_sortClickHandler', () => {
+		suite('_sortClickHandler error cases', () => {
 			const testData = [
 				{
 					name: 'header not found',
@@ -156,19 +156,19 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 			];
 			testData.forEach(testCase => {
 				test(testCase.name, (done) => {
-					var stub = sinon.stub(list, '_fetchSortedData');
+					var stub = sinon.stub(list, '_applySortAndFetchData');
 					const e = {
 						currentTarget: {
 							id: testCase.id
 						}
 					};
 
-					list._updateSortState(e)
+					list._sortClickHandler(e)
 						.then(() => {
-							done('_updateSortState should have rejected');
+							done('_sortClickHandler should have rejected');
 						})
 						.catch(() => {
-							expect(stub.notCalled, '_fetchSortedData should not be called').to.be.true;
+							expect(stub.notCalled, '_applySortAndFetchData should not be called').to.be.true;
 							done();
 						})
 						.catch((err) => {
@@ -178,7 +178,7 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 			});
 		});
 
-		suite('_updateSortState only sets sortable header to sorted', () => {
+		suite('_sortClickHandler only sets sortable header to sorted', () => {
 			const testData = [
 				{
 					name: 'ascending',
@@ -193,7 +193,7 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 			testData.forEach(testCase => {
 				test(testCase.name, () => {
 					const activeSortKey = 'activityName';
-					const stub = sinon.stub(list, '_fetchSortedData', () => Promise.resolve());
+					const stub = sinon.stub(list, '_applySortAndFetchData', () => Promise.resolve());
 					const e = {
 						currentTarget: {
 							id: activeSortKey
@@ -210,7 +210,7 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 						});
 					});
 
-					return list._updateSortState(e)
+					return list._sortClickHandler(e)
 						.then(() => {
 							const activeSorts = list._headerColumns
 								.map(column => column.headers)
@@ -227,8 +227,8 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 		});
 	});
 
-	suite('_fetchSortedData', () => {
-		test('_fetchSortedData correctly fetches data', () => {
+	suite('_applySortAndFetchData', () => {
+		test('_applySortAndFetchData correctly fetches data', () => {
 			const appliedSortClass = 'activity-name';
 			const activityNameSort = formatSort(appliedSortClass);
 			const sorts = SirenParse(formatSimpleSorts([activityNameSort]));
@@ -238,19 +238,13 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 
 			const followLinkStub = sinon.stub(list, '_followLink');
 			const performActionStub = sinon.stub(list, '_performSirenActionWithQueryParams');
-			const sortUpdatedStub = sinon.stub(list, '_dispatchSortUpdatedEvent');
-			const loadDataStub = sinon.stub(list, '_loadData');
-			const loadSortsStub = sinon.stub(list, '_loadSorts');
 
 			followLinkStub.withArgs(list.entity, Rels.sorts).returns(Promise.resolve({ entity: sorts }));
 			performActionStub.withArgs(sortAction).returns(sorts);
 			performActionStub.withArgs(applyAction, sinon.match.any).returns(collection);
 
-			return list._fetchSortedData('activity-name', false)
+			return list._applySortAndFetchData('activity-name', false)
 				.then(actual => {
-					expect(sortUpdatedStub.withArgs(collection).calledOnce).to.be.true;
-					expect(loadDataStub.withArgs(collection).calledOnce).to.be.true;
-					expect(loadSortsStub.withArgs(collection).calledOnce).to.be.true;
 					expect(actual).to.deep.equal(collection);
 				});
 		});

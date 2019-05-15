@@ -1,5 +1,6 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 import {QuickEvalLocalize} from './QuickEvalLocalize.js';
+import {QuickEvalLogging} from './QuickEvalLogging.js';
 import 'd2l-alert/d2l-alert.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import 'd2l-table/d2l-table.js';
@@ -24,7 +25,10 @@ import {StringEndsWith} from './compatability/ie11shims.js';
  * @polymer
  */
 
-class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior, D2L.PolymerBehaviors.QuickEval.D2LHMSortBehaviour], QuickEvalLocalize(PolymerElement)) {
+class D2LQuickEvalActivitiesList extends mixinBehaviors(
+	[D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior, D2L.PolymerBehaviors.QuickEval.D2LHMSortBehaviour],
+	QuickEvalLogging(QuickEvalLocalize(PolymerElement))
+) {
 	static get template() {
 		const quickEvalActivitiesListTemplate = html`
 			<style include="d2l-table-style">
@@ -147,7 +151,7 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Qu
 													<d2l-table-col-sort-button
 														nosort$="[[!header.sorted]]"
 														desc$="[[header.desc]]"
-														on-click="_updateSortState"
+														on-click="_sortClickHandler"
 														id="[[header.key]]"
 														title="[[_localizeSortText(header.key)]]"
 														aria-label$="[[_localizeSortText(header.key)]]"
@@ -350,7 +354,62 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Qu
 	constructor() { super(); }
 
 	_handleSorts(entity) {
-		return this._loadSorts(entity);
+		// entity is null on initial load
+		if (!entity) {
+			return Promise.resolve();
+		}
+
+		return this._loadSorts(entity).then(sortsEntity => {
+			this._headerColumns.forEach((headerColumn, i) => {
+				headerColumn.headers.forEach((header, j) => {
+					if (header.sortClass) {
+						const sort = sortsEntity.getSubEntityByClass(header.sortClass);
+						if (sort) {
+							this.set(`_headerColumns.${i}.headers.${j}.canSort`, true);
+							if (sort.properties && sort.properties.applied && (sort.properties.priority === 0)) {
+								const descending = sort.properties.direction === 'descending';
+								this.set(`_headerColumns.${i}.headers.${j}.sorted`, true);
+								this.set(`_headerColumns.${i}.headers.${j}.desc`, descending);
+
+							} else {
+								this.set(`_headerColumns.${i}.headers.${j}.sorted`, false);
+								this.set(`_headerColumns.${i}.headers.${j}.desc`, false);
+							}
+						}
+					}
+				});
+			});
+		});
+	}
+
+	_sortClickHandler(event) {
+
+		let result;
+		const headerId = event.currentTarget.id;
+
+		this._headerColumns.forEach((headerColumn, i) => {
+			headerColumn.headers.forEach((header, j) => {
+				if ((header.key === headerId) && header.canSort) {
+					const descending = header.sorted && !header.desc;
+					this.set(`_headerColumns.${i}.headers.${j}.sorted`, true);
+					this.set(`_headerColumns.${i}.headers.${j}.desc`, descending);
+
+					result = this._applySortAndFetchData(header.sortClass, descending);
+				}
+				else {
+					this.set(`_headerColumns.${i}.headers.${j}.sorted`, false);
+				}
+			});
+		});
+
+		if (result) {
+			return result.then(sortedCollection => {
+				this.entity = sortedCollection;
+				this._dispatchSortUpdatedEvent(sortedCollection);
+			});
+		} else {
+			return Promise.reject(new Error(`Could not find sortable header for ${headerId}`));
+		}
 	}
 
 	setLoadingState(state) {
@@ -411,7 +470,7 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Qu
 			this._clearAlerts();
 
 		} catch (e) {
-			// Unable to load activities from entity.
+			this._logError(e, {developerMessage: 'Unable to load activities from entity.'});
 			this._handleFullLoadFailure();
 			return Promise.reject(e);
 		} finally {
@@ -449,7 +508,8 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors([D2L.PolymerBehaviors.Qu
 					}
 				}.bind(this))
 				.then(this._clearAlerts.bind(this))
-				.catch(function() {
+				.catch(function(e) {
+					this._logError(e, {developerMessage: 'Unable to load more.'});
 					this._loading = false;
 					this._handleLoadMoreFailure();
 				}.bind(this));
