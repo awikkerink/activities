@@ -26,7 +26,7 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSortBehaviourImpl = {
 			});
 	},
 
-	_applySortAndFetchData: function(sortClass, descending) {
+	_applySortAndFetchData: function(sortClass, descending, customParams) {
 		return this._followSortRel(this.entity)
 			.then((sortsEntity => {
 				if (!sortsEntity || !sortsEntity.entity) {
@@ -54,7 +54,6 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSortBehaviourImpl = {
 				if (!action) {
 					return Promise.reject(new Error(`Could not find apply action in ${sortsEntity}`));
 				}
-				const customParams = this._numberOfActivitiesToShow > 0 ? {pageSize: this._numberOfActivitiesToShow} : undefined;
 				return this._performSirenActionWithQueryParams(action, customParams);
 			}).bind(this));
 	}
