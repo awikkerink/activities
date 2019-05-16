@@ -63,15 +63,15 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 			</style>
 			<div>
 				<label id="d2l-quick-eval-view-toggle-label">[[localize('viewBy')]]</label>
-				<button 
-					class="d2l-quick-eval-view-toggle-left" 
-					on-click="_selectSubmissions" 
+				<button
+					class="d2l-quick-eval-view-toggle-left"
+					on-click="_selectSubmissions"
 					selected$="[[_isSelected(_viewTypes.submissions, currentSelected)]]"
 					aria-labelledby="d2l-quick-eval-view-toggle-label"
 				>[[localize('submissions')]]</button>
-				<button 
-					class="d2l-quick-eval-view-toggle-right" 
-					on-click="_selectActivities" 
+				<button
+					class="d2l-quick-eval-view-toggle-right"
+					on-click="_selectActivities"
 					selected$="[[_isSelected(_viewTypes.activities, currentSelected)]]"
 					aria-labelledby="d2l-quick-eval-view-toggle-label"
 				>[[localize('activities')]]</button>
@@ -96,10 +96,14 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 		};
 	}
 	_selectSubmissions() {
-		this.currentSelected = this._viewTypes.submissions;
+		if (this.currentSelected !== this._viewTypes.submissions) {
+			this.currentSelected = this._viewTypes.submissions;
+		}
 	}
 	_selectActivities() {
-		this.currentSelected = this._viewTypes.activities;
+		if (this.currentSelected !== this._viewTypes.activities) {
+			this.currentSelected = this._viewTypes.activities;
+		}
 	}
 	_isSelected(view) {
 		return this.currentSelected === view;
