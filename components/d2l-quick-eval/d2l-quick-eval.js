@@ -36,7 +36,11 @@ class D2LQuickEval extends mixinBehaviors(
 					width: 250px;
 					margin-left: .25rem;
 				}
-				.d2l-quick-eval-top-bar {
+				d2l-quick-eval-view-toggle {
+					clear: both;
+					float: left;
+				}
+				.d2l-quick-eval-header {
 					float: left;
 					padding-top: 0.25rem;
 				}
@@ -68,13 +72,10 @@ class D2LQuickEval extends mixinBehaviors(
 					clear: both;
 				}
 			</style>
-			<div class="d2l-quick-eval-top-bar">
-				<template is="dom-if" if="[[headerText]]">
-					<h1>[[headerText]]</h1>
-				</template>
-				<div class="break" hidden$="[[!activitiesViewEnabled]]"></div>
-				<d2l-quick-eval-view-toggle currentSelected="submissions" hidden$="[[!activitiesViewEnabled]]"></d2l-quick-eval-view-toggle>
-			</div>
+			<template is="dom-if" if="[[headerText]]">
+				<h1 class="d2l-quick-eval-header">[[headerText]]</h1>
+			</template>
+			<d2l-quick-eval-view-toggle current-selected="submissions" hidden$="[[!activitiesViewEnabled]]"></d2l-quick-eval-view-toggle>
 			<div class="submissionsView" hidden$="[[_showActivitiesView]]">
 				<div class="d2l-quick-eval-activity-list-modifiers">
 					<d2l-hm-filter
