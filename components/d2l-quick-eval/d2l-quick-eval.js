@@ -45,7 +45,7 @@ class D2LQuickEval extends mixinBehaviors(
 				}
 				.d2l-quick-eval-header-with-toggle {
 					float: left;
-					padding-bottom: 1rem;
+					padding-bottom: 1.8rem;
 				}
 				d2l-quick-eval-activities-list {
 					display: block;
