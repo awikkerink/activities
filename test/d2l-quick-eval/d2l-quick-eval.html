@@ -5,10 +5,13 @@
 		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
 		<title>d2l-quick-eval test</title>
-
-		<script src="../../../@babel/polyfill/browser.js"></script>
 		<script src="../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
 		<script src="../../../wct-browser-legacy/browser.js"></script>
+
+		<!-- For IE11 -->
+		<script src="../../../lie/dist/lie.polyfill.min.js"></script>
+		<script type="module" src="../../../whatwg-fetch/fetch.js"></script>
+		<script type="module" src="../../../url-polyfill/url-polyfill.js"></script>
 		<script type="module" src="../../components/d2l-quick-eval/d2l-quick-eval.js"></script>
 	</head>
 	<body>
@@ -99,7 +102,7 @@
 					quickEval = fixture('basic');
 					filter = quickEval.shadowRoot.querySelector('d2l-hm-filter');
 					filterDropdown = filter.shadowRoot.querySelector('d2l-filter-dropdown');
-					list = quickEval.shadowRoot.querySelector('d2l-quick-eval-activities-list');
+					list = quickEval.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
 					search = quickEval.shadowRoot.querySelector('d2l-hm-search');
 					toggle = quickEval.shadowRoot.querySelector('d2l-quick-eval-view-toggle');
 				});
@@ -380,7 +383,7 @@
 					quickEval = fixture('masterTeacher');
 					filter = quickEval.shadowRoot.querySelector('d2l-hm-filter');
 					filterDropdown = filter.shadowRoot.querySelector('d2l-filter-dropdown');
-					list = quickEval.shadowRoot.querySelector('d2l-quick-eval-activities-list');
+					list = quickEval.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
 				});
 				test('instantiating the element works', function() {
 					assert.equal(quickEval.tagName.toLowerCase(), 'd2l-quick-eval');

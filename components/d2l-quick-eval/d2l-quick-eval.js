@@ -8,10 +8,10 @@ import 'd2l-typography/d2l-typography-shared-styles.js';
 import 'd2l-alert/d2l-alert.js';
 import 'd2l-common/components/d2l-hm-filter/d2l-hm-filter.js';
 import 'd2l-common/components/d2l-hm-search/d2l-hm-search.js';
-import './d2l-quick-eval-activities-list.js';
 import './d2l-quick-eval-search-results-summary-container.js';
 import './d2l-quick-eval-view-toggle.js';
 import './d2l-quick-eval-activities.js';
+import './d2l-quick-eval-submissions.js';
 
 /**
  * @customElement
@@ -47,7 +47,7 @@ class D2LQuickEval extends mixinBehaviors(
 					float: left;
 					padding-bottom: 1.2rem;
 				}
-				d2l-quick-eval-activities-list {
+				d2l-quick-eval-submissions {
 					display: block;
 					padding-top: 1rem;
 				}
@@ -104,7 +104,7 @@ class D2LQuickEval extends mixinBehaviors(
 					more-results="[[_moreSearchResults]]"
 					hidden$="[[!_searchResultsMessageEnabled(_showSearchResultSummary, searchEnabled)]]">
 				</d2l-quick-eval-search-results-summary-container>
-				<d2l-quick-eval-activities-list href="[[href]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" master-teacher="[[masterTeacher]]"></d2l-quick-eval-activities-list>
+				<d2l-quick-eval-submissions href="[[href]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" master-teacher="[[masterTeacher]]"></d2l-quick-eval-submissions>
 			</div>
 			<d2l-quick-eval-activities hidden$="[[!_showActivitiesView]]"></d2l-quick-eval-activities>
 		`;
@@ -253,19 +253,19 @@ class D2LQuickEval extends mixinBehaviors(
 	}
 
 	_filtersLoaded(e) {
-		const list = this.shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
 		list.filterApplied = e.detail.totalSelectedFilters > 0;
 		this._showFilterError = false;
 	}
 
 	_filtersUpdating() {
-		const list = this.shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
 		list.setLoadingState(true);
 		this._clearErrors();
 	}
 
 	_filtersChanged(e) {
-		const list = this.shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
 		list.entity = e.detail.filteredActivities;
 		this.entity = e.detail.filteredActivities;
 
@@ -277,7 +277,7 @@ class D2LQuickEval extends mixinBehaviors(
 
 	_filterError(evt) {
 		this._logError(evt.detail.error, {developerMessage: 'Failed to retrieve filter results'});
-		const list = this.shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
 		list.setLoadingState(false);
 		this._showFilterError = true;
 	}
@@ -287,13 +287,13 @@ class D2LQuickEval extends mixinBehaviors(
 	}
 
 	_searchResultsLoading() {
-		const list = this.shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
 		list.setLoadingState(true);
 		this._clearErrors();
 	}
 
 	_searchResultsLoaded(e) {
-		const list = this.shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
 		list.entity = e.detail.results;
 		this.entity = e.detail.results;
 		this._showSearchResultSummary = !e.detail.searchIsCleared;
@@ -314,7 +314,7 @@ class D2LQuickEval extends mixinBehaviors(
 
 	_searchError(evt) {
 		this._logError(evt.detail.error, {developerMessage: 'Failed to retrieve search results.'});
-		const list = this.shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
 		list.setLoadingState(false);
 		this._showSearchError = true;
 	}
@@ -327,7 +327,7 @@ class D2LQuickEval extends mixinBehaviors(
 	_updateSearchResultsCount(count) {
 		this._searchResultsCount = count;
 
-		const list = this.shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
 		if (list._pageNextHref) {
 			this._moreSearchResults = true;
 		} else {
