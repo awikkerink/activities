@@ -1,5 +1,6 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 import {QuickEvalLocalize} from './QuickEvalLocalize.js';
+import {QuickEvalLogging} from './QuickEvalLogging.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
 import './behaviors/d2l-quick-eval-siren-helper-behavior.js';
@@ -14,7 +15,7 @@ import 'd2l-common/components/d2l-hm-search/d2l-hm-search.js';
 
 class D2LQuickEvalActivities extends mixinBehaviors(
 	[D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior, D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour],
-	QuickEvalLocalize(PolymerElement)
+	QuickEvalLogging(QuickEvalLocalize(PolymerElement))
 ) {
 	static get template() {
 		const quickEvalActivitiesTemplate = html`
@@ -68,15 +69,41 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	}
 	static get is() { return 'd2l-quick-eval-activities'; }
 
+	static get properties() {
+		return {
+			_searchAction: {
+				type: Object
+			}
+		};
+	}
+
+	ready() {
+		console.log('ready');
+		super.ready();
+		this._searchAction = this._getSearchAction(this.entity);
+		console.log(this._searchAction);
+	}
+
 	attached()  {
+		this.addEventListener('d2l-hm-search-results-loading', this._searchResultsLoading);
 		this.addEventListener('d2l-hm-search-results-loaded', this._searchResultsLoaded);
+		this.addEventListener('d2l-hm-search-error', this._errorOnSearch);
 	}
 
 	detached() {
+		this.removeEventListener('d2l-hm-search-results-loading', this._searchResultsLoading);
 		this.removeEventListener('d2l-hm-search-results-loaded', this._searchResultsLoaded);
+		this.removeEventListener('d2l-hm-search-error', this._errorOnSearch);
+	}
+
+	_searchResultsLoading() {
+		console.log('_searchResultsLoading');
+		// set loading state of list to true
+		this._searchError = false;
 	}
 
 	_searchResultsLoaded(e) {
+		console.log('_searchResultsLoaded');
 		this.entity = e.detail.results;
 		this._searchCleared = !e.detail.searchIsCleared;
 
@@ -86,6 +113,13 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			this._searchResultsCount = 0;
 		}
 		this._searchError = false;
+	}
+
+	_errorOnSearch(evt) {
+		console.log('_errorOnSearch');
+		this._logError(evt.detail.error, {developerMessage: 'Failed to retrieve search results.'});
+		// set loading state of list to false
+		this._searchError = true;
 	}
 }
 window.customElements.define(D2LQuickEvalActivities.is, D2LQuickEvalActivities);

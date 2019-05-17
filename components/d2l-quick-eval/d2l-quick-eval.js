@@ -106,7 +106,7 @@ class D2LQuickEval extends mixinBehaviors(
 				</d2l-quick-eval-search-results-summary-container>
 				<d2l-quick-eval-submissions href="[[href]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" master-teacher="[[masterTeacher]]"></d2l-quick-eval-submissions>
 			</div>
-			<d2l-quick-eval-activities token="[[token]]" hidden$="[[!_showActivitiesView]]"></d2l-quick-eval-activities>
+			<d2l-quick-eval-activities href="[[href]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" hidden$="[[!_showActivitiesView]]"></d2l-quick-eval-activities>
 		`;
 	}
 

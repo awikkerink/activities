@@ -11,10 +11,6 @@ window.D2L.PolymerBehaviors.QuickEval = window.D2L.PolymerBehaviors.QuickEval ||
 D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 
 	properties: {
-		_searchAction: {
-			type: Object,
-			computed: '_getSearchAction(entity)'
-		},
 		_searchError: {
 			type: Boolean,
 			value: false
