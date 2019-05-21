@@ -14,6 +14,7 @@ const LangTrImpl = (superClass) => class extends superClass {
 			'clearSearch': 'Aramayı Temizle',
 			'courseName': 'Ders',
 			'displayName': 'Ad, Soyad',
+			'due': 'Due:',
 			'evaluate': 'Değerlendir: {displayName}',
 			'failedToFilter': 'Filtre uygulanamıyor. Birkaç dakika içinde tekrar deneyin.',
 			'failedToLoadData': 'Gönderiler yüklenemiyor. Birkaç dakika içinde tekrar deneyin.',

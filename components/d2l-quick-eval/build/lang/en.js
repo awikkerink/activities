@@ -14,6 +14,7 @@ const LangEnImpl = (superClass) => class extends superClass {
 			'clearSearch': 'Clear Search',
 			'courseName': 'Course',
 			'displayName': 'First Name, Last Name',
+			'due': 'Due:',
 			'evaluate': 'Evaluate {displayName}',
 			'failedToFilter': 'Unable to apply filter. Try again in a few minutes.',
 			'failedToLoadData': 'Unable to load submissions. Try again in a few minutes.',

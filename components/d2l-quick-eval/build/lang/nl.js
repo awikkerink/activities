@@ -14,6 +14,7 @@ const LangNlImpl = (superClass) => class extends superClass {
 			'clearSearch': 'Zoekopdracht wissen',
 			'courseName': 'Cursus',
 			'displayName': 'Voornaam, achternaam',
+			'due': 'Due:',
 			'evaluate': '{displayName} evalueren',
 			'failedToFilter': 'Kan filter niet toepassen. Probeer het nogmaals over een paar minuten.',
 			'failedToLoadData': 'Kan indieningen via postvak niet laden. Probeer het nogmaals over een paar minuten.',

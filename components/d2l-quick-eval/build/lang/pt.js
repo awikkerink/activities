@@ -14,6 +14,7 @@ const LangPtImpl = (superClass) => class extends superClass {
 			'clearSearch': 'Limpar Pesquisa',
 			'courseName': 'Curso',
 			'displayName': 'Nome e Sobrenome',
+			'due': 'Due:',
 			'evaluate': 'Avaliar {displayName}',
 			'failedToFilter': 'Não foi possível aplicar o filtro. Tente novamente em alguns minutos.',
 			'failedToLoadData': 'Não foi possível carregar os envios. Tente novamente em alguns minutos.',

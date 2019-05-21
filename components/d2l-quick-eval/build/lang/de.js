@@ -14,6 +14,7 @@ const LangDeImpl = (superClass) => class extends superClass {
 			'clearSearch': 'Suche löschen',
 			'courseName': 'Kurs',
 			'displayName': 'Vorname, Nachname',
+			'due': 'Due:',
 			'evaluate': '{displayName} bewerten',
 			'failedToFilter': 'Filter konnte nicht angewendet werden. Versuchen Sie es in ein paar Minuten erneut.',
 			'failedToLoadData': 'Abgaben können nicht geladen werden. Versuchen Sie es in ein paar Minuten erneut.',

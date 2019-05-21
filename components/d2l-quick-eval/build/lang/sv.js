@@ -14,6 +14,7 @@ const LangSvImpl = (superClass) => class extends superClass {
 			'clearSearch': 'Rensa sökning',
 			'courseName': 'Kurs',
 			'displayName': 'Förnamn, efternamn',
+			'due': 'Due:',
 			'evaluate': 'Utvärdera {displayName}',
 			'failedToFilter': 'Det gick inte att använda filtret. Försök igen om några minuter.',
 			'failedToLoadData': 'Det gick inte att läsa in inlämningarna. Försök igen om några minuter.',

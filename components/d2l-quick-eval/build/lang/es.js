@@ -14,6 +14,7 @@ const LangEsImpl = (superClass) => class extends superClass {
 			'clearSearch': 'Borrar búsqueda',
 			'courseName': 'Curso',
 			'displayName': 'Nombre, Apellido',
+			'due': 'Due:',
 			'evaluate': 'Evaluar {displayName}',
 			'failedToFilter': 'No se puede aplicar el filtro. Intente de nuevo en algunos minutos.',
 			'failedToLoadData': 'No se puede cargar los envíos. Intente de nuevo en algunos minutos.',

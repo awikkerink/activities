@@ -14,6 +14,7 @@ const LangKoImpl = (superClass) => class extends superClass {
 			'clearSearch': '검색 지우기',
 			'courseName': '강의',
 			'displayName': '이름, 성',
+			'due': 'Due:',
 			'evaluate': '{displayName} 평가',
 			'failedToFilter': '필터를 적용할 수 없습니다. 몇 분 후에 다시 시도하십시오.',
 			'failedToLoadData': '제출 항목을 로드할 수 없습니다. 몇 분 후에 다시 시도하십시오.',

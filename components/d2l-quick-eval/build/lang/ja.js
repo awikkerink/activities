@@ -14,6 +14,7 @@ const LangJaImpl = (superClass) => class extends superClass {
 			'clearSearch': '検索のクリア',
 			'courseName': 'コース',
 			'displayName': '名、姓',
+			'due': 'Due:',
 			'evaluate': '{displayName} さんの評価',
 			'failedToFilter': 'フィルタを適用できません。しばらくしてからもう一度試してください。',
 			'failedToLoadData': '送信物を読み込めません。しばらくしてからもう一度試してください。',

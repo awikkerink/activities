@@ -14,6 +14,7 @@ const LangDadkImpl = (superClass) => class extends superClass {
 			'clearSearch': 'Ryd søgning',
 			'courseName': 'Kursus',
 			'displayName': 'Fornavn, Efternavn',
+			'due': 'Due:',
 			'evaluate': 'Evaluer {displayName}',
 			'failedToFilter': 'Kunne ikke anvende filter. Prøv igen om et par minutter.',
 			'failedToLoadData': 'Kunne ikke indlæse afleveringer. Prøv igen om et par minutter.',

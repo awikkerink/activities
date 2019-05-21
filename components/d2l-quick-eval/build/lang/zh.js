@@ -14,6 +14,7 @@ const LangZhImpl = (superClass) => class extends superClass {
 			'clearSearch': '清除搜索',
 			'courseName': '课程',
 			'displayName': '名字，姓氏',
+			'due': 'Due:',
 			'evaluate': '评估 {displayName}',
 			'failedToFilter': '无法应用筛选器。请在几分钟后重试。',
 			'failedToLoadData': '无法加载提交。请在几分钟后重试。',

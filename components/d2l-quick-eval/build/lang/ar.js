@@ -14,6 +14,7 @@ const LangArImpl = (superClass) => class extends superClass {
 			'clearSearch': 'مسح البحث',
 			'courseName': 'المقرر التعليمي',
 			'displayName': 'الاسم الأول، اسم العائلة',
+			'due': 'Due:',
 			'evaluate': 'تقييم {displayName}',
 			'failedToFilter': 'يتعذّر تطبيق التصفية. حاول مجددًا في غضون بضع دقائق.',
 			'failedToLoadData': 'يتعذّر تحميل عمليات الإرسال. حاول مجددًا في غضون بضع دقائق.',
