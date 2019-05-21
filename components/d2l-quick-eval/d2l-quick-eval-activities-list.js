@@ -394,7 +394,8 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors(
 					this.set(`_headerColumns.${i}.headers.${j}.sorted`, true);
 					this.set(`_headerColumns.${i}.headers.${j}.desc`, descending);
 
-					result = this._applySortAndFetchData(header.sortClass, descending);
+					const customParams = this._numberOfActivitiesToShow > 0 ? {pageSize: this._numberOfActivitiesToShow} : undefined;
+					result = this._applySortAndFetchData(header.sortClass, descending, customParams);
 				}
 				else {
 					this.set(`_headerColumns.${i}.headers.${j}.sorted`, false);
