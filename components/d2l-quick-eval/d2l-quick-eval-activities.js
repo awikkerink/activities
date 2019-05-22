@@ -49,7 +49,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				</d2l-hm-filter>
 				<d2l-hm-search
 					token="[[token]]"
-					search-action="[[_searchAction]]"
+					search-action="[[searchAction]]"
 					placeholder="[[localize('search')]]"
 					aria-label$="[[localize('search')]]">
 				</d2l-hm-search>
@@ -69,21 +69,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	}
 	static get is() { return 'd2l-quick-eval-activities'; }
 
-	static get properties() {
-		return {
-			_searchAction: {
-				type: Object
-			}
-		};
-	}
-
-	ready() {
-		console.log('ready');
-		super.ready();
-		this._searchAction = this._getSearchAction(this.entity);
-		console.log(this._searchAction);
-	}
-
 	attached()  {
 		this.addEventListener('d2l-hm-search-results-loading', this._searchResultsLoading);
 		this.addEventListener('d2l-hm-search-results-loaded', this._searchResultsLoaded);
@@ -97,13 +82,11 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	}
 
 	_searchResultsLoading() {
-		console.log('_searchResultsLoading');
-		// set loading state of list to true
+		// TODO: set loading state of activity cards to true
 		this._searchError = false;
 	}
 
 	_searchResultsLoaded(e) {
-		console.log('_searchResultsLoaded');
 		this.entity = e.detail.results;
 		this._searchCleared = !e.detail.searchIsCleared;
 
@@ -116,9 +99,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	}
 
 	_errorOnSearch(evt) {
-		console.log('_errorOnSearch');
 		this._logError(evt.detail.error, {developerMessage: 'Failed to retrieve search results.'});
-		// set loading state of list to false
+		// TODO: set loading state of activity cards to false
 		this._searchError = true;
 	}
 }

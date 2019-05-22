@@ -11,6 +11,9 @@ window.D2L.PolymerBehaviors.QuickEval = window.D2L.PolymerBehaviors.QuickEval ||
 D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 
 	properties: {
+		searchAction: {
+			type: Object
+		},
 		_searchError: {
 			type: Boolean,
 			value: false
@@ -29,12 +32,15 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 		}
 	},
 
+	observers: [
+		'_getSearchAction(entity)'
+	],
+
 	_getSearchAction: function(entity) {
 		const search = 'search';
 		if (entity && entity.hasActionByName && entity.hasActionByName(search)) {
-			return entity.getActionByName(search);
+			this.searchAction = entity.getActionByName(search);
 		}
-		return null;
 	},
 
 	_isSearchResultSummaryVisible: function() {
