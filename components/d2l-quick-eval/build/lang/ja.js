@@ -17,6 +17,7 @@ const LangJaImpl = (superClass) => class extends superClass {
 			'displayName': '名、姓',
 			'due': 'Due: {date}',
 			'evaluate': '{displayName} さんの評価',
+			'evaluateAll': 'Evaluate All',
 			'evaluated': 'Evaluated',
 			'failedToFilter': 'フィルタを適用できません。しばらくしてからもう一度試してください。',
 			'failedToLoadData': '送信物を読み込めません。しばらくしてからもう一度試してください。',
@@ -30,6 +31,7 @@ const LangJaImpl = (superClass) => class extends superClass {
 			'noCriteriaMatch': '条件に一致する送信物はありません。',
 			'noResults': 'ここには結果がありません。',
 			'noSubmissions': '確認が必要な送信物はありません。',
+			'publishAll': 'Publish All',
 			'published': 'Published',
 			'search': '検索',
 			'searchResultsMore': '{num} 件以上の検索結果',
@@ -37,9 +39,12 @@ const LangJaImpl = (superClass) => class extends superClass {
 			'searchResultsSingle': '1 件の検索結果',
 			'sortBy': '{columnName} で並べ替え',
 			'submissionDate': '送信日',
+			'submissionList': 'Submission List',
 			'submissions': 'Submissions',
 			'tableTitle': 'コースやツールをまたいだ、受講者からの未評価の送信物リスト',
 			'tryAgain': 'もう一度試してください',
+			'unreadSubmissions': '{num} unread submissions',
+			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
 			'viewBy': 'View by:'
 		};
 	}

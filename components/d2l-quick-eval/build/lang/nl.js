@@ -17,6 +17,7 @@ const LangNlImpl = (superClass) => class extends superClass {
 			'displayName': 'Voornaam, achternaam',
 			'due': 'Due: {date}',
 			'evaluate': '{displayName} evalueren',
+			'evaluateAll': 'Evaluate All',
 			'evaluated': 'Evaluated',
 			'failedToFilter': 'Kan filter niet toepassen. Probeer het nogmaals over een paar minuten.',
 			'failedToLoadData': 'Kan indieningen via postvak niet laden. Probeer het nogmaals over een paar minuten.',
@@ -30,6 +31,7 @@ const LangNlImpl = (superClass) => class extends superClass {
 			'noCriteriaMatch': 'Er zijn geen indieningen via postvak die overeenkomen met uw criteria.',
 			'noResults': 'Geen resultaten hier.',
 			'noSubmissions': 'Er zijn geen indieningen via postvak die uw aandacht nodig hebben.',
+			'publishAll': 'Publish All',
 			'published': 'Published',
 			'search': 'Zoeken',
 			'searchResultsMore': '{num}+ zoekresultaten',
@@ -37,9 +39,12 @@ const LangNlImpl = (superClass) => class extends superClass {
 			'searchResultsSingle': '1 zoekresultaat',
 			'sortBy': 'Sorteren op {columnName}',
 			'submissionDate': 'Datum van indiening via postvak',
+			'submissionList': 'Submission List',
 			'submissions': 'Submissions',
 			'tableTitle': 'Lijst van niet-geëvalueerde indieningen via postvak van cursisten van alle cursussen en tools',
 			'tryAgain': 'Probeer het opnieuw',
+			'unreadSubmissions': '{num} unread submissions',
+			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
 			'viewBy': 'View by:'
 		};
 	}

@@ -17,6 +17,7 @@ const LangArImpl = (superClass) => class extends superClass {
 			'displayName': 'الاسم الأول، اسم العائلة',
 			'due': 'Due: {date}',
 			'evaluate': 'تقييم {displayName}',
+			'evaluateAll': 'Evaluate All',
 			'evaluated': 'Evaluated',
 			'failedToFilter': 'يتعذّر تطبيق التصفية. حاول مجددًا في غضون بضع دقائق.',
 			'failedToLoadData': 'يتعذّر تحميل عمليات الإرسال. حاول مجددًا في غضون بضع دقائق.',
@@ -30,6 +31,7 @@ const LangArImpl = (superClass) => class extends superClass {
 			'noCriteriaMatch': 'لا تتوفر أي عمليات إرسال تتوافق مع معاييرك.',
 			'noResults': 'لا تتوفر أي نتائج هنا.',
 			'noSubmissions': 'لا تتوفر أي عمليات إرسال تتطلب اهتمامك.',
+			'publishAll': 'Publish All',
 			'published': 'Published',
 			'search': 'بحث',
 			'searchResultsMore': 'أكثر من {num} من نتائج البحث',
@@ -37,9 +39,12 @@ const LangArImpl = (superClass) => class extends superClass {
 			'searchResultsSingle': 'نتيجة بحث واحدة',
 			'sortBy': 'الفرز بحسب {columnName}',
 			'submissionDate': 'تاريخ الإرسال',
+			'submissionList': 'Submission List',
 			'submissions': 'Submissions',
 			'tableTitle': 'قائمة بعمليات إرسال المتعلّم غير المقيّمة من المقررات التعليمية والأدوات',
 			'tryAgain': 'المحاولة مرة أخرى',
+			'unreadSubmissions': '{num} unread submissions',
+			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
 			'viewBy': 'View by:'
 		};
 	}

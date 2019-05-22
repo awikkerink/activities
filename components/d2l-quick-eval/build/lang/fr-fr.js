@@ -17,6 +17,7 @@ const LangFrfrImpl = (superClass) => class extends superClass {
 			'displayName': 'Prénom, Nom',
 			'due': 'Due: {date}',
 			'evaluate': 'Évaluer {displayName}',
+			'evaluateAll': 'Evaluate All',
 			'evaluated': 'Evaluated',
 			'failedToFilter': 'Impossible d’appliquer le filtre. Réessayez dans quelques minutes.',
 			'failedToLoadData': 'Impossible de charger les soumissions. Réessayez dans quelques minutes.',
@@ -30,6 +31,7 @@ const LangFrfrImpl = (superClass) => class extends superClass {
 			'noCriteriaMatch': 'There are no submissions that match your criteria.',
 			'noResults': 'Aucun résultat.',
 			'noSubmissions': 'Aucune soumission ne nécessite votre attention.',
+			'publishAll': 'Publish All',
 			'published': 'Published',
 			'search': 'Rechercher',
 			'searchResultsMore': '{num}+ Résultats de recherche',
@@ -37,9 +39,12 @@ const LangFrfrImpl = (superClass) => class extends superClass {
 			'searchResultsSingle': '1 Search Result',
 			'sortBy': 'Sort by {columnName}',
 			'submissionDate': 'Date de la soumission',
+			'submissionList': 'Submission List',
 			'submissions': 'Submissions',
 			'tableTitle': 'Liste des soumissions non évaluées de l’apprenant dans l’ensemble des cours et des outils',
 			'tryAgain': 'Réessayez',
+			'unreadSubmissions': '{num} unread submissions',
+			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
 			'viewBy': 'View by:'
 		};
 	}

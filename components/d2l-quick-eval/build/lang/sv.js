@@ -17,6 +17,7 @@ const LangSvImpl = (superClass) => class extends superClass {
 			'displayName': 'Förnamn, efternamn',
 			'due': 'Due: {date}',
 			'evaluate': 'Utvärdera {displayName}',
+			'evaluateAll': 'Evaluate All',
 			'evaluated': 'Evaluated',
 			'failedToFilter': 'Det gick inte att använda filtret. Försök igen om några minuter.',
 			'failedToLoadData': 'Det gick inte att läsa in inlämningarna. Försök igen om några minuter.',
@@ -30,6 +31,7 @@ const LangSvImpl = (superClass) => class extends superClass {
 			'noCriteriaMatch': 'Det finns inga inlämningar som matchar dina kriterier.',
 			'noResults': 'Det finns inga resultat här.',
 			'noSubmissions': 'Det finns inga inlämningar som du behöver utföra någon åtgärd på.',
+			'publishAll': 'Publish All',
 			'published': 'Published',
 			'search': 'Sökning',
 			'searchResultsMore': '{num}+ sökresultat',
@@ -37,9 +39,12 @@ const LangSvImpl = (superClass) => class extends superClass {
 			'searchResultsSingle': '1 sökresultat',
 			'sortBy': 'Sortera efter {columnName}',
 			'submissionDate': 'Inlämningsdatum',
+			'submissionList': 'Submission List',
 			'submissions': 'Submissions',
 			'tableTitle': 'Lista över ej utvärderade elevinlämningar från kurser och verktyg',
 			'tryAgain': 'Försök på nytt',
+			'unreadSubmissions': '{num} unread submissions',
+			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
 			'viewBy': 'View by:'
 		};
 	}

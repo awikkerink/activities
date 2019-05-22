@@ -17,6 +17,7 @@ const LangTrImpl = (superClass) => class extends superClass {
 			'displayName': 'Ad, Soyad',
 			'due': 'Due: {date}',
 			'evaluate': 'Değerlendir: {displayName}',
+			'evaluateAll': 'Evaluate All',
 			'evaluated': 'Evaluated',
 			'failedToFilter': 'Filtre uygulanamıyor. Birkaç dakika içinde tekrar deneyin.',
 			'failedToLoadData': 'Gönderiler yüklenemiyor. Birkaç dakika içinde tekrar deneyin.',
@@ -30,6 +31,7 @@ const LangTrImpl = (superClass) => class extends superClass {
 			'noCriteriaMatch': 'Kriterinizle eşleşen gönderi yok.',
 			'noResults': 'Sonuç yok.',
 			'noSubmissions': 'İlgilenmeniz gereken gönderi yok.',
+			'publishAll': 'Publish All',
 			'published': 'Published',
 			'search': 'Ara',
 			'searchResultsMore': '{num}+ Arama Sonucu',
@@ -37,9 +39,12 @@ const LangTrImpl = (superClass) => class extends superClass {
 			'searchResultsSingle': '1 Arama Sonucu',
 			'sortBy': 'Şuna göre sırala: {columnName}',
 			'submissionDate': 'Gönderme Tarihi',
+			'submissionList': 'Submission List',
 			'submissions': 'Submissions',
 			'tableTitle': 'Dersler ve araçlar genelinde değerlendirilmemiş Öğrenci gönderilerinin listesi',
 			'tryAgain': 'Tekrar Dene',
+			'unreadSubmissions': '{num} unread submissions',
+			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
 			'viewBy': 'View by:'
 		};
 	}

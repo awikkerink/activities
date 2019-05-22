@@ -17,6 +17,7 @@ const LangFiImpl = (superClass) => class extends superClass {
 			'displayName': 'First Name, Last Name',
 			'due': 'Due: {date}',
 			'evaluate': 'Evaluate {displayName}',
+			'evaluateAll': 'Evaluate All',
 			'evaluated': 'Evaluated',
 			'failedToFilter': 'Unable to apply filter. Try again in a few minutes.',
 			'failedToLoadData': 'Unable to load submissions. Try again in a few minutes.',
@@ -30,6 +31,7 @@ const LangFiImpl = (superClass) => class extends superClass {
 			'noCriteriaMatch': 'There are no submissions that match your criteria.',
 			'noResults': 'No results here.',
 			'noSubmissions': 'There are no submissions that need your attention.',
+			'publishAll': 'Publish All',
 			'published': 'Published',
 			'search': 'Search',
 			'searchResultsSingle': '1 Search Result',
@@ -37,9 +39,12 @@ const LangFiImpl = (superClass) => class extends superClass {
 			'searchResultsMore': '{num}+ Search Results',
 			'sortBy': 'Sort by {columnName}',
 			'submissionDate': 'Submission Date',
+			'submissionList': 'Submission List',
 			'submissions': 'Submissions',
 			'tableTitle': 'List of unevaluated Learner submissions from across courses and tools',
 			'tryAgain': 'Try Again',
+			'unreadSubmissions': '{num} unread submissions',
+			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
 			'viewBy': 'View by:'
 		};
 	}

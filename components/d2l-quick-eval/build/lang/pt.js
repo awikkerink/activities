@@ -17,6 +17,7 @@ const LangPtImpl = (superClass) => class extends superClass {
 			'displayName': 'Nome e Sobrenome',
 			'due': 'Due: {date}',
 			'evaluate': 'Avaliar {displayName}',
+			'evaluateAll': 'Evaluate All',
 			'evaluated': 'Evaluated',
 			'failedToFilter': 'Não foi possível aplicar o filtro. Tente novamente em alguns minutos.',
 			'failedToLoadData': 'Não foi possível carregar os envios. Tente novamente em alguns minutos.',
@@ -30,6 +31,7 @@ const LangPtImpl = (superClass) => class extends superClass {
 			'noCriteriaMatch': 'Não há nenhum envio correspondente aos seus critérios.',
 			'noResults': 'Nenhum resultado aqui.',
 			'noSubmissions': 'Não há envios que precisem de sua atenção.',
+			'publishAll': 'Publish All',
 			'published': 'Published',
 			'search': 'Pesquisar',
 			'searchResultsMore': '{num}+ resultados da pesquisa',
@@ -37,9 +39,12 @@ const LangPtImpl = (superClass) => class extends superClass {
 			'searchResultsSingle': '1 resultado da pesquisa',
 			'sortBy': 'Classificar por {columnName}',
 			'submissionDate': 'Data do Envio',
+			'submissionList': 'Submission List',
 			'submissions': 'Submissions',
 			'tableTitle': 'Lista de envios de alunos não avaliados de todos os cursos e ferramentas',
 			'tryAgain': 'Tentar novamente',
+			'unreadSubmissions': '{num} unread submissions',
+			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
 			'viewBy': 'View by:'
 		};
 	}

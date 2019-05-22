@@ -17,6 +17,7 @@ const LangZhtwImpl = (superClass) => class extends superClass {
 			'displayName': '名字，姓氏',
 			'due': 'Due: {date}',
 			'evaluate': '評估{displayName}',
+			'evaluateAll': 'Evaluate All',
 			'evaluated': 'Evaluated',
 			'failedToFilter': '無法套用篩選器。請在幾分鐘後再試一次。',
 			'failedToLoadData': '無法載入提交項目。請在幾分鐘後再試一次。',
@@ -30,6 +31,7 @@ const LangZhtwImpl = (superClass) => class extends superClass {
 			'noCriteriaMatch': '沒有提交項目符合您的標準。',
 			'noResults': '這裡沒有任何結果。',
 			'noSubmissions': '沒有提交項目需要您注意。',
+			'publishAll': 'Publish All',
 			'published': 'Published',
 			'search': '搜尋',
 			'searchResultsMore': '{num}+ 個搜尋結果',
@@ -37,9 +39,12 @@ const LangZhtwImpl = (superClass) => class extends superClass {
 			'searchResultsSingle': '1 個搜尋結果',
 			'sortBy': '排序方式：{columnName}',
 			'submissionDate': '提交日期',
+			'submissionList': 'Submission List',
 			'submissions': 'Submissions',
 			'tableTitle': '此清單包含所有課程和工具中未評估的學習者提交項目',
 			'tryAgain': '再試一次',
+			'unreadSubmissions': '{num} unread submissions',
+			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
 			'viewBy': 'View by:'
 		};
 	}

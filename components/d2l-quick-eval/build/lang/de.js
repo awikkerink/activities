@@ -17,6 +17,7 @@ const LangDeImpl = (superClass) => class extends superClass {
 			'displayName': 'Vorname, Nachname',
 			'due': 'Due: {date}',
 			'evaluate': '{displayName} bewerten',
+			'evaluateAll': 'Evaluate All',
 			'evaluated': 'Evaluated',
 			'failedToFilter': 'Filter konnte nicht angewendet werden. Versuchen Sie es in ein paar Minuten erneut.',
 			'failedToLoadData': 'Abgaben können nicht geladen werden. Versuchen Sie es in ein paar Minuten erneut.',
@@ -30,6 +31,7 @@ const LangDeImpl = (superClass) => class extends superClass {
 			'noCriteriaMatch': 'Es gibt keine Abgaben, die mit Ihren Kriterien übereinstimmen.',
 			'noResults': 'Keine Ergebnisse',
 			'noSubmissions': 'Es gibt keine Abgaben, die Ihre Aufmerksamkeit erfordern.',
+			'publishAll': 'Publish All',
 			'published': 'Published',
 			'search': 'Suchen',
 			'searchResultsMore': 'Über {num} Suchergebnisse',
@@ -37,9 +39,12 @@ const LangDeImpl = (superClass) => class extends superClass {
 			'searchResultsSingle': '1 Suchergebnis',
 			'sortBy': 'Sortieren nach {columnName}',
 			'submissionDate': 'Abgabedatum',
+			'submissionList': 'Submission List',
 			'submissions': 'Submissions',
 			'tableTitle': 'Liste nicht bewerteter Abgaben von Lernern in allen Kursen und Tools',
 			'tryAgain': 'Erneut versuchen',
+			'unreadSubmissions': '{num} unread submissions',
+			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
 			'viewBy': 'View by:'
 		};
 	}

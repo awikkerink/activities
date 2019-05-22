@@ -17,6 +17,7 @@ const LangEsImpl = (superClass) => class extends superClass {
 			'displayName': 'Nombre, Apellido',
 			'due': 'Due: {date}',
 			'evaluate': 'Evaluar {displayName}',
+			'evaluateAll': 'Evaluate All',
 			'evaluated': 'Evaluated',
 			'failedToFilter': 'No se puede aplicar el filtro. Intente de nuevo en algunos minutos.',
 			'failedToLoadData': 'No se puede cargar los envíos. Intente de nuevo en algunos minutos.',
@@ -30,6 +31,7 @@ const LangEsImpl = (superClass) => class extends superClass {
 			'noCriteriaMatch': 'No hay materiales enviados que coincidan con sus criterios.',
 			'noResults': 'No hay resultados aquí.',
 			'noSubmissions': 'No hay envíos que requieran su atención.',
+			'publishAll': 'Publish All',
 			'published': 'Published',
 			'search': 'Buscar',
 			'searchResultsMore': 'Más de {num} resultados de búsqueda',
@@ -37,9 +39,12 @@ const LangEsImpl = (superClass) => class extends superClass {
 			'searchResultsSingle': '1 resultado de búsqueda',
 			'sortBy': 'Ordenar por {columnName}',
 			'submissionDate': 'Fecha del material enviado',
+			'submissionList': 'Submission List',
 			'submissions': 'Submissions',
 			'tableTitle': 'Lista de envíos no evaluados del estudiante de todos los cursos y herramientas',
 			'tryAgain': 'Volver a intentarlo',
+			'unreadSubmissions': '{num} unread submissions',
+			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
 			'viewBy': 'View by:'
 		};
 	}

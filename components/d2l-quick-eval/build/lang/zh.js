@@ -17,6 +17,7 @@ const LangZhImpl = (superClass) => class extends superClass {
 			'displayName': '名字，姓氏',
 			'due': 'Due: {date}',
 			'evaluate': '评估 {displayName}',
+			'evaluateAll': 'Evaluate All',
 			'evaluated': 'Evaluated',
 			'failedToFilter': '无法应用筛选器。请在几分钟后重试。',
 			'failedToLoadData': '无法加载提交。请在几分钟后重试。',
@@ -30,6 +31,7 @@ const LangZhImpl = (superClass) => class extends superClass {
 			'noCriteriaMatch': '没有与筛选条件匹配的提交。',
 			'noResults': '此处没有结果。',
 			'noSubmissions': '没有需要您注意的提交。',
+			'publishAll': 'Publish All',
 			'published': 'Published',
 			'search': '搜索',
 			'searchResultsMore': '{Num}+ 搜索结果',
@@ -37,9 +39,12 @@ const LangZhImpl = (superClass) => class extends superClass {
 			'searchResultsSingle': '个搜索结果',
 			'sortBy': 'Sort by {columnName}',
 			'submissionDate': '提交日期',
+			'submissionList': 'Submission List',
 			'submissions': 'Submissions',
 			'tableTitle': '来自各个课程和工具的未评估学员提交的列表',
 			'tryAgain': '请重试',
+			'unreadSubmissions': '{num} unread submissions',
+			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
 			'viewBy': 'View by:'
 		};
 	}
