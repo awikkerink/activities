@@ -55,12 +55,12 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				</d2l-hm-search>
 			</div>
 			<div class="clear"></div>
-			<d2l-alert type="critical" hidden$="[[!_searchError]]" id="d2l-quick-eval-search-error-alert">
+			<d2l-alert type="critical" hidden$="[[!searchError]]" id="d2l-quick-eval-search-error-alert">
 				[[localize('failedToSearch')]]
 			</d2l-alert>
 			<d2l-quick-eval-search-results-summary-container
-				search-results-count$="[[_searchResultsCount]]"
-				hidden$="[[!_showSearchResultSummary]]">
+				search-results-count$="[[searchResultsCount]]"
+				hidden$="[[searchCleared]]">
 			</d2l-quick-eval-search-results-summary-container>
 		`;
 
@@ -68,40 +68,5 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		return quickEvalActivitiesTemplate;
 	}
 	static get is() { return 'd2l-quick-eval-activities'; }
-
-	attached()  {
-		this.addEventListener('d2l-hm-search-results-loading', this._searchResultsLoading);
-		this.addEventListener('d2l-hm-search-results-loaded', this._searchResultsLoaded);
-		this.addEventListener('d2l-hm-search-error', this._errorOnSearch);
-	}
-
-	detached() {
-		this.removeEventListener('d2l-hm-search-results-loading', this._searchResultsLoading);
-		this.removeEventListener('d2l-hm-search-results-loaded', this._searchResultsLoaded);
-		this.removeEventListener('d2l-hm-search-error', this._errorOnSearch);
-	}
-
-	_searchResultsLoading() {
-		// TODO: set loading state of activity cards to true
-		this._searchError = false;
-	}
-
-	_searchResultsLoaded(e) {
-		this.entity = e.detail.results;
-		this._searchCleared = !e.detail.searchIsCleared;
-
-		if (this.entity && this.entity.entities) {
-			this._searchResultsCount = this.entity.entities.length;
-		} else {
-			this._searchResultsCount = 0;
-		}
-		this._searchError = false;
-	}
-
-	_errorOnSearch(evt) {
-		this._logError(evt.detail.error, {developerMessage: 'Failed to retrieve search results.'});
-		// TODO: set loading state of activity cards to false
-		this._searchError = true;
-	}
 }
 window.customElements.define(D2LQuickEvalActivities.is, D2LQuickEvalActivities);

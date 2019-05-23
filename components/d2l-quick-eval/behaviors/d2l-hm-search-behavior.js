@@ -14,27 +14,35 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 		searchAction: {
 			type: Object
 		},
-		_searchError: {
-			type: Boolean,
-			value: false
-		},
-		_searchResultsCount: {
-			type: Number,
-			value: 0
-		},
-		_searchCleared: {
+		searchCleared: {
 			type: Boolean,
 			value: true
 		},
-		_showSearchResultSummary: {
+		searchError: {
 			type: Boolean,
-			computed: '_isSearchResultSummaryVisible()'
+			value: false
+		},
+		searchResultsCount: {
+			type: Number,
+			value: 0
 		}
 	},
 
 	observers: [
 		'_getSearchAction(entity)'
 	],
+
+	attached: function() {
+		this.addEventListener('d2l-hm-search-results-loading', this._searchResultsLoading);
+		this.addEventListener('d2l-hm-search-results-loaded', this._searchResultsLoaded);
+		this.addEventListener('d2l-hm-search-error', this._errorOnSearch);
+	},
+
+	detached: function() {
+		this.removeEventListener('d2l-hm-search-results-loading', this._searchResultsLoading);
+		this.removeEventListener('d2l-hm-search-results-loaded', this._searchResultsLoaded);
+		this.removeEventListener('d2l-hm-search-error', this._errorOnSearch);
+	},
 
 	_getSearchAction: function(entity) {
 		const search = 'search';
@@ -43,8 +51,24 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 		}
 	},
 
-	_isSearchResultSummaryVisible: function() {
-		return !this._searchError && !this._searchCleared;
+	_searchResultsLoading: function() {
+		this.searchError = false;
+	},
+
+	_searchResultsLoaded: function(e) {
+		this.entity = e.detail.results;
+		this.searchCleared = e.detail.searchIsCleared;
+
+		if (this.entity && this.entity.entities) {
+			this.searchResultsCount = this.entity.entities.length;
+		} else {
+			this.searchResultsCount = 0;
+		}
+		this.searchError = false;
+	},
+
+	_errorOnSearch: function(evt) {
+		this.searchError = true;
 	}
 };
 
