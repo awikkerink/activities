@@ -1,4 +1,5 @@
 import './d2l-siren-helper-behavior.js';
+import {QuickEvalLogging} from '../QuickEvalLogging.js';
 
 window.D2L = window.D2L || {};
 window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
@@ -71,6 +72,7 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 
 	_errorOnSearch: function(e) {
 		this.searchError = true;
+		this._logError(e.detail.error, {developerMessage: 'Failed to retrieve search results.'});
 	},
 
 	_clearSearchResults: function() {
