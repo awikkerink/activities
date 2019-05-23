@@ -4,7 +4,7 @@ import 'd2l-colors/d2l-colors.js';
 import 'd2l-icons/d2l-icon.js';
 import 'd2l-icons/tier3-icons.js';
 import 'd2l-tooltip/d2l-tooltip.js';
-import 'd2l-offscreen/d2l-offscreen-shared-styles.js'
+import 'd2l-offscreen/d2l-offscreen-shared-styles.js';
 
 class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 	static get is() { return 'd2l-quick-eval-activity-card'; }
@@ -150,15 +150,19 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 			releaseConditions: {
 				type: Boolean,
 				value: false
+			},
+			_focused: {
+				type: Boolean,
+				value: false
 			}
 		};
 	}
 
-	_clicked(e) {
-		const card = this.shadowRoot.querySelector('.d2l-quick-eval-card');
-		if (e.path[0] === card) {
-			card.focus();
+	_clicked() {
+		if (this._focused) {
+			this.blur();
 		}
+		this._focused = !this._focused;
 	}
 
 	_getNewSubmissionsText() {
