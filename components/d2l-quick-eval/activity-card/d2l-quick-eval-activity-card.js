@@ -1,5 +1,6 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 import {QuickEvalLocalize} from '../QuickEvalLocalize.js';
+import '../../d2l-activity-name/d2l-activity-name.js';
 import 'd2l-colors/d2l-colors.js';
 import 'd2l-icons/d2l-icon.js';
 import 'd2l-icons/tier3-icons.js';
@@ -75,7 +76,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 			</style>
 			<div class="d2l-quick-eval-card" on-click="_clicked" tabindex="-1">
 				<div class="d2l-quick-eval-card-left">
-					<div>[[activityName]]<span hidden$="[[!gradeItem]]"> GR</span><span hidden$="[[!releaseConditions]]"> RC</span></div>
+					<d2l-activity-name href="[[activityNameHref]]" token="[[token]]"></d2l-activity-name>
 					<div>[[activityType]] &bull; [[localize('due', 'date', dueDate)]]</div>
 				</div>
 				<div class="d2l-quick-eval-card-right">
@@ -135,21 +136,17 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				type: String,
 				value: ''
 			},
-			activityName: {
+			activityNameHref: {
 				type: String,
+				value: ''
+			},
+			token: {
+				type: String, 
 				value: ''
 			},
 			activityType: {
 				type: String,
 				value: ''
-			},
-			gradeItem: {
-				type: Boolean,
-				value: false
-			},
-			releaseConditions: {
-				type: Boolean,
-				value: false
 			},
 			_focused: {
 				type: Boolean,
