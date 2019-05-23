@@ -141,7 +141,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				value: ''
 			},
 			token: {
-				type: String, 
+				type: String,
 				value: ''
 			},
 			activityType: {
