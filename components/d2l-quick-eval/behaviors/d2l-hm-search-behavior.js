@@ -36,12 +36,14 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 		this.addEventListener('d2l-hm-search-results-loading', this._searchResultsLoading);
 		this.addEventListener('d2l-hm-search-results-loaded', this._searchResultsLoaded);
 		this.addEventListener('d2l-hm-search-error', this._errorOnSearch);
+		this.addEventListener('d2l-quick-eval-search-results-summary-container-clear-search', this._clearSearchResults);
 	},
 
 	detached: function() {
 		this.removeEventListener('d2l-hm-search-results-loading', this._searchResultsLoading);
 		this.removeEventListener('d2l-hm-search-results-loaded', this._searchResultsLoaded);
 		this.removeEventListener('d2l-hm-search-error', this._errorOnSearch);
+		this.removeEventListener('d2l-quick-eval-search-results-summary-container-clear-search', this._clearSearchResults);
 	},
 
 	_getSearchAction: function(entity) {
@@ -67,8 +69,12 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 		this.searchError = false;
 	},
 
-	_errorOnSearch: function(evt) {
+	_errorOnSearch: function(e) {
 		this.searchError = true;
+	},
+
+	_clearSearchResults: function() {
+		this.searchCleared = true;
 	}
 };
 
