@@ -75,7 +75,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				}
 			</style>
 			<div class="d2l-quick-eval-card" on-click="_clicked" tabindex="-1">
-				<div class="d2l-quick-eval-card-left">
+				<div>
 					<d2l-activity-name href="[[activityNameHref]]" token="[[token]]"></d2l-activity-name>
 					<div>[[activityType]] &bull; [[localize('due', 'date', dueDate)]]</div>
 				</div>
