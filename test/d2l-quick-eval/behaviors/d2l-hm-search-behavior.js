@@ -1,3 +1,5 @@
+import SirenParse from 'siren-parser';
+
 (function() {
 	var searchBehavior;
 
@@ -7,24 +9,81 @@
 		});
 		test('default state is correct', () => {
 			assert.equal(null, searchBehavior.searchAction);
-			assert.equal(true, searchBehavior.searchCleared);
-			assert.equal(false, searchBehavior.searchError);
+			assert.isTrue(searchBehavior.searchCleared);
+			assert.isFalse(searchBehavior.searchError);
 			assert.equal(0, searchBehavior.searchResultsCount);
+		});
+		test('_setSearchAction properly sets searchAction', () => {
+			const entity = {
+				'actions': [
+					{
+						'name': 'search',
+						'href': '/not/a/real/url'
+					}
+				]
+			};
+
+			assert.equal(null, searchBehavior.searchAction);
+			searchBehavior._setSearchAction(SirenParse(entity));
+			assert.isNotNull(searchBehavior.searchAction);
 		});
 		test('_searchResultsLoading sets searchError to false', () => {
 			searchBehavior.searchError = true;
 			searchBehavior._searchResultsLoading();
-			assert.equal(false, searchBehavior.searchError);
+			assert.isFalse(searchBehavior.searchError);
+		});
+		test('_searchResultsLoaded properly sets variables when entity is valid', () => {
+			const entity = {
+				'entities': [
+					{
+						'rel': [],
+						'href': '/1'
+					},
+					{
+						'rel': [],
+						'href': '/2'
+					},
+					{
+						'rel': [],
+						'href': '/3'
+					}
+				]
+			};
+
+			const e = {
+				detail: {
+					results: SirenParse(entity),
+					searchIsCleared: false
+				}
+			};
+
+			searchBehavior._searchResultsLoaded(e);
+			assert.isFalse(searchBehavior.searchCleared);
+			assert.equal(3, searchBehavior.searchResultsCount);
+			assert.isFalse(searchBehavior.searchError);
+		});
+		test('_searchResultsLoaded properly sets variables when entity is null', () => {
+			const e = {
+				detail: {
+					results: null,
+					searchIsCleared: false
+				}
+			};
+
+			searchBehavior._searchResultsLoaded(e);
+			assert.isFalse(searchBehavior.searchCleared);
+			assert.equal(0, searchBehavior.searchResultsCount);
+			assert.isFalse(searchBehavior.searchError);
 		});
 		test('_errorOnSearch sets searchError to true', () => {
 			searchBehavior.searchError = false;
 			searchBehavior._errorOnSearch();
-			assert.equal(true, searchBehavior.searchError);
+			assert.isTrue(searchBehavior.searchError);
 		});
 		test('_clearSearchResults sets searchCleared to true', () => {
 			searchBehavior.searchCleared = false;
 			searchBehavior._clearSearchResults();
-			assert.equal(true, searchBehavior.searchCleared);
+			assert.isTrue(searchBehavior.searchCleared);
 		});
 	});
 })();

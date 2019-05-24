@@ -29,7 +29,7 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 	},
 
 	observers: [
-		'_getSearchAction(entity)'
+		'_setSearchAction(entity)'
 	],
 
 	attached: function() {
@@ -46,7 +46,7 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 		this.removeEventListener('d2l-quick-eval-search-results-summary-container-clear-search', this._clearSearchResults);
 	},
 
-	_getSearchAction: function(entity) {
+	_setSearchAction: function(entity) {
 		const search = 'search';
 		if (entity && entity.hasActionByName && entity.hasActionByName(search)) {
 			this.searchAction = entity.getActionByName(search);
