@@ -50,6 +50,8 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 		const search = 'search';
 		if (entity && entity.hasActionByName && entity.hasActionByName(search)) {
 			this.searchAction = entity.getActionByName(search);
+		} else {
+			this.searchAction = null;
 		}
 	},
 

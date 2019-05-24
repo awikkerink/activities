@@ -13,7 +13,7 @@ import SirenParse from 'siren-parser';
 			assert.isFalse(searchBehavior.searchError);
 			assert.equal(0, searchBehavior.searchResultsCount);
 		});
-		test('_setSearchAction properly sets searchAction', () => {
+		test('_setSearchAction properly sets searchAction given valid entity', () => {
 			const entity = {
 				'actions': [
 					{
@@ -26,6 +26,22 @@ import SirenParse from 'siren-parser';
 			assert.equal(null, searchBehavior.searchAction);
 			searchBehavior._setSearchAction(SirenParse(entity));
 			assert.isNotNull(searchBehavior.searchAction);
+		});
+		test('_setSearchAction invalidates search action given null entity', () => {
+			const entity = {
+				'actions': [
+					{
+						'name': 'search',
+						'href': '/not/a/real/url'
+					}
+				]
+			};
+
+			searchBehavior._setSearchAction(SirenParse(entity));
+			assert.isNotNull(searchBehavior.searchAction);
+
+			searchBehavior._setSearchAction(null);
+			assert.equal(null, searchBehavior.searchAction);
 		});
 		test('_searchResultsLoading sets searchError to false', () => {
 			searchBehavior.searchError = true;

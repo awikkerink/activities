@@ -4,8 +4,6 @@ import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
 
 class D2LHMSearchBehaviourTestComponent extends mixinBehaviors([D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour], PolymerElement) {
 	static get is() { return 'd2l-hm-search-behavior-test-component'; }
-
-	static get behaviors() { return [ D2L.PolymerBehaviors.Siren.EntityBehavior ]; }
 }
 
 window.customElements.define(D2LHMSearchBehaviourTestComponent.is, D2LHMSearchBehaviourTestComponent);
