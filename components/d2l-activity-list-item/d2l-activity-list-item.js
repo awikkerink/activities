@@ -18,7 +18,6 @@ import './d2l-activity-list-item-enroll.js';
 import SirenParse from 'siren-parser';
 import {ActivityListItemResponsiveConstants} from './ActivityListItemResponsiveConstants.js';
 import 'd2l-colors/d2l-colors.js';
-import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
 
 /**
  * @customElement
@@ -26,7 +25,6 @@ import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
  */
 class D2lActivityListItem extends mixinBehaviors([
 	IronResizableBehavior,
-	D2L.PolymerBehaviors.Siren.EntityBehavior,
 	D2L.PolymerBehaviors.FocusableBehavior], ActivityListItemResponsiveConstants(MutableData(PolymerElement))) {
 	static get template() {
 		return html`
@@ -301,6 +299,7 @@ class D2lActivityListItem extends mixinBehaviors([
 				type: String,
 				observer: '_onHrefChange'
 			},
+			token: String,
 			entity: {
 				type: Object,
 				value: function() {
