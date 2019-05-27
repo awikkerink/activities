@@ -91,6 +91,7 @@ class D2lActivityCard extends PolymerElement {
 				type: String,
 				observer: '_onHrefChange'
 			},
+			token: String,
 			entity: {
 				type: Object,
 				value: function() {
