@@ -68,14 +68,20 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 						headers: [{ key: 'masterTeacher', sortClass: 'primary-facilitator', canSort: false, sorted: false, desc: false }]
 					}
 				]
-			}
+			},
+			_numberOfActivitiesToShow: {
+				type: Number,
+				computed: '_computeNumberOfActivitiesToShow(_data, _numberOfActivitiesToShow)',
+				value: 20
+			},
 		};
 	}
 
 	static get observers() {
 		return [
 			'_loadData(entity)',
-			'_handleSorts(entity)'
+			'_handleSorts(entity)',
+			'_dispatchPageSizeEvent(_numberOfActivitiesToShow)'
 		];
 	}
 
@@ -225,7 +231,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 					this.set(`_headerColumns.${i}.headers.${j}.sorted`, true);
 					this.set(`_headerColumns.${i}.headers.${j}.desc`, descending);
 
-					// bedley fixme _numberOfActivitiesToShow
 					const customParams = this._numberOfActivitiesToShow > 0 ? { pageSize: this._numberOfActivitiesToShow } : undefined;
 					result = this._applySortAndFetchData(header.sortClass, descending, customParams);
 				}
@@ -252,6 +257,25 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				{
 					detail: {
 						sortedActivities: sorted
+					},
+					composed: true,
+					bubbles: true
+				}
+			)
+		);
+	}
+
+	_computeNumberOfActivitiesToShow(data, currentNumberOfActivitiesShown) {
+		return Math.max(data.length, currentNumberOfActivitiesShown);
+	}
+
+	_dispatchPageSizeEvent(numberOfActivitiesToShow) {
+		this.dispatchEvent(
+			new CustomEvent(
+				'd2l-quick-eval-activities-list-activities-shown-number-updated',
+				{
+					detail: {
+						count: numberOfActivitiesToShow
 					},
 					composed: true,
 					bubbles: true

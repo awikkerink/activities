@@ -267,11 +267,6 @@ class D2LQuickEvalActivitiesList extends QuickEvalLogging(QuickEvalLocalize(Poly
 				type: Array,
 				value: [ ]
 			},
-			_numberOfActivitiesToShow: {
-				type: Number,
-				computed: '_computeNumberOfActivitiesToShow(_data, _numberOfActivitiesToShow)',
-				value: 20
-			},
 			_numberOfActivitiesShownInSearchResults: {
 				type: Number,
 				computed: '_computeNumberOfActivitiesShownInSearchResults(_data)'
@@ -304,7 +299,7 @@ class D2LQuickEvalActivitiesList extends QuickEvalLogging(QuickEvalLocalize(Poly
 	static get observers() {
 		return [
 			'_handleNameSwap(_headerColumns.0.headers.*)',
-			'_dispatchPageSizeEvent(_numberOfActivitiesToShow)',
+
 			'_dispatchActivitiesShownInSearchResultsEvent(_numberOfActivitiesShownInSearchResults)'
 		];
 	}
@@ -316,10 +311,6 @@ class D2LQuickEvalActivitiesList extends QuickEvalLogging(QuickEvalLocalize(Poly
 
 	_isLoadingMore(fullListLoading, isLoading) {
 		return !fullListLoading && isLoading;
-	}
-
-	_computeNumberOfActivitiesToShow(data, currentNumberOfActivitiesShown) {
-		return Math.max(data.length, currentNumberOfActivitiesShown);
 	}
 
 	_computeNumberOfActivitiesShownInSearchResults(data) {
@@ -457,21 +448,6 @@ class D2LQuickEvalActivitiesList extends QuickEvalLogging(QuickEvalLocalize(Poly
 				{
 					detail: {
 						headerId: headerId
-					},
-					composed: true,
-					bubbles: true
-				}
-			)
-		);
-	}
-
-	_dispatchPageSizeEvent(numberOfActivitiesToShow) {
-		this.dispatchEvent(
-			new CustomEvent(
-				'd2l-quick-eval-activities-list-activities-shown-number-updated',
-				{
-					detail: {
-						count: numberOfActivitiesToShow
 					},
 					composed: true,
 					bubbles: true
