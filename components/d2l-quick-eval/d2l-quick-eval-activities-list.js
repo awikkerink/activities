@@ -339,9 +339,6 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors(
 			'_dispatchActivitiesShownInSearchResultsEvent(_numberOfActivitiesShownInSearchResults)'
 		];
 	}
-	ready() {
-		super.ready();
-	}
 
 	_handleSorts(entity) {
 		// entity is null on initial load
