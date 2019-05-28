@@ -226,7 +226,7 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors(
 
 			<template is="dom-if" if="[[_shouldShowLoadMore(_pageNextHref, _loading)]]">
 				<div class="d2l-quick-eval-activities-list-load-more-container">
-					<d2l-button class="d2l-quick-eval-activities-list-load-more" onclick="[[_loadMore]]">[[localize('loadMore')]]</d2l-button>
+					<d2l-button class="d2l-quick-eval-activities-list-load-more" onclick="[[_dispatchLoadMore]]">[[localize('loadMore')]]</d2l-button>
 				</div>
 			</template>
 			<template is="dom-if" if="[[_shouldShowNoSubmissions(_data.length, _loading, _health.isHealthy, filterApplied, searchApplied)]]">
@@ -334,24 +334,11 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors(
 	}
 	static get observers() {
 		return [
-			'_loadData(entity)',
-			'_handleSorts(entity)',
 			'_handleNameSwap(_headerColumns.0.headers.*)',
 			'_dispatchPageSizeEvent(_numberOfActivitiesToShow)',
 			'_dispatchActivitiesShownInSearchResultsEvent(_numberOfActivitiesShownInSearchResults)'
 		];
 	}
-	ready() {
-		super.ready();
-		this.addEventListener('d2l-siren-entity-error', function() {
-			this._fullListLoading = false;
-			this._loading = false;
-			this._handleFullLoadFailure();
-		}.bind(this));
-		this._loadMore = this._loadMore.bind(this);
-	}
-
-	constructor() { super(); }
 
 	_handleSorts(entity) {
 		// entity is null on initial load
@@ -405,7 +392,6 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors(
 
 		if (result) {
 			return result.then(sortedCollection => {
-				this.entity = sortedCollection;
 				this._dispatchSortUpdatedEvent(sortedCollection);
 			});
 		} else {
@@ -453,70 +439,6 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors(
 		return !dataLength && !isLoading && isHealthy && (filterApplied || searchApplied);
 	}
 
-	async _loadData(entity) {
-		if (!entity) {
-			return Promise.resolve();
-		}
-		this._loading = true;
-		this._fullListLoading = true;
-
-		try {
-			if (entity.entities) {
-				const result = await this._parseActivities(entity);
-				this._data = result;
-			} else {
-				this._data = [];
-				this._pageNextHref = '';
-			}
-			this._clearAlerts();
-
-		} catch (e) {
-			this._logError(e, {developerMessage: 'Unable to load activities from entity.'});
-			this._handleFullLoadFailure();
-			return Promise.reject(e);
-		} finally {
-			this._fullListLoading = false;
-			this._loading = false;
-		}
-	}
-
-	_loadMore() {
-		if (this._pageNextHref && !this._loading) {
-			this._loading = true;
-			this._followHref(this._pageNextHref)
-				.then(async function(u) {
-					if (u && u.entity) {
-						const tbody = this.shadowRoot.querySelector('d2l-tbody');
-						const lastFocusableTableElement = D2L.Dom.Focus.getLastFocusableDescendant(tbody, false);
-
-						try {
-							if (u.entity.entities) {
-								const result = await this._parseActivities(u.entity);
-								this._data = this._data.concat(result);
-							}
-						} catch (e) {
-						// Unable to load more activities from entity.
-							throw e;
-						} finally {
-							this._loading = false;
-							window.requestAnimationFrame(function() {
-								const newElementToFocus = D2L.Dom.Focus.getNextFocusable(lastFocusableTableElement, false);
-								if (newElementToFocus) {
-									newElementToFocus.focus();
-								}
-							});
-						}
-					}
-				}.bind(this))
-				.then(this._clearAlerts.bind(this))
-				.catch(function(e) {
-					this._logError(e, {developerMessage: 'Unable to load more.'});
-					this._loading = false;
-					this._handleLoadMoreFailure();
-				}.bind(this));
-		}
-	}
-
 	_clearAlerts() {
 		this.set('_health', { isHealthy: true, errorMessage: '' });
 	}
@@ -527,44 +449,6 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors(
 
 	_handleFullLoadFailure() {
 		this.set('_health', { isHealthy: false, errorMessage: 'failedToLoadData' });
-	}
-
-	async _parseActivities(entity) {
-		const extraParams = this._getExtraParams(this._getHref(entity, 'self'));
-
-		const promises = [];
-		entity.entities.forEach(function(activity) {
-			promises.push(new Promise(function(resolve) {
-
-				const item = {
-					displayName: '',
-					userHref: this._getUserHref(activity),
-					courseName: '',
-					activityNameHref: this._getActivityNameHref(activity),
-					submissionDate: this._getSubmissionDate(activity),
-					activityLink: this._getRelativeUriProperty(activity, extraParams),
-					masterTeacher: '',
-					isDraft: this._determineIfActivityIsDraft(activity)
-				};
-
-				const getUserName = this._getUserPromise(activity, item);
-				const getCourseName = this._getCoursePromise(activity, item);
-				const getMasterTeacherName =
-					this._shouldDisplayColumn('masterTeacher')
-						? this._getMasterTeacherPromise(activity, item)
-						: Promise.resolve();
-
-				Promise.all([getUserName, getCourseName, getMasterTeacherName]).then(function() {
-					resolve(item);
-				});
-			}.bind(this)));
-		}.bind(this));
-
-		this._filterHref = this._getFilterHref(entity);
-		this._pageNextHref = this._getPageNextHref(entity);
-
-		const result = await Promise.all(promises);
-		return result;
 	}
 
 	_determineIfActivityIsDraft(activity) {
@@ -701,6 +585,18 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors(
 					detail: {
 						count: countOfSearchResults
 					},
+					composed: true,
+					bubbles: true
+				}
+			)
+		);
+	}
+
+	_dispatchLoadMore() {
+		this.dispatchEvent(
+			new CustomEvent(
+				'd2l-quick-eval-submission-table-load-more',
+				{
 					composed: true,
 					bubbles: true
 				}
