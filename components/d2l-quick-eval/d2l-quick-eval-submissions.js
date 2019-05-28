@@ -3,9 +3,13 @@ import { QuickEvalLogging } from './QuickEvalLogging.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 import './behaviors/d2l-quick-eval-siren-helper-behavior.js';
 import './d2l-quick-eval-activities-list.js';
+import './behaviors/d2l-hm-sort-behaviour.js';
 
 class D2LQuickEvalSubmissions extends mixinBehaviors(
-	[D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior],
+	[
+		D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior,
+		D2L.PolymerBehaviors.QuickEval.D2LHMSortBehaviour
+	],
 	QuickEvalLogging(PolymerElement)
 ) {
 	static get template() {
@@ -16,8 +20,9 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				logging-endpoint="[[loggingEndpoint]]"
 				master-teacher="[[masterTeacher]]"
 				_data="[[_data]]"
+				_header-columns="[[_headerColumns]]"
 				on-d2l-quick-eval-submission-table-load-more="_loadMore"
-				on-d2l-quick-eval-activities-list-sort-updated="_sortChanged"
+				on-d2l-quick-eval-submissions-table-sort-requested="_handleSortRequested"
 			>
 			</d2l-quick-eval-activities-list>
 		`;
@@ -34,6 +39,35 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			_data: {
 				type: Array,
 				value: []
+			},
+			_headerColumns: {
+				type: Array,
+				value: [
+					{
+						key: 'displayName',
+						meta: { firstThenLast: true },
+						headers: [
+							{ key: 'firstName', sortClass: 'first-name', suffix: ',', canSort: false, sorted: false, desc: false  },
+							{ key: 'lastName', sortClass: 'last-name', canSort: false, sorted: false, desc: false  }
+						]
+					},
+					{
+						key: 'activityName',
+						headers: [{ key: 'activityName', sortClass: 'activity-name', canSort: false, sorted: false, desc: false }]
+					},
+					{
+						key: 'courseName',
+						headers: [{ key: 'courseName', sortClass: 'course-name', canSort: false, sorted: false, desc: false }]
+					},
+					{
+						key: 'submissionDate',
+						headers: [{ key: 'submissionDate', sortClass: 'completion-date', canSort: false, sorted: false, desc: false }]
+					},
+					{
+						key: 'masterTeacher',
+						headers: [{ key: 'masterTeacher', sortClass: 'primary-facilitator', canSort: false, sorted: false, desc: false }]
+					}
+				]
 			}
 		};
 	}
@@ -47,10 +81,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 
 	get list() {
 		return this.shadowRoot.querySelector('d2l-quick-eval-activities-list');
-	}
-
-	_handleSorts(entity) {
-		this.list._handleSorts(entity);
 	}
 
 	async _loadData(entity) {
@@ -132,7 +162,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 					submissionDate: this._getSubmissionDate(activity),
 					activityLink: this._getRelativeUriProperty(activity, extraParams),
 					masterTeacher: '',
-					isDraft: this.list._determineIfActivityIsDraft(activity)
+					isDraft: this._determineIfActivityIsDraft(activity)
 				};
 
 				const getUserName = this._getUserPromise(activity, item);
@@ -155,8 +185,79 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		return result;
 	}
 
-	_sortChanged(e) {
-		this.entity = e.detail.sortedActivities;
+	_handleSorts(entity) {
+		// entity is null on initial load
+		if (!entity) {
+			return Promise.resolve();
+		}
+
+		return this._loadSorts(entity).then(sortsEntity => {
+			this._headerColumns.forEach((headerColumn, i) => {
+				headerColumn.headers.forEach((header, j) => {
+					if (header.sortClass) {
+						const sort = sortsEntity.getSubEntityByClass(header.sortClass);
+						if (sort) {
+							this.set(`_headerColumns.${i}.headers.${j}.canSort`, true);
+							if (sort.properties && sort.properties.applied && (sort.properties.priority === 0)) {
+								const descending = sort.properties.direction === 'descending';
+								this.set(`_headerColumns.${i}.headers.${j}.sorted`, true);
+								this.set(`_headerColumns.${i}.headers.${j}.desc`, descending);
+
+							} else {
+								this.set(`_headerColumns.${i}.headers.${j}.sorted`, false);
+								this.set(`_headerColumns.${i}.headers.${j}.desc`, false);
+							}
+						}
+					}
+				});
+			});
+		});
+	}
+
+	_handleSortRequested(evt) {
+		let result;
+		const headerId = evt.detail.headerId;
+
+		this._headerColumns.forEach((headerColumn, i) => {
+			headerColumn.headers.forEach((header, j) => {
+				if ((header.key === headerId) && header.canSort) {
+					const descending = header.sorted && !header.desc;
+					this.set(`_headerColumns.${i}.headers.${j}.sorted`, true);
+					this.set(`_headerColumns.${i}.headers.${j}.desc`, descending);
+
+					// bedley fixme _numberOfActivitiesToShow
+					const customParams = this._numberOfActivitiesToShow > 0 ? { pageSize: this._numberOfActivitiesToShow } : undefined;
+					result = this._applySortAndFetchData(header.sortClass, descending, customParams);
+				}
+				else {
+					this.set(`_headerColumns.${i}.headers.${j}.sorted`, false);
+				}
+			});
+		});
+
+		if (result) {
+			return result.then(sortedCollection => {
+				this.entity = sortedCollection;
+				this._dispatchSortUpdatedEvent(sortedCollection);
+			});
+		} else {
+			return Promise.reject(new Error(`Could not find sortable header for ${headerId}`));
+		}
+	}
+
+	_dispatchSortUpdatedEvent(sorted) {
+		this.dispatchEvent(
+			new CustomEvent(
+				'd2l-quick-eval-activities-list-sort-updated',
+				{
+					detail: {
+						sortedActivities: sorted
+					},
+					composed: true,
+					bubbles: true
+				}
+			)
+		);
 	}
 
 	ready() {

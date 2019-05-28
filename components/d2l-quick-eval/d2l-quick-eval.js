@@ -266,9 +266,7 @@ class D2LQuickEval extends mixinBehaviors(
 
 	_filtersChanged(e) {
 		const submissions = this.shadowRoot.querySelector('d2l-quick-eval-submissions');
-		const list = submissions.shadowRoot.querySelector('d2l-quick-eval-activities-list');
 		submissions.entity = e.detail.filteredActivities;
-		list.entity = e.detail.filteredActivities;
 		this.entity = e.detail.filteredActivities;
 
 		if (this.entity && this.entity.entities) {
@@ -299,7 +297,6 @@ class D2LQuickEval extends mixinBehaviors(
 		const list = submissions.shadowRoot.querySelector('d2l-quick-eval-activities-list');
 
 		submissions.entity = e.detail.results;
-		list.entity = e.detail.results;
 		this.entity = e.detail.results;
 		this._showSearchResultSummary = !e.detail.searchIsCleared;
 		list.searchApplied = !e.detail.searchIsCleared;

@@ -128,6 +128,15 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 		}
 		return '';
 	},
+
+	_determineIfActivityIsDraft: function(activity) {
+		const evaluation = this._getEvaluation(activity);
+		if (evaluation && evaluation.properties && evaluation.properties.state === 'Draft') {
+			return true;
+		}
+
+		return false;
+	}
 };
 
 /** @polymerBehavior */

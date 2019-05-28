@@ -9,14 +9,11 @@ import 'd2l-offscreen/d2l-offscreen.js';
 import 'd2l-polymer-behaviors/d2l-dom-focus.js';
 import 'd2l-link/d2l-link.js';
 import 'd2l-users/components/d2l-profile-image.js';
-import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
 import '../d2l-activity-name/d2l-activity-name.js';
 import '../d2l-activity-evaluation-icon/d2l-activity-evaluation-icon-base.js';
 import './d2l-quick-eval-no-submissions-image.js';
 import './d2l-quick-eval-no-criteria-results-image.js';
 import './d2l-quick-eval-skeleton.js';
-import './behaviors/d2l-quick-eval-siren-helper-behavior.js';
-import './behaviors/d2l-hm-sort-behaviour.js';
 import 'd2l-loading-spinner/d2l-loading-spinner.js';
 import {StringEndsWith} from './compatability/ie11shims.js';
 
@@ -25,10 +22,7 @@ import {StringEndsWith} from './compatability/ie11shims.js';
  * @polymer
  */
 
-class D2LQuickEvalActivitiesList extends mixinBehaviors(
-	[D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior, D2L.PolymerBehaviors.QuickEval.D2LHMSortBehaviour],
-	QuickEvalLogging(QuickEvalLocalize(PolymerElement))
-) {
+class D2LQuickEvalActivitiesList extends QuickEvalLogging(QuickEvalLocalize(PolymerElement)) {
 	static get template() {
 		const quickEvalActivitiesListTemplate = html`
 			<style include="d2l-table-style">
@@ -151,7 +145,7 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors(
 													<d2l-table-col-sort-button
 														nosort$="[[!header.sorted]]"
 														desc$="[[header.desc]]"
-														on-click="_sortClickHandler"
+														on-click="_dispatchSortRequestedEvent"
 														id="[[header.key]]"
 														title="[[_localizeSortText(header.key)]]"
 														aria-label$="[[_localizeSortText(header.key)]]"
@@ -267,32 +261,7 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors(
 			},
 			_headerColumns: {
 				type: Array,
-				value: [
-					{
-						key: 'displayName',
-						meta: { firstThenLast: true },
-						headers: [
-							{ key: 'firstName', sortClass: 'first-name', suffix: ',', canSort: false, sorted: false, desc: false  },
-							{ key: 'lastName', sortClass: 'last-name', canSort: false, sorted: false, desc: false  }
-						]
-					},
-					{
-						key: 'activityName',
-						headers: [{ key: 'activityName', sortClass: 'activity-name', canSort: false, sorted: false, desc: false }]
-					},
-					{
-						key: 'courseName',
-						headers: [{ key: 'courseName', sortClass: 'course-name', canSort: false, sorted: false, desc: false }]
-					},
-					{
-						key: 'submissionDate',
-						headers: [{ key: 'submissionDate', sortClass: 'completion-date', canSort: false, sorted: false, desc: false }]
-					},
-					{
-						key: 'masterTeacher',
-						headers: [{ key: 'masterTeacher', sortClass: 'primary-facilitator', canSort: false, sorted: false, desc: false }]
-					}
-				]
+				value: []
 			},
 			_data: {
 				type: Array,
@@ -338,65 +307,6 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors(
 			'_dispatchPageSizeEvent(_numberOfActivitiesToShow)',
 			'_dispatchActivitiesShownInSearchResultsEvent(_numberOfActivitiesShownInSearchResults)'
 		];
-	}
-
-	_handleSorts(entity) {
-		// entity is null on initial load
-		if (!entity) {
-			return Promise.resolve();
-		}
-
-		return this._loadSorts(entity).then(sortsEntity => {
-			this._headerColumns.forEach((headerColumn, i) => {
-				headerColumn.headers.forEach((header, j) => {
-					if (header.sortClass) {
-						const sort = sortsEntity.getSubEntityByClass(header.sortClass);
-						if (sort) {
-							this.set(`_headerColumns.${i}.headers.${j}.canSort`, true);
-							if (sort.properties && sort.properties.applied && (sort.properties.priority === 0)) {
-								const descending = sort.properties.direction === 'descending';
-								this.set(`_headerColumns.${i}.headers.${j}.sorted`, true);
-								this.set(`_headerColumns.${i}.headers.${j}.desc`, descending);
-
-							} else {
-								this.set(`_headerColumns.${i}.headers.${j}.sorted`, false);
-								this.set(`_headerColumns.${i}.headers.${j}.desc`, false);
-							}
-						}
-					}
-				});
-			});
-		});
-	}
-
-	_sortClickHandler(event) {
-
-		let result;
-		const headerId = event.currentTarget.id;
-
-		this._headerColumns.forEach((headerColumn, i) => {
-			headerColumn.headers.forEach((header, j) => {
-				if ((header.key === headerId) && header.canSort) {
-					const descending = header.sorted && !header.desc;
-					this.set(`_headerColumns.${i}.headers.${j}.sorted`, true);
-					this.set(`_headerColumns.${i}.headers.${j}.desc`, descending);
-
-					const customParams = this._numberOfActivitiesToShow > 0 ? {pageSize: this._numberOfActivitiesToShow} : undefined;
-					result = this._applySortAndFetchData(header.sortClass, descending, customParams);
-				}
-				else {
-					this.set(`_headerColumns.${i}.headers.${j}.sorted`, false);
-				}
-			});
-		});
-
-		if (result) {
-			return result.then(sortedCollection => {
-				this._dispatchSortUpdatedEvent(sortedCollection);
-			});
-		} else {
-			return Promise.reject(new Error(`Could not find sortable header for ${headerId}`));
-		}
 	}
 
 	setLoadingState(state) {
@@ -449,15 +359,6 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors(
 
 	_handleFullLoadFailure() {
 		this.set('_health', { isHealthy: false, errorMessage: 'failedToLoadData' });
-	}
-
-	_determineIfActivityIsDraft(activity) {
-		const evaluation = this._getEvaluation(activity);
-		if (evaluation && evaluation.properties && evaluation.properties.state === 'Draft') {
-			return true;
-		}
-
-		return false;
 	}
 
 	_localizeSortText(columnName) {
@@ -547,13 +448,15 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors(
 		return true;
 	}
 
-	_dispatchSortUpdatedEvent(sorted) {
+	_dispatchSortRequestedEvent(evt) {
+		const headerId = evt.currentTarget.id;
+
 		this.dispatchEvent(
 			new CustomEvent(
-				'd2l-quick-eval-activities-list-sort-updated',
+				'd2l-quick-eval-submissions-table-sort-requested',
 				{
 					detail: {
-						sortedActivities: sorted
+						headerId: headerId
 					},
 					composed: true,
 					bubbles: true
