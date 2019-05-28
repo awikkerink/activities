@@ -265,7 +265,9 @@ class D2LQuickEval extends mixinBehaviors(
 	}
 
 	_filtersChanged(e) {
-		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		const submissions = this.shadowRoot.querySelector('d2l-quick-eval-submissions');
+		const list = submissions.shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		submissions.entity = e.detail.filteredActivities;
 		list.entity = e.detail.filteredActivities;
 		this.entity = e.detail.filteredActivities;
 
@@ -293,7 +295,10 @@ class D2LQuickEval extends mixinBehaviors(
 	}
 
 	_searchResultsLoaded(e) {
-		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		const submissions = this.shadowRoot.querySelector('d2l-quick-eval-submissions');
+		const list = submissions.shadowRoot.querySelector('d2l-quick-eval-activities-list');
+
+		submissions.entity = e.detail.results;
 		list.entity = e.detail.results;
 		this.entity = e.detail.results;
 		this._showSearchResultSummary = !e.detail.searchIsCleared;
