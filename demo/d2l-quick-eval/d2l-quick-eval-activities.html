@@ -30,6 +30,16 @@
 					html {
 						font-size: 20px;
 					}
+					.toggle-container {
+						border: 1px solid lightGrey;
+						display: inline-block;
+						padding: 10px;
+					}
+					.toggle-container ul {
+						list-style: none;
+						margin: 0;
+						padding: 0;
+					}
 				</style>
 			`;
 			document.body.appendChild($_documentContainer.content);
@@ -40,9 +50,38 @@
 			<h3>Basic d2l-quick-eval-activities demo</h3>
 			<demo-snippet>
 				<template strip-whitespace>
+					<div class="toggle-container">
+						<ul>
+							<li><label><input type="checkbox" class="toggle-data"/>Data exists</label></li>
+							<li><label><input type="checkbox" class="toggle-search"/>Search applied</label></li>
+							<li><label><input type="checkbox" class="toggle-filter"/>Filter applied</label></li>
+						</ul>
+					</div>
+					<hr/>
 					<d2l-quick-eval-activities href="pages/" token="whatever"></d2l-quick-eval-activities>
 				</template>
 			</demo-snippet>
 		</div>
+		
+		<script type="module">
+			window.requestAnimationFrame(function() {
+				document.querySelector('input.toggle-data').addEventListener('click', function() {
+					const list = document.querySelector('d2l-quick-eval-activities');
+					if (list._data.length) {
+						list._data = [];
+					} else {
+						document.querySelector('d2l-quick-eval-activities')._data = [1];
+					}
+				});
+				document.querySelector('input.toggle-search').addEventListener('click', function() {
+					const list = document.querySelector('d2l-quick-eval-activities');
+					list.searchCleared = !list.searchCleared;
+				});
+				document.querySelector('input.toggle-filter').addEventListener('click', function() {
+					const list = document.querySelector('d2l-quick-eval-activities');
+					list.filterApplied = !list.filterApplied;
+				});
+			});
+		</script>
 	</body>
 </html>
