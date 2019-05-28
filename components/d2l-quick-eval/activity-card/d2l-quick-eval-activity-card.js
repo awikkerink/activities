@@ -5,19 +5,14 @@ import 'd2l-colors/d2l-colors.js';
 import 'd2l-icons/d2l-icon.js';
 import 'd2l-icons/tier3-icons.js';
 import 'd2l-tooltip/d2l-tooltip.js';
-import 'd2l-offscreen/d2l-offscreen-shared-styles.js';
+import 'd2l-polymer-behaviors/d2l-visible-on-ancestor-behavior.js';
+import './d2l-quick-eval-activity-card-items.js';
 
 class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 	static get is() { return 'd2l-quick-eval-activity-card'; }
 	static get template() {
 		return html`
-			<style include="d2l-offscreen-shared-styles">
-				:host {
-					--d2l-quick-eval-activity-card-items-content-size: 6.25rem;
-				}
-				[hidden] {
-					display: none;
-				}
+			<style include="d2l-visible-on-ancestor-styles">
 				.d2l-quick-eval-card {
 					border: 3px solid var(--d2l-color-ferrite);
 					border-radius: 10px;
@@ -30,7 +25,8 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 					border-color: var(--d2l-color-celestine-plus-1);
 					outline: none;
 				}
-				.d2l-quick-eval-activity-card-item {
+				#d2l-quick-eval-activity-card-submissions {
+					border-right: 1px solid var(--d2l-color-tungsten);
 					width: 7.5rem;
 					height: 3rem;
 					text-align: center;
@@ -38,29 +34,33 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 					align-items: center;
 					justify-content: space-around;
 				}
-				.d2l-quick-eval-activity-card-items-separator {
-					border-left: .05rem solid var(--d2l-color-mica);
-  					height: 3rem;
+				button.d2l-quick-eval-activity-card-item {
+					width: 7.55rem;
 				}
-				.d2l-quick-eval-card-right,
-				.d2l-quick-eval-activity-card-items-meters,
-				.d2l-quick-eval-activity-card-items-buttons {
+				.d2l-quick-eval-card-right {
 					display: flex;
 					align-items: center;
 				}
-				.d2l-quick-eval-card:hover .d2l-quick-eval-activity-card-items-meters,
-				.d2l-quick-eval-card:focus-within .d2l-quick-eval-activity-card-items-meters,
-				.d2l-quick-eval-card:not(:hover):not(:focus-within) .d2l-quick-eval-activity-card-items-buttons {
-					@apply --d2l-offscreen;
+				.d2l-quick-eval-activity-card-items-container {
+					position: relative;
+				}
+				d2l-quick-eval-activity-card-items[visible-on-ancestor] {
+					position: absolute;
+					top: 0;
+					left: 0;
 				}
 				.d2l-quick-eval-card:hover .d2l-quick-eval-activity-card-hovered-on,
 				.d2l-quick-eval-card:focus-within .d2l-quick-eval-activity-card-hovered-on,
-				.d2l-quick-eval-card:not(:hover):not(:focus-within) .d2l-quick-eval-activity-card-hovered-off {
+				.d2l-quick-eval-activity-card-hovered-off {
 					fill: var(--d2l-color-tungsten);
 				}
+				.d2l-quick-eval-card:hover .d2l-quick-eval-activity-card-hovered-off,
+				.d2l-quick-eval-card:focus-within .d2l-quick-eval-activity-card-hovered-off,
+				.d2l-quick-eval-activity-card-hovered-on {
+					fill: transparent;
+				}
 				button {
-					background-color: transparent;
-					border: none;
+					background-color: white;
 					outline: none;
 				}
 				button:hover,
@@ -71,33 +71,28 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				}
 				circle {
 					stroke: var(--d2l-color-tungsten);
-					fill: transparent;
 				}
 			</style>
-			<div class="d2l-quick-eval-card" on-click="_clicked" tabindex="-1">
+			<div class="d2l-quick-eval-card d2l-visible-on-ancestor-target" on-click="_clicked" tabindex="-1">
 				<div>
 					<d2l-activity-name href="[[activityNameHref]]" token="[[token]]"></d2l-activity-name>
 					<div>[[activityType]] &bull; [[localize('due', 'date', dueDate)]]</div>
 				</div>
 				<div class="d2l-quick-eval-card-right">
-					<div id="d2l-quick-eval-activity-card-submissions" class="d2l-quick-eval-activity-card-item">[[_getNewSubmissionsText()]]</div>
+					<div id="d2l-quick-eval-activity-card-submissions">[[_getNewSubmissionsText()]]</div>
 					<d2l-tooltip for="d2l-quick-eval-activity-card-submissions" position="bottom">[[_getSubmissionTooltipText()]]</d2l-tooltip>
-					<div class="d2l-quick-eval-activity-card-items-separator"></div>
-					<div class="d2l-quick-eval-activity-card-items-meters">
-						<span class="d2l-quick-eval-activity-card-item">[[completed]]/[[total]] [[localize('completed')]]</span>
-						<div class="d2l-quick-eval-activity-card-items-separator"></div>
-						<span class="d2l-quick-eval-activity-card-item">[[evaluated]]/[[total]] [[localize('evaluated')]]</span>
-						<div class="d2l-quick-eval-activity-card-items-separator"></div>
-						<span class="d2l-quick-eval-activity-card-item">[[published]]/[[total]] [[localize('published')]]</span>
+					<div class="d2l-quick-eval-activity-card-items-container">
+						<d2l-quick-eval-activity-card-items>
+							<span>[[completed]]/[[total]] [[localize('completed')]]</span>
+							<span>[[evaluated]]/[[total]] [[localize('evaluated')]]</span>
+							<span>[[published]]/[[total]] [[localize('published')]]</span>
+						</d2l-quick-eval-activity-card-items>
+						<d2l-quick-eval-activity-card-items visible-on-ancestor>
+							<button class="d2l-quick-eval-activity-card-item"><d2l-icon icon="d2l-tier3:quizzing"></d2l-icon>[[localize('evaluateAll')]]</button>
+							<button class="d2l-quick-eval-activity-card-item"><d2l-icon icon="d2l-tier3:preview"></d2l-icon>[[localize('submissionList')]]</button>
+							<button class="d2l-quick-eval-activity-card-item"><d2l-icon icon="d2l-tier3:grade"></d2l-icon>[[localize('publishAll')]]</button>
+						</d2l-quick-eval-activity-card-items>
 					</div>
-					<div class="d2l-quick-eval-activity-card-items-buttons">
-						<button class="d2l-quick-eval-activity-card-item"><d2l-icon icon="d2l-tier3:quizzing"></d2l-icon>[[localize('evaluateAll')]]</button>
-						<div class="d2l-quick-eval-activity-card-items-separator"></div>
-						<button class="d2l-quick-eval-activity-card-item"><d2l-icon icon="d2l-tier3:preview"></d2l-icon>[[localize('submissionList')]]</button>
-						<div class="d2l-quick-eval-activity-card-items-separator"></div>
-						<button class="d2l-quick-eval-activity-card-item"><d2l-icon icon="d2l-tier3:grade"></d2l-icon>[[localize('publishAll')]]</button>
-					</div>
-					<div class="d2l-quick-eval-activity-card-items-separator"></div>
 					<svg width=".7rem" height="1.4rem">
 						<circle cx=".35rem" cy=".35rem" r=".25rem" stroke-width=".1rem" class="d2l-quick-eval-activity-card-hovered-off"></circle>
 						<circle cx=".35rem" cy="1.1rem" r=".25rem" stroke-width=".1rem" class="d2l-quick-eval-activity-card-hovered-on"></circle>
