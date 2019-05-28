@@ -235,15 +235,16 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 			const sortAction = sorts.getSubEntityByClass(appliedSortClass).getActionByName('sort-ascending');
 			const applyAction = sorts.getActionByName('apply');
 			const collection = {};
+			const customParams = { pageSize: 17 };
 
 			const followLinkStub = sinon.stub(list, '_followLink');
 			const performActionStub = sinon.stub(list, '_performSirenActionWithQueryParams');
 
 			followLinkStub.withArgs(list.entity, Rels.sorts).returns(Promise.resolve({ entity: sorts }));
 			performActionStub.withArgs(sortAction).returns(sorts);
-			performActionStub.withArgs(applyAction, sinon.match.any).returns(collection);
+			performActionStub.withArgs(applyAction, customParams).returns(collection);
 
-			return list._applySortAndFetchData('activity-name', false)
+			return list._applySortAndFetchData('activity-name', false, customParams)
 				.then(actual => {
 					expect(actual).to.deep.equal(collection);
 				});
