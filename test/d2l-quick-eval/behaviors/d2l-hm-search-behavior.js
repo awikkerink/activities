@@ -8,7 +8,7 @@ import SirenParse from 'siren-parser';
 			searchBehavior = fixture('basic');
 		});
 		test('default state is correct', () => {
-			assert.equal(null, searchBehavior.searchAction);
+			assert.isNull(searchBehavior.searchAction);
 			assert.isTrue(searchBehavior.searchCleared);
 			assert.isFalse(searchBehavior.searchError);
 			assert.equal(0, searchBehavior.searchResultsCount);
@@ -23,7 +23,7 @@ import SirenParse from 'siren-parser';
 				]
 			};
 
-			assert.equal(null, searchBehavior.searchAction);
+			assert.isNull(searchBehavior.searchAction);
 			searchBehavior._setSearchAction(SirenParse(entity));
 			assert.isNotNull(searchBehavior.searchAction);
 		});
@@ -41,7 +41,7 @@ import SirenParse from 'siren-parser';
 			assert.isNotNull(searchBehavior.searchAction);
 
 			searchBehavior._setSearchAction(null);
-			assert.equal(null, searchBehavior.searchAction);
+			assert.isNull(searchBehavior.searchAction);
 		});
 		test('_searchResultsLoading sets searchError to false', () => {
 			searchBehavior.searchError = true;
