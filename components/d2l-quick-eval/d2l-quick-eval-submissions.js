@@ -10,7 +10,15 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 ) {
 	static get template() {
 		const template = html`
-			<d2l-quick-eval-activities-list href="[[href]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" master-teacher="[[masterTeacher]]" _data="[[_data]]">
+			<d2l-quick-eval-activities-list
+				href="[[href]]"
+				token="[[token]]"
+				logging-endpoint="[[loggingEndpoint]]"
+				master-teacher="[[masterTeacher]]"
+				_data="[[_data]]"
+				on-d2l-quick-eval-submission-table-load-more="_loadMore"
+				on-d2l-quick-eval-activities-list-sort-updated="_sortChanged"
+			>
 			</d2l-quick-eval-activities-list>
 		`;
 		template.setAttribute('strip-whitespace', 'strip-whitespace');
@@ -158,9 +166,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			this.list._loading = false;
 			this.list._handleFullLoadFailure();
 		}.bind(this));
-
-		this.addEventListener('d2l-quick-eval-submission-table-load-more', this._loadMore.bind(this));
-		this.addEventListener('d2l-quick-eval-activities-list-sort-updated', this._sortChanged.bind(this));
 	}
 }
 
