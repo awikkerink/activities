@@ -110,10 +110,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			filterApplied: {
 				type: Boolean,
 				value: false
-			},
-			searchCleared: {
-				type: Boolean,
-				value: true
 			}
 		};
 	}
