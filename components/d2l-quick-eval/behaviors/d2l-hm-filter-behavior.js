@@ -29,14 +29,14 @@ D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviourImpl = {
 		this.addEventListener('d2l-hm-filter-filters-loaded', this._clearFilterError);
 		this.addEventListener('d2l-hm-filter-filters-updating', this._clearFilterError);
 		this.addEventListener('d2l-hm-filter-filters-updated', this._clearFilterError);
-		this.addEventListener('d2l-hm-filter-error', this._filterError);
+		this.addEventListener('d2l-hm-filter-error', this._errorOnFilter);
 	},
 
 	detached: function() {
 		this.removeEventListener('d2l-hm-filter-filters-loaded', this._clearFilterError);
 		this.removeEventListener('d2l-hm-filter-filters-updating', this._clearFilterError);
 		this.removeEventListener('d2l-hm-filter-filters-updated', this._clearFilterError);
-		this.removeEventListener('d2l-hm-filter-error', this._filterError);
+		this.removeEventListener('d2l-hm-filter-error', this._errorOnFilter);
 	},
 
 	_setFilterHref: function(entity) {
@@ -51,7 +51,7 @@ D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviourImpl = {
 		this.filterError = false;
 	},
 
-	_filterError: function() {
+	_errorOnFilter: function() {
 		this.filterError = true;
 	}
 };

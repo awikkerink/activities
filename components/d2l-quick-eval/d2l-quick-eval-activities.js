@@ -14,11 +14,8 @@ import 'd2l-common/components/d2l-hm-search/d2l-hm-search.js';
  * @polymer
  */
 
-class D2LQuickEvalActivities extends mixinBehaviors([
-		D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior,
-		D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviour,
-		D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour
-	],
+class D2LQuickEvalActivities extends mixinBehaviors(
+	[D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior, D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviour, D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour],
 	QuickEvalLogging(QuickEvalLocalize(PolymerElement))
 ) {
 	static get template() {
@@ -77,7 +74,7 @@ class D2LQuickEvalActivities extends mixinBehaviors([
 
 	static get is() { return 'd2l-quick-eval-activities'; }
 
-	get filterIds () {
+	get filterIds() {
 		// [ 'activity-name', 'enrollments' ]
 		const filters = [ 'c806bbc6-cfb3-4b6b-ae74-d5e4e319183d', 'f2b32f03-556a-4368-945a-2614b9f41f76' ];
 		return filters;
