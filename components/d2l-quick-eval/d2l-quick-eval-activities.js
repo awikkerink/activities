@@ -53,6 +53,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				.d2l-quick-eval-no-criteria-results-heading {
 					@apply --d2l-heading-2;
 					margin: 0;
+				}
 				d2l-alert {
 					margin: auto;
 					margin-bottom: 0.5rem;
