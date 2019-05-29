@@ -9,6 +9,7 @@ import 'd2l-common/components/d2l-hm-filter/d2l-hm-filter.js';
 import 'd2l-common/components/d2l-hm-search/d2l-hm-search.js';
 import './d2l-quick-eval-no-submissions-image.js';
 import './d2l-quick-eval-no-criteria-results-image.js';
+import './d2l-quick-eval-search-results-summary-container.js';
 
 /**
  * @customElement
