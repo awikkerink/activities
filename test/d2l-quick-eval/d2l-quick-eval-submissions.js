@@ -76,7 +76,7 @@ suite('d2l-quick-eval-submissions', function() {
 			['Submission Date'],
 			['Teacher']
 		];
-		const list = submissions.shadowRoot.querySelector('d2l-quick-eval-activities-list')
+		const list = submissions.shadowRoot.querySelector('d2l-quick-eval-activities-list');
 		list.setAttribute('master-teacher', '');
 
 		flush(function() {
@@ -101,7 +101,7 @@ suite('d2l-quick-eval-submissions', function() {
 		submissions._headerColumns[0].headers[0].canSort = true;
 		submissions._headerColumns[0].headers[1].canSort = true;
 
-		const list = submissions.shadowRoot.querySelector('d2l-quick-eval-activities-list')
+		const list = submissions.shadowRoot.querySelector('d2l-quick-eval-activities-list');
 
 		flush(function() {
 			var lastNameHeader = list.shadowRoot.querySelector('#lastName');

@@ -141,14 +141,6 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 			isDraft: false
 		}
 	];
-	var expectedColumnHeaders = [
-		['First Name', 'Last Name'],
-		['Activity Name'],
-		['Course'],
-		['Submission Date'],
-		['Teacher']
-	];
-	var expectedColumnHeadersWithMasterTeacher = expectedColumnHeaders.concat([['Teacher']]);
 
 	suite('d2l-quick-eval-activities-list', function() {
 		setup(function() {
