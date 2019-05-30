@@ -33,17 +33,21 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 	],
 
 	attached: function() {
-		this.addEventListener('d2l-hm-search-results-loading', this._searchResultsLoading);
+		this.addEventListener('d2l-hm-search-results-loading', this._clearSearchError);
 		this.addEventListener('d2l-hm-search-results-loaded', this._searchResultsLoaded);
 		this.addEventListener('d2l-hm-search-error', this._errorOnSearch);
 		this.addEventListener('d2l-quick-eval-search-results-summary-container-clear-search', this._clearSearchResults);
+		this.addEventListener('d2l-hm-filter-filters-updating', this._clearSearchError);
+		this.addEventListener('d2l-hm-filter-filters-updated', this._clearSearchError);
 	},
 
 	detached: function() {
-		this.removeEventListener('d2l-hm-search-results-loading', this._searchResultsLoading);
+		this.removeEventListener('d2l-hm-search-results-loading', this._clearSearchError);
 		this.removeEventListener('d2l-hm-search-results-loaded', this._searchResultsLoaded);
 		this.removeEventListener('d2l-hm-search-error', this._errorOnSearch);
 		this.removeEventListener('d2l-quick-eval-search-results-summary-container-clear-search', this._clearSearchResults);
+		this.removeEventListener('d2l-hm-filter-filters-updating', this._clearSearchError);
+		this.removeEventListener('d2l-hm-filter-filters-updated', this._clearSearchError);
 	},
 
 	_setSearchAction: function(entity) {
@@ -55,7 +59,7 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 		}
 	},
 
-	_searchResultsLoading: function() {
+	_clearSearchError: function() {
 		this.searchError = false;
 	},
 
@@ -68,7 +72,7 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 		} else {
 			this.searchResultsCount = 0;
 		}
-		this.searchError = false;
+		this._clearSearchError();
 	},
 
 	_errorOnSearch: function() {

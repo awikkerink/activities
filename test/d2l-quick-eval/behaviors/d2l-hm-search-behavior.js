@@ -43,9 +43,9 @@ import SirenParse from 'siren-parser';
 			searchBehavior._setSearchAction(null);
 			assert.isNull(searchBehavior.searchAction);
 		});
-		test('_searchResultsLoading sets searchError to false', () => {
+		test('_clearSearchError sets searchError to false', () => {
 			searchBehavior.searchError = true;
-			searchBehavior._searchResultsLoading();
+			searchBehavior._clearSearchError();
 			assert.isFalse(searchBehavior.searchError);
 		});
 		test('_searchResultsLoaded properly sets variables when entity is valid', () => {

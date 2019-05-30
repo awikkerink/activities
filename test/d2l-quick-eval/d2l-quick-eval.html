@@ -168,7 +168,7 @@
 					quickEval.addEventListener('d2l-hm-filter-filters-updating', function() {
 						assert.equal(list._loading, true);
 						assert.equal(list._fullListLoading, true);
-						assert.equal(quickEval._showFilterError, false);
+						assert.equal(quickEval.filterError, false);
 						assert.equal(alert.hidden, true);
 						done();
 					});
@@ -176,7 +176,7 @@
 					waitForFilter(function() {
 						assert.equal(list._loading, false);
 						assert.equal(list._fullListLoading, false);
-						assert.equal(quickEval._showFilterError, false);
+						assert.equal(quickEval.filterError, false);
 						assert.equal(alert.hidden, true);
 						clickFilter('Assignment Name');
 					});
@@ -187,7 +187,7 @@
 					quickEval.addEventListener('d2l-hm-filter-filters-loaded', function() {
 						assert.equal(list._loading, false);
 						assert.equal(list._fullListLoading, false);
-						assert.equal(quickEval._showFilterError, false);
+						assert.equal(quickEval.filterError, false);
 						assert.equal(alert.hidden, true);
 						if (filtersSelected === 1) {
 							clearFilter();
@@ -197,13 +197,13 @@
 					quickEval.addEventListener('d2l-hm-filter-filters-updating', function() {
 						assert.equal(list._loading, true);
 						assert.equal(list._fullListLoading, true);
-						assert.equal(quickEval._showFilterError, false);
+						assert.equal(quickEval.filterError, false);
 						assert.equal(alert.hidden, true);
 
 						quickEval.addEventListener('d2l-hm-filter-error', function() {
 							assert.equal(list._loading, false);
 							assert.equal(list._fullListLoading, false);
-							assert.equal(quickEval._showFilterError, true);
+							assert.equal(quickEval.filterError, true);
 							assert.equal(alert.hidden, false);
 							done();
 						});
@@ -261,7 +261,7 @@
 					var alert = quickEval.shadowRoot.querySelector('#d2l-quick-eval-filter-error-alert');
 					var filtersSelected = 0;
 					quickEval.addEventListener('d2l-hm-filter-filters-loaded', function() {
-						assert.isFalse(quickEval._showFilterError);
+						assert.isFalse(quickEval.filterError);
 						assert.isTrue(alert.hidden);
 						if (filtersSelected === 1) {
 							clearFilter();
@@ -269,16 +269,16 @@
 						filtersSelected++;
 					});
 					quickEval.addEventListener('d2l-hm-filter-error', function() {
-						assert.isTrue(quickEval._showFilterError);
+						assert.isTrue(quickEval.filterError);
 						assert.isFalse(alert.hidden);
 						clickFilter('Quiz Name');
 					});
 					quickEval.addEventListener('d2l-hm-filter-filters-updated', function() {
-						assert.isFalse(quickEval._showFilterError);
+						assert.isFalse(quickEval.filterError);
 						assert.isTrue(alert.hidden);
 						done();
 					});
-					assert.isFalse(quickEval._showFilterError);
+					assert.isFalse(quickEval.filterError);
 					assert.isTrue(alert.hidden);
 					waitForFilter(function() { filter.href = 'data/filters-error.json'; });
 				});
@@ -287,7 +287,7 @@
 					quickEval.addEventListener('d2l-hm-search-results-loading', function() {
 						assert.equal(list._loading, true);
 						assert.equal(list._fullListLoading, true);
-						assert.equal(quickEval._showSearchError, false);
+						assert.equal(quickEval.searchError, false);
 						assert.equal(alert.hidden, true);
 						done();
 					});
@@ -295,7 +295,7 @@
 					waitForSearch(function() {
 						assert.equal(list._loading, false);
 						assert.equal(list._fullListLoading, false);
-						assert.equal(quickEval._showSearchError, false);
+						assert.equal(quickEval.searchError, false);
 						assert.equal(alert.hidden, true);
 						performSearch('test');
 					});
@@ -328,13 +328,13 @@
 					quickEval.addEventListener('d2l-hm-search-results-loading', function() {
 						assert.equal(list._loading, true);
 						assert.equal(list._fullListLoading, true);
-						assert.equal(quickEval._showSearchError, false);
+						assert.equal(quickEval.searchError, false);
 						assert.equal(alert.hidden, true);
 
 						quickEval.addEventListener('d2l-hm-search-error', function() {
 							assert.equal(list._loading, false);
 							assert.equal(list._fullListLoading, false);
-							assert.equal(quickEval._showSearchError, true);
+							assert.equal(quickEval.searchError, true);
 							assert.equal(alert.hidden, false);
 							search.searchAction.href = validHref;
 							done();
@@ -351,17 +351,17 @@
 					const alert = quickEval.shadowRoot.querySelector('#d2l-quick-eval-search-error-alert');
 					let validHref;
 					quickEval.addEventListener('d2l-hm-search-error', function() {
-						assert.isTrue(quickEval._showSearchError);
+						assert.isTrue(quickEval.searchError);
 						assert.isFalse(alert.hidden);
 						search.searchAction.href = validHref;
 						performSearch('test');
 					});
 					quickEval.addEventListener('d2l-hm-search-results-loaded', function() {
-						assert.isFalse(quickEval._showSearchError);
+						assert.isFalse(quickEval.searchError);
 						assert.isTrue(alert.hidden);
 						done();
 					});
-					assert.isFalse(quickEval._showSearchError);
+					assert.isFalse(quickEval.searchError);
 					assert.isTrue(alert.hidden);
 					waitForSearch(function() {
 						validHref = search.searchAction.href;
