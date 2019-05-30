@@ -30,7 +30,7 @@
 		<script type="module">
 			import '@polymer/iron-test-helpers/mock-interactions.js';
 
-			var quickEval, filter, filterDropdown, list, search, toggle;
+			var quickEval, filter, filterDropdown, list, search, toggle, submissions;
 
 			var expectedFirstCellData = 'Special User Name';
 			var expectedFilters = ['Activity Name', 'Course', 'Date'];
@@ -102,7 +102,8 @@
 					quickEval = fixture('basic');
 					filter = quickEval.shadowRoot.querySelector('d2l-hm-filter');
 					filterDropdown = filter.shadowRoot.querySelector('d2l-filter-dropdown');
-					list = quickEval.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
+					submissions = quickEval.shadowRoot.querySelector('d2l-quick-eval-submissions');
+					list = submissions.shadowRoot.querySelector('d2l-quick-eval-activities-list');
 					search = quickEval.shadowRoot.querySelector('d2l-hm-search');
 					toggle = quickEval.shadowRoot.querySelector('d2l-quick-eval-view-toggle');
 				});
@@ -218,7 +219,7 @@
 
 					quickEval.addEventListener('d2l-hm-filter-filters-updated', function(e) {
 						var dropdownButton = filterDropdown.shadowRoot.querySelector('d2l-dropdown-button-subtle').shadowRoot.querySelector('d2l-button-subtle');
-						assert.deepEqual(e.detail.filteredActivities, list.entity);
+						assert.deepEqual(e.detail.filteredActivities, submissions.entity);
 						if (add === 1) {
 							assert.equal(dropdownButton.text, 'Filter: 1 Filter');
 							assert.equal(e.detail.totalSelectedFilters, 1);
@@ -238,7 +239,7 @@
 
 					quickEval.addEventListener('d2l-hm-filter-filters-updated', function(e) {
 						var dropdownButton = filterDropdown.shadowRoot.querySelector('d2l-dropdown-button-subtle').shadowRoot.querySelector('d2l-button-subtle');
-						assert.deepEqual(e.detail.filteredActivities, list.entity);
+						assert.deepEqual(e.detail.filteredActivities, submissions.entity);
 						if (add === 2) {
 							assert.equal(dropdownButton.text, 'Filter: 1 Filter');
 							assert.equal(e.detail.totalSelectedFilters, 1);
@@ -304,7 +305,7 @@
 					quickEval.addEventListener('d2l-hm-search-results-loaded', function(e) {
 						assert.equal(list.searchApplied, true);
 						assert.equal(quickEval._moreSearchResults, true);
-						assert.deepEqual(e.detail.results, list.entity);
+						assert.deepEqual(e.detail.results, submissions.entity);
 						done();
 					});
 

@@ -299,7 +299,6 @@ class D2LQuickEvalActivitiesList extends QuickEvalLogging(QuickEvalLocalize(Poly
 	static get observers() {
 		return [
 			'_handleNameSwap(_headerColumns.0.headers.*)',
-
 			'_dispatchActivitiesShownInSearchResultsEvent(_numberOfActivitiesShownInSearchResults)'
 		];
 	}
