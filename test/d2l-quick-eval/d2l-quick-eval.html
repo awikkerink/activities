@@ -315,7 +315,7 @@
 				});
 				test('clearing search causes event to fire', function(done) {
 					quickEval.addEventListener('d2l-hm-search-results-loaded', function(e) {
-						assert.deepEqual(e.detail.results, list.entity);
+						assert.deepEqual(e.detail.results, submissions.entity);
 						done();
 					});
 
