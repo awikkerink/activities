@@ -102,7 +102,7 @@ class D2LQuickEval extends mixinBehaviors(
 			<d2l-quick-eval-search-results-summary-container
 				search-results-count="[[searchResultsCount]]"
 				more-results="[[_moreSearchResults]]"
-				hidden$="[[!_showSearchResults]]">
+				hidden$="[[!_searchResultsMessageEnabled(searchCleared, searchEnabled)]]">
 			</d2l-quick-eval-search-results-summary-container>
 			<d2l-quick-eval-submissions href="[[href]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" master-teacher="[[masterTeacher]]" hidden$="[[_showActivitiesView]]"></d2l-quick-eval-submissions>
 			<d2l-quick-eval-activities href="[[href]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" hidden$="[[!_showActivitiesView]]"></d2l-quick-eval-activities>
@@ -136,10 +136,6 @@ class D2LQuickEval extends mixinBehaviors(
 			_numberOfActivitiesToShow: {
 				type: Number,
 				value: 20
-			},
-			_showSearchResults: {
-				type: Boolean,
-				computed: '_searchResultsMessageEnabled()'
 			},
 			_moreSearchResults: {
 				type: Boolean,
@@ -212,7 +208,7 @@ class D2LQuickEval extends mixinBehaviors(
 	}
 
 	_searchResultsMessageEnabled() {
-		return this.searchEnabled && !this.searchCleared;
+		return !this.searchCleared && this.searchEnabled;
 	}
 
 	_filtersLoaded(e) {
@@ -259,7 +255,7 @@ class D2LQuickEval extends mixinBehaviors(
 		submissions.entity = e.detail.results;
 		list.entity = e.detail.results;
 		this.entity = e.detail.results;
-		this._showSearchResultSummary = !e.detail.searchIsCleared;
+		this.searchCleared = e.detail.searchIsCleared;
 		list.searchApplied = !e.detail.searchIsCleared;
 
 		if (this.entity && this.entity.entities) {
@@ -281,7 +277,7 @@ class D2LQuickEval extends mixinBehaviors(
 	}
 
 	_updateSearchResultsCount(count) {
-		this._searchResultsCount = count;
+		this.searchResultsCount = count;
 
 		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
 		if (list._pageNextHref) {
