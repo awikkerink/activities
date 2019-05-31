@@ -29,7 +29,7 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 			assert.equal(getComputedStyle(noSubmissionComponent).display, 'none');
 		});
 		test('if there is no data in the list and search has been applied, d2l-quick-eval-no-criteria-results-image is shown', () => {
-			list.searchCleared = false;
+			list.searchApplied = true;
 
 			var noCriteriaResultsComponent = list.shadowRoot.querySelector('.d2l-quick-eval-no-criteria-results');
 			assert.notEqual(getComputedStyle(noCriteriaResultsComponent).display, 'none');
@@ -38,7 +38,7 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 		});
 		test('if there is no data in the list and filters and search have been applied, d2l-quick-eval-no-criteria-results-image is shown', () => {
 			list.filterApplied = true;
-			list.searchCleared = false;
+			list.searchApplied = true;
 
 			var noCriteriaResultsComponent = list.shadowRoot.querySelector('.d2l-quick-eval-no-criteria-results');
 			assert.notEqual(getComputedStyle(noCriteriaResultsComponent).display, 'none');

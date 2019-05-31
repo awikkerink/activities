@@ -44,13 +44,13 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					display: none;
 				}
 			</style>
-			<div class="d2l-quick-eval-no-submissions" hidden$="[[!_shouldShowNoSubmissions(_data, filterApplied, searchCleared)]]">
+			<div class="d2l-quick-eval-no-submissions" hidden$="[[!_shouldShowNoSubmissions(_data, filterApplied, searchApplied)]]">
 				<d2l-quick-eval-no-submissions-image></d2l-quick-eval-no-submissions-image>
 				<h2 class="d2l-quick-eval-no-submissions-heading">[[localize('caughtUp')]]</h2>
 				<p class="d2l-body-standard">[[localize('noSubmissions')]]</p>
 				<p class="d2l-body-standard">[[localize('checkBackOften')]]</p>
 			</div>
-			<div class="d2l-quick-eval-no-criteria-results" hidden$="[[!_shouldShowNoCriteriaResults(_data, filterApplied, searchCleared)]]">
+			<div class="d2l-quick-eval-no-criteria-results" hidden$="[[!_shouldShowNoCriteriaResults(_data, filterApplied, searchApplied)]]">
 				<d2l-quick-eval-no-criteria-results-image></d2l-quick-eval-no-criteria-results-image>
 				<h2 class="d2l-quick-eval-no-criteria-results-heading">[[localize('noResults')]]</h2>
 				<p class="d2l-body-standard">[[localize('noCriteriaMatch')]]</p>
@@ -71,16 +71,20 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			filterApplied: {
 				type: Boolean,
 				value: false
-			}
+			},
+			searchApplied: {
+				type: Boolean,
+				value: false
+			},
 		};
 	}
 
 	_shouldShowNoSubmissions() {
-		return !(this._data.length) && !(this.filterApplied || !this.searchCleared);
+		return !(this._data.length) && !(this.filterApplied || this.searchApplied);
 	}
 
 	_shouldShowNoCriteriaResults() {
-		return !(this._data.length) && (this.filterApplied || !this.searchCleared);
+		return !(this._data.length) && (this.filterApplied || this.searchApplied);
 	}
 }
 window.customElements.define(D2LQuickEvalActivities.is, D2LQuickEvalActivities);
