@@ -11,7 +11,7 @@ const ActivityListItemResponsiveConstantsImpl = (superClass) => class extends su
 				minWidth: 0,
 				image: {
 					width: 90,
-					height: 54,
+					height: 52,
 					marginRight: '0.9rem'
 				},
 				title: {
@@ -42,7 +42,7 @@ const ActivityListItemResponsiveConstantsImpl = (superClass) => class extends su
 				minWidth: 339,
 				image: {
 					width: 120,
-					height: 72,
+					height: 71,
 					marginRight: '1.2rem'
 				},
 				title: {
@@ -73,7 +73,7 @@ const ActivityListItemResponsiveConstantsImpl = (superClass) => class extends su
 				minWidth: 385,
 				image: {
 					width: 120,
-					height: 72,
+					height: 71,
 					marginRight: '1.2rem'
 				},
 				title: {
@@ -104,7 +104,7 @@ const ActivityListItemResponsiveConstantsImpl = (superClass) => class extends su
 				minWidth: 580,
 				image: {
 					width: 120,
-					height: 72,
+					height: 71,
 					marginRight: '1.2rem'
 				},
 				title: {

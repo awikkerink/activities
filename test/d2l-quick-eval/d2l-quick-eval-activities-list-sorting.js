@@ -142,8 +142,8 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 		});
 	});
 
-	suite('_sortClickHandler', () => {
-		suite('_sortClickHandler error cases', () => {
+	suite('_handleSortRequested', () => {
+		suite('_handleSortRequested error cases', () => {
 			const testData = [
 				{
 					name: 'header not found',
@@ -158,14 +158,14 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 				test(testCase.name, (done) => {
 					var stub = sinon.stub(list, '_applySortAndFetchData');
 					const e = {
-						currentTarget: {
-							id: testCase.id
+						detail: {
+							headerId: testCase.id
 						}
 					};
 
-					list._sortClickHandler(e)
+					list._handleSortRequested(e)
 						.then(() => {
-							done('_sortClickHandler should have rejected');
+							done('_handleSortRequested should have rejected');
 						})
 						.catch(() => {
 							expect(stub.notCalled, '_applySortAndFetchData should not be called').to.be.true;
@@ -178,7 +178,7 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 			});
 		});
 
-		suite('_sortClickHandler only sets sortable header to sorted', () => {
+		suite('_handleSortRequested only sets sortable header to sorted', () => {
 			const testData = [
 				{
 					name: 'ascending',
@@ -195,8 +195,8 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 					const activeSortKey = 'activityName';
 					const stub = sinon.stub(list, '_applySortAndFetchData', () => Promise.resolve());
 					const e = {
-						currentTarget: {
-							id: activeSortKey
+						detail: {
+							headerId: activeSortKey
 						}
 					};
 
@@ -210,7 +210,7 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 						});
 					});
 
-					return list._sortClickHandler(e)
+					return list._handleSortRequested(e)
 						.then(() => {
 							const activeSorts = list._headerColumns
 								.map(column => column.headers)
