@@ -96,10 +96,6 @@ class D2LQuickEval extends mixinBehaviors(
 				value: false,
 				reflectToAttribute: true
 			},
-			_filterIds: {
-				type: Array,
-				computed: '_getFilterIds(masterTeacher)'
-			},
 			_numberOfActivitiesToShow: {
 				type: Number,
 				value: 20

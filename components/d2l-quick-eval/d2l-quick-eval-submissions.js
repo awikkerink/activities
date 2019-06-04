@@ -31,7 +31,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				<d2l-hm-filter
 					href="[[filterHref]]"
 					token="[[token]]"
-					category-whitelist="[[filterIds]]"
+					category-whitelist="[[_filterIds]]"
 					on-d2l-hm-filter-filters-loaded="_submisionsFiltersLoaded"
 					on-d2l-hm-filter-filters-updating="_submissionsFiltersUpdating"
 					on-d2l-hm-filter-filters-updated="_submissionsFiltersChanged"
@@ -72,12 +72,22 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			_data: {
 				type: Array,
 				value: []
+			},
+			masterTeacher: {
+				type: Boolean,
+				value: false,
+				reflectToAttribute: true
+			},
+			_filterIds: {
+				type: Array,
+				computed: '_getFilterIds(masterTeacher)'
 			}
 		};
 	}
 
 	static get observers() {
 		return [
+			'_loadFilterAndSearch(entity)',
 			'_loadData(entity)',
 			'_handleSorts(entity)'
 		];
@@ -87,7 +97,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		return this.shadowRoot.querySelector('d2l-quick-eval-activities-list');
 	}
 
-	get filterIds() {
+	_getFilterIds(masterTeacher) {
 		// [ 'activity-name', 'enrollments', 'completion-date' ]
 		let filters = [ 'c806bbc6-cfb3-4b6b-ae74-d5e4e319183d', 'f2b32f03-556a-4368-945a-2614b9f41f76', '05de346e-c94d-4e4b-b887-9c86c9a80351' ];
 
@@ -110,9 +120,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	}
 
 	_submissionsFiltersChanged(e) {
-		console.log('JOSH from submissions');
-		this._clearFilterError();
-
 		const submissions = this.shadowRoot.querySelector('d2l-quick-eval-submissions');
 		const list = submissions.shadowRoot.querySelector('d2l-quick-eval-activities-list');
 		submissions.entity = e.detail.filteredActivities;
@@ -122,6 +129,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		if (this.entity && this.entity.entities) {
 			this._updateSearchResultsCount(this.entity.entities.length);
 		}
+		this._clearFilterError();
 	}
 
 	_filterError(evt) {
@@ -183,6 +191,11 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		} else {
 			this._moreSearchResults = false;
 		}
+	}
+
+	_loadFilterAndSearch(entity) {
+		this._setFilterHref(entity);
+		this._setSearchAction(entity);
 	}
 
 	async _loadData(entity) {
@@ -293,8 +306,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 
 	ready() {
 		super.ready();
-		this._setFilterHref(this.entity);
-		this._setSearchAction(this.entity);
 		this.addEventListener('d2l-siren-entity-error', function() {
 			this.list._fullListLoading = false;
 			this.list._loading = false;

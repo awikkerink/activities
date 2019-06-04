@@ -40,11 +40,11 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 	},
 
 	_searchResultsLoaded: function(e) {
-		this.entity = e.detail.results;
+		const entity = e.detail.results;
 		this.searchApplied = !e.detail.searchIsCleared;
 
-		if (this.entity && this.entity.entities) {
-			this.searchResultsCount = this.entity.entities.length;
+		if (entity && entity.entities) {
+			this.searchResultsCount = entity.entities.length;
 		} else {
 			this.searchResultsCount = 0;
 		}

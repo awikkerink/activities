@@ -11,6 +11,7 @@ import './behaviors/d2l-hm-filter-behavior.js';
 import './behaviors/d2l-hm-search-behavior.js';
 import './d2l-quick-eval-no-submissions-image.js';
 import './d2l-quick-eval-no-criteria-results-image.js';
+import './d2l-quick-eval-search-results-summary-container.js';
 
 /**
  * @customElement
@@ -27,22 +28,13 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				.d2l-quick-eval-activity-list-modifiers {
 					float: right;
 				}
+				.clear {
+					clear: both;
+				}
 				d2l-hm-search {
 					display: inline-block;
 					width: 250px;
 					margin-left: .25rem;
-				}
-				.clear {
-					clear: both;
-				}
-				d2l-alert {
-					margin: auto;
-					margin-bottom: 0.5rem;
-				}
-				d2l-quick-eval-search-results-summary-container {
-					margin-bottom: 0.9rem;
-					margin-top: 0.9rem;
-					display: block;
 				}
 				.d2l-quick-eval-no-submissions,
 				.d2l-quick-eval-no-criteria-results {
@@ -65,6 +57,15 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					@apply --d2l-heading-2;
 					margin: 0;
 				}
+				d2l-alert {
+					margin: auto;
+					margin-bottom: 0.5rem;
+				}
+				d2l-quick-eval-search-results-summary-container {
+					margin-bottom: 0.9rem;
+					margin-top: 0.9rem;
+					display: block;
+				}
 				[hidden] {
 					display: none;
 				}
@@ -76,7 +77,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					category-whitelist="[[filterIds]]"
 					on-d2l-hm-filter-filters-loaded="_filtersLoaded"
 					on-d2l-hm-filter-filters-updating="_clearFilterError"
-					on-d2l-hm-filter-filters-updated="_activitiesFiltersUpdated"
+					on-d2l-hm-filter-filters-updated="_clearFilterError"
 					on-d2l-hm-filter-error="_errorOnFilter">
 				</d2l-hm-filter>
 				<d2l-hm-search
@@ -85,7 +86,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					placeholder="[[localize('search')]]"
 					aria-label$="[[localize('search')]]"
 					on-d2l-hm-search-results-loading="_clearSearchError"
-					on-d2l-hm-search-results-loaded="_searchResultsLoaded"
+					on-d2l-hm-search-results-loaded="_activitiesSearchLoaded"
 					on-d2l-hm-search-error="_errorOnSearch">
 				</d2l-hm-search>
 			</div>
@@ -136,16 +137,21 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		};
 	}
 
+	static get observers() {
+		return [
+			'_loadFilterAndSearch(entity)'
+		];
+	}
+
 	get filterIds() {
 		// [ 'activity-name', 'enrollments' ]
 		const filters = [ 'c806bbc6-cfb3-4b6b-ae74-d5e4e319183d', 'f2b32f03-556a-4368-945a-2614b9f41f76' ];
 		return filters;
 	}
 
-	ready() {
-		super.ready();
-		this._setFilterHref(this.entity);
-		this._setSearchAction(this.entity);
+	_loadFilterAndSearch(entity) {
+		this._setFilterHref(entity);
+		this._setSearchAction(entity);
 	}
 
 	_shouldShowNoSubmissions() {
@@ -156,9 +162,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		return !(this._data.length) && (this.filterApplied || this.searchApplied);
 	}
 
-	_activitiesFiltersUpdated() {
-		console.log('JOSH from activities');
-		this._clearFilterError();
+	_activitiesSearchLoaded() {
+		// TODO: add activity DOM card loading here
+		this._searchResultsLoaded();
 	}
 }
 window.customElements.define(D2LQuickEvalActivities.is, D2LQuickEvalActivities);
