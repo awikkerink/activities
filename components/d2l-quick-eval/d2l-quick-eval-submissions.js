@@ -1,61 +1,28 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { QuickEvalLogging } from './QuickEvalLogging.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
-import 'd2l-common/components/d2l-hm-filter/d2l-hm-filter.js';
-import 'd2l-common/components/d2l-hm-search/d2l-hm-search.js';
 import './behaviors/d2l-quick-eval-siren-helper-behavior.js';
-import './behaviors/d2l-hm-filter-behavior.js';
-import './behaviors/d2l-hm-search-behavior.js';
 import './d2l-quick-eval-activities-list.js';
+import './behaviors/d2l-hm-sort-behaviour.js';
 
 class D2LQuickEvalSubmissions extends mixinBehaviors(
-	[D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior, D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviour, D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour],
+	[
+		D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior,
+		D2L.PolymerBehaviors.QuickEval.D2LHMSortBehaviour
+	],
 	QuickEvalLogging(PolymerElement)
 ) {
 	static get template() {
 		const template = html`
-			<style>
-				.d2l-quick-eval-activity-list-modifiers {
-					float: right;
-				}
-				d2l-hm-search {
-					display: inline-block;
-					width: 250px;
-					margin-left: .25rem;
-				}
-				.clear {
-					clear: both;
-				}
-			</style>
-			<div class="d2l-quick-eval-activity-list-modifiers">
-				<d2l-hm-filter
-					href="[[filterHref]]"
-					token="[[token]]"
-					category-whitelist="[[_filterIds]]"
-					on-d2l-hm-filter-filters-loaded="_submisionsFiltersLoaded"
-					on-d2l-hm-filter-filters-updating="_submissionsFiltersUpdating"
-					on-d2l-hm-filter-filters-updated="_submissionsFiltersChanged"
-					on-d2l-hm-filter-error="_filterError">
-				</d2l-hm-filter>
-				<d2l-hm-search
-					token="[[token]]"
-					search-action="[[searchAction]]"
-					placeholder="[[localize('search')]]"
-					aria-label$="[[localize('search')]]"
-					on-d2l-hm-search-results-loading="_submissionsSearchResultsLoading"
-					on-d2l-hm-search-results-loaded="_submissionsSearchResultsLoaded"
-					on-d2l-hm-search-error="_searchError">
-				</d2l-hm-search>
-			</div>
-			<div class="clear"></div>
 			<d2l-quick-eval-activities-list
 				href="[[href]]"
 				token="[[token]]"
 				logging-endpoint="[[loggingEndpoint]]"
 				master-teacher="[[masterTeacher]]"
 				_data="[[_data]]"
+				_header-columns="[[_headerColumns]]"
 				on-d2l-quick-eval-submission-table-load-more="_loadMore"
-				on-d2l-quick-eval-activities-list-sort-updated="_sortChanged"
+				on-d2l-quick-eval-submissions-table-sort-requested="_handleSortRequested"
 			>
 			</d2l-quick-eval-activities-list>
 		`;
@@ -73,129 +40,53 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				type: Array,
 				value: []
 			},
-			masterTeacher: {
-				type: Boolean,
-				value: false,
-				reflectToAttribute: true
-			},
-			_filterIds: {
+			_headerColumns: {
 				type: Array,
-				computed: '_getFilterIds(masterTeacher)'
-			}
+				value: [
+					{
+						key: 'displayName',
+						meta: { firstThenLast: true },
+						headers: [
+							{ key: 'firstName', sortClass: 'first-name', suffix: ',', canSort: false, sorted: false, desc: false  },
+							{ key: 'lastName', sortClass: 'last-name', canSort: false, sorted: false, desc: false  }
+						]
+					},
+					{
+						key: 'activityName',
+						headers: [{ key: 'activityName', sortClass: 'activity-name', canSort: false, sorted: false, desc: false }]
+					},
+					{
+						key: 'courseName',
+						headers: [{ key: 'courseName', sortClass: 'course-name', canSort: false, sorted: false, desc: false }]
+					},
+					{
+						key: 'submissionDate',
+						headers: [{ key: 'submissionDate', sortClass: 'completion-date', canSort: false, sorted: false, desc: false }]
+					},
+					{
+						key: 'masterTeacher',
+						headers: [{ key: 'masterTeacher', sortClass: 'primary-facilitator', canSort: false, sorted: false, desc: false }]
+					}
+				]
+			},
+			_numberOfActivitiesToShow: {
+				type: Number,
+				computed: '_computeNumberOfActivitiesToShow(_data, _numberOfActivitiesToShow)',
+				value: 20
+			},
 		};
 	}
 
 	static get observers() {
 		return [
-			'_loadFilterAndSearch(entity)',
 			'_loadData(entity)',
-			'_handleSorts(entity)'
+			'_handleSorts(entity)',
+			'_dispatchPageSizeEvent(_numberOfActivitiesToShow)'
 		];
 	}
 
 	get list() {
 		return this.shadowRoot.querySelector('d2l-quick-eval-activities-list');
-	}
-
-	_getFilterIds(masterTeacher) {
-		// [ 'activity-name', 'enrollments', 'completion-date' ]
-		let filters = [ 'c806bbc6-cfb3-4b6b-ae74-d5e4e319183d', 'f2b32f03-556a-4368-945a-2614b9f41f76', '05de346e-c94d-4e4b-b887-9c86c9a80351' ];
-
-		if (masterTeacher) {
-			filters = filters.concat('35b3aca0-c10c-436d-b369-c8a3022455e3'); // [ 'primary-facilitator' ]
-		}
-		return filters;
-	}
-
-	_submisionsFiltersLoaded(e) {
-		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
-		list.filterApplied = e.detail.totalSelectedFilters > 0;
-		this._filtersLoaded(e);
-	}
-
-	_submissionsFiltersUpdating() {
-		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
-		list.setLoadingState(true);
-		this._clearFilterError();
-	}
-
-	_submissionsFiltersChanged(e) {
-		const submissions = this.shadowRoot.querySelector('d2l-quick-eval-submissions');
-		const list = submissions.shadowRoot.querySelector('d2l-quick-eval-activities-list');
-		submissions.entity = e.detail.filteredActivities;
-		list.entity = e.detail.filteredActivities;
-		this.entity = e.detail.filteredActivities;
-
-		if (this.entity && this.entity.entities) {
-			this._updateSearchResultsCount(this.entity.entities.length);
-		}
-		this._clearFilterError();
-	}
-
-	_filterError(evt) {
-		this._logError(evt.detail.error, {developerMessage: 'Failed to retrieve filter results'});
-		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
-		list.setLoadingState(false);
-
-		this._errorOnFilter();
-	}
-
-	_handleSorts(entity) {
-		this.list._handleSorts(entity);
-	}
-
-	_submissionsSearchResultsLoading() {
-		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
-		list.setLoadingState(true);
-
-		this._clearSearchError();
-	}
-
-	_submissionsSearchResultsLoaded(e) {
-		this._searchResultsLoaded(e);
-
-		const submissions = this.shadowRoot.querySelector('d2l-quick-eval-submissions');
-		const list = submissions.shadowRoot.querySelector('d2l-quick-eval-activities-list');
-
-		submissions.entity = e.detail.results;
-		list.entity = e.detail.results;
-		this.entity = e.detail.results;
-		list.searchApplied = !e.detail.searchIsCleared;
-
-		if (this.entity && this.entity.entities) {
-			this._updateSearchResultsCount(this.entity.entities.length);
-		} else {
-			this._updateSearchResultsCount(0);
-		}
-	}
-
-	_clearSearchResults() {
-		const search = this.shadowRoot.querySelector('d2l-hm-search');
-		search.clearSearch();
-	}
-
-	_searchError(evt) {
-		this._errorOnSearch();
-
-		this._logError(evt.detail.error, {developerMessage: 'Failed to retrieve search results.'});
-		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
-		list.setLoadingState(false);
-	}
-
-	_updateSearchResultsCount(count) {
-		this.searchResultsCount = count;
-
-		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
-		if (list._pageNextHref) {
-			this._moreSearchResults = true;
-		} else {
-			this._moreSearchResults = false;
-		}
-	}
-
-	_loadFilterAndSearch(entity) {
-		this._setFilterHref(entity);
-		this._setSearchAction(entity);
 	}
 
 	async _loadData(entity) {
@@ -277,7 +168,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 					submissionDate: this._getSubmissionDate(activity),
 					activityLink: this._getRelativeUriProperty(activity, extraParams),
 					masterTeacher: '',
-					isDraft: this.list._determineIfActivityIsDraft(activity)
+					isDraft: this._determineIfActivityIsDraft(activity)
 				};
 
 				const getUserName = this._getUserPromise(activity, item);
@@ -300,8 +191,97 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		return result;
 	}
 
-	_sortChanged(e) {
-		this.entity = e.detail.sortedActivities;
+	_handleSorts(entity) {
+		// entity is null on initial load
+		if (!entity) {
+			return Promise.resolve();
+		}
+
+		return this._loadSorts(entity).then(sortsEntity => {
+			this._headerColumns.forEach((headerColumn, i) => {
+				headerColumn.headers.forEach((header, j) => {
+					if (header.sortClass) {
+						const sort = sortsEntity.getSubEntityByClass(header.sortClass);
+						if (sort) {
+							this.set(`_headerColumns.${i}.headers.${j}.canSort`, true);
+							if (sort.properties && sort.properties.applied && (sort.properties.priority === 0)) {
+								const descending = sort.properties.direction === 'descending';
+								this.set(`_headerColumns.${i}.headers.${j}.sorted`, true);
+								this.set(`_headerColumns.${i}.headers.${j}.desc`, descending);
+
+							} else {
+								this.set(`_headerColumns.${i}.headers.${j}.sorted`, false);
+								this.set(`_headerColumns.${i}.headers.${j}.desc`, false);
+							}
+						}
+					}
+				});
+			});
+		});
+	}
+
+	_handleSortRequested(evt) {
+		let result;
+		const headerId = evt.detail.headerId;
+
+		this._headerColumns.forEach((headerColumn, i) => {
+			headerColumn.headers.forEach((header, j) => {
+				if ((header.key === headerId) && header.canSort) {
+					const descending = header.sorted && !header.desc;
+					this.set(`_headerColumns.${i}.headers.${j}.sorted`, true);
+					this.set(`_headerColumns.${i}.headers.${j}.desc`, descending);
+
+					const customParams = this._numberOfActivitiesToShow > 0 ? { pageSize: this._numberOfActivitiesToShow } : undefined;
+					result = this._applySortAndFetchData(header.sortClass, descending, customParams);
+				}
+				else {
+					this.set(`_headerColumns.${i}.headers.${j}.sorted`, false);
+				}
+			});
+		});
+
+		if (result) {
+			return result.then(sortedCollection => {
+				this.entity = sortedCollection;
+				this._dispatchSortUpdatedEvent(sortedCollection);
+			});
+		} else {
+			return Promise.reject(new Error(`Could not find sortable header for ${headerId}`));
+		}
+	}
+
+	_dispatchSortUpdatedEvent(sorted) {
+		this.dispatchEvent(
+			new CustomEvent(
+				'd2l-quick-eval-activities-list-sort-updated',
+				{
+					detail: {
+						sortedActivities: sorted
+					},
+					composed: true,
+					bubbles: true
+				}
+			)
+		);
+	}
+
+	_computeNumberOfActivitiesToShow(data, currentNumberOfActivitiesShown) {
+		return Math.max(data.length, currentNumberOfActivitiesShown);
+	}
+
+	_dispatchPageSizeEvent(numberOfActivitiesToShow) {
+		this.dispatchEvent(
+			new CustomEvent(
+				'd2l-quick-eval-activities-list-activities-shown-number-updated',
+				{
+					detail: {
+						count: numberOfActivitiesToShow
+					},
+					composed: true,
+					bubbles: true
+				}
+			)
+		);
 	}
 
 	ready() {

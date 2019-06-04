@@ -30,7 +30,7 @@
 		<script type="module">
 			import '@polymer/iron-test-helpers/mock-interactions.js';
 
-			var quickEval, filter, filterDropdown, list, search, toggle;
+			var quickEval, filter, filterDropdown, list, search, toggle, submissions;
 
 			var expectedFirstCellData = 'Special User Name';
 			var expectedFilters = ['Activity Name', 'Course', 'Date'];
@@ -102,7 +102,8 @@
 					quickEval = fixture('basic');
 					filter = quickEval.shadowRoot.querySelector('d2l-hm-filter');
 					filterDropdown = filter.shadowRoot.querySelector('d2l-filter-dropdown');
-					list = quickEval.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
+					submissions = quickEval.shadowRoot.querySelector('d2l-quick-eval-submissions');
+					list = submissions.shadowRoot.querySelector('d2l-quick-eval-activities-list');
 					search = quickEval.shadowRoot.querySelector('d2l-hm-search');
 					toggle = quickEval.shadowRoot.querySelector('d2l-quick-eval-view-toggle');
 				});
@@ -163,12 +164,12 @@
 
 					waitForFilter(function() { filter.href = 'data/filters-on.json'; });
 				});
-				test.skip('when a filter is selected an updating event is fired and the table is set to loading', function(done) {
+				test('when a filter is selected an updating event is fired and the table is set to loading', function(done) {
 					var alert = quickEval.shadowRoot.querySelector('#d2l-quick-eval-filter-error-alert');
 					quickEval.addEventListener('d2l-hm-filter-filters-updating', function() {
 						assert.equal(list._loading, true);
 						assert.equal(list._fullListLoading, true);
-						assert.equal(quickEval.filterError, false);
+						assert.equal(quickEval._showFilterError, false);
 						assert.equal(alert.hidden, true);
 						done();
 					});
@@ -176,18 +177,18 @@
 					waitForFilter(function() {
 						assert.equal(list._loading, false);
 						assert.equal(list._fullListLoading, false);
-						assert.equal(quickEval.filterError, false);
+						assert.equal(quickEval._showFilterError, false);
 						assert.equal(alert.hidden, true);
 						clickFilter('Assignment Name');
 					});
 				});
-				test.skip('if there is an error when the filter is updating, the table is set back to not loading', function(done) {
+				test('if there is an error when the filter is updating, the table is set back to not loading', function(done) {
 					var alert = quickEval.shadowRoot.querySelector('#d2l-quick-eval-filter-error-alert');
 					var filtersSelected = 0;
 					quickEval.addEventListener('d2l-hm-filter-filters-loaded', function() {
 						assert.equal(list._loading, false);
 						assert.equal(list._fullListLoading, false);
-						assert.equal(quickEval.filterError, false);
+						assert.equal(quickEval._showFilterError, false);
 						assert.equal(alert.hidden, true);
 						if (filtersSelected === 1) {
 							clearFilter();
@@ -197,13 +198,13 @@
 					quickEval.addEventListener('d2l-hm-filter-filters-updating', function() {
 						assert.equal(list._loading, true);
 						assert.equal(list._fullListLoading, true);
-						assert.equal(quickEval.filterError, false);
+						assert.equal(quickEval._showFilterError, false);
 						assert.equal(alert.hidden, true);
 
 						quickEval.addEventListener('d2l-hm-filter-error', function() {
 							assert.equal(list._loading, false);
 							assert.equal(list._fullListLoading, false);
-							assert.equal(quickEval.filterError, true);
+							assert.equal(quickEval._showFilterError, true);
 							assert.equal(alert.hidden, false);
 							done();
 						});
@@ -218,7 +219,7 @@
 
 					quickEval.addEventListener('d2l-hm-filter-filters-updated', function(e) {
 						var dropdownButton = filterDropdown.shadowRoot.querySelector('d2l-dropdown-button-subtle').shadowRoot.querySelector('d2l-button-subtle');
-						assert.deepEqual(e.detail.filteredActivities, list.entity);
+						assert.deepEqual(e.detail.filteredActivities, submissions.entity);
 						if (add === 1) {
 							assert.equal(dropdownButton.text, 'Filter: 1 Filter');
 							assert.equal(e.detail.totalSelectedFilters, 1);
@@ -238,7 +239,7 @@
 
 					quickEval.addEventListener('d2l-hm-filter-filters-updated', function(e) {
 						var dropdownButton = filterDropdown.shadowRoot.querySelector('d2l-dropdown-button-subtle').shadowRoot.querySelector('d2l-button-subtle');
-						assert.deepEqual(e.detail.filteredActivities, list.entity);
+						assert.deepEqual(e.detail.filteredActivities, submissions.entity);
 						if (add === 2) {
 							assert.equal(dropdownButton.text, 'Filter: 1 Filter');
 							assert.equal(e.detail.totalSelectedFilters, 1);
@@ -257,11 +258,11 @@
 
 					waitForFilter(function() { clickFilter('Assignment Name'); });
 				});
-				test.skip('if there is an error with the filter, we catch an event and display an alert, and clear that after a successful filter action', function(done) {
+				test('if there is an error with the filter, we catch an event and display an alert, and clear that after a successful filter action', function(done) {
 					var alert = quickEval.shadowRoot.querySelector('#d2l-quick-eval-filter-error-alert');
 					var filtersSelected = 0;
 					quickEval.addEventListener('d2l-hm-filter-filters-loaded', function() {
-						assert.isFalse(quickEval.filterError);
+						assert.isFalse(quickEval._showFilterError);
 						assert.isTrue(alert.hidden);
 						if (filtersSelected === 1) {
 							clearFilter();
@@ -269,16 +270,16 @@
 						filtersSelected++;
 					});
 					quickEval.addEventListener('d2l-hm-filter-error', function() {
-						assert.isTrue(quickEval.filterError);
+						assert.isTrue(quickEval._showFilterError);
 						assert.isFalse(alert.hidden);
 						clickFilter('Quiz Name');
 					});
 					quickEval.addEventListener('d2l-hm-filter-filters-updated', function() {
-						assert.isFalse(quickEval.filterError);
+						assert.isFalse(quickEval._showFilterError);
 						assert.isTrue(alert.hidden);
 						done();
 					});
-					assert.isFalse(quickEval.filterError);
+					assert.isFalse(quickEval._showFilterError);
 					assert.isTrue(alert.hidden);
 					waitForFilter(function() { filter.href = 'data/filters-error.json'; });
 				});
@@ -287,7 +288,7 @@
 					quickEval.addEventListener('d2l-hm-search-results-loading', function() {
 						assert.equal(list._loading, true);
 						assert.equal(list._fullListLoading, true);
-						assert.equal(quickEval.searchError, false);
+						assert.equal(quickEval._showSearchError, false);
 						assert.equal(alert.hidden, true);
 						done();
 					});
@@ -295,7 +296,7 @@
 					waitForSearch(function() {
 						assert.equal(list._loading, false);
 						assert.equal(list._fullListLoading, false);
-						assert.equal(quickEval.searchError, false);
+						assert.equal(quickEval._showSearchError, false);
 						assert.equal(alert.hidden, true);
 						performSearch('test');
 					});
@@ -304,7 +305,7 @@
 					quickEval.addEventListener('d2l-hm-search-results-loaded', function(e) {
 						assert.equal(list.searchApplied, true);
 						assert.equal(quickEval._moreSearchResults, true);
-						assert.deepEqual(e.detail.results, list.entity);
+						assert.deepEqual(e.detail.results, submissions.entity);
 						done();
 					});
 
@@ -314,7 +315,7 @@
 				});
 				test('clearing search causes event to fire', function(done) {
 					quickEval.addEventListener('d2l-hm-search-results-loaded', function(e) {
-						assert.deepEqual(e.detail.results, list.entity);
+						assert.deepEqual(e.detail.results, submissions.entity);
 						done();
 					});
 
@@ -322,19 +323,19 @@
 						quickEval._clearSearchResults();
 					});
 				});
-				test.skip('if there is an error when the search is updating, the table is set back to not loading', function(done) {
+				test('if there is an error when the search is updating, the table is set back to not loading', function(done) {
 					const alert = quickEval.shadowRoot.querySelector('#d2l-quick-eval-search-error-alert');
 					let validHref;
 					quickEval.addEventListener('d2l-hm-search-results-loading', function() {
 						assert.equal(list._loading, true);
 						assert.equal(list._fullListLoading, true);
-						assert.equal(quickEval.searchError, false);
+						assert.equal(quickEval._showSearchError, false);
 						assert.equal(alert.hidden, true);
 
 						quickEval.addEventListener('d2l-hm-search-error', function() {
 							assert.equal(list._loading, false);
 							assert.equal(list._fullListLoading, false);
-							assert.equal(quickEval.searchError, true);
+							assert.equal(quickEval._showSearchError, true);
 							assert.equal(alert.hidden, false);
 							search.searchAction.href = validHref;
 							done();
@@ -347,21 +348,21 @@
 						performSearch('test');
 					});
 				});
-				test.skip('if there is an error with the search, we catch an event and display an alert, and clear that after a successful search action', function(done) {
+				test('if there is an error with the search, we catch an event and display an alert, and clear that after a successful search action', function(done) {
 					const alert = quickEval.shadowRoot.querySelector('#d2l-quick-eval-search-error-alert');
 					let validHref;
 					quickEval.addEventListener('d2l-hm-search-error', function() {
-						assert.isTrue(quickEval.searchError);
+						assert.isTrue(quickEval._showSearchError);
 						assert.isFalse(alert.hidden);
 						search.searchAction.href = validHref;
 						performSearch('test');
 					});
 					quickEval.addEventListener('d2l-hm-search-results-loaded', function() {
-						assert.isFalse(quickEval.searchError);
+						assert.isFalse(quickEval._showSearchError);
 						assert.isTrue(alert.hidden);
 						done();
 					});
-					assert.isFalse(quickEval.searchError);
+					assert.isFalse(quickEval._showSearchError);
 					assert.isTrue(alert.hidden);
 					waitForSearch(function() {
 						validHref = search.searchAction.href;
