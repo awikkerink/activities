@@ -141,13 +141,6 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 			isDraft: false
 		}
 	];
-	var expectedColumnHeaders = [
-		['First Name', 'Last Name'],
-		['Activity Name'],
-		['Course'],
-		['Submission Date']
-	];
-	var expectedColumnHeadersWithMasterTeacher = expectedColumnHeaders.concat([['Teacher']]);
 
 	suite('d2l-quick-eval-activities-list', function() {
 		setup(function() {
@@ -156,39 +149,9 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 		test('instantiating the element works', function() {
 			assert.equal(list.tagName.toLowerCase(), 'd2l-quick-eval-activities-list');
 		});
-		test('_numberOfActivitiesToShow starts with default value of 20', function() {
-			assert.equal(20, list._numberOfActivitiesToShow);
-		});
-		test('attributes are set correctly', function() {
-			assert.equal(list.href, 'blah');
-			assert.equal(list.token, 't');
-		});
 		test('no alert displayed when healthy', function() {
 			const alert = list.shadowRoot.querySelector('#list-alert');
 			assert.equal(true, alert.hasAttribute('hidden'));
-		});
-		test('when _updateNumberOfActivitiesToShow updated, event "d2l-quick-eval-activities-list-activities-shown-number-updated" fires', function(done) {
-			const expectedNumberOfActivitiesToShow = 50;
-
-			list.addEventListener('d2l-quick-eval-activities-list-activities-shown-number-updated', function(e) {
-				assert.equal(expectedNumberOfActivitiesToShow, e.detail.count);
-				done();
-			});
-
-			list._numberOfActivitiesToShow = expectedNumberOfActivitiesToShow;
-		});
-		test('when data size increased, _numberOfActivitiesToShow matches size and event is triggered', function(done) {
-			const expectedNumberOfActivitiesToShow = 100;
-			const fakeData = new Array(expectedNumberOfActivitiesToShow);
-
-			list.addEventListener('d2l-quick-eval-activities-list-activities-shown-number-updated', function(e) {
-				assert.equal(expectedNumberOfActivitiesToShow, list._numberOfActivitiesToShow);
-				assert.equal(expectedNumberOfActivitiesToShow, e.detail.count);
-				list._data = [];
-				done();
-			});
-
-			list._data = fakeData;
 		});
 		test('_fullListLoading and _loading are set to true before data is loaded, and loading-skeleton is present', () => {
 			var loadingskeleton = list.shadowRoot.querySelector('d2l-quick-eval-skeleton');
@@ -306,36 +269,6 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 					assert.equal(noCriteriaResultsComponent.style.display, 'none');
 					done();
 				});
-			});
-		});
-		test('headers display correctly', function(done) {
-			flush(function() {
-				var headers = list.shadowRoot.querySelectorAll('d2l-th');
-
-				assert.equal(expectedColumnHeaders.length, headers.length);
-
-				for (var i = 0; i < expectedColumnHeaders.length; i++) {
-					expectedColumnHeaders[i].forEach(function(expectedHeader) {
-						assert.include(headers[i].innerHTML, expectedHeader);
-					});
-				}
-				done();
-			});
-		});
-		test('headers include master teacher when toggled on, and is display correctly', function(done) {
-			list.setAttribute('master-teacher', '');
-
-			flush(function() {
-
-				var headers = list.shadowRoot.querySelectorAll('d2l-th');
-				assert.equal(expectedColumnHeadersWithMasterTeacher.length, headers.length);
-
-				for (var i = 0; i < expectedColumnHeadersWithMasterTeacher.length; i++) {
-					expectedColumnHeadersWithMasterTeacher[i].forEach(function(expectedHeader) {
-						assert.include(headers[i].innerHTML, expectedHeader);
-					});
-				}
-				done();
 			});
 		});
 		test.skip('data is imported correctly', (done) => {
@@ -534,52 +467,6 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 				}
 			);
 			assert.equal(expectedDisplayName, displayName);
-		});
-
-		test('firstName begins before lastName, clicking lastName puts it before firstName and clicking firstName puts it before lastName', (done) => {
-
-			var nameHeaders = list._headerColumns[0].headers;
-			assert.equal('firstName', nameHeaders[0].key);
-
-			list._headerColumns[0].headers[0].canSort = true;
-			list._headerColumns[0].headers[1].canSort = true;
-
-			flush(function() {
-				var lastNameHeader = list.shadowRoot.querySelector('#lastName');
-
-				var verifyFirstNameNameFirst = function() {
-					assert.equal('firstName', nameHeaders[0].key);
-					assert.equal(',', nameHeaders[0].suffix);
-					assert.equal('', nameHeaders[1].suffix);
-
-					done();
-				};
-
-				var verifyLastNameFirst = function() {
-					assert.equal('lastName', nameHeaders[0].key);
-					assert.equal(',', nameHeaders[0].suffix);
-					assert.equal('', nameHeaders[1].suffix);
-
-					lastNameHeader.removeEventListener('click', verifyLastNameFirst);
-
-					var firstNameHeader = list.shadowRoot.querySelector('#firstName');
-					firstNameHeader.addEventListener('click', verifyFirstNameNameFirst);
-
-					MockInteractions.tap(firstNameHeader);
-				};
-
-				lastNameHeader.addEventListener('click', verifyLastNameFirst);
-				MockInteractions.tap(lastNameHeader);
-
-			});
-		});
-
-		test('_computeNumberOfActivitiesToShow returns max of data length, and previously shown number of activities', function() {
-			const numberOfActivitiesToShowWhenDataLarger = list._computeNumberOfActivitiesToShow([1, 2, 3, 4], 1);
-			assert.equal(4, numberOfActivitiesToShowWhenDataLarger);
-
-			const numberOfActivitiesToShowWhenPreviousLarger = list._computeNumberOfActivitiesToShow([1], 5);
-			assert.equal(5, numberOfActivitiesToShowWhenPreviousLarger);
 		});
 
 		test.skip('_loadData sets _pageNextHref to empty string when no entities present on entity', function() {
