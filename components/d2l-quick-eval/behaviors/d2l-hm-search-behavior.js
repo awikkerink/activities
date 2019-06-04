@@ -1,5 +1,3 @@
-import './d2l-siren-helper-behavior.js';
-
 window.D2L = window.D2L || {};
 window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
 window.D2L.PolymerBehaviors.QuickEval = window.D2L.PolymerBehaviors.QuickEval || {};
@@ -14,9 +12,9 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 		searchAction: {
 			type: Object
 		},
-		searchCleared: {
+		searchApplied: {
 			type: Boolean,
-			value: true
+			value: false
 		},
 		searchError: {
 			type: Boolean,
@@ -26,28 +24,6 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 			type: Number,
 			value: 0
 		}
-	},
-
-	observers: [
-		'_setSearchAction(entity)'
-	],
-
-	attached: function() {
-		this.addEventListener('d2l-hm-search-results-loading', this._clearSearchError);
-		this.addEventListener('d2l-hm-search-results-loaded', this._searchResultsLoaded);
-		this.addEventListener('d2l-hm-search-error', this._errorOnSearch);
-		this.addEventListener('d2l-quick-eval-search-results-summary-container-clear-search', this._clearSearchResults);
-		this.addEventListener('d2l-hm-filter-filters-updating', this._clearSearchError);
-		this.addEventListener('d2l-hm-filter-filters-updated', this._clearSearchError);
-	},
-
-	detached: function() {
-		this.removeEventListener('d2l-hm-search-results-loading', this._clearSearchError);
-		this.removeEventListener('d2l-hm-search-results-loaded', this._searchResultsLoaded);
-		this.removeEventListener('d2l-hm-search-error', this._errorOnSearch);
-		this.removeEventListener('d2l-quick-eval-search-results-summary-container-clear-search', this._clearSearchResults);
-		this.removeEventListener('d2l-hm-filter-filters-updating', this._clearSearchError);
-		this.removeEventListener('d2l-hm-filter-filters-updated', this._clearSearchError);
 	},
 
 	_setSearchAction: function(entity) {
@@ -65,7 +41,7 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 
 	_searchResultsLoaded: function(e) {
 		this.entity = e.detail.results;
-		this.searchCleared = e.detail.searchIsCleared;
+		this.searchApplied = !e.detail.searchIsCleared;
 
 		if (this.entity && this.entity.entities) {
 			this.searchResultsCount = this.entity.entities.length;
@@ -80,12 +56,11 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 	},
 
 	_clearSearchResults: function() {
-		this.searchCleared = true;
+		this.searchApplied = false;
 	}
 };
 
 /** @polymerBehavior */
 D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour = [
-	D2L.PolymerBehaviors.Siren.D2LSirenHelperBehavior,
 	D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl
 ];

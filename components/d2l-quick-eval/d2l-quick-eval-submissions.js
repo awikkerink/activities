@@ -1,15 +1,53 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { QuickEvalLogging } from './QuickEvalLogging.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
+import 'd2l-common/components/d2l-hm-filter/d2l-hm-filter.js';
+import 'd2l-common/components/d2l-hm-search/d2l-hm-search.js';
 import './behaviors/d2l-quick-eval-siren-helper-behavior.js';
+import './behaviors/d2l-hm-filter-behavior.js';
+import './behaviors/d2l-hm-search-behavior.js';
 import './d2l-quick-eval-activities-list.js';
 
 class D2LQuickEvalSubmissions extends mixinBehaviors(
-	[D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior],
+	[D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior, D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviour, D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour],
 	QuickEvalLogging(PolymerElement)
 ) {
 	static get template() {
 		const template = html`
+			<style>
+				.d2l-quick-eval-activity-list-modifiers {
+					float: right;
+				}
+				d2l-hm-search {
+					display: inline-block;
+					width: 250px;
+					margin-left: .25rem;
+				}
+				.clear {
+					clear: both;
+				}
+			</style>
+			<div class="d2l-quick-eval-activity-list-modifiers">
+				<d2l-hm-filter
+					href="[[filterHref]]"
+					token="[[token]]"
+					category-whitelist="[[filterIds]]"
+					on-d2l-hm-filter-filters-loaded="_submisionsFiltersLoaded"
+					on-d2l-hm-filter-filters-updating="_submissionsFiltersUpdating"
+					on-d2l-hm-filter-filters-updated="_submissionsFiltersChanged"
+					on-d2l-hm-filter-error="_filterError">
+				</d2l-hm-filter>
+				<d2l-hm-search
+					token="[[token]]"
+					search-action="[[searchAction]]"
+					placeholder="[[localize('search')]]"
+					aria-label$="[[localize('search')]]"
+					on-d2l-hm-search-results-loading="_submissionsSearchResultsLoading"
+					on-d2l-hm-search-results-loaded="_submissionsSearchResultsLoaded"
+					on-d2l-hm-search-error="_searchError">
+				</d2l-hm-search>
+			</div>
+			<div class="clear"></div>
 			<d2l-quick-eval-activities-list
 				href="[[href]]"
 				token="[[token]]"
@@ -49,8 +87,102 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		return this.shadowRoot.querySelector('d2l-quick-eval-activities-list');
 	}
 
+	get filterIds() {
+		// [ 'activity-name', 'enrollments', 'completion-date' ]
+		let filters = [ 'c806bbc6-cfb3-4b6b-ae74-d5e4e319183d', 'f2b32f03-556a-4368-945a-2614b9f41f76', '05de346e-c94d-4e4b-b887-9c86c9a80351' ];
+
+		if (masterTeacher) {
+			filters = filters.concat('35b3aca0-c10c-436d-b369-c8a3022455e3'); // [ 'primary-facilitator' ]
+		}
+		return filters;
+	}
+
+	_submisionsFiltersLoaded(e) {
+		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		list.filterApplied = e.detail.totalSelectedFilters > 0;
+		this._filtersLoaded(e);
+	}
+
+	_submissionsFiltersUpdating() {
+		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		list.setLoadingState(true);
+		this._clearFilterError();
+	}
+
+	_submissionsFiltersChanged(e) {
+		console.log('JOSH from submissions');
+		this._clearFilterError();
+
+		const submissions = this.shadowRoot.querySelector('d2l-quick-eval-submissions');
+		const list = submissions.shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		submissions.entity = e.detail.filteredActivities;
+		list.entity = e.detail.filteredActivities;
+		this.entity = e.detail.filteredActivities;
+
+		if (this.entity && this.entity.entities) {
+			this._updateSearchResultsCount(this.entity.entities.length);
+		}
+	}
+
+	_filterError(evt) {
+		this._logError(evt.detail.error, {developerMessage: 'Failed to retrieve filter results'});
+		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		list.setLoadingState(false);
+
+		this._errorOnFilter();
+	}
+
 	_handleSorts(entity) {
 		this.list._handleSorts(entity);
+	}
+
+	_submissionsSearchResultsLoading() {
+		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		list.setLoadingState(true);
+
+		this._clearSearchError();
+	}
+
+	_submissionsSearchResultsLoaded(e) {
+		this._searchResultsLoaded(e);
+
+		const submissions = this.shadowRoot.querySelector('d2l-quick-eval-submissions');
+		const list = submissions.shadowRoot.querySelector('d2l-quick-eval-activities-list');
+
+		submissions.entity = e.detail.results;
+		list.entity = e.detail.results;
+		this.entity = e.detail.results;
+		list.searchApplied = !e.detail.searchIsCleared;
+
+		if (this.entity && this.entity.entities) {
+			this._updateSearchResultsCount(this.entity.entities.length);
+		} else {
+			this._updateSearchResultsCount(0);
+		}
+	}
+
+	_clearSearchResults() {
+		const search = this.shadowRoot.querySelector('d2l-hm-search');
+		search.clearSearch();
+	}
+
+	_searchError(evt) {
+		this._errorOnSearch();
+
+		this._logError(evt.detail.error, {developerMessage: 'Failed to retrieve search results.'});
+		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		list.setLoadingState(false);
+	}
+
+	_updateSearchResultsCount(count) {
+		this.searchResultsCount = count;
+
+		const list = this.shadowRoot.querySelector('d2l-quick-eval-submissions').shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		if (list._pageNextHref) {
+			this._moreSearchResults = true;
+		} else {
+			this._moreSearchResults = false;
+		}
 	}
 
 	async _loadData(entity) {
@@ -161,6 +293,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 
 	ready() {
 		super.ready();
+		this._setFilterHref(this.entity);
+		this._setSearchAction(this.entity);
 		this.addEventListener('d2l-siren-entity-error', function() {
 			this.list._fullListLoading = false;
 			this.list._loading = false;

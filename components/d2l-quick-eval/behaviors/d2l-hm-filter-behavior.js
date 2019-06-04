@@ -1,5 +1,4 @@
 import {Rels} from 'd2l-hypermedia-constants';
-import './d2l-siren-helper-behavior.js';
 
 window.D2L = window.D2L || {};
 window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
@@ -15,32 +14,14 @@ D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviourImpl = {
 		filterHref: {
 			type: String
 		},
+		filterApplied: {
+			type: Boolean,
+			value: false
+		},
 		filterError: {
 			type: Boolean,
 			value: false
 		},
-	},
-
-	observers: [
-		'_setFilterHref(entity)'
-	],
-
-	attached: function() {
-		this.addEventListener('d2l-hm-filter-filters-loaded', this._clearFilterError);
-		this.addEventListener('d2l-hm-filter-filters-updating', this._clearFilterError);
-		this.addEventListener('d2l-hm-filter-filters-updated', this._clearFilterError);
-		this.addEventListener('d2l-hm-filter-error', this._errorOnFilter);
-		this.addEventListener('d2l-hm-search-results-loading', this._clearFilterError);
-		this.addEventListener('d2l-hm-search-results-loaded', this._clearFilterError);
-	},
-
-	detached: function() {
-		this.removeEventListener('d2l-hm-filter-filters-loaded', this._clearFilterError);
-		this.removeEventListener('d2l-hm-filter-filters-updating', this._clearFilterError);
-		this.removeEventListener('d2l-hm-filter-filters-updated', this._clearFilterError);
-		this.removeEventListener('d2l-hm-filter-error', this._errorOnFilter);
-		this.removeEventListener('d2l-hm-search-results-loading', this._clearFilterError);
-		this.removeEventListener('d2l-hm-search-results-loaded', this._clearFilterError);
 	},
 
 	_setFilterHref: function(entity) {
@@ -49,6 +30,11 @@ D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviourImpl = {
 		} else {
 			this.filterHref = '';
 		}
+	},
+
+	_filtersLoaded: function(e) {
+		this.filterApplied = e.detail.totalSelectedFilters > 0;
+		this._clearFilterError();
 	},
 
 	_clearFilterError: function() {
@@ -62,6 +48,5 @@ D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviourImpl = {
 
 /** @polymerBehavior */
 D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviour = [
-	D2L.PolymerBehaviors.Siren.D2LSirenHelperBehavior,
 	D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviourImpl
 ];
