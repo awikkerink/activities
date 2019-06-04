@@ -110,7 +110,7 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 	_getSubmissionDate: function(entity) {
 		if (entity.hasSubEntityByClass('localized-formatted-date')) {
 			const i = entity.getSubEntityByClass('localized-formatted-date');
-			return i.properties.text;
+			return i.properties.localizedDate;
 		}
 		return '';
 	},

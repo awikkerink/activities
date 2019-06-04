@@ -205,7 +205,7 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors(
 									<span>[[_getDataProperty(s, 'courseName')]]</span>
 								</d2l-td>
 								<d2l-td>
-									<span>[[_getDataProperty(s, 'submissionDate')]]</span>
+									<span>[[_localizeDateTimeFormat(s, 'submissionDate')]]</span>
 								</d2l-td>
 								<template is="dom-if" if="[[_shouldDisplayColumn('masterTeacher')]]">
 									<d2l-td>
@@ -496,6 +496,11 @@ class D2LQuickEvalActivitiesList extends mixinBehaviors(
 		}
 
 		return lastName + ', ' + firstName;
+	}
+
+	_localizeDateTimeFormat(item, prop) {
+		const localizedDate = this._getDataProperty(item, prop);
+		return this.formatDateTime(new Date(localizedDate));
 	}
 
 	_getDataProperty(item, prop) {
