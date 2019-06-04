@@ -99,7 +99,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			</d2l-alert>
 			<d2l-quick-eval-search-results-summary-container
 				search-results-count="[[searchResultsCount]]"
-				hidden$="[[searchCleared]]"
+				hidden$="[[!searchApplied]]"
 				on-d2l-quick-eval-search-results-summary-container-clear-search="_clearSearchResults">
 			</d2l-quick-eval-search-results-summary-container>
 			<div class="d2l-quick-eval-no-submissions" hidden$="[[!_shouldShowNoSubmissions(_data, filterApplied, searchApplied)]]">
@@ -125,11 +125,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 	static get properties() {
 		return {
-			isVisible: {
-				type: Boolean,
-				value: false,
-				reflectToAttribute: true
-			},
 			_data: {
 				type: Array,
 				value: []

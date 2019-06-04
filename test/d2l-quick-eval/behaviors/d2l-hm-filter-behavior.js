@@ -6,7 +6,7 @@
 			filterBehavior = fixture('basic');
 		});
 		test('default state is correct', () => {
-			assert.lengthOf(filterBehavior.filterHref, 0);
+			assert.isNotOk(filterBehavior.filterHref);
 			assert.isFalse(filterBehavior.filterError);
 		});
 		test('_clearFilterError sets filterError to false', () => {

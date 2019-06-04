@@ -8,8 +8,8 @@ import SirenParse from 'siren-parser';
 			searchBehavior = fixture('basic');
 		});
 		test('default state is correct', () => {
-			assert.isNull(searchBehavior.searchAction);
-			assert.isTrue(searchBehavior.searchCleared);
+			assert.isNotOk(searchBehavior.searchAction);
+			assert.isFalse(searchBehavior.searchApplied);
 			assert.isFalse(searchBehavior.searchError);
 			assert.equal(0, searchBehavior.searchResultsCount);
 		});
@@ -23,9 +23,9 @@ import SirenParse from 'siren-parser';
 				]
 			};
 
-			assert.isNull(searchBehavior.searchAction);
+			assert.isNotOk(searchBehavior.searchAction);
 			searchBehavior._setSearchAction(SirenParse(entity));
-			assert.isNotNull(searchBehavior.searchAction);
+			assert.isOk(searchBehavior.searchAction);
 		});
 		test('_setSearchAction invalidates search action given null entity', () => {
 			const entity = {
@@ -38,10 +38,10 @@ import SirenParse from 'siren-parser';
 			};
 
 			searchBehavior._setSearchAction(SirenParse(entity));
-			assert.isNotNull(searchBehavior.searchAction);
+			assert.isOk(searchBehavior.searchAction);
 
 			searchBehavior._setSearchAction(null);
-			assert.isNull(searchBehavior.searchAction);
+			assert.isNotOk(searchBehavior.searchAction);
 		});
 		test('_clearSearchError sets searchError to false', () => {
 			searchBehavior.searchError = true;
@@ -74,7 +74,7 @@ import SirenParse from 'siren-parser';
 			};
 
 			searchBehavior._searchResultsLoaded(e);
-			assert.isFalse(searchBehavior.searchCleared);
+			assert.isTrue(searchBehavior.searchApplied);
 			assert.equal(3, searchBehavior.searchResultsCount);
 			assert.isFalse(searchBehavior.searchError);
 		});
@@ -87,7 +87,7 @@ import SirenParse from 'siren-parser';
 			};
 
 			searchBehavior._searchResultsLoaded(e);
-			assert.isFalse(searchBehavior.searchCleared);
+			assert.isTrue(searchBehavior.searchApplied);
 			assert.equal(0, searchBehavior.searchResultsCount);
 			assert.isFalse(searchBehavior.searchError);
 		});
@@ -96,10 +96,10 @@ import SirenParse from 'siren-parser';
 			searchBehavior._errorOnSearch();
 			assert.isTrue(searchBehavior.searchError);
 		});
-		test('_clearSearchResults sets searchCleared to true', () => {
-			searchBehavior.searchCleared = false;
+		test('_clearSearchResults sets searchApplied to false', () => {
+			searchBehavior.searchApplied = true;
 			searchBehavior._clearSearchResults();
-			assert.isTrue(searchBehavior.searchCleared);
+			assert.isFalse(searchBehavior.searchApplied);
 		});
 	});
 })();
