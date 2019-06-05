@@ -137,11 +137,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		];
 	}
 
-	get filterIds() {
-		const filters = [];
-		return filters;
-	}
-
 	_loadFilterAndSearch(entity) {
 		this._setFilterHref(entity);
 		this._setSearchAction(entity);
