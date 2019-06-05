@@ -101,6 +101,13 @@ D2L.PolymerBehaviors.Siren.D2LSirenHelperBehaviorImpl = {
 			searchParams[param.name] = param.value;
 		});
 		return parsedUrl.pathname + DictToQueryString(searchParams);
+	},
+
+	_getAction: function(entity, name) {
+		if (entity && entity.hasActionByName && entity.hasActionByName(name)) {
+			return entity.getActionByName(name);
+		}
+		return null;
 	}
 };
 
