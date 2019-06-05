@@ -74,7 +74,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				<d2l-hm-filter
 					href="[[filterHref]]"
 					token="[[token]]"
-					category-whitelist="[[filterIds]]"
 					on-d2l-hm-filter-filters-loaded="_filtersLoaded"
 					on-d2l-hm-filter-filters-updating="_clearFilterError"
 					on-d2l-hm-filter-filters-updated="_clearFilterError"
