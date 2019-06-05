@@ -445,7 +445,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 
 	_searchError(e) {
 		this._logError(e.detail.error, { developerMessage: 'Failed to retrieve search results.' });
-		list.setLoadingState(false);
+		this.list.setLoadingState(false);
 		this._showSearchError = true;
 	}
 
