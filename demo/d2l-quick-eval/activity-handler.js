@@ -55,7 +55,7 @@ function formatActivity(activity) {
 				],
 				'properties': {
 					'date': '2019-03-13T15:16:10.793Z',
-					'text': activity.localizedFormattedDate
+					'localizedDate': activity.localizedFormattedDate
 				}
 			}
 		]

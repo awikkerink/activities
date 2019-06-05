@@ -73,7 +73,7 @@ export default
 			'activityType': 'assignment',
 			'activityName': 'What is Love?',
 			'courseName': 'Music 304 - A Study of Haddaway Music 304 - A Study of Haddaway Music 304 - A Study of Haddaway Music 304 - A Study of Haddaway',
-			'localizedFormattedDate': '3/9/2019 10:16 AM',
+			'localizedFormattedDate': (new Date(2019, 3, 9, 10, 16)).toISOString(),
 			'masterTeacher': {
 				'firstName': 'Brett',
 				'lastName': 'Hertzberger'
@@ -85,7 +85,7 @@ export default
 			'activityType': 'assignment',
 			'activityName': 'The Bestest Number The Bestest Number The Bestest Number The Bestest Number The Bestest Number The Bestest Number',
 			'courseName': 'Math 102 - Numbers',
-			'localizedFormattedDate': '3/9/2019 10:16 AM',
+			'localizedFormattedDate': (new Date(2019, 3, 9, 10, 16)).toISOString(),
 			'masterTeacher': {
 				'firstName': 'Chris',
 				'lastName': 'Alexander'
@@ -97,7 +97,7 @@ export default
 			'activityType': 'assignment',
 			'activityName': 'The Bestest Number',
 			'courseName': 'Math 102 - Numbers',
-			'localizedFormattedDate': '3/9/2019 10:16 AM',
+			'localizedFormattedDate': (new Date(2019, 3, 9, 10, 16)).toISOString(),
 			'masterTeacher': {
 				'firstName': 'Chris',
 				'lastName': 'Alexander'
@@ -110,7 +110,7 @@ export default
 			'activityType': 'assignment',
 			'activityName': 'The Bestest Number',
 			'courseName': 'Math 102 - Numbers',
-			'localizedFormattedDate': '18/2/2019 10:16 AM',
+			'localizedFormattedDate': (new Date(2019, 2, 18, 10, 16)).toISOString(),
 			'masterTeacher': {
 				'firstName': 'Chris',
 				'lastName': 'Alexander'
@@ -123,7 +123,7 @@ export default
 			'activityType': 'discussion',
 			'activityName': 'Was Shakespeare secretly illiterate?',
 			'courseName': 'Literature 303 - Real Talks',
-			'localizedFormattedDate': '1/1/2019 10:52 AM',
+			'localizedFormattedDate': (new Date(2019, 1, 1, 10, 52)).toISOString(),
 			'masterTeacher': {
 				'firstName': 'Surekha',
 				'lastName': 'Rao'
@@ -135,7 +135,7 @@ export default
 			'activityType': 'quiz',
 			'activityName': "Months that start with 'Feb'",
 			'courseName': 'Arts 101 - Underwater Basket Weaving',
-			'localizedFormattedDate': '1/16/2019 5:16 AM',
+			'localizedFormattedDate': (new Date(2019, 1, 16, 17, 16)).toISOString(),
 			'masterTeacher': {
 				'firstName': 'Tina',
 				'lastName': 'Fletcher'
@@ -147,7 +147,7 @@ export default
 			'activityType': 'quiz',
 			'activityName': "Months that start with 'Feb'",
 			'courseName': 'Arts 101 - Underwater Basket Weaving',
-			'localizedFormattedDate': '1/15/2019 10:12 AM',
+			'localizedFormattedDate': (new Date(2019, 1, 15, 10, 12)).toISOString(),
 			'masterTeacher': {
 				'firstName': 'Tina',
 				'lastName': 'Fletcher'
