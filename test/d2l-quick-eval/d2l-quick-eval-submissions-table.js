@@ -142,12 +142,12 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 		}
 	];
 
-	suite('d2l-quick-eval-activities-list', function() {
+	suite('d2l-quick-eval-submissions-table', function() {
 		setup(function() {
 			list = fixture('basic');
 		});
 		test('instantiating the element works', function() {
-			assert.equal(list.tagName.toLowerCase(), 'd2l-quick-eval-activities-list');
+			assert.equal(list.tagName.toLowerCase(), 'd2l-quick-eval-submissions-table');
 		});
 		test('no alert displayed when healthy', function() {
 			const alert = list.shadowRoot.querySelector('#list-alert');
@@ -188,7 +188,7 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 		});
 		test.skip('if _loading is true, the Load More button is hidden', (done) => {
 			loadPromise('data/unassessedActivities.json').then(function() {
-				var loadMore = list.shadowRoot.querySelector('.d2l-quick-eval-activities-list-load-more-container');
+				var loadMore = list.shadowRoot.querySelector('.d2l-quick-eval-submissions-table-load-more-container');
 				assert.notEqual(loadMore.style.display, 'none');
 				list._loading = true;
 				requestAnimationFrame(function() {
@@ -310,7 +310,7 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 		});
 		test.skip('the Load More button appears when there is a next link', (done) => {
 			loadPromise('data/unassessedActivities.json').then(function() {
-				var loadMore = list.shadowRoot.querySelector('.d2l-quick-eval-activities-list-load-more');
+				var loadMore = list.shadowRoot.querySelector('.d2l-quick-eval-submissions-table-load-more');
 				assert.equal(loadMore.tagName.toLowerCase(), 'd2l-button');
 				assert.notEqual(loadMore.style.display, 'none');
 				assert.notEqual(loadMore.disabled, 'true');
@@ -321,8 +321,8 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 			var expectedNext = createExpectedData(expectedData.concat(expectedNextData));
 
 			loadPromise('data/unassessedActivities.json').then(function() {
-				var loadMore = list.shadowRoot.querySelector('.d2l-quick-eval-activities-list-load-more');
-				var loadMoreContainer = list.shadowRoot.querySelector('.d2l-quick-eval-activities-list-load-more-container');
+				var loadMore = list.shadowRoot.querySelector('.d2l-quick-eval-submissions-table-load-more');
+				var loadMoreContainer = list.shadowRoot.querySelector('.d2l-quick-eval-submissions-table-load-more-container');
 				var verify = function() {
 					if (!list._loading && loadMoreContainer.style.display === 'none') {
 						verifyData(expectedNext, done);
