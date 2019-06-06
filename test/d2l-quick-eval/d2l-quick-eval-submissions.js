@@ -21,31 +21,6 @@ suite('d2l-quick-eval-submissions', function() {
 		assert.equal(submissions.token, 't');
 	});
 
-	test('when _updateNumberOfActivitiesToShow updated, event "d2l-quick-eval-activities-list-activities-shown-number-updated" fires', function(done) {
-		const expectedNumberOfActivitiesToShow = 50;
-
-		submissions.addEventListener('d2l-quick-eval-activities-list-activities-shown-number-updated', function(e) {
-			assert.equal(expectedNumberOfActivitiesToShow, e.detail.count);
-			done();
-		});
-
-		submissions._numberOfActivitiesToShow = expectedNumberOfActivitiesToShow;
-	});
-
-	test('when data size increased, _numberOfActivitiesToShow matches size and event is triggered', function(done) {
-		const expectedNumberOfActivitiesToShow = 100;
-		const fakeData = new Array(expectedNumberOfActivitiesToShow);
-
-		submissions.addEventListener('d2l-quick-eval-activities-list-activities-shown-number-updated', function(e) {
-			assert.equal(expectedNumberOfActivitiesToShow, submissions._numberOfActivitiesToShow);
-			assert.equal(expectedNumberOfActivitiesToShow, e.detail.count);
-			submissions._data = [];
-			done();
-		});
-
-		submissions._data = fakeData;
-	});
-
 	test('headers display correctly', function(done) {
 		var expectedColumnHeaders = [
 			['First Name', 'Last Name'],
