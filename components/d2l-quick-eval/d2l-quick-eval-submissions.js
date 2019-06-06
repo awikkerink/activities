@@ -453,7 +453,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		return this._showSearchResultSummary && this.searchEnabled;
 	}
 
-	// move
 	_clearSearchResults() {
 		const search = this.shadowRoot.querySelector('d2l-hm-search');
 		search.clearSearch();
