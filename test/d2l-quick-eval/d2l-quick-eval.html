@@ -98,7 +98,7 @@
 			};
 
 			suite('d2l-quick-eval', function() {
-				setup(function() {
+				setup(/** @this Mocha */function() {
 					this.skip();
 					quickEval = fixture('basic');
 					filter = quickEval.shadowRoot.querySelector('d2l-hm-filter');
@@ -381,7 +381,7 @@
 			});
 
 			suite('d2l-quick-eval with master-teacher', function() {
-				setup(function() {
+				setup(/** @this Mocha */function() {
 					this.skip();
 					quickEval = fixture('masterTeacher');
 					filter = quickEval.shadowRoot.querySelector('d2l-hm-filter');
