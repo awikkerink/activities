@@ -30,7 +30,7 @@ suite('d2l-quick-eval-submissions', function() {
 		];
 
 		flush(function() {
-			var headers = submissions.shadowRoot.querySelector('d2l-quick-eval-activities-list').shadowRoot.querySelectorAll('d2l-th');
+			var headers = submissions.shadowRoot.querySelector('d2l-quick-eval-submissions-table').shadowRoot.querySelectorAll('d2l-th');
 
 			assert.equal(expectedColumnHeaders.length, headers.length);
 
@@ -51,7 +51,7 @@ suite('d2l-quick-eval-submissions', function() {
 			['Submission Date'],
 			['Teacher']
 		];
-		const list = submissions.shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		const list = submissions.shadowRoot.querySelector('d2l-quick-eval-submissions-table');
 		list.setAttribute('master-teacher', '');
 
 		flush(function() {
@@ -76,7 +76,7 @@ suite('d2l-quick-eval-submissions', function() {
 		submissions._headerColumns[0].headers[0].canSort = true;
 		submissions._headerColumns[0].headers[1].canSort = true;
 
-		const list = submissions.shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		const list = submissions.shadowRoot.querySelector('d2l-quick-eval-submissions-table');
 
 		flush(function() {
 			var lastNameHeader = list.shadowRoot.querySelector('#lastName');

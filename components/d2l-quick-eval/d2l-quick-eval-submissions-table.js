@@ -22,9 +22,9 @@ import {StringEndsWith} from './compatability/ie11shims.js';
  * @polymer
  */
 
-class D2LQuickEvalActivitiesList extends QuickEvalLogging(QuickEvalLocalize(PolymerElement)) {
+class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(PolymerElement)) {
 	static get template() {
-		const quickEvalActivitiesListTemplate = html`
+		const quickEvalSubmissionsTableTemplate = html`
 			<style include="d2l-table-style">
 				.d2l-quick-eval-table {
 					--d2l-table-body-background-color: transparent;
@@ -56,12 +56,12 @@ class D2LQuickEvalActivitiesList extends QuickEvalLogging(QuickEvalLocalize(Poly
 					margin: auto;
 					margin-top: 1rem;
 				}
-				.d2l-quick-eval-activities-list-load-more-container {
+				.d2l-quick-eval-submissions-table-load-more-container {
 					padding-top: 1rem;
 					text-align: right;
 					width: 100%;
 				}
-				:host(:dir(rtl)) .d2l-quick-eval-activities-list-load-more-container {
+				:host(:dir(rtl)) .d2l-quick-eval-submissions-table-load-more-container {
 					text-align: left;
 				}
 				.d2l-quick-eval-30-column {
@@ -131,8 +131,8 @@ class D2LQuickEvalActivitiesList extends QuickEvalLogging(QuickEvalLocalize(Poly
 					@apply --d2l-body-compact-text;
 				}
 			</style>
-			<d2l-offscreen id="d2l-quick-eval-activities-list-table-summary">[[localize('tableTitle')]]</d2l-offscreen>
-			<d2l-table class="d2l-quick-eval-table" type="light" hidden$="[[_fullListLoading]]" aria-describedby$="d2l-quick-eval-activities-list-table-summary" aria-colcount$="[[_headerColumns.length]]" aria-rowcount$="[[_data.length]]">
+			<d2l-offscreen id="d2l-quick-eval-submissions-table-table-summary">[[localize('tableTitle')]]</d2l-offscreen>
+			<d2l-table class="d2l-quick-eval-table" type="light" hidden$="[[_fullListLoading]]" aria-describedby$="d2l-quick-eval-submissions-table-table-summary" aria-colcount$="[[_headerColumns.length]]" aria-rowcount$="[[_data.length]]">
 				<d2l-thead>
 					<d2l-tr>
 						<dom-repeat items="[[_headerColumns]]" as="headerColumn">
@@ -219,8 +219,8 @@ class D2LQuickEvalActivitiesList extends QuickEvalLogging(QuickEvalLocalize(Poly
 	     	<d2l-loading-spinner size="80" hidden$="[[!_isLoadingMore(_fullListLoading,_loading)]]"></d2l-loading-spinner>
 
 			<template is="dom-if" if="[[_shouldShowLoadMore(_pageNextHref, _loading)]]">
-				<div class="d2l-quick-eval-activities-list-load-more-container">
-					<d2l-button class="d2l-quick-eval-activities-list-load-more" onclick="[[_dispatchLoadMore]]">[[localize('loadMore')]]</d2l-button>
+				<div class="d2l-quick-eval-submissions-table-load-more-container">
+					<d2l-button class="d2l-quick-eval-submissions-table-load-more" onclick="[[_dispatchLoadMore]]">[[localize('loadMore')]]</d2l-button>
 				</div>
 			</template>
 			<template is="dom-if" if="[[_shouldShowNoSubmissions(_data.length, _loading, _health.isHealthy, filterApplied, searchApplied)]]">
@@ -240,10 +240,10 @@ class D2LQuickEvalActivitiesList extends QuickEvalLogging(QuickEvalLocalize(Poly
 			</template>
 		`;
 
-		quickEvalActivitiesListTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
-		return quickEvalActivitiesListTemplate;
+		quickEvalSubmissionsTableTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
+		return quickEvalSubmissionsTableTemplate;
 	}
-	static get is() { return 'd2l-quick-eval-activities-list'; }
+	static get is() { return 'd2l-quick-eval-submissions-table'; }
 	static get properties() {
 		return {
 			masterTeacher: {
@@ -454,7 +454,7 @@ class D2LQuickEvalActivitiesList extends QuickEvalLogging(QuickEvalLocalize(Poly
 	_dispatchLoadMore() {
 		this.dispatchEvent(
 			new CustomEvent(
-				'd2l-quick-eval-submission-table-load-more',
+				'd2l-quick-eval-submissions-table-load-more',
 				{
 					composed: true,
 					bubbles: true
@@ -464,4 +464,4 @@ class D2LQuickEvalActivitiesList extends QuickEvalLogging(QuickEvalLocalize(Poly
 	}
 }
 
-window.customElements.define(D2LQuickEvalActivitiesList.is, D2LQuickEvalActivitiesList);
+window.customElements.define(D2LQuickEvalSubmissionsTable.is, D2LQuickEvalSubmissionsTable);

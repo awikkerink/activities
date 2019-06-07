@@ -4,7 +4,7 @@ import { QuickEvalLocalize } from './QuickEvalLocalize.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 import { Rels } from 'd2l-hypermedia-constants';
 import './behaviors/d2l-quick-eval-siren-helper-behavior.js';
-import './d2l-quick-eval-activities-list.js';
+import './d2l-quick-eval-submissions-table.js';
 import './behaviors/d2l-hm-sort-behaviour.js';
 import 'd2l-common/components/d2l-hm-filter/d2l-hm-filter.js';
 import 'd2l-common/components/d2l-hm-search/d2l-hm-search.js';
@@ -38,18 +38,18 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				[hidden] {
 					display: none;
 				}
-				.d2l-quick-eval-activity-list-modifiers {
+				.d2l-quick-eval-submissions-table-modifiers {
 					float: right;
 				}
 				.clear {
 					clear: both;
 				}
-				d2l-quick-eval-activities-list {
+				d2l-quick-eval-submissions-table {
 					display: block;
 					padding-top: 1rem;
 				}
 			</style>
-			<div class="d2l-quick-eval-activity-list-modifiers">
+			<div class="d2l-quick-eval-submissions-table-modifiers">
 				<d2l-hm-filter
 					href="[[_filterHref]]"
 					token="[[token]]"
@@ -85,16 +85,16 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				hidden$="[[!_searchResultsMessageEnabled(_showSearchResultSummary, searchEnabled)]]"
 				on-d2l-quick-eval-search-results-summary-container-clear-search="_clearSearchResults">
 			</d2l-quick-eval-search-results-summary-container>
-			<d2l-quick-eval-activities-list
+			<d2l-quick-eval-submissions-table
 				href="[[href]]"
 				token="[[token]]"
 				logging-endpoint="[[loggingEndpoint]]"
 				master-teacher="[[masterTeacher]]"
 				_data="[[_data]]"
 				_header-columns="[[_headerColumns]]"
-				on-d2l-quick-eval-submission-table-load-more="_loadMore"
+				on-d2l-quick-eval-submissions-table-load-more="_loadMore"
 				on-d2l-quick-eval-submissions-table-sort-requested="_handleSortRequested">
-			</d2l-quick-eval-activities-list>
+			</d2l-quick-eval-submissions-table>
 		`;
 		template.setAttribute('strip-whitespace', 'strip-whitespace');
 		return template;
@@ -192,7 +192,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	}
 
 	get list() {
-		return this.shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		return this.shadowRoot.querySelector('d2l-quick-eval-submissions-table');
 	}
 
 	async _loadData(entity) {
@@ -350,26 +350,10 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		if (result) {
 			return result.then(sortedCollection => {
 				this.entity = sortedCollection;
-				this._dispatchSortUpdatedEvent(sortedCollection);
 			});
 		} else {
 			return Promise.reject(new Error(`Could not find sortable header for ${headerId}`));
 		}
-	}
-
-	_dispatchSortUpdatedEvent(sorted) {
-		this.dispatchEvent(
-			new CustomEvent(
-				'd2l-quick-eval-activities-list-sort-updated',
-				{
-					detail: {
-						sortedActivities: sorted
-					},
-					composed: true,
-					bubbles: true
-				}
-			)
-		);
 	}
 
 	_filtersLoaded(e) {
