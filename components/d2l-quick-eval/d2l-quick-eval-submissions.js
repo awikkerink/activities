@@ -94,6 +94,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				_header-columns="[[_headerColumns]]"
 				_loading="[[_loading]]"
 				_full-list-loading="[[_fullListLoading]]"
+				show-load-more="[[_showLoadMore]]"
 				on-d2l-quick-eval-submissions-table-load-more="_loadMore"
 				on-d2l-quick-eval-submissions-table-sort-requested="_handleSortRequested">
 			</d2l-quick-eval-submissions-table>
@@ -191,6 +192,13 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				type: Boolean,
 				value: true
 			},
+			_pageNextHref: {
+				type: String,
+			},
+			_showLoadMore: {
+				type: Boolean,
+				computed: '_computeShowLoadMore(_pageNextHref, _loading)'
+			}
 		};
 	}
 
@@ -218,7 +226,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				this._data = result;
 			} else {
 				this._data = [];
-				this.list._pageNextHref = '';
+				this._pageNextHref = undefined;
 			}
 			this.list._clearAlerts();
 
@@ -233,9 +241,9 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	}
 
 	_loadMore() {
-		if (this.list._pageNextHref && !this._loading) {
+		if (this._pageNextHref && !this._loading) {
 			this._loading = true;
-			this._followHref(this.list._pageNextHref)
+			this._followHref(this._pageNextHref)
 				.then(async function(u) {
 					if (u && u.entity) {
 						const tbody = this.list.shadowRoot.querySelector('d2l-tbody');
@@ -301,7 +309,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			}.bind(this)));
 		}.bind(this));
 
-		this.list._pageNextHref = this._getPageNextHref(entity);
+		this._pageNextHref = this._getPageNextHref(entity);
 
 		const result = await Promise.all(promises);
 		return result;
@@ -415,7 +423,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	_updateSearchResultsCount(count) {
 		this._searchResultsCount = count;
 
-		if (this.list._pageNextHref) {
+		if (this._pageNextHref) {
 			this._moreSearchResults = true;
 		} else {
 			this._moreSearchResults = false;
@@ -463,6 +471,10 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 
 	_getSearchAction(entity) {
 		return this._getAction(entity, 'search');
+	}
+
+	_computeShowLoadMore(_pageNextHref, _loading) {
+		return _pageNextHref && !_loading;
 	}
 
 	ready() {

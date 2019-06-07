@@ -218,7 +218,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 			<d2l-quick-eval-skeleton hidden$="[[!_fullListLoading]]"></d2l-quick-eval-skeleton>
 	     	<d2l-loading-spinner size="80" hidden$="[[!_isLoadingMore(_fullListLoading,_loading)]]"></d2l-loading-spinner>
 
-			<template is="dom-if" if="[[_shouldShowLoadMore(_pageNextHref, _loading)]]">
+			<template is="dom-if" if="[[showLoadMore]]">
 				<div class="d2l-quick-eval-submissions-table-load-more-container">
 					<d2l-button class="d2l-quick-eval-submissions-table-load-more" onclick="[[_dispatchLoadMore]]">[[localize('loadMore')]]</d2l-button>
 				</div>
@@ -282,9 +282,9 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 				type: Boolean,
 				value: true
 			},
-			_pageNextHref: {
-				type: String,
-				value: ''
+			showLoadMore: {
+				type: Boolean,
+				value: false
 			}
 		};
 	}
@@ -307,10 +307,6 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 			this.set('_headerColumns.0.headers.1.suffix', '');
 			this.set('_headerColumns.0.meta.firstThenLast', this._headerColumns[0].headers[0].key === 'firstName');
 		}
-	}
-
-	_shouldShowLoadMore(hasPageNextHref, isLoading) {
-		return hasPageNextHref && !isLoading;
 	}
 
 	_shouldShowNoSubmissions(dataLength, isLoading, isHealthy, filterApplied, searchApplied) {
