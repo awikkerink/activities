@@ -291,7 +291,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			}.bind(this)));
 		}.bind(this));
 
-		this.list._filterHref = this._getFilterHref(entity);
 		this.list._pageNextHref = this._getPageNextHref(entity);
 
 		const result = await Promise.all(promises);

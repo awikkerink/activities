@@ -282,10 +282,6 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 				type: Boolean,
 				value: true
 			},
-			_filterHref: {
-				type: String,
-				value: ''
-			},
 			_pageNextHref: {
 				type: String,
 				value: ''
