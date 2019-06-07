@@ -223,7 +223,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 					<d2l-button class="d2l-quick-eval-submissions-table-load-more" onclick="[[_dispatchLoadMore]]">[[localize('loadMore')]]</d2l-button>
 				</div>
 			</template>
-			<template is="dom-if" if="[[_shouldShowNoSubmissions(_data.length, _loading, _health.isHealthy, filterApplied, searchApplied)]]">
+			<template is="dom-if" if="[[showNoSubmissions]]">
 				<div class="d2l-quick-eval-no-submissions">
 					<d2l-quick-eval-no-submissions-image></d2l-quick-eval-no-submissions-image>
 					<h2 class="d2l-quick-eval-no-submissions-heading">[[localize('caughtUp')]]</h2>
@@ -231,7 +231,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 					<p class="d2l-body-standard">[[localize('checkBackOften')]]</p>
 				</div>
 			</template>
-			<template is="dom-if" if="[[_shouldShowNoCriteriaResults(_data.length, _loading, _health.isHealthy, filterApplied, searchApplied)]]">
+			<template is="dom-if" if="[[showNoCriteria]]">
 				<div class="d2l-quick-eval-no-criteria-results">
 					<d2l-quick-eval-no-criteria-results-image></d2l-quick-eval-no-criteria-results-image>
 					<h2 class="d2l-quick-eval-no-criteria-results-heading">[[localize('noResults')]]</h2>
@@ -250,14 +250,6 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 				type: Boolean,
 				value: false,
 				reflectToAttribute: true
-			},
-			filterApplied: {
-				type: Boolean,
-				value: false
-			},
-			searchApplied: {
-				type: Boolean,
-				value: false
 			},
 			_headerColumns: {
 				type: Array,
@@ -285,7 +277,15 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 			showLoadMore: {
 				type: Boolean,
 				value: false
-			}
+			},
+			showNoSubmissions: {
+				type: Boolean,
+				value: false
+			},
+			showNoCriteria: {
+				type: Boolean,
+				value: false
+			},
 		};
 	}
 	static get observers() {
@@ -307,14 +307,6 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 			this.set('_headerColumns.0.headers.1.suffix', '');
 			this.set('_headerColumns.0.meta.firstThenLast', this._headerColumns[0].headers[0].key === 'firstName');
 		}
-	}
-
-	_shouldShowNoSubmissions(dataLength, isLoading, isHealthy, filterApplied, searchApplied) {
-		return !dataLength && !isLoading && isHealthy && !(filterApplied || searchApplied);
-	}
-
-	_shouldShowNoCriteriaResults(dataLength, isLoading, isHealthy, filterApplied, searchApplied) {
-		return !dataLength && !isLoading && isHealthy && (filterApplied || searchApplied);
 	}
 
 	_localizeSortText(columnName) {
