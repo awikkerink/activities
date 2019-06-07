@@ -294,11 +294,6 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 		];
 	}
 
-	setLoadingState(state) {
-		this.set('_fullListLoading', state);
-		this.set('_loading', state);
-	}
-
 	_isLoadingMore(fullListLoading, isLoading) {
 		return !fullListLoading && isLoading;
 	}
