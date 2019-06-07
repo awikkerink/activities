@@ -96,6 +96,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				_full-list-loading="[[_fullListLoading]]"
 				show-load-more="[[_showLoadMore]]"
 				_health="[[_health]]"
+				show-no-submissions="[[_showNoSubmissions]]"
+				show-no-criteria="[[_showNoCriteria]]"
 				on-d2l-quick-eval-submissions-table-load-more="_loadMore"
 				on-d2l-quick-eval-submissions-table-sort-requested="_handleSortRequested">
 			</d2l-quick-eval-submissions-table>
@@ -206,7 +208,23 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 					isHealthy: true,
 					errorMessage: ''
 				}
-			}
+			},
+			_showNoSubmissions: {
+				type: Boolean,
+				computed: '_computeShowNoSubmissions(_data, _loading, _health, _filterApplied, _searchApplied)'
+			},
+			_showNoCriteria: {
+				type: Boolean,
+				computed: '_computeShowNoCriteria(_data, _loading, _health, _filterApplied, _searchApplied)'
+			},
+			_filterApplied: {
+				type: Boolean,
+				value: false
+			},
+			_searchApplied: {
+				type: Boolean,
+				value: false
+			},
 		};
 	}
 
@@ -383,7 +401,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	}
 
 	_filtersLoaded(e) {
-		this.list.filterApplied = e.detail.totalSelectedFilters > 0;
+		this._filterApplied = e.detail.totalSelectedFilters > 0;
 		this._showFilterError = false;
 	}
 
@@ -446,7 +464,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	_searchResultsLoaded(e) {
 		this.entity = e.detail.results;
 		this._showSearchResultSummary = !e.detail.searchIsCleared;
-		this.list.searchApplied = !e.detail.searchIsCleared;
+		this._searchApplied = !e.detail.searchIsCleared;
 
 		if (this.entity && this.entity.entities) {
 			this._updateSearchResultsCount(this.entity.entities.length);
@@ -494,6 +512,14 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 
 	_handleFullLoadFailure() {
 		this.set('_health', { isHealthy: false, errorMessage: 'failedToLoadData' });
+	}
+
+	_computeShowNoSubmissions(_data, _loading, _health, _filterApplied, _searchApplied) {
+		return !_data.length && !_loading && _health.isHealthy && !(_filterApplied || _searchApplied);
+	}
+
+	_computeShowNoCriteria(_data, _loading, _health, _filterApplied, _searchApplied) {
+		return !_data.length && !_loading && _health.isHealthy && (_filterApplied || _searchApplied);
 	}
 
 	ready() {
