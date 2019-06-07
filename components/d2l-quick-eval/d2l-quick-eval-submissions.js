@@ -225,6 +225,10 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				type: Boolean,
 				value: false
 			},
+			masterTeacher: {
+				type: Boolean,
+				value: false
+			}
 		};
 	}
 
@@ -233,10 +237,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			'_loadData(entity)',
 			'_handleSorts(entity)'
 		];
-	}
-
-	get list() {
-		return this.shadowRoot.querySelector('d2l-quick-eval-submissions-table');
 	}
 
 	async _loadData(entity) {
@@ -271,7 +271,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			this._followHref(this._pageNextHref)
 				.then(async function(u) {
 					if (u && u.entity) {
-						const tbody = this.list.shadowRoot.querySelector('d2l-tbody');
+						const tbody = this.shadowRoot.querySelector('d2l-quick-eval-submissions-table').shadowRoot.querySelector('d2l-tbody');
 						const lastFocusableTableElement = D2L.Dom.Focus.getLastFocusableDescendant(tbody, false);
 
 						try {
@@ -324,7 +324,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				const getUserName = this._getUserPromise(activity, item);
 				const getCourseName = this._getCoursePromise(activity, item);
 				const getMasterTeacherName =
-					this.list._shouldDisplayColumn('masterTeacher')
+					this.masterTeacher
 						? this._getMasterTeacherPromise(activity, item)
 						: Promise.resolve();
 
