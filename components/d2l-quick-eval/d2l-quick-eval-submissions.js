@@ -95,6 +95,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				_loading="[[_loading]]"
 				_full-list-loading="[[_fullListLoading]]"
 				show-load-more="[[_showLoadMore]]"
+				_health="[[_health]]"
 				on-d2l-quick-eval-submissions-table-load-more="_loadMore"
 				on-d2l-quick-eval-submissions-table-sort-requested="_handleSortRequested">
 			</d2l-quick-eval-submissions-table>
@@ -198,6 +199,13 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			_showLoadMore: {
 				type: Boolean,
 				computed: '_computeShowLoadMore(_pageNextHref, _loading)'
+			},
+			_health: {
+				type: Object,
+				value: {
+					isHealthy: true,
+					errorMessage: ''
+				}
 			}
 		};
 	}
@@ -228,11 +236,10 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				this._data = [];
 				this._pageNextHref = undefined;
 			}
-			this.list._clearAlerts();
-
+			this._clearAlerts();
 		} catch (e) {
 			this._logError(e, {developerMessage: 'Unable to load activities from entity.'});
-			this.list._handleFullLoadFailure();
+			this._handleFullLoadFailure();
 			return Promise.reject(e);
 		} finally {
 			this._fullListLoading = false;
@@ -269,11 +276,11 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 						}
 					}
 				}.bind(this))
-				.then(this.list._clearAlerts.bind(this.list))
+				.then(this._clearAlerts.bind(this))
 				.catch(function(e) {
 					this._logError(e, {developerMessage: 'Unable to load more.'});
 					this._loading = false;
-					this.list._handleLoadMoreFailure();
+					this._handleLoadMoreFailure();
 				}.bind(this));
 		}
 	}
@@ -477,12 +484,24 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		return _pageNextHref && !_loading;
 	}
 
+	_clearAlerts() {
+		this.set('_health', { isHealthy: true, errorMessage: '' });
+	}
+
+	_handleLoadMoreFailure() {
+		this.set('_health', { isHealthy: false, errorMessage: 'failedToLoadMore' });
+	}
+
+	_handleFullLoadFailure() {
+		this.set('_health', { isHealthy: false, errorMessage: 'failedToLoadData' });
+	}
+
 	ready() {
 		super.ready();
 		this.addEventListener('d2l-siren-entity-error', function() {
 			this._fullListLoading = false;
 			this._loading = false;
-			this.list._handleFullLoadFailure();
+			this._handleFullLoadFailure();
 		}.bind(this));
 	}
 }
