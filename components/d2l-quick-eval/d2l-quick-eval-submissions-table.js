@@ -193,17 +193,17 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 									<d2l-activity-evaluation-icon-base draft$="[[s.isDraft]]"></d2l-activity-evaluation-icon-base>
 								</d2l-td>
 								<d2l-td class="d2l-quick-eval-truncated-column d2l-activity-name-column">
-									<d2l-activity-name href="[[_getDataProperty(s, 'activityNameHref')]]" token="[[token]]"></d2l-activity-name>
+									<d2l-activity-name href="[[s.activityNameHref]]" token="[[token]]"></d2l-activity-name>
 								</d2l-td>
 								<d2l-td class="d2l-quick-eval-truncated-column d2l-course-name-column">
-									<span>[[_getDataProperty(s, 'courseName')]]</span>
+									<span>[[s.courseName]]</span>
 								</d2l-td>
 								<d2l-td>
-									<span>[[_localizeDateTimeFormat(s, 'submissionDate')]]</span>
+									<span>[[_localizeDateTimeFormat(s.submissionDate)]]</span>
 								</d2l-td>
 								<template is="dom-if" if="[[_shouldDisplayColumn('masterTeacher')]]">
 									<d2l-td>
-										<span>[[_getDataProperty(s, 'masterTeacher')]]</span>
+										<span>[[s.masterTeacher]]</span>
 									</d2l-td>
 								</template>
 							</d2l-tr>
@@ -376,22 +376,8 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 		return lastName + ', ' + firstName;
 	}
 
-	_localizeDateTimeFormat(item, prop) {
-		const localizedDate = this._getDataProperty(item, prop);
+	_localizeDateTimeFormat(localizedDate) {
 		return this.formatDateTime(new Date(localizedDate));
-	}
-
-	_getDataProperty(item, prop) {
-		let result;
-		if (Array.isArray(prop) && prop.length > 0) {
-			result = item;
-			for (let i = 0; i < prop.length; i++) {
-				result = result[prop[i]];
-			}
-		} else {
-			result = item[prop];
-		}
-		return result;
 	}
 
 	_getWidthCssClass(columnKey) {
