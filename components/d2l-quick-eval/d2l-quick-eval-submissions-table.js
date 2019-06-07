@@ -317,18 +317,6 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 		return !dataLength && !isLoading && isHealthy && (filterApplied || searchApplied);
 	}
 
-	_clearAlerts() {
-		this.set('_health', { isHealthy: true, errorMessage: '' });
-	}
-
-	_handleLoadMoreFailure() {
-		this.set('_health', { isHealthy: false, errorMessage: 'failedToLoadMore' });
-	}
-
-	_handleFullLoadFailure() {
-		this.set('_health', { isHealthy: false, errorMessage: 'failedToLoadData' });
-	}
-
 	_localizeSortText(columnName) {
 		const localizedColumnName = this.localize(columnName);
 		return this.localize('sortBy', 'columnName', localizedColumnName);
