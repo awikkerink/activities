@@ -337,13 +337,13 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 			});
 		});
 		test('when handling load more failure, alert should pop up and alert should hide when alerts cleared', (done) => {
-			list._handleLoadMoreFailure();
+			list._health = { isHealthy: false, errorMessage: 'failedToLoadMore' };
 
 			flush(function() {
 				var alert = list.shadowRoot.querySelector('#list-alert');
 				assert.equal(false, alert.hasAttribute('hidden'));
 
-				list._clearAlerts();
+				list._health = { isHealthy: true, errorMessage: '' };
 				flush(function() {
 					assert.equal(true, alert.hasAttribute('hidden'));
 					done();
@@ -352,13 +352,13 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 			});
 		});
 		test('when handling initial load failure, alert should pop up and alert should hide when alerts cleared', (done) => {
-			list._handleFullLoadFailure();
+			list._health = { isHealthy: false, errorMessage: 'failedToLoadData' };
 
 			flush(function() {
 				var alert = list.shadowRoot.querySelector('#list-alert');
 				assert.equal(false, alert.hasAttribute('hidden'));
 
-				list._clearAlerts();
+				list._health = { isHealthy: true, errorMessage: '' };
 				flush(function() {
 					assert.equal(true, alert.hasAttribute('hidden'));
 					done();
