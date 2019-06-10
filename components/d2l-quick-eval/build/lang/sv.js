@@ -7,7 +7,7 @@ const LangSvImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.sv = {
-			'activities': 'Activities',
+			'activities': 'Aktiviteter',
 			'activityName': 'Aktivitetsnamn',
 			'caughtUp': 'Du är ifatt!',
 			'checkBackOften': 'Du bör kontrollera om det finns nya inlämningar här med regelbundna intervall.',
@@ -40,12 +40,12 @@ const LangSvImpl = (superClass) => class extends superClass {
 			'sortBy': 'Sortera efter {columnName}',
 			'submissionDate': 'Inlämningsdatum',
 			'submissionList': 'Submission List',
-			'submissions': 'Submissions',
+			'submissions': 'inlämningar',
 			'tableTitle': 'Lista över ej utvärderade elevinlämningar från kurser och verktyg',
 			'tryAgain': 'Försök på nytt',
 			'unreadSubmissions': '{num} unread submissions',
 			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
-			'viewBy': 'View by:'
+			'viewBy': 'Visa enligt:'
 		};
 	}
 };

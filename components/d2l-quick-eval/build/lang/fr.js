@@ -7,7 +7,7 @@ const LangFrImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.fr = {
-			'activities': 'Activities',
+			'activities': 'Activités',
 			'activityName': 'Nom de l’activité',
 			'caughtUp': 'Vous avez terminé!',
 			'checkBackOften': 'Revenez régulièrement pour de nouvelles soumissions.',
@@ -40,12 +40,12 @@ const LangFrImpl = (superClass) => class extends superClass {
 			'sortBy': 'Trier par {columnName}',
 			'submissionDate': 'Date de soumission',
 			'submissionList': 'Submission List',
-			'submissions': 'Submissions',
+			'submissions': 'Soumissions',
 			'tableTitle': 'Liste des soumissions des apprenants non évaluées provenant des cours et des outils',
 			'tryAgain': 'Réessayer',
 			'unreadSubmissions': '{num} unread submissions',
 			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
-			'viewBy': 'View by:'
+			'viewBy': 'Afficher par :'
 		};
 	}
 };
