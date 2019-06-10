@@ -12,6 +12,7 @@ import './behaviors/d2l-hm-search-behavior.js';
 import './d2l-quick-eval-no-submissions-image.js';
 import './d2l-quick-eval-no-criteria-results-image.js';
 import './d2l-quick-eval-search-results-summary-container.js';
+import './activities-list/d2l-quick-eval-activities-list.js';
 
 /**
  * @customElement
@@ -112,6 +113,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				<h2 class="d2l-quick-eval-no-criteria-results-heading">[[localize('noResults')]]</h2>
 				<p class="d2l-body-standard">[[localize('noCriteriaMatch')]]</p>
 			</div>
+			<d2l-quick-eval-activities-list 
+				hidden$="[[!_shouldShowActivitiesList(_data, filterApplied, searchCleared)]]" 
+				activities="[[_data]]" 
+				token="[[token]]"></d2l-quick-eval-activities-list>
 		`;
 
 		quickEvalActivitiesTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
@@ -130,11 +135,60 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			}
 		};
 	}
-
 	static get observers() {
 		return [
+			'_loadData(entity)',
 			'_loadFilterAndSearch(entity)'
 		];
+	}
+
+	async _loadData(entity) {
+		if (!entity) {
+			return Promise.resolve();
+		}
+
+		try {
+			if (entity.entities) {
+				const result = await this._parseActivities(entity);
+				this._data = result;
+			} else {
+				this._data = [];
+				this.list._pageNextHref = '';
+			}
+
+		} catch (e) {
+			this._logError(e, {developerMessage: 'Unable to load activities from entity.'});
+			return Promise.reject(e);
+		}
+	}
+
+	async _parseActivities(entity) {
+		const promises = [];
+		entity.entities.forEach(function(activity) {
+			promises.push(new Promise(function(resolve) {
+				const item = {
+					courseName: '',
+					assigned: 0,
+					completed: 0,
+					published: 0,
+					evaluated: 0,
+					unread: 0,
+					resubmitted: 0,
+					dueDate: this._getActivityDueDate(activity),
+					activityType: this._getActivityType(activity),
+					activityNameHref: this._getActivityNameHref(activity)
+				};
+				const getCourseName = this._getCoursePromise(activity, item);
+				const getEvaluationStatus = this._getEvaluationStatusPromise(activity, item);
+
+				Promise.all([getCourseName, getEvaluationStatus]).then(function() {
+					resolve(item);
+				});
+			}.bind(this)));
+		}.bind(this));
+
+		const result = await Promise.all(promises);
+		return result;
 	}
 
 	_loadFilterAndSearch(entity) {
@@ -153,6 +207,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	_activitiesSearchLoaded() {
 		// TODO: add activity DOM card loading here
 		this._searchResultsLoaded();
+	}
+
+	_shouldShowActivitiesList() {
+		return this._data.length;
 	}
 }
 window.customElements.define(D2LQuickEvalActivities.is, D2LQuickEvalActivities);

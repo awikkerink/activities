@@ -64,6 +64,21 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 		return subEntity.properties.name;
 	},
 
+	_getEvaluationStatusPromise: function(entity, item) {
+		return this._followLink(entity, Rels.Activities.evaluationStatus)
+			.then(function(e) {
+				if (e && e.entity && e.entity.properties) {
+					const p = e.entity.properties;
+					item.assigned = p.assigned || 0;
+					item.completed = p.completed || 0;
+					item.published = p.published || 0;
+					item.evaluated = p.evaluated || 0;
+					item.unread = p.unread || 0;
+					item.resubmitted = p.resubmitted || 0;
+				}
+			});
+	},
+
 	_getUserPromise: function(entity, item) {
 		return this._followLink(entity, Rels.user)
 			.then(function(u) {
@@ -103,6 +118,26 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 		if (entity.hasLinkByRel(Rels.Activities.userActivityUsage)) {
 			const link = entity.getLinkByRel(Rels.Activities.userActivityUsage);
 			return link.href;
+		}
+		return '';
+	},
+
+	_getActivityType: function(entity) {
+		if (entity) {
+			if (entity.hasClass(Classes.activities.quizActivity)) {
+				return 'quiz';
+			} else if (entity.hasClass(Classes.activities.assignmentActivity)) {
+				return 'assignment';
+			} else if (entity.hasClass(Classes.activities.discussionActivity)) {
+				return 'discussion';
+			}
+		}
+		return '';
+	},
+
+	_getActivityDueDate: function(entity) {
+		if (entity && entity.hasSubEntityByClass('due-date')) {
+			return entity.getSubEntityByClass('due-date').properties.date;
 		}
 		return '';
 	},
