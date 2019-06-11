@@ -7,7 +7,7 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 	static get template() {
 		return html`
 			<div>
-				<dom-repeat items="[[_courses]]" as="c">
+				<dom-repeat items="[[courses]]" as="c">
 					<template>
 						<h3>[[c.name]]</h3>
 						<dom-repeat items="[[c.activities]]" as="a">
@@ -32,7 +32,7 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 	}
 	static get properties() {
 		return {
-			activities: {
+			courses: {
 				type: Array,
 				value: [
 					// {
@@ -49,24 +49,11 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 					// }
 				]
 			},
-			_courses: {
-				type: Array,
-				computed: '_groupByCourse(activities)'
-			},
 			token: {
 				type: String,
 				value: ''
 			}
 		};
-	}
-
-	_groupByCourse() {
-		const grouped = this.activities.reduce((acts, a) => {
-			(acts[a.courseName] = acts[a.courseName] || { name: a.courseName, activities: []});
-			acts[a.courseName].activities.push(a);
-			return acts;
-		}, {});
-		return Object.values(grouped);
 	}
 }
 

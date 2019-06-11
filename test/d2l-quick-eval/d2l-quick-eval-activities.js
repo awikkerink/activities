@@ -5,40 +5,43 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 
 	const expectedData = [
 		{
-			courseName: 'Org Name',
-			activityNameHref: 'data/assignmentActivity.json',
-			assigned: 21,
-			completed: 22,
-			published: 23,
-			evaluated: 24,
-			unread: 25,
-			resubmitted: 26,
-			dueDate: '2019-03-03T03:03:03.003Z',
-			activityType: 'assignment'
-		},
-		{
-			courseName: 'Org Name',
-			activityNameHref: 'data/quizActivity.json',
-			assigned: 11,
-			completed: 12,
-			published: 13,
-			evaluated: 14,
-			unread: 15,
-			resubmitted: 16,
-			dueDate: '2019-02-02T02:02:02.002Z',
-			activityType: 'quiz'
-		},
-		{
-			courseName: 'Org Name',
-			activityNameHref: 'data/topicActivity.json',
-			assigned: 1,
-			completed: 2,
-			published: 3,
-			evaluated: 4,
-			unread: 5,
-			resubmitted: 6,
-			dueDate: '2019-01-01T01:01:01.001Z',
-			activityType: 'discussion'
+			name: 'Org Name',
+			activities: [{
+				courseName: 'Org Name',
+				activityNameHref: 'data/assignmentActivity.json',
+				assigned: 21,
+				completed: 22,
+				published: 23,
+				evaluated: 24,
+				unread: 25,
+				resubmitted: 26,
+				dueDate: '2019-03-03T03:03:03.003Z',
+				activityType: 'assignment'
+			},
+			{
+				courseName: 'Org Name',
+				activityNameHref: 'data/quizActivity.json',
+				assigned: 11,
+				completed: 12,
+				published: 13,
+				evaluated: 14,
+				unread: 15,
+				resubmitted: 16,
+				dueDate: '2019-02-02T02:02:02.002Z',
+				activityType: 'quiz'
+			},
+			{
+				courseName: 'Org Name',
+				activityNameHref: 'data/topicActivity.json',
+				assigned: 1,
+				completed: 2,
+				published: 3,
+				evaluated: 4,
+				unread: 5,
+				resubmitted: 6,
+				dueDate: '2019-01-01T01:01:01.001Z',
+				activityType: 'discussion'
+			}]
 		}
 	];
 

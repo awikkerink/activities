@@ -115,7 +115,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			</div>
 			<d2l-quick-eval-activities-list 
 				hidden$="[[!_shouldShowActivitiesList(_data, filterApplied, searchCleared)]]" 
-				activities="[[_data]]" 
+				courses="[[_data]]" 
 				token="[[token]]"></d2l-quick-eval-activities-list>
 		`;
 
@@ -188,7 +188,16 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		}.bind(this));
 
 		const result = await Promise.all(promises);
-		return result;
+		return this._groupByCourse(result);
+	}
+
+	_groupByCourse(act) {
+		const grouped = act.reduce((acts, a) => {
+			(acts[a.courseName] = acts[a.courseName] || { name: a.courseName, activities: []});
+			acts[a.courseName].activities.push(a);
+			return acts;
+		}, {});
+		return Object.values(grouped);
 	}
 
 	_loadFilterAndSearch(entity) {
