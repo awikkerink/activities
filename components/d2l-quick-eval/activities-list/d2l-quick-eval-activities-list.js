@@ -50,8 +50,7 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 				]
 			},
 			token: {
-				type: String,
-				value: ''
+				type: String
 			}
 		};
 	}
