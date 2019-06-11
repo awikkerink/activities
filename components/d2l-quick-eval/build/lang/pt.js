@@ -7,7 +7,7 @@ const LangPtImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.pt = {
-			'activities': 'Activities',
+			'activities': 'Atividades',
 			'activityName': 'Nome da Atividade',
 			'assignment': 'Assignment',
 			'caughtUp': 'Você está em dia!',
@@ -43,12 +43,12 @@ const LangPtImpl = (superClass) => class extends superClass {
 			'sortBy': 'Classificar por {columnName}',
 			'submissionDate': 'Data do Envio',
 			'submissionList': 'Submission List',
-			'submissions': 'Submissions',
+			'submissions': 'Envios',
 			'tableTitle': 'Lista de envios de alunos não avaliados de todos os cursos e ferramentas',
 			'tryAgain': 'Tentar novamente',
 			'unreadSubmissions': '{num} unread submissions',
 			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
-			'viewBy': 'View by:'
+			'viewBy': 'Exibir por:'
 		};
 	}
 };

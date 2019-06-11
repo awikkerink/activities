@@ -92,6 +92,12 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				master-teacher="[[masterTeacher]]"
 				_data="[[_data]]"
 				_header-columns="[[_headerColumns]]"
+				_loading="[[_loading]]"
+				_full-list-loading="[[_fullListLoading]]"
+				show-load-more="[[_showLoadMore]]"
+				_health="[[_health]]"
+				show-no-submissions="[[_showNoSubmissions]]"
+				show-no-criteria="[[_showNoCriteria]]"
 				on-d2l-quick-eval-submissions-table-load-more="_loadMore"
 				on-d2l-quick-eval-submissions-table-sort-requested="_handleSortRequested">
 			</d2l-quick-eval-submissions-table>
@@ -181,6 +187,48 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				type: Boolean,
 				value: false
 			},
+			_loading: {
+				type: Boolean,
+				value: true
+			},
+			_fullListLoading: {
+				type: Boolean,
+				value: true
+			},
+			_pageNextHref: {
+				type: String,
+			},
+			_showLoadMore: {
+				type: Boolean,
+				computed: '_computeShowLoadMore(_pageNextHref, _loading)'
+			},
+			_health: {
+				type: Object,
+				value: {
+					isHealthy: true,
+					errorMessage: ''
+				}
+			},
+			_showNoSubmissions: {
+				type: Boolean,
+				computed: '_computeShowNoSubmissions(_data, _loading, _health, _filterApplied, _searchApplied)'
+			},
+			_showNoCriteria: {
+				type: Boolean,
+				computed: '_computeShowNoCriteria(_data, _loading, _health, _filterApplied, _searchApplied)'
+			},
+			_filterApplied: {
+				type: Boolean,
+				value: false
+			},
+			_searchApplied: {
+				type: Boolean,
+				value: false
+			},
+			masterTeacher: {
+				type: Boolean,
+				value: false
+			}
 		};
 	}
 
@@ -191,16 +239,12 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		];
 	}
 
-	get list() {
-		return this.shadowRoot.querySelector('d2l-quick-eval-submissions-table');
-	}
-
 	async _loadData(entity) {
 		if (!entity) {
 			return Promise.resolve();
 		}
-		this.list._loading = true;
-		this.list._fullListLoading = true;
+		this._loading = true;
+		this._fullListLoading = true;
 
 		try {
 			if (entity.entities) {
@@ -208,27 +252,26 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				this._data = result;
 			} else {
 				this._data = [];
-				this.list._pageNextHref = '';
+				this._pageNextHref = undefined;
 			}
-			this.list._clearAlerts();
-
+			this._clearAlerts();
 		} catch (e) {
 			this._logError(e, {developerMessage: 'Unable to load activities from entity.'});
-			this.list._handleFullLoadFailure();
+			this._handleFullLoadFailure();
 			return Promise.reject(e);
 		} finally {
-			this.list._fullListLoading = false;
-			this.list._loading = false;
+			this._fullListLoading = false;
+			this._loading = false;
 		}
 	}
 
 	_loadMore() {
-		if (this.list._pageNextHref && !this.list._loading) {
-			this.list._loading = true;
-			this._followHref(this.list._pageNextHref)
+		if (this._pageNextHref && !this._loading) {
+			this._loading = true;
+			this._followHref(this._pageNextHref)
 				.then(async function(u) {
 					if (u && u.entity) {
-						const tbody = this.list.shadowRoot.querySelector('d2l-tbody');
+						const tbody = this.shadowRoot.querySelector('d2l-quick-eval-submissions-table').shadowRoot.querySelector('d2l-tbody');
 						const lastFocusableTableElement = D2L.Dom.Focus.getLastFocusableDescendant(tbody, false);
 
 						try {
@@ -241,7 +284,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 						// Unable to load more activities from entity.
 							throw e;
 						} finally {
-							this.list._loading = false;
+							this._loading = false;
 							window.requestAnimationFrame(function() {
 								const newElementToFocus = D2L.Dom.Focus.getNextFocusable(lastFocusableTableElement, false);
 								if (newElementToFocus) {
@@ -251,11 +294,11 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 						}
 					}
 				}.bind(this))
-				.then(this.list._clearAlerts.bind(this.list))
+				.then(this._clearAlerts.bind(this))
 				.catch(function(e) {
 					this._logError(e, {developerMessage: 'Unable to load more.'});
-					this.list._loading = false;
-					this.list._handleLoadMoreFailure();
+					this._loading = false;
+					this._handleLoadMoreFailure();
 				}.bind(this));
 		}
 	}
@@ -281,7 +324,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				const getUserName = this._getUserPromise(activity, item);
 				const getCourseName = this._getCoursePromise(activity, item);
 				const getMasterTeacherName =
-					this.list._shouldDisplayColumn('masterTeacher')
+					this.masterTeacher
 						? this._getMasterTeacherPromise(activity, item)
 						: Promise.resolve();
 
@@ -291,7 +334,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			}.bind(this)));
 		}.bind(this));
 
-		this.list._pageNextHref = this._getPageNextHref(entity);
+		this._pageNextHref = this._getPageNextHref(entity);
 
 		const result = await Promise.all(promises);
 		return result;
@@ -347,6 +390,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		});
 
 		if (result) {
+			this._loading = true;
+			this._fullListLoading = true;
 			return result.then(sortedCollection => {
 				this.entity = sortedCollection;
 			});
@@ -356,12 +401,13 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	}
 
 	_filtersLoaded(e) {
-		this.list.filterApplied = e.detail.totalSelectedFilters > 0;
+		this._filterApplied = e.detail.totalSelectedFilters > 0;
 		this._showFilterError = false;
 	}
 
 	_filtersUpdating() {
-		this.list.setLoadingState(true);
+		this._loading = true;
+		this._fullListLoading = true;
 		this._clearErrors();
 	}
 
@@ -376,7 +422,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 
 	_filterError(e) {
 		this._logError(e.detail.error, { developerMessage: 'Failed to retrieve filter results' });
-		this.list.setLoadingState(false);
+		this._loading = false;
+		this._fullListLoading = false;
 		this._showFilterError = true;
 	}
 
@@ -401,7 +448,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	_updateSearchResultsCount(count) {
 		this._searchResultsCount = count;
 
-		if (this.list._pageNextHref) {
+		if (this._pageNextHref) {
 			this._moreSearchResults = true;
 		} else {
 			this._moreSearchResults = false;
@@ -409,14 +456,15 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	}
 
 	_searchResultsLoading() {
-		this.list.setLoadingState(true);
+		this._loading = true;
+		this._fullListLoading = true;
 		this._clearErrors();
 	}
 
 	_searchResultsLoaded(e) {
 		this.entity = e.detail.results;
 		this._showSearchResultSummary = !e.detail.searchIsCleared;
-		this.list.searchApplied = !e.detail.searchIsCleared;
+		this._searchApplied = !e.detail.searchIsCleared;
 
 		if (this.entity && this.entity.entities) {
 			this._updateSearchResultsCount(this.entity.entities.length);
@@ -428,7 +476,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 
 	_searchError(e) {
 		this._logError(e.detail.error, { developerMessage: 'Failed to retrieve search results.' });
-		this.list.setLoadingState(false);
+		this._loading = false;
+		this._fullListLoading = false;
 		this._showSearchError = true;
 	}
 
@@ -449,12 +498,36 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		return this._getAction(entity, 'search');
 	}
 
+	_computeShowLoadMore(_pageNextHref, _loading) {
+		return _pageNextHref && !_loading;
+	}
+
+	_clearAlerts() {
+		this.set('_health', { isHealthy: true, errorMessage: '' });
+	}
+
+	_handleLoadMoreFailure() {
+		this.set('_health', { isHealthy: false, errorMessage: 'failedToLoadMore' });
+	}
+
+	_handleFullLoadFailure() {
+		this.set('_health', { isHealthy: false, errorMessage: 'failedToLoadData' });
+	}
+
+	_computeShowNoSubmissions(_data, _loading, _health, _filterApplied, _searchApplied) {
+		return !_data.length && !_loading && _health.isHealthy && !(_filterApplied || _searchApplied);
+	}
+
+	_computeShowNoCriteria(_data, _loading, _health, _filterApplied, _searchApplied) {
+		return !_data.length && !_loading && _health.isHealthy && (_filterApplied || _searchApplied);
+	}
+
 	ready() {
 		super.ready();
 		this.addEventListener('d2l-siren-entity-error', function() {
-			this.list._fullListLoading = false;
-			this.list._loading = false;
-			this.list._handleFullLoadFailure();
+			this._fullListLoading = false;
+			this._loading = false;
+			this._handleFullLoadFailure();
 		}.bind(this));
 	}
 }

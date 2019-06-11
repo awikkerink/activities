@@ -7,7 +7,7 @@ const LangZhtwImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.zhtw = {
-			'activities': 'Activities',
+			'activities': '活動',
 			'activityName': '活動名稱',
 			'assignment': 'Assignment',
 			'caughtUp': '您已趕上最新進度！',
@@ -43,12 +43,12 @@ const LangZhtwImpl = (superClass) => class extends superClass {
 			'sortBy': '排序方式：{columnName}',
 			'submissionDate': '提交日期',
 			'submissionList': 'Submission List',
-			'submissions': 'Submissions',
+			'submissions': '提交項目',
 			'tableTitle': '此清單包含所有課程和工具中未評估的學習者提交項目',
 			'tryAgain': '再試一次',
 			'unreadSubmissions': '{num} unread submissions',
 			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
-			'viewBy': 'View by:'
+			'viewBy': '檢視依據：'
 		};
 	}
 };

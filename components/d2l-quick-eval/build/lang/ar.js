@@ -7,7 +7,7 @@ const LangArImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.ar = {
-			'activities': 'Activities',
+			'activities': 'النشاطات',
 			'activityName': 'اسم النشاط',
 			'assignment': 'Assignment',
 			'caughtUp': 'لقد انتهيت من مهامك!',
@@ -43,12 +43,12 @@ const LangArImpl = (superClass) => class extends superClass {
 			'sortBy': 'الفرز بحسب {columnName}',
 			'submissionDate': 'تاريخ الإرسال',
 			'submissionList': 'Submission List',
-			'submissions': 'Submissions',
+			'submissions': 'الإرسالات',
 			'tableTitle': 'قائمة بعمليات إرسال المتعلّم غير المقيّمة من المقررات التعليمية والأدوات',
 			'tryAgain': 'المحاولة مرة أخرى',
 			'unreadSubmissions': '{num} unread submissions',
 			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
-			'viewBy': 'View by:'
+			'viewBy': 'عرض حسب:'
 		};
 	}
 };

@@ -7,7 +7,7 @@ const LangJaImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.ja = {
-			'activities': 'Activities',
+			'activities': 'アクティビティ',
 			'activityName': 'アクティビティ名',
 			'assignment': 'Assignment',
 			'caughtUp': '学習はすべて順調に進んでいます！',
@@ -43,12 +43,12 @@ const LangJaImpl = (superClass) => class extends superClass {
 			'sortBy': '{columnName} で並べ替え',
 			'submissionDate': '送信日',
 			'submissionList': 'Submission List',
-			'submissions': 'Submissions',
+			'submissions': '送信物',
 			'tableTitle': 'コースやツールをまたいだ、受講者からの未評価の送信物リスト',
 			'tryAgain': 'もう一度試してください',
 			'unreadSubmissions': '{num} unread submissions',
 			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
-			'viewBy': 'View by:'
+			'viewBy': '表示対象:'
 		};
 	}
 };

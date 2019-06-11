@@ -7,7 +7,7 @@ const LangEsImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.es = {
-			'activities': 'Activities',
+			'activities': 'Actividades',
 			'activityName': 'Nombre de la actividad',
 			'assignment': 'Assignment',
 			'caughtUp': 'Ya está al día.',
@@ -43,12 +43,12 @@ const LangEsImpl = (superClass) => class extends superClass {
 			'sortBy': 'Ordenar por {columnName}',
 			'submissionDate': 'Fecha del material enviado',
 			'submissionList': 'Submission List',
-			'submissions': 'Submissions',
+			'submissions': 'Materiales enviados',
 			'tableTitle': 'Lista de envíos no evaluados del estudiante de todos los cursos y herramientas',
 			'tryAgain': 'Volver a intentarlo',
 			'unreadSubmissions': '{num} unread submissions',
 			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
-			'viewBy': 'View by:'
+			'viewBy': 'Ver por:'
 		};
 	}
 };

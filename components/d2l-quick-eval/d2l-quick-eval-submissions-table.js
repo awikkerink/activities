@@ -193,17 +193,17 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 									<d2l-activity-evaluation-icon-base draft$="[[s.isDraft]]"></d2l-activity-evaluation-icon-base>
 								</d2l-td>
 								<d2l-td class="d2l-quick-eval-truncated-column d2l-activity-name-column">
-									<d2l-activity-name href="[[_getDataProperty(s, 'activityNameHref')]]" token="[[token]]"></d2l-activity-name>
+									<d2l-activity-name href="[[s.activityNameHref]]" token="[[token]]"></d2l-activity-name>
 								</d2l-td>
 								<d2l-td class="d2l-quick-eval-truncated-column d2l-course-name-column">
-									<span>[[_getDataProperty(s, 'courseName')]]</span>
+									<span>[[s.courseName]]</span>
 								</d2l-td>
 								<d2l-td>
-									<span>[[_localizeDateTimeFormat(s, 'submissionDate')]]</span>
+									<span>[[_localizeDateTimeFormat(s.submissionDate)]]</span>
 								</d2l-td>
 								<template is="dom-if" if="[[_shouldDisplayColumn('masterTeacher')]]">
 									<d2l-td>
-										<span>[[_getDataProperty(s, 'masterTeacher')]]</span>
+										<span>[[s.masterTeacher]]</span>
 									</d2l-td>
 								</template>
 							</d2l-tr>
@@ -218,12 +218,12 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 			<d2l-quick-eval-skeleton hidden$="[[!_fullListLoading]]"></d2l-quick-eval-skeleton>
 	     	<d2l-loading-spinner size="80" hidden$="[[!_isLoadingMore(_fullListLoading,_loading)]]"></d2l-loading-spinner>
 
-			<template is="dom-if" if="[[_shouldShowLoadMore(_pageNextHref, _loading)]]">
+			<template is="dom-if" if="[[showLoadMore]]">
 				<div class="d2l-quick-eval-submissions-table-load-more-container">
 					<d2l-button class="d2l-quick-eval-submissions-table-load-more" onclick="[[_dispatchLoadMore]]">[[localize('loadMore')]]</d2l-button>
 				</div>
 			</template>
-			<template is="dom-if" if="[[_shouldShowNoSubmissions(_data.length, _loading, _health.isHealthy, filterApplied, searchApplied)]]">
+			<template is="dom-if" if="[[showNoSubmissions]]">
 				<div class="d2l-quick-eval-no-submissions">
 					<d2l-quick-eval-no-submissions-image></d2l-quick-eval-no-submissions-image>
 					<h2 class="d2l-quick-eval-no-submissions-heading">[[localize('caughtUp')]]</h2>
@@ -231,7 +231,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 					<p class="d2l-body-standard">[[localize('checkBackOften')]]</p>
 				</div>
 			</template>
-			<template is="dom-if" if="[[_shouldShowNoCriteriaResults(_data.length, _loading, _health.isHealthy, filterApplied, searchApplied)]]">
+			<template is="dom-if" if="[[showNoCriteria]]">
 				<div class="d2l-quick-eval-no-criteria-results">
 					<d2l-quick-eval-no-criteria-results-image></d2l-quick-eval-no-criteria-results-image>
 					<h2 class="d2l-quick-eval-no-criteria-results-heading">[[localize('noResults')]]</h2>
@@ -250,14 +250,6 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 				type: Boolean,
 				value: false,
 				reflectToAttribute: true
-			},
-			filterApplied: {
-				type: Boolean,
-				value: false
-			},
-			searchApplied: {
-				type: Boolean,
-				value: false
 			},
 			_headerColumns: {
 				type: Array,
@@ -282,21 +274,24 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 				type: Boolean,
 				value: true
 			},
-			_pageNextHref: {
-				type: String,
-				value: ''
-			}
+			showLoadMore: {
+				type: Boolean,
+				value: false
+			},
+			showNoSubmissions: {
+				type: Boolean,
+				value: false
+			},
+			showNoCriteria: {
+				type: Boolean,
+				value: false
+			},
 		};
 	}
 	static get observers() {
 		return [
 			'_handleNameSwap(_headerColumns.0.headers.*)'
 		];
-	}
-
-	setLoadingState(state) {
-		this.set('_fullListLoading', state);
-		this.set('_loading', state);
 	}
 
 	_isLoadingMore(fullListLoading, isLoading) {
@@ -312,30 +307,6 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 			this.set('_headerColumns.0.headers.1.suffix', '');
 			this.set('_headerColumns.0.meta.firstThenLast', this._headerColumns[0].headers[0].key === 'firstName');
 		}
-	}
-
-	_shouldShowLoadMore(hasPageNextHref, isLoading) {
-		return hasPageNextHref && !isLoading;
-	}
-
-	_shouldShowNoSubmissions(dataLength, isLoading, isHealthy, filterApplied, searchApplied) {
-		return !dataLength && !isLoading && isHealthy && !(filterApplied || searchApplied);
-	}
-
-	_shouldShowNoCriteriaResults(dataLength, isLoading, isHealthy, filterApplied, searchApplied) {
-		return !dataLength && !isLoading && isHealthy && (filterApplied || searchApplied);
-	}
-
-	_clearAlerts() {
-		this.set('_health', { isHealthy: true, errorMessage: '' });
-	}
-
-	_handleLoadMoreFailure() {
-		this.set('_health', { isHealthy: false, errorMessage: 'failedToLoadMore' });
-	}
-
-	_handleFullLoadFailure() {
-		this.set('_health', { isHealthy: false, errorMessage: 'failedToLoadData' });
 	}
 
 	_localizeSortText(columnName) {
@@ -376,22 +347,8 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 		return lastName + ', ' + firstName;
 	}
 
-	_localizeDateTimeFormat(item, prop) {
-		const localizedDate = this._getDataProperty(item, prop);
+	_localizeDateTimeFormat(localizedDate) {
 		return this.formatDateTime(new Date(localizedDate));
-	}
-
-	_getDataProperty(item, prop) {
-		let result;
-		if (Array.isArray(prop) && prop.length > 0) {
-			result = item;
-			for (let i = 0; i < prop.length; i++) {
-				result = result[prop[i]];
-			}
-		} else {
-			result = item[prop];
-		}
-		return result;
 	}
 
 	_getWidthCssClass(columnKey) {
