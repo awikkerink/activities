@@ -7,7 +7,7 @@ const LangDadkImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.dadk = {
-			'activities': 'Activities',
+			'activities': 'Aktiviteter',
 			'activityName': 'Aktivitetsnavn',
 			'caughtUp': 'Du er helt med!',
 			'checkBackOften': 'Kom tilbage med jævne mellemrum for at se nye afleveringer.',
@@ -40,12 +40,12 @@ const LangDadkImpl = (superClass) => class extends superClass {
 			'sortBy': 'Sortér efter {columnName}',
 			'submissionDate': 'Afleveringsdato',
 			'submissionList': 'Submission List',
-			'submissions': 'Submissions',
+			'submissions': 'Afleveringer',
 			'tableTitle': 'Liste over ikke-evaluerede elevafleveringer på tværs af kurser og værktøjer',
 			'tryAgain': 'Prøv igen',
 			'unreadSubmissions': '{num} unread submissions',
 			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
-			'viewBy': 'View by:'
+			'viewBy': 'Vis efter:'
 		};
 	}
 };

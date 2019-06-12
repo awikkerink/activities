@@ -7,7 +7,7 @@ const LangTrImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.tr = {
-			'activities': 'Activities',
+			'activities': 'Etkinlikler',
 			'activityName': 'Etkinlik Adı',
 			'caughtUp': 'Yetiştin!',
 			'checkBackOften': 'Yeni gönderiler için belirli aralıklarla tekrar kontrol edin.',
@@ -40,12 +40,12 @@ const LangTrImpl = (superClass) => class extends superClass {
 			'sortBy': 'Şuna göre sırala: {columnName}',
 			'submissionDate': 'Gönderme Tarihi',
 			'submissionList': 'Submission List',
-			'submissions': 'Submissions',
+			'submissions': 'Gönderimler',
 			'tableTitle': 'Dersler ve araçlar genelinde değerlendirilmemiş Öğrenci gönderilerinin listesi',
 			'tryAgain': 'Tekrar Dene',
 			'unreadSubmissions': '{num} unread submissions',
 			'unreadSubmissionsDetail': '{unread} new, {resub} resubmissions',
-			'viewBy': 'View by:'
+			'viewBy': 'Görüntüleme ölçütü:'
 		};
 	}
 };
