@@ -272,7 +272,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	}
 
 	_loadMore() {
-		if (this._pageNextHref) {
+		if (this._pageNextHref && !this._loadingMore) {
 			this._loadingMore = true;
 			this._followHref(this._pageNextHref)
 				.then(async function(u) {
@@ -535,6 +535,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		super.ready();
 		this.addEventListener('d2l-siren-entity-error', function() {
 			this._loading = false;
+			this._loadingMore = false;
 			this._handleFullLoadFailure();
 		}.bind(this));
 	}
