@@ -2,7 +2,6 @@ import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { QuickEvalLogging } from './QuickEvalLogging.js';
 import { QuickEvalLocalize } from './QuickEvalLocalize.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
-import { Rels } from 'd2l-hypermedia-constants';
 import './behaviors/d2l-quick-eval-siren-helper-behavior.js';
 import './d2l-quick-eval-submissions-table.js';
 import './behaviors/d2l-hm-sort-behaviour.js';
@@ -491,6 +490,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		if (filterError) {
 			this._logError(filterError.error, { developerMessage: 'Failed to retrieve filter results' });
 		}
+	}
 
 	_computeShowLoadingSpinner(_loadingMore) {
 		return _loadingMore;
