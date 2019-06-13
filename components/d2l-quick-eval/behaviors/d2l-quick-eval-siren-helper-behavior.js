@@ -38,6 +38,10 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 			}.bind(this));
 	},
 
+	_getOrgHref: function(entity) {
+		return this._getHref(entity, Rels.organization);
+	},
+
 	_getCourseNamePromise: async function(entity) {
 		return this._followLink(entity, Rels.organization)
 			.then(function(o) {

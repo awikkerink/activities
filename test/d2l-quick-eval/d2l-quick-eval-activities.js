@@ -8,6 +8,7 @@ suite('d2l-quick-eval-activities', function() {
 		{
 			name: 'Org Name',
 			activities: [{
+				key: 'data/org.json',
 				courseName: 'Org Name',
 				activityNameHref: 'data/assignmentActivity.json',
 				assigned: 21,
@@ -20,6 +21,7 @@ suite('d2l-quick-eval-activities', function() {
 				activityType: 'assignment'
 			},
 			{
+				key: 'data/org.json',
 				courseName: 'Org Name',
 				activityNameHref: 'data/quizActivity.json',
 				assigned: 11,
@@ -32,6 +34,7 @@ suite('d2l-quick-eval-activities', function() {
 				activityType: 'quiz'
 			},
 			{
+				key: 'data/org.json',
 				courseName: 'Org Name',
 				activityNameHref: 'data/topicActivity.json',
 				assigned: 1,

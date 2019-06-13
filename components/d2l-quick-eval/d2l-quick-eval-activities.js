@@ -174,6 +174,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				evaluated: evalStatus.evaluated,
 				unread: evalStatus.unread,
 				resubmitted: evalStatus.resubmitted,
+				key: this._getOrgHref(activity),
 				dueDate: this._getActivityDueDate(activity),
 				activityType: this._getActivityType(activity),
 				activityNameHref: this._getActivityNameHref(activity)
@@ -185,8 +186,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	_groupByCourse(act) {
 		if (act) {
 			const grouped = act.reduce((acts, a) => {
-				acts[a.courseName] = acts[a.courseName] || { name: a.courseName, activities: []};
-				acts[a.courseName].activities.push(a);
+				acts[a.key] = acts[a.key] || { name: a.courseName, activities: []};
+				acts[a.key].activities.push(a);
 				return acts;
 			}, {});
 			return Object.values(grouped);
