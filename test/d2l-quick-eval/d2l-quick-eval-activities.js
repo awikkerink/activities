@@ -46,11 +46,6 @@ suite('d2l-quick-eval-activities', function() {
 		}
 	];
 
-	async function loadPromise(url) {
-		var entity = await window.D2L.Siren.EntityStore.fetch(url, '');
-		await act._loadData(entity.entity);
-	}
-
 	setup(function() {
 		act = fixture('basic');
 		noSubmissionComponent = act.shadowRoot.querySelector('.d2l-quick-eval-no-submissions');
@@ -98,10 +93,15 @@ suite('d2l-quick-eval-activities', function() {
 		assert.notEqual(getComputedStyle(list).display, 'none');
 	});
 	test('data is imported correctly', (done) => {
-		loadPromise('data/unassessedActivitiesCollection.json').then(function() {
-			assert.equal(act._data.length, expectedData.length);
-			assert.deepEqual(act._data, expectedData);
-			done();
-		});
+		function checkData() {
+			if (act._data.length) {
+				assert.equal(act._data.length, expectedData.length);
+				assert.deepEqual(act._data, expectedData);
+				act.removeEventListener('d2l-siren-entity-changed', checkData);
+				done();
+			}
+		}
+		act.addEventListener('d2l-siren-entity-changed', checkData);
+		act.href = 'data/unassessedActivitiesCollection.json';
 	});
 });
