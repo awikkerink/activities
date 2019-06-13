@@ -181,7 +181,7 @@ suite('d2l-hm-filter-behavior', function() {
 	});
 
 	test('default implementation of _clearErrors sets filterError to false', () => {
-		filterBehavior._clearErrors()
+		filterBehavior._clearErrors();
 		assert.isFalse(filterBehavior.filterError);
 	});
 });
