@@ -1,8 +1,8 @@
 import '@polymer/iron-test-helpers/mock-interactions.js';
 
-(function() {
+suite('d2l-quick-eval-activities-list', function() {
 	let list;
-	var expectedCourses = [
+	const expectedCourses = [
 		{
 			name: 'Org Name',
 			activities: [
@@ -98,45 +98,43 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 		}
 	}
 
-	suite('d2l-quick-eval-activities-list', function() {
-		setup(function() {
-			list = fixture('basic');
-		});
-		test('instantiating the element works', function() {
-			assert.equal(list.tagName.toLowerCase(), 'd2l-quick-eval-activities-list');
-		});
-		test('attributes are set correctly', function() {
-			assert.equal(list.token, 't');
-		});
-		test('data displays correctly', function(done) {
-			list.courses = expectedCourses;
-			window.requestAnimationFrame(function() {
-				const elements = list.shadowRoot.querySelectorAll('h3, d2l-quick-eval-activity-card');
-				let element = 0;
-				for (let i = 0; i < expectedCourses.length; i++) {
-					const c = expectedCourses[i];
-					assert.equal(elements[element].tagName.toLowerCase(), 'h3');
-					assert.equal(elements[element].innerHTML, c.name);
+	setup(function() {
+		list = fixture('basic');
+	});
+	test('instantiating the element works', function() {
+		assert.equal(list.tagName.toLowerCase(), 'd2l-quick-eval-activities-list');
+	});
+	test('attributes are set correctly', function() {
+		assert.equal(list.token, 't');
+	});
+	test('data displays correctly', function(done) {
+		list.courses = expectedCourses;
+		window.requestAnimationFrame(function() {
+			const elements = list.shadowRoot.querySelectorAll('h3, d2l-quick-eval-activity-card');
+			let element = 0;
+			for (let i = 0; i < expectedCourses.length; i++) {
+				const c = expectedCourses[i];
+				assert.equal(elements[element].tagName.toLowerCase(), 'h3');
+				assert.equal(elements[element].innerHTML, c.name);
+				element++;
+				for (let j = 0; j < c.activities.length; j++) {
+					const card = elements[element];
+					const a = c.activities[j];
+					assert.equal(card.tagName.toLowerCase(), 'd2l-quick-eval-activity-card');
+					assert.equal(card.assigned, a.assigned);
+					assert.equal(card.completed, a.completed);
+					assert.equal(card.published, a.published);
+					assert.equal(card.evaluated, a.evaluated);
+					assert.equal(card.unread, a.unread);
+					assert.equal(card.resubmitted, a.resubmitted);
+					assert.equal(card.dueDate, a.dueDate);
+					assert.equal(card.activityType, localize(a.activityType));
+					assert.equal(card.activityNameHref, a.activityNameHref);
+					assert.equal(card.token, list.token);
 					element++;
-					for (let j = 0; j < c.activities.length; j++) {
-						const card = elements[element];
-						const a = c.activities[j];
-						assert.equal(card.tagName.toLowerCase(), 'd2l-quick-eval-activity-card');
-						assert.equal(card.assigned, a.assigned);
-						assert.equal(card.completed, a.completed);
-						assert.equal(card.published, a.published);
-						assert.equal(card.evaluated, a.evaluated);
-						assert.equal(card.unread, a.unread);
-						assert.equal(card.resubmitted, a.resubmitted);
-						assert.equal(card.dueDate, a.dueDate);
-						assert.equal(card.activityType, localize(a.activityType));
-						assert.equal(card.activityNameHref, a.activityNameHref);
-						assert.equal(card.token, list.token);
-						element++;
-					}
 				}
-			});
+			}
 			done();
 		});
 	});
-})();
+});
