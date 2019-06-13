@@ -45,7 +45,7 @@ suite('d2l-quick-eval-activities', function() {
 			}]
 		}
 	];
-	
+
 	async function loadPromise(url) {
 		var entity = await window.D2L.Siren.EntityStore.fetch(url, '');
 		await act._loadData(entity.entity);
