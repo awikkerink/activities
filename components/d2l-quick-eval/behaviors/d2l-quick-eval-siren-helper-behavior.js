@@ -38,6 +38,17 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 			}.bind(this));
 	},
 
+	_getCourseName: async function(entity) {
+		let result;
+		await this._followLink(entity, Rels.organization)
+			.then(function(o) {
+				if (o && o.entity && o.entity.properties) {
+					result = o.entity.properties.name;
+				}
+			});
+		return result;
+	},
+	
 	_getCoursePromise: function(entity, item) {
 		return this._followLink(entity, Rels.organization)
 			.then(function(o) {
@@ -64,19 +75,23 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 		return subEntity.properties.name;
 	},
 
-	_getEvaluationStatusPromise: function(entity, item) {
-		return this._followLink(entity, Rels.Activities.evaluationStatus)
+	_getEvaluationStatus: async function(entity) {
+		let result;
+		await this._followLink(entity, Rels.Activities.evaluationStatus)
 			.then(function(e) {
 				if (e && e.entity && e.entity.properties) {
 					const p = e.entity.properties;
-					item.assigned = p.assigned || 0;
-					item.completed = p.completed || 0;
-					item.published = p.published || 0;
-					item.evaluated = p.evaluated || 0;
-					item.unread = p.unread || 0;
-					item.resubmitted = p.resubmitted || 0;
+					result = {
+						assigned: p.assigned || 0,
+						completed: p.completed || 0,
+						published: p.published || 0,
+						evaluated: p.evaluated || 0,
+						unread: p.unread || 0,
+						resubmitted: p.resubmitted || 0
+					};
 				}
 			});
+		return result;
 	},
 
 	_getUserPromise: function(entity, item) {
@@ -132,7 +147,6 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 				return 'discussion';
 			}
 		}
-		return '';
 	},
 
 	_getActivityDueDate: function(entity) {

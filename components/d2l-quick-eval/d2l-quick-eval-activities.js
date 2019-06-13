@@ -163,31 +163,22 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	}
 
 	async _parseActivities(entity) {
-		const promises = [];
-		entity.entities.forEach(function(activity) {
-			promises.push(new Promise(function(resolve) {
-				const item = {
-					courseName: '',
-					assigned: 0,
-					completed: 0,
-					published: 0,
-					evaluated: 0,
-					unread: 0,
-					resubmitted: 0,
-					dueDate: this._getActivityDueDate(activity),
-					activityType: this._getActivityType(activity),
-					activityNameHref: this._getActivityNameHref(activity)
-				};
-				const getCourseName = this._getCoursePromise(activity, item);
-				const getEvaluationStatus = this._getEvaluationStatusPromise(activity, item);
-
-				Promise.all([getCourseName, getEvaluationStatus]).then(function() {
-					resolve(item);
-				});
-			}.bind(this)));
-		}.bind(this));
-
-		const result = await Promise.all(promises);
+		const result = await Promise.all(entity.entities.map(async function(activity) {
+			const evalStatus = await this._getEvaluationStatus(activity);
+			const courseName = await this._getCourseName(activity);
+			return {
+				courseName: courseName,
+				assigned: evalStatus.assigned,
+				completed: evalStatus.completed,
+				published: evalStatus.published,
+				evaluated: evalStatus.evaluated,
+				unread: evalStatus.unread,
+				resubmitted: evalStatus.resubmitted,
+				dueDate: this._getActivityDueDate(activity),
+				activityType: this._getActivityType(activity),
+				activityNameHref: this._getActivityNameHref(activity)
+			};
+		}.bind(this)));
 		return this._groupByCourse(result);
 	}
 
