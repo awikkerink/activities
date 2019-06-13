@@ -104,4 +104,10 @@ suite('d2l-quick-eval-activities', function() {
 		act.addEventListener('d2l-siren-entity-changed', checkData);
 		act.href = 'data/unassessedActivitiesCollection.json';
 	});
+	[null, undefined, []].forEach(testCase => {
+		test(`_groupByCourse returns an empty array when given ${JSON.stringify(testCase)}`, function() {
+			const result = act._groupByCourse(testCase);
+			assert.deepEqual(result, []);
+		});
+	});
 });

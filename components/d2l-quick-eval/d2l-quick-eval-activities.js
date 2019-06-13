@@ -144,7 +144,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 	async _loadData(entity) {
 		if (!entity) {
-			return Promise.resolve();
+			return;
 		}
 
 		try {
@@ -158,14 +158,14 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 		} catch (e) {
 			this._logError(e, {developerMessage: 'Unable to load activities from entity.'});
-			return Promise.reject(e);
+			throw e;
 		}
 	}
 
 	async _parseActivities(entity) {
 		const result = await Promise.all(entity.entities.map(async function(activity) {
-			const evalStatus = await this._getEvaluationStatus(activity);
-			const courseName = await this._getCourseName(activity);
+			const evalStatus = await this._getEvaluationStatusPromise(activity);
+			const courseName = await this._getCourseNamePromise(activity);
 			return {
 				courseName: courseName,
 				assigned: evalStatus.assigned,
@@ -183,12 +183,16 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	}
 
 	_groupByCourse(act) {
-		const grouped = act.reduce((acts, a) => {
-			(acts[a.courseName] = acts[a.courseName] || { name: a.courseName, activities: []});
-			acts[a.courseName].activities.push(a);
-			return acts;
-		}, {});
-		return Object.values(grouped);
+		if (act) {
+			const grouped = act.reduce((acts, a) => {
+				acts[a.courseName] = acts[a.courseName] || { name: a.courseName, activities: []};
+				acts[a.courseName].activities.push(a);
+				return acts;
+			}, {});
+			return Object.values(grouped);
+		} else {
+			return [];
+		}
 	}
 
 	_loadFilterAndSearch(entity) {

@@ -34,16 +34,19 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 				type: Array,
 				value: [
 					// {
-					// 	courseName: '',
-					// 	assigned: 0,
-					// 	completed: 0,
-					// 	published: 0,
-					// 	evaluated: 0,
-					// 	unread: 0,
-					// 	resubmitted: 0,
-					// 	dueDate: '',
-					// 	activityType: '',
-					// 	activityNameHref: ''
+					// 	name: '',
+					// 	activities: {
+					// 		courseName: '',
+					// 		assigned: 0,
+					// 		completed: 0,
+					// 		published: 0,
+					// 		evaluated: 0,
+					// 		unread: 0,
+					// 		resubmitted: 0,
+					// 		dueDate: '',
+					// 		activityType: '',
+					// 		activityNameHref: ''
+					// 	}
 					// }
 				]
 			},
