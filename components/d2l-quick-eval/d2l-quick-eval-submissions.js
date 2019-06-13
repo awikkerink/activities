@@ -219,7 +219,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			},
 			_showLoadingSkeleton: {
 				type: Boolean,
-				computed: '_computeShowLoadingSkeleton(_loading)'
+				computed: '_computeShowLoadingSkeleton(_loading, filtersLoading)'
 			}
 		};
 	}
@@ -228,7 +228,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		return [
 			'_loadData(entity)',
 			'_handleSorts(entity)',
-			'_onFiltersLoadingChange(filtersLoading)',
 			'_onFilterErrorChange(filterError)'
 		];
 	}
@@ -481,11 +480,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		return !_data.length && !_loading && !_loadingMore && _health.isHealthy && (_filterApplied || _searchApplied);
 	}
 
-	_onFiltersLoadingChange(filtersLoading) {
-		this._loading = filtersLoading;
-		this._fullListLoading = filtersLoading;
-	}
-
 	_onFilterErrorChange(filterError) {
 		if (filterError) {
 			this._logError(filterError.error, { developerMessage: 'Failed to retrieve filter results' });
@@ -496,8 +490,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		return _loadingMore;
 	}
 
-	_computeShowLoadingSkeleton(_loading) {
-		return _loading;
+	_computeShowLoadingSkeleton(_loading, filtersLoading) {
+		return _loading || filtersLoading;
 	}
 
 	ready() {

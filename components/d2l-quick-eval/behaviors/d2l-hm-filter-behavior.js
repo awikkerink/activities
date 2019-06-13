@@ -60,6 +60,7 @@ D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviourImpl = {
 
 	_onFiltersUpdated: function(e) {
 		this.entity = e.detail.filteredActivities;
+		this.filtersLoading = false;
 		this._clearErrors();
 	},
 
