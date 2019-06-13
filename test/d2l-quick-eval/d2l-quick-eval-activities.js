@@ -1,6 +1,7 @@
 import '@polymer/iron-test-helpers/mock-interactions.js';
 
-(function() {
+suite('d2l-quick-eval-activities', function() {
+
 	let act, list, noSubmissionComponent, noCriteriaResultsComponent;
 
 	const expectedData = [
@@ -44,65 +45,63 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 			}]
 		}
 	];
-
+	
 	async function loadPromise(url) {
 		var entity = await window.D2L.Siren.EntityStore.fetch(url, '');
 		await act._loadData(entity.entity);
 	}
 
-	suite('d2l-quick-eval-activities', function() {
-		setup(function() {
-			act = fixture('basic');
-			noSubmissionComponent = act.shadowRoot.querySelector('.d2l-quick-eval-no-submissions');
-			noCriteriaResultsComponent = act.shadowRoot.querySelector('.d2l-quick-eval-no-criteria-results');
-			list = act.shadowRoot.querySelector('d2l-quick-eval-activities-list');
-		});
-		test('instantiating the element works', function() {
-			assert.equal(act.tagName.toLowerCase(), 'd2l-quick-eval-activities');
-		});
-		test('attributes are set correctly', function() {
-			assert.equal(act.href, 'blah');
-			assert.equal(act.token, 't');
-		});
-		test('if there is no data, d2l-quick-eval-no-submissions-image is shown', () => {
-			assert.notEqual(getComputedStyle(noSubmissionComponent).display, 'none');
-			assert.equal(getComputedStyle(noCriteriaResultsComponent).display, 'none');
-			assert.equal(getComputedStyle(list).display, 'none');
-		});
-		test('if there is no data and filters have been applied, d2l-quick-eval-no-criteria-results-image is shown', () => {
-			act.filterApplied = true;
+	setup(function() {
+		act = fixture('basic');
+		noSubmissionComponent = act.shadowRoot.querySelector('.d2l-quick-eval-no-submissions');
+		noCriteriaResultsComponent = act.shadowRoot.querySelector('.d2l-quick-eval-no-criteria-results');
+		list = act.shadowRoot.querySelector('d2l-quick-eval-activities-list');
+	});
+	test('instantiating the element works', function() {
+		assert.equal(act.tagName.toLowerCase(), 'd2l-quick-eval-activities');
+	});
+	test('attributes are set correctly', function() {
+		assert.equal(act.href, 'blah');
+		assert.equal(act.token, 't');
+	});
+	test('if there is no data, d2l-quick-eval-no-submissions-image is shown', () => {
+		assert.notEqual(getComputedStyle(noSubmissionComponent).display, 'none');
+		assert.equal(getComputedStyle(noCriteriaResultsComponent).display, 'none');
+		assert.equal(getComputedStyle(list).display, 'none');
+	});
+	test('if there is no data and filters have been applied, d2l-quick-eval-no-criteria-results-image is shown', () => {
+		act.filterApplied = true;
 
-			assert.notEqual(getComputedStyle(noCriteriaResultsComponent).display, 'none');
-			assert.equal(getComputedStyle(noSubmissionComponent).display, 'none');
-			assert.equal(getComputedStyle(list).display, 'none');
-		});
-		test('if there is no data and search has been applied, d2l-quick-eval-no-criteria-results-image is shown', () => {
-			act.searchApplied = true;
+		assert.notEqual(getComputedStyle(noCriteriaResultsComponent).display, 'none');
+		assert.equal(getComputedStyle(noSubmissionComponent).display, 'none');
+		assert.equal(getComputedStyle(list).display, 'none');
+	});
+	test('if there is no data and search has been applied, d2l-quick-eval-no-criteria-results-image is shown', () => {
+		act.searchApplied = true;
 
-			assert.notEqual(getComputedStyle(noCriteriaResultsComponent).display, 'none');
-			assert.equal(getComputedStyle(noSubmissionComponent).display, 'none');
-			assert.equal(getComputedStyle(list).display, 'none');
-		});
-		test('if there is no data and filters and search have been applied, d2l-quick-eval-no-criteria-results-image is shown', () => {
-			act.filterApplied = true;
-			act.searchApplied = true;
+		assert.notEqual(getComputedStyle(noCriteriaResultsComponent).display, 'none');
+		assert.equal(getComputedStyle(noSubmissionComponent).display, 'none');
+		assert.equal(getComputedStyle(list).display, 'none');
+	});
+	test('if there is no data and filters and search have been applied, d2l-quick-eval-no-criteria-results-image is shown', () => {
+		act.filterApplied = true;
+		act.searchApplied = true;
 
-			assert.notEqual(getComputedStyle(noCriteriaResultsComponent).display, 'none');
-			assert.equal(getComputedStyle(noSubmissionComponent).display, 'none');
-			assert.equal(getComputedStyle(list).display, 'none');
-		});
-		test('if there is data, the list is shown', () => {
-			act._data = expectedData;
-			assert.equal(getComputedStyle(noCriteriaResultsComponent).display, 'none');
-			assert.equal(getComputedStyle(noSubmissionComponent).display, 'none');
-			assert.notEqual(getComputedStyle(list).display, 'none');
-		});
-		test('data is imported correctly', (done) => {
-			loadPromise('data/unassessedActivitiesCollection.json').then(function() {
-				assert.equal(act._data.length, expectedData.length);
-				assert.deepEqual(act._data, expectedData);
-				done();
-			});
+		assert.notEqual(getComputedStyle(noCriteriaResultsComponent).display, 'none');
+		assert.equal(getComputedStyle(noSubmissionComponent).display, 'none');
+		assert.equal(getComputedStyle(list).display, 'none');
+	});
+	test('if there is data, the list is shown', () => {
+		act._data = expectedData;
+		assert.equal(getComputedStyle(noCriteriaResultsComponent).display, 'none');
+		assert.equal(getComputedStyle(noSubmissionComponent).display, 'none');
+		assert.notEqual(getComputedStyle(list).display, 'none');
+	});
+	test('data is imported correctly', (done) => {
+		loadPromise('data/unassessedActivitiesCollection.json').then(function() {
+			assert.equal(act._data.length, expectedData.length);
+			assert.deepEqual(act._data, expectedData);
+			done();
 		});
 	});
-})();
+});
