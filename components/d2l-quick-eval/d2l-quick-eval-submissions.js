@@ -400,6 +400,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		return filters;
 	}
 
+	// @override - do not change the name
 	_clearErrors() {
 		this._showSearchError = false;
 		this.filterError = false;
