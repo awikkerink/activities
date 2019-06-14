@@ -21,8 +21,7 @@ D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviourImpl = {
 			value: false
 		},
 		filterError: {
-			type: Object,
-			value: false
+			type: Object
 		},
 		filtersLoading: {
 			type: Boolean,
@@ -70,7 +69,7 @@ D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviourImpl = {
 	},
 
 	_clearErrors: function() {
-		this.filterError = false;
+		this.filterError = null;
 	}
 };
 

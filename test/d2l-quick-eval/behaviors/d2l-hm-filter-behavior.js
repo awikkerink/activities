@@ -7,7 +7,7 @@ suite('d2l-hm-filter-behavior', function() {
 	});
 	test('default state is correct', () => {
 		assert.isNotOk(filterBehavior.filterHref);
-		assert.isFalse(filterBehavior.filterError);
+		assert.isNotOk(filterBehavior.filterError);
 		assert.isFalse(filterBehavior.filterApplied);
 		assert.isFalse(filterBehavior.filtersLoading);
 	});
@@ -56,7 +56,7 @@ suite('d2l-hm-filter-behavior', function() {
 		);
 		assert.isFalse(filterBehavior.filterApplied);
 	});
-	test('d2l-hm-filter-filters-loaded sets filterError to false', () => {
+	test('d2l-hm-filter-filters-loaded sets filterError to falsy', () => {
 		filterBehavior.dispatchEvent(
 			new CustomEvent(
 				'd2l-hm-filter-filters-loaded',
@@ -67,7 +67,7 @@ suite('d2l-hm-filter-behavior', function() {
 				}
 			)
 		);
-		assert.isFalse(filterBehavior.filterError);
+		assert.isNotOk(filterBehavior.filterError);
 	});
 	test('d2l-hm-filter-filters-loaded calls this._clearErrors with no parameters', (done) => {
 		filterBehavior._clearErrors = done;
@@ -89,11 +89,11 @@ suite('d2l-hm-filter-behavior', function() {
 		);
 		assert.isTrue(filterBehavior.filtersLoading);
 	});
-	test('d2l-hm-filter-filters-updating sets filterError to false', () => {
+	test('d2l-hm-filter-filters-updating sets filterError to falsy', () => {
 		filterBehavior.dispatchEvent(
 			new CustomEvent('d2l-hm-filter-filters-updating', {})
 		);
-		assert.isFalse(filterBehavior.filterError);
+		assert.isNotOk(filterBehavior.filterError);
 	});
 	test('d2l-hm-filter-filters-updating calls this._clearErrors with no parameters', (done) => {
 		filterBehavior._clearErrors = done;
@@ -129,7 +129,7 @@ suite('d2l-hm-filter-behavior', function() {
 		);
 		assert.isFalse(filterBehavior.filtersLoading);
 	});
-	test('d2l-hm-filter-filters-updated sets filterError to false', () => {
+	test('d2l-hm-filter-filters-updated sets filterError to falsy', () => {
 		filterBehavior.dispatchEvent(
 			new CustomEvent(
 				'd2l-hm-filter-filters-updated',
@@ -140,7 +140,7 @@ suite('d2l-hm-filter-behavior', function() {
 				}
 			)
 		);
-		assert.isFalse(filterBehavior.filterError);
+		assert.isNotOk(filterBehavior.filterError);
 	});
 	test('d2l-hm-filter-filters-updated calls this._clearErrors with no parameters', (done) => {
 		filterBehavior._clearErrors = done;
@@ -180,8 +180,8 @@ suite('d2l-hm-filter-behavior', function() {
 		assert.equal(filterBehavior.filterError, error);
 	});
 
-	test('default implementation of _clearErrors sets filterError to false', () => {
+	test('default implementation of _clearErrors sets filterError to falsy', () => {
 		filterBehavior._clearErrors();
-		assert.isFalse(filterBehavior.filterError);
+		assert.isNotOk(filterBehavior.filterError);
 	});
 });
