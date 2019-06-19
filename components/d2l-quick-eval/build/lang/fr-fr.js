@@ -22,22 +22,22 @@ const LangFrfrImpl = (superClass) => class extends superClass {
 			'failedToFilter': 'Impossible d’appliquer le filtre. Réessayez dans quelques minutes.',
 			'failedToLoadData': 'Impossible de charger les soumissions. Réessayez dans quelques minutes.',
 			'failedToLoadMore': 'Impossible de charger plus de soumissions. Réessayez dans quelques minutes.',
-			'failedToSearch': 'Unable to apply search. Try again in a few minutes.',
+			'failedToSearch': 'Impossible d’appliquer la recherche. Réessayez dans quelques minutes.',
 			'firstName': 'Prénom',
 			'lastName': 'Nom de famille',
 			'loadMore': 'Charger plus',
 			'loading': 'Chargement en cours',
 			'masterTeacher': 'Enseignant',
-			'noCriteriaMatch': 'There are no submissions that match your criteria.',
+			'noCriteriaMatch': 'Aucune soumission ne correspond à vos critères.',
 			'noResults': 'Aucun résultat.',
 			'noSubmissions': 'Aucune soumission ne nécessite votre attention.',
 			'publishAll': 'Publish All',
 			'published': 'Published',
 			'search': 'Rechercher',
 			'searchResultsMore': 'Plus de {num} résultats de recherche',
-			'searchResultsMultiple': '{num} Search Results',
-			'searchResultsSingle': '1 Search Result',
-			'sortBy': 'Sort by {columnName}',
+			'searchResultsMultiple': '{num} résultats de recherche',
+			'searchResultsSingle': '1 résultat de recherche',
+			'sortBy': 'Trier par {columnName}',
 			'submissionDate': 'Date de la soumission',
 			'submissionList': 'Submission List',
 			'submissions': 'Soumissions de devoirs',
@@ -51,4 +51,3 @@ const LangFrfrImpl = (superClass) => class extends superClass {
 };
 
 export const LangFrfr = dedupingMixin(LangFrfrImpl);
-
