@@ -74,11 +74,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			<div class="d2l-quick-eval-activity-list-modifiers">
 				<d2l-hm-filter
 					href="[[filterHref]]"
-					token="[[token]]"
-					on-d2l-hm-filter-filters-loaded="_filtersLoaded"
-					on-d2l-hm-filter-filters-updating="_clearFilterError"
-					on-d2l-hm-filter-filters-updated="_clearFilterError"
-					on-d2l-hm-filter-error="_errorOnFilter">
+					token="[[token]]">
 				</d2l-hm-filter>
 				<d2l-hm-search
 					token="[[token]]"
@@ -113,9 +109,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				<h2 class="d2l-quick-eval-no-criteria-results-heading">[[localize('noResults')]]</h2>
 				<p class="d2l-body-standard">[[localize('noCriteriaMatch')]]</p>
 			</div>
-			<d2l-quick-eval-activities-list 
-				hidden$="[[!_shouldShowActivitiesList(_data, filterApplied, searchCleared)]]" 
-				courses="[[_data]]" 
+			<d2l-quick-eval-activities-list
+				hidden$="[[!_shouldShowActivitiesList(_data, filterApplied, searchCleared)]]"
+				courses="[[_data]]"
 				token="[[token]]"></d2l-quick-eval-activities-list>
 		`;
 
@@ -138,7 +134,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	static get observers() {
 		return [
 			'_loadData(entity)',
-			'_loadFilterAndSearch(entity)'
+			'_loadSearch(entity)'
 		];
 	}
 
@@ -196,8 +192,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		}
 	}
 
-	_loadFilterAndSearch(entity) {
-		this._setFilterHref(entity);
+	_loadSearch(entity) {
 		this._setSearchAction(entity);
 	}
 
