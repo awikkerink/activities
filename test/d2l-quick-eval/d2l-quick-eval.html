@@ -122,10 +122,10 @@
 				test('_numberOfActivitiesToShow starts with default value of 20', function() {
 					assert.equal(20, quickEval._numberOfActivitiesToShow);
 				});
-				[ 
+				[
 					{ hrefKey: 'href', child: 'd2l-quick-eval-submissions', expected: 'newValue' },
 					{ hrefKey: 'submissionsHref', child: 'd2l-quick-eval-submissions', expected: 'newValue'},
-					{ hrefKey: 'activitiesHref', child: 'd2l-quick-eval-activities', expected: 'newValue'} 
+					{ hrefKey: 'activitiesHref', child: 'd2l-quick-eval-activities', expected: 'newValue'}
 				].forEach(function(testCase) {
 					test(`Setting ${testCase.hrefKey} gets passed to the href for ${testCase.child}`, function() {
 						quickEval.href = '';
