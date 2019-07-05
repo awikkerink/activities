@@ -1,5 +1,5 @@
 {
-   "activities" : "Activities",
+   "activities" : "活动",
    "activityName" : "活动名称",
    "assignment" : "作业",
    "caughtUp" : "您已跟上进度！",
@@ -29,16 +29,16 @@
    "published" : "已发布",
    "quiz" : "测验",
    "search" : "搜索",
-   "searchResultsMore" : "{Num}+ 搜索结果",
+   "searchResultsMore" : "{num}+ 搜索结果",
    "searchResultsMultiple" : "LOR 搜索结果",
    "searchResultsSingle" : "个搜索结果",
    "sortBy" : "Sort by {columnName}",
    "submissionDate" : "提交日期",
    "submissionList" : "提交列表",
-   "submissions" : "Submissions",
+   "submissions" : "提交",
    "tableTitle" : "来自各个课程和工具的未评估学员提交的列表",
    "tryAgain" : "请重试",
    "unreadSubmissions" : "{num} 项未读提交",
    "unreadSubmissionsDetail" : "{unread} 项新提交，{resub} 项重新提交",
-   "viewBy" : "View by:"
+   "viewBy" : "查看方式："
 }
