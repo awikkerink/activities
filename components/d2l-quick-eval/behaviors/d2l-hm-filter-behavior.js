@@ -21,7 +21,8 @@ D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviourImpl = {
 			value: false
 		},
 		filterError: {
-			type: Object
+			type: Object,
+			value: null
 		},
 		filtersLoading: {
 			type: Boolean,
