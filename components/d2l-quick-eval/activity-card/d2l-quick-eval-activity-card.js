@@ -28,8 +28,6 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				d2l-quick-eval-activity-card-unread-submissions {
 					width: 7.5rem;
 					height: 3rem;
-					display: flex;
-					justify-content: space-around;
 				}
 				button.d2l-quick-eval-activity-card-item {
 					width: 7.55rem;

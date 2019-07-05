@@ -10,6 +10,8 @@ class D2LQuickEvalActivityCardUnreadSubmissions extends QuickEvalLocalize(Polyme
 				#d2l-quick-eval-activity-card-submissions {
 					text-align: center;
 					align-items: center;
+					display: flex;
+					justify-content: space-around;
 				}
 			</style>
 			<div id="d2l-quick-eval-activity-card-submissions">[[_getNewSubmissionsText(unread, resubmitted)]]</div>
