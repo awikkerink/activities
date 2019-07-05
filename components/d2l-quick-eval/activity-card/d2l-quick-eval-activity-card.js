@@ -154,8 +154,8 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 		this._focused = !this._focused;
 	}
 
-	_showUnreadSubmissions() {
-		return this.unread || this.resubmitted;
+	_showUnreadSubmissions(unread, resubmitted) {
+		return (unread > 0) || (resubmitted > 0);
 	}
 }
 
