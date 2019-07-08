@@ -6,12 +6,19 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 	static get is() { return 'd2l-quick-eval-activities-list'; }
 	static get template() {
 		return html`
-		<ul>
+		<style>
+			.d2l-quick-eval-activities-list-remove-ul-styling {
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+			}
+		</style>
+		<ul class="d2l-quick-eval-activities-list-remove-ul-styling">
 			<dom-repeat items="[[courses]]" as="c">
 				<template>
 					<li>
 						<h3>[[c.name]]</h3>
-						<ul>
+						<ul class="d2l-quick-eval-activities-list-remove-ul-styling">
 							<dom-repeat items="[[c.activities]]" as="a">
 								<template>
 									<li>
