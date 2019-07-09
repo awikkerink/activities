@@ -41,7 +41,13 @@
 			<h3>d2l-quick-eval-toggle-link demo</h3>
 			<demo-snippet>
 				<template strip-whitespace>
+					<p>Submission should be selected when current-selected is invalid</p>
+					<d2l-quick-eval-view-toggle current-selected="invalid"></d2l-quick-eval-view-toggle>
+					<p>Submission should be selected when current-selected is not defined</p>
+					<d2l-quick-eval-view-toggle></d2l-quick-eval-view-toggle>
+					<p>Activties should be selected when current-selected is set to activities</p>
 					<d2l-quick-eval-view-toggle current-selected="activities"></d2l-quick-eval-view-toggle>
+					<p>Submission should be selected when current-selected is set to submissions</p>
 					<d2l-quick-eval-view-toggle current-selected="submissions"></d2l-quick-eval-view-toggle>
 				</template>
 			</demo-snippet>
