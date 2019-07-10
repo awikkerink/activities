@@ -38,6 +38,8 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 					cursor: pointer;
 					display: inline;
 					font-family: inherit;
+			    font-size: .7rem;
+			    font-weight: 700;
 					margin: 0;
 					min-height: calc(2rem + 2px);
 					outline: none;
