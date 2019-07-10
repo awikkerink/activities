@@ -30,7 +30,7 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 					border-width: 1px 1px 1px 0;
 				}
 				:host button {
-					background-color: var(--d2l-color-regolith);
+					background-color: var(--d2l-color-sylvite);
 					border-color: var(--d2l-color-mica);
 					border-style: solid;
 					box-sizing: border-box;
@@ -52,9 +52,12 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 					-moz-user-select: none;
 					-ms-user-select: none;
 				}
-				:host button:hover,
+				:host button:hover {
+					border-color: var(--d2l-color-celestine);
+				}
 				:host button[selected] {
-					background-color: var(--d2l-color-gypsum);
+					background-color: var(--d2l-color-tungsten);
+					color: var(--d2l-color-white);
 				}
 				:host button:focus-within {
 					box-shadow: 0 0 0 4px rgba(0, 111, 191, 0.3);
