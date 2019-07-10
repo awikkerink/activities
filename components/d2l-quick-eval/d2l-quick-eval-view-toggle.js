@@ -61,10 +61,6 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 					background-color: var(--d2l-color-tungsten);
 					color: var(--d2l-color-white);
 				}
-				:host button:focus-within {
-					box-shadow: 0 0 0 4px rgba(0, 111, 191, 0.3);
-					position: relative;
-				}
 			</style>
 			<div>
 				<label id="d2l-quick-eval-view-toggle-label">[[localize('viewBy')]]</label>
