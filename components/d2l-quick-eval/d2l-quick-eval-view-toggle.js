@@ -11,11 +11,11 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 	static get template() {
 		const toggleTemplate = html`
 			<style>
-				.d2l-quick-eval-view-toggle-left,
-				:host(:dir(rtl)) .d2l-quick-eval-view-toggle-right {
+				:host button.d2l-quick-eval-view-toggle-left,
+				:host(:dir(rtl)) :host button.d2l-quick-eval-view-toggle-right {
 					border-top-left-radius: 0.3em;
 					border-bottom-left-radius: 0.3em;
-					border-width: 1px;
+					border-right-color: transparent;
 				}
 				:host button.d2l-quick-eval-view-toggle-left {
 					margin-left: 0.9rem;
@@ -23,16 +23,17 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 				:host(:dir(rtl)) button.d2l-quick-eval-view-toggle-left {
 					margin-right: 0.9rem;
 				}
-				.d2l-quick-eval-view-toggle-right,
-				:host(:dir(rtl)) .d2l-quick-eval-view-toggle-left {
+				:host button.d2l-quick-eval-view-toggle-right,
+				:host(:dir(rtl)) :host button.d2l-quick-eval-view-toggle-left {
 					border-top-right-radius: 0.3em;
 					border-bottom-right-radius: 0.3em;
-					border-width: 1px 1px 1px 0;
+					border-left-color: transparent;
 				}
 				:host button {
 					background-color: var(--d2l-color-sylvite);
 					border-color: var(--d2l-color-mica);
 					border-style: solid;
+					border-width: 1px;
 					box-sizing: border-box;
 					color: var(--d2l-color-ferrite);
 					cursor: pointer;
@@ -55,10 +56,11 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 					-ms-user-select: none;
 				}
 				:host button:hover {
-					border-color: var(--d2l-color-celestine);
+					border: 1px solid var(--d2l-color-celestine) !important;
 				}
 				:host button[selected] {
 					background-color: var(--d2l-color-tungsten);
+					border-color: var(--d2l-color-tungsten);
 					color: var(--d2l-color-white);
 				}
 			</style>
