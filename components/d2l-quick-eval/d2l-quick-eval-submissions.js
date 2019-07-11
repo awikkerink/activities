@@ -6,6 +6,7 @@ import './behaviors/d2l-quick-eval-siren-helper-behavior.js';
 import './d2l-quick-eval-submissions-table.js';
 import './behaviors/d2l-hm-sort-behaviour.js';
 import './behaviors/d2l-hm-filter-behavior.js';
+import './behaviors/d2l-hm-search-behavior.js';
 import 'd2l-common/components/d2l-hm-filter/d2l-hm-filter.js';
 import 'd2l-common/components/d2l-hm-search/d2l-hm-search.js';
 import 'd2l-alert/d2l-alert.js';
@@ -17,7 +18,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior,
 		D2L.PolymerBehaviors.QuickEval.D2LHMSortBehaviour,
 		D2L.PolymerBehaviors.QuickEval.TelemetryBehaviorImpl,
-		D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviour
+		D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviour,
+		D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour
 	],
 	QuickEvalLogging(QuickEvalLocalize(PolymerElement))
 ) {
@@ -62,13 +64,10 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				<d2l-hm-search
 					hidden$="[[!searchEnabled]]"
 					token="[[token]]"
-					search-action="[[_searchAction]]"
+					search-action="[[searchAction]]"
 					placeholder="[[localize('search')]]"
 					result-size="[[_numberOfActivitiesToShow]]"
-					aria-label$="[[localize('search')]]"
-					on-d2l-hm-search-results-loading="_searchResultsLoading"
-					on-d2l-hm-search-results-loaded="_searchResultsLoaded"
-					on-d2l-hm-search-error="_searchError">
+					aria-label$="[[localize('search')]]">
 				</d2l-hm-search>
 			</div>
 			<div class="clear"></div>
@@ -148,10 +147,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				type: Number,
 				computed: '_computeNumberOfActivitiesToShow(_data, _numberOfActivitiesToShow)',
 				value: 20
-			},
-			_searchAction: {
-				type: Object,
-				computed: '_getSearchAction(entity)'
 			},
 			_filterIds: {
 				type: Array,
@@ -426,30 +421,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		}
 	}
 
-	_searchResultsLoading() {
-		this._loading = true;
-		this._clearErrors();
-	}
-
-	_searchResultsLoaded(e) {
-		this.entity = e.detail.results;
-		this._showSearchResultSummary = !e.detail.searchIsCleared;
-		this._searchApplied = !e.detail.searchIsCleared;
-
-		if (this.entity && this.entity.entities) {
-			this._updateSearchResultsCount(this.entity.entities.length);
-		} else {
-			this._updateSearchResultsCount(0);
-		}
-		this._clearErrors();
-	}
-
-	_searchError(e) {
-		this._logError(e.detail.error, { developerMessage: 'Failed to retrieve search results.' });
-		this._loading = false;
-		this._showSearchError = true;
-	}
-
 	_searchResultsMessageEnabled() {
 		return this._showSearchResultSummary && this.searchEnabled;
 	}
@@ -461,10 +432,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 
 	_computeNumberOfActivitiesToShow(data, currentNumberOfActivitiesShown) {
 		return Math.max(data.length, currentNumberOfActivitiesShown);
-	}
-
-	_getSearchAction(entity) {
-		return this._getAction(entity, 'search');
 	}
 
 	_computeShowLoadMore(_pageNextHref, _showLoadingSpinner, _showLoadingSkeleton) {

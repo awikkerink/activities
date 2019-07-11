@@ -20,7 +20,7 @@ import './activities-list/d2l-quick-eval-activities-list.js';
  */
 
 class D2LQuickEvalActivities extends mixinBehaviors(
-	[D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior, D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviour, D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour],
+	[D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior, D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviour],
 	QuickEvalLogging(QuickEvalLocalize(PolymerElement))
 ) {
 	static get template() {
@@ -192,7 +192,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	}
 
 	_loadSearch(entity) {
-		this._setSearchAction(entity);
 	}
 
 	_shouldShowNoSubmissions() {
@@ -204,8 +203,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	}
 
 	_activitiesSearchLoaded() {
-		// TODO: add activity DOM card loading here
-		this._searchResultsLoaded();
 	}
 
 	_shouldShowActivitiesList() {
