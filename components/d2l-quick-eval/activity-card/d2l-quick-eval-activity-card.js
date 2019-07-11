@@ -87,7 +87,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						<d2l-quick-eval-activity-card-items visible-on-ancestor>
 							<button class="d2l-quick-eval-activity-card-item"><d2l-icon icon="d2l-tier3:evaluate-all"></d2l-icon>[[localize('evaluateAll')]]</button>
 							<button class="d2l-quick-eval-activity-card-item"><d2l-icon icon="d2l-tier3:view-submission-list"></d2l-icon>[[localize('submissionList')]]</button>
-							<button class="d2l-quick-eval-activity-card-item"><d2l-icon icon="d2l-tier3:publish-all"></d2l-icon>[[localize('publishAll')]]</button>
+							<button class="d2l-quick-eval-activity-card-item" on-click="_publishAll"><d2l-icon icon="d2l-tier3:publish-all"></d2l-icon>[[localize('publishAll')]]</button>
 						</d2l-quick-eval-activity-card-items>
 					</div>
 					<svg width=".7rem" height="1.4rem">
@@ -124,6 +124,10 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				type: Number,
 				value: 0
 			},
+			publishAllHref: {
+				type: String,
+				value: ''
+			},
 			dueDate: {
 				type: String,
 				value: ''
@@ -152,6 +156,14 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 			this.blur();
 		}
 		this._focused = !this._focused;
+	}
+
+	_publishAll() {
+		console.log(this.publishAllHref);
+
+		var request = new XMLHttpRequest();
+		request.open("PUT", this.publishAllHref);
+		request.send();
 	}
 
 	_showUnreadSubmissions(unread, resubmitted) {

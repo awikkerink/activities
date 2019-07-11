@@ -170,6 +170,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				evaluated: evalStatus.evaluated,
 				unread: evalStatus.unread,
 				resubmitted: evalStatus.resubmitted,
+				publishAllHref: evalStatus.publishAllHref,
 				key: this._getOrgHref(activity),
 				dueDate: this._getActivityDueDate(activity),
 				activityType: this._getActivityType(activity),
