@@ -74,13 +74,13 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			<d2l-alert type="critical" hidden$="[[!filterError]]" id="d2l-quick-eval-filter-error-alert">
 				[[localize('failedToFilter')]]
 			</d2l-alert>
-			<d2l-alert type="critical" hidden$="[[!_showSearchError]]" id="d2l-quick-eval-search-error-alert">
+			<d2l-alert type="critical" hidden$="[[!searchError]]" id="d2l-quick-eval-search-error-alert">
 				[[localize('failedToSearch')]]
 			</d2l-alert>
 			<d2l-quick-eval-search-results-summary-container
 				search-results-count="[[_searchResultsCount]]"
 				more-results="[[_moreSearchResults]]"
-				hidden$="[[!_searchResultsMessageEnabled(_showSearchResultSummary, searchEnabled)]]"
+				hidden$="[[!_searchResultsMessageEnabled(searchApplied, searchEnabled)]]"
 				on-d2l-quick-eval-search-results-summary-container-clear-search="_clearSearchResults">
 			</d2l-quick-eval-search-results-summary-container>
 			<d2l-quick-eval-submissions-table
@@ -166,10 +166,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				reflectToAttribute: true
 			},
 			_showSearchResultSummary: {
-				type: Boolean,
-				value: false
-			},
-			_showSearchError: {
 				type: Boolean,
 				value: false
 			},
@@ -407,7 +403,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 
 	// @override - do not change the name
 	_clearErrors() {
-		this._showSearchError = false;
+		this.searchError = false;
 		this.filterError = null;
 	}
 
@@ -422,7 +418,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	}
 
 	_searchResultsMessageEnabled() {
-		return this._showSearchResultSummary && this.searchEnabled;
+		return this.searchApplied && this.searchEnabled;
 	}
 
 	_clearSearchResults() {
