@@ -159,8 +159,6 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 	}
 
 	_publishAll() {
-		console.log(this.publishAllHref);
-
 		var request = new XMLHttpRequest();
 		request.open("PUT", this.publishAllHref);
 		request.send();
