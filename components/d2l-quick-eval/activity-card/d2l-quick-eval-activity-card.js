@@ -1,14 +1,19 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 import {QuickEvalLocalize} from '../QuickEvalLocalize.js';
+import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
 import '../../d2l-activity-name/d2l-activity-name.js';
 import 'd2l-colors/d2l-colors.js';
 import 'd2l-icons/d2l-icon.js';
 import 'd2l-icons/tier3-icons.js';
 import 'd2l-polymer-behaviors/d2l-visible-on-ancestor-behavior.js';
+import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import './d2l-quick-eval-activity-card-items.js';
 import './d2l-quick-eval-activity-card-unread-submissions.js';
 
-class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
+class D2LQuickEvalActivityCard extends mixinBehaviors(
+	[D2L.PolymerBehaviors.Siren.SirenActionBehavior],
+	QuickEvalLocalize(PolymerElement)
+) {
 	static get is() { return 'd2l-quick-eval-activity-card'; }
 	static get template() {
 		return html`
@@ -124,9 +129,8 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				type: Number,
 				value: 0
 			},
-			publishAllHref: {
-				type: String,
-				value: ''
+			publishAll: {
+				type: Object
 			},
 			dueDate: {
 				type: String,
@@ -159,9 +163,9 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 	}
 
 	_publishAll() {
-		var request = new XMLHttpRequest();
-		request.open("PUT", this.publishAllHref);
-		request.send();
+		console.log(this.publishAll);
+
+		this.performSirenAction(this.publishAll);
 	}
 
 	_showUnreadSubmissions(unread, resubmitted) {

@@ -83,10 +83,10 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 				if (e && e.entity && e.entity.properties) {
 					const p = e.entity.properties;
 
-					let publishAllHref = '';
+					let publishAll = {};
+					console.log(e.entity);
 					if (e.entity.hasActionByName('publish-all-feedback')) {
-						const publishAll = e.entity.getActionByName('publish-all-feedback');
-						publishAllHref = publishAll.href;
+						publishAll = e.entity.getActionByName('publish-all-feedback');
 					}
 
 					return {
@@ -96,7 +96,7 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 						evaluated: p.evaluated || 0,
 						unread: p.unread || 0,
 						resubmitted: p.resubmitted || 0,
-						publishAllHref: publishAllHref
+						publishAll: publishAll
 					};
 				}
 			});
