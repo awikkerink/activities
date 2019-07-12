@@ -23,10 +23,6 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 			type: Boolean,
 			value: false
 		},
-		searchResultsCount: {
-			type: Number,
-			value: 0
-		},
 		searchLoading: {
 			type: Boolean,
 			value: false

@@ -20,7 +20,11 @@ import './activities-list/d2l-quick-eval-activities-list.js';
  */
 
 class D2LQuickEvalActivities extends mixinBehaviors(
-	[D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior, D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviour],
+	[
+		D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior,
+		D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviour,
+		D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour
+	],
 	QuickEvalLogging(QuickEvalLocalize(PolymerElement))
 ) {
 	static get template() {
@@ -81,9 +85,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					search-action="[[searchAction]]"
 					placeholder="[[localize('search')]]"
 					aria-label$="[[localize('search')]]"
-					on-d2l-hm-search-results-loading="_clearSearchError"
-					on-d2l-hm-search-results-loaded="_activitiesSearchLoaded"
-					on-d2l-hm-search-error="_errorOnSearch">
+					>
 				</d2l-hm-search>
 			</div>
 			<div class="clear"></div>
@@ -134,7 +136,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	static get observers() {
 		return [
 			'_loadData(entity)',
-			'_loadSearch(entity)'
 		];
 	}
 
@@ -150,6 +151,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			} else {
 				this._data = [];
 			}
+			this._updateSearchResultsCount(this._data);
+			this._clearErrors();
 
 		} catch (e) {
 			this._logError(e, {developerMessage: 'Unable to load activities from entity.'});
@@ -191,7 +194,20 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		}
 	}
 
-	_loadSearch(entity) {
+	// @override - do not change the name
+	_clearErrors() {
+		this.searchError = false;
+		this.filterError = null;
+	}
+
+	_clearSearchResults() {
+		const search = this.shadowRoot.querySelector('d2l-hm-search');
+		search.clearSearch();
+	}
+
+	_updateSearchResultsCount(courses) {
+		this.searchResultsCount = courses.reduce(
+			(accumulator,course)=>accumulator+course.activities.length,0);
 	}
 
 	_shouldShowNoSubmissions() {
@@ -200,9 +216,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 	_shouldShowNoCriteriaResults() {
 		return !(this._data.length) && (this.filterApplied || this.searchApplied);
-	}
-
-	_activitiesSearchLoaded() {
 	}
 
 	_shouldShowActivitiesList() {
