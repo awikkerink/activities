@@ -165,10 +165,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				value: false,
 				reflectToAttribute: true
 			},
-			_showSearchResultSummary: {
-				type: Boolean,
-				value: false
-			},
 			_pageNextHref: {
 				type: String,
 			},
@@ -185,15 +181,11 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			},
 			_showNoSubmissions: {
 				type: Boolean,
-				computed: '_computeShowNoSubmissions(_data, _loading, _loadingMore, _health, _filterApplied, _searchApplied)'
+				computed: '_computeShowNoSubmissions(_data, _loading, _loadingMore, _health, filterApplied, searchApplied)'
 			},
 			_showNoCriteria: {
 				type: Boolean,
-				computed: '_computeShowNoCriteria(_data, _loading, _loadingMore, _health, _filterApplied, _searchApplied)'
-			},
-			_searchApplied: {
-				type: Boolean,
-				value: false
+				computed: '_computeShowNoCriteria(_data, _loading, _loadingMore, _health, filterApplied, searchApplied)'
 			},
 			masterTeacher: {
 				type: Boolean,
@@ -239,11 +231,11 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			if (entity.entities) {
 				const result = await this._parseActivities(entity);
 				this._data = result;
-				this._updateSearchResultsCount(this._data.length);
 			} else {
 				this._data = [];
 				this._pageNextHref = undefined;
 			}
+			this._updateSearchResultsCount(this._data.length);
 			this._clearAlerts();
 		} catch (e) {
 			this._logError(e, {developerMessage: 'Unable to load activities from entity.'});
