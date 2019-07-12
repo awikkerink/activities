@@ -208,7 +208,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			},
 			_showLoadingSkeleton: {
 				type: Boolean,
-				computed: '_computeShowLoadingSkeleton(_loading, filtersLoading)'
+				computed: '_computeShowLoadingSkeleton(_loading, filtersLoading, searchLoading)'
 			}
 		};
 	}
@@ -456,8 +456,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		return _loadingMore;
 	}
 
-	_computeShowLoadingSkeleton(_loading, filtersLoading) {
-		return _loading || filtersLoading;
+	_computeShowLoadingSkeleton(_loading, filtersLoading, searchLoading) {
+		return _loading || filtersLoading || searchLoading;
 	}
 
 	ready() {

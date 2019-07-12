@@ -57,6 +57,7 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 	onSearchResultsLoaded: function(e) {
 		this.entity = e.detail.results;
 		this.searchApplied = !e.detail.searchIsCleared;
+		this.searchLoading = false;
 		this._clearErrors();
 	},
 
