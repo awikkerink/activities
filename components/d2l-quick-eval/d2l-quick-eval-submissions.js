@@ -217,7 +217,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		return [
 			'_loadData(entity)',
 			'_handleSorts(entity)',
-			'_onFilterErrorChange(filterError)'
+			'_onFilterErrorChange(filterError)',
+			'_onSearchErrorChange(searchError)'
 		];
 	}
 
@@ -449,6 +450,12 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	_onFilterErrorChange(filterError) {
 		if (filterError) {
 			this._logError(filterError.error, { developerMessage: 'Failed to retrieve filter results' });
+		}
+	}
+
+	_onSearchErrorChange(searchError) {
+		if (searchError) {
+			this._logError(searchError.error, { developerMessage: 'Failed to retrieve search results.' });
 		}
 	}
 
