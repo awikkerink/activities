@@ -207,7 +207,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 	_updateSearchResultsCount(courses) {
 		this.searchResultsCount = courses.reduce(
-			(accumulator,course)=>accumulator+course.activities.length,0);
+			(accumulator, course)=> accumulator + course.activities.length, 0);
 	}
 
 	_shouldShowNoSubmissions() {
