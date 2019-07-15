@@ -17,7 +17,10 @@ suite('d2l-quick-eval-activities', function() {
 				evaluated: 24,
 				unread: 25,
 				resubmitted: 26,
-				publishAll: {},
+				publishAll: {
+					'name': 'publish-all-feedback',
+					'href': 'assignment/publish-all-feedback'
+				},
 				dueDate: '2019-03-03T03:03:03.003Z',
 				activityType: 'assignment'
 			},
@@ -31,7 +34,10 @@ suite('d2l-quick-eval-activities', function() {
 				evaluated: 14,
 				unread: 15,
 				resubmitted: 16,
-				publishAll: {},
+				publishAll: {
+					'name': 'publish-all-feedback',
+					'href': 'quiz/publish-all-feedback'
+				},
 				dueDate: '2019-02-02T02:02:02.002Z',
 				activityType: 'quiz'
 			},
@@ -45,7 +51,10 @@ suite('d2l-quick-eval-activities', function() {
 				evaluated: 4,
 				unread: 5,
 				resubmitted: 6,
-				publishAll: {},
+				publishAll: {
+					'name': 'publish-all-feedback',
+					'href': 'topic/publish-all-feedback'
+				},
 				dueDate: '2019-01-01T01:01:01.001Z',
 				activityType: 'discussion'
 			}]
@@ -103,7 +112,23 @@ suite('d2l-quick-eval-activities', function() {
 		function checkData() {
 			if (act._data.length) {
 				assert.equal(act._data.length, expectedData.length);
-				assert.deepEqual(act._data, expectedData);
+
+				for (let i = 0; i < act._data.length; i++) {
+					assert.equal(act._data[0].activities[i].key, expectedData[0].activities[i].key);
+					assert.equal(act._data[0].activities[i].courseName, expectedData[0].activities[i].courseName);
+					assert.equal(act._data[0].activities[i].activityNameHref, expectedData[0].activities[i].activityNameHref);
+					assert.equal(act._data[0].activities[i].assigned, expectedData[0].activities[i].assigned);
+					assert.equal(act._data[0].activities[i].completed, expectedData[0].activities[i].completed);
+					assert.equal(act._data[0].activities[i].published, expectedData[0].activities[i].published);
+					assert.equal(act._data[0].activities[i].evaluated, expectedData[0].activities[i].evaluated);
+					assert.equal(act._data[0].activities[i].unread, expectedData[0].activities[i].unread);
+					assert.equal(act._data[0].activities[i].resubmitted, expectedData[0].activities[i].resubmitted);
+					assert.equal(act._data[0].activities[i].publishAll.name, expectedData[0].activities[i].publishAll.name);
+					assert.equal(act._data[0].activities[i].publishAll.href, expectedData[0].activities[i].publishAll.href);
+					assert.equal(act._data[0].activities[i].dueDate, expectedData[0].activities[i].dueDate);
+					assert.equal(act._data[0].activities[i].activityType, expectedData[0].activities[i].activityType);
+				}
+
 				act.removeEventListener('d2l-siren-entity-changed', checkData);
 				done();
 			}

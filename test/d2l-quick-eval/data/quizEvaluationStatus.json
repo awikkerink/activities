@@ -1,10 +1,20 @@
 {
+	"actions":[
+		{ 
+			"name": "publish-all-feedback",
+			"href": "quiz/publish-all-feedback"
+		}
+	],
 	"properties":{
 		"assigned": 11,
 		"completed": 12,
 		"published": 13,
 		"evaluated": 14,
 		"unread": 15,
-		"resubmitted": 16
+		"resubmitted": 16,
+		"publishAll": { 
+			"name": "publish-all-feedback",
+			"href": "quiz/publish-all-feedback"
+		}
 	}
 }
