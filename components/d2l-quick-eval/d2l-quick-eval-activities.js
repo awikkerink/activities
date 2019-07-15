@@ -149,7 +149,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				this._data = result;
 			} else {
 				this._data = [];
-				this.list._pageNextHref = '';
 			}
 
 		} catch (e) {

@@ -10,11 +10,13 @@ import 'd2l-common/components/d2l-hm-filter/d2l-hm-filter.js';
 import 'd2l-common/components/d2l-hm-search/d2l-hm-search.js';
 import 'd2l-alert/d2l-alert.js';
 import './d2l-quick-eval-search-results-summary-container.js';
+import './behaviors/d2l-quick-eval-telemetry-behavior.js';
 
 class D2LQuickEvalSubmissions extends mixinBehaviors(
 	[
 		D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior,
 		D2L.PolymerBehaviors.QuickEval.D2LHMSortBehaviour,
+		D2L.PolymerBehaviors.QuickEval.TelemetryBehaviorImpl,
 		D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviour
 	],
 	QuickEvalLogging(QuickEvalLocalize(PolymerElement))
@@ -214,6 +216,9 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				type: Boolean,
 				value: false
 			},
+			dataTelemetryEndpoint: {
+				type: String
+			},
 			_showLoadingSpinner: {
 				type: Boolean,
 				computed: '_computeShowLoadingSpinner(_loadingMore)'
@@ -364,7 +369,9 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 
 	_handleSortRequested(evt) {
 		let result;
+		const telemetryData = {};
 		const headerId = evt.detail.headerId;
+		telemetryData.columnName = headerId;
 
 		this._headerColumns.forEach((headerColumn, i) => {
 			headerColumn.headers.forEach((header, j) => {
@@ -375,6 +382,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 
 					const customParams = this._numberOfActivitiesToShow > 0 ? { pageSize: this._numberOfActivitiesToShow } : undefined;
 					result = this._applySortAndFetchData(header.sortClass, descending, customParams);
+					telemetryData.sortDirection = descending ? 'desc' : 'asc';
+					this.logSortEvent(telemetryData);
 				}
 				else {
 					this.set(`_headerColumns.${i}.headers.${j}.sorted`, false);
