@@ -163,8 +163,6 @@ class D2LQuickEvalActivityCard extends mixinBehaviors(
 	}
 
 	_publishAll() {
-		console.log(this.publishAll);
-
 		this.performSirenAction(this.publishAll);
 	}
 

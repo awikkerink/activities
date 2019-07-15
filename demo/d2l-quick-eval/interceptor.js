@@ -8,6 +8,8 @@ function parsePathNoLeadingSlash(input) {
 }
 
 function startMockServer(mappings, debug, delay) {
+	window.D2L.Siren.WhitelistBehavior._testMode(true);
+
 	const oldFetch = window.d2lfetch.fetch.bind(window.d2lfetch);
 	delay = delay || 150;
 

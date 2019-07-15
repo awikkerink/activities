@@ -84,7 +84,6 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 					const p = e.entity.properties;
 
 					let publishAll = {};
-					console.log(e.entity);
 					if (e.entity.hasActionByName('publish-all-feedback')) {
 						publishAll = e.entity.getActionByName('publish-all-feedback');
 					}
