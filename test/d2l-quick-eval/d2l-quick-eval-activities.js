@@ -17,6 +17,7 @@ suite('d2l-quick-eval-activities', function() {
 				evaluated: 24,
 				unread: 25,
 				resubmitted: 26,
+				publishAll: {},
 				dueDate: '2019-03-03T03:03:03.003Z',
 				activityType: 'assignment'
 			},
@@ -30,6 +31,7 @@ suite('d2l-quick-eval-activities', function() {
 				evaluated: 14,
 				unread: 15,
 				resubmitted: 16,
+				publishAll: {},
 				dueDate: '2019-02-02T02:02:02.002Z',
 				activityType: 'quiz'
 			},
@@ -43,6 +45,7 @@ suite('d2l-quick-eval-activities', function() {
 				evaluated: 4,
 				unread: 5,
 				resubmitted: 6,
+				publishAll: {},
 				dueDate: '2019-01-01T01:01:01.001Z',
 				activityType: 'discussion'
 			}]
