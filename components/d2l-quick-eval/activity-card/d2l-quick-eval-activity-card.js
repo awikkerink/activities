@@ -224,9 +224,9 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						</div>
 					</div>
 					<div class="d2l-quick-eval-card-indicator">
-						<svg width=".7rem" height="1.4rem">
-							<circle cx=".35rem" cy=".35rem" r=".25rem" stroke-width=".1rem" class="d2l-quick-eval-activity-card-hovered-off"></circle>
-							<circle cx=".35rem" cy="1.1rem" r=".25rem" stroke-width=".1rem" class="d2l-quick-eval-activity-card-hovered-on"></circle>
+						<svg width="14px" height="28px">
+							<circle cx="7px" cy="7px" r="5px" stroke-width="2px" class="d2l-quick-eval-activity-card-hovered-off"></circle>
+							<circle cx="7px" cy="22px" r="5px" stroke-width="2px" class="d2l-quick-eval-activity-card-hovered-on"></circle>
 						</svg>
 					</div>
 				</div>
