@@ -90,7 +90,6 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				@media (min-width: 900px) {
 					d2l-activity-name {
 						height: 1.2rem;
-						display: block;
 					}
 					.d2l-quick-eval-card {
 						padding: 1.2rem;
@@ -134,7 +133,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						justify-content: flex-end;
 					}
 					.d2l-quick-eval-card-titles {
-						height: 3rem;
+						min-height: 3rem;
 					}
 					.d2l-quick-eval-card-subtitle {
 						font-size: .7rem;
