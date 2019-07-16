@@ -96,7 +96,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				[[localize('failedToSearch')]]
 			</d2l-alert>
 			<d2l-quick-eval-search-results-summary-container
-				search-results-count="[[searchResultsCount]]"
+				search-results-count="[[_searchResultsCount]]"
 				hidden$="[[!searchApplied]]"
 				on-d2l-quick-eval-search-results-summary-container-clear-search="_clearSearchResults">
 			</d2l-quick-eval-search-results-summary-container>
@@ -130,7 +130,11 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			_data: {
 				type: Array,
 				value: []
-			}
+			},
+			_searchResultsCount: {
+				type: Number,
+				value: 0
+			},
 		};
 	}
 	static get observers() {
@@ -206,7 +210,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	}
 
 	_updateSearchResultsCount(courses) {
-		this.searchResultsCount = courses.reduce(
+		this._searchResultsCount = courses.reduce(
 			(accumulator, course)=> accumulator + course.activities.length, 0);
 	}
 
