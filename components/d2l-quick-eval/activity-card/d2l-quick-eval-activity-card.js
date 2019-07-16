@@ -81,9 +81,9 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 					<d2l-quick-eval-activity-card-unread-submissions unread="[[unread]]" resubmitted="[[resubmitted]]" hidden$="[[!_showUnreadSubmissions(unread, resubmitted)]]"></d2l-quick-eval-activity-card-unread-submissions>
 					<div class="d2l-quick-eval-activity-card-items-container">
 						<d2l-quick-eval-activity-card-items>
-							<d2l-meter-radial value="[[completed]]" max="[[assigned]]" percent$="[[_denominatorOver100(assigned)]]" text="[[localize('completed')]]"></d2l-meter-radial>
-							<d2l-meter-radial value="[[evaluated]]" max="[[assigned]]" percent$="[[_denominatorOver100(assigned)]]" text="[[localize('evaluated')]]"></d2l-meter-radial>
-							<d2l-meter-radial value="[[published]]" max="[[assigned]]" percent$="[[_denominatorOver100(assigned)]]" text="[[localize('published')]]"></d2l-meter-radial>
+							<d2l-meter-radial value="[[completed]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('completed')]]"></d2l-meter-radial>
+							<d2l-meter-radial value="[[evaluated]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('evaluated')]]"></d2l-meter-radial>
+							<d2l-meter-radial value="[[published]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('published')]]"></d2l-meter-radial>
 						</d2l-quick-eval-activity-card-items>
 						<d2l-quick-eval-activity-card-items visible-on-ancestor>
 							<button class="d2l-quick-eval-activity-card-item"><d2l-icon icon="d2l-tier3:evaluate-all"></d2l-icon>[[localize('evaluateAll')]]</button>
@@ -159,7 +159,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 		return (unread > 0) || (resubmitted > 0);
 	}
 
-	_denominatorOver100(num) {
+	_denominatorOver99(num) {
 		return num > 99;
 	}
 }
