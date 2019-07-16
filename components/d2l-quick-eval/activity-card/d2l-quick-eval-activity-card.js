@@ -282,6 +282,12 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 		};
 	}
 
+	ready() {
+		super.ready();
+		window.addEventListener("resize", this._onWindowResize.bind(this));	
+		this._onWindowResize();
+	}
+
 	_clicked() {
 		if (this._focused) {
 			this.blur();
@@ -291,6 +297,17 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 
 	_showUnreadSubmissions(unread, resubmitted) {
 		return (unread > 0) || (resubmitted > 0);
+	}
+
+	_onWindowResize() {
+		const width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+		const actions = this.shadowRoot.querySelector('.d2l-quick-eval-card-actions d2l-quick-eval-activity-card-items');
+		if (width >= 900) {
+			actions.setAttribute('visible-on-ancestor', '');
+		} else {
+			actions.removeAttribute('visible-on-ancestor');
+			actions.removeAttribute('d2l-visible-on-ancestor-hide');
+		}
 	}
 }
 
