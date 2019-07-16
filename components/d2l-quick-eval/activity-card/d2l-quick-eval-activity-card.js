@@ -1,19 +1,14 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 import {QuickEvalLocalize} from '../QuickEvalLocalize.js';
-import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
 import '../../d2l-activity-name/d2l-activity-name.js';
 import 'd2l-colors/d2l-colors.js';
 import 'd2l-icons/d2l-icon.js';
 import 'd2l-icons/tier3-icons.js';
 import 'd2l-polymer-behaviors/d2l-visible-on-ancestor-behavior.js';
-import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import './d2l-quick-eval-activity-card-items.js';
 import './d2l-quick-eval-activity-card-unread-submissions.js';
 
-class D2LQuickEvalActivityCard extends mixinBehaviors(
-	[D2L.PolymerBehaviors.Siren.SirenActionBehavior],
-	QuickEvalLocalize(PolymerElement)
-) {
+class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 	static get is() { return 'd2l-quick-eval-activity-card'; }
 	static get template() {
 		return html`
@@ -92,7 +87,7 @@ class D2LQuickEvalActivityCard extends mixinBehaviors(
 						<d2l-quick-eval-activity-card-items visible-on-ancestor>
 							<button class="d2l-quick-eval-activity-card-item"><d2l-icon icon="d2l-tier3:evaluate-all"></d2l-icon>[[localize('evaluateAll')]]</button>
 							<button class="d2l-quick-eval-activity-card-item"><d2l-icon icon="d2l-tier3:view-submission-list"></d2l-icon>[[localize('submissionList')]]</button>
-							<button class="d2l-quick-eval-activity-card-item" on-click="_publishAll"><d2l-icon icon="d2l-tier3:publish-all"></d2l-icon>[[localize('publishAll')]]</button>
+							<button class="d2l-quick-eval-activity-card-item" on-click="_dispatchPublishAllEvent"><d2l-icon icon="d2l-tier3:publish-all"></d2l-icon>[[localize('publishAll')]]</button>
 						</d2l-quick-eval-activity-card-items>
 					</div>
 					<svg width=".7rem" height="1.4rem">
@@ -129,12 +124,12 @@ class D2LQuickEvalActivityCard extends mixinBehaviors(
 				type: Number,
 				value: 0
 			},
-			publishAll: {
-				type: Object
-			},
 			dueDate: {
 				type: String,
 				value: ''
+			},
+			publishAll: {
+				type: Object
 			},
 			activityNameHref: {
 				type: String,
@@ -162,8 +157,19 @@ class D2LQuickEvalActivityCard extends mixinBehaviors(
 		this._focused = !this._focused;
 	}
 
-	_publishAll() {
-		this.performSirenAction(this.publishAll);
+	_dispatchPublishAllEvent() {
+		this.dispatchEvent(
+			new CustomEvent(
+				'd2l-quick-eval-activity-publish-all',
+				{
+					detail: {
+						publishAllAction: this.publishAll
+					},
+					composed: true,
+					bubbles: true
+				}
+			)
+		);
 	}
 
 	_showUnreadSubmissions(unread, resubmitted) {

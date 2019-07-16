@@ -82,11 +82,7 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 			.then(function(e) {
 				if (e && e.entity && e.entity.properties) {
 					const p = e.entity.properties;
-
-					let publishAll = {};
-					if (e.entity.hasActionByName('publish-all-feedback')) {
-						publishAll = e.entity.getActionByName('publish-all-feedback');
-					}
+					const publishAll = this._getAction(e.entity, 'publish-all-feedback');
 
 					return {
 						assigned: p.assigned || 0,
@@ -98,7 +94,7 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 						publishAll: publishAll
 					};
 				}
-			});
+			}.bind(this));
 	},
 
 	_getUserPromise: function(entity, item) {

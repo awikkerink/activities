@@ -6,6 +6,7 @@ import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
 import 'd2l-alert/d2l-alert.js';
 import 'd2l-common/components/d2l-hm-filter/d2l-hm-filter.js';
 import 'd2l-common/components/d2l-hm-search/d2l-hm-search.js';
+import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import './behaviors/d2l-quick-eval-siren-helper-behavior.js';
 import './behaviors/d2l-hm-filter-behavior.js';
 import './behaviors/d2l-hm-search-behavior.js';
@@ -20,7 +21,11 @@ import './activities-list/d2l-quick-eval-activities-list.js';
  */
 
 class D2LQuickEvalActivities extends mixinBehaviors(
-	[D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior, D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviour, D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour],
+	[	D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior,
+		D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviour,
+		D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour,
+		D2L.PolymerBehaviors.Siren.SirenActionBehavior
+	],
 	QuickEvalLogging(QuickEvalLocalize(PolymerElement))
 ) {
 	static get template() {
@@ -112,7 +117,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			<d2l-quick-eval-activities-list
 				hidden$="[[!_shouldShowActivitiesList(_data, filterApplied, searchCleared)]]"
 				courses="[[_data]]"
-				token="[[token]]"></d2l-quick-eval-activities-list>
+				token="[[token]]"
+				on-d2l-quick-eval-activity-publish-all="_publishAll">
+			</d2l-quick-eval-activities-list>
 		`;
 
 		quickEvalActivitiesTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
@@ -211,6 +218,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 	_shouldShowActivitiesList() {
 		return this._data.length;
+	}
+
+	_publishAll(evt) {
+		this.performSirenAction(evt.detail.publishAllAction);
 	}
 }
 window.customElements.define(D2LQuickEvalActivities.is, D2LQuickEvalActivities);
