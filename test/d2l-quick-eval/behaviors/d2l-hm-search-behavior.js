@@ -10,7 +10,7 @@ import SirenParse from 'siren-parser';
 		test('default state is correct', () => {
 			assert.isNotOk(searchBehavior.searchAction);
 			assert.isFalse(searchBehavior.searchApplied);
-			assert.isFalse(searchBehavior.searchError);
+			assert.isNull(searchBehavior.searchError);
 			assert.isFalse(searchBehavior.searchLoading);
 		});
 		test('properly sets searchAction given valid entity', () => {
@@ -59,13 +59,13 @@ import SirenParse from 'siren-parser';
 			assert.isTrue(searchBehavior.searchApplied);
 			assert.isFalse(searchBehavior.searchLoading);
 			assert.equal(results, searchBehavior.entity);
-			assert.isFalse(searchBehavior.searchError);
+			assert.isNull(searchBehavior.searchError);
 		});
 
 		test('_clearErrors sets searchError to false', () => {
 			searchBehavior.searchError = true;
 			searchBehavior._clearErrors();
-			assert.isFalse(searchBehavior.searchError);
+			assert.isNull(searchBehavior.searchError);
 		});
 
 		test('d2l-hm-search-error sets searchError correctly', () => {

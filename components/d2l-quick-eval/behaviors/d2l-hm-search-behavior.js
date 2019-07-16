@@ -20,8 +20,8 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 			value: false
 		},
 		searchError: {
-			type: Boolean,
-			value: false
+			type: Object,
+			value: null
 		},
 		searchLoading: {
 			type: Boolean,
@@ -63,7 +63,7 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 	},
 
 	_clearErrors: function() {
-		this.searchError = false;
+		this.searchError = null;
 	},
 };
 
