@@ -221,8 +221,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	}
 
 	_publishAll(evt) {
-		if (evt.detail.publishAllAction) {
-			this.performSirenAction(evt.detail.publishAllAction);
+		if (evt.detail.publishAll) {
+			this.performSirenAction(evt.detail.publishAll);
 		}
 	}
 }

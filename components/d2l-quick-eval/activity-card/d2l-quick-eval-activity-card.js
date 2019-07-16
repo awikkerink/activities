@@ -163,7 +163,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				'd2l-quick-eval-activity-publish-all',
 				{
 					detail: {
-						publishAllAction: this.publishAll
+						publishAll: this.publishAll
 					},
 					composed: true,
 					bubbles: true
