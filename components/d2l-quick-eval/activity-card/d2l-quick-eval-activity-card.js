@@ -284,7 +284,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 
 	ready() {
 		super.ready();
-		window.addEventListener("resize", this._onWindowResize.bind(this));	
+		window.addEventListener('resize', this._onWindowResize.bind(this));
 		this._onWindowResize();
 	}
 
