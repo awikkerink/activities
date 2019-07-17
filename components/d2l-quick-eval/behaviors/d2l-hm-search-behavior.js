@@ -1,3 +1,5 @@
+import './d2l-siren-helper-behavior.js';
+
 window.D2L = window.D2L || {};
 window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
 window.D2L.PolymerBehaviors.QuickEval = window.D2L.PolymerBehaviors.QuickEval || {};
@@ -10,57 +12,63 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 
 	properties: {
 		searchAction: {
-			type: Object
+			type: Object,
+			computed: '_computeSearchAction(entity)'
 		},
 		searchApplied: {
 			type: Boolean,
 			value: false
 		},
 		searchError: {
+			type: Object,
+			value: null
+		},
+		searchLoading: {
 			type: Boolean,
 			value: false
-		},
-		searchResultsCount: {
-			type: Number,
-			value: 0
 		}
 	},
 
-	_setSearchAction: function(entity) {
-		const search = 'search';
-		if (entity && entity.hasActionByName && entity.hasActionByName(search)) {
-			this.searchAction = entity.getActionByName(search);
-		} else {
-			this.searchAction = null;
-		}
+	attached: function() {
+		this.addEventListener('d2l-hm-search-results-loading', this.onSearchResultsLoading);
+		this.addEventListener('d2l-hm-search-results-loaded', this.onSearchResultsLoaded);
+		this.addEventListener('d2l-hm-search-error', this.onSearchError);
 	},
 
-	_clearSearchError: function() {
-		this.searchError = false;
+	detached: function() {
+		this.removeEventListener('d2l-hm-search-results-loading', this.onSearchResultsLoading);
+		this.removeEventListener('d2l-hm-search-results-loaded', this.onSearchResultsLoaded);
+		this.removeEventListener('d2l-hm-search-error', this.onSearchError);
 	},
 
-	_searchResultsLoaded: function(e) {
-		const entity = e.detail.results;
+	_computeSearchAction: function(entity) {
+		return this._getAction(entity, 'search');
+	},
+
+	onSearchResultsLoading: function() {
+		this.searchLoading = true;
+		this._clearErrors();
+	},
+
+	onSearchResultsLoaded: function(e) {
+		this.entity = e.detail.results;
 		this.searchApplied = !e.detail.searchIsCleared;
-
-		if (entity && entity.entities) {
-			this.searchResultsCount = entity.entities.length;
-		} else {
-			this.searchResultsCount = 0;
-		}
-		this._clearSearchError();
+		this.searchLoading = false;
+		this._clearErrors();
 	},
 
-	_errorOnSearch: function() {
-		this.searchError = true;
+	onSearchError: function(e) {
+		this.searchLoading = false;
+		this.searchError = e.detail;
 	},
 
-	_clearSearchResults: function() {
-		this.searchApplied = false;
-	}
+	_clearErrors: function() {
+		this.searchError = null;
+	},
 };
 
 /** @polymerBehavior */
 D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour = [
+	D2L.PolymerBehaviors.Siren.D2LSirenHelperBehavior,
 	D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl
 ];
