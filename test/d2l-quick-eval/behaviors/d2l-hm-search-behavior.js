@@ -10,10 +10,10 @@ import SirenParse from 'siren-parser';
 		test('default state is correct', () => {
 			assert.isNotOk(searchBehavior.searchAction);
 			assert.isFalse(searchBehavior.searchApplied);
-			assert.isFalse(searchBehavior.searchError);
-			assert.equal(0, searchBehavior.searchResultsCount);
+			assert.isNull(searchBehavior.searchError);
+			assert.isFalse(searchBehavior.searchLoading);
 		});
-		test('_setSearchAction properly sets searchAction given valid entity', () => {
+		test('properly sets searchAction given valid entity', () => {
 			const entity = {
 				'actions': [
 					{
@@ -23,82 +23,78 @@ import SirenParse from 'siren-parser';
 				]
 			};
 
-			assert.isNotOk(searchBehavior.searchAction);
-			searchBehavior._setSearchAction(SirenParse(entity));
+			const parsedEntity = SirenParse(entity);
+			searchBehavior.entity = parsedEntity;
 			assert.isOk(searchBehavior.searchAction);
+			assert.equal(searchBehavior.searchAction, parsedEntity.actions[0]);
 		});
-		test('_setSearchAction invalidates search action given null entity', () => {
-			const entity = {
-				'actions': [
+
+		test('Properly set searchAction given invalid entity', () => {
+			searchBehavior.entity = null;
+			assert.isNotOk(searchBehavior.searchAction);
+		});
+
+		test('d2l-hm-search-results-loading sets searchLoading to true', () => {
+			searchBehavior.dispatchEvent(
+				new CustomEvent(
+					'd2l-hm-search-results-loading'
+				)
+			);
+			assert.isTrue(searchBehavior.searchLoading);
+		});
+
+		test('d2l-hm-search-results-loaded sets searchLoading to false and entity to results and error to null', () => {
+			const results = ['some', 'arbitrary', 'results'];
+			searchBehavior.dispatchEvent(
+				new CustomEvent(
+					'd2l-hm-search-results-loaded',
 					{
-						'name': 'search',
-						'href': '/not/a/real/url'
+						detail: {
+							results: results,
+							searchIsCleared: false
+						}
 					}
-				]
-			};
-
-			searchBehavior._setSearchAction(SirenParse(entity));
-			assert.isOk(searchBehavior.searchAction);
-
-			searchBehavior._setSearchAction(null);
-			assert.isNotOk(searchBehavior.searchAction);
+				)
+			);
+			assert.isTrue(searchBehavior.searchApplied);
+			assert.isFalse(searchBehavior.searchLoading);
+			assert.equal(results, searchBehavior.entity);
+			assert.isNull(searchBehavior.searchError);
 		});
-		test('_clearSearchError sets searchError to false', () => {
+
+		test('_clearErrors sets searchError to null', () => {
 			searchBehavior.searchError = true;
-			searchBehavior._clearSearchError();
-			assert.isFalse(searchBehavior.searchError);
+			searchBehavior._clearErrors();
+			assert.isNull(searchBehavior.searchError);
 		});
-		test('_searchResultsLoaded properly sets variables when entity is valid', () => {
-			const entity = {
-				'entities': [
+
+		test('d2l-hm-search-error sets searchError correctly', () => {
+			const errorDetail = {error: true};
+			searchBehavior.dispatchEvent(
+				new CustomEvent(
+					'd2l-hm-search-error',
 					{
-						'rel': [],
-						'href': '/1'
-					},
-					{
-						'rel': [],
-						'href': '/2'
-					},
-					{
-						'rel': [],
-						'href': '/3'
+						detail: errorDetail
 					}
-				]
-			};
-
-			const e = {
-				detail: {
-					results: SirenParse(entity),
-					searchIsCleared: false
-				}
-			};
-
-			searchBehavior._searchResultsLoaded(e);
-			assert.isTrue(searchBehavior.searchApplied);
-			assert.equal(3, searchBehavior.searchResultsCount);
-			assert.isFalse(searchBehavior.searchError);
+				)
+			);
+			assert.isFalse(searchBehavior.searchLoading);
+			assert.equal(errorDetail, searchBehavior.searchError);
 		});
-		test('_searchResultsLoaded properly sets variables when entity is null', () => {
-			const e = {
-				detail: {
-					results: null,
-					searchIsCleared: false
-				}
-			};
 
-			searchBehavior._searchResultsLoaded(e);
-			assert.isTrue(searchBehavior.searchApplied);
-			assert.equal(0, searchBehavior.searchResultsCount);
-			assert.isFalse(searchBehavior.searchError);
-		});
-		test('_errorOnSearch sets searchError to true', () => {
-			searchBehavior.searchError = false;
-			searchBehavior._errorOnSearch();
-			assert.isTrue(searchBehavior.searchError);
-		});
-		test('_clearSearchResults sets searchApplied to false', () => {
-			searchBehavior.searchApplied = true;
-			searchBehavior._clearSearchResults();
+		test('searchIsCleared sets searchApplied to false', () => {
+			searchBehavior.dispatchEvent(
+				new CustomEvent(
+					'd2l-hm-search-results-loaded',
+					{
+						detail: {
+							results: [],
+							searchIsCleared: true
+						}
+					}
+				)
+			);
+			assert.isFalse(searchBehavior.searchLoading);
 			assert.isFalse(searchBehavior.searchApplied);
 		});
 	});
