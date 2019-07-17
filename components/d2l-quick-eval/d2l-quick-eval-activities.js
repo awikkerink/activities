@@ -6,7 +6,6 @@ import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
 import 'd2l-alert/d2l-alert.js';
 import 'd2l-common/components/d2l-hm-filter/d2l-hm-filter.js';
 import 'd2l-common/components/d2l-hm-search/d2l-hm-search.js';
-import 'd2l-polymer-siren-behaviors/store/siren-action-behavior.js';
 import './behaviors/d2l-quick-eval-siren-helper-behavior.js';
 import './behaviors/d2l-hm-filter-behavior.js';
 import './behaviors/d2l-hm-search-behavior.js';
@@ -23,8 +22,7 @@ import './activities-list/d2l-quick-eval-activities-list.js';
 class D2LQuickEvalActivities extends mixinBehaviors(
 	[	D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior,
 		D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviour,
-		D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour,
-		D2L.PolymerBehaviors.Siren.SirenActionBehavior
+		D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour
 	],
 	QuickEvalLogging(QuickEvalLocalize(PolymerElement))
 ) {
