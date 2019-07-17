@@ -217,7 +217,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 									</button>
 								</div>
 								<div>
-									<button class="d2l-quick-eval-activity-card-item">
+									<button class="d2l-quick-eval-activity-card-item" on-click="_dispatchPublishAllEvent">
 										<d2l-icon icon="d2l-tier3:publish-all"></d2l-icon>[[localize('publishAll')]]
 									</button>
 								</div>
@@ -264,6 +264,9 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				type: String,
 				value: ''
 			},
+			publishAll: {
+				type: Object
+			},
 			activityNameHref: {
 				type: String,
 				value: ''
@@ -294,6 +297,21 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 			this.blur();
 		}
 		this._focused = !this._focused;
+	}
+
+	_dispatchPublishAllEvent() {
+		this.dispatchEvent(
+			new CustomEvent(
+				'd2l-quick-eval-activity-publish-all',
+				{
+					detail: {
+						publishAll: this.publishAll
+					},
+					composed: true,
+					bubbles: true
+				}
+			)
+		);
 	}
 
 	_showUnreadSubmissions(unread, resubmitted) {
