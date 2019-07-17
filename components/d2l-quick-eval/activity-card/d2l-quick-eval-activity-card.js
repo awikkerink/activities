@@ -309,7 +309,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 			actions.removeAttribute('visible-on-ancestor');
 			actions.removeAttribute('d2l-visible-on-ancestor-hide');
 		}
-  }
+ 	}
 
 	_denominatorOver99(num) {
 		return num > 99;
