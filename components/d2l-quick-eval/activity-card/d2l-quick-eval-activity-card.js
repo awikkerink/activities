@@ -15,7 +15,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 		return html`
 			<style include="d2l-visible-on-ancestor-styles">
 				d2l-activity-name {
-					height: .9rem;
+					min-height: .9rem;
 				}
 				.d2l-quick-eval-card {
 					padding-bottom: .9rem;
