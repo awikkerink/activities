@@ -43,7 +43,7 @@ import SirenParse from 'siren-parser';
 			assert.isTrue(searchBehavior.searchLoading);
 		});
 
-		test('d2l-hm-search-results-loaded sets searchLoading to false and entity to results and error to false', () => {
+		test('d2l-hm-search-results-loaded sets searchLoading to false and entity to results and error to null', () => {
 			const results = ['some', 'arbitrary', 'results'];
 			searchBehavior.dispatchEvent(
 				new CustomEvent(
@@ -62,7 +62,7 @@ import SirenParse from 'siren-parser';
 			assert.isNull(searchBehavior.searchError);
 		});
 
-		test('_clearErrors sets searchError to false', () => {
+		test('_clearErrors sets searchError to null', () => {
 			searchBehavior.searchError = true;
 			searchBehavior._clearErrors();
 			assert.isNull(searchBehavior.searchError);
