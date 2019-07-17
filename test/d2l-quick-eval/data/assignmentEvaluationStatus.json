@@ -1,10 +1,20 @@
 {
+	"actions":[
+		{ 
+			"name": "publish-all-feedback",
+			"href": "assignment/publish-all-feedback"
+		}
+	],
 	"properties":{
 		"assigned": 21,
 		"completed": 22,
 		"published": 23,
 		"evaluated": 24,
 		"unread": 25,
-		"resubmitted": 26
+		"resubmitted": 26,
+    	"publishAll": {
+			"name":"publish-all-feedback",
+			"href":"assignment/publish-all-feedback"
+		}
 	}
 }
