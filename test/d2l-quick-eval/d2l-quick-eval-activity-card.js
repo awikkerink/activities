@@ -17,7 +17,7 @@
 		});
 
 		test('_computeFormattedDate works as intended when activity has valid dueDate', function() {
-			const dueDate = '2012-09-01T17:00:00.000Z';
+			const dueDate = '2012-09-01T13:00:00.000';
 			const expectedFormattedDate = '9/1/2012 1:00 PM';
 
 			assert.equal(qeActivityCard._computeFormattedDate(dueDate), expectedFormattedDate);
