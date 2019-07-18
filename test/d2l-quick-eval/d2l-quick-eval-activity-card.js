@@ -1,19 +1,33 @@
 (function() {
-	let toggle;
-	suite('d2l-quick-eval-view-toggle', function() {
+	let qeActivityCard;
+	suite('d2l-quick-eval-activity-card', function() {
 		setup(function() {
-			toggle = fixture('basic');
+			qeActivityCard = fixture('basic');
 		});
 
 		test('instantiating the element works', function() {
-			assert.equal(toggle.tagName.toLowerCase(), 'd2l-quick-eval-activity-card');
+			assert.equal(qeActivityCard.tagName.toLowerCase(), 'd2l-quick-eval-activity-card');
 		});
 
 		test('_denominatorOver99 works', function() {
-			assert.isFalse(toggle._denominatorOver99(50));
-			assert.isFalse(toggle._denominatorOver99(99));
-			assert.isTrue(toggle._denominatorOver99(100));
-			assert.isTrue(toggle._denominatorOver99(200));
+			assert.isFalse(qeActivityCard._denominatorOver99(50));
+			assert.isFalse(qeActivityCard._denominatorOver99(99));
+			assert.isTrue(qeActivityCard._denominatorOver99(100));
+			assert.isTrue(qeActivityCard._denominatorOver99(200));
+		});
+
+		test('_computeFormattedDate works as intended when activity has valid dueDate', function() {
+			const dueDate = '2012-09-01T17:00:00.000Z';
+			const expectedFormattedDate = '9/1/2012 1:00 PM';
+
+			assert.equal(qeActivityCard._computeFormattedDate(dueDate), expectedFormattedDate);
+		});
+
+		test('_computeFormattedDate works as intended when activity does not have dueDate', function() {
+			const dueDate = '';
+			const expectedFormattedDate = '';
+
+			assert.equal(qeActivityCard._computeFormattedDate(dueDate), expectedFormattedDate);
 		});
 	});
 })();
