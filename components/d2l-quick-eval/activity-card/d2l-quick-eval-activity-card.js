@@ -189,7 +189,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 			<div class="d2l-quick-eval-card d2l-visible-on-ancestor-target" on-click="_clicked" tabindex="-1">
 				<div class="d2l-quick-eval-card-titles">
 					<d2l-activity-name href="[[activityNameHref]]" token="[[token]]"></d2l-activity-name>
-					<div class="d2l-quick-eval-card-subtitle"><span>[[activityType]]</span> <span hidden$="[[!dueDate]]"> &bull; [[localize('due', 'date', dueDate)]]</span></div>
+					<div class="d2l-quick-eval-card-subtitle"><span>[[activityType]]</span> <span hidden$="[[!formattedDueDate]]"> &bull; [[localize('due', 'date', formattedDueDate)]]</span></div>
 				</div>
 				<div class="d2l-quick-eval-card-right">
 					<div class="d2l-quick-eval-activity-card-items-container">
@@ -264,6 +264,10 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				type: String,
 				value: ''
 			},
+			formattedDueDate: {
+				type: String,
+				computed: '_computeFormattedDueDate(dueDate)'
+			},
 			publishAll: {
 				type: Object
 			},
@@ -331,6 +335,13 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 
 	_denominatorOver99(num) {
 		return num > 99;
+	}
+
+	_computeFormattedDueDate(dueDate) {
+		if (dueDate) {
+			return this.formatDateTime(new Date(dueDate));
+		}
+		return '';
 	}
 }
 
