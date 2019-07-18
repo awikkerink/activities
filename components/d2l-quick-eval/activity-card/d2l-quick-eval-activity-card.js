@@ -266,7 +266,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 			},
 			formattedDueDate: {
 				type: String,
-				computed: '_computeFormattedDate(dueDate)'
+				computed: '_computeFormattedDueDate(dueDate)'
 			},
 			publishAll: {
 				type: Object
@@ -337,7 +337,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 		return num > 99;
 	}
 
-	_computeFormattedDate(dueDate) {
+	_computeFormattedDueDate(dueDate) {
 		if (dueDate) {
 			return this.formatDateTime(new Date(dueDate));
 		}

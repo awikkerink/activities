@@ -16,18 +16,27 @@
 			assert.isTrue(qeActivityCard._denominatorOver99(200));
 		});
 
-		test('_computeFormattedDate works as intended when activity has valid dueDate', function() {
+		test('_computeFormattedDueDate works as intended when activity has valid dueDate', function() {
 			const dueDate = '2012-09-01T13:00:00.000';
 			const expectedFormattedDate = '9/1/2012 1:00 PM';
 
-			assert.equal(qeActivityCard._computeFormattedDate(dueDate), expectedFormattedDate);
+			assert.equal(qeActivityCard._computeFormattedDueDate(dueDate), expectedFormattedDate);
 		});
 
-		test('_computeFormattedDate works as intended when activity does not have dueDate', function() {
+		test('_computeFormattedDueDate works as intended when activity does not have dueDate', function() {
 			const dueDate = '';
 			const expectedFormattedDate = '';
 
-			assert.equal(qeActivityCard._computeFormattedDate(dueDate), expectedFormattedDate);
+			assert.equal(qeActivityCard._computeFormattedDueDate(dueDate), expectedFormattedDate);
+		});
+
+		test('when dueDate changes, formattedDueDate also changes', function() {
+			let dueDate = '';
+			assert.equal(qeActivityCard._computeFormattedDueDate(dueDate), dueDate);
+
+			dueDate = '2016-03-07T00:20:00.000';
+			const expectedFormattedDate = '3/7/2016 12:20 AM';
+			assert.equal(qeActivityCard._computeFormattedDueDate(dueDate), expectedFormattedDate);
 		});
 	});
 })();
