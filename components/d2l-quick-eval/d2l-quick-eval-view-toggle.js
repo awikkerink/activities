@@ -62,7 +62,7 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 					border: 1px solid var(--d2l-color-celestine) !important;
 				}
 				:host button:focus {
-					background-color: #e6eaf0;
+					background-color: var(--d2l-color-gypsum);
 				}
 				:host button.d2l-quick-eval-view-toggle-left[selected], :host button.d2l-quick-eval-view-toggle-right[selected] {
 					background-color: var(--d2l-color-tungsten);
