@@ -46,12 +46,15 @@ const LangDeImpl = (superClass) => class extends superClass {
 			'submissions': 'Abgaben',
 			'tableTitle': 'Liste nicht bewerteter Abgaben von Lernern in allen Kursen und Tools',
 			'tryAgain': 'Erneut versuchen',
-			'unreadSubmissions': '{num} ungelesene Abgaben',
-			'unreadSubmissionsDetail': '{ungelesen} neue, {resub} erneute Abgaben',
+			'newSubmissions': '{num} new submissions',
+			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
+			'newPosts': '{num} new posts',
+			'newPostDetails': '{newNum} new, {resub} reposts',
+			'newAttempts': '{num} new attempts',
+			'newAttemptsDetails': '{newNum} new',
 			'viewBy': 'Anzeigen nach:'
 		};
 	}
 };
 
 export const LangDe = dedupingMixin(LangDeImpl);
-

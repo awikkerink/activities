@@ -46,12 +46,15 @@ const LangArImpl = (superClass) => class extends superClass {
 			'submissions': 'الإرسالات',
 			'tableTitle': 'قائمة بعمليات إرسال المتعلّم غير المقيّمة من المقررات التعليمية والأدوات',
 			'tryAgain': 'المحاولة مرة أخرى',
-			'unreadSubmissions': '{num} من الإرسالات غير المقروءة',
-			'unreadSubmissionsDetail': '{unread} من الإرسالات الجديدة، {resub} من عمليات إعادة الإرسال',
+			'newSubmissions': '{num} new submissions',
+			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
+			'newPosts': '{num} new posts',
+			'newPostDetails': '{newNum} new, {resub} reposts',
+			'newAttempts': '{num} new attempts',
+			'newAttemptsDetails': '{newNum} new',
 			'viewBy': 'عرض حسب:'
 		};
 	}
 };
 
 export const LangAr = dedupingMixin(LangArImpl);
-

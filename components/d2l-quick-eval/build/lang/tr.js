@@ -46,12 +46,15 @@ const LangTrImpl = (superClass) => class extends superClass {
 			'submissions': 'Gönderimler',
 			'tableTitle': 'Dersler ve araçlar genelinde değerlendirilmemiş Öğrenci gönderilerinin listesi',
 			'tryAgain': 'Tekrar Dene',
-			'unreadSubmissions': '{num} okunmamış gönderim',
-			'unreadSubmissionsDetail': '{unread} yeni, {resub} yeniden gönderim',
+			'newSubmissions': '{num} new submissions',
+			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
+			'newPosts': '{num} new posts',
+			'newPostDetails': '{newNum} new, {resub} reposts',
+			'newAttempts': '{num} new attempts',
+			'newAttemptsDetails': '{newNum} new',
 			'viewBy': 'Görüntüleme ölçütü:'
 		};
 	}
 };
 
 export const LangTr = dedupingMixin(LangTrImpl);
-

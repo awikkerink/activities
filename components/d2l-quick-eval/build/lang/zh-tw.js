@@ -46,12 +46,15 @@ const LangZhtwImpl = (superClass) => class extends superClass {
 			'submissions': '提交項目',
 			'tableTitle': '此清單包含所有課程和工具中未評估的學習者提交項目',
 			'tryAgain': '再試一次',
-			'unreadSubmissions': '{num} 個未讀取的提交項目',
-			'unreadSubmissionsDetail': '{unread} 個新項目，{resub} 個重新提交的項目',
+			'newSubmissions': '{num} new submissions',
+			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
+			'newPosts': '{num} new posts',
+			'newPostDetails': '{newNum} new, {resub} reposts',
+			'newAttempts': '{num} new attempts',
+			'newAttemptsDetails': '{newNum} new',
 			'viewBy': '檢視依據：'
 		};
 	}
 };
 
 export const LangZhtw = dedupingMixin(LangZhtwImpl);
-

@@ -46,12 +46,15 @@ const LangNlImpl = (superClass) => class extends superClass {
 			'submissions': 'Indieningen',
 			'tableTitle': 'Lijst van niet-geëvalueerde indieningen via postvak van cursisten van alle cursussen en tools',
 			'tryAgain': 'Probeer het opnieuw',
-			'unreadSubmissions': '{num} ongelezen indieningen via postvak',
-			'unreadSubmissionsDetail': '{unread} nieuw, {resub} herindieningen via postvak',
+			'newSubmissions': '{num} new submissions',
+			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
+			'newPosts': '{num} new posts',
+			'newPostDetails': '{newNum} new, {resub} reposts',
+			'newAttempts': '{num} new attempts',
+			'newAttemptsDetails': '{newNum} new',
 			'viewBy': 'Weergeven op:'
 		};
 	}
 };
 
 export const LangNl = dedupingMixin(LangNlImpl);
-

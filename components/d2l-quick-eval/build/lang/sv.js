@@ -46,12 +46,15 @@ const LangSvImpl = (superClass) => class extends superClass {
 			'submissions': 'inlämningar',
 			'tableTitle': 'Lista över ej utvärderade elevinlämningar från kurser och verktyg',
 			'tryAgain': 'Försök på nytt',
-			'unreadSubmissions': '{num} olästa inlämningar',
-			'unreadSubmissionsDetail': '{unread} nya, {resub} återinlämningar',
+			'newSubmissions': '{num} new submissions',
+			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
+			'newPosts': '{num} new posts',
+			'newPostDetails': '{newNum} new, {resub} reposts',
+			'newAttempts': '{num} new attempts',
+			'newAttemptsDetails': '{newNum} new',
 			'viewBy': 'Visa enligt:'
 		};
 	}
 };
 
 export const LangSv = dedupingMixin(LangSvImpl);
-

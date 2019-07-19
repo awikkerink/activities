@@ -46,12 +46,15 @@ const LangJaImpl = (superClass) => class extends superClass {
 			'submissions': '送信物',
 			'tableTitle': 'コースやツールをまたいだ、受講者からの未評価の送信物リスト',
 			'tryAgain': 'もう一度試してください',
-			'unreadSubmissions': '{num} 件の未読送信',
-			'unreadSubmissionsDetail': '{unread} 件の新規送信、{resub} 件の再送信',
+			'newSubmissions': '{num} new submissions',
+			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
+			'newPosts': '{num} new posts',
+			'newPostDetails': '{newNum} new, {resub} reposts',
+			'newAttempts': '{num} new attempts',
+			'newAttemptsDetails': '{newNum} new',
 			'viewBy': '表示対象:'
 		};
 	}
 };
 
 export const LangJa = dedupingMixin(LangJaImpl);
-

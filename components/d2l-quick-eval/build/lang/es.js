@@ -46,12 +46,15 @@ const LangEsImpl = (superClass) => class extends superClass {
 			'submissions': 'Materiales enviados',
 			'tableTitle': 'Lista de envíos no evaluados del estudiante de todos los cursos y herramientas',
 			'tryAgain': 'Volver a intentarlo',
-			'unreadSubmissions': '{num} materiales enviados no leídos',
-			'unreadSubmissionsDetail': '{unread} nuevos, {resub} materiales enviados nuevamente',
+			'newSubmissions': '{num} new submissions',
+			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
+			'newPosts': '{num} new posts',
+			'newPostDetails': '{newNum} new, {resub} reposts',
+			'newAttempts': '{num} new attempts',
+			'newAttemptsDetails': '{newNum} new',
 			'viewBy': 'Ver por:'
 		};
 	}
 };
 
 export const LangEs = dedupingMixin(LangEsImpl);
-

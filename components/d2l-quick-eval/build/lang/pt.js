@@ -46,12 +46,15 @@ const LangPtImpl = (superClass) => class extends superClass {
 			'submissions': 'Envios',
 			'tableTitle': 'Lista de envios de alunos não avaliados de todos os cursos e ferramentas',
 			'tryAgain': 'Tentar novamente',
-			'unreadSubmissions': '{num} envios não lidos',
-			'unreadSubmissionsDetail': '{unread} novos, {resume} reenvios',
+			'newSubmissions': '{num} new submissions',
+			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
+			'newPosts': '{num} new posts',
+			'newPostDetails': '{newNum} new, {resub} reposts',
+			'newAttempts': '{num} new attempts',
+			'newAttemptsDetails': '{newNum} new',
 			'viewBy': 'Exibir por:'
 		};
 	}
 };
 
 export const LangPt = dedupingMixin(LangPtImpl);
-
