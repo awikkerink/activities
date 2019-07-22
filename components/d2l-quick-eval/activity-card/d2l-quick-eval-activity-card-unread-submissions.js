@@ -14,8 +14,8 @@ class D2LQuickEvalActivityCardUnreadSubmissions extends QuickEvalLocalize(Polyme
 					justify-content: space-around;
 				}
 			</style>
-			<div id="d2l-quick-eval-activity-card-submissions">[[_getNewSubmissionsText(unread,resubmitted,activityType)]]</div>
-			<d2l-tooltip for="d2l-quick-eval-activity-card-submissions" position="bottom">[[_getSubmissionTooltipText(unread,resubmitted,activityType)]]</d2l-tooltip>
+			<div id="d2l-quick-eval-activity-card-submissions">[[_getNewSubmissionsText(unread, resubmitted, activityType)]]</div>
+			<d2l-tooltip for="d2l-quick-eval-activity-card-submissions" position="bottom">[[_getSubmissionTooltipText(unread, resubmitted, activityType)]]</d2l-tooltip>
 		`;
 	}
 	static get properties() {
@@ -52,11 +52,11 @@ class D2LQuickEvalActivityCardUnreadSubmissions extends QuickEvalLocalize(Polyme
 		};
 	}
 
-	_getNewSubmissionsText(unread,resubmitted,activityType) {
+	_getNewSubmissionsText(unread, resubmitted, activityType) {
 		return this.localize(this.activityTypeLocalizeNew[activityType], 'num', this.unread + this.resubmitted);
 	}
 
-	_getSubmissionTooltipText(unread,resubmitted,activityType) {
+	_getSubmissionTooltipText(unread, resubmitted, activityType) {
 		return this.localize(this.activityTypeLocalizeDetail[activityType], 'newNum', this.unread, 'resub', this.resubmitted);
 	}
 }
