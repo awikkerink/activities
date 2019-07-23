@@ -1,6 +1,7 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 import {QuickEvalLocalize} from './QuickEvalLocalize.js';
 import 'd2l-colors/d2l-colors.js';
+import 'd2l-fetch/d2l-fetch.js';
 
 /**
  * @customElement
@@ -90,7 +91,10 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 		return {
 			currentSelected: {
 				type: String,
-				observer: '_dispatchSelectionChanged'
+				observer: '_handleSelectionChange'
+			},
+			toggleHref: {
+				type: String
 			},
 			_viewTypes: {
 				type: Object,
@@ -101,6 +105,17 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 			}
 		};
 	}
+
+	ready() {
+		super.ready();
+		if (
+			(this.currentSelected !== this._viewTypes.submissions)
+			&& (this.currentSelected !== this._viewTypes.activities)
+		) {
+			this.currentSelected = this._viewTypes.submissions;
+		}
+	}
+
 	_selectSubmissions() {
 		if (this.currentSelected !== this._viewTypes.submissions) {
 			this.currentSelected = this._viewTypes.submissions;
@@ -114,7 +129,29 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 	_isSelected(view) {
 		return this.currentSelected === view;
 	}
-	_dispatchSelectionChanged(view) {
+	_handleSelectionChange(view, previousView) {
+
+		if (
+			this.toggleHref
+			&& previousView !== null
+			&& previousView !== undefined
+		) {
+			const data = { toggleState: view };
+
+			window.d2lfetch.fetch(
+				new Request(
+					this.toggleHref,
+					{
+						method: 'PUT',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(data)
+					}
+				)
+			);
+		}
+
 		this.dispatchEvent(
 			new CustomEvent(
 				'd2l-quick-eval-view-toggle-changed',

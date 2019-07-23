@@ -11,20 +11,44 @@ class D2LQuickEvalActivityCardItems extends mixinBehaviors([D2L.PolymerBehaviors
 				.d2l-quick-eval-activity-card-items-container {
 					display: flex;
 					align-items: stretch;
+					justify-content: space-between;
 				}
 				::slotted(*) {
-					border-width: 0 1px 0 0;
-					border-style: solid;
-					border-color: var(--d2l-color-tungsten);
 					width: 7.5rem;
 					height: 3rem;
 					text-align: center;
 					display: flex;
 					align-items: center;
 					justify-content: space-around;
+					flex: 1 1 0;
 				}
-				::slotted(*:first-child) {
-					border-left-width: 1px;
+				@media (min-width: 525px) {
+					::slotted(*) {
+						border-width: 0 1px 0 0;
+						border-style: solid;
+						border-color: var(--d2l-color-tungsten);
+					}
+					::slotted(*:last-child) {
+						border-right-width: 0;
+					}
+					:host([small]) ::slotted(*) {
+						border: none;
+					}
+				}
+				@media (min-width: 900px) {
+					:host([small]) ::slotted(*) {
+						border-width: 0 1px 0 0;
+						border-style: solid;
+						border-color: var(--d2l-color-tungsten);
+					}
+					:host([small]) ::slotted(*:first-child),
+					::slotted(*:first-child) {
+						border-left-width: 1px;
+					}
+					:host([small]) ::slotted(*:last-child),
+					::slotted(*:last-child) {
+						border-right-width: 1px;
+					}
 				}
 			</style>
 			<div class="d2l-quick-eval-activity-card-items-container">
