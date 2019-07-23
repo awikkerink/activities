@@ -23,7 +23,7 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 				margin-inline-start: .9rem;
 				min-height: .6rem;
 				line-height: .6rem;
-				font-size: 16px;
+				font-size: .8rem;
 			}
 			@media (min-width: 525px) {
 				h2 {
