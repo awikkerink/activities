@@ -12,7 +12,7 @@ const activityTypeLocalizeDetail = {
 	Assignment: 'newSubmissionDetails',
 	Discussion: 'newPostDetails',
 	Quiz: 'newAttemptsDetails'
-}
+};
 
 class D2LQuickEvalActivityCardUnreadSubmissions extends QuickEvalLocalize(PolymerElement) {
 	static get is() { return 'd2l-quick-eval-activity-card-unread-submissions'; }
@@ -69,14 +69,14 @@ class D2LQuickEvalActivityCardUnreadSubmissions extends QuickEvalLocalize(Polyme
 	}
 
 	_getNewSubmissionsNumber(unread, resubmitted) {
-		return this.unread + this.resubmitted;
+		return unread + resubmitted;
 	}
-	_getNewSubmissionsSubtitle(unread, resubmitted, activityType) {
+	_getNewSubmissionsSubtitle(activityType) {
 		return this.localize(activityTypeLocalizeNew[activityType]);
 	}
 
 	_getSubmissionTooltipText(unread, resubmitted, activityType) {
-		return this.localize(activityTypeLocalizeDetail[activityType], 'newNum', this.unread, 'resub', this.resubmitted);
+		return this.localize(activityTypeLocalizeDetail[activityType], 'newNum', unread, 'resub', resubmitted);
 	}
 }
 
