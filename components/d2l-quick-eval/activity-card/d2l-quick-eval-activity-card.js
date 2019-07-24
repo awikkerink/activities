@@ -24,6 +24,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				}
 				.d2l-quick-eval-card-actions {
 					padding-top: .6rem;
+					order: 3;
 				}
 				.d2l-quick-eval-card-actions div {
 					height: 2.1rem;
@@ -35,6 +36,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 					padding-bottom: .6rem;
 					padding-top: .9rem;
 					border-bottom: 1px solid var(--d2l-color-mica);
+					order: 1;
 				}
 				.d2l-quick-eval-card-meters span {
 					height: 2.7rem;
@@ -48,6 +50,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 					height: 2.1rem;
 					display: flex;
 					justify-content: center;
+					order: 2;
 				}
 
 				@media (min-width: 525px) {
@@ -115,9 +118,13 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						top: 0;
 						right: 0;
 					}
+					:host(:dir(rtl)) d2l-quick-eval-activity-card-items[visible-on-ancestor] {
+						left: 0;
+						right: initial;
+					}
 					.d2l-quick-eval-activity-card-items-container {
 						position: relative;
-						display: block;
+						display: flex;
 					}
 					.d2l-quick-eval-card-meters,
 					.d2l-quick-eval-card-actions {
@@ -125,7 +132,6 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						padding: 0;
 						border: none;
 						width: auto;
-						float: right;
 					}
 					.d2l-quick-eval-card-right {
 						display: flex;
@@ -145,9 +151,9 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						margin-left: 1.5rem;
 					}
 					d2l-quick-eval-activity-card-unread-submissions {
-						float:left;
 						border: none;
 						padding: 0;
+						order: 0;
 					}
 					d2l-quick-eval-activity-card-unread-submissions,
 					.d2l-quick-eval-card-meters span,
@@ -200,9 +206,9 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 							<d2l-meter-radial value="[[published]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('published')]]"></d2l-meter-radial>
 							</d2l-quick-eval-activity-card-items>
 						</div>
-						<d2l-quick-eval-activity-card-unread-submissions 
-							unread="[[unread]]" 
-							resubmitted="[[resubmitted]]" 
+						<d2l-quick-eval-activity-card-unread-submissions
+							unread="[[unread]]"
+							resubmitted="[[resubmitted]]"
 							activity-type="[[activityType]]"
 							hidden$="[[!_showUnreadSubmissions(unread, resubmitted)]]"></d2l-quick-eval-activity-card-unread-submissions>
 						<div class="d2l-quick-eval-card-actions">
