@@ -18,7 +18,7 @@ class D2LQuickEvalActivityCardItems extends mixinBehaviors([D2L.PolymerBehaviors
 					height: 3rem;
 					text-align: center;
 					display: flex;
-					align-items: center;
+					align-items: flex-start;
 					justify-content: space-around;
 					flex: 1 1 0;
 				}
