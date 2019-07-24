@@ -46,11 +46,11 @@ const LangZhImpl = (superClass) => class extends superClass {
 			'submissions': '提交',
 			'tableTitle': '来自各个课程和工具的未评估学员提交的列表',
 			'tryAgain': '请重试',
-			'newSubmissions': '{num} new submissions',
+			'newSubmissions': 'new submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
-			'newPosts': '{num} new posts',
+			'newPosts': 'new posts',
 			'newPostDetails': '{newNum} new, {resub} reposts',
-			'newAttempts': '{num} new attempts',
+			'newAttempts': 'new attempts',
 			'newAttemptsDetails': '{newNum} new',
 			'viewBy': '查看方式：'
 		};
@@ -58,3 +58,4 @@ const LangZhImpl = (superClass) => class extends superClass {
 };
 
 export const LangZh = dedupingMixin(LangZhImpl);
+

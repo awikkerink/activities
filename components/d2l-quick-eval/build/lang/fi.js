@@ -46,11 +46,11 @@ const LangFiImpl = (superClass) => class extends superClass {
 			'submissions': 'Submissions',
 			'tableTitle': 'List of unevaluated Learner submissions from across courses and tools',
 			'tryAgain': 'Try Again',
-			'newSubmissions': '{num} new submissions',
+			'newSubmissions': 'new submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
-			'newPosts': '{num} new posts',
+			'newPosts': 'new posts',
 			'newPostDetails': '{newNum} new, {resub} reposts',
-			'newAttempts': '{num} new attempts',
+			'newAttempts': 'new attempts',
 			'newAttemptsDetails': '{newNum} new',
 			'viewBy': 'View by:'
 		};
@@ -58,3 +58,4 @@ const LangFiImpl = (superClass) => class extends superClass {
 };
 
 export const LangFi = dedupingMixin(LangFiImpl);
+

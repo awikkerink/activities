@@ -46,11 +46,11 @@ const LangDadkImpl = (superClass) => class extends superClass {
 			'submissions': 'Afleveringer',
 			'tableTitle': 'Liste over ikke-evaluerede elevafleveringer på tværs af kurser og værktøjer',
 			'tryAgain': 'Prøv igen',
-			'newSubmissions': '{num} new submissions',
+			'newSubmissions': 'new submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
-			'newPosts': '{num} new posts',
+			'newPosts': 'new posts',
 			'newPostDetails': '{newNum} new, {resub} reposts',
-			'newAttempts': '{num} new attempts',
+			'newAttempts': 'new attempts',
 			'newAttemptsDetails': '{newNum} new',
 			'viewBy': 'Vis efter:'
 		};
@@ -58,3 +58,4 @@ const LangDadkImpl = (superClass) => class extends superClass {
 };
 
 export const LangDadk = dedupingMixin(LangDadkImpl);
+

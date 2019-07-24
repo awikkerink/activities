@@ -46,11 +46,11 @@ const LangJaImpl = (superClass) => class extends superClass {
 			'submissions': '送信物',
 			'tableTitle': 'コースやツールをまたいだ、受講者からの未評価の送信物リスト',
 			'tryAgain': 'もう一度試してください',
-			'newSubmissions': '{num} new submissions',
+			'newSubmissions': 'new submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
-			'newPosts': '{num} new posts',
+			'newPosts': 'new posts',
 			'newPostDetails': '{newNum} new, {resub} reposts',
-			'newAttempts': '{num} new attempts',
+			'newAttempts': 'new attempts',
 			'newAttemptsDetails': '{newNum} new',
 			'viewBy': '表示対象:'
 		};
@@ -58,3 +58,4 @@ const LangJaImpl = (superClass) => class extends superClass {
 };
 
 export const LangJa = dedupingMixin(LangJaImpl);
+
