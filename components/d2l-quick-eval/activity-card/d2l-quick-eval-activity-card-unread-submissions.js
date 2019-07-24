@@ -47,7 +47,7 @@ class D2LQuickEvalActivityCardUnreadSubmissions extends QuickEvalLocalize(Polyme
 			</style>
 			<div id="d2l-quick-eval-activity-card-submissions-container" class="d2l-quick-eval-activity-card-submissions-container">
 				<div class="d2l-quick-eval-activity-card-submissions-number">[[_getNewSubmissionsNumber(unread, resubmitted)]]</div>
-				<div class="d2l-quick-eval-activity-card-submissions-subtitle">[[_getNewSubmissionsSubtitle(unread, resubmitted, activityType)]]</div>
+				<div class="d2l-quick-eval-activity-card-submissions-subtitle">[[_getNewSubmissionsSubtitle(activityType)]]</div>
 			</div>
 			<d2l-tooltip for="d2l-quick-eval-activity-card-submissions-container" position="bottom">[[_getSubmissionTooltipText(unread, resubmitted, activityType)]]</d2l-tooltip>
 		`;
