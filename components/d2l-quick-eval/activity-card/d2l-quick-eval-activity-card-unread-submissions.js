@@ -23,10 +23,11 @@ class D2LQuickEvalActivityCardUnreadSubmissions extends QuickEvalLocalize(Polyme
 						align-items: baseline;
 						display: flex;
 						justify-content: space-around;
-						margin: auto;
+						margin: 0.35rem 0;
 					}
 					.d2l-quick-eval-activity-card-submissions-number {
 						font-size: 1.2rem;
+						margin: 0 0.6rem;
 					}
 					.d2l-quick-eval-activity-card-submissions-subtitle {
 						font-size: 0.6rem;
@@ -39,6 +40,7 @@ class D2LQuickEvalActivityCardUnreadSubmissions extends QuickEvalLocalize(Polyme
 					}
 					.d2l-quick-eval-activity-card-submissions-number {
 						font-size: 1.5rem;
+						margin: 0;
 					}
 					.d2l-quick-eval-activity-card-submissions-subtitle {
 						font-size: 0.7rem;
