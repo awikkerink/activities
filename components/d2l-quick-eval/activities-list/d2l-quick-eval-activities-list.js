@@ -16,11 +16,19 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 			.d2l-quick-eval-activities-list-card-spacer {
 				background: var(--d2l-color-sylvite);
 				height: .3rem;
+				width: 100vw;
+				position: relative;
+				left: 50%;
+				right: 50%;
+				margin-left: -50vw;
+				margin-right: -50vw;
+			}
+			.d2l-quick-eval-activities-list-card-spacer-border {
+				border-top: 1px solid var(--d2l-color-mica);
 			}
 			h2 {
 				margin-bottom: .6rem;
 				margin-top: .9rem;
-				margin-inline-start: .9rem;
 				min-height: .6rem;
 				line-height: .6rem;
 				font-size: .8rem;
@@ -30,7 +38,6 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 					font-size: 1rem;
 					margin-top: 1.2rem;
 					margin-bottom: .6rem;
-					margin-inline-start: 0;
 					min-height: 1rem;
 					line-height: 1rem;
 				}
@@ -65,7 +72,7 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 										activity-type="[[localize(a.activityType)]]"
 										activity-name-href="[[a.activityNameHref]]"
 										token="[[token]]"></d2l-quick-eval-activity-card>
-										<div class="d2l-quick-eval-activities-list-card-spacer"></div>
+										<div class="d2l-quick-eval-activities-list-card-spacer d2l-quick-eval-activities-list-card-spacer-border"></div>
 									</li>
 								</template>
 							</dom-repeat>
