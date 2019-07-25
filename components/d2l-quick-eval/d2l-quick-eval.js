@@ -1,4 +1,5 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
+import {QuickEvalLocalize} from './QuickEvalLocalize.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import './d2l-quick-eval-view-toggle.js';
 import './d2l-quick-eval-activities.js';
@@ -8,7 +9,7 @@ import './d2l-quick-eval-submissions.js';
  * @customElement
  * @polymer
  */
-class D2LQuickEval extends PolymerElement {
+class D2LQuickEval extends  QuickEvalLocalize(PolymerElement) {
 	static get template() {
 		return html`
 			<style>
@@ -26,6 +27,10 @@ class D2LQuickEval extends PolymerElement {
 				.d2l-quick-eval-header {
 					float: left;
 				}
+				:host(:dir(rtl)) d2l-quick-eval-view-toggle,
+				:host(:dir(rtl)) .d2l-quick-eval-header-with-toggle {
+					float: right;
+				}
 				.d2l-quick-eval-header-with-toggle {
 					float: left;
 					padding-bottom: 1.2rem;
@@ -35,7 +40,7 @@ class D2LQuickEval extends PolymerElement {
 				}
 			</style>
 			<template is="dom-if" if="[[headerText]]">
-				<h1 class="d2l-quick-eval-header-with-toggle" hidden$="[[!activitiesViewEnabled]]"">[[headerText]]</h1>
+				<h1 class="d2l-quick-eval-header-with-toggle" hidden$="[[!activitiesViewEnabled]]">[[headerText]]</h1>
 				<h1 class="d2l-quick-eval-header" hidden$="[[activitiesViewEnabled]]"">[[headerText]]</h1>
 			</template>
 			<d2l-quick-eval-view-toggle current-selected="[[toggleState]]" toggle-href="[[toggleHref]]" hidden$="[[!activitiesViewEnabled]]" on-d2l-quick-eval-view-toggle-changed="_toggleView"></d2l-quick-eval-view-toggle>
