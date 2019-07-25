@@ -8,15 +8,24 @@ class D2LQuickEvalActivityCardActionButton extends PolymerElement {
 	static get template() {
 		return html`
 			<style>
+				:host {
+					--d2l-quick-eval-card-button-icon-size: 1.2rem;
+					--d2l-quick-eval-card-button-icon-background-size: 1.5rem;
+					--d2l-quick-eval-card-button-font-size: .6rem;
+					--d2l-quick-eval-card-button-icon-padding: calc(calc(var(--d2l-quick-eval-card-button-icon-background-size) - var(--d2l-quick-eval-card-button-icon-size)) / 2);
+					--d2l-quick-eval-card-button-icon-hover: 0 0 0 var(--d2l-quick-eval-card-button-icon-padding) var(--d2l-color-gypsum);
+					--d2l-quick-eval-card-button-icon-focus-inner: 0 0 0 calc(var(--d2l-quick-eval-card-button-icon-padding) + 2px) white;
+					--d2l-quick-eval-card-button-icon-focus-outer: 0 0 0 calc(var(--d2l-quick-eval-card-button-icon-padding) + 4px) var(--d2l-color-celestine);
+				}
 				:host button {
 					display: flex;
 					flex-direction: column;
 					align-items: center;
 					text-align: center;
 					align-content: center;
-					justify-content: flex-end;
-					font-size: .6rem;
-					line-height: .6rem;
+					justify-content: space-between;
+					font-size: var(--d2l-quick-eval-card-button-font-size);
+					line-height: calc(var(--d2l-quick-eval-card-button-font-size) - .2rem);
 					color: var(--d2l-color-ferrite);
 					background: white;
 					height: 100%;
@@ -25,24 +34,13 @@ class D2LQuickEvalActivityCardActionButton extends PolymerElement {
 					border: none;
 					padding: 0;
 				}
-				:host button span {
-					padding-top: .25rem;
-				}
 				.d2l-quick-eval-activity-card-button-icon {
-					width: 1.5rem;
-					height: 1.5rem;
+					width: var(--d2l-quick-eval-card-button-icon-size);
+					height: var(--d2l-quick-eval-card-button-icon-size);
 					border-radius: .3rem;
 					display: flex;
 					justify-content: center;
 					align-items: center;
-				}
-				.d2l-quick-eval-acivity-card-button-icon-focus {
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					width: 1.6rem;
-					height: 1.6rem;
-					border-radius: .3rem;
 				}
 				:host(:hover) button,
 				:host(:hover) d2l-icon,
@@ -53,44 +51,51 @@ class D2LQuickEvalActivityCardActionButton extends PolymerElement {
 					text-decoration: underline;
 					color: var(--d2l-color-celestine-minus-1);
 				}
-				:host(:hover) .d2l-quick-eval-activity-card-button-icon,
-				:host(:focus) .d2l-quick-eval-activity-card-button-icon,
-				:host(:focus-within) .d2l-quick-eval-activity-card-button-icon {
-					background: var(--d2l-color-gypsum);
+				:host(:hover) .d2l-quick-eval-activity-card-button-icon {
+					background-color: var(--d2l-color-gypsum);
+					box-shadow: var(--d2l-quick-eval-card-button-icon-hover);
 				}
 				:host(:focus) .d2l-quick-eval-activity-card-button-icon,
 				:host(:focus-within) .d2l-quick-eval-activity-card-button-icon {
-					box-shadow: 0 0 0 2px white, 0 0 0 4px var(--d2l-color-celestine);
+					background-color: var(--d2l-color-gypsum);
+					box-shadow: var(--d2l-quick-eval-card-button-icon-hover), var(--d2l-quick-eval-card-button-icon-focus-inner), var(--d2l-quick-eval-card-button-icon-focus-outer)
 				}
 				.d2l-quick-eval-card-button-icon-large {
 					display: none;
 				}
 				@media (min-width: 900px) {
-					:host button span {
-						padding-top: 1rem;
-					}
 					.d2l-quick-eval-card-button-icon-large {
 						display: unset;
 					}
 					.d2l-quick-eval-card-button-icon-small {
 						display: none;
 					}
-					:host button span {
-						font-size: .7rem;
-						line-height: .7rem;
-					}
-					.d2l-quick-eval-activity-card-button-icon {
-						width: 2.1rem;
-						height: 2.1rem;
+					:host {
+						--d2l-quick-eval-card-button-icon-size: 1.5rem;
+						--d2l-quick-eval-card-button-icon-background-size: 2.1rem;
+						--d2l-quick-eval-card-button-font-size: .7rem;
 					}
 				}
 			</style>
-			<button>
+			<button 
+				aria-labelledby$="d2l-quick-eval-activity-card-button-text"
+				aria-expanded$="[[ariaExpanded]]"
+				aria-haspopup$="[[ariaHaspopup]]"
+				aria-label$="[[_ariaLabel]]"
+				form$="[[form]]"
+				formaction$="[[formaction]]"
+				formenctype$="[[formenctype]]"
+				formmethod$="[[formmethod]]"
+				formnovalidate$="[[formnovalidate]]"
+				formtarget$="[[formtarget]]"
+				name$="[[name]]"
+				title$="[[text]]"
+				type$="[[type]]">
 				<div class="d2l-quick-eval-activity-card-button-icon">
 					<d2l-icon icon="[[_computeIcon(3)]]" class="d2l-quick-eval-card-button-icon-large"></d2l-icon>
 					<d2l-icon icon="[[_computeIcon(2)]]" class="d2l-quick-eval-card-button-icon-small"></d2l-icon>
 				</div>
-				<span>[[text]]</span>
+				<span id="d2l-quick-eval-activity-card-button-text">[[text]]</span>
 			</button>
 		`;
 	}
