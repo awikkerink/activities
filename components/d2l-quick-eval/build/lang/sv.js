@@ -46,11 +46,11 @@ const LangSvImpl = (superClass) => class extends superClass {
 			'submissions': 'inlämningar',
 			'tableTitle': 'Lista över ej utvärderade elevinlämningar från kurser och verktyg',
 			'tryAgain': 'Försök på nytt',
-			'newSubmissions': 'new submissions',
+			'newSubmissions': 'New Submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
-			'newPosts': 'new posts',
+			'newPosts': 'New Posts',
 			'newPostDetails': '{newNum} new, {resub} reposts',
-			'newAttempts': 'new attempts',
+			'newAttempts': 'New Attempts',
 			'newAttemptsDetails': '{newNum} new',
 			'viewBy': 'Visa enligt:'
 		};

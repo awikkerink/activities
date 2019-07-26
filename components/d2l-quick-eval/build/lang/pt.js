@@ -46,11 +46,11 @@ const LangPtImpl = (superClass) => class extends superClass {
 			'submissions': 'Envios',
 			'tableTitle': 'Lista de envios de alunos não avaliados de todos os cursos e ferramentas',
 			'tryAgain': 'Tentar novamente',
-			'newSubmissions': 'new submissions',
+			'newSubmissions': 'New Submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
-			'newPosts': 'new posts',
+			'newPosts': 'New Posts',
 			'newPostDetails': '{newNum} new, {resub} reposts',
-			'newAttempts': 'new attempts',
+			'newAttempts': 'New Attempts',
 			'newAttemptsDetails': '{newNum} new',
 			'viewBy': 'Exibir por:'
 		};

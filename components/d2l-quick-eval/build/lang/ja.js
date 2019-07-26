@@ -46,11 +46,11 @@ const LangJaImpl = (superClass) => class extends superClass {
 			'submissions': '送信物',
 			'tableTitle': 'コースやツールをまたいだ、受講者からの未評価の送信物リスト',
 			'tryAgain': 'もう一度試してください',
-			'newSubmissions': 'new submissions',
+			'newSubmissions': 'New Submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
-			'newPosts': 'new posts',
+			'newPosts': 'New Posts',
 			'newPostDetails': '{newNum} new, {resub} reposts',
-			'newAttempts': 'new attempts',
+			'newAttempts': 'New Attempts',
 			'newAttemptsDetails': '{newNum} new',
 			'viewBy': '表示対象:'
 		};

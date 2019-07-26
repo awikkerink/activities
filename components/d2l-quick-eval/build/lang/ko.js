@@ -46,11 +46,11 @@ const LangKoImpl = (superClass) => class extends superClass {
 			'submissions': '제출 항목',
 			'tableTitle': '강의 및 도구 전체의 평가되지 않은 학습자 제출 항목 목록',
 			'tryAgain': '다시 시도',
-			'newSubmissions': 'new submissions',
+			'newSubmissions': 'New Submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
-			'newPosts': 'new posts',
+			'newPosts': 'New Posts',
 			'newPostDetails': '{newNum} new, {resub} reposts',
-			'newAttempts': 'new attempts',
+			'newAttempts': 'New Attempts',
 			'newAttemptsDetails': '{newNum} new',
 			'viewBy': '보기 기준:'
 		};
