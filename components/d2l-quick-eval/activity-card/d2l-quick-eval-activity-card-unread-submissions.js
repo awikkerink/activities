@@ -3,15 +3,15 @@ import {QuickEvalLocalize} from '../QuickEvalLocalize.js';
 import 'd2l-tooltip/d2l-tooltip.js';
 
 const activityTypeLocalizeNew = {
-	Assignment: 'newSubmissions',
-	Discussion: 'newPosts',
-	Quiz: 'newAttempts'
+	assignment: 'newSubmissions',
+	discussion: 'newPosts',
+	quiz: 'newAttempts'
 };
 
 const activityTypeLocalizeDetail = {
-	Assignment: 'newSubmissionDetails',
-	Discussion: 'newPostDetails',
-	Quiz: 'newAttemptsDetails'
+	assignment: 'newSubmissionDetails',
+	discussion: 'newPostDetails',
+	quiz: 'newAttemptsDetails'
 };
 
 class D2LQuickEvalActivityCardUnreadSubmissions extends QuickEvalLocalize(PolymerElement) {
