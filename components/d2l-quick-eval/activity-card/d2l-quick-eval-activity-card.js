@@ -209,6 +209,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 							</d2l-quick-eval-activity-card-items>
 						</div>
 						<d2l-quick-eval-activity-card-unread-submissions
+							tabindex="1"
 							unread="[[unread]]"
 							resubmitted="[[resubmitted]]"
 							activity-type="[[activityType]]"
