@@ -114,9 +114,13 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						top: 0;
 						right: 0;
 					}
+					:host(:dir(rtl)) d2l-quick-eval-activity-card-items[visible-on-ancestor] {
+						left: 0;
+						right: initial;
+					}
 					.d2l-quick-eval-activity-card-items-container {
 						position: relative;
-						display: block;
+						display: flex;
 					}
 					.d2l-quick-eval-card-meters,
 					.d2l-quick-eval-card-actions {
@@ -124,7 +128,6 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						padding: 0;
 						border: none;
 						width: auto;
-						float: right;
 					}
 					.d2l-quick-eval-card-right {
 						display: flex;
@@ -144,9 +147,9 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						margin-left: 1.5rem;
 					}
 					d2l-quick-eval-activity-card-unread-submissions {
-						float:left;
 						border: none;
 						padding: 0;
+						order: -1;
 					}
 					d2l-quick-eval-activity-card-unread-submissions,
 					.d2l-quick-eval-card-meters span,
@@ -188,7 +191,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 			<div class="d2l-quick-eval-card d2l-visible-on-ancestor-target">
 				<div class="d2l-quick-eval-card-titles">
 					<d2l-activity-name href="[[activityNameHref]]" token="[[token]]"></d2l-activity-name>
-					<div class="d2l-quick-eval-card-subtitle"><span>[[activityType]]</span> <span hidden$="[[!formattedDueDate]]"> &bull; [[localize('due', 'date', formattedDueDate)]]</span></div>
+					<div class="d2l-quick-eval-card-subtitle"><span>[[localize(activityType)]]</span> <span hidden$="[[!formattedDueDate]]"> &bull; [[localize('due', 'date', formattedDueDate)]]</span></div>
 				</div>
 				<div class="d2l-quick-eval-card-right">
 					<div class="d2l-quick-eval-activity-card-items-container">
@@ -208,6 +211,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						<d2l-quick-eval-activity-card-unread-submissions
 							unread="[[unread]]"
 							resubmitted="[[resubmitted]]"
+							activity-type="[[activityType]]"
 							hidden$="[[!_showUnreadSubmissions(unread, resubmitted)]]"></d2l-quick-eval-activity-card-unread-submissions>
 						<div class="d2l-quick-eval-card-actions">
 							<d2l-quick-eval-activity-card-items visible-on-ancestor small>
