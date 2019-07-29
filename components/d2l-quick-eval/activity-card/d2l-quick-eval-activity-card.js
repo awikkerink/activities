@@ -188,7 +188,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 					stroke: var(--d2l-color-tungsten);
 				}
 			</style>
-			<div class="d2l-quick-eval-card d2l-visible-on-ancestor-target">
+			<div class="d2l-quick-eval-card">
 				<div class="d2l-quick-eval-card-titles">
 					<d2l-activity-name href="[[activityNameHref]]" token="[[token]]"></d2l-activity-name>
 					<div class="d2l-quick-eval-card-subtitle"><span>[[localize(activityType)]]</span> <span hidden$="[[!formattedDueDate]]"> &bull; [[localize('due', 'date', formattedDueDate)]]</span></div>
@@ -198,13 +198,13 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						<div class="d2l-quick-eval-card-meters">
 							<d2l-quick-eval-activity-card-items>
 								<div>
-							<d2l-meter-radial value="[[completed]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('completed')]]"></d2l-meter-radial>
+							<d2l-meter-radial tabindex="0" value="[[completed]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('completed')]]"></d2l-meter-radial>
 								</div>
 								<div>
-							<d2l-meter-radial value="[[evaluated]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('evaluated')]]"></d2l-meter-radial>
+							<d2l-meter-radial tabindex="0" value="[[evaluated]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('evaluated')]]"></d2l-meter-radial>
 								</div>
 								<div>
-							<d2l-meter-radial value="[[published]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('published')]]"></d2l-meter-radial>
+							<d2l-meter-radial tabindex="0" value="[[published]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('published')]]"></d2l-meter-radial>
 								</div>
 							</d2l-quick-eval-activity-card-items>
 						</div>
@@ -213,7 +213,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 							resubmitted="[[resubmitted]]"
 							activity-type="[[activityType]]"
 							hidden$="[[!_showUnreadSubmissions(unread, resubmitted)]]"></d2l-quick-eval-activity-card-unread-submissions>
-						<div class="d2l-quick-eval-card-actions">
+						<div class="d2l-quick-eval-card-actions d2l-visible-on-ancestor-target">
 							<d2l-quick-eval-activity-card-items visible-on-ancestor small>
 								<div>
 									<button class="d2l-quick-eval-activity-card-item">
