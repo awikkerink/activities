@@ -184,7 +184,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				button:focus d2l-icon {
 					color: var(--d2l-color-celestine-plus-1);
 				}
-				circle {
+				.d2l-quick-eval-card-indicator circle {
 					stroke: var(--d2l-color-tungsten);
 				}
 			</style>
@@ -234,9 +234,9 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						</div>
 					</div>
 					<div class="d2l-quick-eval-card-indicator">
-						<svg width="14px" height="28px">
-							<circle cx="7px" cy="7px" r="5px" stroke-width="2px" class="d2l-quick-eval-activity-card-hovered-off"></circle>
-							<circle cx="7px" cy="22px" r="5px" stroke-width="2px" class="d2l-quick-eval-activity-card-hovered-on"></circle>
+						<svg width="12px" height="33px" viewBox="0 0 12 33">
+							<circle class="d2l-quick-eval-activity-card-hovered-off" stroke-width="2" cx="5.5" cy="5.5" r="4.5"></circle>
+							<circle class="d2l-quick-eval-activity-card-hovered-on" stroke-width="2" cx="5.5" cy="26.5" r="4.5"></circle>
 						</svg>
 					</div>
 				</div>
