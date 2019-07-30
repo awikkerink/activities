@@ -54,8 +54,8 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						display: inline;
 					}
 					.d2l-quick-eval-card {
-						border: 3px solid var(--d2l-color-ferrite);
-						border-radius: 10px;
+						border: 1px solid var(--d2l-color-galena);
+						border-radius: 6px;
 						padding: .9rem;
 					}
 					.d2l-quick-eval-card-actions {
