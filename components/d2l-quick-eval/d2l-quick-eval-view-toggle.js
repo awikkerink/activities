@@ -71,13 +71,13 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 			<div>
 				<label id="d2l-quick-eval-view-toggle-label">[[localize('viewBy')]]</label>
 				<button
-					aria-expanded$="[[_isSelected(_viewTypes.submissions, currentSelected)]]"
+					aria-pressed$="[[_isSelected(_viewTypes.submissions, currentSelected)]]"
 					class="d2l-quick-eval-view-toggle-left"
 					on-click="_selectSubmissions"
 					selected$="[[_isSelected(_viewTypes.submissions, currentSelected)]]"
 				>[[localize('submissions')]]</button>
 				<button
-					aria-expanded$="[[_isSelected(_viewTypes.activities, currentSelected)]]"
+					aria-pressed$="[[_isSelected(_viewTypes.activities, currentSelected)]]"
 					class="d2l-quick-eval-view-toggle-right"
 					on-click="_selectActivities"
 					selected$="[[_isSelected(_viewTypes.activities, currentSelected)]]"
