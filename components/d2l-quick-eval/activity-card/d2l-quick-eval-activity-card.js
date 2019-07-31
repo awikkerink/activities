@@ -8,6 +8,7 @@ import 'd2l-polymer-behaviors/d2l-visible-on-ancestor-behavior.js';
 import '@brightspace-ui/core/components/meter/meter-radial.js';
 import './d2l-quick-eval-activity-card-items.js';
 import './d2l-quick-eval-activity-card-unread-submissions.js';
+import './d2l-quick-eval-activity-card-action-button.js';
 
 class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 	static get is() { return 'd2l-quick-eval-activity-card'; }
@@ -26,6 +27,8 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				}
 				.d2l-quick-eval-card-actions div {
 					height: 2.1rem;
+					background: white;
+					display: block;
 				}
 				.d2l-quick-eval-card-indicator {
 					display: none;
@@ -178,12 +181,6 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 					width: 100%;
 					height: 100%;
 				}
-				button:hover,
-				button:focus,
-				button:hover d2l-icon,
-				button:focus d2l-icon {
-					color: var(--d2l-color-celestine-plus-1);
-				}
 				.d2l-quick-eval-card-indicator circle {
 					stroke: var(--d2l-color-tungsten);
 				}
@@ -216,19 +213,21 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						<div class="d2l-quick-eval-card-actions">
 							<d2l-quick-eval-activity-card-items visible-on-ancestor small>
 								<div>
-									<button class="d2l-quick-eval-activity-card-item">
-										<d2l-icon icon="d2l-tier3:evaluate-all"></d2l-icon>[[localize('evaluateAll')]]
-									</button>
+									<d2l-quick-eval-activity-card-action-button 
+										icon-name="evaluate-all" 
+										text="[[localize('evaluateAll')]]"></d2l-quick-eval-activity-card-action-button>
 								</div>
-                                <div>
-                                    <button class="d2l-quick-eval-activity-card-item" on-click="_dispatchViewSubmissionListEvent">
-                                        <d2l-icon icon="d2l-tier3:view-submission-list"></d2l-icon>[[localize('submissionList')]]
-                                    </button>
+								<div>
+									<d2l-quick-eval-activity-card-action-button 
+										icon-name="view-submission-list" 
+										text="[[localize('submissionList')]]"
+										on-click="_dispatchViewSubmissionListEvent"></d2l-quick-eval-activity-card-action-button>
                                 </div>
 								<div>
-									<button class="d2l-quick-eval-activity-card-item" on-click="_dispatchPublishAllEvent">
-										<d2l-icon icon="d2l-tier3:publish-all"></d2l-icon>[[localize('publishAll')]]
-									</button>
+									<d2l-quick-eval-activity-card-action-button 
+										icon-name="publish-all" 
+										text="[[localize('publishAll')]]"
+										on-click="_dispatchPublishAllEvent"></d2l-quick-eval-activity-card-action-button>
 								</div>
 							</d2l-quick-eval-activity-card-items>
 						</div>
