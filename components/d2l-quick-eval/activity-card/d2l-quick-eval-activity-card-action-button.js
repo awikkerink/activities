@@ -2,6 +2,7 @@ import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 import 'd2l-icons/d2l-icon.js';
 import 'd2l-icons/tier3-icons.js';
 import 'd2l-icons/tier2-icons.js';
+import 'd2l-polymer-behaviors/d2l-id.js';
 
 class D2LQuickEvalActivityCardActionButton extends PolymerElement {
 	static get template() {
@@ -77,7 +78,7 @@ class D2LQuickEvalActivityCardActionButton extends PolymerElement {
 				}
 			</style>
 			<button 
-				aria-labelledby$="d2l-quick-eval-activity-card-button-text"
+				aria-labelledby$="[[_labelledbyId]]"
 				aria-expanded$="[[ariaExpanded]]"
 				aria-haspopup$="[[ariaHaspopup]]"
 				aria-label$="[[_ariaLabel]]"
@@ -94,7 +95,7 @@ class D2LQuickEvalActivityCardActionButton extends PolymerElement {
 					<d2l-icon icon="[[_computeIcon(3)]]" class="d2l-quick-eval-card-button-icon-large"></d2l-icon>
 					<d2l-icon icon="[[_computeIcon(2)]]" class="d2l-quick-eval-card-button-icon-small"></d2l-icon>
 				</div>
-				<span id="d2l-quick-eval-activity-card-button-text">[[text]]</span>
+				<span id="[[_labelledbyId]]">[[text]]</span>
 			</button>
 		`;
 	}
@@ -105,12 +106,20 @@ class D2LQuickEvalActivityCardActionButton extends PolymerElement {
 			},
 			iconName: {
 				type: String
+			},
+			_labelledbyId: {
+				type: String,
+				computed: '_computeLabelledbyId()'
 			}
 		};
 	}
 
 	_computeIcon(tier) {
 		return `d2l-tier${tier}:${this.iconName}`;
+	}
+
+	_computeLabelledbyId() {
+		return D2L.Id.getUniqueId();
 	}
 }
 
