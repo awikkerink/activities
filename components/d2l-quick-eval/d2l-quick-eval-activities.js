@@ -76,6 +76,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				[hidden] {
 					display: none;
 				}
+				.d2l-body-standard {
+					@apply --d2l-body-compact-text;
+				}
 			</style>
 			<div class="d2l-quick-eval-activity-list-modifiers">
 				<d2l-hm-filter
