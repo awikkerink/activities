@@ -4,7 +4,6 @@ import 'd2l-icons/tier3-icons.js';
 import 'd2l-icons/tier2-icons.js';
 
 class D2LQuickEvalActivityCardActionButton extends PolymerElement {
-	static get is() { return 'd2l-quick-eval-activity-card-action-button'; }
 	static get template() {
 		return html`
 			<style>
@@ -17,7 +16,7 @@ class D2LQuickEvalActivityCardActionButton extends PolymerElement {
 					--d2l-quick-eval-card-button-icon-focus-inner: 0 0 0 calc(var(--d2l-quick-eval-card-button-icon-padding) + 2px) white;
 					--d2l-quick-eval-card-button-icon-focus-outer: 0 0 0 calc(var(--d2l-quick-eval-card-button-icon-padding) + 4px) var(--d2l-color-celestine);
 				}
-				:host button {
+				button {
 					display: flex;
 					flex-direction: column;
 					align-items: center;
@@ -115,4 +114,4 @@ class D2LQuickEvalActivityCardActionButton extends PolymerElement {
 	}
 }
 
-window.customElements.define(D2LQuickEvalActivityCardActionButton.is, D2LQuickEvalActivityCardActionButton);
+window.customElements.define('d2l-quick-eval-activity-card-action-button', D2LQuickEvalActivityCardActionButton);
