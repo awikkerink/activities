@@ -120,7 +120,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				hidden$="[[!_shouldShowActivitiesList(_data, filterApplied, searchCleared)]]"
 				courses="[[_data]]"
 				token="[[token]]"
-				on-d2l-quick-eval-activity-publish-all="_publishAll">
+				on-d2l-quick-eval-activity-publish-all="_publishAll"
+				on-d2l-quick-eval-activity-view-submission-list="_navigateSubmissionList"
+				>
 			</d2l-quick-eval-activities-list>
 		`;
 
@@ -184,6 +186,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				unread: evalStatus.unread,
 				resubmitted: evalStatus.resubmitted,
 				publishAll: evalStatus.publishAll,
+				submissionListHref: evalStatus.submissionListHref,
 				key: this._getOrgHref(activity),
 				dueDate: this._getActivityDueDate(activity),
 				activityType: this._getActivityType(activity),
@@ -238,6 +241,16 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		if (evt.detail.publishAll) {
 			this.performSirenAction(evt.detail.publishAll);
 		}
+	}
+
+	_navigateSubmissionList(evt) {
+		if (evt.detail.submissionListHref) {
+			this._setWindowLocationHref(evt.detail.submissionListHref);
+		}
+	}
+
+	_setWindowLocationHref(href) {
+		window.location.href = href;
 	}
 }
 window.customElements.define(D2LQuickEvalActivities.is, D2LQuickEvalActivities);
