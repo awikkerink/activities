@@ -13,7 +13,9 @@ const LangSvImpl = (superClass) => class extends superClass {
 			'caughtUp': 'Du är ifatt!',
 			'checkBackOften': 'Du bör kontrollera om det finns nya inlämningar här med regelbundna intervall.',
 			'clearSearch': 'Rensa sökning',
+			'close': 'Close',
 			'completed': 'Slutförd',
+			'confirmation': 'Confirmation',
 			'courseName': 'Kurs',
 			'discussion': 'Diskussion',
 			'displayName': 'Förnamn, efternamn',
@@ -30,10 +32,12 @@ const LangSvImpl = (superClass) => class extends superClass {
 			'loadMore': 'Ladda mer',
 			'loading': 'Laddar',
 			'masterTeacher': 'Lärare',
+			'no': 'No',
 			'noCriteriaMatch': 'Det finns inga inlämningar som matchar dina kriterier.',
 			'noResults': 'Det finns inga resultat här.',
 			'noSubmissions': 'Det finns inga inlämningar som du behöver utföra någon åtgärd på.',
 			'publishAll': 'Publicera alla',
+			'publishAllConfirmDialogMessage': 'Users will receive feedback on publishing. Do you want to continue?',
 			'published': 'Publicerad',
 			'quiz': 'Förhör',
 			'search': 'Sökning',
@@ -46,13 +50,14 @@ const LangSvImpl = (superClass) => class extends superClass {
 			'submissions': 'inlämningar',
 			'tableTitle': 'Lista över ej utvärderade elevinlämningar från kurser och verktyg',
 			'tryAgain': 'Försök på nytt',
-			'newSubmissions': 'New Submissions',
+			'newSubmissions': 'new submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
-			'newPosts': 'New Posts',
+			'newPosts': 'new posts',
 			'newPostDetails': '{newNum} new, {resub} reposts',
-			'newAttempts': 'New Attempts',
+			'newAttempts': 'new attempts',
 			'newAttemptsDetails': '{newNum} new',
-			'viewBy': 'Visa enligt:'
+			'viewBy': 'Visa enligt:',
+			'yes': 'Yes'
 		};
 	}
 };

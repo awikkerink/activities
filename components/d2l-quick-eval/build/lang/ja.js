@@ -13,7 +13,9 @@ const LangJaImpl = (superClass) => class extends superClass {
 			'caughtUp': '学習はすべて順調に進んでいます！',
 			'checkBackOften': '新規送信物を頻繁にチェックしてください。',
 			'clearSearch': '検索のクリア',
+			'close': 'Close',
 			'completed': '完了',
+			'confirmation': 'Confirmation',
 			'courseName': 'コース',
 			'discussion': 'ディスカッション',
 			'displayName': '名、姓',
@@ -30,10 +32,12 @@ const LangJaImpl = (superClass) => class extends superClass {
 			'loadMore': 'さらに読み込む',
 			'loading': '読み込み中',
 			'masterTeacher': '講師',
+			'no': 'No',
 			'noCriteriaMatch': '条件に一致する送信物はありません。',
 			'noResults': 'ここには結果がありません。',
 			'noSubmissions': '確認が必要な送信物はありません。',
 			'publishAll': 'すべて公開',
+			'publishAllConfirmDialogMessage': 'Users will receive feedback on publishing. Do you want to continue?',
 			'published': '公開済み',
 			'quiz': 'クイズ',
 			'search': '検索',
@@ -46,13 +50,14 @@ const LangJaImpl = (superClass) => class extends superClass {
 			'submissions': '送信物',
 			'tableTitle': 'コースやツールをまたいだ、受講者からの未評価の送信物リスト',
 			'tryAgain': 'もう一度試してください',
-			'newSubmissions': 'New Submissions',
+			'newSubmissions': 'new submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
-			'newPosts': 'New Posts',
+			'newPosts': 'new posts',
 			'newPostDetails': '{newNum} new, {resub} reposts',
-			'newAttempts': 'New Attempts',
+			'newAttempts': 'new attempts',
 			'newAttemptsDetails': '{newNum} new',
-			'viewBy': '表示対象:'
+			'viewBy': '表示対象:',
+			'yes': 'Yes'
 		};
 	}
 };

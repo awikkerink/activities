@@ -13,7 +13,9 @@ const LangArImpl = (superClass) => class extends superClass {
 			'caughtUp': 'لقد انتهيت من مهامك!',
 			'checkBackOften': 'تحقق باستمرار من احتمال توفر عمليات إرسال جديدة.',
 			'clearSearch': 'مسح البحث',
+			'close': 'Close',
 			'completed': 'تم الإكمال',
+			'confirmation': 'Confirmation',
 			'courseName': 'المقرر التعليمي',
 			'discussion': 'المناقشة',
 			'displayName': 'الاسم الأول، اسم العائلة',
@@ -30,10 +32,12 @@ const LangArImpl = (superClass) => class extends superClass {
 			'loadMore': 'تحميل المزيد',
 			'loading': 'يتم الآن التحميل',
 			'masterTeacher': 'المعلّم',
+			'no': 'No',
 			'noCriteriaMatch': 'لا تتوفر أي عمليات إرسال تتوافق مع معاييرك.',
 			'noResults': 'لا تتوفر أي نتائج هنا.',
 			'noSubmissions': 'لا تتوفر أي عمليات إرسال تتطلب اهتمامك.',
 			'publishAll': 'نشر الكل',
+			'publishAllConfirmDialogMessage': 'Users will receive feedback on publishing. Do you want to continue?',
 			'published': 'منشور',
 			'quiz': 'الاختبار',
 			'search': 'بحث',
@@ -46,13 +50,14 @@ const LangArImpl = (superClass) => class extends superClass {
 			'submissions': 'الإرسالات',
 			'tableTitle': 'قائمة بعمليات إرسال المتعلّم غير المقيّمة من المقررات التعليمية والأدوات',
 			'tryAgain': 'المحاولة مرة أخرى',
-			'newSubmissions': 'New Submissions',
+			'newSubmissions': 'new submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
-			'newPosts': 'New Posts',
+			'newPosts': 'new posts',
 			'newPostDetails': '{newNum} new, {resub} reposts',
-			'newAttempts': 'New Attempts',
+			'newAttempts': 'new attempts',
 			'newAttemptsDetails': '{newNum} new',
-			'viewBy': 'عرض حسب:'
+			'viewBy': 'عرض حسب:',
+			'yes': 'Yes'
 		};
 	}
 };

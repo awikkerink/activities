@@ -13,7 +13,9 @@ const LangNlImpl = (superClass) => class extends superClass {
 			'caughtUp': 'U bent weer helemaal bij!',
 			'checkBackOften': 'Kijk regelmatig of er nieuwe indieningen via postvak zijn.',
 			'clearSearch': 'Zoekopdracht wissen',
+			'close': 'Close',
 			'completed': 'Voltooid',
+			'confirmation': 'Confirmation',
 			'courseName': 'Cursus',
 			'discussion': 'Discussie',
 			'displayName': 'Voornaam, achternaam',
@@ -30,10 +32,12 @@ const LangNlImpl = (superClass) => class extends superClass {
 			'loadMore': 'Meer laden',
 			'loading': 'Laden',
 			'masterTeacher': 'Docent',
+			'no': 'No',
 			'noCriteriaMatch': 'Er zijn geen indieningen via postvak die overeenkomen met uw criteria.',
 			'noResults': 'Geen resultaten hier.',
 			'noSubmissions': 'Er zijn geen indieningen via postvak die uw aandacht nodig hebben.',
 			'publishAll': 'Alles publiceren',
+			'publishAllConfirmDialogMessage': 'Users will receive feedback on publishing. Do you want to continue?',
 			'published': 'Gepubliceerd',
 			'quiz': 'Test',
 			'search': 'Zoeken',
@@ -46,13 +50,14 @@ const LangNlImpl = (superClass) => class extends superClass {
 			'submissions': 'Indieningen',
 			'tableTitle': 'Lijst van niet-geëvalueerde indieningen via postvak van cursisten van alle cursussen en tools',
 			'tryAgain': 'Probeer het opnieuw',
-			'newSubmissions': 'New Submissions',
+			'newSubmissions': 'new submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
-			'newPosts': 'New Posts',
+			'newPosts': 'new posts',
 			'newPostDetails': '{newNum} new, {resub} reposts',
-			'newAttempts': 'New Attempts',
+			'newAttempts': 'new attempts',
 			'newAttemptsDetails': '{newNum} new',
-			'viewBy': 'Weergeven op:'
+			'viewBy': 'Weergeven op:',
+			'yes': 'Yes'
 		};
 	}
 };

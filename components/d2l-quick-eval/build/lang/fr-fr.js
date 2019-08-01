@@ -13,7 +13,9 @@ const LangFrfrImpl = (superClass) => class extends superClass {
 			'caughtUp': 'Vous êtes à jour !',
 			'checkBackOften': 'Vérifiez régulièrement si vous avez de nouvelles soumissions de devoirs.',
 			'clearSearch': 'Effacer la recherche',
+			'close': 'Close',
 			'completed': 'Completed',
+			'confirmation': 'Confirmation',
 			'courseName': 'Cours',
 			'discussion': 'Discussion',
 			'displayName': 'Prénom, Nom',
@@ -30,10 +32,12 @@ const LangFrfrImpl = (superClass) => class extends superClass {
 			'loadMore': 'Charger plus',
 			'loading': 'Chargement en cours',
 			'masterTeacher': 'Enseignant',
+			'no': 'No',
 			'noCriteriaMatch': 'Aucune soumission ne correspond à vos critères.',
 			'noResults': 'Aucun résultat.',
 			'noSubmissions': 'Aucune soumission ne nécessite votre attention.',
 			'publishAll': 'Publish All',
+			'publishAllConfirmDialogMessage': 'Users will receive feedback on publishing. Do you want to continue?',
 			'published': 'Published',
 			'quiz': 'Quiz',
 			'search': 'Rechercher',
@@ -46,13 +50,14 @@ const LangFrfrImpl = (superClass) => class extends superClass {
 			'submissions': 'Soumissions de devoirs',
 			'tableTitle': 'Liste des soumissions non évaluées de l’apprenant dans l’ensemble des cours et des outils',
 			'tryAgain': 'Réessayez',
-			'newSubmissions': 'New Submissions',
+			'newSubmissions': 'new submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
-			'newPosts': 'New Posts',
+			'newPosts': 'new posts',
 			'newPostDetails': '{newNum} new, {resub} reposts',
-			'newAttempts': 'New Attempts',
+			'newAttempts': 'new attempts',
 			'newAttemptsDetails': '{newNum} new',
-			'viewBy': 'Vue :'
+			'viewBy': 'Vue :',
+			'yes': 'Yes'
 		};
 	}
 };

@@ -13,7 +13,9 @@ const LangDeImpl = (superClass) => class extends superClass {
 			'caughtUp': 'Sie sind auf dem neuesten Stand!',
 			'checkBackOften': 'Sehen Sie regelmäßig nach, ob neue Abgaben verfügbar sind.',
 			'clearSearch': 'Suche löschen',
+			'close': 'Close',
 			'completed': 'Abgeschlossen',
+			'confirmation': 'Confirmation',
 			'courseName': 'Kurs',
 			'discussion': 'Diskussion',
 			'displayName': 'Vorname, Nachname',
@@ -30,10 +32,12 @@ const LangDeImpl = (superClass) => class extends superClass {
 			'loadMore': 'Mehr laden',
 			'loading': 'Wird geladen',
 			'masterTeacher': 'Lehrer',
+			'no': 'No',
 			'noCriteriaMatch': 'Es gibt keine Abgaben, die mit Ihren Kriterien übereinstimmen.',
 			'noResults': 'Keine Ergebnisse',
 			'noSubmissions': 'Es gibt keine Abgaben, die Ihre Aufmerksamkeit erfordern.',
 			'publishAll': 'Alle veröffentlichen',
+			'publishAllConfirmDialogMessage': 'Users will receive feedback on publishing. Do you want to continue?',
 			'published': 'Veröffentlicht',
 			'quiz': 'Test',
 			'search': 'Suchen',
@@ -46,13 +50,14 @@ const LangDeImpl = (superClass) => class extends superClass {
 			'submissions': 'Abgaben',
 			'tableTitle': 'Liste nicht bewerteter Abgaben von Lernern in allen Kursen und Tools',
 			'tryAgain': 'Erneut versuchen',
-			'newSubmissions': 'New Submissions',
+			'newSubmissions': 'new submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
-			'newPosts': 'New Posts',
+			'newPosts': 'new posts',
 			'newPostDetails': '{newNum} new, {resub} reposts',
-			'newAttempts': 'New Attempts',
+			'newAttempts': 'new attempts',
 			'newAttemptsDetails': '{newNum} new',
-			'viewBy': 'Anzeigen nach:'
+			'viewBy': 'Anzeigen nach:',
+			'yes': 'Yes'
 		};
 	}
 };

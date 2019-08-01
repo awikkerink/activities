@@ -13,7 +13,9 @@ const LangZhImpl = (superClass) => class extends superClass {
 			'caughtUp': '您已跟上进度！',
 			'checkBackOften': '请稍后时常查看新的提交。',
 			'clearSearch': '清除搜索',
+			'close': 'Close',
 			'completed': '已完成',
+			'confirmation': 'Confirmation',
 			'courseName': '课程',
 			'discussion': '讨论',
 			'displayName': '名字，姓氏',
@@ -30,10 +32,12 @@ const LangZhImpl = (superClass) => class extends superClass {
 			'loadMore': '加载更多',
 			'loading': '正在加载',
 			'masterTeacher': '教师',
+			'no': 'No',
 			'noCriteriaMatch': '没有与筛选条件匹配的提交。',
 			'noResults': '此处没有结果。',
 			'noSubmissions': '没有需要您注意的提交。',
 			'publishAll': '全部发布',
+			'publishAllConfirmDialogMessage': 'Users will receive feedback on publishing. Do you want to continue?',
 			'published': '已发布',
 			'quiz': '测验',
 			'search': '搜索',
@@ -46,13 +50,14 @@ const LangZhImpl = (superClass) => class extends superClass {
 			'submissions': '提交',
 			'tableTitle': '来自各个课程和工具的未评估学员提交的列表',
 			'tryAgain': '请重试',
-			'newSubmissions': 'New Submissions',
+			'newSubmissions': 'new submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
-			'newPosts': 'New Posts',
+			'newPosts': 'new posts',
 			'newPostDetails': '{newNum} new, {resub} reposts',
-			'newAttempts': 'New Attempts',
+			'newAttempts': 'new attempts',
 			'newAttemptsDetails': '{newNum} new',
-			'viewBy': '查看方式：'
+			'viewBy': '查看方式：',
+			'yes': 'Yes'
 		};
 	}
 };

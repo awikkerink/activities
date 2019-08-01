@@ -13,7 +13,9 @@ const LangFiImpl = (superClass) => class extends superClass {
 			'caughtUp': 'You\'re all caught up!',
 			'checkBackOften': 'Check back often for new submissions.',
 			'clearSearch': 'Clear Search',
+			'close': 'Close',
 			'completed': 'Completed',
+			'confirmation': 'Confirmation',
 			'courseName': 'Course',
 			'discussion': 'Discussion',
 			'displayName': 'First Name, Last Name',
@@ -30,10 +32,12 @@ const LangFiImpl = (superClass) => class extends superClass {
 			'loading': 'Loading',
 			'loadMore': 'Load more',
 			'masterTeacher': 'Teacher',
+			'no': 'No',
 			'noCriteriaMatch': 'There are no submissions that match your criteria.',
 			'noResults': 'No results here.',
 			'noSubmissions': 'There are no submissions that need your attention.',
 			'publishAll': 'Publish All',
+			'publishAllConfirmDialogMessage': 'Users will receive feedback on publishing. Do you want to continue?',
 			'published': 'Published',
 			'quiz': 'Quiz',
 			'search': 'Search',
@@ -46,13 +50,14 @@ const LangFiImpl = (superClass) => class extends superClass {
 			'submissions': 'Submissions',
 			'tableTitle': 'List of unevaluated Learner submissions from across courses and tools',
 			'tryAgain': 'Try Again',
-			'newSubmissions': 'New Submissions',
+			'newSubmissions': 'new submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
-			'newPosts': 'New Posts',
+			'newPosts': 'new posts',
 			'newPostDetails': '{newNum} new, {resub} reposts',
-			'newAttempts': 'New Attempts',
+			'newAttempts': 'new attempts',
 			'newAttemptsDetails': '{newNum} new',
-			'viewBy': 'View by:'
+			'viewBy': 'View by:',
+			'yes': 'Yes'
 		};
 	}
 };

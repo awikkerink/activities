@@ -13,7 +13,9 @@ const LangDadkImpl = (superClass) => class extends superClass {
 			'caughtUp': 'Du er helt med!',
 			'checkBackOften': 'Kom tilbage med jævne mellemrum for at se nye afleveringer.',
 			'clearSearch': 'Ryd søgning',
+			'close': 'Close',
 			'completed': 'Completed',
+			'confirmation': 'Confirmation',
 			'courseName': 'Kursus',
 			'discussion': 'Discussion',
 			'displayName': 'Fornavn, Efternavn',
@@ -30,10 +32,12 @@ const LangDadkImpl = (superClass) => class extends superClass {
 			'loadMore': 'Indlæs flere',
 			'loading': 'Indlæser',
 			'masterTeacher': 'Lærer',
+			'no': 'No',
 			'noCriteriaMatch': 'Der er ingen afleveringer, der matcher dine kriterier.',
 			'noResults': 'Ingen resultater her.',
 			'noSubmissions': 'Der er ingen afleveringer, der kræver din opmærksomhed.',
 			'publishAll': 'Publish All',
+			'publishAllConfirmDialogMessage': 'Users will receive feedback on publishing. Do you want to continue?',
 			'published': 'Published',
 			'quiz': 'Quiz',
 			'search': 'Søg',
@@ -46,13 +50,14 @@ const LangDadkImpl = (superClass) => class extends superClass {
 			'submissions': 'Afleveringer',
 			'tableTitle': 'Liste over ikke-evaluerede elevafleveringer på tværs af kurser og værktøjer',
 			'tryAgain': 'Prøv igen',
-			'newSubmissions': 'New Submissions',
+			'newSubmissions': 'new submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
-			'newPosts': 'New Posts',
+			'newPosts': 'new posts',
 			'newPostDetails': '{newNum} new, {resub} reposts',
-			'newAttempts': 'New Attempts',
+			'newAttempts': 'new attempts',
 			'newAttemptsDetails': '{newNum} new',
-			'viewBy': 'Vis efter:'
+			'viewBy': 'Vis efter:',
+			'yes': 'Yes'
 		};
 	}
 };
