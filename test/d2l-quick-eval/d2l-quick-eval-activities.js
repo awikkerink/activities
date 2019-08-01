@@ -67,6 +67,7 @@ suite('d2l-quick-eval-activities', function() {
 		noSubmissionComponent = act.shadowRoot.querySelector('.d2l-quick-eval-no-submissions');
 		noCriteriaResultsComponent = act.shadowRoot.querySelector('.d2l-quick-eval-no-criteria-results');
 		list = act.shadowRoot.querySelector('d2l-quick-eval-activities-list');
+		act._loading = false;
 	});
 	test('instantiating the element works', function() {
 		assert.equal(act.tagName.toLowerCase(), 'd2l-quick-eval-activities');
@@ -141,5 +142,13 @@ suite('d2l-quick-eval-activities', function() {
 			const result = act._groupByCourse(testCase);
 			assert.deepEqual(result, []);
 		});
+	});
+
+	test('if data is loading, show the loading skeleton', () => {
+		act._loading = true;
+		const skeletonComponent = act.shadowRoot.querySelector('d2l-quick-eval-activities-skeleton');
+		assert.notEqual(getComputedStyle(skeletonComponent).display, 'none');
+		act._loading = false;
+		assert.equal(getComputedStyle(skeletonComponent).display, 'none');
 	});
 });
