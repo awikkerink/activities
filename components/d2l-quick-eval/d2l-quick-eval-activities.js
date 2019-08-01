@@ -117,6 +117,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				<p class="d2l-body-standard">[[localize('noCriteriaMatch')]]</p>
 			</div>
 			<d2l-quick-eval-activities-list
+				id="d2l-quick-eval-activities-list"
 				hidden$="[[!_shouldShowActivitiesList(_data, filterApplied, searchCleared)]]"
 				courses="[[_data]]"
 				token="[[token]]"
@@ -238,9 +239,25 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	}
 
 	_publishAll(evt) {
-		if (evt.detail.publishAll) {
-			this.performSirenAction(evt.detail.publishAll);
-		}
+		// THIS IS TEMPORARY - will switch to modal dialog when available; dialog will NOT load in demo page
+		const confirmEvent = D2L.LP.Web.UI.Html.JavaScript.Confirm(
+			'Confirmation',
+			'Users will receive feedback on publishing. Do you want to continue?',
+			'',
+			'Yes',
+			'No',
+			'Close',
+			'd2l-quick-eval-activities-list',
+			() => {}
+		);
+
+		confirmEvent.AddListener(
+			Function.prototype.construct = function(result) {
+				if (result && evt.detail.publishAll) {
+					this.performSirenAction(evt.detail.publishAll);
+				}
+			}.bind(this)
+		);
 	}
 
 	_navigateSubmissionList(evt) {
