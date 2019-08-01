@@ -121,9 +121,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				<h2 class="d2l-quick-eval-no-criteria-results-heading">[[localize('noResults')]]</h2>
 				<p class="d2l-body-standard">[[localize('noCriteriaMatch')]]</p>
 			</div>
-			<d2l-quick-eval-activities-skeleton hidden$="[[!_loading]]"></d2l-quick-eval-activities-skeleton>
+			<d2l-quick-eval-activities-skeleton hidden$="[[!_showLoadingSkeleton]]"></d2l-quick-eval-activities-skeleton>
 			<d2l-quick-eval-activities-list
-				hidden$="[[!_shouldShowActivitiesList(_data, _loading)]]"
+				hidden$="[[!_shouldShowActivitiesList(_data, _showLoadingSkeleton)]]"
 				courses="[[_data]]"
 				token="[[token]]"
 				on-d2l-quick-eval-activity-publish-all="_publishAll"
@@ -154,6 +154,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				type: Boolean,
 				value: true
 			},
+			_showLoadingSkeleton: {
+				type: Boolean,
+				computed: '_computeShowLoadingSkeleton(_loading, filtersLoading, searchLoading)'
+			}
 		};
 	}
 	static get observers() {
@@ -246,8 +250,12 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		return !(this._data.length) && !this._loading && (this.filterApplied || this.searchApplied);
 	}
 
-	_shouldShowActivitiesList(_data, _loading) {
-		return _data.length && !_loading;
+	_shouldShowActivitiesList(_data, _showLoadingSkeleton) {
+		return _data.length && !_showLoadingSkeleton;
+	}
+
+	_computeShowLoadingSkeleton(_loading, filtersLoading, searchLoading) {
+		return _loading || filtersLoading || searchLoading;
 	}
 
 	_publishAll(evt) {
