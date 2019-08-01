@@ -1,10 +1,15 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
+import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 import 'd2l-icons/d2l-icon.js';
 import 'd2l-icons/tier3-icons.js';
 import 'd2l-icons/tier2-icons.js';
 import 'd2l-polymer-behaviors/d2l-id.js';
+import 'd2l-button/d2l-button-behavior.js';
 
-class D2LQuickEvalActivityCardActionButton extends PolymerElement {
+class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
+	[
+		D2L.PolymerBehaviors.Button.Behavior
+	], PolymerElement) {
 	static get template() {
 		return html`
 			<style>
@@ -43,11 +48,11 @@ class D2LQuickEvalActivityCardActionButton extends PolymerElement {
 					align-items: center;
 				}
 				:host(:hover) button,
-				:host(:hover) d2l-icon,
+				:host(:hover) .d2l-quick-eval-activity-card-button-icon,
 				:host(:focus-within) button,
-				:host(:focus-within) d2l-icon,
+				:host(:focus-within) .d2l-quick-eval-activity-card-button-icon,
 				:host(:focus) button,
-				:host(:focus) d2l-icon {
+				:host(:focus) .d2l-quick-eval-activity-card-button-icon {
 					text-decoration: underline;
 					color: var(--d2l-color-celestine-minus-1);
 				}
@@ -76,6 +81,20 @@ class D2LQuickEvalActivityCardActionButton extends PolymerElement {
 						--d2l-quick-eval-card-button-font-size: .7rem;
 					}
 				}
+				:host([disabled]) button {
+					opacity: .5;
+				}
+				:host([disabled]:hover) button,
+				:host([disabled]:hover) .d2l-quick-eval-activity-card-button-icon,
+				:host([disabled]:focus) button,
+				:host([disabled]:focus) .d2l-quick-eval-activity-card-button-icon,
+				:host([disabled]:focus-within) button,
+				:host([disabled]:focus-within) .d2l-quick-eval-activity-card-button-icon {
+					text-decoration: none;
+					color: var(--d2l-color-ferrite);
+					background-color: transparent;
+					box-shadow: none;
+				}
 			</style>
 			<button 
 				aria-labelledby$="[[_labelledbyId]]"
@@ -90,7 +109,8 @@ class D2LQuickEvalActivityCardActionButton extends PolymerElement {
 				formtarget$="[[formtarget]]"
 				name$="[[name]]"
 				title$="[[text]]"
-				type$="[[type]]">
+				type$="[[type]]"
+				disabled$="[[disabled]]">
 				<div class="d2l-quick-eval-activity-card-button-icon">
 					<d2l-icon icon="[[_computeIcon(3)]]" class="d2l-quick-eval-card-button-icon-large"></d2l-icon>
 					<d2l-icon icon="[[_computeIcon(2)]]" class="d2l-quick-eval-card-button-icon-small"></d2l-icon>
@@ -110,6 +130,9 @@ class D2LQuickEvalActivityCardActionButton extends PolymerElement {
 			_labelledbyId: {
 				type: String,
 				computed: '_computeLabelledbyId()'
+			},
+			disabled: {
+				type: Boolean
 			}
 		};
 	}
