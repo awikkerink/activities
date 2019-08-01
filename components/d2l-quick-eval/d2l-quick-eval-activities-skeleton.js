@@ -14,13 +14,13 @@ class D2LQuickEvalActivitiesSkeleton extends PolymerElement {
 				.large, .medium, .small {
 					width: 100%;
 				}
+				.large {
+					display: none;
+				}
 				.medium {
 					display: none;
 				}
-				.small {
-					display: none;
-				}
-				@media (max-width: 900px) {
+				@media (min-width: 525px) {
 					.small {
 						display: none;
 					}
@@ -31,15 +31,15 @@ class D2LQuickEvalActivitiesSkeleton extends PolymerElement {
 						display: none;
 					}
 				}
-				@media (max-width: 524px) {
+				@media (min-width: 900px) {
 					.small {
-						display: block;
+						display: none;
 					}
 					.medium {
 						display: none;
 					}
 					.large {
-						display: none;
+						display: block;
 					}
 				}
 			</style>
