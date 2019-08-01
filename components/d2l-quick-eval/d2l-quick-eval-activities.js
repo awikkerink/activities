@@ -117,7 +117,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				<p class="d2l-body-standard">[[localize('noCriteriaMatch')]]</p>
 			</div>
 			<d2l-quick-eval-activities-list
-				id="d2l-quick-eval-activities-list"
+				id="[[_activitiesListId]]"
 				hidden$="[[!_shouldShowActivitiesList(_data, filterApplied, searchCleared)]]"
 				courses="[[_data]]"
 				token="[[token]]"
@@ -145,6 +145,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				type: Number,
 				value: 0
 			},
+			_activitiesListId: {
+				type: String,
+				computed: '_computeActivitiesListId()'
+			}
 		};
 	}
 	static get observers() {
@@ -247,7 +251,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			'Yes',
 			'No',
 			'Close',
-			'd2l-quick-eval-activities-list',
+			this._activitiesListId,
 			() => {}
 		);
 
@@ -258,6 +262,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				}
 			}.bind(this)
 		);
+	}
+
+	_computeActivitiesListId() {
+		return D2L.Id.getUniqueId();
 	}
 
 	_navigateSubmissionList(evt) {
