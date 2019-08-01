@@ -5,7 +5,9 @@
    "caughtUp" : "Vous êtes à jour !",
    "checkBackOften" : "Vérifiez régulièrement si vous avez de nouvelles soumissions de devoirs.",
    "clearSearch" : "Effacer la recherche",
+   "close": "Close",
    "completed" : "Completed",
+   "confirmation": "Confirmation",
    "courseName" : "Cours",
    "discussion": "Discussion",
    "displayName" : "Prénom, Nom",
@@ -22,10 +24,12 @@
    "loadMore" : "Charger plus",
    "loading" : "Chargement en cours",
    "masterTeacher" : "Enseignant",
+   "no": "No",
    "noCriteriaMatch" : "Aucune soumission ne correspond à vos critères.",
    "noResults" : "Aucun résultat.",
    "noSubmissions" : "Aucune soumission ne nécessite votre attention.",
    "publishAll" : "Publish All",
+   "publishAllConfirmDialogMessage": "Users will receive feedback on publishing. Do you want to continue?",
    "published" : "Published",
    "quiz" : "Quiz",
    "search" : "Rechercher",
@@ -44,5 +48,6 @@
    "newPostDetails" : "{newNum} new, {resub} reposts",
    "newAttempts" : "new attempts",
    "newAttemptsDetails" : "{newNum} new",
-   "viewBy" : "Vue :"
+   "viewBy" : "Vue :",
+   "yes": "Yes"
 }

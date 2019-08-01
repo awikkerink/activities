@@ -5,7 +5,9 @@
    "caughtUp" : "Você está em dia!",
    "checkBackOften" : "Verifique com frequência se há novos envios.",
    "clearSearch" : "Limpar Pesquisa",
+   "close": "Close",
    "completed" : "Concluído",
+   "confirmation": "Confirmation",
    "courseName" : "Curso",
    "discussion" : "Discussão",
    "displayName" : "Nome e Sobrenome",
@@ -22,10 +24,12 @@
    "loadMore" : "Carregar mais",
    "loading" : "Carregando",
    "masterTeacher" : "Professor",
+   "no": "No",
    "noCriteriaMatch" : "Não há nenhum envio correspondente aos seus critérios.",
    "noResults" : "Nenhum resultado aqui.",
    "noSubmissions" : "Não há envios que precisem de sua atenção.",
    "publishAll" : "Publicar Tudo",
+   "publishAllConfirmDialogMessage": "Users will receive feedback on publishing. Do you want to continue?",
    "published" : "Publicado",
    "quiz" : "Questionário",
    "search" : "Pesquisar",
@@ -44,5 +48,6 @@
    "newPostDetails" : "{newNum} new, {resub} reposts",
    "newAttempts" : "new attempts",
    "newAttemptsDetails" : "{newNum} new",
-   "viewBy" : "Exibir por:"
+   "viewBy" : "Exibir por:",
+   "yes": "Yes"
 }
