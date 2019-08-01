@@ -321,12 +321,18 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 	}
 
 	_dispatchPublishAllEvent() {
+		let confirmMessage = this.localize('publishAllConfirmDialogMessageForDiscussion');
+		if (this.activityType === 'assignment') {
+			confirmMessage = this.localize('publishAllConfirmDialogMessageForAssignment', 'evaluated', this.evaluated, 'assigned', this.assigned);
+		}
+
 		this.dispatchEvent(
 			new CustomEvent(
 				'd2l-quick-eval-activity-publish-all',
 				{
 					detail: {
-						publishAll: this.publishAll
+						publishAll: this.publishAll,
+						confirmMessage: confirmMessage
 					},
 					composed: true,
 					bubbles: true

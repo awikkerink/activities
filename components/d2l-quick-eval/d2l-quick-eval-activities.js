@@ -247,7 +247,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		// THIS IS TEMPORARY - will switch to modal dialog when available; dialog will NOT load in demo page
 		const confirmEvent = D2L.LP.Web.UI.Html.JavaScript.Confirm(
 			this.localize('confirmation'),
-			this.localize('publishAllConfirmDialogMessage'),
+			evt.detail.confirmMessage,
 			'',
 			this.localize('yes'),
 			this.localize('no'),
