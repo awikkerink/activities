@@ -6,6 +6,7 @@ import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
 import 'd2l-alert/d2l-alert.js';
 import 'd2l-common/components/d2l-hm-filter/d2l-hm-filter.js';
 import 'd2l-common/components/d2l-hm-search/d2l-hm-search.js';
+import 'd2l-polymer-behaviors/d2l-id.js';
 import './behaviors/d2l-quick-eval-siren-helper-behavior.js';
 import './behaviors/d2l-hm-filter-behavior.js';
 import './behaviors/d2l-hm-search-behavior.js';
