@@ -48,11 +48,11 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 					align-items: center;
 				}
 				:host(:hover) button,
-				:host(:hover) .d2l-quick-eval-activity-card-button-icon,
+				:host(:hover) d2l-icon,
 				:host(:focus-within) button,
-				:host(:focus-within) .d2l-quick-eval-activity-card-button-icon,
+				:host(:focus-within) d2l-icon,
 				:host(:focus) button,
-				:host(:focus) .d2l-quick-eval-activity-card-button-icon {
+				:host(:focus) d2l-icon {
 					text-decoration: underline;
 					color: var(--d2l-color-celestine-minus-1);
 				}
@@ -85,10 +85,13 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 					opacity: .5;
 				}
 				:host([disabled]:hover) button,
+				:host([disabled]:hover) d2l-icon,
 				:host([disabled]:hover) .d2l-quick-eval-activity-card-button-icon,
 				:host([disabled]:focus) button,
+				:host([disabled]:focus) d2l-icon,
 				:host([disabled]:focus) .d2l-quick-eval-activity-card-button-icon,
 				:host([disabled]:focus-within) button,
+				:host([disabled]:focus-within) d2l-icon,
 				:host([disabled]:focus-within) .d2l-quick-eval-activity-card-button-icon {
 					text-decoration: none;
 					color: var(--d2l-color-ferrite);
