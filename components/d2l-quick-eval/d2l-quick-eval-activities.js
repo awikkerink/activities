@@ -14,6 +14,7 @@ import './d2l-quick-eval-no-submissions-image.js';
 import './d2l-quick-eval-no-criteria-results-image.js';
 import './d2l-quick-eval-search-results-summary-container.js';
 import './activities-list/d2l-quick-eval-activities-list.js';
+import './d2l-quick-eval-activities-skeleton.js';
 
 /**
  * @customElement
@@ -47,6 +48,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				.d2l-quick-eval-no-submissions,
 				.d2l-quick-eval-no-criteria-results {
 					text-align: center;
+				}
+				d2l-quick-eval-activities-skeleton {
+					width: 100%;
+					margin-top: 1.2rem;
 				}
 				d2l-quick-eval-no-submissions-image {
 					padding-top: 30px;
@@ -106,20 +111,21 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				hidden$="[[!searchApplied]]"
 				on-d2l-quick-eval-search-results-summary-container-clear-search="_clearSearchResults">
 			</d2l-quick-eval-search-results-summary-container>
-			<div class="d2l-quick-eval-no-submissions" hidden$="[[!_shouldShowNoSubmissions(_data, filterApplied, searchApplied)]]">
+			<div class="d2l-quick-eval-no-submissions" hidden$="[[!_shouldShowNoSubmissions(_data, _loading, filterApplied, searchApplied)]]">
 				<d2l-quick-eval-no-submissions-image></d2l-quick-eval-no-submissions-image>
 				<h2 class="d2l-quick-eval-no-submissions-heading">[[localize('caughtUp')]]</h2>
 				<p class="d2l-body-standard">[[localize('noSubmissions')]]</p>
 				<p class="d2l-body-standard">[[localize('checkBackOften')]]</p>
 			</div>
-			<div class="d2l-quick-eval-no-criteria-results" hidden$="[[!_shouldShowNoCriteriaResults(_data, filterApplied, searchApplied)]]">
+			<div class="d2l-quick-eval-no-criteria-results" hidden$="[[!_shouldShowNoCriteriaResults(_data, _loading, filterApplied, searchApplied)]]">
 				<d2l-quick-eval-no-criteria-results-image></d2l-quick-eval-no-criteria-results-image>
 				<h2 class="d2l-quick-eval-no-criteria-results-heading">[[localize('noResults')]]</h2>
 				<p class="d2l-body-standard">[[localize('noCriteriaMatch')]]</p>
 			</div>
+			<d2l-quick-eval-activities-skeleton hidden$="[[!_showLoadingSkeleton]]"></d2l-quick-eval-activities-skeleton>
 			<d2l-quick-eval-activities-list
 				id="[[_activitiesListId]]"
-				hidden$="[[!_shouldShowActivitiesList(_data, filterApplied, searchCleared)]]"
+				hidden$="[[!_shouldShowActivitiesList(_data, _showLoadingSkeleton)]]"
 				courses="[[_data]]"
 				token="[[token]]"
 				on-d2l-quick-eval-activity-publish-all="_publishAll"
@@ -149,6 +155,14 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			_activitiesListId: {
 				type: String,
 				computed: '_computeActivitiesListId()'
+      },
+			_loading: {
+				type: Boolean,
+				value: true
+			},
+			_showLoadingSkeleton: {
+				type: Boolean,
+				computed: '_computeShowLoadingSkeleton(_loading, filtersLoading, searchLoading)'
 			}
 		};
 	}
@@ -162,6 +176,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		if (!entity) {
 			return;
 		}
+		this._loading = true;
 
 		try {
 			if (entity.entities) {
@@ -176,6 +191,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		} catch (e) {
 			this._logError(e, {developerMessage: 'Unable to load activities from entity.'});
 			throw e;
+		} finally {
+			this._loading = false;
 		}
 	}
 
@@ -232,15 +249,19 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	}
 
 	_shouldShowNoSubmissions() {
-		return !(this._data.length) && !(this.filterApplied || this.searchApplied);
+		return !(this._data.length) && !this._loading && !(this.filterApplied || this.searchApplied);
 	}
 
 	_shouldShowNoCriteriaResults() {
-		return !(this._data.length) && (this.filterApplied || this.searchApplied);
+		return !(this._data.length) && !this._loading && (this.filterApplied || this.searchApplied);
 	}
 
-	_shouldShowActivitiesList() {
-		return this._data.length;
+	_shouldShowActivitiesList(_data, _showLoadingSkeleton) {
+		return _data.length && !_showLoadingSkeleton;
+	}
+
+	_computeShowLoadingSkeleton(_loading, filtersLoading, searchLoading) {
+		return _loading || filtersLoading || searchLoading;
 	}
 
 	_publishAll(evt) {
