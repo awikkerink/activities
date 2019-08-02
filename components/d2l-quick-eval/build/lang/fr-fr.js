@@ -9,7 +9,7 @@ const LangFrfrImpl = (superClass) => class extends superClass {
 		this.frfr = {
 			'activities': 'Activités',
 			'activityName': 'Nom de l’activité',
-			'assignment': 'Assignment',
+			'assignment': 'Devoirs',
 			'caughtUp': 'Vous êtes à jour !',
 			'checkBackOften': 'Vérifiez régulièrement si vous avez de nouvelles soumissions de devoirs.',
 			'clearSearch': 'Effacer la recherche',
@@ -63,4 +63,3 @@ const LangFrfrImpl = (superClass) => class extends superClass {
 };
 
 export const LangFrfr = dedupingMixin(LangFrfrImpl);
-
