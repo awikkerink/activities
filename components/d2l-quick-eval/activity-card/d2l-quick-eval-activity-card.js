@@ -9,6 +9,7 @@ import '@brightspace-ui/core/components/meter/meter-radial.js';
 import './d2l-quick-eval-activity-card-items.js';
 import './d2l-quick-eval-activity-card-unread-submissions.js';
 import './d2l-quick-eval-activity-card-action-button.js';
+import 'd2l-typography/d2l-typography-shared-styles.js';
 
 class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 	static get is() { return 'd2l-quick-eval-activity-card'; }
@@ -142,8 +143,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						min-height: 3rem;
 					}
 					.d2l-activity-name-wrapper {
-						font-size: 0.95rem;
-						font-weight: 400;
+						@apply --d2l-body-standard-text;
 						margin: 0;
 					}
 					.d2l-quick-eval-card-subtitle {
