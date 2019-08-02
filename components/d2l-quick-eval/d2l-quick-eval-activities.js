@@ -278,11 +278,11 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		);
 
 		confirmEvent.AddListener(
-			Function.prototype.construct = function(result) {
+			(result) => {
 				if (result && evt.detail.publishAll) {
 					this.performSirenAction(evt.detail.publishAll);
 				}
-			}.bind(this)
+			}
 		);
 	}
 
