@@ -155,7 +155,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			_activitiesListId: {
 				type: String,
 				computed: '_computeActivitiesListId()'
-      },
+			},
 			_loading: {
 				type: Boolean,
 				value: true
