@@ -6,6 +6,7 @@ import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
 import 'd2l-alert/d2l-alert.js';
 import 'd2l-common/components/d2l-hm-filter/d2l-hm-filter.js';
 import 'd2l-common/components/d2l-hm-search/d2l-hm-search.js';
+import 'd2l-polymer-behaviors/d2l-id.js';
 import './behaviors/d2l-quick-eval-siren-helper-behavior.js';
 import './behaviors/d2l-hm-filter-behavior.js';
 import './behaviors/d2l-hm-search-behavior.js';
@@ -123,6 +124,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			</div>
 			<d2l-quick-eval-activities-skeleton hidden$="[[!_showLoadingSkeleton]]"></d2l-quick-eval-activities-skeleton>
 			<d2l-quick-eval-activities-list
+				id="[[_activitiesListId]]"
 				hidden$="[[!_shouldShowActivitiesList(_data, _showLoadingSkeleton)]]"
 				courses="[[_data]]"
 				token="[[token]]"
@@ -149,6 +151,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			_searchResultsCount: {
 				type: Number,
 				value: 0
+			},
+			_activitiesListId: {
+				type: String,
+				computed: '_computeActivitiesListId()'
 			},
 			_loading: {
 				type: Boolean,
@@ -259,9 +265,29 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	}
 
 	_publishAll(evt) {
-		if (evt.detail.publishAll) {
-			this.performSirenAction(evt.detail.publishAll);
-		}
+		// THIS IS TEMPORARY - will switch to modal dialog when available; dialog will NOT load in demo page
+		const confirmEvent = D2L.LP.Web.UI.Html.JavaScript.Confirm(
+			this.localize('confirmation'),
+			evt.detail.confirmMessage,
+			'',
+			this.localize('yes'),
+			this.localize('no'),
+			this.localize('close'),
+			this._activitiesListId,
+			() => {}
+		);
+
+		confirmEvent.AddListener(
+			(result) => {
+				if (result) {
+					this.performSirenAction(evt.detail.publishAll);
+				}
+			}
+		);
+	}
+
+	_computeActivitiesListId() {
+		return D2L.Id.getUniqueId();
 	}
 
 	_navigateSubmissionList(evt) {
