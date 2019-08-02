@@ -141,6 +141,11 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 					.d2l-quick-eval-card-titles {
 						min-height: 3rem;
 					}
+					.d2l-activity-name-wrapper {
+						font-size: 0.95rem;
+						font-weight: 400;
+						margin: 0;
+					}
 					.d2l-quick-eval-card-subtitle {
 						font-size: .7rem;
 						line-height: .7rem;
@@ -187,7 +192,9 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 			</style>
 			<div class="d2l-quick-eval-card d2l-visible-on-ancestor-target">
 				<div class="d2l-quick-eval-card-titles">
-					<d2l-activity-name href="[[activityNameHref]]" token="[[token]]"></d2l-activity-name>
+					<h3 class="d2l-activity-name-wrapper">
+						<d2l-activity-name href="[[activityNameHref]]" token="[[token]]"></d2l-activity-name>
+					</h3>
 					<div class="d2l-quick-eval-card-subtitle"><span>[[localize(activityType)]]</span> <span hidden$="[[!formattedDueDate]]"> &bull; [[localize('due', 'date', formattedDueDate)]]</span></div>
 				</div>
 				<div class="d2l-quick-eval-card-right">
