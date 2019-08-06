@@ -12,12 +12,6 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 	static get template() {
 		const toggleTemplate = html`
 			<style>
-				:host {
-					margin: 0 -0.9rem;
-				}
-				label {
-					margin: 0 0.9rem;
-				}
 				:host button.d2l-quick-eval-view-toggle-left,
 				:host(:dir(rtl)) button.d2l-quick-eval-view-toggle-right {
 					border-top-left-radius: 0.3rem;
@@ -45,6 +39,7 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 					color: var(--d2l-color-ferrite);
 					cursor: pointer;
 					display: inline;
+					flex: 1;
 					font-family: inherit;
 					font-size: .7rem;
 					font-weight: 700;
@@ -70,20 +65,22 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 					border-color: var(--d2l-color-tungsten);
 					color: var(--d2l-color-white);
 				}
-				@media (max-width: 525px) {
+				:host {
+					width: 100%;
+					display: flex;
+				}
+				label {
+					display: none;
+				}
+				@media (min-width: 525px) {
 					:host {
-						margin: 0;
-						width: 100%;
-						display: flex;
-					}
-					button {
-						flex: 1;
+						margin: 0 -0.9rem;
+						display: block;
+						width: auto;
 					}
 					label {
-						display: none;
-					}
-					:host button.d2l-quick-eval-view-toggle-left {
-						margin-inline-start: 0;
+						margin: 0 0.9rem;
+						display: inline;
 					}
 				}
 			</style>

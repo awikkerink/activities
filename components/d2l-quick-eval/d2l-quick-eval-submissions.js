@@ -26,10 +26,16 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	static get template() {
 		const template = html`
 			<style>
+				.d2l-quick-eval-submissions-table-modifiers {
+					display: flex;
+					margin-top: 18px;
+					width: 100%;
+				}
 				d2l-hm-search {
 					display: inline-block;
 					width: 250px;
 					margin-left: .25rem;
+					flex: 1;
 				}
 				d2l-alert {
 					margin: auto;
@@ -56,9 +62,9 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 					display: block;
 					padding-top: 1rem;
 				}
-				@media (max-width: 900px) {
+				@media (min-width: 525px) {
 					.d2l-quick-eval-submissions-table-modifiers {
-						margin-top: 18px;
+						width: auto;
 						float: left;
 						clear: both;
 					}
@@ -66,13 +72,14 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 						float: right;
 					}
 				}
-				@media (max-width: 525px) {
+				@media (min-width: 900px) {
 					.d2l-quick-eval-submissions-table-modifiers {
-						width: 100%;
-						display: flex;
+						float: right;
+						margin-top: 0;
+						clear: none;
 					}
-					d2l-hm-search {
-						flex: 1;
+					:host(:dir(rtl)) .d2l-quick-eval-submissions-table-modifiers {
+						float: left;
 					}
 				}
 			</style>
