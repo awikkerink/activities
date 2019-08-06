@@ -38,6 +38,7 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 					outline: none;
 					border: none;
 					padding: 0;
+					cursor: pointer;
 				}
 				.d2l-quick-eval-activity-card-button-icon {
 					width: var(--d2l-quick-eval-card-button-icon-size);
@@ -97,9 +98,10 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 					color: var(--d2l-color-ferrite);
 					background-color: transparent;
 					box-shadow: none;
+					cursor: auto;
 				}
 			</style>
-			<button 
+			<button
 				aria-labelledby$="[[_labelledbyId]]"
 				aria-expanded$="[[ariaExpanded]]"
 				aria-haspopup$="[[ariaHaspopup]]"
