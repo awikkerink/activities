@@ -200,7 +200,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		const result = await Promise.all(entity.entities.map(async function(activity) {
 			const evalStatus = await this._getEvaluationStatusPromise(activity);
 			const courseName = await this._getCourseNamePromise(activity);
-			const id = this.getEvaluationStatusHref(activity);
+			const evaluationStatusHref = this.getEvaluationStatusHref(activity);
 			return {
 				courseName: courseName,
 				assigned: evalStatus.assigned,
@@ -215,7 +215,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				dueDate: this._getActivityDueDate(activity),
 				activityType: this._getActivityType(activity),
 				activityNameHref: this._getActivityNameHref(activity),
-				id: id
+				evaluationStatusHref: evaluationStatusHref
 			};
 		}.bind(this)));
 		return this._groupByCourse(result);
@@ -284,8 +284,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				if (result) {
 					this.performSirenAction(evt.detail.publishAll)
 						.then(evalStatusEntity => {
-							const id = this.getEvaluationStatusHref(evalStatusEntity);
-							this._updateEvaluationStatus(id, evalStatusEntity.properties);
+							const evaluationStatusHref = this.getEvaluationStatusHref(evalStatusEntity);
+							this._updateEvaluationStatus(evaluationStatusHref, evalStatusEntity.properties);
 						});
 				}
 			}
@@ -306,11 +306,11 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		window.location.href = href;
 	}
 
-	_updateEvaluationStatus(id, evalStatus) {
+	_updateEvaluationStatus(evaluationStatusHref, evalStatus) {
 		for (let i = 0; i < this._data.length; i++) {
 			for (let j = 0; j < this._data[i].activities.length; j++) {
 
-				if (this._data[i].activities[j].id === id) {
+				if (this._data[i].activities[j].evaluationStatusHref === evaluationStatusHref) {
 					this.set(`_data.${i}.activities.${j}.assigned`, evalStatus.assigned);
 					this.set(`_data.${i}.activities.${j}.completed`, evalStatus.completed);
 					this.set(`_data.${i}.activities.${j}.published`, evalStatus.published);
