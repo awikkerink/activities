@@ -85,6 +85,25 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				.d2l-body-standard {
 					@apply --d2l-body-compact-text;
 				}
+				@media (max-width: 900px) {
+					.d2l-quick-eval-activity-list-modifiers {
+						margin-top: 18px;
+						float: left;
+						clear: both;
+					}
+					:host(:dir(rtl)) .d2l-quick-eval-activity-list-modifiers {
+						float: right;
+					}
+				}
+				@media (max-width: 525px) {
+					.d2l-quick-eval-activity-list-modifiers {
+						width: 100%;
+						display: flex;
+					}
+					d2l-hm-search {
+						flex: 1;
+					}
+				}
 			</style>
 			<div class="d2l-quick-eval-activity-list-modifiers">
 				<d2l-hm-filter
