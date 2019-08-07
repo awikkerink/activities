@@ -16,6 +16,10 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 	static get template() {
 		return html`
 			<style include="d2l-visible-on-ancestor-styles">
+				.d2l-activity-name-wrapper {
+					@apply --d2l-body-standard-text;
+					margin: 0;
+				}
 				d2l-activity-name {
 					min-height: .9rem;
 				}
@@ -141,10 +145,6 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 					}
 					.d2l-quick-eval-card-titles {
 						min-height: 3rem;
-					}
-					.d2l-activity-name-wrapper {
-						@apply --d2l-body-standard-text;
-						margin: 0;
 					}
 					.d2l-quick-eval-card-subtitle {
 						font-size: .7rem;
