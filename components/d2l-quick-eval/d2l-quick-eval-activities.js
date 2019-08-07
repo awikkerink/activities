@@ -200,6 +200,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		const result = await Promise.all(entity.entities.map(async function(activity) {
 			const evalStatus = await this._getEvaluationStatusPromise(activity);
 			const courseName = await this._getCourseNamePromise(activity);
+			const evaluationStatusHref = this.getEvaluationStatusHref(activity);
 			return {
 				courseName: courseName,
 				assigned: evalStatus.assigned,
@@ -213,7 +214,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				key: this._getOrgHref(activity),
 				dueDate: this._getActivityDueDate(activity),
 				activityType: this._getActivityType(activity),
-				activityNameHref: this._getActivityNameHref(activity)
+				activityNameHref: this._getActivityNameHref(activity),
+				evaluationStatusHref: evaluationStatusHref
 			};
 		}.bind(this)));
 		return this._groupByCourse(result);
@@ -280,7 +282,11 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		confirmEvent.AddListener(
 			(result) => {
 				if (result) {
-					this.performSirenAction(evt.detail.publishAll);
+					this.performSirenAction(evt.detail.publishAll)
+						.then(evalStatusEntity => {
+							const evaluationStatusHref = this.getEvaluationStatusHref(evalStatusEntity);
+							this._updateEvaluationStatus(evaluationStatusHref, evalStatusEntity.properties);
+						});
 				}
 			}
 		);
@@ -298,6 +304,24 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 	_setWindowLocationHref(href) {
 		window.location.href = href;
+	}
+
+	_updateEvaluationStatus(evaluationStatusHref, evalStatus) {
+		for (let i = 0; i < this._data.length; i++) {
+			for (let j = 0; j < this._data[i].activities.length; j++) {
+
+				if (this._data[i].activities[j].evaluationStatusHref === evaluationStatusHref) {
+					this.set(`_data.${i}.activities.${j}.assigned`, evalStatus.assigned);
+					this.set(`_data.${i}.activities.${j}.completed`, evalStatus.completed);
+					this.set(`_data.${i}.activities.${j}.published`, evalStatus.published);
+					this.set(`_data.${i}.activities.${j}.evaluated`, evalStatus.evaluated);
+					this.set(`_data.${i}.activities.${j}.unread`, evalStatus.newsubmissions);
+					this.set(`_data.${i}.activities.${j}.resubmitted`, evalStatus.resubmissions);
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }
 window.customElements.define(D2LQuickEvalActivities.is, D2LQuickEvalActivities);
