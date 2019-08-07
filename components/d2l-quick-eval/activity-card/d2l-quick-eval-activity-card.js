@@ -189,6 +189,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				.d2l-quick-eval-card-indicator circle {
 					stroke: var(--d2l-color-tungsten);
 				}
+
 			</style>
 			<div class="d2l-quick-eval-card d2l-visible-on-ancestor-target">
 				<div class="d2l-quick-eval-card-titles">
@@ -213,17 +214,19 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 							</d2l-quick-eval-activity-card-items>
 						</div>
 						<d2l-quick-eval-activity-card-unread-submissions
+							on-click="_dispatchViewEvaluateNewEvent"
 							unread="[[unread]]"
 							resubmitted="[[resubmitted]]"
 							activity-type="[[activityType]]"
 							hidden$="[[!_showUnreadSubmissions(unread, resubmitted)]]"></d2l-quick-eval-activity-card-unread-submissions>
 						<div class="d2l-quick-eval-card-actions">
 							<d2l-quick-eval-activity-card-items visible-on-ancestor small>
-								<d2l-quick-eval-activity-card-action-button
-									icon-name="evaluate-all"
-									text="[[localize('evaluateAll')]]"></d2l-quick-eval-activity-card-action-button>
-								<d2l-quick-eval-activity-card-action-button
-									icon-name="view-submission-list"
+								<d2l-quick-eval-activity-card-action-button 
+									icon-name="evaluate-all" 
+									text="[[localize('evaluateAll')]]"
+									on-click="_dispatchViewEvaluateAllEvent"></d2l-quick-eval-activity-card-action-button>
+								<d2l-quick-eval-activity-card-action-button 
+									icon-name="view-submission-list" 
 									text="[[localize('submissionList')]]"
 									on-click="_dispatchViewSubmissionListEvent"></d2l-quick-eval-activity-card-action-button>
 								<d2l-quick-eval-activity-card-action-button
@@ -284,6 +287,14 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				type: String,
 				value: ''
 			},
+			evaluateAllHref: {
+				type: String,
+				value: ''
+			},
+			evaluateNewHref: {
+				type: String,
+				value: ''
+			},
 			activityNameHref: {
 				type: String,
 				value: ''
@@ -312,6 +323,36 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				{
 					detail: {
 						submissionListHref: this.submissionListHref
+					},
+					composed: true,
+					bubbles: true
+				}
+			)
+		);
+	}
+
+	_dispatchViewEvaluateAllEvent() {
+		this.dispatchEvent(
+			new CustomEvent(
+				'd2l-quick-eval-activity-view-evaluate-all',
+				{
+					detail: {
+						evaluateAllHref: this.evaluateAllHref
+					},
+					composed: true,
+					bubbles: true
+				}
+			)
+		);
+	}
+
+	_dispatchViewEvaluateNewEvent() {
+		this.dispatchEvent(
+			new CustomEvent(
+				'd2l-quick-eval-activity-view-evaluate-new',
+				{
+					detail: {
+						evaluateNewHref: this.evaluateNewHref
 					},
 					composed: true,
 					bubbles: true
