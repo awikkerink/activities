@@ -16,6 +16,10 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 	static get template() {
 		return html`
 			<style include="d2l-visible-on-ancestor-styles">
+				.d2l-activity-name-wrapper {
+					@apply --d2l-body-standard-text;
+					margin: 0;
+				}
 				d2l-activity-name {
 					min-height: .9rem;
 				}
@@ -142,10 +146,6 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 					.d2l-quick-eval-card-titles {
 						min-height: 3rem;
 					}
-					.d2l-activity-name-wrapper {
-						@apply --d2l-body-standard-text;
-						margin: 0;
-					}
 					.d2l-quick-eval-card-subtitle {
 						font-size: .7rem;
 						line-height: .7rem;
@@ -219,15 +219,15 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 							hidden$="[[!_showUnreadSubmissions(unread, resubmitted)]]"></d2l-quick-eval-activity-card-unread-submissions>
 						<div class="d2l-quick-eval-card-actions">
 							<d2l-quick-eval-activity-card-items visible-on-ancestor small>
-								<d2l-quick-eval-activity-card-action-button 
-									icon-name="evaluate-all" 
+								<d2l-quick-eval-activity-card-action-button
+									icon-name="evaluate-all"
 									text="[[localize('evaluateAll')]]"></d2l-quick-eval-activity-card-action-button>
-								<d2l-quick-eval-activity-card-action-button 
-									icon-name="view-submission-list" 
+								<d2l-quick-eval-activity-card-action-button
+									icon-name="view-submission-list"
 									text="[[localize('submissionList')]]"
 									on-click="_dispatchViewSubmissionListEvent"></d2l-quick-eval-activity-card-action-button>
-								<d2l-quick-eval-activity-card-action-button 
-									icon-name="publish-all" 
+								<d2l-quick-eval-activity-card-action-button
+									icon-name="publish-all"
 									text="[[localize('publishAll')]]"
 									on-click="_dispatchPublishAllEvent"></d2l-quick-eval-activity-card-action-button>
 							</d2l-quick-eval-activity-card-items>
