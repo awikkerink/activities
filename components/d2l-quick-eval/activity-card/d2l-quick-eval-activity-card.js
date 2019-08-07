@@ -219,17 +219,18 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 							hidden$="[[!_showUnreadSubmissions(unread, resubmitted)]]"></d2l-quick-eval-activity-card-unread-submissions>
 						<div class="d2l-quick-eval-card-actions">
 							<d2l-quick-eval-activity-card-items visible-on-ancestor small>
-								<d2l-quick-eval-activity-card-action-button 
-									icon-name="evaluate-all" 
+								<d2l-quick-eval-activity-card-action-button
+									icon-name="evaluate-all"
 									text="[[localize('evaluateAll')]]"></d2l-quick-eval-activity-card-action-button>
-								<d2l-quick-eval-activity-card-action-button 
-									icon-name="view-submission-list" 
+								<d2l-quick-eval-activity-card-action-button
+									icon-name="view-submission-list"
 									text="[[localize('submissionList')]]"
 									on-click="_dispatchViewSubmissionListEvent"></d2l-quick-eval-activity-card-action-button>
-								<d2l-quick-eval-activity-card-action-button 
-									icon-name="publish-all" 
+								<d2l-quick-eval-activity-card-action-button
+									icon-name="publish-all"
 									text="[[localize('publishAll')]]"
-									on-click="_dispatchPublishAllEvent"></d2l-quick-eval-activity-card-action-button>
+									on-click="_dispatchPublishAllEvent"
+									disabled$="[[_disablePublishAllButton(publishAll)]]"></d2l-quick-eval-activity-card-action-button>
 							</d2l-quick-eval-activity-card-items>
 						</div>
 					</div>
@@ -366,6 +367,10 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 			return this.formatDateTime(new Date(dueDate));
 		}
 		return '';
+	}
+
+	_disablePublishAllButton() {
+		return !this.publishAll;
 	}
 }
 
