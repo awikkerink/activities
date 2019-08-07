@@ -21,9 +21,6 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 					border-bottom-right-radius: 0;
 					border-left-color: var(--d2l-color-mica);
 				}
-				:host button.d2l-quick-eval-view-toggle-left {
-					margin-inline-start: 0.9rem;
-				}
 				:host button.d2l-quick-eval-view-toggle-right,
 				:host(:dir(rtl)) button.d2l-quick-eval-view-toggle-left {
 					border-top-right-radius: 0.3rem;
@@ -42,6 +39,7 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 					color: var(--d2l-color-ferrite);
 					cursor: pointer;
 					display: inline;
+					flex: 1;
 					font-family: inherit;
 					font-size: .7rem;
 					font-weight: 700;
@@ -67,22 +65,38 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 					border-color: var(--d2l-color-tungsten);
 					color: var(--d2l-color-white);
 				}
+				:host {
+					width: 100%;
+					display: flex;
+				}
+				label {
+					display: none;
+				}
+				@media (min-width: 525px) {
+					:host {
+						margin: 0 -0.9rem;
+						display: block;
+						width: auto;
+					}
+					label {
+						margin: 0 0.9rem;
+						display: inline;
+					}
+				}
 			</style>
-			<div>
-				<label>[[localize('viewBy')]]</label>
-				<button
-					aria-pressed$="[[_isSelected(_viewTypes.submissions, currentSelected)]]"
-					class="d2l-quick-eval-view-toggle-left"
-					on-click="_selectSubmissions"
-					selected$="[[_isSelected(_viewTypes.submissions, currentSelected)]]"
-				>[[localize('submissions')]]</button>
-				<button
-					aria-pressed$="[[_isSelected(_viewTypes.activities, currentSelected)]]"
-					class="d2l-quick-eval-view-toggle-right"
-					on-click="_selectActivities"
-					selected$="[[_isSelected(_viewTypes.activities, currentSelected)]]"
-				>[[localize('activities')]]</button>
-			<div>
+			<label>[[localize('viewBy')]]</label>
+			<button
+				aria-pressed$="[[_isSelected(_viewTypes.submissions, currentSelected)]]"
+				class="d2l-quick-eval-view-toggle-left"
+				on-click="_selectSubmissions"
+				selected$="[[_isSelected(_viewTypes.submissions, currentSelected)]]"
+			>[[localize('submissions')]]</button>
+			<button
+				aria-pressed$="[[_isSelected(_viewTypes.activities, currentSelected)]]"
+				class="d2l-quick-eval-view-toggle-right"
+				on-click="_selectActivities"
+				selected$="[[_isSelected(_viewTypes.activities, currentSelected)]]"
+			>[[localize('activities')]]</button>
 		`;
 		toggleTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
 		return toggleTemplate;

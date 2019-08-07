@@ -32,10 +32,17 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		const quickEvalActivitiesTemplate = html`
 			<style>
 				.d2l-quick-eval-activity-list-modifiers {
-					float: right;
+					display: flex;
+					margin-top: 0.9rem;
+					width: 100%;
 				}
-				:host(:dir(rtl)) .d2l-quick-eval-activity-list-modifiers {
-					float: left;
+				d2l-hm-filter {
+					margin-left: -0.7rem;
+					margin-right: .25rem;
+				}
+				:host(:dir(rtl)) d2l-hm-filter {
+					margin-left: .25rem;
+					margin-right: -0.7rem;
 				}
 				.clear {
 					clear: both;
@@ -43,7 +50,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				d2l-hm-search {
 					display: inline-block;
 					width: 250px;
-					margin-left: .25rem;
+					flex: 1;
 				}
 				.d2l-quick-eval-no-submissions,
 				.d2l-quick-eval-no-criteria-results {
@@ -84,6 +91,26 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				}
 				.d2l-body-standard {
 					@apply --d2l-body-compact-text;
+				}
+				@media (min-width: 525px) {
+					.d2l-quick-eval-activity-list-modifiers {
+						width: auto;
+						float: left;
+						clear: both;
+					}
+					:host(:dir(rtl)) .d2l-quick-eval-activity-list-modifiers {
+						float: right;
+					}
+				}
+				@media (min-width: 900px) {
+					.d2l-quick-eval-activity-list-modifiers {
+						float: right;
+						margin-top: 0;
+						clear: none;
+					}
+					:host(:dir(rtl)) .d2l-quick-eval-activity-list-modifiers {
+						float: left;
+					}
 				}
 			</style>
 			<div class="d2l-quick-eval-activity-list-modifiers">
