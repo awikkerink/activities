@@ -4,6 +4,7 @@ import {QuickEvalLogging} from './QuickEvalLogging.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
 import 'd2l-alert/d2l-alert.js';
+import 'd2l-alert/d2l-alert-toast.js';
 import 'd2l-common/components/d2l-hm-filter/d2l-hm-filter.js';
 import 'd2l-common/components/d2l-hm-search/d2l-hm-search.js';
 import 'd2l-polymer-behaviors/d2l-id.js';
@@ -161,6 +162,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				on-d2l-quick-eval-activity-view-evaluate-new="_navigateEvaluateNew"
 				>
 			</d2l-quick-eval-activities-list>
+			<d2l-alert-toast type="default" open="[[_displayPublishAllToast]]" on-d2l-alert-closed="_onPublishAllToastClosed">Evaluations published successfully.</d2l-alert-toast>
 		`;
 
 		quickEvalActivitiesTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
@@ -192,6 +194,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			_showLoadingSkeleton: {
 				type: Boolean,
 				computed: '_computeShowLoadingSkeleton(_loading, filtersLoading, searchLoading)'
+			},
+			_displayPublishAllToast: {
+				type: Boolean,
+				value: false
 			}
 		};
 	}
@@ -317,6 +323,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 						.then(evalStatusEntity => {
 							const evaluationStatusHref = this.getEvaluationStatusHref(evalStatusEntity);
 							this._updateEvaluationStatus(evaluationStatusHref, evalStatusEntity);
+
+							// _displayPublishAllToast is not reset if the toast is not manually closed
+							this._displayPublishAllToast = false;
+							this._displayPublishAllToast = true;
 						});
 				}
 			}
@@ -371,6 +381,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			}
 		}
 		return false;
+	}
+
+	_onPublishAllToastClosed() {
+		this._displayPublishAllToast = false;
 	}
 }
 window.customElements.define(D2LQuickEvalActivities.is, D2LQuickEvalActivities);
