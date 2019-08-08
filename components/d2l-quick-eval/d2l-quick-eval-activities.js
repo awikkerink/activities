@@ -316,7 +316,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					this.performSirenAction(evt.detail.publishAll)
 						.then(evalStatusEntity => {
 							const evaluationStatusHref = this.getEvaluationStatusHref(evalStatusEntity);
-							this._updateEvaluationStatus(evaluationStatusHref, evalStatusEntity.properties);
+							this._updateEvaluationStatus(evaluationStatusHref, evalStatusEntity);
 						});
 				}
 			}
@@ -351,17 +351,21 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		}
 	}
 
-	_updateEvaluationStatus(evaluationStatusHref, evalStatus) {
+	_updateEvaluationStatus(evaluationStatusHref, evalStatusEntity) {
 		for (let i = 0; i < this._data.length; i++) {
 			for (let j = 0; j < this._data[i].activities.length; j++) {
 
 				if (this._data[i].activities[j].evaluationStatusHref === evaluationStatusHref) {
-					this.set(`_data.${i}.activities.${j}.assigned`, evalStatus.assigned);
-					this.set(`_data.${i}.activities.${j}.completed`, evalStatus.completed);
-					this.set(`_data.${i}.activities.${j}.published`, evalStatus.published);
-					this.set(`_data.${i}.activities.${j}.evaluated`, evalStatus.evaluated);
-					this.set(`_data.${i}.activities.${j}.unread`, evalStatus.newsubmissions);
-					this.set(`_data.${i}.activities.${j}.resubmitted`, evalStatus.resubmissions);
+
+					const publishAll = this._getAction(evalStatusEntity, 'publish-all-feedback');
+
+					this.set(`_data.${i}.activities.${j}.assigned`, evalStatusEntity.properties.assigned);
+					this.set(`_data.${i}.activities.${j}.completed`, evalStatusEntity.properties.completed);
+					this.set(`_data.${i}.activities.${j}.published`, evalStatusEntity.properties.published);
+					this.set(`_data.${i}.activities.${j}.evaluated`, evalStatusEntity.properties.evaluated);
+					this.set(`_data.${i}.activities.${j}.unread`, evalStatusEntity.properties.newsubmissions);
+					this.set(`_data.${i}.activities.${j}.resubmitted`, evalStatusEntity.properties.resubmissions);
+					this.set(`_data.${i}.activities.${j}.publishAll`, publishAll);
 					return true;
 				}
 			}
