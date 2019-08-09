@@ -192,12 +192,16 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			_showLoadingSkeleton: {
 				type: Boolean,
 				computed: '_computeShowLoadingSkeleton(_loading, filtersLoading, searchLoading)'
+			},
+			hidden: {
+				type: Boolean
 			}
 		};
 	}
 	static get observers() {
 		return [
 			'_loadData(entity)',
+			'_clearAllOnHidden(hidden)',
 		];
 	}
 
@@ -252,6 +256,19 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		return this._groupByCourse(result);
 	}
 
+	async _clearAllOnHidden(hidden) {
+		if (hidden) {
+			// NOTE: _clearFilterResults has to be before _clearSearchResults or else
+			// it doesn't effectively clears the filters and searches
+			if (this.filterApplied) {
+				this.entity = await this._clearFilterResults();
+			}
+			if (this.searchApplied) {
+				await this._clearSearchResults();
+			}
+		}
+	}
+
 	_groupByCourse(act) {
 		if (act) {
 			const grouped = act.reduce((acts, a) => {
@@ -274,6 +291,11 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	_clearSearchResults() {
 		const search = this.shadowRoot.querySelector('d2l-hm-search');
 		search.clearSearch();
+	}
+
+	async _clearFilterResults() {
+		const filter = this.shadowRoot.querySelector('d2l-hm-filter');
+		return await filter._clearAllOptions();
 	}
 
 	_updateSearchResultsCount(courses) {
