@@ -113,8 +113,8 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 						evaluated: p.evaluated || 0,
 						publishAll: publishAll,
 						submissionListHref: submissionListHref,
-						evaluateAllHref: evaluateAllHref,
-						evaluateNewHref: evaluateNewHref,
+						evaluateAllHref: this._formBackToQuickEvalLink(evaluateAllHref),
+						evaluateNewHref: this._formBackToQuickEvalLink(evaluateNewHref),
 						unread: p.newsubmissions || 0,
 						resubmitted: p.resubmissions || 0
 					};
@@ -139,6 +139,18 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 					item.displayName = displayName;
 				}
 			}.bind(this));
+	},
+
+	_formBackToQuickEvalLink(url) {
+		if (!url) {
+			return url;
+		}
+		const placeHolderHost = 'http://fake.commm';
+		const newUrl = new URL(url, placeHolderHost);
+		const searchParams = newUrl.searchParams;
+		searchParams.append('cft', 'qe');
+
+		return newUrl.pathname + newUrl.search;
 	},
 
 	_getUserHref: function(entity) {
