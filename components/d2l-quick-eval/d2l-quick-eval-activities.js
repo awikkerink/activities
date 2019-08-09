@@ -235,6 +235,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		const result = await Promise.all(entity.entities.map(async function(activity) {
 			const evalStatus = await this._getEvaluationStatusPromise(activity);
 			const courseName = await this._getCourseNamePromise(activity);
+			const activityNameHref = this._getActivityNameHref(activity);
+			const activityName = await this._getActivityName(activity);
 			const evaluationStatusHref = this.getEvaluationStatusHref(activity);
 			return {
 				courseName: courseName,
@@ -251,7 +253,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				key: this._getOrgHref(activity),
 				dueDate: this._getActivityDueDate(activity),
 				activityType: this._getActivityType(activity),
-				activityNameHref: this._getActivityNameHref(activity),
+				activityNameHref: activityNameHref,
+				activityName: activityName,
 				evaluationStatusHref: evaluationStatusHref
 			};
 		}.bind(this)));

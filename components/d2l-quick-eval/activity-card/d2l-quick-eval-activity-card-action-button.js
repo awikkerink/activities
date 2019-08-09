@@ -149,6 +149,10 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 	_computeLabelledbyId() {
 		return D2L.Id.getUniqueId();
 	}
+
+	focus() {
+		this.shadowRoot.querySelector('button').focus();
+	}
 }
 
 window.customElements.define('d2l-quick-eval-activity-card-action-button', D2LQuickEvalActivityCardActionButton);

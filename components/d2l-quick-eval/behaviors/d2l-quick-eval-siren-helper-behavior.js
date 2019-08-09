@@ -196,6 +196,29 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 		return '';
 	},
 
+	_getActivityName: function(entity) {
+		return this._followHref(this._getActivityNameHref(entity))
+			.then(function(a) {
+				let rel;
+				if (a.entity.hasClass(Classes.activities.userQuizAttemptActivity) || a.entity.hasClass(Classes.activities.userQuizActivity)) {
+					rel = Rels.quiz;
+				} else if (a.entity.hasClass(Classes.activities.userAssignmentActivity)) {
+					rel = Rels.assignment;
+				} else if (a.entity.hasClass(Classes.activities.userDiscussionActivity)) {
+					rel = Rels.Discussions.topic;
+				} else {
+					return Promise.resolve();
+				}
+
+				return this._followLink(a.entity, rel);
+			}.bind(this))
+			.then(function(n) {
+				if (n && n.entity && n.entity.properties) {
+					return n.entity.properties.name;
+				}
+			});
+	},
+
 	_getSubmissionDate: function(entity) {
 		if (entity.hasSubEntityByClass('localized-formatted-date')) {
 			const i = entity.getSubEntityByClass('localized-formatted-date');

@@ -169,19 +169,16 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				[hidden] {
 					display: none;
 				}
-				.d2l-quick-eval-card:hover .d2l-quick-eval-activity-card-hovered-on,
-				.d2l-quick-eval-card:focus-within .d2l-quick-eval-activity-card-hovered-on,
-				.d2l-quick-eval-activity-card-hovered-off {
+				button[aria-pressed="true"] .d2l-quick-eval-activity-card-hovered-on,
+				button[aria-pressed="false"] .d2l-quick-eval-activity-card-hovered-off {
 					fill: var(--d2l-color-tungsten);
 				}
-				.d2l-quick-eval-card:hover .d2l-quick-eval-activity-card-hovered-off,
-				.d2l-quick-eval-card:focus-within .d2l-quick-eval-activity-card-hovered-off,
-				.d2l-quick-eval-activity-card-hovered-on {
+				button[aria-pressed="true"] .d2l-quick-eval-activity-card-hovered-off,
+				button[aria-pressed="false"] .d2l-quick-eval-activity-card-hovered-on {
 					fill: transparent;
 				}
 				button {
 					background-color: white;
-					outline: none;
 					border: none;
 					width: 100%;
 					height: 100%;
@@ -191,7 +188,12 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				}
 
 			</style>
-			<div class="d2l-quick-eval-card d2l-visible-on-ancestor-target">
+			<div
+				class="d2l-quick-eval-card d2l-visible-on-ancestor-target"
+				on-mouseenter="_handleOnMouseenter"
+				on-mouseleave="_handleOnMouseleave"
+				on-focusin="_handleOnFocusin"
+				on-focusout="_handleOnFocusout">
 				<div class="d2l-quick-eval-card-titles">
 					<h3 class="d2l-activity-name-wrapper">
 						<d2l-activity-name href="[[activityNameHref]]" token="[[token]]"></d2l-activity-name>
@@ -237,12 +239,16 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 							</d2l-quick-eval-activity-card-items>
 						</div>
 					</div>
-					<div class="d2l-quick-eval-card-indicator">
+					<button
+						class="d2l-quick-eval-card-indicator"
+						on-click="_handleIndicatorToggle"
+						aria-label$="[[_computeIndicatorLabel(activityName)]]"
+						aria-pressed$="[[_indicatorPressed]]">
 						<svg width="12px" height="33px" viewBox="0 0 12 33">
 							<circle class="d2l-quick-eval-activity-card-hovered-off" stroke-width="2" cx="5.5" cy="5.5" r="4.5"></circle>
 							<circle class="d2l-quick-eval-activity-card-hovered-on" stroke-width="2" cx="5.5" cy="26.5" r="4.5"></circle>
 						</svg>
-					</div>
+					</button>
 				</div>
 			</div>
 		`;
@@ -307,6 +313,17 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 			activityType: {
 				type: String,
 				value: ''
+			},
+			activityName: {
+				type: String
+			},
+			_indicatorPressed: {
+				type: String,
+				value: 'false'
+			},
+			_hovered: {
+				type: Boolean,
+				value: false
 			}
 		};
 	}
@@ -408,6 +425,44 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 			return this.formatDateTime(new Date(dueDate));
 		}
 		return '';
+	}
+
+	_computeIndicatorLabel(activityName) {
+		return this.localize('toggleIndicatorLabel', 'target', activityName);
+	}
+
+	_handleIndicatorToggle() {
+		const attr = 'd2l-visible-on-ancestor-hide';
+		const actions = this.shadowRoot.querySelector('.d2l-quick-eval-card-actions d2l-quick-eval-activity-card-items');
+		if (actions.hasAttribute(attr)) {
+			actions.removeAttribute(attr);
+			const firstButton = this.shadowRoot.querySelector('d2l-quick-eval-activity-card-action-button');
+			firstButton.focus();
+			this._indicatorPressed = 'true';
+		} else {
+			actions.setAttribute(attr, attr);
+			this._indicatorPressed = 'false';
+		}
+	}
+
+	_handleOnMouseenter() {
+		this._indicatorPressed = 'true';
+		this._hovered = true;
+	}
+
+	_handleOnMouseleave() {
+		this._indicatorPressed = 'false';
+		this._hovered = false;
+	}
+
+	_handleOnFocusin() {
+		this._indicatorPressed = 'true';
+	}
+
+	_handleOnFocusout() {
+		if (!this._hovered) {
+			this._indicatorPressed = 'false';
+		}
 	}
 
 	_disablePublishAllButton() {
