@@ -137,7 +137,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			<d2l-quick-eval-search-results-summary-container
 				search-results-count="[[_searchResultsCount]]"
 				hidden$="[[!searchApplied]]"
-				on-d2l-quick-eval-search-results-summary-container-clear-search="_clearSearchResults">
+				on-d2l-quick-eval-search-results-summary-container-clear-search="clearSearchResults">
 			</d2l-quick-eval-search-results-summary-container>
 			<div class="d2l-quick-eval-no-submissions" hidden$="[[!_shouldShowNoSubmissions(_data, _loading, filterApplied, searchApplied)]]">
 				<d2l-quick-eval-no-submissions-image></d2l-quick-eval-no-submissions-image>
@@ -264,13 +264,13 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 	async _clearAllOnHidden(hidden) {
 		if (hidden) {
-			// NOTE: _clearFilterResults has to be before _clearSearchResults or else
+			// NOTE: clearFilters has to be before clearSearchResults or else
 			// it doesn't effectively clears the filters and searches
 			if (this.filterApplied) {
-				this.entity = await this._clearFilterResults();
+				await this.clearFilters();
 			}
 			if (this.searchApplied) {
-				await this._clearSearchResults();
+				await this.clearSearchResults();
 			}
 		}
 	}
@@ -292,16 +292,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	_clearErrors() {
 		this.searchError = null;
 		this.filterError = null;
-	}
-
-	_clearSearchResults() {
-		const search = this.shadowRoot.querySelector('d2l-hm-search');
-		search.clearSearch();
-	}
-
-	async _clearFilterResults() {
-		const filter = this.shadowRoot.querySelector('d2l-hm-filter');
-		return await filter._clearAllOptions();
 	}
 
 	_updateSearchResultsCount(courses) {

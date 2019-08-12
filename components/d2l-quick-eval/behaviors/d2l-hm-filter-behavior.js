@@ -64,6 +64,13 @@ D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviourImpl = {
 		this._clearErrors();
 	},
 
+	clearFilters: async function() {
+		this.filtersLoading = true;
+		const filter = this.shadowRoot.querySelector('d2l-hm-filter');
+		this.entity = await filter._clearAllOptions();
+		this.filtersLoading = false;
+	},
+
 	_onFilterError: function(e) {
 		this.filtersLoading = false;
 		this.filterError = e.detail;
