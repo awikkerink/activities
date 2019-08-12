@@ -197,7 +197,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			},
 			hidden: {
 				type: Boolean
-      },
+			},
 			_displayPublishAllToast: {
 				type: Boolean,
 				value: false
