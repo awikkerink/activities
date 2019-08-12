@@ -115,7 +115,7 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 
 	_handleOnMouseenter(e) {
 		if (e && e.path && e.path.length && e.path[0].tagName.toLowerCase() === 'd2l-quick-eval-activity-card') {
-			const focused = this.shadowRoot.querySelector('d2l-quick-eval-activity-card:focus-within');
+			const focused = this.shadowRoot.querySelector('d2l-quick-eval-activity-card[focus-within]');
 			if (e.path[0] !== focused) {
 				document.activeElement.blur();
 			}
@@ -124,7 +124,7 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 
 	_handleOnMouseleave(e) {
 		if (e && e.path && e.path.length) {
-			const focused = this.shadowRoot.querySelector('d2l-quick-eval-activity-card:focus-within');
+			const focused = this.shadowRoot.querySelector('d2l-quick-eval-activity-card[focus-within]');
 			if (e.path[0] === focused) {
 				document.activeElement.blur();
 			}

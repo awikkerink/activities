@@ -324,6 +324,12 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 			_hovered: {
 				type: Boolean,
 				value: false
+			},
+			// Becaue IE11 and Edge don't have :focus-within selector.
+			focusWithin: {
+				type: Boolean,
+				value: false,
+				reflectToAttribute: true
 			}
 		};
 	}
@@ -456,10 +462,12 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 	}
 
 	_handleOnFocusin() {
+		this.focusWithin = true;
 		this._indicatorPressed = 'true';
 	}
 
 	_handleOnFocusout() {
+		this.focusWithin = false;
 		if (!this._hovered) {
 			this._indicatorPressed = 'false';
 		}
