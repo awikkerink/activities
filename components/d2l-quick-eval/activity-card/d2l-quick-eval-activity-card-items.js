@@ -13,22 +13,22 @@ class D2LQuickEvalActivityCardItems extends mixinBehaviors([D2L.PolymerBehaviors
 					align-items: stretch;
 					justify-content: space-between;
 				}
-				::slotted(*) {
+				.d2l-quick-eval-activity-card-items-container ::slotted(*) {
 					width: 7.5rem;
 					height: 3rem;
 					text-align: center;
 					display: flex;
 					align-items: flex-start;
 					justify-content: space-around;
-					flex: 1 1 0;
+					flex: 1 1 auto;
 				}
 				@media (min-width: 525px) {
-					::slotted(*) {
+					.d2l-quick-eval-activity-card-items-container ::slotted(div) {
 						border-width: 0 1px 0 0;
 						border-style: solid;
 						border-color: var(--d2l-color-mica);
 					}
-					::slotted(*:last-child) {
+					.d2l-quick-eval-activity-card-items-container ::slotted(*:last-child) {
 						border-right-width: 0;
 					}
 					:host([small]) ::slotted(*) {
@@ -36,17 +36,17 @@ class D2LQuickEvalActivityCardItems extends mixinBehaviors([D2L.PolymerBehaviors
 					}
 				}
 				@media (min-width: 900px) {
-					:host([small]) ::slotted(*) {
+					:host([small]) .d2l-quick-eval-activity-card-items-container ::slotted(*) {
 						border-width: 0 1px 0 0;
 						border-style: solid;
 						border-color: var(--d2l-color-mica);
 					}
 					:host([small]) ::slotted(*:first-child),
-					::slotted(*:first-child) {
+					.d2l-quick-eval-activity-card-items-container ::slotted(*:first-child) {
 						border-left-width: 1px;
 					}
 					:host([small]) ::slotted(*:last-child),
-					::slotted(*:last-child) {
+					.d2l-quick-eval-activity-card-items-container ::slotted(*:last-child) {
 						border-right-width: 1px;
 					}
 				}
