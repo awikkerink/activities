@@ -165,6 +165,9 @@ class D2lActivityCard extends PolymerElement {
 		}
 		this.removeEventListener('d2l-organization-accessible', this._onD2lOrganizationAccessible);
 	}
+	focus() {
+		this.shadowRoot.querySelector('d2l-card').focus();
+	}
 	_onHrefChange(href) {
 		if (!href ||
 			(this.entity.hasLinkByRel &&
