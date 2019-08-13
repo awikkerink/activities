@@ -70,7 +70,10 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 										due-date="[[a.dueDate]]"
 										activity-type="[[a.activityType]]"
 										activity-name-href="[[a.activityNameHref]]"
-										token="[[token]]"></d2l-quick-eval-activity-card>
+										activity-name="[[a.activityName]]"
+										token="[[token]]"
+										on-mouseenter="_handleOnMouseenter"
+										on-mouseleave="_handleOnMouseleave"></d2l-quick-eval-activity-card>
 										<div class="d2l-quick-eval-activities-list-card-spacer d2l-quick-eval-activities-list-card-spacer-border"></div>
 									</li>
 								</template>
@@ -108,6 +111,24 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 				type: String
 			}
 		};
+	}
+
+	_handleOnMouseenter(e) {
+		if (e && e.path && e.path.length && e.path[0].tagName.toLowerCase() === 'd2l-quick-eval-activity-card') {
+			const focused = this.shadowRoot.querySelector('d2l-quick-eval-activity-card[focus-within]');
+			if (e.path[0] !== focused) {
+				document.activeElement.blur();
+			}
+		}
+	}
+
+	_handleOnMouseleave(e) {
+		if (e && e.path && e.path.length) {
+			const focused = this.shadowRoot.querySelector('d2l-quick-eval-activity-card[focus-within]');
+			if (e.path[0] === focused) {
+				document.activeElement.blur();
+			}
+		}
 	}
 }
 
