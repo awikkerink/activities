@@ -5,7 +5,6 @@ import 'd2l-icons/tier3-icons.js';
 import 'd2l-icons/tier2-icons.js';
 import 'd2l-polymer-behaviors/d2l-id.js';
 import 'd2l-button/d2l-button-behavior.js';
-
 class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 	[
 		D2L.PolymerBehaviors.Button.Behavior
@@ -17,10 +16,10 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 					--d2l-quick-eval-card-button-icon-size: 1.2rem;
 					--d2l-quick-eval-card-button-icon-background-size: 1.5rem;
 					--d2l-quick-eval-card-button-font-size: .6rem;
-					--d2l-quick-eval-card-button-icon-padding: calc(calc(var(--d2l-quick-eval-card-button-icon-background-size) - var(--d2l-quick-eval-card-button-icon-size)) / 2);
+					--d2l-quick-eval-card-button-icon-padding: 0.15rem;
 					--d2l-quick-eval-card-button-icon-hover: 0 0 0 var(--d2l-quick-eval-card-button-icon-padding) var(--d2l-color-gypsum);
-					--d2l-quick-eval-card-button-icon-focus-inner: 0 0 0 calc(var(--d2l-quick-eval-card-button-icon-padding) + 2px) white;
-					--d2l-quick-eval-card-button-icon-focus-outer: 0 0 0 calc(var(--d2l-quick-eval-card-button-icon-padding) + 4px) var(--d2l-color-celestine);
+					--d2l-quick-eval-card-button-icon-focus-inner: 0 0 0 0.25rem white;
+					--d2l-quick-eval-card-button-icon-focus-outer: 0 0 0 0.35rem var(--d2l-color-celestine);
 				}
 				button {
 					display: flex;
@@ -48,21 +47,18 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 					justify-content: center;
 					align-items: center;
 				}
-				:host(:hover) button,
-				:host(:hover) d2l-icon,
-				:host(:focus-within) button,
-				:host(:focus-within) d2l-icon,
-				:host(:focus) button,
-				:host(:focus) d2l-icon {
+				button:hover,
+				button:hover d2l-icon,
+				button:focus,
+				buton:focus d2l-icon {
 					text-decoration: underline;
 					color: var(--d2l-color-celestine-minus-1);
 				}
-				:host(:hover) .d2l-quick-eval-activity-card-button-icon {
+				button:hover .d2l-quick-eval-activity-card-button-icon {
 					background-color: var(--d2l-color-gypsum);
 					box-shadow: var(--d2l-quick-eval-card-button-icon-hover);
 				}
-				:host(:focus) .d2l-quick-eval-activity-card-button-icon,
-				:host(:focus-within) .d2l-quick-eval-activity-card-button-icon {
+				button:focus .d2l-quick-eval-activity-card-button-icon {
 					background-color: var(--d2l-color-gypsum);
 					box-shadow: var(--d2l-quick-eval-card-button-icon-hover), var(--d2l-quick-eval-card-button-icon-focus-inner), var(--d2l-quick-eval-card-button-icon-focus-outer)
 				}
@@ -80,20 +76,20 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 						--d2l-quick-eval-card-button-icon-size: 1.5rem;
 						--d2l-quick-eval-card-button-icon-background-size: 2.1rem;
 						--d2l-quick-eval-card-button-font-size: .7rem;
+						--d2l-quick-eval-card-button-icon-padding: 0.3rem;
+						--d2l-quick-eval-card-button-icon-focus-inner: 0 0 0 0.4rem white;
+						--d2l-quick-eval-card-button-icon-focus-outer: 0 0 0 0.5rem var(--d2l-color-celestine);
 					}
 				}
 				:host([disabled]) button {
 					opacity: .5;
 				}
-				:host([disabled]:hover) button,
-				:host([disabled]:hover) d2l-icon,
-				:host([disabled]:hover) .d2l-quick-eval-activity-card-button-icon,
-				:host([disabled]:focus) button,
-				:host([disabled]:focus) d2l-icon,
-				:host([disabled]:focus) .d2l-quick-eval-activity-card-button-icon,
-				:host([disabled]:focus-within) button,
-				:host([disabled]:focus-within) d2l-icon,
-				:host([disabled]:focus-within) .d2l-quick-eval-activity-card-button-icon {
+				:host([disabled]) button:hover,
+				:host([disabled]) button:hover d2l-icon,
+				:host([disabled]) button:hover .d2l-quick-eval-activity-card-button-icon,
+				:host([disabled]) button:focus,
+				:host([disabled]) button:focus d2l-icon,
+				:host([disabled]) button:focus .d2l-quick-eval-activity-card-button-icon {
 					text-decoration: none;
 					color: var(--d2l-color-ferrite);
 					background-color: transparent;
@@ -124,6 +120,7 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 			</button>
 		`;
 	}
+
 	static get properties() {
 		return {
 			text: {
