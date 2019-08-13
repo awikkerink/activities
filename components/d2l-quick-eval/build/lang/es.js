@@ -53,7 +53,7 @@ const LangEsImpl = (superClass) => class extends superClass {
 			'newSubmissions': 'New Submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
 			'newPosts': 'New Posts',
-			'newPostDetails': '{newNum} new, {resub} reposts',
+			'newPostDetails': '{numInteractions} threads or replies',
 			'newAttempts': 'New Attempts',
 			'newAttemptsDetails': '{newNum} new',
 			'viewBy': 'Ver por:',

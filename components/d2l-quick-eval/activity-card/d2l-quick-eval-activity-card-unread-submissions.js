@@ -10,7 +10,6 @@ const activityTypeLocalizeNew = {
 
 const activityTypeLocalizeDetail = {
 	assignment: 'newSubmissionDetails',
-	discussion: 'newPostDetails',
 	quiz: 'newAttemptsDetails'
 };
 
@@ -85,6 +84,9 @@ class D2LQuickEvalActivityCardUnreadSubmissions extends QuickEvalLocalize(Polyme
 	}
 
 	_getSubmissionTooltipText(unread, resubmitted, activityType) {
+		if (activityType === 'discussion') {
+			return this.localize('newPostDetails', 'numInteractions', unread + resubmitted);
+		}
 		return this.localize(activityTypeLocalizeDetail[activityType], 'newNum', unread, 'resub', resubmitted);
 	}
 }
