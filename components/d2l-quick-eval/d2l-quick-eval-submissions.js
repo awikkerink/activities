@@ -117,7 +117,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				search-results-count="[[_searchResultsCount]]"
 				more-results="[[_moreSearchResults]]"
 				hidden$="[[!_searchResultsMessageEnabled(searchApplied, searchEnabled)]]"
-				on-d2l-quick-eval-search-results-summary-container-clear-search="_clearSearchResults">
+				on-d2l-quick-eval-search-results-summary-container-clear-search="clearSearchResults">
 			</d2l-quick-eval-search-results-summary-container>
 			<d2l-quick-eval-submissions-table
 				href="[[href]]"
@@ -245,6 +245,9 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			_showLoadingSkeleton: {
 				type: Boolean,
 				computed: '_computeShowLoadingSkeleton(_loading, filtersLoading, searchLoading)'
+			},
+			hidden: {
+				type: Boolean
 			}
 		};
 	}
@@ -254,7 +257,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			'_loadData(entity)',
 			'_handleSorts(entity)',
 			'_onFilterErrorChange(filterError)',
-			'_onSearchErrorChange(searchError)'
+			'_onSearchErrorChange(searchError)',
+			'_clearAllOnHidden(hidden)'
 		];
 	}
 
@@ -358,6 +362,19 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		return result;
 	}
 
+	async _clearAllOnHidden(hidden) {
+		if (hidden) {
+			// NOTE: clearFilters has to be before clearSearchResults or else
+			// it doesn't effectively clears the filters and searches
+			if (this.filterApplied) {
+				await this.clearFilters();
+			}
+			if (this.searchApplied) {
+				await this.clearSearchResults();
+			}
+		}
+	}
+
 	_handleSorts(entity) {
 		// entity is null on initial load
 		if (!entity) {
@@ -448,11 +465,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 
 	_searchResultsMessageEnabled() {
 		return this.searchApplied && this.searchEnabled;
-	}
-
-	_clearSearchResults() {
-		const search = this.shadowRoot.querySelector('d2l-hm-search');
-		search.clearSearch();
 	}
 
 	_computeNumberOfActivitiesToShow(data, currentNumberOfActivitiesShown) {

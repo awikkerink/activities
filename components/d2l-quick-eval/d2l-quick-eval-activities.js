@@ -137,7 +137,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			<d2l-quick-eval-search-results-summary-container
 				search-results-count="[[_searchResultsCount]]"
 				hidden$="[[!searchApplied]]"
-				on-d2l-quick-eval-search-results-summary-container-clear-search="_clearSearchResults">
+				on-d2l-quick-eval-search-results-summary-container-clear-search="clearSearchResults">
 			</d2l-quick-eval-search-results-summary-container>
 			<div class="d2l-quick-eval-no-submissions" hidden$="[[!_shouldShowNoSubmissions(_data, _loading, filterApplied, searchApplied)]]">
 				<d2l-quick-eval-no-submissions-image></d2l-quick-eval-no-submissions-image>
@@ -195,6 +195,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				type: Boolean,
 				computed: '_computeShowLoadingSkeleton(_loading, filtersLoading, searchLoading)'
 			},
+			hidden: {
+				type: Boolean
+			},
 			_displayPublishAllToast: {
 				type: Boolean,
 				value: false
@@ -204,6 +207,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	static get observers() {
 		return [
 			'_loadData(entity)',
+			'_clearAllOnHidden(hidden)',
 		];
 	}
 
@@ -258,6 +262,19 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		return this._groupByCourse(result);
 	}
 
+	async _clearAllOnHidden(hidden) {
+		if (hidden) {
+			// NOTE: clearFilters has to be before clearSearchResults or else
+			// it doesn't effectively clears the filters and searches
+			if (this.filterApplied) {
+				await this.clearFilters();
+			}
+			if (this.searchApplied) {
+				await this.clearSearchResults();
+			}
+		}
+	}
+
 	_groupByCourse(act) {
 		if (act) {
 			const grouped = act.reduce((acts, a) => {
@@ -275,11 +292,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	_clearErrors() {
 		this.searchError = null;
 		this.filterError = null;
-	}
-
-	_clearSearchResults() {
-		const search = this.shadowRoot.querySelector('d2l-hm-search');
-		search.clearSearch();
 	}
 
 	_updateSearchResultsCount(courses) {
