@@ -31,6 +31,10 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 				@apply --d2l-heading-3;
 				margin-top: 0.9rem;
 				margin-bottom: 0.6rem;
+				max-width: 24rem;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
 			}
 			@media (min-width: 525px) {
 				.d2l-quick-eval-activities-list-card-spacer {
@@ -50,7 +54,7 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 			<dom-repeat items="[[courses]]" as="c">
 				<template>
 					<li>
-						<h2 class="d2l-quick-eval-activities-course-name-heading">[[c.name]]</h2>
+						<h2 title="[[c.name]]" class="d2l-quick-eval-activities-course-name-heading">[[c.name]]</h2>
 						<ul class="d2l-quick-eval-activities-list-remove-ul-styling">
 							<dom-repeat items="[[c.activities]]" as="a">
 								<template>
