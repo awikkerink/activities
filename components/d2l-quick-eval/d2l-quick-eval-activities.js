@@ -162,7 +162,11 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				on-d2l-quick-eval-activity-view-evaluate-new="_navigateEvaluateNew"
 				>
 			</d2l-quick-eval-activities-list>
-			<d2l-alert-toast type="default" open="[[_displayPublishAllToast]]" on-d2l-alert-closed="_onPublishAllToastClosed">Evaluations published successfully.</d2l-alert-toast>
+			<dom-repeat items="[[_publishAllToasts]]" as="toast">
+				<template>
+					<d2l-alert-toast type="default" open>[[_publishAllToastMessage(toast)]]</d2l-alert-toast>
+				</template>
+			</dom-repeat>
 		`;
 
 		quickEvalActivitiesTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
@@ -198,9 +202,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			hidden: {
 				type: Boolean
 			},
-			_displayPublishAllToast: {
-				type: Boolean,
-				value: false
+			_publishAllToasts: {
+				type: Array,
+				value: []
 			}
 		};
 	}
@@ -337,11 +341,11 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					this.performSirenAction(evt.detail.publishAll)
 						.then(evalStatusEntity => {
 							const evaluationStatusHref = this.getEvaluationStatusHref(evalStatusEntity);
-							this._updateEvaluationStatus(evaluationStatusHref, evalStatusEntity);
+							const publishedActivity = this._updateEvaluationStatus(evaluationStatusHref, evalStatusEntity);
 
-							// _displayPublishAllToast is not reset if the toast is not manually closed
-							this._displayPublishAllToast = false;
-							this._displayPublishAllToast = true;
+							if (publishedActivity) {
+								this.push('_publishAllToasts', { activityName: publishedActivity.activityName });
+							}
 						});
 				}
 			}
@@ -391,15 +395,21 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					this.set(`_data.${i}.activities.${j}.unread`, evalStatusEntity.properties.newsubmissions);
 					this.set(`_data.${i}.activities.${j}.resubmitted`, evalStatusEntity.properties.resubmissions);
 					this.set(`_data.${i}.activities.${j}.publishAll`, publishAll);
-					return true;
+
+					return this._data[i].activities[j];
 				}
 			}
 		}
 		return false;
 	}
 
-	_onPublishAllToastClosed() {
-		this._displayPublishAllToast = false;
+	_publishAllToastMessage(toast) {
+		const maxLength = 48;
+
+		if (toast.activityName.length > maxLength) {
+			return this.localize('publishAllToastMessageTruncated', 'truncatedActivityName', toast.activityName.substring(0, maxLength))
+		}
+		return this.localize('publishAllToastMessage', 'activityName', toast.activityName)
 	}
 }
 window.customElements.define(D2LQuickEvalActivities.is, D2LQuickEvalActivities);
