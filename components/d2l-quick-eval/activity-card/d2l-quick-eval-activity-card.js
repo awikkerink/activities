@@ -144,6 +144,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						justify-content: flex-end;
 					}
 					.d2l-quick-eval-card-titles {
+						min-width: 0;
 						min-height: 3rem;
 					}
 					.d2l-quick-eval-card-subtitle {
