@@ -81,7 +81,7 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 		return entity.getLinkByRel(Rels.Activities.evaluationStatus).href;
 	},
 
-	_getEvaluationStatusPromise: async function(entity) {
+	_getEvaluationStatusPromise: async function(entity, extraParams) {
 		return this._followLink(entity, Rels.Activities.evaluationStatus)
 			.then(function(e) {
 				if (e && e.entity && e.entity.properties) {
@@ -99,12 +99,18 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 
 					if (evaluateAllSubEntity && evaluateAllSubEntity.properties.path) {
 						evaluateAllHref = evaluateAllSubEntity.properties.path;
+						if (extraParams.length) {
+							evaluateAllHref = this._buildRelativeUri(evaluateAllHref, extraParams);
+						}
 					}
 					const evaluateNewSubEntity = e.entity.getSubEntityByRel(Rels.Assessments.assessNewApplication);
 
 					let evaluateNewHref = '';
 					if (evaluateNewSubEntity && evaluateNewSubEntity.properties.path) {
 						evaluateNewHref = evaluateNewSubEntity.properties.path;
+						if (extraParams.length) {
+							evaluateNewHref = this._buildRelativeUri(evaluateNewHref, extraParams);
+						}
 					}
 					return {
 						assigned: p.assigned || 0,

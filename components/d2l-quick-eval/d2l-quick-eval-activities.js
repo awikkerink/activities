@@ -236,8 +236,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	}
 
 	async _parseActivities(entity) {
+		const extraParams = this._getExtraParams(this._getHref(entity, 'self'));
 		const result = await Promise.all(entity.entities.map(async function(activity) {
-			const evalStatus = await this._getEvaluationStatusPromise(activity);
+			const evalStatus = await this._getEvaluationStatusPromise(activity, extraParams);
 			const courseName = await this._getCourseNamePromise(activity);
 			const activityNameHref = this._getActivityNameHref(activity);
 			const activityName = await this._getActivityName(activity);
