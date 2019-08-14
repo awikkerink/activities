@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+		<title>d2l-quick-eval-activity-card-subtitle demo</title>
+		<script src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+
+		<!-- For IE11 -->
+		<script src="../../node_modules/lie/dist/lie.polyfill.min.js"></script>
+		<script type="module" src="../../node_modules/whatwg-fetch/fetch.js"></script>
+		<script type="module" src="../../node_modules/url-polyfill/url-polyfill.js"></script>
+
+		<script type="module">
+			import '@polymer/iron-demo-helpers/demo-pages-shared-styles';
+			import '@polymer/iron-demo-helpers/demo-snippet';
+			import 'd2l-typography/d2l-typography.js';
+			import './update-direction.js';
+			import '../../components/d2l-quick-eval/activity-card/d2l-quick-eval-activity-card-subtitle.js';
+
+			const $_documentContainer = document.createElement('template');
+			$_documentContainer.innerHTML = `
+				<custom-style>
+					<style is="custom-style" include="demo-pages-shared-styles"></style>
+				</custom-style>
+				<custom-style include="d2l-typography">
+					<style is="custom-style" include="d2l-typography"></style>
+				</custom-style>
+				<style>
+					html {
+						font-size: 20px;
+					}
+				</style>
+			`;
+			document.body.appendChild($_documentContainer.content);
+		</script>
+	</head>
+	<body class="d2l-typography">
+		<style>
+		</style>
+		<div class="vertical-section-container fixedSize">
+            <style>
+                d2l-quick-eval-activity-card-subtitle {
+                    display: block;
+                }
+            </style>
+			<h3>d2l-quick-eval-activity-card demo</h3>
+			<demo-snippet>
+				<template strip-whitespace>
+					<d2l-quick-eval-activity-card-subtitle class='one-item'></d2l-quick-eval-activity-card-subtitle>
+					<d2l-quick-eval-activity-card-subtitle class='two-item'></d2l-quick-eval-activity-card-subtitle>
+					<d2l-quick-eval-activity-card-subtitle class='many-item'></d2l-quick-eval-activity-card-subtitle>
+					<d2l-quick-eval-activity-card-subtitle class='empty-middle'></d2l-quick-eval-activity-card-subtitle>
+					<d2l-quick-eval-activity-card-subtitle class='empty-last'></d2l-quick-eval-activity-card-subtitle>
+					<d2l-quick-eval-activity-card-subtitle class='empty-first'></d2l-quick-eval-activity-card-subtitle>
+					<d2l-quick-eval-activity-card-subtitle class='null-middle'></d2l-quick-eval-activity-card-subtitle>
+					<d2l-quick-eval-activity-card-subtitle class='null-last'></d2l-quick-eval-activity-card-subtitle>
+					<d2l-quick-eval-activity-card-subtitle class='null-first'></d2l-quick-eval-activity-card-subtitle>
+				</template>
+            </demo-snippet>
+		</div>
+        <script type="module">
+            window.requestAnimationFrame(function() {
+                let sub = document.querySelector('.one-item');
+                sub.text = ['One item'];
+                sub = document.querySelector('.two-item');
+                sub.text = ['Two', 'items'];
+                sub = document.querySelector('.many-item');
+                sub.text = ['Multiple', 'items', 'items', 'items', 'items', 'items', 'items'];
+                sub = document.querySelector('.empty-middle');
+                sub.text = ['Empty', 'middle', '', 'item'];
+                sub = document.querySelector('.empty-last');
+                sub.text = ['Empty', 'last', 'item', ''];
+                sub = document.querySelector('.empty-first');
+                sub.text = ['', 'Empty', 'first', 'item'];
+                sub = document.querySelector('.null-middle');
+                sub.text = ['Null', 'middle', null, 'item'];
+                sub = document.querySelector('.null-last');
+                sub.text = ['Null', 'last', 'item', null];
+                sub = document.querySelector('.null-first');
+                sub.text = [null, 'Null', 'first', 'item'];
+            });
+        </script>
+	</body>
+</html>
