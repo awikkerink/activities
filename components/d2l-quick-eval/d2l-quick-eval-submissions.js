@@ -362,16 +362,14 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		return result;
 	}
 
-	async _clearAllOnHidden(hidden) {
-		if (hidden) {
-			// NOTE: clearFilters has to be before clearSearchResults or else
-			// it doesn't effectively clears the filters and searches
-			if (this.filterApplied) {
-				await this.clearFilters();
-			}
-			if (this.searchApplied) {
-				await this.clearSearchResults();
-			}
+	async _clearAllOnHidden() {
+		// NOTE: clearFilters has to be before clearSearchResults or else
+		// it doesn't effectively clears the filters and searches
+		if (this.filterApplied) {
+			await this.clearFilters();
+		}
+		if (this.searchApplied) {
+			await this.clearSearchResults();
 		}
 	}
 
