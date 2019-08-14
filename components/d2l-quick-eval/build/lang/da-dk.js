@@ -49,6 +49,7 @@ const LangDadkImpl = (superClass) => class extends superClass {
 			'submissionList': 'Submission List',
 			'submissions': 'Afleveringer',
 			'tableTitle': 'Liste over ikke-evaluerede elevafleveringer på tværs af kurser og værktøjer',
+			'toggleIndicatorLabel': 'Perform Actions on {target}',
 			'tryAgain': 'Prøv igen',
 			'newSubmissions': 'New Submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',

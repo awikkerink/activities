@@ -49,6 +49,7 @@ const LangNlImpl = (superClass) => class extends superClass {
 			'submissionList': 'Lijst met indieningen via postvak',
 			'submissions': 'Indieningen',
 			'tableTitle': 'Lijst van niet-geëvalueerde indieningen via postvak van cursisten van alle cursussen en tools',
+			'toggleIndicatorLabel': 'Perform Actions on {target}',
 			'tryAgain': 'Probeer het opnieuw',
 			'newSubmissions': 'New Submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
