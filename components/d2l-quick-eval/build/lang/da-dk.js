@@ -38,6 +38,8 @@ const LangDadkImpl = (superClass) => class extends superClass {
 			'noSubmissions': 'Der er ingen afleveringer, der kræver din opmærksomhed.',
 			'publishAll': 'Publish All',
 			'publishAllConfirmDialogMessage': '{evaluated} out of {assigned} users will receive feedback on publishing. Do you want to continue?',
+			'publishAllToastMessage': '{activityName} evaluations published successfully.',
+			'publishAllToastMessageTruncated': '{truncatedActivityName}… evaluations published successfully.',
 			'published': 'Published',
 			'quiz': 'Quiz',
 			'search': 'Søg',

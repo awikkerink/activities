@@ -38,6 +38,8 @@ const LangZhtwImpl = (superClass) => class extends superClass {
 			'noSubmissions': '沒有提交項目需要您注意。',
 			'publishAll': '全部發佈',
 			'publishAllConfirmDialogMessage': '{evaluated} out of {assigned} users will receive feedback on publishing. Do you want to continue?',
+			'publishAllToastMessage': '{activityName} evaluations published successfully.',
+			'publishAllToastMessageTruncated': '{truncatedActivityName}… evaluations published successfully.',
 			'published': '已發佈',
 			'quiz': '測驗',
 			'search': '搜尋',

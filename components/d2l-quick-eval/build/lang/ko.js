@@ -38,6 +38,8 @@ const LangKoImpl = (superClass) => class extends superClass {
 			'noSubmissions': '주목할 제출 항목이 없습니다.',
 			'publishAll': '모두 게시',
 			'publishAllConfirmDialogMessage': '{evaluated} out of {assigned} users will receive feedback on publishing. Do you want to continue?',
+			'publishAllToastMessage': '{activityName} evaluations published successfully.',
+			'publishAllToastMessageTruncated': '{truncatedActivityName}… evaluations published successfully.',
 			'published': '게시됨',
 			'quiz': '퀴즈',
 			'search': '검색',

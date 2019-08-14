@@ -38,6 +38,8 @@ const LangPtImpl = (superClass) => class extends superClass {
 			'noSubmissions': 'Não há envios que precisem de sua atenção.',
 			'publishAll': 'Publicar Tudo',
 			'publishAllConfirmDialogMessage': '{evaluated} out of {assigned} users will receive feedback on publishing. Do you want to continue?',
+			'publishAllToastMessage': '{activityName} evaluations published successfully.',
+			'publishAllToastMessageTruncated': '{truncatedActivityName}… evaluations published successfully.',
 			'published': 'Publicado',
 			'quiz': 'Questionário',
 			'search': 'Pesquisar',

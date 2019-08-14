@@ -38,6 +38,8 @@ const LangEnImpl = (superClass) => class extends superClass {
 			'noSubmissions': 'There are no submissions that need your attention.',
 			'publishAll': 'Publish All',
 			'publishAllConfirmDialogMessage': '{evaluated} out of {assigned} users will receive feedback on publishing. Do you want to continue?',
+			'publishAllToastMessage': '{activityName} evaluations published successfully.',
+			'publishAllToastMessageTruncated': '{truncatedActivityName}… evaluations published successfully.',
 			'published': 'Published',
 			'quiz': 'Quiz',
 			'search': 'Search',
@@ -64,3 +66,4 @@ const LangEnImpl = (superClass) => class extends superClass {
 };
 
 export const LangEn = dedupingMixin(LangEnImpl);
+
