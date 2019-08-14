@@ -34,6 +34,7 @@ const LangTrImpl = (superClass) => class extends superClass {
 			'masterTeacher': 'Öğretmen',
 			'no': 'No',
 			'noCriteriaMatch': 'Kriterinizle eşleşen gönderi yok.',
+			'noCriteriaMatchActivities': 'There are no activities that match your criteria.',
 			'noResults': 'Sonuç yok.',
 			'noSubmissions': 'İlgilenmeniz gereken gönderi yok.',
 			'publishAll': 'Tümünü Yayımla',

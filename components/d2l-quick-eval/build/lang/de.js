@@ -34,6 +34,7 @@ const LangDeImpl = (superClass) => class extends superClass {
 			'masterTeacher': 'Lehrer',
 			'no': 'No',
 			'noCriteriaMatch': 'Es gibt keine Abgaben, die mit Ihren Kriterien übereinstimmen.',
+			'noCriteriaMatchActivities': 'There are no activities that match your criteria.',
 			'noResults': 'Keine Ergebnisse',
 			'noSubmissions': 'Es gibt keine Abgaben, die Ihre Aufmerksamkeit erfordern.',
 			'publishAll': 'Alle veröffentlichen',

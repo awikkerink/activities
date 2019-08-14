@@ -34,6 +34,7 @@ const LangFrImpl = (superClass) => class extends superClass {
 			'masterTeacher': 'Enseignant',
 			'no': 'No',
 			'noCriteriaMatch': 'Aucune soumission ne correspond à vos critères.',
+			'noCriteriaMatchActivities': 'There are no activities that match your criteria.',
 			'noResults': 'Aucun résultat ici.',
 			'noSubmissions': 'Aucune soumission ne requiert votre attention.',
 			'publishAll': 'Tout publier',

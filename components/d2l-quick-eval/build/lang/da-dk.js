@@ -34,6 +34,7 @@ const LangDadkImpl = (superClass) => class extends superClass {
 			'masterTeacher': 'Lærer',
 			'no': 'No',
 			'noCriteriaMatch': 'Der er ingen afleveringer, der matcher dine kriterier.',
+			'noCriteriaMatchActivities': 'There are no activities that match your criteria.',
 			'noResults': 'Ingen resultater her.',
 			'noSubmissions': 'Der er ingen afleveringer, der kræver din opmærksomhed.',
 			'publishAll': 'Publish All',

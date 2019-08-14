@@ -34,6 +34,7 @@ const LangSvImpl = (superClass) => class extends superClass {
 			'masterTeacher': 'Lärare',
 			'no': 'No',
 			'noCriteriaMatch': 'Det finns inga inlämningar som matchar dina kriterier.',
+			'noCriteriaMatchActivities': 'There are no activities that match your criteria.',
 			'noResults': 'Det finns inga resultat här.',
 			'noSubmissions': 'Det finns inga inlämningar som du behöver utföra någon åtgärd på.',
 			'publishAll': 'Publicera alla',

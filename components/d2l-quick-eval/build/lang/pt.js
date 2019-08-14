@@ -34,6 +34,7 @@ const LangPtImpl = (superClass) => class extends superClass {
 			'masterTeacher': 'Professor',
 			'no': 'No',
 			'noCriteriaMatch': 'Não há nenhum envio correspondente aos seus critérios.',
+			'noCriteriaMatchActivities': 'There are no activities that match your criteria.',
 			'noResults': 'Nenhum resultado aqui.',
 			'noSubmissions': 'Não há envios que precisem de sua atenção.',
 			'publishAll': 'Publicar Tudo',

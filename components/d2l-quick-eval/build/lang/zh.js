@@ -34,6 +34,7 @@ const LangZhImpl = (superClass) => class extends superClass {
 			'masterTeacher': '教师',
 			'no': 'No',
 			'noCriteriaMatch': '没有与筛选条件匹配的提交。',
+			'noCriteriaMatchActivities': 'There are no activities that match your criteria.',
 			'noResults': '此处没有结果。',
 			'noSubmissions': '没有需要您注意的提交。',
 			'publishAll': '全部发布',

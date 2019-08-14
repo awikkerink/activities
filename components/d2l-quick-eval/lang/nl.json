@@ -26,6 +26,7 @@
    "masterTeacher" : "Docent",
    "no": "No",
    "noCriteriaMatch" : "Er zijn geen indieningen via postvak die overeenkomen met uw criteria.",
+   "noCriteriaMatchActivities": "There are no activities that match your criteria.",
    "noResults" : "Geen resultaten hier.",
    "noSubmissions" : "Er zijn geen indieningen via postvak die uw aandacht nodig hebben.",
    "publishAll" : "Alles publiceren",
