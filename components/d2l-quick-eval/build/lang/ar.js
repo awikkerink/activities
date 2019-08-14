@@ -49,6 +49,7 @@ const LangArImpl = (superClass) => class extends superClass {
 			'submissionList': 'قائمة الإرسال',
 			'submissions': 'الإرسالات',
 			'tableTitle': 'قائمة بعمليات إرسال المتعلّم غير المقيّمة من المقررات التعليمية والأدوات',
+			'toggleIndicatorLabel': 'Perform Actions on {target}',
 			'tryAgain': 'المحاولة مرة أخرى',
 			'newSubmissions': 'New Submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',

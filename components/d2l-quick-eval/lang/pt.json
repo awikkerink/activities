@@ -41,6 +41,7 @@
    "submissionList" : "Lista de Envio",
    "submissions" : "Envios",
    "tableTitle" : "Lista de envios de alunos não avaliados de todos os cursos e ferramentas",
+   "toggleIndicatorLabel": "Perform Actions on {target}",
    "tryAgain" : "Tentar novamente",
    "newSubmissions" : "New Submissions",
    "newSubmissionDetails" : "{newNum} new, {resub} resubmissions",

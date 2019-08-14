@@ -49,6 +49,7 @@ const LangZhImpl = (superClass) => class extends superClass {
 			'submissionList': '提交列表',
 			'submissions': '提交',
 			'tableTitle': '来自各个课程和工具的未评估学员提交的列表',
+			'toggleIndicatorLabel': 'Perform Actions on {target}',
 			'tryAgain': '请重试',
 			'newSubmissions': 'New Submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',

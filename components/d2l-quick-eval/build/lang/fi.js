@@ -49,6 +49,7 @@ const LangFiImpl = (superClass) => class extends superClass {
 			'submissionList': 'Submission List',
 			'submissions': 'Submissions',
 			'tableTitle': 'List of unevaluated Learner submissions from across courses and tools',
+			'toggleIndicatorLabel': 'Perform Actions on {target}',
 			'tryAgain': 'Try Again',
 			'newSubmissions': 'New Submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',

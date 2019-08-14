@@ -49,6 +49,7 @@ const LangZhtwImpl = (superClass) => class extends superClass {
 			'submissionList': '提交清單',
 			'submissions': '提交項目',
 			'tableTitle': '此清單包含所有課程和工具中未評估的學習者提交項目',
+			'toggleIndicatorLabel': 'Perform Actions on {target}',
 			'tryAgain': '再試一次',
 			'newSubmissions': 'New Submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',

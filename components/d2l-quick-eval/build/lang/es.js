@@ -49,6 +49,7 @@ const LangEsImpl = (superClass) => class extends superClass {
 			'submissionList': 'Lista de material enviado',
 			'submissions': 'Materiales enviados',
 			'tableTitle': 'Lista de envíos no evaluados del estudiante de todos los cursos y herramientas',
+			'toggleIndicatorLabel': 'Perform Actions on {target}',
 			'tryAgain': 'Volver a intentarlo',
 			'newSubmissions': 'New Submissions',
 			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
