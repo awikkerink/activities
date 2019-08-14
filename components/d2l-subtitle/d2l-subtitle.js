@@ -1,7 +1,6 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
-import {QuickEvalLocalize} from '../QuickEvalLocalize.js';
 
-class D2LQuickEvalActivityCardSubtitle extends QuickEvalLocalize(PolymerElement) {
+class D2LSubtitle extends PolymerElement {
 	static get template() {
 		const subtitleTemplate =  html`
 			<style>
@@ -48,4 +47,4 @@ class D2LQuickEvalActivityCardSubtitle extends QuickEvalLocalize(PolymerElement)
 	}
 }
 
-window.customElements.define('d2l-quick-eval-activity-card-subtitle', D2LQuickEvalActivityCardSubtitle);
+window.customElements.define('d2l-subtitle', D2LSubtitle);
