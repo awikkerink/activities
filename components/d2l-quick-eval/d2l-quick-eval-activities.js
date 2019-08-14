@@ -407,9 +407,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		const maxLength = 48;
 
 		if (toast.activityName.length > maxLength) {
-			return this.localize('publishAllToastMessageTruncated', 'truncatedActivityName', toast.activityName.substring(0, maxLength))
+			return this.localize('publishAllToastMessageTruncated', 'truncatedActivityName', toast.activityName.substring(0, maxLength));
 		}
-		return this.localize('publishAllToastMessage', 'activityName', toast.activityName)
+		return this.localize('publishAllToastMessage', 'activityName', toast.activityName);
 	}
 }
 window.customElements.define(D2LQuickEvalActivities.is, D2LQuickEvalActivities);
