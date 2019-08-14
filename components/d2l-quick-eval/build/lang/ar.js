@@ -34,6 +34,7 @@ const LangArImpl = (superClass) => class extends superClass {
 			'masterTeacher': 'المعلّم',
 			'no': 'No',
 			'noCriteriaMatch': 'لا تتوفر أي عمليات إرسال تتوافق مع معاييرك.',
+			'noCriteriaMatchActivities': 'There are no activities that match your criteria.',
 			'noResults': 'لا تتوفر أي نتائج هنا.',
 			'noSubmissions': 'لا تتوفر أي عمليات إرسال تتطلب اهتمامك.',
 			'publishAll': 'نشر الكل',

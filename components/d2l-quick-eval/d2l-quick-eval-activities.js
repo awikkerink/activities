@@ -148,7 +148,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			<div class="d2l-quick-eval-no-criteria-results" hidden$="[[!_shouldShowNoCriteriaResults(_data, _loading, filterApplied, searchApplied)]]">
 				<d2l-quick-eval-no-criteria-results-image></d2l-quick-eval-no-criteria-results-image>
 				<h2 class="d2l-quick-eval-no-criteria-results-heading">[[localize('noResults')]]</h2>
-				<p class="d2l-body-standard">[[localize('noCriteriaMatch')]]</p>
+				<p class="d2l-body-standard">[[localize('noCriteriaMatchActivities')]]</p>
 			</div>
 			<d2l-quick-eval-activities-skeleton hidden$="[[!_showLoadingSkeleton]]"></d2l-quick-eval-activities-skeleton>
 			<d2l-quick-eval-activities-list

@@ -34,6 +34,7 @@ const LangJaImpl = (superClass) => class extends superClass {
 			'masterTeacher': '講師',
 			'no': 'No',
 			'noCriteriaMatch': '条件に一致する送信物はありません。',
+			'noCriteriaMatchActivities': 'There are no activities that match your criteria.',
 			'noResults': 'ここには結果がありません。',
 			'noSubmissions': '確認が必要な送信物はありません。',
 			'publishAll': 'すべて公開',

@@ -34,6 +34,7 @@ const LangEnImpl = (superClass) => class extends superClass {
 			'masterTeacher': 'Teacher',
 			'no': 'No',
 			'noCriteriaMatch': 'There are no submissions that match your criteria.',
+			'noCriteriaMatchActivities': 'There are no activities that match your criteria.',
 			'noResults': 'No results here.',
 			'noSubmissions': 'There are no submissions that need your attention.',
 			'publishAll': 'Publish All',

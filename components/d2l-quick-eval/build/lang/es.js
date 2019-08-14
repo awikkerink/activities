@@ -34,6 +34,7 @@ const LangEsImpl = (superClass) => class extends superClass {
 			'masterTeacher': 'Profesor',
 			'no': 'No',
 			'noCriteriaMatch': 'No hay materiales enviados que coincidan con sus criterios.',
+			'noCriteriaMatchActivities': 'There are no activities that match your criteria.',
 			'noResults': 'No hay resultados aquí.',
 			'noSubmissions': 'No hay envíos que requieran su atención.',
 			'publishAll': 'Publicar todo',

@@ -34,6 +34,7 @@ const LangZhtwImpl = (superClass) => class extends superClass {
 			'masterTeacher': '教師',
 			'no': 'No',
 			'noCriteriaMatch': '沒有提交項目符合您的標準。',
+			'noCriteriaMatchActivities': 'There are no activities that match your criteria.',
 			'noResults': '這裡沒有任何結果。',
 			'noSubmissions': '沒有提交項目需要您注意。',
 			'publishAll': '全部發佈',
