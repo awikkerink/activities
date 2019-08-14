@@ -47,39 +47,17 @@
 			<h3>d2l-subtitle demo</h3>
 			<demo-snippet>
 				<template strip-whitespace>
-					<d2l-subtitle class="one-item"></d2l-subtitle>
-					<d2l-subtitle class="two-item"></d2l-subtitle>
-					<d2l-subtitle class="many-item"></d2l-subtitle>
-					<d2l-subtitle class="empty-middle"></d2l-subtitle>
-					<d2l-subtitle class="empty-last"></d2l-subtitle>
-					<d2l-subtitle class="empty-first"></d2l-subtitle>
-					<d2l-subtitle class="null-middle"></d2l-subtitle>
-					<d2l-subtitle class="null-last"></d2l-subtitle>
-					<d2l-subtitle class="null-first"></d2l-subtitle>
+					<d2l-subtitle text='["One item"]'></d2l-subtitle>
+					<d2l-subtitle text='["Two","items"]'></d2l-subtitle>
+					<d2l-subtitle text='["Multiple","items","items","items","items","items","items"]'></d2l-subtitle>
+					<d2l-subtitle text='["Empty","middle","","item"]'></d2l-subtitle>
+					<d2l-subtitle text='["Empty","last","item",""]'></d2l-subtitle>
+					<d2l-subtitle text='["","Empty","first","item"]'></d2l-subtitle>
+					<d2l-subtitle text='["Null","middle",null,"item"]'></d2l-subtitle>
+					<d2l-subtitle text='["Null","last","item",null]'></d2l-subtitle>
+					<d2l-subtitle text='[null,"Null","first","item"]'></d2l-subtitle>
 				</template>
 			</demo-snippet>
 		</div>
-		<script type="module">
-			window.requestAnimationFrame(function() {
-				let sub = document.querySelector('.one-item');
-				sub.text = ['One item'];
-				sub = document.querySelector('.two-item');
-				sub.text = ['Two', 'items'];
-				sub = document.querySelector('.many-item');
-				sub.text = ['Multiple', 'items', 'items', 'items', 'items', 'items', 'items'];
-				sub = document.querySelector('.empty-middle');
-				sub.text = ['Empty', 'middle', '', 'item'];
-				sub = document.querySelector('.empty-last');
-				sub.text = ['Empty', 'last', 'item', ''];
-				sub = document.querySelector('.empty-first');
-				sub.text = ['', 'Empty', 'first', 'item'];
-				sub = document.querySelector('.null-middle');
-				sub.text = ['Null', 'middle', null, 'item'];
-				sub = document.querySelector('.null-last');
-				sub.text = ['Null', 'last', 'item', null];
-				sub = document.querySelector('.null-first');
-				sub.text = [null, 'Null', 'first', 'item'];
-			});
-		</script>
 	</body>
 </html>

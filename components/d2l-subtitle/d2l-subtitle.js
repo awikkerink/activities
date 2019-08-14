@@ -43,7 +43,7 @@ class D2LSubtitle extends PolymerElement {
 	}
 
 	_computeDisplayText(text) {
-		return text.filter(t => t);
+		return text.filter(t => t !== null && t !== undefined && t !== '');
 	}
 }
 
