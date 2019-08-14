@@ -38,6 +38,8 @@ const LangTrImpl = (superClass) => class extends superClass {
 			'noSubmissions': 'İlgilenmeniz gereken gönderi yok.',
 			'publishAll': 'Tümünü Yayımla',
 			'publishAllConfirmDialogMessage': '{evaluated} out of {assigned} users will receive feedback on publishing. Do you want to continue?',
+			'publishAllToastMessage': '{activityName} evaluations published successfully.',
+			'publishAllToastMessageTruncated': '{truncatedActivityName}… evaluations published successfully.',
 			'published': 'Yayınlandı',
 			'quiz': 'Sınav',
 			'search': 'Ara',

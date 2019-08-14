@@ -38,6 +38,8 @@ const LangDeImpl = (superClass) => class extends superClass {
 			'noSubmissions': 'Es gibt keine Abgaben, die Ihre Aufmerksamkeit erfordern.',
 			'publishAll': 'Alle veröffentlichen',
 			'publishAllConfirmDialogMessage': '{evaluated} out of {assigned} users will receive feedback on publishing. Do you want to continue?',
+			'publishAllToastMessage': '{activityName} evaluations published successfully.',
+			'publishAllToastMessageTruncated': '{truncatedActivityName}… evaluations published successfully.',
 			'published': 'Veröffentlicht',
 			'quiz': 'Test',
 			'search': 'Suchen',

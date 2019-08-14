@@ -38,6 +38,8 @@ const LangJaImpl = (superClass) => class extends superClass {
 			'noSubmissions': '確認が必要な送信物はありません。',
 			'publishAll': 'すべて公開',
 			'publishAllConfirmDialogMessage': '{evaluated} out of {assigned} users will receive feedback on publishing. Do you want to continue?',
+			'publishAllToastMessage': '{activityName} evaluations published successfully.',
+			'publishAllToastMessageTruncated': '{truncatedActivityName}… evaluations published successfully.',
 			'published': '公開済み',
 			'quiz': 'クイズ',
 			'search': '検索',

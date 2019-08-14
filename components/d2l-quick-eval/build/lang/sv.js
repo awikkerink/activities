@@ -38,6 +38,8 @@ const LangSvImpl = (superClass) => class extends superClass {
 			'noSubmissions': 'Det finns inga inlämningar som du behöver utföra någon åtgärd på.',
 			'publishAll': 'Publicera alla',
 			'publishAllConfirmDialogMessage': '{evaluated} out of {assigned} users will receive feedback on publishing. Do you want to continue?',
+			'publishAllToastMessage': '{activityName} evaluations published successfully.',
+			'publishAllToastMessageTruncated': '{truncatedActivityName}… evaluations published successfully.',
 			'published': 'Publicerad',
 			'quiz': 'Förhör',
 			'search': 'Sökning',

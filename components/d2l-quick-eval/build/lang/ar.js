@@ -38,6 +38,8 @@ const LangArImpl = (superClass) => class extends superClass {
 			'noSubmissions': 'لا تتوفر أي عمليات إرسال تتطلب اهتمامك.',
 			'publishAll': 'نشر الكل',
 			'publishAllConfirmDialogMessage': '{evaluated} out of {assigned} users will receive feedback on publishing. Do you want to continue?',
+			'publishAllToastMessage': '{activityName} evaluations published successfully.',
+			'publishAllToastMessageTruncated': '{truncatedActivityName}… evaluations published successfully.',
 			'published': 'منشور',
 			'quiz': 'الاختبار',
 			'search': 'بحث',

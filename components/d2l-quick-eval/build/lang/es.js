@@ -38,6 +38,8 @@ const LangEsImpl = (superClass) => class extends superClass {
 			'noSubmissions': 'No hay envíos que requieran su atención.',
 			'publishAll': 'Publicar todo',
 			'publishAllConfirmDialogMessage': '{evaluated} out of {assigned} users will receive feedback on publishing. Do you want to continue?',
+			'publishAllToastMessage': '{activityName} evaluations published successfully.',
+			'publishAllToastMessageTruncated': '{truncatedActivityName}… evaluations published successfully.',
 			'published': 'Publicado',
 			'quiz': 'Cuestionario',
 			'search': 'Buscar',

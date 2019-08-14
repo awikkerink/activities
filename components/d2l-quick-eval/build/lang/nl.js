@@ -38,6 +38,8 @@ const LangNlImpl = (superClass) => class extends superClass {
 			'noSubmissions': 'Er zijn geen indieningen via postvak die uw aandacht nodig hebben.',
 			'publishAll': 'Alles publiceren',
 			'publishAllConfirmDialogMessage': '{evaluated} out of {assigned} users will receive feedback on publishing. Do you want to continue?',
+			'publishAllToastMessage': '{activityName} evaluations published successfully.',
+			'publishAllToastMessageTruncated': '{truncatedActivityName}… evaluations published successfully.',
 			'published': 'Gepubliceerd',
 			'quiz': 'Test',
 			'search': 'Zoeken',

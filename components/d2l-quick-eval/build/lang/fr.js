@@ -38,6 +38,8 @@ const LangFrImpl = (superClass) => class extends superClass {
 			'noSubmissions': 'Aucune soumission ne requiert votre attention.',
 			'publishAll': 'Tout publier',
 			'publishAllConfirmDialogMessage': '{evaluated} out of {assigned} users will receive feedback on publishing. Do you want to continue?',
+			'publishAllToastMessage': '{activityName} evaluations published successfully.',
+			'publishAllToastMessageTruncated': '{truncatedActivityName}… evaluations published successfully.',
 			'published': 'Publié',
 			'quiz': 'Questionnaire',
 			'search': 'Rechercher',
