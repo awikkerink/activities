@@ -80,7 +80,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				}
 				d2l-alert {
 					margin: auto;
-					margin-bottom: 0.5rem;
+					margin-top: 1rem;
 				}
 				d2l-quick-eval-search-results-summary-container {
 					margin-bottom: 0.9rem;
@@ -128,6 +128,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				</d2l-hm-search>
 			</div>
 			<div class="clear"></div>
+			<d2l-alert type="critical" hidden$="[[!_isError]]" id="d2l-quick-eval-activities-load-error-alert">
+				[[localize('failedToLoadActivities')]]
+			</d2l-alert>
 			<d2l-alert type="critical" hidden$="[[!filterError]]" id="d2l-quick-eval-filter-error-alert">
 				[[localize('failedToFilter')]]
 			</d2l-alert>
@@ -139,13 +142,13 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				hidden$="[[!searchApplied]]"
 				on-d2l-quick-eval-search-results-summary-container-clear-search="clearSearchResults">
 			</d2l-quick-eval-search-results-summary-container>
-			<div class="d2l-quick-eval-no-submissions" hidden$="[[!_shouldShowNoSubmissions(_data, _loading, filterApplied, searchApplied)]]">
+			<div class="d2l-quick-eval-no-submissions" hidden$="[[!_shouldShowNoSubmissions(_data, _loading, _isError, filterApplied, searchApplied)]]">
 				<d2l-quick-eval-no-submissions-image></d2l-quick-eval-no-submissions-image>
 				<h2 class="d2l-quick-eval-no-submissions-heading">[[localize('caughtUp')]]</h2>
 				<p class="d2l-body-standard">[[localize('noSubmissions')]]</p>
 				<p class="d2l-body-standard">[[localize('checkBackOften')]]</p>
 			</div>
-			<div class="d2l-quick-eval-no-criteria-results" hidden$="[[!_shouldShowNoCriteriaResults(_data, _loading, filterApplied, searchApplied)]]">
+			<div class="d2l-quick-eval-no-criteria-results" hidden$="[[!_shouldShowNoCriteriaResults(_data, _loading, _isError, filterApplied, searchApplied)]]">
 				<d2l-quick-eval-no-criteria-results-image></d2l-quick-eval-no-criteria-results-image>
 				<h2 class="d2l-quick-eval-no-criteria-results-heading">[[localize('noResults')]]</h2>
 				<p class="d2l-body-standard">[[localize('noCriteriaMatchActivities')]]</p>
@@ -199,6 +202,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				type: Boolean,
 				computed: '_computeShowLoadingSkeleton(_loading, filtersLoading, searchLoading)'
 			},
+			_isError: {
+				type: Boolean,
+				value: false,
+			},
 			hidden: {
 				type: Boolean
 			},
@@ -212,6 +219,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		return [
 			'_loadData(entity)',
 			'_clearAllOnHidden(hidden)',
+			'_onFilterErrorChange(filterError)',
+			'_onSearchErrorChange(searchError)',
 		];
 	}
 
@@ -230,8 +239,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			}
 			this._updateSearchResultsCount(this._data);
 			this._clearErrors();
-
+			this._handleLoadSuccess();
 		} catch (e) {
+			this._handleLoadFailure();
 			this._logError(e, {developerMessage: 'Unable to load activities from entity.'});
 			throw e;
 		} finally {
@@ -301,17 +311,37 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		this.filterError = null;
 	}
 
+	_handleLoadFailure() {
+		this._isError = true;
+	}
+
+	_handleLoadSuccess() {
+		this._isError = false;
+	}
+
+	_onFilterErrorChange(filterError) {
+		if (filterError) {
+			this._logError(filterError.error, { developerMessage: 'Failed to retrieve filter results' });
+		}
+	}
+
+	_onSearchErrorChange(searchError) {
+		if (searchError) {
+			this._logError(searchError.error, { developerMessage: 'Failed to retrieve search results.' });
+		}
+	}
+
 	_updateSearchResultsCount(courses) {
 		this._searchResultsCount = courses.reduce(
 			(accumulator, course)=> accumulator + course.activities.length, 0);
 	}
 
 	_shouldShowNoSubmissions() {
-		return !(this._data.length) && !this._loading && !(this.filterApplied || this.searchApplied);
+		return !(this._data.length) && !this._loading && !this._isError && !(this.filterApplied || this.searchApplied);
 	}
 
 	_shouldShowNoCriteriaResults() {
-		return !(this._data.length) && !this._loading && (this.filterApplied || this.searchApplied);
+		return !(this._data.length) && !this._loading && !this._isError && (this.filterApplied || this.searchApplied);
 	}
 
 	_shouldShowActivitiesList(_data, _showLoadingSkeleton) {
@@ -410,6 +440,14 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			return this.localize('publishAllToastMessageTruncated', 'truncatedActivityName', toast.activityName.substring(0, maxLength));
 		}
 		return this.localize('publishAllToastMessage', 'activityName', toast.activityName);
+	}
+
+	ready() {
+		super.ready();
+		this.addEventListener('d2l-siren-entity-error', ()=> {
+			this._loading = false;
+			this._handleLoadFailure();
+		});
 	}
 }
 window.customElements.define(D2LQuickEvalActivities.is, D2LQuickEvalActivities);
