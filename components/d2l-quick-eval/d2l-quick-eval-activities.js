@@ -242,7 +242,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			this._handleLoadSuccess();
 		} catch (e) {
 			this._handleLoadFailure();
-			this._logError(e, {developerMessage: 'Unable to load activities from entity.'});
+			this._logError(e, {developerMessage: 'activities-view: Unable to load activities from entity.'});
 			throw e;
 		} finally {
 			this._loading = false;
@@ -321,13 +321,13 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 	_onFilterErrorChange(filterError) {
 		if (filterError) {
-			this._logError(filterError.error, { developerMessage: 'Failed to retrieve filter results' });
+			this._logError(filterError.error, { developerMessage: 'activities-view: Failed to retrieve filter results' });
 		}
 	}
 
 	_onSearchErrorChange(searchError) {
 		if (searchError) {
-			this._logError(searchError.error, { developerMessage: 'Failed to retrieve search results.' });
+			this._logError(searchError.error, { developerMessage: 'activities-view: Failed to retrieve search results.' });
 		}
 	}
 
