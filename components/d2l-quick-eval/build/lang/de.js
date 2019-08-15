@@ -25,6 +25,7 @@ const LangDeImpl = (superClass) => class extends superClass {
 			'evaluated': 'Bewertet',
 			'failedToFilter': 'Filter konnte nicht angewendet werden. Versuchen Sie es in ein paar Minuten erneut.',
 			'failedToLoadData': 'Abgaben können nicht geladen werden. Versuchen Sie es in ein paar Minuten erneut.',
+			'failedToLoadActivities': 'Unable to load activities. Try again in a few minutes.',
 			'failedToLoadMore': 'Es können keine weiteren Abgaben geladen werden. Versuchen Sie es in ein paar Minuten erneut.',
 			'failedToSearch': 'Suche konnte nicht durchgeführt werden. Versuchen Sie es in ein paar Minuten erneut.',
 			'firstName': 'Vorname',

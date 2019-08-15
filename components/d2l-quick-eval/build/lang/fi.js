@@ -25,6 +25,7 @@ const LangFiImpl = (superClass) => class extends superClass {
 			'evaluated': 'Evaluated',
 			'failedToFilter': 'Unable to apply filter. Try again in a few minutes.',
 			'failedToLoadData': 'Unable to load submissions. Try again in a few minutes.',
+			'failedToLoadActivities': 'Unable to load activities. Try again in a few minutes.',
 			'failedToLoadMore': 'Unable to load more submissions. Try again in a few minutes.',
 			'failedToSearch': 'Unable to apply search. Try again in a few minutes.',
 			'firstName': 'First Name',
@@ -59,7 +60,7 @@ const LangFiImpl = (superClass) => class extends superClass {
 			'newPosts': 'New Posts',
 			'newPostDetails': '{numInteractions} threads or replies',
 			'newAttempts': 'New Attempts',
-			'newAttemptsDetails': '{newNum} new, {reAttemptNum} reattempts',
+			'newAttemptsDetails': '{newNum} new',
 			'viewBy': 'View by:',
 			'yes': 'Yes'
 		};

@@ -25,6 +25,7 @@ const LangPtImpl = (superClass) => class extends superClass {
 			'evaluated': 'Avaliado',
 			'failedToFilter': 'Não foi possível aplicar o filtro. Tente novamente em alguns minutos.',
 			'failedToLoadData': 'Não foi possível carregar os envios. Tente novamente em alguns minutos.',
+			'failedToLoadActivities': 'Unable to load activities. Try again in a few minutes.',
 			'failedToLoadMore': 'Não foi possível carregar mais envios. Tente novamente em alguns minutos.',
 			'failedToSearch': 'Não foi possível aplicar pesquisa. Tente novamente em alguns minutos.',
 			'firstName': 'Nome',

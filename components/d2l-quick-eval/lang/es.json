@@ -17,6 +17,7 @@
    "evaluated" : "Evaluado",
    "failedToFilter" : "No se puede aplicar el filtro. Intente de nuevo en algunos minutos.",
    "failedToLoadData" : "No se puede cargar los envíos. Intente de nuevo en algunos minutos.",
+   "failedToLoadActivities": "Unable to load activities. Try again in a few minutes.",
    "failedToLoadMore" : "No se puede cargar más envíos. Intente de nuevo en algunos minutos.",
    "failedToSearch" : "No se puede aplicar la búsqueda. Intente de nuevo en algunos minutos.",
    "firstName" : "Nombre",

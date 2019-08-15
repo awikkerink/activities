@@ -25,6 +25,7 @@ const LangFrfrImpl = (superClass) => class extends superClass {
 			'evaluated': 'Evaluated',
 			'failedToFilter': 'Impossible d’appliquer le filtre. Réessayez dans quelques minutes.',
 			'failedToLoadData': 'Impossible de charger les soumissions. Réessayez dans quelques minutes.',
+			'failedToLoadActivities': 'Unable to load activities. Try again in a few minutes.',
 			'failedToLoadMore': 'Impossible de charger plus de soumissions. Réessayez dans quelques minutes.',
 			'failedToSearch': 'Impossible d’appliquer la recherche. Réessayez dans quelques minutes.',
 			'firstName': 'Prénom',

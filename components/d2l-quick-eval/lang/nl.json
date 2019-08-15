@@ -17,6 +17,7 @@
    "evaluated" : "Geëvalueerd",
    "failedToFilter" : "Kan filter niet toepassen. Probeer het nogmaals over een paar minuten.",
    "failedToLoadData" : "Kan indieningen via postvak niet laden. Probeer het nogmaals over een paar minuten.",
+   "failedToLoadActivities": "Unable to load activities. Try again in a few minutes.",
    "failedToLoadMore" : "Kan niet meer indieningen via postvak laden. Probeer het nogmaals over een paar minuten.",
    "failedToSearch" : "Kan zoekopdracht niet toepassen. Probeer het nogmaals over een paar minuten.",
    "firstName" : "Voornaam",
