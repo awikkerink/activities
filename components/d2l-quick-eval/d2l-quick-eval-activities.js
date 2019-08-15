@@ -57,6 +57,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				.d2l-quick-eval-no-criteria-results {
 					text-align: center;
 				}
+				.d2l-quick-eval-no-submissions {
+					padding-top: 67px;
+				}
 				d2l-quick-eval-activities-skeleton {
 					width: 100%;
 					margin-top: 1.2rem;
