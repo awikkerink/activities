@@ -56,11 +56,11 @@ const LangZhtwImpl = (superClass) => class extends superClass {
 			'toggleIndicatorLabel': 'Perform Actions on {target}',
 			'tryAgain': '再試一次',
 			'newSubmissions': 'New Submissions',
-			'newSubmissionDetails': '{newNum} new, {resub} resubmissions',
+			'newSubmissionDetails': '{newNum, plural, =0 {{resub, plural, =1 {1 resubmission} other {{resub} resubmissions}}} other {{resub, plural, =0 {{newNum} new} =1{{newNum} new, 1 resubmission} other {{newNum} new, {resub} resubmissions}}}}',
 			'newPosts': 'New Posts',
-			'newPostDetails': '{numInteractions} threads or replies',
+			'newPostDetails': '{numInteractions, plural, =1 {1 thread or reply} other {{numInteractions} threads or replies}}',
 			'newAttempts': 'New Attempts',
-			'newAttemptsDetails': '{newNum} new, {reAttemptNum} reattempts',
+			'newAttemptsDetails': '{newNum, plural, =0 {{reAttemptNum, plural, =1 {1 reattempt} other {{reAttemptNum} reattempts}}} other {{reAttemptNum, plural, =0 {{newNum} new} =1{{newNum} new, 1 reattempt} other {{newNum} new, {reAttemptNum} reattempts}}}}',
 			'viewBy': '檢視依據：',
 			'yes': 'Yes'
 		};
