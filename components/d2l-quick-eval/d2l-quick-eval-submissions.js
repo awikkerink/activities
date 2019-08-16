@@ -68,6 +68,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				d2l-quick-eval-submissions-table {
 					display: block;
 					padding-top: 1rem;
+					margin-bottom: 2.1rem;
 				}
 				@media (min-width: 525px) {
 					.d2l-quick-eval-submissions-table-modifiers {
