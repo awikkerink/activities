@@ -25,6 +25,7 @@ const LangZhtwImpl = (superClass) => class extends superClass {
 			'evaluated': '已評估',
 			'failedToFilter': '無法套用篩選器。請在幾分鐘後再試一次。',
 			'failedToLoadData': '無法載入提交項目。請在幾分鐘後再試一次。',
+			'failedToLoadActivities': 'Unable to load activities. Try again in a few minutes.',
 			'failedToLoadMore': '無法載入更多提交項目。請在幾分鐘後再試一次。',
 			'failedToSearch': '無法套用搜尋。請在幾分鐘後再試一次。',
 			'firstName': '名字',

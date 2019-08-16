@@ -17,6 +17,7 @@
    "evaluated" : "평가됨",
    "failedToFilter" : "필터를 적용할 수 없습니다. 몇 분 후에 다시 시도하십시오.",
    "failedToLoadData" : "제출 항목을 로드할 수 없습니다. 몇 분 후에 다시 시도하십시오.",
+   "failedToLoadActivities": "Unable to load activities. Try again in a few minutes.",
    "failedToLoadMore" : "추가 제출 항목을 로드할 수 없습니다. 몇 분 후에 다시 시도하십시오.",
    "failedToSearch" : "탐색을 적용할 수 없습니다. 몇 분 후에 다시 시도하십시오.",
    "firstName" : "이름",

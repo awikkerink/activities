@@ -25,6 +25,7 @@ const LangTrImpl = (superClass) => class extends superClass {
 			'evaluated': 'Değerlendirildi',
 			'failedToFilter': 'Filtre uygulanamıyor. Birkaç dakika içinde tekrar deneyin.',
 			'failedToLoadData': 'Gönderiler yüklenemiyor. Birkaç dakika içinde tekrar deneyin.',
+			'failedToLoadActivities': 'Unable to load activities. Try again in a few minutes.',
 			'failedToLoadMore': 'Daha fazla gönderi yüklenemiyor. Birkaç dakika içinde tekrar deneyin.',
 			'failedToSearch': 'Arama uygulanamıyor. Birkaç dakika içinde tekrar deneyin.',
 			'firstName': 'Adı',

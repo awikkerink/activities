@@ -17,6 +17,7 @@
    "evaluated" : "已评估",
    "failedToFilter" : "无法应用筛选器。请在几分钟后重试。",
    "failedToLoadData" : "无法加载提交。请在几分钟后重试。",
+   "failedToLoadActivities": "Unable to load activities. Try again in a few minutes.",
    "failedToLoadMore" : "无法加载更多提交。请在几分钟后重试。",
    "failedToSearch" : "无法应用筛选器。请在几分钟后重试。",
    "firstName" : "名字",

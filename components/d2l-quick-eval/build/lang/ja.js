@@ -25,6 +25,7 @@ const LangJaImpl = (superClass) => class extends superClass {
 			'evaluated': '評価済み',
 			'failedToFilter': 'フィルタを適用できません。しばらくしてからもう一度試してください。',
 			'failedToLoadData': '送信物を読み込めません。しばらくしてからもう一度試してください。',
+			'failedToLoadActivities': 'Unable to load activities. Try again in a few minutes.',
 			'failedToLoadMore': 'これ以上送信物を読み込めません。しばらくしてからもう一度試してください。',
 			'failedToSearch': '検索を適用できません。しばらくしてからもう一度試してください。',
 			'firstName': '名',

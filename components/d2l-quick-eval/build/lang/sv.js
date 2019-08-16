@@ -25,6 +25,7 @@ const LangSvImpl = (superClass) => class extends superClass {
 			'evaluated': 'Utvärderad',
 			'failedToFilter': 'Det gick inte att använda filtret. Försök igen om några minuter.',
 			'failedToLoadData': 'Det gick inte att läsa in inlämningarna. Försök igen om några minuter.',
+			'failedToLoadActivities': 'Unable to load activities. Try again in a few minutes.',
 			'failedToLoadMore': 'Det gick inte att läsa in fler inlämningar. Försök igen om några minuter.',
 			'failedToSearch': 'Det gick inte att använda sökningen. Försök igen om några minuter.',
 			'firstName': 'Förnamn',

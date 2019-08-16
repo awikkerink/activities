@@ -17,6 +17,7 @@
    "evaluated" : "تم التقييم",
    "failedToFilter" : "يتعذّر تطبيق التصفية. حاول مجددًا في غضون بضع دقائق.",
    "failedToLoadData" : "يتعذّر تحميل عمليات الإرسال. حاول مجددًا في غضون بضع دقائق.",
+   "failedToLoadActivities": "Unable to load activities. Try again in a few minutes.",
    "failedToLoadMore" : "يتعذّر تحميل المزيد من عمليات الإرسال. حاول مجددًا في غضون بضع دقائق.",
    "failedToSearch" : "يتعذّر تطبيق البحث. حاول مجددًا في غضون بضع دقائق.",
    "firstName" : "الاسم الأول",
