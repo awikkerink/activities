@@ -9,6 +9,7 @@ import '@brightspace-ui/core/components/meter/meter-radial.js';
 import './d2l-quick-eval-activity-card-items.js';
 import './d2l-quick-eval-activity-card-unread-submissions.js';
 import './d2l-quick-eval-activity-card-action-button.js';
+import './d2l-quick-eval-activity-card-subtitle.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 
 class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
@@ -46,8 +47,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				.d2l-quick-eval-card-meters span {
 					height: 2.7rem;
 				}
-				.d2l-quick-eval-card-subtitle {
-					font-size: .6rem;
+				d2l-quick-eval-activity-card-subtitle {
 					height: .9rem;
 				}
 				d2l-quick-eval-activity-card-unread-submissions {
@@ -85,7 +85,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 					.d2l-quick-eval-card-meters span {
 						height: 3rem;
 					}
-					.d2l-quick-eval-card-subtitle {
+					d2l-quick-eval-activity-card-subtitle {
 						display: inline;
 					}
 					d2l-quick-eval-activity-card-unread-submissions {
@@ -147,9 +147,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						min-width: 0;
 						min-height: 3rem;
 					}
-					.d2l-quick-eval-card-subtitle {
-						font-size: .7rem;
-						line-height: .7rem;
+					d2l-quick-eval-activity-card-subtitle {
 						height: 1.8rem;
 						display: flex;
 						align-items: flex-end;
@@ -199,7 +197,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 					<h3 class="d2l-activity-name-wrapper">
 						<d2l-activity-name href="[[activityNameHref]]" token="[[token]]"></d2l-activity-name>
 					</h3>
-					<div class="d2l-quick-eval-card-subtitle"><span>[[localize(activityType)]]</span> <span hidden$="[[!formattedDueDate]]"> &bull; [[localize('due', 'date', formattedDueDate)]]</span></div>
+					<d2l-quick-eval-activity-card-subtitle activity-type="[[activityType]]" due-date="[[dueDate]]"></d2l-quick-eval-activity-card-subtitle>
 				</div>
 				<div class="d2l-quick-eval-card-right">
 					<div class="d2l-quick-eval-activity-card-items-container">
@@ -283,10 +281,6 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 			dueDate: {
 				type: String,
 				value: ''
-			},
-			formattedDueDate: {
-				type: String,
-				computed: '_computeFormattedDueDate(dueDate)'
 			},
 			publishAll: {
 				type: Object
@@ -425,13 +419,6 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 
 	_denominatorOver99(num) {
 		return num > 99;
-	}
-
-	_computeFormattedDueDate(dueDate) {
-		if (dueDate) {
-			return this.formatDateTime(new Date(dueDate));
-		}
-		return '';
 	}
 
 	_computeIndicatorLabel(activityName) {
