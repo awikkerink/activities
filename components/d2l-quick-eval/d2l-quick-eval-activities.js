@@ -281,7 +281,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					evaluationStatusHref: evaluationStatusHref
 				};
 			} catch (e) {
-				this._logError(e, {developerMessage: 'Error loading activity data .'});
+				this._logError(e, {developerMessage: `Error loading activity data for ${this._getHref(activity, 'self')}.`});
 				return null;
 			}
 		}.bind(this)));
