@@ -255,32 +255,37 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	async _parseActivities(entity) {
 		const extraParams = this._getExtraParams(this._getHref(entity, 'self'));
 		const result = await Promise.all(entity.entities.map(async function(activity) {
-			const evalStatus = await this._getEvaluationStatusPromise(activity, extraParams);
-			const courseName = await this._getCourseNamePromise(activity);
-			const activityNameHref = this._getActivityNameHref(activity);
-			const activityName = await this._getActivityName(activity);
-			const evaluationStatusHref = this.getEvaluationStatusHref(activity);
-			return {
-				courseName: courseName,
-				assigned: evalStatus.assigned,
-				completed: evalStatus.completed,
-				published: evalStatus.published,
-				evaluated: evalStatus.evaluated,
-				unread: evalStatus.unread,
-				resubmitted: evalStatus.resubmitted,
-				publishAll: evalStatus.publishAll,
-				submissionListHref: evalStatus.submissionListHref,
-				evaluateAllHref: evalStatus.evaluateAllHref,
-				evaluateNewHref: evalStatus.evaluateNewHref,
-				key: this._getOrgHref(activity),
-				dueDate: this._getActivityDueDate(activity),
-				activityType: this._getActivityType(activity),
-				activityNameHref: activityNameHref,
-				activityName: activityName,
-				evaluationStatusHref: evaluationStatusHref
-			};
+			try {
+				const evalStatus = await this._getEvaluationStatusPromise(activity, extraParams);
+				const courseName = await this._getCourseNamePromise(activity);
+				const activityNameHref = this._getActivityNameHref(activity);
+				const activityName = await this._getActivityName(activity);
+				const evaluationStatusHref = this.getEvaluationStatusHref(activity);
+				return {
+					courseName: courseName,
+					assigned: evalStatus.assigned,
+					completed: evalStatus.completed,
+					published: evalStatus.published,
+					evaluated: evalStatus.evaluated,
+					unread: evalStatus.unread,
+					resubmitted: evalStatus.resubmitted,
+					publishAll: evalStatus.publishAll,
+					submissionListHref: evalStatus.submissionListHref,
+					evaluateAllHref: evalStatus.evaluateAllHref,
+					evaluateNewHref: evalStatus.evaluateNewHref,
+					key: this._getOrgHref(activity),
+					dueDate: this._getActivityDueDate(activity),
+					activityType: this._getActivityType(activity),
+					activityNameHref: activityNameHref,
+					activityName: activityName,
+					evaluationStatusHref: evaluationStatusHref
+				};
+			} catch (e) {
+				this._logError(e, {developerMessage: `Error loading activity data for ${this._getHref(activity, 'self')}.`});
+				return null;
+			}
 		}.bind(this)));
-		return this._groupByCourse(result);
+		return this._groupByCourse(result.filter(r => r));
 	}
 
 	async _clearAllOnHidden() {
