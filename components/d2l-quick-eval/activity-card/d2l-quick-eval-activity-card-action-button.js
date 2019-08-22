@@ -46,6 +46,7 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 					display: flex;
 					justify-content: center;
 					align-items: center;
+					z-index: 0; /* safari fix */
 				}
 				button:hover,
 				button:hover d2l-icon,
@@ -61,6 +62,9 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 				button:focus .d2l-quick-eval-activity-card-button-icon {
 					background-color: var(--d2l-color-gypsum);
 					box-shadow: var(--d2l-quick-eval-card-button-icon-hover), var(--d2l-quick-eval-card-button-icon-focus-inner), var(--d2l-quick-eval-card-button-icon-focus-outer)
+				}
+				span {
+					z-index: 0; /* safari fix */
 				}
 				.d2l-quick-eval-card-button-icon-large {
 					display: none;
