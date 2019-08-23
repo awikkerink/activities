@@ -46,7 +46,7 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 				}
 				.d2l-quick-eval-activities-course-name-heading {
 					margin-top: 1.8rem;
-					margin-bottom: 1.2rem;
+					margin-bottom: .8rem;
 				}
 			}
 		</style>

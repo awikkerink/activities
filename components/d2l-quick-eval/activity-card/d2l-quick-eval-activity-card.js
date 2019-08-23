@@ -47,8 +47,8 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				.d2l-quick-eval-card-meters span {
 					height: 2.7rem;
 				}
-				d2l-quick-eval-activity-card-subtitle {
-					height: .9rem;
+				.d2l-quick-eval-card-titles d2l-quick-eval-activity-card-subtitle {
+					min-height: .9rem;
 				}
 				d2l-quick-eval-activity-card-unread-submissions {
 					border-bottom: 1px solid var(--d2l-color-mica);
@@ -85,8 +85,15 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 					.d2l-quick-eval-card-meters span {
 						height: 3rem;
 					}
-					d2l-quick-eval-activity-card-subtitle {
+					.d2l-quick-eval-card-titles d2l-quick-eval-activity-card-subtitle {
 						display: inline;
+					}
+					.d2l-quick-eval-card-titles {
+						display: flex;
+					}
+					.d2l-quick-eval-card-titles h3 {
+						display: inline-block;
+						margin-right: .9rem;
 					}
 					d2l-quick-eval-activity-card-unread-submissions {
 						flex-grow: 1;
@@ -107,7 +114,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 					}
 					.d2l-quick-eval-card:hover,
 					.d2l-quick-eval-card:focus-within {
-						border-color: var(--d2l-color-celestine-plus-1);
+						border-color: var(--d2l-color-celestine-minus-1);
 						outline: none;
 					}
 					.d2l-quick-eval-card-indicator {
@@ -146,9 +153,10 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 					.d2l-quick-eval-card-titles {
 						min-width: 0;
 						min-height: 3rem;
+						display: block;
 					}
-					d2l-quick-eval-activity-card-subtitle {
-						height: 1.8rem;
+					.d2l-quick-eval-card-titles d2l-quick-eval-activity-card-subtitle {
+						min-height: 1.8rem;
 						display: flex;
 						align-items: flex-end;
 						margin-left: 1.5rem;

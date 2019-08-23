@@ -20,6 +20,7 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 					--d2l-quick-eval-card-button-icon-hover: 0 0 0 var(--d2l-quick-eval-card-button-icon-padding) var(--d2l-color-gypsum);
 					--d2l-quick-eval-card-button-icon-focus-inner: 0 0 0 0.25rem white;
 					--d2l-quick-eval-card-button-icon-focus-outer: 0 0 0 0.35rem var(--d2l-color-celestine);
+					--d2l-quick-eval-card-button-icon-border-radius: .15rem;
 				}
 				button {
 					display: flex;
@@ -42,7 +43,7 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 				.d2l-quick-eval-activity-card-button-icon {
 					width: var(--d2l-quick-eval-card-button-icon-size);
 					height: var(--d2l-quick-eval-card-button-icon-size);
-					border-radius: .3rem;
+					border-radius: var(--d2l-quick-eval-card-button-icon-border-radius);
 					display: flex;
 					justify-content: center;
 					align-items: center;
@@ -50,7 +51,7 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 				button:hover,
 				button:hover d2l-icon,
 				button:focus,
-				buton:focus d2l-icon {
+				button:focus d2l-icon {
 					text-decoration: underline;
 					color: var(--d2l-color-celestine-minus-1);
 				}
@@ -79,6 +80,7 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 						--d2l-quick-eval-card-button-icon-padding: 0.3rem;
 						--d2l-quick-eval-card-button-icon-focus-inner: 0 0 0 0.4rem white;
 						--d2l-quick-eval-card-button-icon-focus-outer: 0 0 0 0.5rem var(--d2l-color-celestine);
+						--d2l-quick-eval-card-button-icon-border-radius: .01rem;
 					}
 				}
 				:host([disabled]) button {
