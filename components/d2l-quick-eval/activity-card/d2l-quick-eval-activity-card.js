@@ -90,11 +90,12 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 					}
 					.d2l-quick-eval-card-titles {
 						display: flex;
+						flex-wrap: wrap;
 					}
 					.d2l-quick-eval-card-titles h3 {
 						display: inline-block;
 						margin-right: .9rem;
-						max-width: 75%;
+						max-width: 100%;
 					}
 					d2l-quick-eval-activity-card-unread-submissions {
 						flex-grow: 1;
