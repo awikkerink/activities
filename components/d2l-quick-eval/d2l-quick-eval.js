@@ -104,7 +104,7 @@ class D2LQuickEval extends  QuickEvalLocalize(PolymerElement) {
 	static get is() { return 'd2l-quick-eval'; }
 
 	_toggleView(e) {
-		if (e.detail.view === 'submissions') {
+		if (e.detail.view === 'submissions' || !this.activitiesViewEnabled) {
 			this._showActivitiesView = false;
 		} else {
 			this._showActivitiesView = true;
