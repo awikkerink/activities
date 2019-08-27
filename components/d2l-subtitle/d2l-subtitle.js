@@ -18,7 +18,10 @@ class D2LSubtitle extends PolymerElement {
 				@media (min-width: 900px) {
 					span {
 						font-size: .7rem;
-						line-height: .7rem;
+						line-height: .9rem;
+					}
+					:host {
+						line-height: .9rem;
 					}
 				}
 			</style>
