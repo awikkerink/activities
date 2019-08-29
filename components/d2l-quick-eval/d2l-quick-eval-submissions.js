@@ -99,7 +99,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 					result-size="[[_numberOfActivitiesToShow]]">
 				</d2l-hm-filter>
 				<d2l-hm-search
-					hidden$="[[!searchEnabled]]"
 					token="[[token]]"
 					search-action="[[searchAction]]"
 					placeholder="[[localize('search')]]"
@@ -117,7 +116,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			<d2l-quick-eval-search-results-summary-container
 				search-results-count="[[_searchResultsCount]]"
 				more-results="[[_moreSearchResults]]"
-				hidden$="[[!_searchResultsMessageEnabled(searchApplied, searchEnabled)]]"
+				hidden$="[[!_searchResultsMessageEnabled(searchApplied)]]"
 				on-d2l-quick-eval-search-results-summary-container-clear-search="clearSearchResults">
 			</d2l-quick-eval-search-results-summary-container>
 			<d2l-quick-eval-submissions-table
@@ -196,11 +195,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			_moreSearchResults: {
 				type: Boolean,
 				value: false
-			},
-			searchEnabled: {
-				type: Boolean,
-				value: false,
-				reflectToAttribute: true
 			},
 			_pageNextHref: {
 				type: String,
@@ -463,7 +457,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	}
 
 	_searchResultsMessageEnabled() {
-		return this.searchApplied && this.searchEnabled;
+		return this.searchApplied;
 	}
 
 	_computeNumberOfActivitiesToShow(data, currentNumberOfActivitiesShown) {
