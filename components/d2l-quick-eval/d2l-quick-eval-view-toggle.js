@@ -65,6 +65,9 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 					border-color: var(--d2l-color-tungsten);
 					color: var(--d2l-color-white);
 				}
+				:host button[selected]:hover, :host button[selected]:focus {
+					box-shadow: inset 0 0 0 2px #ffffff;
+				}
 				:host {
 					width: 100%;
 					display: flex;
