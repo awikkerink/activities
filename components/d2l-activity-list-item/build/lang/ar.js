@@ -7,6 +7,7 @@ const LangArImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.ar = {
+			'clickToViewActivity': 'النقر لعرض النشاط',
 			'enroll': 'تسجيل'
 		};
 	}

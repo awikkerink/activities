@@ -7,6 +7,7 @@ const LangJaImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.ja = {
+			'clickToViewActivity': 'クリックしてアクティビティを表示',
 			'enroll': '登録'
 		};
 	}

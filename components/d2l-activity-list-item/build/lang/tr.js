@@ -7,6 +7,7 @@ const LangTrImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.tr = {
+			'clickToViewActivity': 'Etkinliği görüntülemek için tıklayın',
 			'enroll': 'Kaydol'
 		};
 	}

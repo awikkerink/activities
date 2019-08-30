@@ -7,6 +7,7 @@ const LangKoImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.ko = {
+			'clickToViewActivity': '클릭하여 활동 보기',
 			'enroll': '등록'
 		};
 	}

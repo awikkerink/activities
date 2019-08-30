@@ -7,6 +7,7 @@ const LangSvImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.sv = {
+			'clickToViewActivity': 'Klicka för att visa aktivitet',
 			'enroll': 'Registrera'
 		};
 	}
