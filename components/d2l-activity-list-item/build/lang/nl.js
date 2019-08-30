@@ -7,6 +7,7 @@ const LangNlImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.nl = {
+			'clickToViewActivity': 'Klik om activiteit te bekijken',
 			'enroll': 'Inschrijven'
 		};
 	}
