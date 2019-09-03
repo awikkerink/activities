@@ -89,13 +89,13 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 			</style>
 			<label>[[localize('viewBy')]]</label>
 			<button
-				aria-pressed$="[[_isSelected(_viewTypes.submissions, currentSelected)]]"
+				aria-pressed$="[[_isPressed(_viewTypes.submissions, currentSelected)]]"
 				class="d2l-quick-eval-view-toggle-left"
 				on-click="_selectSubmissions"
 				selected$="[[_isSelected(_viewTypes.submissions, currentSelected)]]"
 			>[[localize('submissions')]]</button>
 			<button
-				aria-pressed$="[[_isSelected(_viewTypes.activities, currentSelected)]]"
+				aria-pressed$="[[_isPressed(_viewTypes.activities, currentSelected)]]"
 				class="d2l-quick-eval-view-toggle-right"
 				on-click="_selectActivities"
 				selected$="[[_isSelected(_viewTypes.activities, currentSelected)]]"
@@ -145,6 +145,9 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 	}
 	_isSelected(view) {
 		return this.currentSelected === view;
+	}
+	_isPressed(view) {
+		return this._isSelected(view).toString();
 	}
 	_handleSelectionChange(view, previousView) {
 
