@@ -87,7 +87,7 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 						--d2l-quick-eval-card-button-icon-border-radius: .01rem;
 					}
 				}
-				[disabled] button {
+				:host([disabled]) button {
 					opacity: .5;
 				}
 				:host([disabled]) button:hover,
