@@ -35,7 +35,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 					margin-left: -0.7rem;
 					margin-right: .25rem;
 				}
-				:host(:dir(rtl)) d2l-hm-filter {
+				:dir(rtl) d2l-hm-filter {
 					margin-left: .25rem;
 					margin-right: -0.7rem;
 				}
@@ -59,7 +59,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				.d2l-quick-eval-submissions-table-modifiers {
 					float: right;
 				}
-				:host(:dir(rtl)) .d2l-quick-eval-submissions-table-modifiers {
+				:dir(rtl) .d2l-quick-eval-submissions-table-modifiers {
 					float: left;
 				}
 				.clear {
@@ -76,7 +76,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 						float: left;
 						clear: both;
 					}
-					:host(:dir(rtl)) .d2l-quick-eval-submissions-table-modifiers {
+					:dir(rtl) .d2l-quick-eval-submissions-table-modifiers {
 						float: right;
 					}
 				}
@@ -86,7 +86,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 						margin-top: 0;
 						clear: none;
 					}
-					:host(:dir(rtl)) .d2l-quick-eval-submissions-table-modifiers {
+					:dir(rtl) .d2l-quick-eval-submissions-table-modifiers {
 						float: left;
 					}
 				}

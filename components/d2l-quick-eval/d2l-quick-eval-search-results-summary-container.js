@@ -22,7 +22,7 @@ class D2LQuickEvalSearchResultsSummaryContainer extends QuickEvalLocalize(Polyme
 			span {
 				margin-right: 2.3em;
 			}
-			:host(:dir(rtl)) span {
+			:dir(rtl) span {
 				margin-right: 0;
 				margin-left: 2.3em;
 			}

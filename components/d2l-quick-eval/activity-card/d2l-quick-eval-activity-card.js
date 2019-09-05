@@ -132,7 +132,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						top: 0;
 						right: 0;
 					}
-					:host(:dir(rtl)) d2l-quick-eval-activity-card-items[visible-on-ancestor] {
+					:dir(rtl) d2l-quick-eval-activity-card-items[visible-on-ancestor] {
 						left: 0;
 						right: initial;
 					}

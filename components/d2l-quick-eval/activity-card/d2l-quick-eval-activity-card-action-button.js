@@ -87,15 +87,15 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 						--d2l-quick-eval-card-button-icon-border-radius: .01rem;
 					}
 				}
-				:host([disabled]) button {
+				[disabled] button {
 					opacity: .5;
 				}
-				:host([disabled]) button:hover,
-				:host([disabled]) button:hover d2l-icon,
-				:host([disabled]) button:hover .d2l-quick-eval-activity-card-button-icon,
-				:host([disabled]) button:focus,
-				:host([disabled]) button:focus d2l-icon,
-				:host([disabled]) button:focus .d2l-quick-eval-activity-card-button-icon {
+				[disabled] button:hover,
+				[disabled] button:hover d2l-icon,
+				[disabled] button:hover .d2l-quick-eval-activity-card-button-icon,
+				[disabled] button:focus,
+				[disabled] button:focus d2l-icon,
+				[disabled] button:focus .d2l-quick-eval-activity-card-button-icon {
 					text-decoration: none;
 					color: var(--d2l-color-ferrite);
 					background-color: transparent;
