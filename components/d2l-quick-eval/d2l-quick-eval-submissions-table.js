@@ -41,7 +41,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 					padding-right: 0.6rem;
 					vertical-align: middle;
 				}
-				:dir(rtl) .d2l-user-badge-image {
+				:host(:dir(rtl)) .d2l-user-badge-image {
 					padding-right: 0;
 					padding-left: 0.6rem;
 				}
@@ -61,7 +61,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 					text-align: right;
 					width: 100%;
 				}
-				:dir(rtl) .d2l-quick-eval-submissions-table-load-more-container {
+				:host(:dir(rtl)) .d2l-quick-eval-submissions-table-load-more-container {
 					text-align: left;
 				}
 				.d2l-quick-eval-30-column {
@@ -86,7 +86,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 				d2l-loading-spinner {
 					width: 100%;
 				}
-				:dir(rtl) d2l-activity-evaluation-icon-base {
+				:host(:dir(rtl)) d2l-activity-evaluation-icon-base {
 					padding-left: 0;
 					padding-right: 0.6rem;
 				}
@@ -99,7 +99,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 					white-space: nowrap;
 					overflow: hidden;
 				}
-				:dir(rtl) d2l-activity-name {
+				:host(:dir(rtl)) d2l-activity-name {
 					padding-right: 0;
 					padding-left: 1.4rem;
 				}

@@ -13,7 +13,7 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 		const toggleTemplate = html`
 			<style>
 				button.d2l-quick-eval-view-toggle-left,
-				:dir(rtl) button.d2l-quick-eval-view-toggle-right {
+				:host(:dir(rtl)) button.d2l-quick-eval-view-toggle-right {
 					border-top-left-radius: 0.3rem;
 					border-bottom-left-radius: 0.3rem;
 					border-right-color: transparent;
@@ -22,7 +22,7 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 					border-left-color: var(--d2l-color-mica);
 				}
 				button.d2l-quick-eval-view-toggle-right,
-				:dir(rtl) button.d2l-quick-eval-view-toggle-left {
+				:host(:dir(rtl)) button.d2l-quick-eval-view-toggle-left {
 					border-top-right-radius: 0.3rem;
 					border-bottom-right-radius: 0.3rem;
 					border-left-color: transparent;

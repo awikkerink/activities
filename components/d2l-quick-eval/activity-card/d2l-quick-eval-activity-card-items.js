@@ -31,21 +31,21 @@ class D2LQuickEvalActivityCardItems extends mixinBehaviors([D2L.PolymerBehaviors
 					.d2l-quick-eval-activity-card-items-container ::slotted(*:last-child) {
 						border-right-width: 0;
 					}
-					[small] ::slotted(*) {
+					:host([small]) ::slotted(*) {
 						border: none;
 					}
 				}
 				@media (min-width: 900px) {
-					[small] .d2l-quick-eval-activity-card-items-container ::slotted(*) {
+					:host([small]) .d2l-quick-eval-activity-card-items-container ::slotted(*) {
 						border-width: 0 1px 0 0;
 						border-style: solid;
 						border-color: var(--d2l-color-mica);
 					}
-					[small] ::slotted(*:first-child),
+					:host([small]) ::slotted(*:first-child),
 					.d2l-quick-eval-activity-card-items-container ::slotted(*:first-child) {
 						border-left-width: 1px;
 					}
-					[small] ::slotted(*:last-child),
+					:host([small]) ::slotted(*:last-child),
 					.d2l-quick-eval-activity-card-items-container ::slotted(*:last-child) {
 						border-right-width: 1px;
 					}

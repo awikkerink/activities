@@ -41,7 +41,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					margin-left: -0.7rem;
 					margin-right: .25rem;
 				}
-				:dir(rtl) d2l-hm-filter {
+				:host(:dir(rtl)) d2l-hm-filter {
 					margin-left: .25rem;
 					margin-right: -0.7rem;
 				}
@@ -102,7 +102,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 						float: left;
 						clear: both;
 					}
-					:dir(rtl) .d2l-quick-eval-activity-list-modifiers {
+					:host(:dir(rtl)) .d2l-quick-eval-activity-list-modifiers {
 						float: right;
 					}
 				}
@@ -112,7 +112,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 						margin-top: 0;
 						clear: none;
 					}
-					:dir(rtl) .d2l-quick-eval-activity-list-modifiers {
+					:host(:dir(rtl)) .d2l-quick-eval-activity-list-modifiers {
 						float: left;
 					}
 				}

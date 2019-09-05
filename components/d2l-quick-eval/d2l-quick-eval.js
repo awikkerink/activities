@@ -23,7 +23,7 @@ class D2LQuickEval extends  QuickEvalLocalize(PolymerElement) {
 				.d2l-quick-eval-header {
 					float: left;
 				}
-				:dir(rtl) .d2l-quick-eval-header-with-toggle {
+				:host(:dir(rtl)) .d2l-quick-eval-header-with-toggle {
 					float: right;
 				}
 				.d2l-quick-eval-header-with-toggle {
@@ -38,7 +38,7 @@ class D2LQuickEval extends  QuickEvalLocalize(PolymerElement) {
 						clear: both;
 						float: left;
 					}
-					:dir(rtl) d2l-quick-eval-view-toggle {
+					:host(:dir(rtl)) d2l-quick-eval-view-toggle {
 						float: right;
 					}
 				}
