@@ -165,7 +165,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				on-d2l-quick-eval-activity-publish-all="_publishAll"
 				on-d2l-quick-eval-activity-view-submission-list="_navigateSubmissionList"
 				on-d2l-quick-eval-activity-view-evaluate-all="_navigateEvaluateAll"
-				on-d2l-quick-eval-activity-view-evaluate-new="_navigateEvaluateNew"
 				>
 			</d2l-quick-eval-activities-list>
 			<dom-repeat items="[[_publishAllToasts]]" as="toast">
@@ -402,12 +401,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	_navigateEvaluateAll(evt) {
 		if (evt.detail.evaluateAllHref) {
 			this._setWindowLocationHref(evt.detail.evaluateAllHref);
-		}
-	}
-
-	_navigateEvaluateNew(evt) {
-		if (evt.detail.evaluateNewHref) {
-			this._setWindowLocationHref(evt.detail.evaluateNewHref);
 		}
 	}
 
