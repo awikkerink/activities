@@ -6,16 +6,11 @@ class D2LQuickEvalSearchResultsSummaryContainer extends QuickEvalLocalize(Polyme
 	static get template() {
 		return html `
 		<style>
-			.d2l-msg-container {
+			:host {
 				border-radius: 8px;
 				background-color: var(--d2l-color-regolith);
 				border: 1px solid var(--d2l-color-gypsum);
 				color: var(--d2l-color-ferrite);
-			}
-			.d2l-msg-container-inner {
-				padding: 0;
-			}
-			.d2l-msg-container-text {
 				padding: 10px 20px;
 			}
 			span {
@@ -26,14 +21,8 @@ class D2LQuickEvalSearchResultsSummaryContainer extends QuickEvalLocalize(Polyme
 				margin-left: 2.3em;
 			}
 		</style>
-		<div class="d2l-msg-container">
-			<div class="d2l-msg-container-inner">
-				<div class="d2l-msg-container-text">
-					<span class="d2l-quick-eval-search-results-summary">[[_getSummaryString(searchResultsCount, moreResults)]]</span>
-					<d2l-link on-click="_linkClicked">[[localize('clearSearch')]]</d2l-link>
-				</div>
-			</div>
-		</div>
+		<span class="d2l-quick-eval-search-results-summary">[[_getSummaryString(searchResultsCount, moreResults)]]</span>
+		<d2l-link on-click="_linkClicked">[[localize('clearSearch')]]</d2l-link>
 		`;
 	}
 	static get properties() {
