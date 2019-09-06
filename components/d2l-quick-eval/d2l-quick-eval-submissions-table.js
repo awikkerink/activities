@@ -185,7 +185,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 											class="d2l-user-badge-image"
 											href="[[s.userHref]]"
 											token="[[token]]"
-											small=""
+											small
 											aria-hidden="true">
 										</d2l-profile-image>
 									</template>

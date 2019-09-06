@@ -7,12 +7,12 @@ class D2LQuickEvalActivityCardItems extends mixinBehaviors([D2L.PolymerBehaviors
 	static get template() {
 		return html`
 			<style include="d2l-visible-on-ancestor-styles">
-				.d2l-quick-eval-activity-card-items-container {
+				:host {
 					display: flex;
 					align-items: stretch;
 					justify-content: space-between;
 				}
-				.d2l-quick-eval-activity-card-items-container ::slotted(*) {
+				:host ::slotted(*) {
 					width: 7.5rem;
 					height: 3rem;
 					text-align: center;
@@ -22,12 +22,12 @@ class D2LQuickEvalActivityCardItems extends mixinBehaviors([D2L.PolymerBehaviors
 					flex: 1 1 auto;
 				}
 				@media (min-width: 525px) {
-					.d2l-quick-eval-activity-card-items-container ::slotted(div) {
+					:host ::slotted(div) {
 						border-width: 0 1px 0 0;
 						border-style: solid;
 						border-color: var(--d2l-color-mica);
 					}
-					.d2l-quick-eval-activity-card-items-container ::slotted(*:last-child) {
+					:host ::slotted(*:last-child) {
 						border-right-width: 0;
 					}
 					:host([small]) ::slotted(*) {
@@ -35,24 +35,22 @@ class D2LQuickEvalActivityCardItems extends mixinBehaviors([D2L.PolymerBehaviors
 					}
 				}
 				@media (min-width: 900px) {
-					:host([small]) .d2l-quick-eval-activity-card-items-container ::slotted(*) {
+					:host([small]) :host ::slotted(*) {
 						border-width: 0 1px 0 0;
 						border-style: solid;
 						border-color: var(--d2l-color-mica);
 					}
 					:host([small]) ::slotted(*:first-child),
-					.d2l-quick-eval-activity-card-items-container ::slotted(*:first-child) {
+					:host ::slotted(*:first-child) {
 						border-left-width: 1px;
 					}
 					:host([small]) ::slotted(*:last-child),
-					.d2l-quick-eval-activity-card-items-container ::slotted(*:last-child) {
+					:host ::slotted(*:last-child) {
 						border-right-width: 1px;
 					}
 				}
 			</style>
-			<div class="d2l-quick-eval-activity-card-items-container">
-				<slot></slot>
-			</div>
+			<slot></slot>
 		`;
 	}
 }
