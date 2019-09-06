@@ -8,7 +8,6 @@ import 'd2l-fetch/d2l-fetch.js';
  * @polymer
  */
 class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
-	static get is() { return 'd2l-quick-eval-view-toggle'; }
 	static get template() {
 		const toggleTemplate = html`
 			<style>
@@ -187,4 +186,4 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 	}
 }
 
-window.customElements.define(D2LQuickEvalViewToggle.is, D2LQuickEvalViewToggle);
+window.customElements.define('d2l-quick-eval-view-toggle', D2LQuickEvalViewToggle);

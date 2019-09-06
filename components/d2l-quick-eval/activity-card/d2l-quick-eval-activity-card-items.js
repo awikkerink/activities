@@ -4,7 +4,6 @@ import 'd2l-polymer-behaviors/d2l-visible-on-ancestor-behavior.js';
 import 'd2l-colors/d2l-colors.js';
 
 class D2LQuickEvalActivityCardItems extends mixinBehaviors([D2L.PolymerBehaviors.VisibleOnAncestorBehavior], PolymerElement) {
-	static get is() { return 'd2l-quick-eval-activity-card-items'; }
 	static get template() {
 		return html`
 			<style include="d2l-visible-on-ancestor-styles">
@@ -58,4 +57,4 @@ class D2LQuickEvalActivityCardItems extends mixinBehaviors([D2L.PolymerBehaviors
 	}
 }
 
-window.customElements.define(D2LQuickEvalActivityCardItems.is, D2LQuickEvalActivityCardItems);
+window.customElements.define('d2l-quick-eval-activity-card-items', D2LQuickEvalActivityCardItems);

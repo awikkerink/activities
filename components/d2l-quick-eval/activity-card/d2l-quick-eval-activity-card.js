@@ -13,7 +13,6 @@ import './d2l-quick-eval-activity-card-subtitle.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 
 class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
-	static get is() { return 'd2l-quick-eval-activity-card'; }
 	static get template() {
 		return html`
 			<style include="d2l-visible-on-ancestor-styles">
@@ -466,4 +465,4 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 	}
 }
 
-window.customElements.define(D2LQuickEvalActivityCard.is, D2LQuickEvalActivityCard);
+window.customElements.define('d2l-quick-eval-activity-card', D2LQuickEvalActivityCard);

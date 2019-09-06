@@ -140,10 +140,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		return template;
 	}
 
-	static get is() {
-		return 'd2l-quick-eval-submissions';
-	}
-
 	static get properties() {
 		return {
 			_data: {
@@ -518,4 +514,4 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	}
 }
 
-window.customElements.define(D2LQuickEvalSubmissions.is, D2LQuickEvalSubmissions);
+window.customElements.define('d2l-quick-eval-submissions', D2LQuickEvalSubmissions);

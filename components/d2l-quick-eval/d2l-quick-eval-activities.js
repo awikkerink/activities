@@ -178,10 +178,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		return quickEvalActivitiesTemplate;
 	}
 
-	static get is() {
-		return 'd2l-quick-eval-activities';
-	}
-
 	static get properties() {
 		return {
 			_data: {
@@ -450,4 +446,4 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		});
 	}
 }
-window.customElements.define(D2LQuickEvalActivities.is, D2LQuickEvalActivities);
+window.customElements.define('d2l-quick-eval-activities', D2LQuickEvalActivities);

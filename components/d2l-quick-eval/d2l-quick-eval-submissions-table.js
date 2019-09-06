@@ -247,7 +247,6 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 		quickEvalSubmissionsTableTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
 		return quickEvalSubmissionsTableTemplate;
 	}
-	static get is() { return 'd2l-quick-eval-submissions-table'; }
 	static get properties() {
 		return {
 			masterTeacher: {
@@ -425,4 +424,4 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 	}
 }
 
-window.customElements.define(D2LQuickEvalSubmissionsTable.is, D2LQuickEvalSubmissionsTable);
+window.customElements.define('d2l-quick-eval-submissions-table', D2LQuickEvalSubmissionsTable);
