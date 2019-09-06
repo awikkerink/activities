@@ -35,7 +35,7 @@ class D2LQuickEvalActivityCardItems extends mixinBehaviors([D2L.PolymerBehaviors
 					}
 				}
 				@media (min-width: 900px) {
-					:host([small]) :host ::slotted(*) {
+					:host([small]) ::slotted(*) {
 						border-width: 0 1px 0 0;
 						border-style: solid;
 						border-color: var(--d2l-color-mica);
