@@ -121,7 +121,7 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 						submissionListHref: submissionListHref,
 						evaluateAllHref: this._formBackToQuickEvalLink(evaluateAllHref),
 						evaluateNewHref: this._formBackToQuickEvalLink(evaluateNewHref),
-						unread: p.newsubmissions || 0,
+						newSubmissions: p.newsubmissions || 0,
 						resubmitted: p.resubmissions || 0
 					};
 				}
