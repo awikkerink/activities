@@ -15,7 +15,6 @@ const activityTypeLocalizeDetail = {
 };
 
 class D2LQuickEvalActivityCardUnreadSubmissions extends QuickEvalLocalize(PolymerElement) {
-	static get is() { return 'd2l-quick-eval-activity-card-unread-submissions'; }
 	static get template() {
 		return html`
 			<style>
@@ -115,4 +114,4 @@ class D2LQuickEvalActivityCardUnreadSubmissions extends QuickEvalLocalize(Polyme
 	}
 }
 
-window.customElements.define(D2LQuickEvalActivityCardUnreadSubmissions.is, D2LQuickEvalActivityCardUnreadSubmissions);
+window.customElements.define('d2l-quick-eval-activity-card-unread-submissions', D2LQuickEvalActivityCardUnreadSubmissions);

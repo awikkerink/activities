@@ -5,7 +5,6 @@ import 'd2l-colors/d2l-colors.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 
 class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
-	static get is() { return 'd2l-quick-eval-activities-list'; }
 	static get template() {
 		return html`
 		<style>
@@ -136,4 +135,4 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 	}
 }
 
-window.customElements.define(D2LQuickEvalActivitiesList.is, D2LQuickEvalActivitiesList);
+window.customElements.define('d2l-quick-eval-activities-list', D2LQuickEvalActivitiesList);

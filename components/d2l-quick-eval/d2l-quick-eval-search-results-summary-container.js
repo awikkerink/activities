@@ -3,7 +3,6 @@ import {QuickEvalLocalize} from './QuickEvalLocalize.js';
 import 'd2l-link/d2l-link.js';
 
 class D2LQuickEvalSearchResultsSummaryContainer extends QuickEvalLocalize(PolymerElement) {
-	static get is() { return 'd2l-quick-eval-search-results-summary-container'; }
 	static get template() {
 		return html `
 		<style>
@@ -74,4 +73,4 @@ class D2LQuickEvalSearchResultsSummaryContainer extends QuickEvalLocalize(Polyme
 	}
 }
 
-window.customElements.define(D2LQuickEvalSearchResultsSummaryContainer.is, D2LQuickEvalSearchResultsSummaryContainer);
+window.customElements.define('d2l-quick-eval-search-results-summary-container', D2LQuickEvalSearchResultsSummaryContainer);
