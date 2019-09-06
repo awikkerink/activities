@@ -40,7 +40,7 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 				.d2l-quick-eval-activities-list-card-spacer {
 					display: none;
 				}
-				:host ul ul li {
+				ul ul li {
 					margin-top: .6rem;
 					margin-bottom: .6rem;
 				}
