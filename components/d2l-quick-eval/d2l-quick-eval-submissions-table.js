@@ -251,8 +251,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 		return {
 			masterTeacher: {
 				type: Boolean,
-				value: false,
-				reflectToAttribute: true
+				value: false
 			},
 			_headerColumns: {
 				type: Array,

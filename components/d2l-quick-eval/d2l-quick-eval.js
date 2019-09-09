@@ -60,13 +60,11 @@ class D2LQuickEval extends  QuickEvalLocalize(PolymerElement) {
 			},
 			masterTeacher: {
 				type: Boolean,
-				value: false,
-				reflectToAttribute: true
+				value: false
 			},
 			activitiesViewEnabled: {
 				type: Boolean,
-				value: false,
-				reflectToAttribute: true
+				value: false
 			},
 			_showActivitiesView: {
 				type: Boolean,
