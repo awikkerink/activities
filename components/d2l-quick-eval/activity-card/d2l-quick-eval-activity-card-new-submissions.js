@@ -114,4 +114,4 @@ class D2LQuickEvalActivityCardNewSubmissions extends QuickEvalLocalize(PolymerEl
 	}
 }
 
-window.customElements.define('d2l-quick-eval-activity-card-unread-submissions', D2LQuickEvalActivityCardNewSubmissions);
+window.customElements.define('d2l-quick-eval-activity-card-new-submissions', D2LQuickEvalActivityCardNewSubmissions);
