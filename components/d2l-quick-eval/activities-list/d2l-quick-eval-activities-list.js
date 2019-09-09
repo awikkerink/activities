@@ -11,6 +11,9 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 			:host {
 				display: block;
 			}
+			:host([hidden]) {
+				display: none;
+			}
 			.d2l-quick-eval-activities-list-remove-ul-styling {
 				list-style-type: none;
 				margin: 0;

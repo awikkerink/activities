@@ -9,6 +9,9 @@ class D2LQuickEvalActivityCardSubtitle extends QuickEvalLocalize(PolymerElement)
 				:host {
 					display: inline-block;
 				}
+				:host([hidden]) {
+					display: none;
+				}
 			</style>
 			<d2l-subtitle text="[[_computeText(activityType, dueDate)]]"></d2l-subtitle>
 		`;
