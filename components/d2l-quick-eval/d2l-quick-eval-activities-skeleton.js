@@ -9,7 +9,7 @@ class D2LQuickEvalActivitiesSkeleton extends PolymerElement {
 		return html`
 			<style>
 				:host {
-					display: inline-block;
+					display: block;
 				}
 				:host([hidden]) {
 					display: none;
