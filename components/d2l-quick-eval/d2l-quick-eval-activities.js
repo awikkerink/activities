@@ -262,7 +262,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					completed: evalStatus.completed,
 					published: evalStatus.published,
 					evaluated: evalStatus.evaluated,
-					unread: evalStatus.unread,
+					newSubmissions: evalStatus.newSubmissions,
 					resubmitted: evalStatus.resubmitted,
 					publishAll: evalStatus.publishAll,
 					submissionListHref: evalStatus.submissionListHref,
@@ -418,7 +418,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					this.set(`_data.${i}.activities.${j}.completed`, evalStatusEntity.properties.completed);
 					this.set(`_data.${i}.activities.${j}.published`, evalStatusEntity.properties.published);
 					this.set(`_data.${i}.activities.${j}.evaluated`, evalStatusEntity.properties.evaluated);
-					this.set(`_data.${i}.activities.${j}.unread`, evalStatusEntity.properties.newsubmissions);
+					this.set(`_data.${i}.activities.${j}.newSubmissions`, evalStatusEntity.properties.newsubmissions);
 					this.set(`_data.${i}.activities.${j}.resubmitted`, evalStatusEntity.properties.resubmissions);
 					this.set(`_data.${i}.activities.${j}.publishAll`, publishAll);
 

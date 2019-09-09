@@ -14,7 +14,7 @@ const activityTypeLocalizeDetail = {
 	quiz: 'newAttemptsDetails'
 };
 
-class D2LQuickEvalActivityCardUnreadSubmissions extends QuickEvalLocalize(PolymerElement) {
+class D2LQuickEvalActivityCardNewSubmissions extends QuickEvalLocalize(PolymerElement) {
 	static get template() {
 		return html`
 			<style>
@@ -63,16 +63,16 @@ class D2LQuickEvalActivityCardUnreadSubmissions extends QuickEvalLocalize(Polyme
 			</style>
 			<div class="d2l-quick-eval-activity-card-submissions-container">
 				<a href="[[href]]" id="[[_tooltipForId]]">
-					<span class="d2l-quick-eval-activity-card-submissions-number">[[_getNewSubmissionsNumber(unread, resubmitted)]]</span>
+					<span class="d2l-quick-eval-activity-card-submissions-number">[[_getNewSubmissionsNumber(newSubmissions, resubmitted)]]</span>
 					<span class="d2l-quick-eval-activity-card-submissions-subtitle">[[_getNewSubmissionsSubtitle(activityType)]]</span>
 				</a>
 			</div>
-			<d2l-tooltip for="[[_tooltipForId]]" position="bottom">[[_getSubmissionTooltipText(unread, resubmitted, activityType)]]</d2l-tooltip>
+			<d2l-tooltip for="[[_tooltipForId]]" position="bottom">[[_getSubmissionTooltipText(newSubmissions, resubmitted, activityType)]]</d2l-tooltip>
 		`;
 	}
 	static get properties() {
 		return {
-			unread: {
+			newSubmissions: {
 				type: Number,
 				value: 0
 			},
@@ -93,8 +93,8 @@ class D2LQuickEvalActivityCardUnreadSubmissions extends QuickEvalLocalize(Polyme
 		};
 	}
 
-	_getNewSubmissionsNumber(unread, resubmitted) {
-		return unread + resubmitted;
+	_getNewSubmissionsNumber(newSubmissions, resubmitted) {
+		return newSubmissions + resubmitted;
 	}
 	_getNewSubmissionsSubtitle(activityType) {
 		return this.localize(activityTypeLocalizeNew[activityType]);
@@ -103,15 +103,15 @@ class D2LQuickEvalActivityCardUnreadSubmissions extends QuickEvalLocalize(Polyme
 		return D2L.Id.getUniqueId();
 	}
 
-	_getSubmissionTooltipText(unread, resubmitted, activityType) {
+	_getSubmissionTooltipText(newSubmissions, resubmitted, activityType) {
 		if (activityType === 'discussion') {
-			return this.localize('newPostDetails', 'numInteractions', unread + resubmitted);
+			return this.localize('newPostDetails', 'numInteractions', newSubmissions + resubmitted);
 		}
 		if (activityType === 'quiz') {
-			return this.localize('newAttemptsDetails', 'newNum', unread, 'reAttemptNum', resubmitted);
+			return this.localize('newAttemptsDetails', 'newNum', newSubmissions, 'reAttemptNum', resubmitted);
 		}
-		return this.localize(activityTypeLocalizeDetail[activityType], 'newNum', unread, 'resub', resubmitted);
+		return this.localize(activityTypeLocalizeDetail[activityType], 'newNum', newSubmissions, 'resub', resubmitted);
 	}
 }
 
-window.customElements.define('d2l-quick-eval-activity-card-unread-submissions', D2LQuickEvalActivityCardUnreadSubmissions);
+window.customElements.define('d2l-quick-eval-activity-card-new-submissions', D2LQuickEvalActivityCardNewSubmissions);

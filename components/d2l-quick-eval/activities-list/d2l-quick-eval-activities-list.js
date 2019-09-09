@@ -64,7 +64,7 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 										completed="[[a.completed]]"
 										published="[[a.published]]"
 										evaluated="[[a.evaluated]]"
-										unread="[[a.unread]]"
+										newSubmissions="[[a.newSubmissions]]"
 										resubmitted="[[a.resubmitted]]"
 										publish-all="[[a.publishAll]]"
 										submission-list-href="[[a.submissionListHref]]"
@@ -101,7 +101,7 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 					// 		completed: 0,
 					// 		published: 0,
 					// 		evaluated: 0,
-					// 		unread: 0,
+					// 		newSubmissions: 0,
 					// 		resubmitted: 0,
 					// 		dueDate: '',
 					// 		activityType: '',
