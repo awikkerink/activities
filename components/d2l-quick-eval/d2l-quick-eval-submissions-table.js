@@ -52,9 +52,6 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 				d2l-table-col-sort-button span {
 					color: var(--d2l-color-ferrite);
 				}
-				d2l-quick-eval-submissions-skeleton {
-					width: 100%;
-				}
 				d2l-alert {
 					margin: auto;
 					margin-top: 1rem;

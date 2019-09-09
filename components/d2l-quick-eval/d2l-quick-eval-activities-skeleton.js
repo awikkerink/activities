@@ -11,6 +11,9 @@ class D2LQuickEvalActivitiesSkeleton extends PolymerElement {
 				:host {
 					display: inline-block;
 				}
+				:host([hidden]) {
+					display: none;
+				}
 				.large, .medium, .small {
 					width: 100%;
 				}

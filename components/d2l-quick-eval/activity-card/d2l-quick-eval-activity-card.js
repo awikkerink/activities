@@ -17,7 +17,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 		return html`
 			<style include="d2l-visible-on-ancestor-styles">
 				:host {
-					display: inline-block;
+					display: block;
 				}
 				.d2l-activity-name-wrapper {
 					@apply --d2l-body-standard-text;
