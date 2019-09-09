@@ -131,13 +131,13 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				</d2l-hm-search>
 			</div>
 			<div class="clear"></div>
-			<d2l-alert type="critical" hidden$="[[!_isError]]" id="d2l-quick-eval-activities-load-error-alert">
+			<d2l-alert type="critical" hidden$="[[!_isError]]" class="d2l-quick-eval-activities-load-error-alert">
 				[[localize('failedToLoadActivities')]]
 			</d2l-alert>
-			<d2l-alert type="critical" hidden$="[[!filterError]]" id="d2l-quick-eval-filter-error-alert">
+			<d2l-alert type="critical" hidden$="[[!filterError]]" class="d2l-quick-eval-filter-error-alert">
 				[[localize('failedToFilter')]]
 			</d2l-alert>
-			<d2l-alert type="critical" hidden$="[[!searchError]]" id="d2l-quick-eval-search-error-alert">
+			<d2l-alert type="critical" hidden$="[[!searchError]]" class="d2l-quick-eval-search-error-alert">
 				[[localize('failedToSearch')]]
 			</d2l-alert>
 			<d2l-quick-eval-search-results-summary-container
@@ -158,7 +158,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			</div>
 			<d2l-quick-eval-activities-skeleton hidden$="[[!_showLoadingSkeleton]]"></d2l-quick-eval-activities-skeleton>
 			<d2l-quick-eval-activities-list
-				id="[[_activitiesListId]]"
+				id$="[[_activitiesListId]]"
 				hidden$="[[!_shouldShowActivitiesList(_data, _showLoadingSkeleton)]]"
 				courses="[[_data]]"
 				token="[[token]]"

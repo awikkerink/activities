@@ -1,6 +1,7 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import { ActivityEvaluationIconBaseLocalize } from './ActivityEvaluationIconBaseLocalize.js';
 import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
+import 'd2l-polymer-behaviors/d2l-id.js';
 import 'd2l-icons/d2l-icon.js';
 import 'd2l-icons/tier1-icons.js';
 import 'd2l-tooltip/d2l-tooltip.js';
@@ -22,10 +23,9 @@ class ActivityEvaluationIconBase extends ActivityEvaluationIconBaseLocalize(Poly
 				}
 			</style>
 			<template is="dom-if" if="[[draft]]">
-				<d2l-icon id="d2l-draft-icon" icon="d2l-tier1:draft"></d2l-icon>
+				<d2l-icon id$="[[_tooltipForId]]" icon="d2l-tier1:draft"></d2l-icon>
 				<d2l-tooltip
-					id="draft-icon-tooltip"
-					for="d2l-draft-icon"
+					for="[[_tooltipForId]]"
 					position="bottom"
 					offset="15"
 				>
@@ -43,8 +43,16 @@ class ActivityEvaluationIconBase extends ActivityEvaluationIconBaseLocalize(Poly
 				type: Boolean,
 				value: false,
 				reflectToAttribute: true
+			},
+			_tooltipForId: {
+				type: String,
+				computed: '_computeTooltipForId()'
 			}
 		};
+	}
+
+	_computeTooltipForId() {
+		return D2L.Id.getUniqueId();
 	}
 }
 
