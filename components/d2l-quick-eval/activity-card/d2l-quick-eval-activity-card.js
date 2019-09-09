@@ -7,7 +7,7 @@ import 'd2l-icons/tier3-icons.js';
 import 'd2l-polymer-behaviors/d2l-visible-on-ancestor-behavior.js';
 import '@brightspace-ui/core/components/meter/meter-radial.js';
 import './d2l-quick-eval-activity-card-items.js';
-import './d2l-quick-eval-activity-card-unread-submissions.js';
+import './d2l-quick-eval-activity-card-new-submissions.js';
 import './d2l-quick-eval-activity-card-action-button.js';
 import './d2l-quick-eval-activity-card-subtitle.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
@@ -53,7 +53,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				.d2l-quick-eval-card-titles d2l-quick-eval-activity-card-subtitle {
 					min-height: .9rem;
 				}
-				d2l-quick-eval-activity-card-unread-submissions {
+				d2l-quick-eval-activity-card-new-submissions {
 					border-bottom: 1px solid var(--d2l-color-mica);
 					height: 2.1rem;
 					display: flex;
@@ -97,7 +97,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						margin-right: .9rem;
 						max-width: 100%;
 					}
-					d2l-quick-eval-activity-card-unread-submissions {
+					d2l-quick-eval-activity-card-new-submissions {
 						flex-grow: 1;
 						border: none;
 						padding-top: .9rem;
@@ -167,12 +167,12 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						align-items: flex-end;
 						margin-left: 1.5rem;
 					}
-					d2l-quick-eval-activity-card-unread-submissions {
+					d2l-quick-eval-activity-card-new-submissions {
 						border: none;
 						padding: 0;
 						order: -1;
 					}
-					d2l-quick-eval-activity-card-unread-submissions,
+					d2l-quick-eval-activity-card-new-submissions,
 					.d2l-quick-eval-card-meters span,
 					.d2l-quick-eval-card-actions d2l-quick-eval-activity-card-action-button {
 						width: 7.5rem;
@@ -228,12 +228,12 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 								</div>
 							</d2l-quick-eval-activity-card-items>
 						</div>
-						<d2l-quick-eval-activity-card-unread-submissions
+						<d2l-quick-eval-activity-card-new-submissions
 							href="[[evaluateNewHref]]"
-							unread="[[unread]]"
+							new-submissions="[[newSubmissions]]"
 							resubmitted="[[resubmitted]]"
 							activity-type="[[activityType]]"
-							hidden$="[[!_showUnreadSubmissions(unread, resubmitted)]]"></d2l-quick-eval-activity-card-unread-submissions>
+							hidden$="[[!_showNewSubmissions(newSubmissions, resubmitted)]]"></d2l-quick-eval-activity-card-new-submissions>
 						<div class="d2l-quick-eval-card-actions">
 							<d2l-quick-eval-activity-card-items visible-on-ancestor small>
 								<d2l-quick-eval-activity-card-action-button
@@ -284,7 +284,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				type: Number,
 				value: 0
 			},
-			unread: {
+			newSubmissions: {
 				type: Number,
 				value: 0
 			},
@@ -401,8 +401,8 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 		);
 	}
 
-	_showUnreadSubmissions(unread, resubmitted) {
-		return (unread > 0) || (resubmitted > 0);
+	_showNewSubmissions(newSubmissions, resubmitted) {
+		return (newSubmissions > 0) || (resubmitted > 0);
 	}
 
 	_onWindowResize() {

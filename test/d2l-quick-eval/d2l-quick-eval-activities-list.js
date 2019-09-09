@@ -13,7 +13,7 @@ suite('d2l-quick-eval-activities-list', function() {
 					completed: 22,
 					published: 23,
 					evaluated: 24,
-					unread: 25,
+					newSubmissions: 25,
 					resubmitted: 26,
 					dueDate: '2019-03-03T03:03:03.003Z',
 					activityType: 'assignment'
@@ -25,7 +25,7 @@ suite('d2l-quick-eval-activities-list', function() {
 					completed: 12,
 					published: 13,
 					evaluated: 14,
-					unread: 15,
+					newSubmissions: 15,
 					resubmitted: 16,
 					dueDate: '2019-02-02T02:02:02.002Z',
 					activityType: 'quiz'
@@ -37,7 +37,7 @@ suite('d2l-quick-eval-activities-list', function() {
 					completed: 2,
 					published: 3,
 					evaluated: 4,
-					unread: 5,
+					newSubmissions: 5,
 					resubmitted: 6,
 					dueDate: '2019-01-01T01:01:01.001Z',
 					activityType: 'discussion'
@@ -54,7 +54,7 @@ suite('d2l-quick-eval-activities-list', function() {
 					completed: 22,
 					published: 23,
 					evaluated: 24,
-					unread: 25,
+					newSubmissions: 25,
 					resubmitted: 26,
 					dueDate: '2019-03-03T03:03:03.003Z',
 					activityType: 'assignment'
@@ -66,7 +66,7 @@ suite('d2l-quick-eval-activities-list', function() {
 					completed: 12,
 					published: 13,
 					evaluated: 14,
-					unread: 15,
+					newSubmissions: 15,
 					resubmitted: 16,
 					dueDate: '2019-02-02T02:02:02.002Z',
 					activityType: 'quiz'
@@ -78,7 +78,7 @@ suite('d2l-quick-eval-activities-list', function() {
 					completed: 2,
 					published: 3,
 					evaluated: 4,
-					unread: 5,
+					newSubmissions: 5,
 					resubmitted: 6,
 					dueDate: '2019-01-01T01:01:01.001Z',
 					activityType: 'discussion'
@@ -114,7 +114,7 @@ suite('d2l-quick-eval-activities-list', function() {
 					assert.equal(card.completed, a.completed);
 					assert.equal(card.published, a.published);
 					assert.equal(card.evaluated, a.evaluated);
-					assert.equal(card.unread, a.unread);
+					assert.equal(card.newsubmissions, a.newSubmissions);
 					assert.equal(card.resubmitted, a.resubmitted);
 					assert.equal(card.dueDate, a.dueDate);
 					assert.equal(card.activityType, a.activityType);
