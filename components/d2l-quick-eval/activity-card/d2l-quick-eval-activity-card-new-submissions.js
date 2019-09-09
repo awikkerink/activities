@@ -18,6 +18,9 @@ class D2LQuickEvalActivityCardNewSubmissions extends QuickEvalLocalize(PolymerEl
 	static get template() {
 		return html`
 			<style>
+				:host {
+					display: flex;
+				}
 				.d2l-quick-eval-activity-card-submissions-container a {
 					align-items: baseline;
 					display: flex;

@@ -16,6 +16,9 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 	static get template() {
 		return html`
 			<style include="d2l-visible-on-ancestor-styles">
+				:host {
+					display: inline-block;
+				}
 				.d2l-activity-name-wrapper {
 					@apply --d2l-body-standard-text;
 					margin: 0;
@@ -37,7 +40,6 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				.d2l-quick-eval-card-actions d2l-quick-eval-activity-card-action-button {
 					height: 2.1rem;
 					background: white;
-					display: block;
 				}
 				.d2l-quick-eval-card-indicator {
 					display: none;
@@ -56,7 +58,6 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				d2l-quick-eval-activity-card-new-submissions {
 					border-bottom: 1px solid var(--d2l-color-mica);
 					height: 2.1rem;
-					display: flex;
 					justify-content: center;
 				}
 
@@ -179,7 +180,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						height: 3rem;
 					}
 				}
-				[hidden] {
+				:host([hidden]) {
 					display: none;
 				}
 				button[aria-pressed="true"] .d2l-quick-eval-activity-card-hovered-on,

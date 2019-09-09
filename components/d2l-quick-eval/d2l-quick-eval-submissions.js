@@ -26,6 +26,9 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	static get template() {
 		const template = html`
 			<style>
+				:host {
+					display: block;
+				}
 				.d2l-quick-eval-submissions-table-modifiers {
 					display: flex;
 					margin-top: 0.9rem;
@@ -51,9 +54,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				d2l-quick-eval-search-results-summary-container {
 					margin-bottom: 0.9rem;
 					margin-top: 0.9rem;
-					display: block;
 				}
-				[hidden] {
+				:host([hidden]) {
 					display: none;
 				}
 				.d2l-quick-eval-submissions-table-modifiers {
@@ -66,7 +68,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 					clear: both;
 				}
 				d2l-quick-eval-submissions-table {
-					display: block;
 					padding-top: 1rem;
 					margin-bottom: 2.1rem;
 				}

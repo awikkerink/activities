@@ -32,6 +32,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	static get template() {
 		const quickEvalActivitiesTemplate = html`
 			<style>
+				:host {
+					display: block;
+				}
 				.d2l-quick-eval-activity-list-modifiers {
 					display: flex;
 					margin-top: 0.9rem;
@@ -61,7 +64,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					padding-top: 67px;
 				}
 				d2l-quick-eval-activities-skeleton {
-					width: 100%;
 					margin-top: 1.2rem;
 				}
 				d2l-quick-eval-no-submissions-image {
@@ -88,9 +90,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				d2l-quick-eval-search-results-summary-container {
 					margin-bottom: 0.9rem;
 					margin-top: 0.9rem;
-					display: block;
 				}
-				[hidden] {
+				:host([hidden]) {
 					display: none;
 				}
 				.d2l-body-standard {

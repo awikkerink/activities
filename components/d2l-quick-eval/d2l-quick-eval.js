@@ -30,7 +30,7 @@ class D2LQuickEval extends  QuickEvalLocalize(PolymerElement) {
 					float: left;
 					padding-bottom: 1.2rem;
 				}
-				[hidden] {
+				:host([hidden]) {
 					display: none;
 				}
 				@media (min-width: 525px) {
