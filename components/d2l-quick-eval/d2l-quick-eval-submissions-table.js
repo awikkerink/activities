@@ -352,10 +352,10 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 		}
 
 		if (firstThenLast) {
-			return firstName + ' ' + lastName;
+			return `${firstName} ${lastName}`;
 		}
 
-		return lastName + ', ' + firstName;
+		return `${lastName}, ${firstName}`;
 	}
 
 	_localizeDateTimeFormat(localizedDate) {
