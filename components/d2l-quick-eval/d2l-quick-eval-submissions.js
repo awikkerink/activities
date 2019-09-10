@@ -279,41 +279,45 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	}
 
 	_loadMore() {
-		if (this._pageNextHref && !this._loadingMore) {
-			this._loadingMore = true;
-			this._followHref(this._pageNextHref)
-				.then(async function(u) {
-					if (u && u.entity) {
-						const tbody = this.shadowRoot.querySelector('d2l-quick-eval-submissions-table').shadowRoot.querySelector('d2l-tbody');
-						const lastFocusableTableElement = D2L.Dom.Focus.getLastFocusableDescendant(tbody, false);
-
-						try {
-							if (u.entity.entities) {
-								const result = await this._parseActivities(u.entity);
-								this._data = this._data.concat(result);
-								this._updateSearchResultsCount(this._data.length);
-							}
-						} catch (e) {
-						// Unable to load more activities from entity.
-							throw e;
-						} finally {
-							this._loadingMore = false;
-							window.requestAnimationFrame(function() {
-								const newElementToFocus = D2L.Dom.Focus.getNextFocusable(lastFocusableTableElement, false);
-								if (newElementToFocus) {
-									newElementToFocus.focus();
-								}
-							});
-						}
-					}
-				}.bind(this))
-				.then(this._clearAlerts.bind(this))
-				.catch(function(e) {
-					this._logError(e, {developerMessage: 'Unable to load more.'});
-					this._loadingMore = false;
-					this._handleLoadMoreFailure();
-				}.bind(this));
+		if (!this._pageNextHref || this._loadingMore) {
+			return;
 		}
+
+		this._loadingMore = true;
+		this._followHref(this._pageNextHref)
+			.then(async function(u) {
+				if (!u || !u.entity) {
+					return;
+				}
+
+				const tbody = this.shadowRoot.querySelector('d2l-quick-eval-submissions-table').shadowRoot.querySelector('d2l-tbody');
+				const lastFocusableTableElement = D2L.Dom.Focus.getLastFocusableDescendant(tbody, false);
+
+				try {
+					if (u.entity.entities) {
+						const result = await this._parseActivities(u.entity);
+						this._data = this._data.concat(result);
+						this._updateSearchResultsCount(this._data.length);
+					}
+				} catch (e) {
+				// Unable to load more activities from entity.
+					throw e;
+				} finally {
+					this._loadingMore = false;
+					window.requestAnimationFrame(function() {
+						const newElementToFocus = D2L.Dom.Focus.getNextFocusable(lastFocusableTableElement, false);
+						if (newElementToFocus) {
+							newElementToFocus.focus();
+						}
+					});
+				}
+			}.bind(this))
+			.then(this._clearAlerts.bind(this))
+			.catch(function(e) {
+				this._logError(e, {developerMessage: 'Unable to load more.'});
+				this._loadingMore = false;
+				this._handleLoadMoreFailure();
+			}.bind(this));
 	}
 
 	async _parseActivities(entity) {

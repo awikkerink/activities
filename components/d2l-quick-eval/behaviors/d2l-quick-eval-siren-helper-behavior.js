@@ -84,66 +84,69 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 	_getEvaluationStatusPromise: async function(entity, extraParams) {
 		return this._followLink(entity, Rels.Activities.evaluationStatus)
 			.then(function(e) {
-				if (e && e.entity && e.entity.properties) {
-					const p = e.entity.properties;
-					const publishAll = this._getAction(e.entity, 'publish-all-feedback');
-
-					const submissionListSubEntity = e.entity.getSubEntityByRel(Rels.Assessments.submissionApplication);
-					let submissionListHref = '';
-					if (submissionListSubEntity && submissionListSubEntity.properties.path) {
-						submissionListHref = submissionListSubEntity.properties.path;
-					}
-
-					const evaluateAllSubEntity = e.entity.getSubEntityByRel(Rels.Assessments.assessAllApplication);
-					let evaluateAllHref = '';
-
-					if (evaluateAllSubEntity && evaluateAllSubEntity.properties.path) {
-						evaluateAllHref = evaluateAllSubEntity.properties.path;
-						if (extraParams.length) {
-							evaluateAllHref = this._buildRelativeUri(evaluateAllHref, extraParams);
-						}
-					}
-					const evaluateNewSubEntity = e.entity.getSubEntityByRel(Rels.Assessments.assessNewApplication);
-
-					let evaluateNewHref = '';
-					if (evaluateNewSubEntity && evaluateNewSubEntity.properties.path) {
-						evaluateNewHref = evaluateNewSubEntity.properties.path;
-						if (extraParams.length) {
-							evaluateNewHref = this._buildRelativeUri(evaluateNewHref, extraParams);
-						}
-					}
-					return {
-						assigned: p.assigned || 0,
-						completed: p.completed || 0,
-						published: p.published || 0,
-						evaluated: p.evaluated || 0,
-						publishAll: publishAll,
-						submissionListHref: submissionListHref,
-						evaluateAllHref: this._formBackToQuickEvalLink(evaluateAllHref),
-						evaluateNewHref: this._formBackToQuickEvalLink(evaluateNewHref),
-						newSubmissions: p.newsubmissions || 0,
-						resubmitted: p.resubmissions || 0
-					};
+				if (!e || !e.entity || !e.entity.properties) {
+					return;
 				}
+
+				const p = e.entity.properties;
+				const publishAll = this._getAction(e.entity, 'publish-all-feedback');
+
+				const submissionListSubEntity = e.entity.getSubEntityByRel(Rels.Assessments.submissionApplication);
+				let submissionListHref = '';
+				if (submissionListSubEntity && submissionListSubEntity.properties.path) {
+					submissionListHref = submissionListSubEntity.properties.path;
+				}
+
+				const evaluateAllSubEntity = e.entity.getSubEntityByRel(Rels.Assessments.assessAllApplication);
+				let evaluateAllHref = '';
+
+				if (evaluateAllSubEntity && evaluateAllSubEntity.properties.path) {
+					evaluateAllHref = evaluateAllSubEntity.properties.path;
+					if (extraParams.length) {
+						evaluateAllHref = this._buildRelativeUri(evaluateAllHref, extraParams);
+					}
+				}
+				const evaluateNewSubEntity = e.entity.getSubEntityByRel(Rels.Assessments.assessNewApplication);
+
+				let evaluateNewHref = '';
+				if (evaluateNewSubEntity && evaluateNewSubEntity.properties.path) {
+					evaluateNewHref = evaluateNewSubEntity.properties.path;
+					if (extraParams.length) {
+						evaluateNewHref = this._buildRelativeUri(evaluateNewHref, extraParams);
+					}
+				}
+				return {
+					assigned: p.assigned || 0,
+					completed: p.completed || 0,
+					published: p.published || 0,
+					evaluated: p.evaluated || 0,
+					publishAll: publishAll,
+					submissionListHref: submissionListHref,
+					evaluateAllHref: this._formBackToQuickEvalLink(evaluateAllHref),
+					evaluateNewHref: this._formBackToQuickEvalLink(evaluateNewHref),
+					newSubmissions: p.newsubmissions || 0,
+					resubmitted: p.resubmissions || 0
+				};
 			}.bind(this));
 	},
 
 	_getUserPromise: function(entity, item) {
 		return this._followLink(entity, Rels.user)
 			.then(function(u) {
-				if (u && u.entity) {
-					const firstName = this._tryGetName(u.entity, Rels.firstName, null);
-					const lastName = this._tryGetName(u.entity, Rels.lastName, null);
-					const defaultDisplayName = this._tryGetName(u.entity, Rels.displayName, '');
-
-					const displayName = {
-						'firstName': firstName,
-						'lastName': lastName,
-						'defaultDisplayName': defaultDisplayName
-					};
-
-					item.displayName = displayName;
+				if (!u || !u.entity) {
+					return;
 				}
+				const firstName = this._tryGetName(u.entity, Rels.firstName, null);
+				const lastName = this._tryGetName(u.entity, Rels.lastName, null);
+				const defaultDisplayName = this._tryGetName(u.entity, Rels.displayName, '');
+
+				const displayName = {
+					'firstName': firstName,
+					'lastName': lastName,
+					'defaultDisplayName': defaultDisplayName
+				};
+
+				item.displayName = displayName;
 			}.bind(this));
 	},
 
