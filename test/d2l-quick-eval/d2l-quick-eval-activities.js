@@ -161,7 +161,7 @@ suite('d2l-quick-eval-activities', function() {
 	});
 	test('if error, show alert', () => {
 		act._isError = true;
-		var alert = act.shadowRoot.querySelector('#d2l-quick-eval-activities-load-error-alert');
+		var alert = act.shadowRoot.querySelector('.d2l-quick-eval-activities-load-error-alert');
 		assert.equal(false, alert.hasAttribute('hidden'));
 	});
 });

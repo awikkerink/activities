@@ -62,7 +62,7 @@ class D2LQuickEvalActivityCardNewSubmissions extends QuickEvalLocalize(PolymerEl
 				}
 			</style>
 			<div class="d2l-quick-eval-activity-card-submissions-container">
-				<a href="[[href]]" id="[[_tooltipForId]]">
+				<a href$="[[href]]" id$="[[_tooltipForId]]">
 					<span class="d2l-quick-eval-activity-card-submissions-number">[[_getNewSubmissionsNumber(newSubmissions, resubmitted)]]</span>
 					<span class="d2l-quick-eval-activity-card-submissions-subtitle">[[_getNewSubmissionsSubtitle(activityType)]]</span>
 				</a>

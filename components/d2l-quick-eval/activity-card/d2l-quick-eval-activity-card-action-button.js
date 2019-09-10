@@ -122,7 +122,7 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 					<d2l-icon icon="[[_computeIcon(3)]]" class="d2l-quick-eval-card-button-icon-large"></d2l-icon>
 					<d2l-icon icon="[[_computeIcon(2)]]" class="d2l-quick-eval-card-button-icon-small"></d2l-icon>
 				</div>
-				<span id="[[_labelledbyId]]">[[text]]</span>
+				<span id$="[[_labelledbyId]]">[[text]]</span>
 			</button>
 		`;
 	}
