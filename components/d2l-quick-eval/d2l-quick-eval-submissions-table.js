@@ -27,6 +27,9 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 	static get template() {
 		const quickEvalSubmissionsTableTemplate = html`
 			<style include="d2l-table-style">
+				:host {
+					display: block;
+				}
 				.d2l-quick-eval-table {
 					--d2l-table-body-background-color: transparent;
 					--d2l-table-light-header-background-color: transparent;
@@ -49,9 +52,6 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 				/* Needed for Edge */
 				d2l-table-col-sort-button span {
 					color: var(--d2l-color-ferrite);
-				}
-				d2l-quick-eval-submissions-skeleton {
-					width: 100%;
 				}
 				d2l-alert {
 					margin: auto;
@@ -108,7 +108,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 					overflow: hidden;
 					text-overflow: ellipsis;
 				}
-				[hidden] {
+				:host([hidden]) {
 					display: none;
 				}
 				.d2l-quick-eval-no-submissions,

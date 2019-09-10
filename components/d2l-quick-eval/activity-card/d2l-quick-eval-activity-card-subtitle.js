@@ -5,6 +5,14 @@ import '../../d2l-subtitle/d2l-subtitle.js';
 class D2LQuickEvalActivityCardSubtitle extends QuickEvalLocalize(PolymerElement) {
 	static get template() {
 		return html`
+			<style>
+				:host {
+					display: inline-block;
+				}
+				:host([hidden]) {
+					display: none;
+				}
+			</style>
 			<d2l-subtitle text="[[_computeText(activityType, dueDate)]]"></d2l-subtitle>
 		`;
 	}

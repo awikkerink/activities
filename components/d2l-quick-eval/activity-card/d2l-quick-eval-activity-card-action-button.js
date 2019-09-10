@@ -21,6 +21,10 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 					--d2l-quick-eval-card-button-icon-focus-inner: 0 0 0 0.25rem white;
 					--d2l-quick-eval-card-button-icon-focus-outer: 0 0 0 0.35rem var(--d2l-color-celestine);
 					--d2l-quick-eval-card-button-icon-border-radius: .15rem;
+					display: block;
+				}
+				:host([hidden]) {
+					display: none;
 				}
 				button {
 					display: flex;

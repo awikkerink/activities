@@ -11,6 +11,7 @@ class D2LQuickEvalSearchResultsSummaryContainer extends QuickEvalLocalize(Polyme
 				background-color: var(--d2l-color-regolith);
 				border: 1px solid var(--d2l-color-gypsum);
 				color: var(--d2l-color-ferrite);
+				display: block;
 				padding: 10px 20px;
 			}
 			span {
@@ -19,6 +20,9 @@ class D2LQuickEvalSearchResultsSummaryContainer extends QuickEvalLocalize(Polyme
 			:host(:dir(rtl)) span {
 				margin-right: 0;
 				margin-left: 2.3em;
+			}
+			:host([hidden]) {
+				display: none;
 			}
 		</style>
 		<span class="d2l-quick-eval-search-results-summary">[[_getSummaryString(searchResultsCount, moreResults)]]</span>
