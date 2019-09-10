@@ -8,11 +8,10 @@ import 'd2l-fetch/d2l-fetch.js';
  * @polymer
  */
 class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
-	static get is() { return 'd2l-quick-eval-view-toggle'; }
 	static get template() {
 		const toggleTemplate = html`
 			<style>
-				:host button.d2l-quick-eval-view-toggle-left,
+				button.d2l-quick-eval-view-toggle-left,
 				:host(:dir(rtl)) button.d2l-quick-eval-view-toggle-right {
 					border-top-left-radius: 0.3rem;
 					border-bottom-left-radius: 0.3rem;
@@ -21,10 +20,7 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 					border-bottom-right-radius: 0;
 					border-left-color: var(--d2l-color-mica);
 				}
-				:host button.d2l-quick-eval-view-toggle-left {
-					margin-inline-start: 0.9rem;
-				}
-				:host button.d2l-quick-eval-view-toggle-right,
+				button.d2l-quick-eval-view-toggle-right,
 				:host(:dir(rtl)) button.d2l-quick-eval-view-toggle-left {
 					border-top-right-radius: 0.3rem;
 					border-bottom-right-radius: 0.3rem;
@@ -33,7 +29,7 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 					border-bottom-left-radius: 0rem;
 					border-right-color: var(--d2l-color-mica);
 				}
-				:host button {
+				button {
 					background-color: var(--d2l-color-sylvite);
 					border-color: var(--d2l-color-mica);
 					border-style: solid;
@@ -42,6 +38,7 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 					color: var(--d2l-color-ferrite);
 					cursor: pointer;
 					display: inline;
+					flex: 1;
 					font-family: inherit;
 					font-size: .7rem;
 					font-weight: 700;
@@ -59,30 +56,49 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 					-moz-user-select: none;
 					-ms-user-select: none;
 				}
-				:host button:hover, :host button:focus {
+				button:hover, button:focus {
 					border: 1px solid var(--d2l-color-celestine) !important;
 				}
-				:host button.d2l-quick-eval-view-toggle-left[selected], :host button.d2l-quick-eval-view-toggle-right[selected] {
+				button.d2l-quick-eval-view-toggle-left[selected], button.d2l-quick-eval-view-toggle-right[selected] {
 					background-color: var(--d2l-color-tungsten);
 					border-color: var(--d2l-color-tungsten);
 					color: var(--d2l-color-white);
 				}
+				button[selected]:hover, button[selected]:focus {
+					box-shadow: inset 0 0 0 2px #ffffff;
+				}
+				:host {
+					width: 100%;
+					display: flex;
+				}
+				label {
+					display: none;
+				}
+				@media (min-width: 525px) {
+					:host {
+						margin: 0 -0.9rem;
+						display: block;
+						width: auto;
+					}
+					label {
+						margin: 0 0.9rem;
+						display: inline;
+					}
+				}
 			</style>
-			<div>
-				<label id="d2l-quick-eval-view-toggle-label">[[localize('viewBy')]]</label>
-				<button
-					class="d2l-quick-eval-view-toggle-left"
-					on-click="_selectSubmissions"
-					selected$="[[_isSelected(_viewTypes.submissions, currentSelected)]]"
-					aria-labelledby="d2l-quick-eval-view-toggle-label"
-				>[[localize('submissions')]]</button>
-				<button
-					class="d2l-quick-eval-view-toggle-right"
-					on-click="_selectActivities"
-					selected$="[[_isSelected(_viewTypes.activities, currentSelected)]]"
-					aria-labelledby="d2l-quick-eval-view-toggle-label"
-				>[[localize('activities')]]</button>
-			<div>
+			<label>[[localize('viewBy')]]</label>
+			<button
+				aria-pressed$="[[_isPressed(_viewTypes.submissions, currentSelected)]]"
+				class="d2l-quick-eval-view-toggle-left"
+				on-click="_selectSubmissions"
+				selected$="[[_isSelected(_viewTypes.submissions, currentSelected)]]"
+			>[[localize('submissions')]]</button>
+			<button
+				aria-pressed$="[[_isPressed(_viewTypes.activities, currentSelected)]]"
+				class="d2l-quick-eval-view-toggle-right"
+				on-click="_selectActivities"
+				selected$="[[_isSelected(_viewTypes.activities, currentSelected)]]"
+			>[[localize('activities')]]</button>
 		`;
 		toggleTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
 		return toggleTemplate;
@@ -129,6 +145,9 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 	_isSelected(view) {
 		return this.currentSelected === view;
 	}
+	_isPressed(view) {
+		return this._isSelected(view).toString();
+	}
 	_handleSelectionChange(view, previousView) {
 
 		if (
@@ -167,4 +186,4 @@ class D2LQuickEvalViewToggle extends QuickEvalLocalize(PolymerElement) {
 	}
 }
 
-window.customElements.define(D2LQuickEvalViewToggle.is, D2LQuickEvalViewToggle);
+window.customElements.define('d2l-quick-eval-view-toggle', D2LQuickEvalViewToggle);

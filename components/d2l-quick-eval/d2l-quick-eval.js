@@ -20,14 +20,9 @@ class D2LQuickEval extends  QuickEvalLocalize(PolymerElement) {
 					@apply --d2l-heading-1;
 					margin: 0;
 				}
-				d2l-quick-eval-view-toggle {
-					clear: both;
-					float: left;
-				}
 				.d2l-quick-eval-header {
 					float: left;
 				}
-				:host(:dir(rtl)) d2l-quick-eval-view-toggle,
 				:host(:dir(rtl)) .d2l-quick-eval-header-with-toggle {
 					float: right;
 				}
@@ -35,8 +30,17 @@ class D2LQuickEval extends  QuickEvalLocalize(PolymerElement) {
 					float: left;
 					padding-bottom: 1.2rem;
 				}
-				[hidden] {
+				:host([hidden]) {
 					display: none;
+				}
+				@media (min-width: 525px) {
+					d2l-quick-eval-view-toggle {
+						clear: both;
+						float: left;
+					}
+					:host(:dir(rtl)) d2l-quick-eval-view-toggle {
+						float: right;
+					}
 				}
 			</style>
 			<template is="dom-if" if="[[headerText]]">
@@ -44,8 +48,8 @@ class D2LQuickEval extends  QuickEvalLocalize(PolymerElement) {
 				<h1 class="d2l-quick-eval-header" hidden$="[[activitiesViewEnabled]]">[[headerText]]</h1>
 			</template>
 			<d2l-quick-eval-view-toggle current-selected="[[toggleState]]" toggle-href="[[toggleHref]]" hidden$="[[!activitiesViewEnabled]]" on-d2l-quick-eval-view-toggle-changed="_toggleView"></d2l-quick-eval-view-toggle>
-			<d2l-quick-eval-submissions href="[[_submissionsHref(submissionsHref, href)]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" data-telemetry-endpoint="[[dataTelemetryEndpoint]]" hidden$="[[_showActivitiesView]]" master-teacher="[[masterTeacher]]" search-enabled="[[searchEnabled]]"></d2l-quick-eval-submissions>
-			<d2l-quick-eval-activities href="[[activitiesHref]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" hidden$="[[!_showActivitiesView]]"></d2l-quick-eval-activities>
+			<d2l-quick-eval-submissions href="[[submissionsHref]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" data-telemetry-endpoint="[[dataTelemetryEndpoint]]" hidden$="[[_showActivitiesView]]" master-teacher="[[masterTeacher]]"></d2l-quick-eval-submissions>
+			<d2l-quick-eval-activities href="[[_activitiesHref(activitiesViewEnabled)]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" hidden$="[[!_showActivitiesView]]"></d2l-quick-eval-activities>
 		`;
 	}
 
@@ -56,30 +60,20 @@ class D2LQuickEval extends  QuickEvalLocalize(PolymerElement) {
 			},
 			masterTeacher: {
 				type: Boolean,
-				value: false,
-				reflectToAttribute: true
+				value: false
 			},
 			activitiesViewEnabled: {
 				type: Boolean,
-				value: false,
-				reflectToAttribute: true
+				value: false
 			},
 			_showActivitiesView: {
 				type: Boolean,
 				value: false
 			},
-			searchEnabled: {
-				type: Boolean,
-				value: false,
-				reflectToAttribute: true
-			},
 			loggingEndpoint: {
 				type: String
 			},
 			dataTelemetryEndpoint: {
-				type: String
-			},
-			href: {
 				type: String
 			},
 			submissionsHref: {
@@ -100,19 +94,16 @@ class D2LQuickEval extends  QuickEvalLocalize(PolymerElement) {
 		};
 	}
 
-	static get is() { return 'd2l-quick-eval'; }
-
 	_toggleView(e) {
-		if (e.detail.view === 'submissions') {
+		if (e.detail.view === 'submissions' || !this.activitiesViewEnabled) {
 			this._showActivitiesView = false;
 		} else {
 			this._showActivitiesView = true;
 		}
 	}
 
-	// Temporary until the LMS has been updated to use the new property
-	_submissionsHref() {
-		return this.submissionsHref || this.href;
+	_activitiesHref(activitiesViewEnabled) {
+		return activitiesViewEnabled ? this.activitiesHref : '';
 	}
 }
 

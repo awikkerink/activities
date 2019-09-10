@@ -2,12 +2,18 @@ import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 import {QuickEvalLocalize} from '../QuickEvalLocalize.js';
 import '../activity-card/d2l-quick-eval-activity-card.js';
 import 'd2l-colors/d2l-colors.js';
+import 'd2l-typography/d2l-typography-shared-styles.js';
 
 class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
-	static get is() { return 'd2l-quick-eval-activities-list'; }
 	static get template() {
 		return html`
 		<style>
+			:host {
+				display: block;
+			}
+			:host([hidden]) {
+				display: none;
+			}
 			.d2l-quick-eval-activities-list-remove-ul-styling {
 				list-style-type: none;
 				margin: 0;
@@ -26,27 +32,26 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 			.d2l-quick-eval-activities-list-card-spacer-border {
 				border-top: 1px solid var(--d2l-color-mica);
 			}
-			h2 {
-				margin-bottom: .6rem;
-				margin-top: .9rem;
-				min-height: .6rem;
-				line-height: .6rem;
-				font-size: .8rem;
+			.d2l-quick-eval-activities-course-name-heading {
+				@apply --d2l-heading-3;
+				margin-top: 0.9rem;
+				margin-bottom: 0.6rem;
+				max-width: 24rem;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
 			}
 			@media (min-width: 525px) {
-				h2 {
-					font-size: 1rem;
-					margin-top: 1.2rem;
-					margin-bottom: .6rem;
-					min-height: 1rem;
-					line-height: 1rem;
-				}
 				.d2l-quick-eval-activities-list-card-spacer {
 					display: none;
 				}
-				:host ul ul li {
+				ul ul li {
 					margin-top: .6rem;
 					margin-bottom: .6rem;
+				}
+				.d2l-quick-eval-activities-course-name-heading {
+					margin-top: 1.8rem;
+					margin-bottom: .8rem;
 				}
 			}
 		</style>
@@ -54,7 +59,7 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 			<dom-repeat items="[[courses]]" as="c">
 				<template>
 					<li>
-						<h2>[[c.name]]</h2>
+						<h2 title="[[c.name]]" class="d2l-quick-eval-activities-course-name-heading">[[c.name]]</h2>
 						<ul class="d2l-quick-eval-activities-list-remove-ul-styling">
 							<dom-repeat items="[[c.activities]]" as="a">
 								<template>
@@ -65,13 +70,19 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 										completed="[[a.completed]]"
 										published="[[a.published]]"
 										evaluated="[[a.evaluated]]"
-										unread="[[a.unread]]"
+										newSubmissions="[[a.newSubmissions]]"
 										resubmitted="[[a.resubmitted]]"
 										publish-all="[[a.publishAll]]"
+										submission-list-href="[[a.submissionListHref]]"
+										evaluate-all-href="[[a.evaluateAllHref]]"
+										evaluate-new-href="[[a.evaluateNewHref]]"
 										due-date="[[a.dueDate]]"
-										activity-type="[[localize(a.activityType)]]"
+										activity-type="[[a.activityType]]"
 										activity-name-href="[[a.activityNameHref]]"
-										token="[[token]]"></d2l-quick-eval-activity-card>
+										activity-name="[[a.activityName]]"
+										token="[[token]]"
+										on-mouseenter="_handleOnMouseenter"
+										on-mouseleave="_handleOnMouseleave"></d2l-quick-eval-activity-card>
 										<div class="d2l-quick-eval-activities-list-card-spacer d2l-quick-eval-activities-list-card-spacer-border"></div>
 									</li>
 								</template>
@@ -96,7 +107,7 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 					// 		completed: 0,
 					// 		published: 0,
 					// 		evaluated: 0,
-					// 		unread: 0,
+					// 		newSubmissions: 0,
 					// 		resubmitted: 0,
 					// 		dueDate: '',
 					// 		activityType: '',
@@ -110,6 +121,24 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 			}
 		};
 	}
+
+	_handleOnMouseenter(e) {
+		if (e && e.path && e.path.length && e.path[0].tagName.toLowerCase() === 'd2l-quick-eval-activity-card') {
+			const focused = this.shadowRoot.querySelector('d2l-quick-eval-activity-card[focus-within]');
+			if (e.path[0] !== focused) {
+				document.activeElement.blur();
+			}
+		}
+	}
+
+	_handleOnMouseleave(e) {
+		if (e && e.path && e.path.length) {
+			const focused = this.shadowRoot.querySelector('d2l-quick-eval-activity-card[focus-within]');
+			if (e.path[0] === focused) {
+				document.activeElement.blur();
+			}
+		}
+	}
 }
 
-window.customElements.define(D2LQuickEvalActivitiesList.is, D2LQuickEvalActivitiesList);
+window.customElements.define('d2l-quick-eval-activities-list', D2LQuickEvalActivitiesList);

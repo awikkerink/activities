@@ -151,17 +151,17 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 			assert.equal(list.tagName.toLowerCase(), 'd2l-quick-eval-submissions-table');
 		});
 		test('no alert displayed when healthy', function() {
-			const alert = list.shadowRoot.querySelector('#list-alert');
+			const alert = list.shadowRoot.querySelector('.list-alert');
 			assert.equal(true, alert.hasAttribute('hidden'));
 		});
 		test('showLoadingSkeleton is set to true, showLoadingSpinner is set to false before data is loaded, and loading-skeleton is present', () => {
-			var loadingskeleton = list.shadowRoot.querySelector('d2l-quick-eval-skeleton');
+			var loadingskeleton = list.shadowRoot.querySelector('d2l-quick-eval-submissions-skeleton');
 			assert.equal(loadingskeleton.hidden, false);
 			assert.isFalse(list.showLoadingSpinner);
 			assert.isTrue(list.showLoadingSkeleton);
 		});
 		test.skip('_fullListLoading and _loading is set to false after data is loaded and the loading skeleton is hidden', (done) => {
-			var loadingskeleton = list.shadowRoot.querySelector('d2l-quick-eval-skeleton');
+			var loadingskeleton = list.shadowRoot.querySelector('d2l-quick-eval-submissions-skeleton');
 
 			loadPromise('data/unassessedActivities.json').then(function() {
 				assert.equal(loadingskeleton.hidden, true);
@@ -171,7 +171,7 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 			});
 		});
 		test.skip('setLoadingState lets consumers control the table loading', (done) => {
-			var loadingskeleton = list.shadowRoot.querySelector('d2l-quick-eval-skeleton');
+			var loadingskeleton = list.shadowRoot.querySelector('d2l-quick-eval-submissions-skeleton');
 
 			loadPromise('data/unassessedActivities.json').then(function() {
 				assert.equal(loadingskeleton.hidden, true);
@@ -341,7 +341,7 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 			list._health = { isHealthy: false, errorMessage: 'failedToLoadMore' };
 
 			flush(function() {
-				var alert = list.shadowRoot.querySelector('#list-alert');
+				var alert = list.shadowRoot.querySelector('.list-alert');
 				assert.equal(false, alert.hasAttribute('hidden'));
 
 				list._health = { isHealthy: true, errorMessage: '' };
@@ -356,7 +356,7 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 			list._health = { isHealthy: false, errorMessage: 'failedToLoadData' };
 
 			flush(function() {
-				var alert = list.shadowRoot.querySelector('#list-alert');
+				var alert = list.shadowRoot.querySelector('.list-alert');
 				assert.equal(false, alert.hasAttribute('hidden'));
 
 				list._health = { isHealthy: true, errorMessage: '' };

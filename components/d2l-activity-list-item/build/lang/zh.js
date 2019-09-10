@@ -7,6 +7,7 @@ const LangZhImpl = (superClass) => class extends superClass {
 	constructor() {
 		super();
 		this.zh = {
+			'clickToViewActivity': '单击查看活动',
 			'enroll': '注册'
 		};
 	}

@@ -57,6 +57,13 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 		this._clearErrors();
 	},
 
+	clearSearchResults: function() {
+		this.searchLoading = true;
+		const search = this.shadowRoot.querySelector('d2l-hm-search');
+		search.clearSearch();
+		this.searchLoading = false;
+	},
+
 	onSearchError: function(e) {
 		this.searchLoading = false;
 		this.searchError = e.detail;

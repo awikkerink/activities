@@ -77,43 +77,89 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 		return subEntity.properties.name;
 	},
 
-	_getEvaluationStatusPromise: async function(entity) {
+	getEvaluationStatusHref: function(entity) {
+		return entity.getLinkByRel(Rels.Activities.evaluationStatus).href;
+	},
+
+	_getEvaluationStatusPromise: async function(entity, extraParams) {
 		return this._followLink(entity, Rels.Activities.evaluationStatus)
 			.then(function(e) {
-				if (e && e.entity && e.entity.properties) {
-					const p = e.entity.properties;
-					const publishAll = this._getAction(e.entity, 'publish-all-feedback');
-
-					return {
-						assigned: p.assigned || 0,
-						completed: p.completed || 0,
-						published: p.published || 0,
-						evaluated: p.evaluated || 0,
-						unread: p.unread || 0,
-						resubmitted: p.resubmitted || 0,
-						publishAll: publishAll
-					};
+				if (!e || !e.entity || !e.entity.properties) {
+					return;
 				}
+
+				const p = e.entity.properties;
+				const publishAll = this._getAction(e.entity, 'publish-all-feedback');
+
+				const submissionListSubEntity = e.entity.getSubEntityByRel(Rels.Assessments.submissionApplication);
+				let submissionListHref = '';
+				if (submissionListSubEntity && submissionListSubEntity.properties.path) {
+					submissionListHref = submissionListSubEntity.properties.path;
+				}
+
+				const evaluateAllSubEntity = e.entity.getSubEntityByRel(Rels.Assessments.assessAllApplication);
+				let evaluateAllHref = '';
+
+				if (evaluateAllSubEntity && evaluateAllSubEntity.properties.path) {
+					evaluateAllHref = evaluateAllSubEntity.properties.path;
+					if (extraParams.length) {
+						evaluateAllHref = this._buildRelativeUri(evaluateAllHref, extraParams);
+					}
+				}
+				const evaluateNewSubEntity = e.entity.getSubEntityByRel(Rels.Assessments.assessNewApplication);
+
+				let evaluateNewHref = '';
+				if (evaluateNewSubEntity && evaluateNewSubEntity.properties.path) {
+					evaluateNewHref = evaluateNewSubEntity.properties.path;
+					if (extraParams.length) {
+						evaluateNewHref = this._buildRelativeUri(evaluateNewHref, extraParams);
+					}
+				}
+				return {
+					assigned: p.assigned || 0,
+					completed: p.completed || 0,
+					published: p.published || 0,
+					evaluated: p.evaluated || 0,
+					publishAll: publishAll,
+					submissionListHref: submissionListHref,
+					evaluateAllHref: this._formBackToQuickEvalLink(evaluateAllHref),
+					evaluateNewHref: this._formBackToQuickEvalLink(evaluateNewHref),
+					newSubmissions: p.newsubmissions || 0,
+					resubmitted: p.resubmissions || 0
+				};
 			}.bind(this));
 	},
 
 	_getUserPromise: function(entity, item) {
 		return this._followLink(entity, Rels.user)
 			.then(function(u) {
-				if (u && u.entity) {
-					const firstName = this._tryGetName(u.entity, Rels.firstName, null);
-					const lastName = this._tryGetName(u.entity, Rels.lastName, null);
-					const defaultDisplayName = this._tryGetName(u.entity, Rels.displayName, '');
-
-					const displayName = {
-						'firstName': firstName,
-						'lastName': lastName,
-						'defaultDisplayName': defaultDisplayName
-					};
-
-					item.displayName = displayName;
+				if (!u || !u.entity) {
+					return;
 				}
+				const firstName = this._tryGetName(u.entity, Rels.firstName, null);
+				const lastName = this._tryGetName(u.entity, Rels.lastName, null);
+				const defaultDisplayName = this._tryGetName(u.entity, Rels.displayName, '');
+
+				const displayName = {
+					'firstName': firstName,
+					'lastName': lastName,
+					'defaultDisplayName': defaultDisplayName
+				};
+
+				item.displayName = displayName;
 			}.bind(this));
+	},
+
+	_formBackToQuickEvalLink(url) {
+		if (!url) {
+			return url;
+		}
+		const placeHolderHost = 'http://fake.commm';
+		const newUrl = new URL(url, placeHolderHost);
+		const searchParams = newUrl.searchParams;
+		searchParams.append('cft', 'qe');
+
+		return newUrl.pathname + newUrl.search;
 	},
 
 	_getUserHref: function(entity) {
@@ -154,9 +200,32 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 
 	_getActivityDueDate: function(entity) {
 		if (entity && entity.hasSubEntityByClass('due-date')) {
-			return entity.getSubEntityByClass('due-date').properties.date;
+			return entity.getSubEntityByClass('due-date').properties.localizedDate;
 		}
 		return '';
+	},
+
+	_getActivityName: function(entity) {
+		return this._followHref(this._getActivityNameHref(entity))
+			.then(function(a) {
+				let rel;
+				if (a.entity.hasClass(Classes.activities.userQuizAttemptActivity) || a.entity.hasClass(Classes.activities.userQuizActivity)) {
+					rel = Rels.quiz;
+				} else if (a.entity.hasClass(Classes.activities.userAssignmentActivity)) {
+					rel = Rels.assignment;
+				} else if (a.entity.hasClass(Classes.activities.userDiscussionActivity)) {
+					rel = Rels.Discussions.topic;
+				} else {
+					return Promise.resolve();
+				}
+
+				return this._followLink(a.entity, rel);
+			}.bind(this))
+			.then(function(n) {
+				if (n && n.entity && n.entity.properties) {
+					return n.entity.properties.name;
+				}
+			});
 	},
 
 	_getSubmissionDate: function(entity) {

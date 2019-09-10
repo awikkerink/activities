@@ -10,11 +10,49 @@
 		"completed": 12,
 		"published": 13,
 		"evaluated": 14,
-		"unread": 15,
-		"resubmitted": 16,
-		"publishAll": { 
+		"newsubmissions": 15,
+		"resubmissions": 16,
+		"publishAll": {
 			"name": "publish-all-feedback",
 			"href": "quiz/publish-all-feedback"
 		}
-	}
+	},
+	"entities": [
+        {
+            "class": [
+                "relative-uri"
+            ],
+            "rel": [
+                "item",
+                "https://assessments.api.brightspace.com/rels/submission-application"
+            ],
+            "properties": {
+                "path": "/quiz"
+            }
+        },
+        {
+            "class": [
+                "relative-uri"
+            ],
+            "rel": [
+                "item",
+                "https://assessments.api.brightspace.com/rels/assess-all-application"
+            ],
+            "properties": {
+                "path": "/quiz/all?cft=qe"
+            }
+        },
+        {
+            "class": [
+                "relative-uri"
+            ],
+            "rel": [
+                "item",
+                "https://assessments.api.brightspace.com/rels/assess-new-application"
+            ],
+            "properties": {
+                "path": "/quiz/new?cft=qe"
+            }
+        }
+    ]
 }
