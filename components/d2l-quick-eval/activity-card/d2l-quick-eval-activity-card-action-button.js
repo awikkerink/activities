@@ -104,6 +104,7 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 				}
 			</style>
 			<button
+				tabindex$="[[_calculateTabstop(tabbable)]]"
 				aria-labelledby$="[[_labelledbyId]]"
 				aria-expanded$="[[ariaExpanded]]"
 				aria-haspopup$="[[ariaHaspopup]]"
@@ -141,12 +142,20 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 			},
 			disabled: {
 				type: Boolean
+			},
+			tabbable: {
+				type: Boolean,
+				value: false
 			}
 		};
 	}
 
 	_computeIcon(tier) {
 		return `d2l-tier${tier}:${this.iconName}`;
+	}
+
+	_calculateTabstop(tabbable) {
+		return tabbable ? 0 : -1;
 	}
 
 	_computeLabelledbyId() {

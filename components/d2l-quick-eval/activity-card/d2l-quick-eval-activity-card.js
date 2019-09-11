@@ -4,7 +4,6 @@ import '../../d2l-activity-name/d2l-activity-name.js';
 import 'd2l-colors/d2l-colors.js';
 import 'd2l-icons/d2l-icon.js';
 import 'd2l-icons/tier3-icons.js';
-import 'd2l-polymer-behaviors/d2l-visible-on-ancestor-behavior.js';
 import '@brightspace-ui/core/components/meter/meter-radial.js';
 import './d2l-quick-eval-activity-card-items.js';
 import './d2l-quick-eval-activity-card-unread-submissions.js';
@@ -16,7 +15,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 	static get is() { return 'd2l-quick-eval-activity-card'; }
 	static get template() {
 		return html`
-			<style include="d2l-visible-on-ancestor-styles">
+			<style>
 				.d2l-activity-name-wrapper {
 					@apply --d2l-body-standard-text;
 					margin: 0;
@@ -127,12 +126,15 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						width: 2.1rem;
 						height: 3rem;
 					}
-					d2l-quick-eval-activity-card-items[visible-on-ancestor] {
+					.d2l-quick-eval-card-actions d2l-quick-eval-activity-card-items, .d2l-meter-radial-container {
+						transition: transform 200ms ease-out, opacity 200ms ease-out !important;
+					}
+					.d2l-quick-eval-card-actions d2l-quick-eval-activity-card-items {
 						position: absolute;
 						top: 0;
 						right: 0;
 					}
-					:host(:dir(rtl)) d2l-quick-eval-activity-card-items[visible-on-ancestor] {
+					:host(:dir(rtl)) .d2l-quick-eval-card-actions d2l-quick-eval-activity-card-items {
 						left: 0;
 						right: initial;
 					}
@@ -183,6 +185,10 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				[hidden] {
 					display: none;
 				}
+				[not-seen] {
+					opacity: 0;
+					transform: translateY(-10px) !important;
+				}
 				button[aria-pressed="true"] .d2l-quick-eval-activity-card-hovered-on,
 				button[aria-pressed="false"] .d2l-quick-eval-activity-card-hovered-off {
 					fill: var(--d2l-color-tungsten);
@@ -203,11 +209,9 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 
 			</style>
 			<div
-				class="d2l-quick-eval-card d2l-visible-on-ancestor-target"
+				class="d2l-quick-eval-card"
 				on-mouseenter="_handleOnMouseenter"
-				on-mouseleave="_handleOnMouseleave"
-				on-focusin="_handleOnFocusin"
-				on-focusout="_handleOnFocusout">
+				on-mouseleave="_handleOnMouseleave">
 				<div class="d2l-quick-eval-card-titles">
 					<h3 class="d2l-activity-name-wrapper">
 						<d2l-activity-name href="[[activityNameHref]]" token="[[token]]"></d2l-activity-name>
@@ -218,13 +222,19 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 					<div class="d2l-quick-eval-activity-card-items-container">
 						<div class="d2l-quick-eval-card-meters">
 							<d2l-quick-eval-activity-card-items>
-								<div>
+								<div class="d2l-meter-radial-container"
+									aria-hidden$="[[_indicatorPressed]]"
+									not-seen$="[[_computeToggleEnabled(_indicatorPressed)]]">
 									<d2l-meter-radial value="[[completed]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('completed')]]"></d2l-meter-radial>
 								</div>
-								<div>
+								<div class="d2l-meter-radial-container"
+									aria-hidden$="[[_indicatorPressed]]"
+									not-seen$="[[_computeToggleEnabled(_indicatorPressed)]]">
 									<d2l-meter-radial value="[[evaluated]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('evaluated')]]"></d2l-meter-radial>
 								</div>
-								<div>
+								<div class="d2l-meter-radial-container"
+									aria-hidden$="[[_indicatorPressed]]"
+									not-seen$="[[_computeToggleEnabled(_indicatorPressed)]]">
 									<d2l-meter-radial value="[[published]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('published')]]"></d2l-meter-radial>
 								</div>
 							</d2l-quick-eval-activity-card-items>
@@ -236,20 +246,26 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 							activity-type="[[activityType]]"
 							hidden$="[[!_showUnreadSubmissions(unread, resubmitted)]]"></d2l-quick-eval-activity-card-unread-submissions>
 						<div class="d2l-quick-eval-card-actions">
-							<d2l-quick-eval-activity-card-items visible-on-ancestor small>
+							<d2l-quick-eval-activity-card-items not-seen$="[[!_computeToggleEnabled(_indicatorPressed)]]" small>
 								<d2l-quick-eval-activity-card-action-button
 									icon-name="evaluate-all"
 									text="[[localize('evaluateAll')]]"
-									on-click="_dispatchViewEvaluateAllEvent"></d2l-quick-eval-activity-card-action-button>
+									on-click="_dispatchViewEvaluateAllEvent"
+									tabbable="[[_computeToggleEnabled(_indicatorPressed)]]"
+									aria-hidden$="[[_computeOppositieIndicatorToggle(_indicatorPressed)]]"></d2l-quick-eval-activity-card-action-button>
 								<d2l-quick-eval-activity-card-action-button
 									icon-name="view-submission-list"
 									text="[[localize('submissionList')]]"
-									on-click="_dispatchViewSubmissionListEvent"></d2l-quick-eval-activity-card-action-button>
+									on-click="_dispatchViewSubmissionListEvent"
+									tabbable="[[_computeToggleEnabled(_indicatorPressed)]]"
+									aria-hidden$="[[_computeOppositieIndicatorToggle(_indicatorPressed)]]"></d2l-quick-eval-activity-card-action-button>
 								<d2l-quick-eval-activity-card-action-button
 									icon-name="publish-all"
 									text="[[localize('publishAll')]]"
 									on-click="_dispatchPublishAllEvent"
-									disabled$="[[_disablePublishAllButton(publishAll)]]"></d2l-quick-eval-activity-card-action-button>
+									disabled$="[[_disablePublishAllButton(publishAll)]]"
+									tabbable="[[_computeToggleEnabled(_indicatorPressed)]]"
+									aria-hidden$="[[_computeOppositieIndicatorToggle(_indicatorPressed)]]"></d2l-quick-eval-activity-card-action-button>
 							</d2l-quick-eval-activity-card-items>
 						</div>
 					</div>
@@ -335,19 +351,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				type: Boolean,
 				value: false
 			},
-			// Becaue IE11 and Edge don't have :focus-within selector.
-			focusWithin: {
-				type: Boolean,
-				value: false,
-				reflectToAttribute: true
-			}
 		};
-	}
-
-	ready() {
-		super.ready();
-		window.addEventListener('resize', this._onWindowResize.bind(this));
-		this._onWindowResize();
 	}
 
 	_dispatchViewSubmissionListEvent() {
@@ -406,17 +410,6 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 		return (unread > 0) || (resubmitted > 0);
 	}
 
-	_onWindowResize() {
-		const width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-		const actions = this.shadowRoot.querySelector('.d2l-quick-eval-card-actions d2l-quick-eval-activity-card-items');
-		if (width >= 900) {
-			actions.setAttribute('visible-on-ancestor', '');
-		} else {
-			actions.removeAttribute('visible-on-ancestor');
-			actions.removeAttribute('d2l-visible-on-ancestor-hide');
-		}
-	}
-
 	_denominatorOver99(num) {
 		return num > 99;
 	}
@@ -425,18 +418,16 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 		return this.localize('toggleIndicatorLabel', 'target', activityName);
 	}
 
+	_computeToggleEnabled(_indicatorPressed) {
+		return _indicatorPressed === 'true' ? true : false;
+	}
+
+	_computeOppositieIndicatorToggle(_indicatorPressed) {
+		return _indicatorPressed === 'true' ? 'false' : 'true';
+	}
+
 	_handleIndicatorToggle() {
-		const attr = 'd2l-visible-on-ancestor-hide';
-		const actions = this.shadowRoot.querySelector('.d2l-quick-eval-card-actions d2l-quick-eval-activity-card-items');
-		if (actions.hasAttribute(attr)) {
-			actions.removeAttribute(attr);
-			const firstButton = this.shadowRoot.querySelector('d2l-quick-eval-activity-card-action-button');
-			firstButton.focus();
-			this._indicatorPressed = 'true';
-		} else {
-			actions.setAttribute(attr, attr);
-			this._indicatorPressed = 'false';
-		}
+		this._indicatorPressed = this._indicatorPressed === 'true' ? 'false' : 'true';
 	}
 
 	_handleOnMouseenter() {
@@ -447,18 +438,6 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 	_handleOnMouseleave() {
 		this._indicatorPressed = 'false';
 		this._hovered = false;
-	}
-
-	_handleOnFocusin() {
-		this.focusWithin = true;
-		this._indicatorPressed = 'true';
-	}
-
-	_handleOnFocusout() {
-		this.focusWithin = false;
-		if (!this._hovered) {
-			this._indicatorPressed = 'false';
-		}
 	}
 
 	_disablePublishAllButton() {
