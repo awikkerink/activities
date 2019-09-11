@@ -127,7 +127,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						height: 3rem;
 					}
 					.d2l-quick-eval-card-actions d2l-quick-eval-activity-card-items, .d2l-meter-radial-container {
-						transition: transform 200ms ease-out, opacity 200ms ease-out !important;
+						transition: transform 200ms ease-out, opacity 200ms ease-out;
 					}
 					.d2l-quick-eval-card-actions d2l-quick-eval-activity-card-items {
 						position: absolute;
