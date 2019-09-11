@@ -47,6 +47,20 @@ Quick Eval should be pulled directly from `my-unassessed-activities`:
 [ci-url]: https://travis-ci.org/BrightspaceUI/activities
 [ci-image]: https://travis-ci.org/BrightspaceUI/activities.svg?branch=master
 
+### Visual Differnce Testing
+
+In order to do visual difference testing, you must generate the "golden" images first as the baseline to compare to.
+
+To generate the golden images: `npm run test:diff:golden`.
+
+To run the test to compare the current UI state to the stored goldens: `npm run test:diff`.
+
+It would be ideal to generate the goldens off of the `master` branch and then run the test on your desired branch.
+
+The golden images are stored at the following path: `\test\<component>\perceptual\screenshots\golden\`.
+
+The currently generated test images are stored at the following path: `\test\<component>\perceptual\screenshots\current\`.
+
 ## Versioning, Releasing & Deploying
 
  By default, when a pull request is merged the patch version in the `package.json` will be incremented, a tag will be created, and a Github release will be created.
