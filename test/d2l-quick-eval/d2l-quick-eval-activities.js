@@ -15,7 +15,7 @@ suite('d2l-quick-eval-activities', function() {
 				completed: 22,
 				published: 23,
 				evaluated: 24,
-				unread: 25,
+				newSubmissions: 25,
 				resubmitted: 26,
 				publishAll: {
 					'name': 'publish-all-feedback',
@@ -32,7 +32,7 @@ suite('d2l-quick-eval-activities', function() {
 				completed: 12,
 				published: 13,
 				evaluated: 14,
-				unread: 15,
+				newSubmissions: 15,
 				resubmitted: 16,
 				publishAll: {
 					'name': 'publish-all-feedback',
@@ -49,7 +49,7 @@ suite('d2l-quick-eval-activities', function() {
 				completed: 2,
 				published: 3,
 				evaluated: 4,
-				unread: 5,
+				newSubmissions: 5,
 				resubmitted: 6,
 				publishAll: {
 					'name': 'publish-all-feedback',
@@ -122,7 +122,7 @@ suite('d2l-quick-eval-activities', function() {
 					assert.equal(act._data[0].activities[i].completed, expectedData[0].activities[i].completed);
 					assert.equal(act._data[0].activities[i].published, expectedData[0].activities[i].published);
 					assert.equal(act._data[0].activities[i].evaluated, expectedData[0].activities[i].evaluated);
-					assert.equal(act._data[0].activities[i].unread, expectedData[0].activities[i].unread);
+					assert.equal(act._data[0].activities[i].newSubmissions, expectedData[0].activities[i].newSubmissions);
 					assert.equal(act._data[0].activities[i].resubmitted, expectedData[0].activities[i].resubmitted);
 					assert.equal(act._data[0].activities[i].publishAll.name, expectedData[0].activities[i].publishAll.name);
 					assert.equal(act._data[0].activities[i].publishAll.href, expectedData[0].activities[i].publishAll.href);
@@ -161,7 +161,7 @@ suite('d2l-quick-eval-activities', function() {
 	});
 	test('if error, show alert', () => {
 		act._isError = true;
-		var alert = act.shadowRoot.querySelector('#d2l-quick-eval-activities-load-error-alert');
+		var alert = act.shadowRoot.querySelector('.d2l-quick-eval-activities-load-error-alert');
 		assert.equal(false, alert.hasAttribute('hidden'));
 	});
 });

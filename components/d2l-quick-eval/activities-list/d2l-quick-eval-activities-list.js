@@ -5,10 +5,15 @@ import 'd2l-colors/d2l-colors.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 
 class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
-	static get is() { return 'd2l-quick-eval-activities-list'; }
 	static get template() {
 		return html`
 		<style>
+			:host {
+				display: block;
+			}
+			:host([hidden]) {
+				display: none;
+			}
 			.d2l-quick-eval-activities-list-remove-ul-styling {
 				list-style-type: none;
 				margin: 0;
@@ -40,7 +45,7 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 				.d2l-quick-eval-activities-list-card-spacer {
 					display: none;
 				}
-				:host ul ul li {
+				ul ul li {
 					margin-top: .6rem;
 					margin-bottom: .6rem;
 				}
@@ -65,7 +70,7 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 										completed="[[a.completed]]"
 										published="[[a.published]]"
 										evaluated="[[a.evaluated]]"
-										unread="[[a.unread]]"
+										newSubmissions="[[a.newSubmissions]]"
 										resubmitted="[[a.resubmitted]]"
 										publish-all="[[a.publishAll]]"
 										submission-list-href="[[a.submissionListHref]]"
@@ -102,7 +107,7 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 					// 		completed: 0,
 					// 		published: 0,
 					// 		evaluated: 0,
-					// 		unread: 0,
+					// 		newSubmissions: 0,
 					// 		resubmitted: 0,
 					// 		dueDate: '',
 					// 		activityType: '',
@@ -136,4 +141,4 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 	}
 }
 
-window.customElements.define(D2LQuickEvalActivitiesList.is, D2LQuickEvalActivitiesList);
+window.customElements.define('d2l-quick-eval-activities-list', D2LQuickEvalActivitiesList);

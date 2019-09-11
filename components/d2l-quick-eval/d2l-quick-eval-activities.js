@@ -32,6 +32,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	static get template() {
 		const quickEvalActivitiesTemplate = html`
 			<style>
+				:host {
+					display: block;
+				}
 				.d2l-quick-eval-activity-list-modifiers {
 					display: flex;
 					margin-top: 0.9rem;
@@ -61,7 +64,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					padding-top: 67px;
 				}
 				d2l-quick-eval-activities-skeleton {
-					width: 100%;
 					margin-top: 1.2rem;
 				}
 				d2l-quick-eval-no-submissions-image {
@@ -88,9 +90,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				d2l-quick-eval-search-results-summary-container {
 					margin-bottom: 0.9rem;
 					margin-top: 0.9rem;
-					display: block;
 				}
-				[hidden] {
+				:host([hidden]) {
 					display: none;
 				}
 				.d2l-body-standard {
@@ -131,13 +132,13 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				</d2l-hm-search>
 			</div>
 			<div class="clear"></div>
-			<d2l-alert type="critical" hidden$="[[!_isError]]" id="d2l-quick-eval-activities-load-error-alert">
+			<d2l-alert type="critical" hidden$="[[!_isError]]" class="d2l-quick-eval-activities-load-error-alert">
 				[[localize('failedToLoadActivities')]]
 			</d2l-alert>
-			<d2l-alert type="critical" hidden$="[[!filterError]]" id="d2l-quick-eval-filter-error-alert">
+			<d2l-alert type="critical" hidden$="[[!filterError]]" class="d2l-quick-eval-filter-error-alert">
 				[[localize('failedToFilter')]]
 			</d2l-alert>
-			<d2l-alert type="critical" hidden$="[[!searchError]]" id="d2l-quick-eval-search-error-alert">
+			<d2l-alert type="critical" hidden$="[[!searchError]]" class="d2l-quick-eval-search-error-alert">
 				[[localize('failedToSearch')]]
 			</d2l-alert>
 			<d2l-quick-eval-search-results-summary-container
@@ -158,7 +159,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			</div>
 			<d2l-quick-eval-activities-skeleton hidden$="[[!_showLoadingSkeleton]]"></d2l-quick-eval-activities-skeleton>
 			<d2l-quick-eval-activities-list
-				id="[[_activitiesListId]]"
+				id$="[[_activitiesListId]]"
 				hidden$="[[!_shouldShowActivitiesList(_data, _showLoadingSkeleton)]]"
 				courses="[[_data]]"
 				token="[[token]]"
@@ -176,10 +177,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 		quickEvalActivitiesTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
 		return quickEvalActivitiesTemplate;
-	}
-
-	static get is() {
-		return 'd2l-quick-eval-activities';
 	}
 
 	static get properties() {
@@ -266,7 +263,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					completed: evalStatus.completed,
 					published: evalStatus.published,
 					evaluated: evalStatus.evaluated,
-					unread: evalStatus.unread,
+					newSubmissions: evalStatus.newSubmissions,
 					resubmitted: evalStatus.resubmitted,
 					publishAll: evalStatus.publishAll,
 					submissionListHref: evalStatus.submissionListHref,
@@ -422,7 +419,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					this.set(`_data.${i}.activities.${j}.completed`, evalStatusEntity.properties.completed);
 					this.set(`_data.${i}.activities.${j}.published`, evalStatusEntity.properties.published);
 					this.set(`_data.${i}.activities.${j}.evaluated`, evalStatusEntity.properties.evaluated);
-					this.set(`_data.${i}.activities.${j}.unread`, evalStatusEntity.properties.newsubmissions);
+					this.set(`_data.${i}.activities.${j}.newSubmissions`, evalStatusEntity.properties.newsubmissions);
 					this.set(`_data.${i}.activities.${j}.resubmitted`, evalStatusEntity.properties.resubmissions);
 					this.set(`_data.${i}.activities.${j}.publishAll`, publishAll);
 
@@ -450,4 +447,4 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		});
 	}
 }
-window.customElements.define(D2LQuickEvalActivities.is, D2LQuickEvalActivities);
+window.customElements.define('d2l-quick-eval-activities', D2LQuickEvalActivities);

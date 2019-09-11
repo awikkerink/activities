@@ -7,6 +7,7 @@ import 'd2l-table/d2l-table.js';
 import 'd2l-button/d2l-button.js';
 import 'd2l-offscreen/d2l-offscreen.js';
 import 'd2l-polymer-behaviors/d2l-dom-focus.js';
+import 'd2l-polymer-behaviors/d2l-id.js';
 import 'd2l-link/d2l-link.js';
 import 'd2l-users/components/d2l-profile-image.js';
 import '../d2l-activity-name/d2l-activity-name.js';
@@ -26,6 +27,9 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 	static get template() {
 		const quickEvalSubmissionsTableTemplate = html`
 			<style include="d2l-table-style">
+				:host {
+					display: block;
+				}
 				.d2l-quick-eval-table {
 					--d2l-table-body-background-color: transparent;
 					--d2l-table-light-header-background-color: transparent;
@@ -48,9 +52,6 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 				/* Needed for Edge */
 				d2l-table-col-sort-button span {
 					color: var(--d2l-color-ferrite);
-				}
-				d2l-quick-eval-submissions-skeleton {
-					width: 100%;
 				}
 				d2l-alert {
 					margin: auto;
@@ -107,7 +108,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 					overflow: hidden;
 					text-overflow: ellipsis;
 				}
-				[hidden] {
+				:host([hidden]) {
 					display: none;
 				}
 				.d2l-quick-eval-no-submissions,
@@ -135,8 +136,8 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 					@apply --d2l-body-compact-text;
 				}
 			</style>
-			<d2l-offscreen id="d2l-quick-eval-submissions-table-table-summary">[[localize('tableTitle')]]</d2l-offscreen>
-			<d2l-table class="d2l-quick-eval-table" type="light" hidden$="[[showLoadingSkeleton]]" aria-describedby$="d2l-quick-eval-submissions-table-table-summary" aria-colcount$="[[_headerColumns.length]]" aria-rowcount$="[[_data.length]]">
+			<d2l-offscreen id$="[[_tableDescriptionId]]">[[localize('tableTitle')]]</d2l-offscreen>
+			<d2l-table class="d2l-quick-eval-table" type="light" hidden$="[[showLoadingSkeleton]]" aria-describedby$="[[_tableDescriptionId]]" aria-colcount$="[[_headerColumns.length]]" aria-rowcount$="[[_data.length]]">
 				<d2l-thead>
 					<d2l-tr>
 						<dom-repeat items="[[_headerColumns]]" as="headerColumn">
@@ -185,7 +186,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 											class="d2l-user-badge-image"
 											href="[[s.userHref]]"
 											token="[[token]]"
-											small=""
+											small
 											aria-hidden="true">
 										</d2l-profile-image>
 									</template>
@@ -215,7 +216,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 					</dom-repeat>
 				</d2l-tbody>
 			</d2l-table>
-			<d2l-alert id="list-alert" type="critical" hidden$="[[_health.isHealthy]]">
+			<d2l-alert class="list-alert" type="critical" hidden$="[[_health.isHealthy]]">
 				[[localize(_health.errorMessage)]]
 			</d2l-alert>
 			<d2l-offscreen role="alert" aria-live="aggressive" hidden$="[[!isLoading]]">[[localize('loading')]]</d2l-offscreen>
@@ -247,13 +248,11 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 		quickEvalSubmissionsTableTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
 		return quickEvalSubmissionsTableTemplate;
 	}
-	static get is() { return 'd2l-quick-eval-submissions-table'; }
 	static get properties() {
 		return {
 			masterTeacher: {
 				type: Boolean,
-				value: false,
-				reflectToAttribute: true
+				value: false
 			},
 			_headerColumns: {
 				type: Array,
@@ -293,6 +292,10 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 			isLoading: {
 				type: Boolean,
 				computed: '_computeIsLoading(showLoadingSpinner, showLoadingSkeleton)'
+			},
+			_tableDescriptionId: {
+				type: String,
+				computed: '_computeTableDescriptionId()'
 			}
 		};
 	}
@@ -349,10 +352,10 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 		}
 
 		if (firstThenLast) {
-			return firstName + ' ' + lastName;
+			return `${firstName} ${lastName}`;
 		}
 
-		return lastName + ', ' + firstName;
+		return `${lastName}, ${firstName}`;
 	}
 
 	_localizeDateTimeFormat(localizedDate) {
@@ -395,6 +398,10 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 		return true;
 	}
 
+	_computeTableDescriptionId() {
+		return D2L.Id.getUniqueId();
+	}
+
 	_dispatchSortRequestedEvent(evt) {
 		const headerId = evt.currentTarget.id;
 
@@ -425,4 +432,4 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 	}
 }
 
-window.customElements.define(D2LQuickEvalSubmissionsTable.is, D2LQuickEvalSubmissionsTable);
+window.customElements.define('d2l-quick-eval-submissions-table', D2LQuickEvalSubmissionsTable);

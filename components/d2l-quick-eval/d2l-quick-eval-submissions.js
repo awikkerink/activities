@@ -26,6 +26,9 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	static get template() {
 		const template = html`
 			<style>
+				:host {
+					display: block;
+				}
 				.d2l-quick-eval-submissions-table-modifiers {
 					display: flex;
 					margin-top: 0.9rem;
@@ -51,9 +54,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				d2l-quick-eval-search-results-summary-container {
 					margin-bottom: 0.9rem;
 					margin-top: 0.9rem;
-					display: block;
 				}
-				[hidden] {
+				:host([hidden]) {
 					display: none;
 				}
 				.d2l-quick-eval-submissions-table-modifiers {
@@ -66,7 +68,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 					clear: both;
 				}
 				d2l-quick-eval-submissions-table {
-					display: block;
 					padding-top: 1rem;
 					margin-bottom: 2.1rem;
 				}
@@ -107,10 +108,10 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				</d2l-hm-search>
 			</div>
 			<div class="clear"></div>
-			<d2l-alert type="critical" hidden$="[[!filterError]]" id="d2l-quick-eval-filter-error-alert">
+			<d2l-alert type="critical" hidden$="[[!filterError]]" class="d2l-quick-eval-filter-error-alert">
 				[[localize('failedToFilter')]]
 			</d2l-alert>
-			<d2l-alert type="critical" hidden$="[[!searchError]]" id="d2l-quick-eval-search-error-alert">
+			<d2l-alert type="critical" hidden$="[[!searchError]]" class="d2l-quick-eval-search-error-alert">
 				[[localize('failedToSearch')]]
 			</d2l-alert>
 			<d2l-quick-eval-search-results-summary-container
@@ -138,10 +139,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		`;
 		template.setAttribute('strip-whitespace', 'strip-whitespace');
 		return template;
-	}
-
-	static get is() {
-		return 'd2l-quick-eval-submissions';
 	}
 
 	static get properties() {
@@ -283,41 +280,45 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	}
 
 	_loadMore() {
-		if (this._pageNextHref && !this._loadingMore) {
-			this._loadingMore = true;
-			this._followHref(this._pageNextHref)
-				.then(async function(u) {
-					if (u && u.entity) {
-						const tbody = this.shadowRoot.querySelector('d2l-quick-eval-submissions-table').shadowRoot.querySelector('d2l-tbody');
-						const lastFocusableTableElement = D2L.Dom.Focus.getLastFocusableDescendant(tbody, false);
-
-						try {
-							if (u.entity.entities) {
-								const result = await this._parseActivities(u.entity);
-								this._data = this._data.concat(result);
-								this._updateSearchResultsCount(this._data.length);
-							}
-						} catch (e) {
-						// Unable to load more activities from entity.
-							throw e;
-						} finally {
-							this._loadingMore = false;
-							window.requestAnimationFrame(function() {
-								const newElementToFocus = D2L.Dom.Focus.getNextFocusable(lastFocusableTableElement, false);
-								if (newElementToFocus) {
-									newElementToFocus.focus();
-								}
-							});
-						}
-					}
-				}.bind(this))
-				.then(this._clearAlerts.bind(this))
-				.catch(function(e) {
-					this._logError(e, {developerMessage: 'Unable to load more.'});
-					this._loadingMore = false;
-					this._handleLoadMoreFailure();
-				}.bind(this));
+		if (!this._pageNextHref || this._loadingMore) {
+			return;
 		}
+
+		this._loadingMore = true;
+		this._followHref(this._pageNextHref)
+			.then(async function(u) {
+				if (!u || !u.entity) {
+					return;
+				}
+
+				const tbody = this.shadowRoot.querySelector('d2l-quick-eval-submissions-table').shadowRoot.querySelector('d2l-tbody');
+				const lastFocusableTableElement = D2L.Dom.Focus.getLastFocusableDescendant(tbody, false);
+
+				try {
+					if (u.entity.entities) {
+						const result = await this._parseActivities(u.entity);
+						this._data = this._data.concat(result);
+						this._updateSearchResultsCount(this._data.length);
+					}
+				} catch (e) {
+				// Unable to load more activities from entity.
+					throw e;
+				} finally {
+					this._loadingMore = false;
+					window.requestAnimationFrame(function() {
+						const newElementToFocus = D2L.Dom.Focus.getNextFocusable(lastFocusableTableElement, false);
+						if (newElementToFocus) {
+							newElementToFocus.focus();
+						}
+					});
+				}
+			}.bind(this))
+			.then(this._clearAlerts.bind(this))
+			.catch(function(e) {
+				this._logError(e, {developerMessage: 'Unable to load more.'});
+				this._loadingMore = false;
+				this._handleLoadMoreFailure();
+			}.bind(this));
 	}
 
 	async _parseActivities(entity) {
@@ -518,4 +519,4 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	}
 }
 
-window.customElements.define(D2LQuickEvalSubmissions.is, D2LQuickEvalSubmissions);
+window.customElements.define('d2l-quick-eval-submissions', D2LQuickEvalSubmissions);
