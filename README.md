@@ -51,12 +51,30 @@ Quick Eval should be pulled directly from `my-unassessed-activities`:
 
 In order to do visual difference testing, you must generate the "golden" images first as the baseline to compare to.
 
-#### Procedure:
+#### Procedure for testing on a local developer machine:
 
 1. Checkout the master branch: `git checkout master`.
 2. Generate the golden (baseline) images: `npm run test:diff:golden`.
 3. Checkout your branch to test: `git checkout <desired branch>`.
 4. Running the visual difference tests: `npm run test:diff`.
+
+
+#### Procedure for testing on the Travis CI pipeline:
+
+When a pull-request is made, you should consider if your changes will alter the UI and break the visual difference tests.
+If the visuals are being changed/modified, it is necessary for the stored goldens in Amazon S3 to be updated.
+
+##### Updating the goldens in S3
+
+1. Head over to the repository on [Travis CI](https://travis-ci.com/BrightspaceHypermediaComponents/activities) and click the "More options" button on the right-hand side of the screen.
+2. Click on "Trigger build" button.
+3. Set the branch to the desired branch to generate the goldens from.
+4. For the custom config enter the following:
+```yaml
+script:
+- npm run test:diff:golden
+```
+5. Wait for the build to complete and then re-run your failed PR build.
 
 #### Other information
 
