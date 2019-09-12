@@ -90,6 +90,80 @@ describe('d2l-activity-list-item', () => {
 		expect(component).to.exist;
 	});
 
+	[
+		{
+			name: 'Setting the href attribute',
+			beforeEachFn: () => {
+				component = fixture('d2l-activity-list-item-href-fixture');
+			}
+		},
+		{
+			name: 'Setting the entity attribute',
+			beforeEachFn: () => {
+				component = fixture('d2l-activity-list-item-empty-fixture');
+				component.entity = activityEntity;
+			}
+		}
+	].forEach((testCase) => {
+		describe(testCase.name, () => {
+			let textLoadedSuccessfulSpy;
+
+			beforeEach(done => {
+				textLoadedSuccessfulSpy = sinon.spy();
+				window.document.addEventListener('d2l-activity-text-loaded', textLoadedSuccessfulSpy);
+				testCase.beforeEachFn();
+				afterNextRender(component, done);
+			});
+
+			afterEach(() => {
+				window.document.removeEventListener('d2l-activity-text-loaded', textLoadedSuccessfulSpy);
+			});
+
+			it('should set the href', () => {
+				expect(component.href).to.equal('/activity/1');
+			});
+
+			it('should set entity', () => {
+				expect(component.entity).to.equal(activityEntity);
+			});
+
+			it('should fetch the organization', () => {
+				expect(component._organizationUrl).to.equal('/organization/1');
+			});
+
+			it('should set the image entity', () => {
+				expect(component._image).to.equal(imageEntity);
+			});
+
+			it('should set the activity homepage', () => {
+				expect(component._activityHomepage).to.equal('#');
+			});
+
+		});
+
+		let handler;
+		afterEach(() => {
+			window.document.removeEventListener('d2l-activity-text-loaded', handler);
+			window.document.removeEventListener('d2l-activity-image-loaded', handler);
+		});
+
+		it(testCase.name + 'should send text loaded event', done => {
+			handler = () => {
+				done();
+			};
+			window.document.addEventListener('d2l-activity-text-loaded', handler);
+			testCase.beforeEachFn();
+		});
+
+		it(testCase.name + 'should send image loaded event', done => {
+			handler = () => {
+				done();
+			};
+			window.document.addEventListener('d2l-activity-image-loaded', handler);
+			testCase.beforeEachFn();
+		});
+	});
+
 	describe('Accessibility', () => {
 		beforeEach(done => {
 			component = fixture('d2l-activity-list-item-href-fixture');
