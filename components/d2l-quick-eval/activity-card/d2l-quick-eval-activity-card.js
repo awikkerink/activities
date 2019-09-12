@@ -181,13 +181,13 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						width: 7.5rem;
 						height: 3rem;
 					}
+					[not-seen-desktop] {
+						opacity: 0;
+						transform: translateY(-10px) !important;
+					}
 				}
 				:host([hidden]) {
 					display: none;
-				}
-				[not-seen] {
-					opacity: 0;
-					transform: translateY(-10px) !important;
 				}
 				button[aria-pressed="true"] .d2l-quick-eval-activity-card-hovered-on,
 				button[aria-pressed="false"] .d2l-quick-eval-activity-card-hovered-off {
@@ -221,14 +221,14 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				<div class="d2l-quick-eval-card-right">
 					<div class="d2l-quick-eval-activity-card-items-container">
 						<div class="d2l-quick-eval-card-meters">
-							<d2l-quick-eval-activity-card-items not-seen$="[[_indicatorPressed]]">
-								<div class="d2l-meter-radial-container" aria-hidden$="[[_toString(_indicatorPressed)]]">
+							<d2l-quick-eval-activity-card-items not-seen-desktop$="[[_indicatorPressed]]">
+								<div class="d2l-meter-radial-container" aria-hidden$="[[_computeIndicatorPressed(_indicatorPressed, _desktopView)]]">
 									<d2l-meter-radial value="[[completed]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('completed')]]"></d2l-meter-radial>
 								</div>
-								<div class="d2l-meter-radial-container" aria-hidden$="[[_toString(_indicatorPressed)]]">
+								<div class="d2l-meter-radial-container" aria-hidden$="[[_computeIndicatorPressed(_indicatorPressed, _desktopView)]]">
 									<d2l-meter-radial value="[[evaluated]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('evaluated')]]"></d2l-meter-radial>
 								</div>
-								<div class="d2l-meter-radial-container" aria-hidden$="[[_toString(_indicatorPressed)]]">
+								<div class="d2l-meter-radial-container" aria-hidden$="[[_computeIndicatorPressed(_indicatorPressed, _desktopView)]]">
 									<d2l-meter-radial value="[[published]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('published')]]"></d2l-meter-radial>
 								</div>
 							</d2l-quick-eval-activity-card-items>
@@ -240,26 +240,26 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 							activity-type="[[activityType]]"
 							hidden$="[[!_showNewSubmissions(newSubmissions, resubmitted)]]"></d2l-quick-eval-activity-card-new-submissions>
 						<div class="d2l-quick-eval-card-actions">
-							<d2l-quick-eval-activity-card-items not-seen$="[[!_indicatorPressed]]" small>
+							<d2l-quick-eval-activity-card-items not-seen-desktop$="[[!_indicatorPressed]]" small>
 								<d2l-quick-eval-activity-card-action-button
 									icon-name="evaluate-all"
 									text="[[localize('evaluateAll')]]"
 									on-click="_dispatchViewEvaluateAllEvent"
 									tabbable="[[_indicatorPressed]]"
-									aria-hidden$="[[_computeOppositeIndicatorToggle(_indicatorPressed)]]"></d2l-quick-eval-activity-card-action-button>
+									aria-hidden$="[[_computeOppositeIndicatorPressed(_indicatorPressed, _desktopView)]]"></d2l-quick-eval-activity-card-action-button>
 								<d2l-quick-eval-activity-card-action-button
 									icon-name="view-submission-list"
 									text="[[localize('submissionList')]]"
 									on-click="_dispatchViewSubmissionListEvent"
 									tabbable="[[_indicatorPressed]]"
-									aria-hidden$="[[_computeOppositeIndicatorToggle(_indicatorPressed)]]"></d2l-quick-eval-activity-card-action-button>
+									aria-hidden$="[[_computeOppositeIndicatorPressed(_indicatorPressed, _desktopView)]]"></d2l-quick-eval-activity-card-action-button>
 								<d2l-quick-eval-activity-card-action-button
 									icon-name="publish-all"
 									text="[[localize('publishAll')]]"
 									on-click="_dispatchPublishAllEvent"
 									disabled$="[[_disablePublishAllButton(publishAll)]]"
 									tabbable="[[_indicatorPressed]]"
-									aria-hidden$="[[_computeOppositeIndicatorToggle(_indicatorPressed)]]"></d2l-quick-eval-activity-card-action-button>
+									aria-hidden$="[[_computeOppositeIndicatorPressed(_indicatorPressed, _desktopView)]]"></d2l-quick-eval-activity-card-action-button>
 							</d2l-quick-eval-activity-card-items>
 						</div>
 					</div>
@@ -267,7 +267,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						class="d2l-quick-eval-card-indicator"
 						on-click="_handleIndicatorToggle"
 						aria-label$="[[_computeIndicatorLabel(activityName)]]"
-						aria-pressed$="[[_toString(_indicatorPressed)]]">
+						aria-pressed$="[[_computeIndicatorPressed(_indicatorPressed, _desktopView)]]">
 						<svg width="12px" height="33px" viewBox="0 0 12 33">
 							<circle class="d2l-quick-eval-activity-card-hovered-off" stroke-width="2" cx="5.5" cy="5.5" r="4.5"></circle>
 							<circle class="d2l-quick-eval-activity-card-hovered-on" stroke-width="2" cx="5.5" cy="26.5" r="4.5"></circle>
@@ -345,6 +345,15 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				type: Boolean,
 				value: false
 			},
+			_desktopView: {
+				type: Boolean,
+				value: false,
+				computed: '_isDesktop(_screenWidth)',
+			},
+			_screenWidth: {
+				type: Number,
+				value: 0,
+			}
 		};
 	}
 
@@ -361,6 +370,25 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				}
 			)
 		);
+	}
+
+	attached() {
+		this._updateScreenWidth = this._updateScreenWidth.bind(this);
+		this._updateScreenWidth();
+
+		window.addEventListener('resize', this._updateScreenWidth);
+	}
+
+	detached() {
+		window.removeEventListener('resize', this._updateScreenWidth);
+	}
+
+	_updateScreenWidth(){
+		this._screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+	}
+
+	_isDesktop(width) {
+		return width >= 900;
 	}
 
 	_dispatchViewEvaluateAllEvent() {
@@ -412,8 +440,12 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 		return this.localize('toggleIndicatorLabel', 'target', activityName);
 	}
 
-	_computeOppositeIndicatorToggle(_indicatorPressed) {
-		return this._toString(!_indicatorPressed);
+	_computeIndicatorPressed(_indicatorPressed, _desktopView) {
+		return (_indicatorPressed && _desktopView).toString();
+	}
+
+	_computeOppositeIndicatorPressed(_indicatorPressed, _desktopView) {
+		return this._computeIndicatorPressed(!_indicatorPressed, _desktopView);
 	}
 
 	_toString(variable) {
