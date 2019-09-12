@@ -126,7 +126,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						width: 2.1rem;
 						height: 3rem;
 					}
-					.d2l-quick-eval-card-actions d2l-quick-eval-activity-card-items, .d2l-meter-radial-container {
+					d2l-quick-eval-activity-card-items {
 						transition: transform 200ms ease-out, opacity 200ms ease-out;
 					}
 					.d2l-quick-eval-card-actions d2l-quick-eval-activity-card-items {
@@ -221,20 +221,14 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				<div class="d2l-quick-eval-card-right">
 					<div class="d2l-quick-eval-activity-card-items-container">
 						<div class="d2l-quick-eval-card-meters">
-							<d2l-quick-eval-activity-card-items>
-								<div class="d2l-meter-radial-container"
-									aria-hidden$="[[_toString(_indicatorPressed)]]"
-									not-seen$="[[_indicatorPressed]]">
+							<d2l-quick-eval-activity-card-items not-seen$="[[_indicatorPressed]]">
+								<div class="d2l-meter-radial-container" aria-hidden$="[[_toString(_indicatorPressed)]]">
 									<d2l-meter-radial value="[[completed]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('completed')]]"></d2l-meter-radial>
 								</div>
-								<div class="d2l-meter-radial-container"
-									aria-hidden$="[[_toString(_indicatorPressed)]]"
-									not-seen$="[[_indicatorPressed]]">
+								<div class="d2l-meter-radial-container" aria-hidden$="[[_toString(_indicatorPressed)]]">
 									<d2l-meter-radial value="[[evaluated]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('evaluated')]]"></d2l-meter-radial>
 								</div>
-								<div class="d2l-meter-radial-container"
-									aria-hidden$="[[_toString(_indicatorPressed)]]"
-									not-seen$="[[_indicatorPressed]]">
+								<div class="d2l-meter-radial-container" aria-hidden$="[[_toString(_indicatorPressed)]]">
 									<d2l-meter-radial value="[[published]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('published')]]"></d2l-meter-radial>
 								</div>
 							</d2l-quick-eval-activity-card-items>
