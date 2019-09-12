@@ -38,7 +38,6 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				}
 				.d2l-quick-eval-card-actions d2l-quick-eval-activity-card-action-button {
 					height: 2.1rem;
-					background: white;
 				}
 				.d2l-quick-eval-card-indicator {
 					display: none;
