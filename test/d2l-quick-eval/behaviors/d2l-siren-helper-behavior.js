@@ -214,7 +214,7 @@
 			test('when parsing url for sort and filter params, if only collectionSearch is present, return array with correct values', () => {
 				const url = 'https://www.example.com/?pageSize=20&collectionSearch=ragnaros';
 
-				var params = component._getExtraParams(url);
+				const params = component._getExtraParams(url);
 				assert.equal(params.length, 1);
 
 				const expectedParams = [
