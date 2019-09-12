@@ -169,7 +169,7 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 		window.removeEventListener('resize', this._updateScreenWidth);
 	}
 
-	_updateScreenWidth(){
+	_updateScreenWidth() {
 		this._screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 	}
 

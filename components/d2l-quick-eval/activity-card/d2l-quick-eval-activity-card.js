@@ -382,7 +382,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 		window.removeEventListener('resize', this._updateScreenWidth);
 	}
 
-	_updateScreenWidth(){
+	_updateScreenWidth() {
 		this._screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 	}
 
