@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+		<title>d2l-quick-eval-search-results-summary-container visual diff tests</title>
+		<script type="module" src="../../../components/d2l-quick-eval/d2l-quick-eval-search-results-summary-container.js"></script>
+		<style>
+		html {
+			font-size: 20px;
+		}
+		div {
+			margin: 10px;
+		}
+		</style>
+		<script type="module">
+			import '@brightspace-ui/core/components/typography/typography.js';
+		</script>
+	</head>
+	<body class="d2l-typography">
+		<div id="zero-no-more">
+			<d2l-quick-eval-search-results-summary-container search-results-count="0"></d2l-quick-eval-search-results-summary-container>
+		</div>
+		<div id="zero-more">
+			<d2l-quick-eval-search-results-summary-container search-results-count="0" more-results></d2l-quick-eval-search-results-summary-container>
+		</div>
+		<div id="one-no-more">
+			<d2l-quick-eval-search-results-summary-container search-results-count="1"></d2l-quick-eval-search-results-summary-container>
+		</div>
+		<div id="one-more">
+			<d2l-quick-eval-search-results-summary-container search-results-count="1" more-results></d2l-quick-eval-search-results-summary-container>
+		</div>
+		<div id="many-no-more">
+			<d2l-quick-eval-search-results-summary-container search-results-count="5"></d2l-quick-eval-search-results-summary-container>
+		</div>
+		<div id="many-more">
+			<d2l-quick-eval-search-results-summary-container search-results-count="5" more-results></d2l-quick-eval-search-results-summary-container>
+		</div>
+		<div id="rtl">
+			<d2l-quick-eval-search-results-summary-container search-results-count="5" more-results dir="rtl"></d2l-quick-eval-search-results-summary-container>
+		</div>
+	</body>
+</html>
