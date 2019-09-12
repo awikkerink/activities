@@ -33,4 +33,6 @@ env:
   # GITHUB_RELEASE_TOKEN (859f......865e)
   - secure: QP5YZ7oT1NAyyLDhNG/kHii+SasV5zR/9XO5ePl2ThAevdpEgrLLk1A76NV0XZMMSRIdvgzMZIvPqHWfA81I2O7QCzXOJKQ+xj8hanGqUUNlGxgDMo8FGmqf7OWyxw+XHoM5E0P20yntmDQnCsYnuPvTwYyZ/6ujQgTbPli2ewvoZL+Doh+RnOHmc7R8HbdpU2Cv42PIZr/H/nW6tpuliP1fNrMvKwzjbRu+zh/ag62CkPOk0jbu6klXTwdwytb0jseY7Y/ybJ/0kOZGmgCguH3Lb2kj4Uncp78aQiAZFyCIurb6iXVZ5K7YtABbpWj2sRtMkJwQedTSCUY7PI8FTuvNowZ9URmJ5d4FAAbo03D6jgur4SHxakyV+iQj5z0vfmw5bJT/ykJzXFgyRTkjy/zznZE3arDeyRiLPKGmlKSYDS51eXUhJ2yqgFtsw3ArCqIoIm3xxe9Qy2DNsJllf/SGIhcGhPXIlG4Mj/59OiqNVJuXORJkwuj4SNK4ujkTGkHWYgwGEglhF9nCSPBOrITaFtyfECNvHc9HM/SeYyaDjMqrvXnGusoU6BKhxqiwhb2LhqrK9SRq6ibeP9ykjvi3PkrmbyVHKTAzXHxKJ5uS1orwQ7oOnC4p751pjZB570wIg4ENUsPML/EwbtfsqWjCYnzGZqOgP8mYDXDprr8=
 after_failure:
-  - cat /tmp/**/sc.log
+- |
+  echo "Tests failed - trying to dump sauce connect"
+- cat /tmp/**/sc.log
