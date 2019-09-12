@@ -223,18 +223,18 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						<div class="d2l-quick-eval-card-meters">
 							<d2l-quick-eval-activity-card-items>
 								<div class="d2l-meter-radial-container"
-									aria-hidden$="[[_indicatorPressed]]"
-									not-seen$="[[_computeToggleEnabled(_indicatorPressed)]]">
+									aria-hidden$="[[_toString(_indicatorPressed)]]"
+									not-seen$="[[_indicatorPressed]]">
 									<d2l-meter-radial value="[[completed]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('completed')]]"></d2l-meter-radial>
 								</div>
 								<div class="d2l-meter-radial-container"
-									aria-hidden$="[[_indicatorPressed]]"
-									not-seen$="[[_computeToggleEnabled(_indicatorPressed)]]">
+									aria-hidden$="[[_toString(_indicatorPressed)]]"
+									not-seen$="[[_indicatorPressed]]">
 									<d2l-meter-radial value="[[evaluated]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('evaluated')]]"></d2l-meter-radial>
 								</div>
 								<div class="d2l-meter-radial-container"
-									aria-hidden$="[[_indicatorPressed]]"
-									not-seen$="[[_computeToggleEnabled(_indicatorPressed)]]">
+									aria-hidden$="[[_toString(_indicatorPressed)]]"
+									not-seen$="[[_indicatorPressed]]">
 									<d2l-meter-radial value="[[published]]" max="[[assigned]]" percent$="[[_denominatorOver99(assigned)]]" text="[[localize('published')]]"></d2l-meter-radial>
 								</div>
 							</d2l-quick-eval-activity-card-items>
@@ -246,26 +246,26 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 							activity-type="[[activityType]]"
 							hidden$="[[!_showNewSubmissions(newSubmissions, resubmitted)]]"></d2l-quick-eval-activity-card-new-submissions>
 						<div class="d2l-quick-eval-card-actions">
-							<d2l-quick-eval-activity-card-items not-seen$="[[!_computeToggleEnabled(_indicatorPressed)]]" small>
+							<d2l-quick-eval-activity-card-items not-seen$="[[!_indicatorPressed]]" small>
 								<d2l-quick-eval-activity-card-action-button
 									icon-name="evaluate-all"
 									text="[[localize('evaluateAll')]]"
 									on-click="_dispatchViewEvaluateAllEvent"
-									tabbable="[[_computeToggleEnabled(_indicatorPressed)]]"
-									aria-hidden$="[[_computeOppositieIndicatorToggle(_indicatorPressed)]]"></d2l-quick-eval-activity-card-action-button>
+									tabbable="[[_indicatorPressed]]"
+									aria-hidden$="[[_computeOppositeIndicatorToggle(_indicatorPressed)]]"></d2l-quick-eval-activity-card-action-button>
 								<d2l-quick-eval-activity-card-action-button
 									icon-name="view-submission-list"
 									text="[[localize('submissionList')]]"
 									on-click="_dispatchViewSubmissionListEvent"
-									tabbable="[[_computeToggleEnabled(_indicatorPressed)]]"
-									aria-hidden$="[[_computeOppositieIndicatorToggle(_indicatorPressed)]]"></d2l-quick-eval-activity-card-action-button>
+									tabbable="[[_indicatorPressed]]"
+									aria-hidden$="[[_computeOppositeIndicatorToggle(_indicatorPressed)]]"></d2l-quick-eval-activity-card-action-button>
 								<d2l-quick-eval-activity-card-action-button
 									icon-name="publish-all"
 									text="[[localize('publishAll')]]"
 									on-click="_dispatchPublishAllEvent"
 									disabled$="[[_disablePublishAllButton(publishAll)]]"
-									tabbable="[[_computeToggleEnabled(_indicatorPressed)]]"
-									aria-hidden$="[[_computeOppositieIndicatorToggle(_indicatorPressed)]]"></d2l-quick-eval-activity-card-action-button>
+									tabbable="[[_indicatorPressed]]"
+									aria-hidden$="[[_computeOppositeIndicatorToggle(_indicatorPressed)]]"></d2l-quick-eval-activity-card-action-button>
 							</d2l-quick-eval-activity-card-items>
 						</div>
 					</div>
@@ -273,7 +273,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						class="d2l-quick-eval-card-indicator"
 						on-click="_handleIndicatorToggle"
 						aria-label$="[[_computeIndicatorLabel(activityName)]]"
-						aria-pressed$="[[_indicatorPressed]]">
+						aria-pressed$="[[_toString(_indicatorPressed)]]">
 						<svg width="12px" height="33px" viewBox="0 0 12 33">
 							<circle class="d2l-quick-eval-activity-card-hovered-off" stroke-width="2" cx="5.5" cy="5.5" r="4.5"></circle>
 							<circle class="d2l-quick-eval-activity-card-hovered-on" stroke-width="2" cx="5.5" cy="26.5" r="4.5"></circle>
@@ -344,8 +344,8 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				type: String
 			},
 			_indicatorPressed: {
-				type: String,
-				value: 'false'
+				type: Boolean,
+				value: false
 			},
 			_hovered: {
 				type: Boolean,
@@ -418,25 +418,25 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 		return this.localize('toggleIndicatorLabel', 'target', activityName);
 	}
 
-	_computeToggleEnabled(_indicatorPressed) {
-		return _indicatorPressed === 'true' ? true : false;
+	_computeOppositeIndicatorToggle(_indicatorPressed) {
+		return this._toString(!_indicatorPressed);
 	}
 
-	_computeOppositieIndicatorToggle(_indicatorPressed) {
-		return _indicatorPressed === 'true' ? 'false' : 'true';
+	_toString(variable) {
+		return variable.toString();
 	}
 
 	_handleIndicatorToggle() {
-		this._indicatorPressed = this._indicatorPressed === 'true' ? 'false' : 'true';
+		this._indicatorPressed = !this._indicatorPressed;
 	}
 
 	_handleOnMouseenter() {
-		this._indicatorPressed = 'true';
+		this._indicatorPressed = true;
 		this._hovered = true;
 	}
 
 	_handleOnMouseleave() {
-		this._indicatorPressed = 'false';
+		this._indicatorPressed = false;
 		this._hovered = false;
 	}
 
