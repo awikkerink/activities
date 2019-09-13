@@ -422,8 +422,11 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 	}
 
 	_computeIndicatorLabel(activityName, _indicatorPressed) {
-		if (_indicatorPressed) return this.localize('toggleIndicatorLabelInfo', 'target', activityName);
-		return this.localize('toggleIndicatorLabelActions', 'target', activityName);
+		if (_indicatorPressed === 'true') {
+			return this.localize('toggleIndicatorLabelInfo', 'target', activityName);
+		} else {
+			return this.localize('toggleIndicatorLabelActions', 'target', activityName);
+		}
 	}
 
 	_handleIndicatorToggle() {
