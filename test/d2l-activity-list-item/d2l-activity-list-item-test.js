@@ -1,4 +1,4 @@
-// import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 describe('d2l-activity-list-item', () => {
 
 	var component,
@@ -185,27 +185,27 @@ describe('d2l-activity-list-item', () => {
 	// 	});
 	// });
 
-	// describe('Responsive Behaviour', () => {
-	// 	it('Description is hidden at width 384', done => {
-	// 		component = fixture('d2l-activity-list-item-responsive-384-fixture');
-	// 		afterNextRender(component, () => {
-	// 			expect(component._showDescription).to.be.false;
-	// 			var description = component.$$('#d2l-activity-list-item-description');
-	// 			expect(description.hasAttribute('hidden')).to.be.true;
-	// 			done();
-	// 		});
-	// 	});
+	describe('Responsive Behaviour', () => {
+		it('Description is hidden at width 384', done => {
+			component = fixture('d2l-activity-list-item-responsive-384-fixture');
+			afterNextRender(component, () => {
+				expect(component._showDescription).to.be.false;
+				var description = component.$$('#d2l-activity-list-item-description');
+				expect(description.hasAttribute('hidden')).to.be.true;
+				done();
+			});
+		});
 
-	// 	it('Description is not hidden at width 385', done => {
-	// 		component = fixture('d2l-activity-list-item-responsive-385-fixture');
-	// 		afterNextRender(component, () => {
-	// 			expect(component._showDescription).to.be.true;
-	// 			var description = component.$$('#d2l-activity-list-item-description');
-	// 			expect(description.hasAttribute('hidden')).to.be.false;
-	// 			done();
-	// 		});
-	// 	});
+		it('Description is not hidden at width 385', done => {
+			component = fixture('d2l-activity-list-item-responsive-385-fixture');
+			afterNextRender(component, () => {
+				expect(component._showDescription).to.be.true;
+				var description = component.$$('#d2l-activity-list-item-description');
+				expect(description.hasAttribute('hidden')).to.be.false;
+				done();
+			});
+		});
 
-	// });
+	});
 
 });
