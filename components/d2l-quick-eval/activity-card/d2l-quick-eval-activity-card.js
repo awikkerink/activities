@@ -447,10 +447,6 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 		return this._computeIndicatorPressed(!_indicatorPressed, _desktopView);
 	}
 
-	_toString(variable) {
-		return variable.toString();
-	}
-
 	_handleIndicatorToggle() {
 		this._indicatorPressed = !this._indicatorPressed;
 	}
