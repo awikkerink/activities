@@ -141,27 +141,27 @@ describe('d2l-activity-list-item', () => {
 
 		});
 
-		let handler;
-		afterEach(() => {
-			window.document.removeEventListener('d2l-activity-text-loaded', handler);
-			window.document.removeEventListener('d2l-activity-image-loaded', handler);
-		});
+		// let handler;
+		// afterEach(() => {
+		// 	window.document.removeEventListener('d2l-activity-text-loaded', handler);
+		// 	window.document.removeEventListener('d2l-activity-image-loaded', handler);
+		// });
 
-		it(testCase.name + 'should send text loaded event', done => {
-			handler = () => {
-				done();
-			};
-			window.document.addEventListener('d2l-activity-text-loaded', handler);
-			testCase.beforeEachFn();
-		});
+		// it(testCase.name + 'should send text loaded event', done => {
+		// 	handler = () => {
+		// 		done();
+		// 	};
+		// 	window.document.addEventListener('d2l-activity-text-loaded', handler);
+		// 	testCase.beforeEachFn();
+		// });
 
-		it(testCase.name + 'should send image loaded event', done => {
-			handler = () => {
-				done();
-			};
-			window.document.addEventListener('d2l-activity-image-loaded', handler);
-			testCase.beforeEachFn();
-		});
+		// it(testCase.name + 'should send image loaded event', done => {
+		// 	handler = () => {
+		// 		done();
+		// 	};
+		// 	window.document.addEventListener('d2l-activity-image-loaded', handler);
+		// 	testCase.beforeEachFn();
+		// });
 	});
 
 	describe('Accessibility', () => {
