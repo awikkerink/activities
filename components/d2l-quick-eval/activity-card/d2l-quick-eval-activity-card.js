@@ -244,20 +244,20 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 									icon-name="evaluate-all"
 									text="[[localize('evaluateAll')]]"
 									on-click="_dispatchViewEvaluateAllEvent"
-									tabbable="[[_indicatorPressed]]"
+									tab-index-number="[[_computeTabstop(_indicatorPressed, _desktopView)]]"
 									aria-hidden$="[[_computeOppositeIndicatorPressed(_indicatorPressed, _desktopView)]]"></d2l-quick-eval-activity-card-action-button>
 								<d2l-quick-eval-activity-card-action-button
 									icon-name="view-submission-list"
 									text="[[localize('submissionList')]]"
 									on-click="_dispatchViewSubmissionListEvent"
-									tabbable="[[_indicatorPressed]]"
+									tab-index-number="[[_computeTabstop(_indicatorPressed, _desktopView)]]"
 									aria-hidden$="[[_computeOppositeIndicatorPressed(_indicatorPressed, _desktopView)]]"></d2l-quick-eval-activity-card-action-button>
 								<d2l-quick-eval-activity-card-action-button
 									icon-name="publish-all"
 									text="[[localize('publishAll')]]"
 									on-click="_dispatchPublishAllEvent"
 									disabled$="[[_disablePublishAllButton(publishAll)]]"
-									tabbable="[[_indicatorPressed]]"
+									tab-index-number="[[_computeTabstop(_indicatorPressed, _desktopView)]]"
 									aria-hidden$="[[_computeOppositeIndicatorPressed(_indicatorPressed, _desktopView)]]"></d2l-quick-eval-activity-card-action-button>
 							</d2l-quick-eval-activity-card-items>
 						</div>
@@ -346,12 +346,11 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 			},
 			_desktopView: {
 				type: Boolean,
-				value: false,
-				computed: '_isDesktop(_screenWidth)',
+				value: false
 			},
-			_screenWidth: {
-				type: Number,
-				value: 0,
+			mql: {
+				type: Object,
+				value: undefined
 			}
 		};
 	}
@@ -372,22 +371,18 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 	}
 
 	attached() {
+		this.mql = window.matchMedia('(min-width: 900px)');
 		this._updateScreenWidth = this._updateScreenWidth.bind(this);
-		this._updateScreenWidth();
-
-		window.addEventListener('resize', this._updateScreenWidth);
+		this._updateScreenWidth(this.mql);
+		this.mql.onchange = this._updateScreenWidth;
 	}
 
 	detached() {
-		window.removeEventListener('resize', this._updateScreenWidth);
+		this.mql.onchange = null;
 	}
 
-	_updateScreenWidth() {
-		this._screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-	}
-
-	_isDesktop(width) {
-		return width >= 900;
+	_updateScreenWidth(e) {
+		this._desktopView = e.matches;
 	}
 
 	_dispatchViewEvaluateAllEvent() {
@@ -445,6 +440,10 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 
 	_computeOppositeIndicatorPressed(_indicatorPressed, _desktopView) {
 		return this._computeIndicatorPressed(!_indicatorPressed, _desktopView);
+	}
+
+	_computeTabstop(_indicatorPressed, _desktopView) {
+		return _indicatorPressed || !_desktopView ? 0 : -1;
 	}
 
 	_handleIndicatorToggle() {

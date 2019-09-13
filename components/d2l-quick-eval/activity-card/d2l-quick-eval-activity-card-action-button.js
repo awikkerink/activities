@@ -108,7 +108,7 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 				}
 			</style>
 			<button
-				tabindex$="[[_calculateTabstop(tabbable, _screenWidth)]]"
+				tabindex$="[[tabIndexNumber]]"
 				aria-labelledby$="[[_labelledbyId]]"
 				aria-expanded$="[[ariaExpanded]]"
 				aria-haspopup$="[[ariaHaspopup]]"
@@ -151,35 +151,15 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 				type: Boolean,
 				value: false
 			},
-			_screenWidth: {
+			tabIndexNumber: {
 				type: Number,
-				value: 0,
+				value: 0
 			}
 		};
 	}
 
-	attached() {
-		this._updateScreenWidth = this._updateScreenWidth.bind(this);
-		this._updateScreenWidth();
-
-		window.addEventListener('resize', this._updateScreenWidth);
-	}
-
-	detached() {
-		window.removeEventListener('resize', this._updateScreenWidth);
-	}
-
-	_updateScreenWidth() {
-		this._screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-	}
-
 	_computeIcon(tier) {
 		return `d2l-tier${tier}:${this.iconName}`;
-	}
-
-	_calculateTabstop(tabbable, _screenWidth) {
-		if (_screenWidth < 900) return 0;
-		return tabbable ? 0 : -1;
 	}
 
 	_computeLabelledbyId() {
