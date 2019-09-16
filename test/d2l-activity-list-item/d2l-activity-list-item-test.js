@@ -186,24 +186,30 @@ describe('d2l-activity-list-item', () => {
 	// });
 
 	describe('Responsive Behaviour', () => {
-		it('Description is hidden at width 384', done => {
+		it('Description is hidden at width 384', /*done*/() => {
 			component = fixture('d2l-activity-list-item-responsive-384-fixture');
-			flush(/*afterNextRender(component, */() => {
-				expect(component._showDescription).to.be.false;
-				var description = component.$$('#d2l-activity-list-item-description');
-				expect(description.hasAttribute('hidden')).to.be.true;
-				done();
-			});
+			expect(component._showDescription).to.be.false;
+			var description = component.$$('#d2l-activity-list-item-description');
+			expect(description.hasAttribute('hidden')).to.be.true;
+			// flush(/*afterNextRender(component, */() => {
+			// 	expect(component._showDescription).to.be.false;
+			// 	var description = component.$$('#d2l-activity-list-item-description');
+			// 	expect(description.hasAttribute('hidden')).to.be.true;
+			// 	/*done();*/
+			// });
 		});
 
-		it('Description is not hidden at width 385', done => {
+		it('Description is not hidden at width 385', /*done*/ () => {
 			component = fixture('d2l-activity-list-item-responsive-385-fixture');
-			flush(/*afterNextRender(component, */() => {
-				expect(component._showDescription).to.be.true;
-				var description = component.$$('#d2l-activity-list-item-description');
-				expect(description.hasAttribute('hidden')).to.be.false;
-				done();
-			});
+			expect(component._showDescription).to.be.true;
+			var description = component.$$('#d2l-activity-list-item-description');
+			expect(description.hasAttribute('hidden')).to.be.false;
+			// flush(/*afterNextRender(component, */() => {
+			// 	expect(component._showDescription).to.be.true;
+			// 	var description = component.$$('#d2l-activity-list-item-description');
+			// 	expect(description.hasAttribute('hidden')).to.be.false;
+			// 	/*done();*/
+			// });
 		});
 
 	});
