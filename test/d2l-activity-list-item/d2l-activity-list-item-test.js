@@ -208,7 +208,5 @@ describe('d2l-activity-list-item', () => {
 				done();
 			});
 		});
-
 	});
-
 });
