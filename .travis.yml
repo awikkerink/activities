@@ -7,7 +7,7 @@ install:
 - npm install
 jobs:
   include:
-  - stage: test
+  - stage: code-tests
     script:
     - npm run lint
     - |
@@ -18,7 +18,7 @@ jobs:
         echo "Not a pull request and/or no secure environment variables, running headless tests...";
         npm run test:polymer:local || travis_terminate 1;
       fi
-  - stage: visual-difference
+  - stage: visual-difference-tests
     script:
     - |
       echo "Pull request, running visual difference tests...";
