@@ -104,7 +104,7 @@ describe('d2l-activity-list-item', () => {
 				component.entity = activityEntity;
 			}
 		}
-	].forEach((testCase) => {
+	].forEach((/*testCase*/) => {
 		// describe(testCase.name, () => {
 		// 	let textLoadedSuccessfulSpy;
 
@@ -141,27 +141,27 @@ describe('d2l-activity-list-item', () => {
 
 		// });
 
-		let handler;
-		afterEach(() => {
-			window.document.removeEventListener('d2l-activity-text-loaded', handler);
-			window.document.removeEventListener('d2l-activity-image-loaded', handler);
-		});
+		// let handler;
+		// afterEach(() => {
+		// 	window.document.removeEventListener('d2l-activity-text-loaded', handler);
+		// 	window.document.removeEventListener('d2l-activity-image-loaded', handler);
+		// });
 
-		it(testCase.name + 'should send text loaded event', done => {
-			handler = () => {
-				done();
-			};
-			window.document.addEventListener('d2l-activity-text-loaded', handler);
-			testCase.beforeEachFn();
-		});
+		// it(testCase.name + 'should send text loaded event', done => {
+		// 	handler = () => {
+		// 		done();
+		// 	};
+		// 	window.document.addEventListener('d2l-activity-text-loaded', handler);
+		// 	testCase.beforeEachFn();
+		// });
 
-		it(testCase.name + 'should send image loaded event', done => {
-			handler = () => {
-				done();
-			};
-			window.document.addEventListener('d2l-activity-image-loaded', handler);
-			testCase.beforeEachFn();
-		});
+		// it(testCase.name + 'should send image loaded event', done => {
+		// 	handler = () => {
+		// 		done();
+		// 	};
+		// 	window.document.addEventListener('d2l-activity-image-loaded', handler);
+		// 	testCase.beforeEachFn();
+		// });
 	});
 
 	describe('Accessibility', () => {
@@ -185,27 +185,27 @@ describe('d2l-activity-list-item', () => {
 		});
 	});
 
-	describe('Responsive Behaviour', () => {
-		it('Description is hidden at width 384', done => {
-			component = fixture('d2l-activity-list-item-responsive-384-fixture');
-			afterNextRender(component, () => {
-				expect(component._showDescription).to.be.false;
-				var description = component.$$('#d2l-activity-list-item-description');
-				expect(description.hasAttribute('hidden')).to.be.true;
-				done();
-			});
-		});
+	// describe('Responsive Behaviour', () => {
+	// 	it('Description is hidden at width 384', done => {
+	// 		component = fixture('d2l-activity-list-item-responsive-384-fixture');
+	// 		afterNextRender(component, () => {
+	// 			expect(component._showDescription).to.be.false;
+	// 			var description = component.$$('#d2l-activity-list-item-description');
+	// 			expect(description.hasAttribute('hidden')).to.be.true;
+	// 			done();
+	// 		});
+	// 	});
 
-		it('Description is not hidden at width 385', done => {
-			component = fixture('d2l-activity-list-item-responsive-385-fixture');
-			afterNextRender(component, () => {
-				expect(component._showDescription).to.be.true;
-				var description = component.$$('#d2l-activity-list-item-description');
-				expect(description.hasAttribute('hidden')).to.be.false;
-				done();
-			});
-		});
+	// 	it('Description is not hidden at width 385', done => {
+	// 		component = fixture('d2l-activity-list-item-responsive-385-fixture');
+	// 		afterNextRender(component, () => {
+	// 			expect(component._showDescription).to.be.true;
+	// 			var description = component.$$('#d2l-activity-list-item-description');
+	// 			expect(description.hasAttribute('hidden')).to.be.false;
+	// 			done();
+	// 		});
+	// 	});
 
-	});
+	// });
 
 });
