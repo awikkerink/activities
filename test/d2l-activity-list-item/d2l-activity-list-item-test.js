@@ -164,26 +164,26 @@ describe('d2l-activity-list-item', () => {
 		// });
 	});
 
-	describe('Accessibility', () => {
-		beforeEach(done => {
-			component = fixture('d2l-activity-list-item-href-fixture');
-			afterNextRender(component, done);
-		});
+	// describe('Accessibility', () => {
+	// 	beforeEach(done => {
+	// 		component = fixture('d2l-activity-list-item-href-fixture');
+	// 		afterNextRender(component, done);
+	// 	});
 
-		it('Organization', done => {
-			component.fire('d2l-organization-accessible', {
-				organization: {
-					name: 'Course name'
-				}
-			});
-			afterNextRender(component, () => {
-				expect(component._accessibilityData.organizationName).to.equal('Course name');
-				var accessibilityText = component.$$('.d2l-activity-list-item-link-text').innerHTML;
-				expect(accessibilityText).to.contain('Course name');
-				done();
-			});
-		});
-	});
+	// 	it('Organization', done => {
+	// 		component.fire('d2l-organization-accessible', {
+	// 			organization: {
+	// 				name: 'Course name'
+	// 			}
+	// 		});
+	// 		afterNextRender(component, () => {
+	// 			expect(component._accessibilityData.organizationName).to.equal('Course name');
+	// 			var accessibilityText = component.$$('.d2l-activity-list-item-link-text').innerHTML;
+	// 			expect(accessibilityText).to.contain('Course name');
+	// 			done();
+	// 		});
+	// 	});
+	// });
 
 	describe('Responsive Behaviour', () => {
 		it('Description is hidden at width 384', done => {
