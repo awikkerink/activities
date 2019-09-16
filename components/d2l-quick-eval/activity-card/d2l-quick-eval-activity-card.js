@@ -374,7 +374,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 		this.mql = window.matchMedia('(min-width: 900px)');
 		this._updateScreenWidth = this._updateScreenWidth.bind(this);
 		this._updateScreenWidth(this.mql);
-		this.mql.addListener(this._updateScreenWidth)
+		this.mql.addListener(this._updateScreenWidth);
 	}
 
 	disconnectedCallback() {
