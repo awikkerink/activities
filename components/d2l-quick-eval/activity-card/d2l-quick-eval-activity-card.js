@@ -349,8 +349,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				value: false
 			},
 			mql: {
-				type: Object,
-				value: undefined
+				type: Object
 			}
 		};
 	}
@@ -370,15 +369,16 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 		);
 	}
 
-	attached() {
+	connectedCallback() {
+		super.connectedCallback();
 		this.mql = window.matchMedia('(min-width: 900px)');
 		this._updateScreenWidth = this._updateScreenWidth.bind(this);
 		this._updateScreenWidth(this.mql);
-		this.mql.onchange = this._updateScreenWidth;
+		this.mql.addListener(this._updateScreenWidth)
 	}
 
-	detached() {
-		this.mql.onchange = null;
+	disconnectedCallback() {
+		this.mql.removeListener(this._updateScreenWidth);
 	}
 
 	_updateScreenWidth(e) {
