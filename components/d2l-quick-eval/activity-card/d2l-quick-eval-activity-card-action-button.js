@@ -147,10 +147,6 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 			disabled: {
 				type: Boolean
 			},
-			tabbable: {
-				type: Boolean,
-				value: false
-			},
 			tabIndexNumber: {
 				type: Number,
 				value: 0
