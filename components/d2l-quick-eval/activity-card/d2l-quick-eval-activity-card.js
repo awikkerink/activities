@@ -182,7 +182,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 					}
 					[not-seen-desktop] {
 						opacity: 0;
-						transform: translateY(-10px) !important;
+						transform: translateY(-10px);
 					}
 				}
 				:host([hidden]) {
