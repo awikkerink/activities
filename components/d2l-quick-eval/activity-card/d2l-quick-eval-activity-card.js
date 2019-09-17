@@ -131,7 +131,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 					.d2l-quick-eval-card-actions d2l-quick-eval-activity-card-items {
 						position: absolute;
 						top: 0;
-						right: 0;
+						right: 2.1rem;
 					}
 					:host(:dir(rtl)) .d2l-quick-eval-card-actions d2l-quick-eval-activity-card-items {
 						left: 0;
@@ -238,6 +238,16 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 							resubmitted="[[resubmitted]]"
 							activity-type="[[activityType]]"
 							hidden$="[[!_showNewSubmissions(newSubmissions, resubmitted)]]"></d2l-quick-eval-activity-card-new-submissions>
+						<button
+							class="d2l-quick-eval-card-indicator"
+							on-click="_handleIndicatorToggle"
+							aria-label$="[[_computeIndicatorLabel(activityName, _indicatorPressed)]]"
+							aria-pressed$="[[_computeIndicatorPressed(_indicatorPressed, _desktopView)]]">
+							<svg width="12px" height="33px" viewBox="0 0 12 33">
+								<circle class="d2l-quick-eval-activity-card-hovered-off" stroke-width="2" cx="5.5" cy="5.5" r="4.5"></circle>
+								<circle class="d2l-quick-eval-activity-card-hovered-on" stroke-width="2" cx="5.5" cy="26.5" r="4.5"></circle>
+							</svg>
+						</button>
 						<div class="d2l-quick-eval-card-actions">
 							<d2l-quick-eval-activity-card-items not-seen-desktop$="[[!_indicatorPressed]]" small>
 								<d2l-quick-eval-activity-card-action-button
@@ -262,16 +272,6 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 							</d2l-quick-eval-activity-card-items>
 						</div>
 					</div>
-					<button
-						class="d2l-quick-eval-card-indicator"
-						on-click="_handleIndicatorToggle"
-						aria-label$="[[_computeIndicatorLabel(activityName, _indicatorPressed)]]"
-						aria-pressed$="[[_computeIndicatorPressed(_indicatorPressed, _desktopView)]]">
-						<svg width="12px" height="33px" viewBox="0 0 12 33">
-							<circle class="d2l-quick-eval-activity-card-hovered-off" stroke-width="2" cx="5.5" cy="5.5" r="4.5"></circle>
-							<circle class="d2l-quick-eval-activity-card-hovered-on" stroke-width="2" cx="5.5" cy="26.5" r="4.5"></circle>
-						</svg>
-					</button>
 				</div>
 			</div>
 		`;
