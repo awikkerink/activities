@@ -160,11 +160,11 @@
 				var params = component._getExtraParams(null);
 				assert.equal(params.length, 0);
 			});
-			test('when parsing url for sort and filter params, if they are both present, return array with correct values', () => {
-				const url = 'https://www.example.com/?pageSize=20&filter=96W3siU29ydCI6eyJJ&sort=Y3Rpb24iOjB9';
+			test('when parsing url for sort, filter, and collectionSearch params, if they are all present, return array with correct values', () => {
+				const url = 'https://www.example.com/?pageSize=20&filter=96W3siU29ydCI6eyJJ&sort=Y3Rpb24iOjB9&collectionSearch=arthas';
 
 				var params = component._getExtraParams(url);
-				assert.equal(params.length, 2);
+				assert.equal(params.length, 3);
 
 				const expectedParams = [
 					{
@@ -174,6 +174,10 @@
 					{
 						name: 'sort',
 						value: 'Y3Rpb24iOjB9'
+					},
+					{
+						name: 'collectionSearch',
+						value: 'arthas'
 					}
 				];
 				assert.deepEqual(params, expectedParams);
@@ -202,6 +206,21 @@
 					{
 						name: 'filter',
 						value: '96W3siU29ydCI6eyJJ'
+					}
+				];
+				assert.deepEqual(params, expectedParams);
+			});
+
+			test('when parsing url for sort and filter params, if only collectionSearch is present, return array with correct values', () => {
+				const url = 'https://www.example.com/?pageSize=20&collectionSearch=ragnaros';
+
+				const params = component._getExtraParams(url);
+				assert.equal(params.length, 1);
+
+				const expectedParams = [
+					{
+						name: 'collectionSearch',
+						value: 'ragnaros'
 					}
 				];
 				assert.deepEqual(params, expectedParams);

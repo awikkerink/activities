@@ -10,6 +10,8 @@
     "lint": "npm run lint:wc && npm run lint:js",
     "lint:js": "eslint . --ext .js,.html test/**/*.js test/**/*.html demo/**/*.html",
     "lint:wc": "polymer lint -i \"./*\" \"components\" \"demo\" \"test\"",
+    "test:diff": "mocha ./**/*.visual-diff.js -t 10000",
+    "test:diff:golden": "mocha ./**/*.visual-diff.js -t 10000 --golden",
     "test:polymer:local": "polymer test --skip-plugin sauce",
     "test:polymer:sauce": "polymer test --skip-plugin local",
     "test": "npm run lint && npm run test:polymer:local",
@@ -19,6 +21,7 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@babel/polyfill": "^7.0.0",
+    "@brightspace-ui/visual-diff": "^0.1.0",
     "@polymer/iron-component-page": "^3.0.0-pre.18",
     "@polymer/iron-demo-helpers": "^3.0.0-pre.18",
     "@polymer/iron-test-helpers": "^3.0.0-pre.18",
@@ -46,7 +49,7 @@
     "wct-mocha": "^1.0.1",
     "whatwg-fetch": "^3.0.0"
   },
-  "version": "3.45.21",
+  "version": "3.45.29",
   "resolutions": {
     "inherits": "2.0.3",
     "samsam": "1.1.3",
