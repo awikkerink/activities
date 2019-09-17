@@ -60,6 +60,13 @@
 			'd2l-quick-eval/d2l-quick-eval-submissions.html?wc-shadydom=true&wc-ce=true',
 			'd2l-quick-eval/d2l-quick-eval-submissions.html?dom=shadow',
 		]);
+		// Sometimes when running in Travis/Sauce, WCT is timing out when loading a test.
+		// Using the Sauce "extendedDebugging": true, property in wct.conf.json, I was able
+		// to verify that sometimes it does seem to take a long time to load all the hundreds
+		// of imported modules required to run tests.
+		// See this issue https://github.com/Polymer/tools/issues/3457
+		// Discovered through trial and error that we seem to be able to hack the loadTimeout here.
+		WCT._ChildRunner.loadTimeout = 120000;
 	</script>
 </body>
 
