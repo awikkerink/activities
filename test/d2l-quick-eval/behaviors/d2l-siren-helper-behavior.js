@@ -15,7 +15,7 @@
 					method: 'GET'
 				};
 
-				const stub = sinon.stub(component, 'performSirenAction', function(passedAction) {
+				const stub = sinon.stub(component, 'performSirenAction').callsFake(function(passedAction) {
 					assert.deepEqual(action, passedAction);
 				});
 
@@ -37,7 +37,7 @@
 						}]
 				};
 
-				const stub = sinon.stub(component, 'performSirenAction', function(passedAction) {
+				const stub = sinon.stub(component, 'performSirenAction').callsFake(function(passedAction) {
 					assert.deepEqual(action, passedAction);
 				});
 
@@ -54,7 +54,7 @@
 				};
 
 				const customParams = { customParam1: 'custom', customParam2: 'custom2' };
-				sinon.stub(component, 'performSirenAction', function(passedAction) {
+				sinon.stub(component, 'performSirenAction').callsFake(function(passedAction) {
 					const fields = passedAction.fields;
 					assert.equal(Object.keys(customParams).length, fields.length);
 
@@ -103,7 +103,7 @@
 						}]
 				};
 
-				const stub = sinon.stub(component, 'performSirenAction', function(passedAction) {
+				const stub = sinon.stub(component, 'performSirenAction').callsFake(function(passedAction) {
 					assert.deepEqual(expectedAction, passedAction);
 				});
 
@@ -134,7 +134,7 @@
 				};
 
 				const customParams = { customParam1: 'custom', customParam2: 'custom2' };
-				sinon.stub(component, 'performSirenAction', function(passedAction) {
+				sinon.stub(component, 'performSirenAction').callsFake(function(passedAction) {
 					const fields = passedAction.fields;
 					assert.equal(4, fields.length);
 
