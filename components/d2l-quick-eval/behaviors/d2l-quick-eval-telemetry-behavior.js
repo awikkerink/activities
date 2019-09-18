@@ -62,6 +62,7 @@ D2L.PolymerBehaviors.QuickEval.TelemetryBehaviorImpl = {
 		}
 		window.performance.measure(viewName, startMark, endMark);
 		const eventBody = new window.d2lTelemetryBrowserClient.PerformanceEventBody()
+			.setAction('LoadView')
 			.addUserTiming(window.performance.getEntriesByName(viewName))
 			.addCustom('ViewName', `${viewName}LoadTime`);
 
@@ -69,6 +70,8 @@ D2L.PolymerBehaviors.QuickEval.TelemetryBehaviorImpl = {
 		window.performance.clearMarks(startMark);
 		window.performance.clearMarks(endMark);
 		window.performance.clearMeasures(viewName);
+		//returning event body to be consistent and to help with tests
+		return eventBody;
 	},
 	_markExists(markName) {
 		return window.performance.getEntriesByName(markName, 'mark').length > 0 ? true : false;
