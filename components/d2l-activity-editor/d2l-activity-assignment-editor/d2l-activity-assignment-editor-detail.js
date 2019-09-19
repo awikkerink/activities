@@ -1,5 +1,5 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { AssignmentActivityEntity } from 'siren-sdk/src/activities/assignments/AssignmentActivityEntity.js';
+import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 
@@ -44,20 +44,20 @@ class AssignmentEditorDetail extends EntityMixinLit(LocalizeMixin(LitElement)) {
 
 	constructor() {
 		super();
-		this._setEntityType(AssignmentActivityEntity);
+		this._setEntityType(AssignmentEntity);
 		this.name = 'Untitled';
 	}
 
 	set _entity(entity) {
 		if (this._entityHasChanged(entity)) {
-			this._onAssignmentActivityChange(entity);
+			this._onAssignmentChange(entity);
 			super._entity = entity;
 		}
 	}
 
-	_onAssignmentActivityChange(assignmentActivity) {
-		if (assignmentActivity) {
-			this._name = assignmentActivity.name();
+	_onAssignmentChange(assignment) {
+		if (assignment) {
+			this._name = assignment.name();
 		}
 	}
 
