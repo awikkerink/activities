@@ -47,7 +47,6 @@ class AssignmentEditor extends EntityMixinLit(LocalizeMixin(LitElement)) {
 	constructor() {
 		super();
 		this._setEntityType(AssignmentActivityUsageEntity);
-		this.name = 'Untitled';
 	}
 
 	set _entity(entity) {
@@ -68,8 +67,8 @@ class AssignmentEditor extends EntityMixinLit(LocalizeMixin(LitElement)) {
 		return html`
 			<d2l-activity-editor>
 				<d2l-activity-assignment-editor-detail
-					href="${this._assignmentHref}"
-					token="${this.token}"
+					.href="${this._assignmentHref}"
+					.token="${this.token}"
 					slot="editor">
 				</d2l-activity-assignment-editor-detail>
 			</d2l-activity-editor>
