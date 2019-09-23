@@ -60,7 +60,7 @@ const LangDeImpl = (superClass) => class extends superClass {
 			'submissions': 'Abgaben',
 			'tableTitle': 'Liste nicht bewerteter Abgaben von Lernern in allen Kursen und Tools',
 			'toggleIndicatorLabelActions': 'Aktionen für {target} ausführen',
-			'toggleIndicatorLabelInfo': 'View info on {target}',
+			'toggleIndicatorLabelInfo': 'Informationen auf {target} anzeigen',
 			'tryAgain': 'Erneut versuchen',
 			'viewBy': 'Anzeigen nach:',
 			'yes': 'Ja'
