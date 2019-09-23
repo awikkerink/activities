@@ -130,6 +130,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					search-action="[[searchAction]]"
 					placeholder="[[localize('search')]]"
 					aria-label$="[[localize('search')]]"
+					initial-value="[[searchTerm]]"
 					>
 				</d2l-hm-search>
 			</div>
@@ -145,7 +146,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			</d2l-alert>
 			<d2l-quick-eval-search-results-summary-container
 				search-results-count="[[_searchResultsCount]]"
-				hidden$="[[!searchApplied]]"
+				hidden$="[[!_showSearchSummary]]"
 				on-d2l-quick-eval-search-results-summary-container-clear-search="clearSearchResults">
 			</d2l-quick-eval-search-results-summary-container>
 			<div class="d2l-quick-eval-no-submissions" hidden$="[[!_shouldShowNoSubmissions(_data, _loading, _isError, filterApplied, searchApplied)]]">
@@ -213,6 +214,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			_publishAllToasts: {
 				type: Array,
 				value: []
+			},
+			_showSearchSummary: {
+				type: Boolean,
+				computed: '_computeShowSearchSummary(_loading, filtersLoading, searchLoading, searchApplied)'
 			}
 		};
 	}
@@ -440,6 +445,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			return this.localize('publishAllToastMessageTruncated', 'truncatedActivityName', toast.activityName.substring(0, maxLength));
 		}
 		return this.localize('publishAllToastMessage', 'activityName', toast.activityName);
+	}
+
+	_computeShowSearchSummary(_loading, filtersLoading, searchLoading, searchApplied) {
+		return !_loading && !filtersLoading && !searchLoading && searchApplied;
 	}
 
 	ready() {
