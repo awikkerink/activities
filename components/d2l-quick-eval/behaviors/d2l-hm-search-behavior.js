@@ -26,6 +26,10 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 		searchLoading: {
 			type: Boolean,
 			value: false
+		},
+		searchTerm: {
+			type: String,
+			computed: '_computeSearchTerm(entity)'
 		}
 	},
 
@@ -43,6 +47,22 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 
 	_computeSearchAction: function(entity) {
 		return this._getAction(entity, 'search');
+	},
+
+	_computeSearchTerm: function(entity) {
+		if (!entity) {
+			return;
+		}
+		const searchTerm = entity
+			.getActionByName('search')
+			.getFieldByName('collectionSearch')
+			.value;
+
+		if (searchTerm) {
+			this.searchApplied = true;
+		}
+
+		return searchTerm;
 	},
 
 	onSearchResultsLoading: function() {

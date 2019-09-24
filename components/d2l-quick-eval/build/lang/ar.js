@@ -60,7 +60,7 @@ const LangArImpl = (superClass) => class extends superClass {
 			'submissions': 'الإرسالات',
 			'tableTitle': 'قائمة بعمليات إرسال المتعلّم غير المقيّمة من المقررات التعليمية والأدوات',
 			'toggleIndicatorLabelActions': 'تنفيذ الإجراءات في {target}',
-			'toggleIndicatorLabelInfo': 'View info on {target}',
+			'toggleIndicatorLabelInfo': 'عرض المعلومات في {target}',
 			'tryAgain': 'المحاولة مرة أخرى',
 			'viewBy': 'عرض حسب:',
 			'yes': 'نعم'
