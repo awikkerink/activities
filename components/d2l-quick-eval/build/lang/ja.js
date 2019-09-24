@@ -60,7 +60,7 @@ const LangJaImpl = (superClass) => class extends superClass {
 			'submissions': '送信物',
 			'tableTitle': 'コースやツールをまたいだ、受講者からの未評価の送信物リスト',
 			'toggleIndicatorLabelActions': '{target} のアクションの実行',
-			'toggleIndicatorLabelInfo': 'View info on {target}',
+			'toggleIndicatorLabelInfo': '{target} に情報を表示',
 			'tryAgain': 'もう一度試してください',
 			'viewBy': '表示対象:',
 			'yes': 'はい'
