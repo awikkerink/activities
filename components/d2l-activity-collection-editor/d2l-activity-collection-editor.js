@@ -1,6 +1,6 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 
-class AdminList extends LitElement {
+class CollectionEditor extends LitElement {
 	static get properties() {
 		return {};
 	}
@@ -18,8 +18,8 @@ class AdminList extends LitElement {
 
 	render() {
 		return html`
-			<div>D2L Activity Admin List</div>
+			<div>D2L Activity Collection Editor</div>
 		`;
 	}
 }
-customElements.define('d2l-activity-admin-list', AdminList);
+customElements.define('d2l-activity-collection-editor', CollectionEditor);
