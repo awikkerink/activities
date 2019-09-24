@@ -2,6 +2,7 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import 'd2l-inputs/d2l-input-text.js';
 
 class AssignmentEditorDetail extends EntityMixinLit(LocalizeMixin(LitElement)) {
@@ -13,7 +14,7 @@ class AssignmentEditorDetail extends EntityMixinLit(LocalizeMixin(LitElement)) {
 	}
 
 	static get styles() {
-		return css`
+		return [labelStyles, css`
 			:host {
 				display: inline-block;
 				padding: 20px;
@@ -21,7 +22,7 @@ class AssignmentEditorDetail extends EntityMixinLit(LocalizeMixin(LitElement)) {
 			:host([hidden]) {
 				display: none;
 			}
-		`;
+		`];
 	}
 
 	static async getLocalizeResources(langs) {
@@ -80,7 +81,7 @@ class AssignmentEditorDetail extends EntityMixinLit(LocalizeMixin(LitElement)) {
 	render() {
 		return html`
 			<div id="assignment-name-container">
-				<label for="assignment-name">${this.localize('name')}*</label>
+				<label class="d2l-label-text" for="assignment-name">${this.localize('name')}*</label>
 				<d2l-input-text
 					id="assignment-name"
 					value="${this._name}"
