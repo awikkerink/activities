@@ -61,12 +61,6 @@ class AssignmentEditorDetail extends EntityMixinLit(LocalizeMixin(LitElement)) {
 	_onAssignmentChange(assignment) {
 		if (assignment) {
 			this._name = assignment.name();
-
-			if (assignment.canEditName()) {
-				this.shadowRoot.getElementById('assignment-name').removeAttribute('disabled', '');
-			} else {
-				this.shadowRoot.getElementById('assignment-name').setAttribute('disabled', '');
-			}
 		}
 	}
 
@@ -88,6 +82,7 @@ class AssignmentEditorDetail extends EntityMixinLit(LocalizeMixin(LitElement)) {
 					on-change="${this._saveName()}"
 					on-input="${this._saveNameOnInput()}"
 					aria-label="${this.localize('name')}"
+					?disabled="${!super._entity.canEditName()}"
 					prevent-submit>
 				</d2l-input-text>
 			</div>
