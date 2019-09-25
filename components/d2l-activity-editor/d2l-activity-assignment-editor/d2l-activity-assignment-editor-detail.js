@@ -71,7 +71,7 @@ class AssignmentEditorDetail extends EntityMixinLit(LocalizeMixin(LitElement)) {
 		}
 	}
 
-	_saveNameOnInput(e) {
+	_saveNameOnInput() {
 
 	}
 
