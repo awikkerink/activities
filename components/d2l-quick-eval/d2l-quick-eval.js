@@ -56,8 +56,8 @@ class D2LQuickEval extends
 				<h1 class="d2l-quick-eval-header" hidden$="[[activitiesViewEnabled]]">[[headerText]]</h1>
 			</template>
 			<d2l-quick-eval-view-toggle current-selected="[[toggleState]]" toggle-href="[[toggleHref]]" hidden$="[[!activitiesViewEnabled]]" on-d2l-quick-eval-view-toggle-changed="_toggleView"></d2l-quick-eval-view-toggle>
-			<d2l-quick-eval-submissions href="[[submissionsHref]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" data-telemetry-endpoint="[[dataTelemetryEndpoint]]" hidden$="[[_showActivitiesView]]" master-teacher="[[masterTeacher]]"></d2l-quick-eval-submissions>
-			<d2l-quick-eval-activities href="[[_activitiesHref(activitiesViewEnabled)]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" hidden$="[[!_showActivitiesView]]"></d2l-quick-eval-activities>
+			<d2l-quick-eval-submissions href="[[_lazySubmissionsHref]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" data-telemetry-endpoint="[[dataTelemetryEndpoint]]" hidden$="[[_showActivitiesView]]" master-teacher="[[masterTeacher]]"></d2l-quick-eval-submissions>
+			<d2l-quick-eval-activities href="[[_lazyActivitiesHref]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" hidden$="[[!_showActivitiesView]]"></d2l-quick-eval-activities>
 		`;
 	}
 	ready() {
@@ -90,8 +90,16 @@ class D2LQuickEval extends
 			submissionsHref: {
 				type: String
 			},
+			_lazySubmissionsHref: {
+				type: String,
+				computed: '_computeLazySubmissionsHref(submissionsHref, _showActivitiesView)'
+			},
 			activitiesHref: {
 				type: String
+			},
+			_lazyActivitiesHref: {
+				type: String,
+				computed: '_computeLazyActivitiesHref(activitiesHref, _showActivitiesView, activitiesViewEnabled)'
 			},
 			toggleHref: {
 				type: String
@@ -112,6 +120,20 @@ class D2LQuickEval extends
 			this._showActivitiesView = true;
 		}
 		this.logViewQuickEvalEvent(e.detail.view);
+	}
+
+	_computeLazySubmissionsHref(href, state) {
+		if (!state) {
+			return href;
+		}
+		return '';
+	}
+
+	_computeLazyActivitiesHref(href, state, enabled) {
+		if (state && enabled) {
+			return href;
+		}
+		return '';
 	}
 
 	_activitiesHref(activitiesViewEnabled) {

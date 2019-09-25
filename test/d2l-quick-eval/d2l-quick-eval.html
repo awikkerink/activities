@@ -23,9 +23,22 @@
 			<template strip-whitespace>
 				<d2l-quick-eval
 					href="data/unassessedActivities.json"
-					submission-href="data/unassessedActivities.json"
+					submissions-href="data/unassessedActivities.json"
 					activities-href="data/unassessedActivitiesCollection.json"
-					token="whatever"></d2l-quick-eval>
+					token="whatever"
+					activities-view-enabled></d2l-quick-eval>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="loadActivities">
+			<template strip-whitespace>
+				<d2l-quick-eval
+					href="data/unassessedActivities.json"
+					submissions-href="data/unassessedActivities.json"
+					activities-href="data/unassessedActivitiesCollection.json"
+					token="whatever"
+					toggle-state="activities"
+					activities-view-enabled></d2l-quick-eval>
 			</template>
 		</test-fixture>
 
@@ -33,7 +46,7 @@
 			<template strip-whitespace>
 				<d2l-quick-eval
 					href="data/unassessedActivities.json"
-					submission-href="data/unassessedActivities.json"
+					submissions-href="data/unassessedActivities.json"
 					token="whatever"
 					master-teacher></d2l-quick-eval>
 			</template>
@@ -42,11 +55,11 @@
 		<script type="module">
 			import '@polymer/iron-test-helpers/mock-interactions.js';
 
-			var quickEval, filter, filterDropdown, list, search, toggle, submissions;
+			let quickEval, filter, filterDropdown, list, search, toggle, submissions, activities;
 
-			var expectedFirstCellData = 'Special User Name';
-			var expectedFilters = ['Activity Name', 'Course', 'Date'];
-			var expectedFiltersWithMasterTeacher = expectedFilters.concat('Primary Facilitator');
+			const expectedFirstCellData = 'Special User Name';
+			const expectedFilters = ['Activity Name', 'Course', 'Date'];
+			const expectedFiltersWithMasterTeacher = expectedFilters.concat('Primary Facilitator');
 
 			function waitForList(callback) {
 				var firstDataCell = list.shadowRoot.querySelector('d2l-tbody > d2l-tr > d2l-td.d2l-table-cell-first');
@@ -69,6 +82,17 @@
 				} else {
 					setTimeout(function() {
 						waitForFilter(callback);
+					}, 30);
+				}
+			}
+
+			function waitForEntities(callback) {
+				let cb = false;
+				if (((submissions.href && submissions.entity) || !submissions.href) && ((activities.href && activities.entity) || !activities.href)) {
+					callback();
+				} else {
+					setTimeout(function() {
+						waitForEntities(callback);
 					}, 30);
 				}
 			}
@@ -108,6 +132,61 @@
 				var clearButton = filterDropdown.shadowRoot.querySelector('d2l-button-subtle');
 				MockInteractions.click(clearButton);
 			};
+
+			suite('d2l-quick-eval lazy loading', function() {
+				suite('toggle-state set to default (submissions)', function() {
+					setup(function() {
+						quickEval = fixture('basic');
+						submissions = quickEval.shadowRoot.querySelector('d2l-quick-eval-submissions');
+						activities = quickEval.shadowRoot.querySelector('d2l-quick-eval-activities');
+					});
+					test('loading into submissions does not fetch the entity for activities', function(done) {
+						const verify = function() {
+							assert.equal(submissions.href, 'data/unassessedActivities.json');
+							assert.equal(activities.href, '');
+							assert.isOk(submissions.entity);
+							assert.isNotOk(activities.entity);
+							done();
+						};
+						waitForEntities(verify);
+					});
+					test('toggling from submissions to activities will load activities', function(done) {
+						const verify = function() {
+							assert.equal(activities.href, 'data/unassessedActivitiesCollection.json');
+							assert.isOk(activities.entity);
+							done();
+						};
+						quickEval._toggleView({ detail: { view: 'activities' } });
+						waitForEntities(verify);
+					});
+				});
+				suite('toggle-state set to activities', function() {
+					setup(function() {
+						quickEval = fixture('loadActivities');
+						submissions = quickEval.shadowRoot.querySelector('d2l-quick-eval-submissions');
+						activities = quickEval.shadowRoot.querySelector('d2l-quick-eval-activities');
+					});
+					test('loading into activities does not fetch the entity for submissions', function(done) {
+						const verify = function() {
+							assert.equal(activities.href, 'data/unassessedActivitiesCollection.json');
+							assert.equal(submissions.href, '');
+							assert.isOk(activities.entity);
+							assert.isNotOk(submissions.entity);
+							done();
+						};
+						waitForEntities(verify);
+					});
+					test('toggling from activities to submissions will load submissions', function(done) {
+						const verify = function() {
+							assert.equal(submissions.href, 'data/unassessedActivities.json');
+							assert.isOk(submissions.entity);
+							done();
+						};
+						quickEval._toggleView({ detail: { view: 'submissions' } });
+						waitForEntities(verify);
+					});
+				});
+			});
 
 			suite('d2l-quick-eval', function() {
 				setup(/** @this Mocha */function() {
