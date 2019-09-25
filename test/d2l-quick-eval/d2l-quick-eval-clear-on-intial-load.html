@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+		<title>d2l-quick-eval test</title>
+		<script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+		<script src="/node_modules/mocha/mocha.js"></script>
+		<script src="/node_modules/chai/chai.js"></script>
+		<script src="/node_modules/@polymer/test-fixture/test-fixture.js"></script>
+		<script src="/node_modules/wct-mocha/wct-mocha.js"></script>
+		<script src="/node_modules/sinon/pkg/sinon.js"></script>
+
+		<!-- For IE11 -->
+		<script src="../../../lie/dist/lie.polyfill.min.js"></script>
+		<script type="module" src="../../../whatwg-fetch/fetch.js"></script>
+		<script type="module" src="../../../url-polyfill/url-polyfill.js"></script>
+		<script type="module" src="../../components/d2l-quick-eval/d2l-quick-eval-activities.js"></script>
+		<script type="module" src="../../components/d2l-quick-eval/d2l-quick-eval-submissions.js"></script>
+	</head>
+	<body>
+		<test-fixture id="activities">
+			<template strip-whitespace>
+				<d2l-quick-eval-activities></d2l-quick-eval-activities>
+			</template>
+		</test-fixture>
+		<test-fixture id="submissions">
+			<template strip-whitespace>
+				<d2l-quick-eval-submissions></d2l-quick-eval-submissions>
+			</template>
+		</test-fixture>
+		<script type="module">
+			function makeEmptyEntity() {
+				return {
+					hasClass: (cls) => cls === 'empty'
+				};
+			}
+
+			function makeSuccessEntity() {
+				return {
+					hasClass: () => false,
+					entities: false
+				};
+			}
+
+			suite('d2l-quick-eval-clear-on-intial-load', () => {
+				['activities', 'submissions'].forEach(subpage => {
+					suite(subpage, () => {
+
+						let module;
+						setup(function() {
+							module = fixture(subpage);
+						});
+
+						test('_initialLoad is false after empty initial load', (done) => {
+							const entity = makeEmptyEntity();
+							const clearSpy = sinon.spy();
+							module.searchApplied = true;
+							module._clearFilterAndSearch = clearSpy;
+
+							module._loadData(entity)
+								.then(() => {
+									assert.isFalse(module._initialLoad);
+									assert.isTrue(clearSpy.calledOnce);
+									assert.isTrue(module._loading);
+									done();
+								});
+						});
+
+						test('_initialLoad is false after successful initial load', (done) => {
+							const entity = makeSuccessEntity();
+
+							module._loadData(entity)
+								.then(() => {
+									assert.isFalse(module._initialLoad);
+									done();
+								});
+						});
+
+						test('reload does not happen after initial load', (done) => {
+							const entity = makeEmptyEntity();
+							const clearSpy = sinon.spy();
+							module.searchApplied = true;
+							module._clearFilterAndSearch = clearSpy;
+							module._initialLoad = false;
+
+							module._loadData(entity)
+								.then(() => {
+									assert.isTrue(clearSpy.notCalled);
+									done();
+								});
+						});
+
+						test('reload does not happen unless criteria is applied', (done) => {
+							const entity = makeEmptyEntity();
+							const clearSpy = sinon.spy();
+							module._clearFilterAndSearch = clearSpy;
+
+							module._loadData(entity)
+								.then(() => {
+									assert.isTrue(clearSpy.notCalled);
+									done();
+								});
+						});
+					});
+				});
+			});
+		</script>
+	</body>
+</html>
