@@ -87,7 +87,6 @@
 			}
 
 			function waitForEntities(callback) {
-				let cb = false;
 				if (((submissions.href && submissions.entity) || !submissions.href) && ((activities.href && activities.entity) || !activities.href)) {
 					callback();
 				} else {
