@@ -65,8 +65,8 @@ class AssignmentEditorDetail extends EntityMixinLit(LocalizeMixin(LitElement)) {
 
 	_saveName(e) {
 		if (super._entity.canEditName()) {
-			var action = super._entity.getSaveNameAction();
-			var fields = [{ 'name': 'name', 'value': e.target.value }];
+			const action = super._entity.getSaveNameAction();
+			const fields = [{ 'name': 'name', 'value': e.target.value }];
 			this._performAction(action, fields);
 		}
 	}
