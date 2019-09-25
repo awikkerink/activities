@@ -1,9 +1,9 @@
+import 'd2l-inputs/d2l-input-text.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
-import 'd2l-inputs/d2l-input-text.js';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 
 class AssignmentEditorDetail extends EntityMixinLit(LocalizeMixin(LitElement)) {
 
@@ -79,8 +79,8 @@ class AssignmentEditorDetail extends EntityMixinLit(LocalizeMixin(LitElement)) {
 				<d2l-input-text
 					id="assignment-name"
 					value="${this._name}"
-					on-change="${this._saveName()}"
-					on-input="${this._saveNameOnInput()}"
+					@change="${this._saveName}"
+					@input="${this._saveNameOnInput}"
 					aria-label="${this.localize('name')}"
 					?disabled="${!super._entity.canEditName()}"
 					prevent-submit>
