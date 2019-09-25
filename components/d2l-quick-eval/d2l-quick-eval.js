@@ -135,10 +135,6 @@ class D2LQuickEval extends
 		}
 		return '';
 	}
-
-	_activitiesHref(activitiesViewEnabled) {
-		return activitiesViewEnabled ? this.activitiesHref : '';
-	}
 }
 
 window.customElements.define('d2l-quick-eval', D2LQuickEval);
