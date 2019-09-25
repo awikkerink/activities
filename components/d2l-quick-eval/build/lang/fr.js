@@ -60,7 +60,7 @@ const LangFrImpl = (superClass) => class extends superClass {
 			'submissions': 'Soumissions',
 			'tableTitle': 'Liste des soumissions des apprenants non évaluées provenant des cours et des outils',
 			'toggleIndicatorLabelActions': 'Exécuter des actions sur {target}',
-			'toggleIndicatorLabelInfo': 'View info on {target}',
+			'toggleIndicatorLabelInfo': 'Afficher l\'information sur {target}',
 			'tryAgain': 'Réessayer',
 			'viewBy': 'Afficher par :',
 			'yes': 'Oui'
