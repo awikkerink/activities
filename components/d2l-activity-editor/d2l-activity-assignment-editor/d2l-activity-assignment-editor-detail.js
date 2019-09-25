@@ -4,8 +4,9 @@ import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/Assignmen
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { SirenFetchMixinLit } from 'siren-sdk/src/mixin/siren-fetch-mixin-lit.js';
 
-class AssignmentEditorDetail extends EntityMixinLit(LocalizeMixin(LitElement)) {
+class AssignmentEditorDetail extends SirenFetchMixinLit(EntityMixinLit(LocalizeMixin(LitElement))) {
 
 	static get properties() {
 		return {
@@ -67,7 +68,7 @@ class AssignmentEditorDetail extends EntityMixinLit(LocalizeMixin(LitElement)) {
 		if (super._entity.canEditName()) {
 			const action = super._entity.getSaveNameAction();
 			const fields = [{ 'name': 'name', 'value': e.target.value }];
-			this._performAction(action, fields);
+			this._performSirenAction(action, fields);
 		}
 	}
 
