@@ -48,7 +48,6 @@ class AssignmentEditorDetail extends EntityMixinLit(LocalizeMixin(LitElement)) {
 	constructor() {
 		super();
 		this._setEntityType(AssignmentEntity);
-		this.name = 'Untitled';
 	}
 
 	set _entity(entity) {
@@ -64,11 +63,15 @@ class AssignmentEditorDetail extends EntityMixinLit(LocalizeMixin(LitElement)) {
 		}
 	}
 
-	_saveName() {
-
+	_saveName(e) {
+		if (super._entity.canEditName()) {
+			var action = super._entity.getSaveNameAction();
+			var fields = [{ 'name': 'name', 'value': e.target.value }];
+			this._performAction(action, fields);
+		}
 	}
 
-	_saveNameOnInput() {
+	_saveNameOnInput(e) {
 
 	}
 
