@@ -1,7 +1,29 @@
 import SirenParse from 'siren-parser';
 
 (function() {
-	var searchBehavior;
+	let searchBehavior;
+
+	function makeEntity(term) {
+		const entity = {
+			'actions': [
+				{
+					'name': 'search',
+					'href': '/not/a/real/url',
+					fields: [
+						{ name: 'collectionSearch' }
+					]
+				}
+			]
+		};
+
+		if (term) {
+			entity.actions[0].fields[0].value = term;
+		}
+
+		const parsedEntity = SirenParse(entity);
+
+		return parsedEntity;
+	}
 
 	suite('d2l-hm-search-behavior', function() {
 		setup(function() {
@@ -14,16 +36,8 @@ import SirenParse from 'siren-parser';
 			assert.isFalse(searchBehavior.searchLoading);
 		});
 		test('properly sets searchAction given valid entity', () => {
-			const entity = {
-				'actions': [
-					{
-						'name': 'search',
-						'href': '/not/a/real/url'
-					}
-				]
-			};
+			const parsedEntity = makeEntity();
 
-			const parsedEntity = SirenParse(entity);
 			searchBehavior.entity = parsedEntity;
 			assert.isOk(searchBehavior.searchAction);
 			assert.equal(searchBehavior.searchAction, parsedEntity.actions[0]);
@@ -32,6 +46,19 @@ import SirenParse from 'siren-parser';
 		test('Properly set searchAction given invalid entity', () => {
 			searchBehavior.entity = null;
 			assert.isNotOk(searchBehavior.searchAction);
+		});
+
+		test('properly sets searchTerm given valid entity', () => {
+			const searchTerm = 'assignment';
+			const parsedEntity = makeEntity(searchTerm);
+
+			searchBehavior.entity = parsedEntity;
+			assert.equal(searchBehavior.searchTerm, searchTerm);
+		});
+
+		test('properly sets searchTerm given invalid entity', () => {
+			searchBehavior.entity = null;
+			assert.isNotOk(searchBehavior.searchTerm);
 		});
 
 		test('d2l-hm-search-results-loading sets searchLoading to true', () => {
@@ -44,13 +71,14 @@ import SirenParse from 'siren-parser';
 		});
 
 		test('d2l-hm-search-results-loaded sets searchLoading to false and entity to results and error to null', () => {
-			const results = ['some', 'arbitrary', 'results'];
+			const parsedEntity = makeEntity();
+
 			searchBehavior.dispatchEvent(
 				new CustomEvent(
 					'd2l-hm-search-results-loaded',
 					{
 						detail: {
-							results: results,
+							results: parsedEntity,
 							searchIsCleared: false
 						}
 					}
@@ -58,7 +86,7 @@ import SirenParse from 'siren-parser';
 			);
 			assert.isTrue(searchBehavior.searchApplied);
 			assert.isFalse(searchBehavior.searchLoading);
-			assert.equal(results, searchBehavior.entity);
+			assert.equal(parsedEntity, searchBehavior.entity);
 			assert.isNull(searchBehavior.searchError);
 		});
 
@@ -88,7 +116,7 @@ import SirenParse from 'siren-parser';
 					'd2l-hm-search-results-loaded',
 					{
 						detail: {
-							results: [],
+							results: makeEntity(),
 							searchIsCleared: true
 						}
 					}

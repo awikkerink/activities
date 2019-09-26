@@ -59,7 +59,8 @@ const LangTrImpl = (superClass) => class extends superClass {
 			'submissionList': 'Gönderim Listesi',
 			'submissions': 'Gönderimler',
 			'tableTitle': 'Dersler ve araçlar genelinde değerlendirilmemiş Öğrenci gönderilerinin listesi',
-			'toggleIndicatorLabel': '{target} Üzerinde Eylemler Gerçekleştir',
+			'toggleIndicatorLabelActions': '{target} Üzerinde Eylemler Gerçekleştir',
+			'toggleIndicatorLabelInfo': 'Şuradaki bilgileri görüntüleyin: {target}',
 			'tryAgain': 'Tekrar Dene',
 			'viewBy': 'Görüntüleme ölçütü:',
 			'yes': 'Evet'

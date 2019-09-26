@@ -16,6 +16,7 @@ import './d2l-quick-eval-no-criteria-results-image.js';
 import './d2l-quick-eval-search-results-summary-container.js';
 import './activities-list/d2l-quick-eval-activities-list.js';
 import './d2l-quick-eval-activities-skeleton.js';
+import './behaviors/d2l-quick-eval-telemetry-behavior.js';
 
 /**
  * @customElement
@@ -25,7 +26,8 @@ import './d2l-quick-eval-activities-skeleton.js';
 class D2LQuickEvalActivities extends mixinBehaviors(
 	[	D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior,
 		D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviour,
-		D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour
+		D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour,
+		D2L.PolymerBehaviors.QuickEval.TelemetryBehaviorImpl
 	],
 	QuickEvalLogging(QuickEvalLocalize(PolymerElement))
 ) {
@@ -128,6 +130,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					search-action="[[searchAction]]"
 					placeholder="[[localize('search')]]"
 					aria-label$="[[localize('search')]]"
+					initial-value="[[searchTerm]]"
 					>
 				</d2l-hm-search>
 			</div>
@@ -143,7 +146,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			</d2l-alert>
 			<d2l-quick-eval-search-results-summary-container
 				search-results-count="[[_searchResultsCount]]"
-				hidden$="[[!searchApplied]]"
+				hidden$="[[!_showSearchSummary]]"
 				on-d2l-quick-eval-search-results-summary-container-clear-search="clearSearchResults">
 			</d2l-quick-eval-search-results-summary-container>
 			<div class="d2l-quick-eval-no-submissions" hidden$="[[!_shouldShowNoSubmissions(_data, _loading, _isError, filterApplied, searchApplied)]]">
@@ -211,6 +214,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			_publishAllToasts: {
 				type: Array,
 				value: []
+			},
+			_showSearchSummary: {
+				type: Boolean,
+				computed: '_computeShowSearchSummary(_loading, filtersLoading, searchLoading, searchApplied)'
 			}
 		};
 	}
@@ -228,7 +235,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			return;
 		}
 		this._loading = true;
-
 		try {
 			if (entity.entities) {
 				const result = await this._parseActivities(entity);
@@ -239,6 +245,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			this._updateSearchResultsCount(this._data);
 			this._clearErrors();
 			this._handleLoadSuccess();
+			this.perfMark('activitiesLoadEnd');
+			this.logAndDestroyPerformanceEvent('activities', 'qeViewLoadStart', 'activitiesLoadEnd');
 		} catch (e) {
 			this._handleLoadFailure();
 			this._logError(e, {developerMessage: 'activities-view: Unable to load activities from entity.'});
@@ -437,6 +445,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			return this.localize('publishAllToastMessageTruncated', 'truncatedActivityName', toast.activityName.substring(0, maxLength));
 		}
 		return this.localize('publishAllToastMessage', 'activityName', toast.activityName);
+	}
+
+	_computeShowSearchSummary(_loading, filtersLoading, searchLoading, searchApplied) {
+		return !_loading && !filtersLoading && !searchLoading && searchApplied;
 	}
 
 	ready() {
