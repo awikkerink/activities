@@ -21,8 +21,10 @@ jobs:
   - stage: visual-difference-tests
     script:
     - |
+    if [ $TRAVIS_PULL_REQUEST != false ] && [ $TRAVIS_SECURE_ENV_VARS == true ]; then
       echo "Pull request, running visual difference tests...";
       npm run test:diff || travis_terminate 1;
+    fi
 after_success:
 - frauci-update-version && export TRAVIS_TAG=$(frauci-get-version)
 deploy:
