@@ -104,7 +104,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 					search-action="[[searchAction]]"
 					placeholder="[[localize('search')]]"
 					result-size="[[_numberOfActivitiesToShow]]"
-					aria-label$="[[localize('search')]]">
+					aria-label$="[[localize('search')]]"
+					initial-value="[[searchTerm]]">
 				</d2l-hm-search>
 			</div>
 			<div class="clear"></div>
@@ -117,7 +118,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			<d2l-quick-eval-search-results-summary-container
 				search-results-count="[[_searchResultsCount]]"
 				more-results="[[_moreSearchResults]]"
-				hidden$="[[!_searchResultsMessageEnabled(searchApplied)]]"
+				hidden$="[[!_showSearchSummary]]"
 				on-d2l-quick-eval-search-results-summary-container-clear-search="clearSearchResults">
 			</d2l-quick-eval-search-results-summary-container>
 			<d2l-quick-eval-submissions-table
@@ -240,6 +241,10 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			},
 			hidden: {
 				type: Boolean
+			},
+			_showSearchSummary: {
+				type: Boolean,
+				computed: '_computeShowSearchSummary(_loading, filtersLoading, searchLoading, searchApplied)'
 			}
 		};
 	}
@@ -270,6 +275,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			}
 			this._updateSearchResultsCount(this._data.length);
 			this._clearAlerts();
+			this.perfMark('submissionsLoadEnd');
+			this.logAndDestroyPerformanceEvent('submissions', 'qeViewLoadStart', 'submissionsLoadEnd');
 		} catch (e) {
 			this._logError(e, {developerMessage: 'Unable to load activities from entity.'});
 			this._handleFullLoadFailure();
@@ -507,6 +514,10 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 
 	_computeShowLoadingSkeleton(_loading, filtersLoading, searchLoading) {
 		return _loading || filtersLoading || searchLoading;
+	}
+
+	_computeShowSearchSummary(_loading, filtersLoading, searchLoading, searchApplied) {
+		return !_loading && !filtersLoading && !searchLoading && searchApplied;
 	}
 
 	ready() {
