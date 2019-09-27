@@ -58,7 +58,11 @@ In order to do visual difference testing, you must generate the "golden" images 
 3. Checkout your branch to test: `git checkout <desired branch>`.
 4. Running the visual difference tests: `npm run test:diff`.
 
-#### Procedure for testing on the travis CI pipeline:
+#### Procedure for testing on the Travis CI pipeline:
+
+When a pull-request is made, you should consider if your changes will alter the UI and break the visual difference tests.
+If the visuals are being changed/modified, it is necessary for the stored Goldens in Amazon S3 to be updated (made easier with the bot).
+
 * The visual difference tests will be automatically run based off of the Goldens stored in Amazon S3, the bot will assist you with re-generation of the Goldens and will comment on your PR should a visual difference test fail.
 
 #### Other information
