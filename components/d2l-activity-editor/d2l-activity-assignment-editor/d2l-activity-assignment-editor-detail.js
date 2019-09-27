@@ -20,7 +20,7 @@ class AssignmentEditorDetail extends SirenFetchMixinLit(EntityMixinLit(LocalizeM
 	static get styles() {
 		return [labelStyles, css`
 			:host {
-				display: inline-block;
+				display: block;
 				padding: 20px;
 			}
 			:host([hidden]) {

@@ -16,7 +16,7 @@ class AssignmentEditor extends EntityMixinLit(LocalizeMixin(LitElement)) {
 	static get styles() {
 		return css`
 			:host {
-				display: inline-block;
+				display: block;
 			}
 			:host([hidden]) {
 				display: none;
