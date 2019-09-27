@@ -5,8 +5,8 @@ import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
-import { microTask } from '@polymer/polymer/lib/utils/async.js';
 import { SirenFetchMixinLit } from 'siren-sdk/src/mixin/siren-fetch-mixin-lit.js';
+import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
 class AssignmentEditorDetail extends SirenFetchMixinLit(EntityMixinLit(LocalizeMixin(LitElement))) {
 
@@ -76,7 +76,7 @@ class AssignmentEditorDetail extends SirenFetchMixinLit(EntityMixinLit(LocalizeM
 
 	_saveNameOnInput(e) {
 		this._debounceJob = Debouncer.debounce(this._debounceJob,
-			microTask, () => this._saveName(e));
+			timeOut.after(500), () => this._saveName(e));
 	}
 
 	render() {
