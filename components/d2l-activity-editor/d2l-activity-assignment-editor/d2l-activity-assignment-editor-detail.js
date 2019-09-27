@@ -101,7 +101,7 @@ class AssignmentEditorDetail extends SirenFetchMixinLit(EntityMixinLit(LocalizeM
 					@input="${this._saveNameOnInput}"
 					aria-label="${this.localize('name')}"
 					?disabled="${!super._entity.canEditName()}"
-					aria-invalid="${this._nameError ? "true" : ''}"
+					aria-invalid="${this._nameError ? 'true' : ''}"
 					prevent-submit>
 				</d2l-input-text>
 				<d2l-tooltip
