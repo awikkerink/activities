@@ -13,6 +13,7 @@ class AssignmentEditorDetail extends SirenFetchMixinLit(EntityMixinLit(LocalizeM
 	static get properties() {
 		return {
 			_name: { type: String },
+			_nameError: { type: String },
 		};
 	}
 
@@ -75,8 +76,18 @@ class AssignmentEditorDetail extends SirenFetchMixinLit(EntityMixinLit(LocalizeM
 	}
 
 	_saveNameOnInput(e) {
-		this._debounceJob = Debouncer.debounce(this._debounceJob,
-			timeOut.after(500), () => this._saveName(e));
+		const name = e.target.value;
+		const isNameEmpty = (name || '').trim().length === 0;
+		if (isNameEmpty) {
+			this._nameError = this.localize('emptyNameError');
+		} else {
+			this._nameError = '';
+			this._debounceJob = Debouncer.debounce(
+				this._debounceJob,
+				timeOut.after(500),
+				() => this._saveName(e)
+			);
+		}
 	}
 
 	render() {
@@ -90,8 +101,16 @@ class AssignmentEditorDetail extends SirenFetchMixinLit(EntityMixinLit(LocalizeM
 					@input="${this._saveNameOnInput}"
 					aria-label="${this.localize('name')}"
 					?disabled="${!super._entity.canEditName()}"
+					aria-invalid="${this._nameError ? "true" : ''}"
 					prevent-submit>
 				</d2l-input-text>
+				<d2l-tooltip
+					id="name-tooltip"
+					for="assignment-name"
+					position="bottom"
+					?showing="${this._nameError}">
+					${this._nameError}
+				</d2l-tooltip>
 			</div>
 		`;
 	}

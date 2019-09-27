@@ -1,3 +1,4 @@
 export const assignment = {
-	'name': 'Name'
+	'name': 'Name',
+	'emptyNameError': 'Name is required'
 };
