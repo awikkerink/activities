@@ -67,10 +67,14 @@ class AssignmentEditorDetail extends SirenFetchMixinLit(EntityMixinLit(LocalizeM
 		}
 	}
 
-	_saveName(e) {
+	_saveNameOnChange() {
+		this._debounceJob && this._debounceJob.flush();
+	}
+
+	_saveName(value) {
 		if (super._entity.canEditName()) {
 			const action = super._entity.getSaveNameAction();
-			const fields = [{ 'name': 'name', 'value': e.target.value }];
+			const fields = [{ 'name': 'name', 'value': value }];
 			this._performSirenAction(action, fields);
 		}
 	}
@@ -85,7 +89,7 @@ class AssignmentEditorDetail extends SirenFetchMixinLit(EntityMixinLit(LocalizeM
 			this._debounceJob = Debouncer.debounce(
 				this._debounceJob,
 				timeOut.after(500),
-				() => this._saveName(e)
+				() => this._saveName(name)
 			);
 		}
 	}
@@ -97,20 +101,24 @@ class AssignmentEditorDetail extends SirenFetchMixinLit(EntityMixinLit(LocalizeM
 				<d2l-input-text
 					id="assignment-name"
 					value="${this._name}"
-					@change="${this._saveName}"
+					@change="${this._saveNameOnChange}"
 					@input="${this._saveNameOnInput}"
 					aria-label="${this.localize('name')}"
 					?disabled="${!super._entity.canEditName()}"
 					aria-invalid="${this._nameError ? 'true' : ''}"
 					prevent-submit>
 				</d2l-input-text>
-				<d2l-tooltip
-					id="name-tooltip"
-					for="assignment-name"
-					position="bottom"
-					?showing="${this._nameError}">
-					${this._nameError}
-				</d2l-tooltip>
+				${this._nameError ?
+					html`
+						<d2l-tooltip
+							id="name-tooltip"
+							for="assignment-name"
+							position="bottom"
+							?showing="${this._nameError}">
+							${this._nameError}
+						</d2l-tooltip>
+					`: ''
+				}
 			</div>
 		`;
 	}
