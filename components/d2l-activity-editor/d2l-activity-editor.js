@@ -2,6 +2,12 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 
 class ActivityEditor extends LitElement {
 
+	static get properties() {
+		return {
+			loading: { type: Boolean },
+		};
+	}
+
 	static get styles() {
 		return css`
 			:host {
@@ -15,7 +21,10 @@ class ActivityEditor extends LitElement {
 
 	render() {
 		return html`
-			<slot name="editor"></slot>
+			<div ?hidden="${!this.loading}">Loading ...</div>
+			<div ?hidden="${this.loading}">
+				<slot name="editor"></slot>
+			</div>
 		`;
 	}
 }
