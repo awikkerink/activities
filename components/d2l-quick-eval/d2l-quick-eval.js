@@ -7,6 +7,9 @@ import './d2l-quick-eval-activities.js';
 import './d2l-quick-eval-submissions.js';
 import './behaviors/d2l-quick-eval-telemetry-behavior.js';
 
+const submissions = 'submissions';
+const activities = 'activities';
+
 /**
  * @customElement
  * @polymer
@@ -56,8 +59,8 @@ class D2LQuickEval extends
 				<h1 class="d2l-quick-eval-header" hidden$="[[activitiesViewEnabled]]">[[headerText]]</h1>
 			</template>
 			<d2l-quick-eval-view-toggle current-selected="[[toggleState]]" toggle-href="[[toggleHref]]" hidden$="[[!activitiesViewEnabled]]" on-d2l-quick-eval-view-toggle-changed="_toggleView"></d2l-quick-eval-view-toggle>
-			<d2l-quick-eval-submissions href="[[_lazySubmissionsHref]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" data-telemetry-endpoint="[[dataTelemetryEndpoint]]" hidden$="[[_showActivitiesView]]" master-teacher="[[masterTeacher]]"></d2l-quick-eval-submissions>
-			<d2l-quick-eval-activities href="[[_lazyActivitiesHref]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" hidden$="[[!_showActivitiesView]]"></d2l-quick-eval-activities>
+			<d2l-quick-eval-submissions href="[[_lazySubmissionsHref]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" data-telemetry-endpoint="[[dataTelemetryEndpoint]]" hidden$="[[_displayActivities(toggleState, activitiesViewEnabled)]]" master-teacher="[[masterTeacher]]"></d2l-quick-eval-submissions>
+			<d2l-quick-eval-activities href="[[_lazyActivitiesHref]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" hidden$="[[!_displayActivities(toggleState, activitiesViewEnabled)]]"></d2l-quick-eval-activities>
 		`;
 	}
 	ready() {
@@ -77,10 +80,6 @@ class D2LQuickEval extends
 				type: Boolean,
 				value: false
 			},
-			_showActivitiesView: {
-				type: Boolean,
-				value: false
-			},
 			loggingEndpoint: {
 				type: String
 			},
@@ -92,20 +91,21 @@ class D2LQuickEval extends
 			},
 			_lazySubmissionsHref: {
 				type: String,
-				computed: '_computeLazySubmissionsHref(submissionsHref, _showActivitiesView)'
+				computed: '_computeLazySubmissionsHref(submissionsHref, toggleState)'
 			},
 			activitiesHref: {
 				type: String
 			},
 			_lazyActivitiesHref: {
 				type: String,
-				computed: '_computeLazyActivitiesHref(activitiesHref, _showActivitiesView, activitiesViewEnabled)'
+				computed: '_computeLazyActivitiesHref(activitiesHref, toggleState, activitiesViewEnabled)'
 			},
 			toggleHref: {
 				type: String
 			},
 			toggleState: {
-				type: String
+				type: String,
+				value: submissions
 			},
 			token: {
 				type: Object,
@@ -113,25 +113,29 @@ class D2LQuickEval extends
 		};
 	}
 
-	_toggleView(e) {
-		if (e.detail.view === 'submissions' || !this.activitiesViewEnabled) {
-			this._showActivitiesView = false;
-		} else {
-			this._showActivitiesView = true;
+	_displayActivities(toggleState, activitiesViewEnabled) {
+		if (!activitiesViewEnabled) {
+			return false;
 		}
+
+		return toggleState === activities;
+	}
+
+	_toggleView(e) {
+		this.toggleState = e.detail.view;
 		this.logViewQuickEvalEvent(e.detail.view);
 	}
 
-	_computeLazySubmissionsHref(href, state) {
-		if (!state) {
-			return href;
+	_computeLazySubmissionsHref(submissionsHref, toggleState) {
+		if (toggleState === submissions || this._lazySubmissionsHref) {
+			return submissionsHref;
 		}
 		return '';
 	}
 
-	_computeLazyActivitiesHref(href, state, enabled) {
-		if (state && enabled) {
-			return href;
+	_computeLazyActivitiesHref(activitiesHref, toggleState, activitiesViewEnabled) {
+		if ((toggleState === activities && activitiesViewEnabled) || this._lazyActivitiesHref) {
+			return activitiesHref;
 		}
 		return '';
 	}
