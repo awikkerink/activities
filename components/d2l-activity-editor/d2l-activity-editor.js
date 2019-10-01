@@ -1,7 +1,12 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { PendingContainerMixin } from 'siren-sdk/src/mixin/pending-container-mixin.js';
 
-class ActivityEditor extends PendingContainerMixin(LitElement) {
+class ActivityEditor extends LitElement {
+
+	static get properties() {
+		return {
+			loading: { type: Boolean },
+		};
+	}
 
 	static get styles() {
 		return css`
@@ -16,8 +21,8 @@ class ActivityEditor extends PendingContainerMixin(LitElement) {
 
 	render() {
 		return html`
-			<div ?hidden="${!this._hasPendingChildren}">Loading ...</div>
-			<div ?hidden="${this._hasPendingChildren}">
+			<div ?hidden="${!this.loading}">Loading ...</div>
+			<div ?hidden="${this.loading}">
 				<slot name="editor"></slot>
 			</div>
 		`;
