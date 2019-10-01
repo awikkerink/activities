@@ -9,7 +9,7 @@ import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { SirenFetchMixinLit } from 'siren-sdk/src/mixin/siren-fetch-mixin-lit.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
-const supportedLanguages = ['en', 'fr'];
+const SUPPORTED_LANGUAGES = ['en', 'fr'];
 
 class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(EntityMixinLit(LocalizeMixin(LitElement)))) {
 
@@ -33,53 +33,23 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 	}
 
 	static async getLocalizeResources(langs) {
-		async function getLangterms(langterms, locale) {
-			const response = await fetch(`./lang/${locale}.json`);
-			const json = await response.json();
+		const supportedLanguages = langs.reverse().filter(language => {
+			return SUPPORTED_LANGUAGES.indexOf(language) > -1;
+		});
+		const requests = supportedLanguages.map(language => {
+			return fetch(`./lang/${language}.json`).then(res => res.json());
+		});
+		const responses = await Promise.all(requests);
 
-			for (const langterm in json) {
-				langterms[langterm] = json[langterm].translation;
+		const langterms = {};
+		responses.forEach(language => {
+			for (const langterm in language) {
+				langterms[langterm] = language[langterm].translation;
 			}
-
-			return langterms;
-		}
-
-		let langterms = await getLangterms({}, 'en');
-
-		let localeCode;
-		for (localeCode of langs) {
-			if (localeCode === 'en') {
-				return {
-					language: localeCode,
-					resources: langterms
-				};
-			}
-
-			const languageCode = localeCode.split('-')[0];
-
-			if (languageCode === localeCode && supportedLanguages.indexOf(languageCode) > -1) {
-				// We support the (non-localized) language
-				langterms = await getLangterms(langterms, languageCode);
-				break;
-			}
-
-			if (languageCode !== localeCode && supportedLanguages.indexOf(localeCode) > -1) {
-				// Add non-localized langterms as fallbacks
-				langterms = await getLangterms(langterms, languageCode);
-				// Override with localized langterms
-				langterms = await getLangterms(langterms, localeCode);
-				break;
-			}
-
-			if (languageCode !== localeCode && supportedLanguages.indexOf(languageCode) > -1) {
-				// We support the language, but not the localization
-				langterms = await getLangterms(langterms, languageCode);
-				break;
-			}
-		}
+		});
 
 		return {
-			language: localeCode,
+			language: supportedLanguages[supportedLanguages.length - 1],
 			resources: langterms
 		};
 	}
