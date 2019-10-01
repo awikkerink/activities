@@ -9,6 +9,8 @@ import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { SirenFetchMixinLit } from 'siren-sdk/src/mixin/siren-fetch-mixin-lit.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
+const supportedLanguages = ['en', 'fr'];
+
 class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(EntityMixinLit(LocalizeMixin(LitElement)))) {
 
 	static get properties() {
@@ -31,23 +33,55 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 	}
 
 	static async getLocalizeResources(langs) {
-		for await (const lang of langs) {
-			let translations;
-			switch (lang) {
-				case 'en':
-					translations = await import('./lang/en.js');
-					break;
+		async function getLangterms(langterms, locale) {
+			const response = await fetch(`./lang/${locale}.json`);
+			const json = await response.json();
+
+			for (const langterm in json) {
+				langterms[langterm] = json[langterm].translation;
 			}
 
-			if (translations && translations.assignment) {
+			return langterms;
+		}
+
+		let langterms = await getLangterms({}, 'en');
+
+		let localeCode;
+		for (localeCode of langs) {
+			if (localeCode === 'en') {
 				return {
-					language: lang,
-					resources: translations.assignment
+					language: localeCode,
+					resources: langterms
 				};
+			}
+
+			const languageCode = localeCode.split('-')[0];
+
+			if (languageCode === localeCode && supportedLanguages.indexOf(languageCode) > -1) {
+				// We support the (non-localized) language
+				langterms = await getLangterms(langterms, languageCode);
+				break;
+			}
+
+			if (languageCode !== localeCode && supportedLanguages.indexOf(localeCode) > -1) {
+				// Add non-localized langterms as fallbacks
+				langterms = await getLangterms(langterms, languageCode);
+				// Override with localized langterms
+				langterms = await getLangterms(langterms, localeCode);
+				break;
+			}
+
+			if (languageCode !== localeCode && supportedLanguages.indexOf(languageCode) > -1) {
+				// We support the language, but not the localization
+				langterms = await getLangterms(langterms, languageCode);
+				break;
 			}
 		}
 
-		return null;
+		return {
+			language: localeCode,
+			resources: langterms
+		};
 	}
 
 	constructor() {
