@@ -1,4 +1,5 @@
 import 'd2l-inputs/d2l-input-text.js';
+import 'd2l-save-status/d2l-save-status.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
@@ -59,9 +60,18 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 
 	_saveName(value) {
 		if (super._entity.canEditName()) {
+			const saveStatus = this.shadowRoot.querySelector('#save-status');
+			saveStatus.start();
+
 			const action = super._entity.getSaveNameAction();
 			const fields = [{ 'name': 'name', 'value': value }];
-			this._performSirenAction(action, fields);
+			this._performSirenAction(action, fields)
+				.then(() => {
+					saveStatus.end();
+				})
+				.catch(() => {
+					saveStatus.error();
+				});
 		}
 	}
 
@@ -99,9 +109,16 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 		}
 	}
 
+	_getSaveStatus() {
+		return html`
+			<d2l-save-status id="save-status"></d2l-save-status>
+		`;
+	}
+
 	render() {
 		return html`
 			<div id="assignment-name-container">
+				${this._getSaveStatus()}
 				<label class="d2l-label-text" for="assignment-name">${this.localize('name')}*</label>
 				<d2l-input-text
 					id="assignment-name"
