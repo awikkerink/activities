@@ -108,16 +108,14 @@ class AssignmentEditorDetail extends SirenFetchMixinLit(EntityMixinLit(LocalizeM
 					aria-invalid="${this._nameError ? 'true' : ''}"
 					prevent-submit>
 				</d2l-input-text>
-				${this._nameError ?
-					html`
-						<d2l-tooltip
-							id="name-tooltip"
-							for="assignment-name"
-							position="bottom"
-							?showing="${this._nameError}">
-							${this._nameError}
-						</d2l-tooltip>
-					`: ''
+				${this._nameError ? html`
+					<d2l-tooltip
+						id="name-tooltip"
+						for="assignment-name"
+						position="bottom"
+						?showing="${this._nameError}">
+						${this._nameError}
+					</d2l-tooltip>` : ''
 				}
 			</div>
 		`;
