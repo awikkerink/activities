@@ -1,9 +1,6 @@
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 
 export const ErrorHandlingMixin = superclass => class extends LocalizeMixin(superclass) {
-	constructor() {
-		super();
-	}
 
 	async setError(errorProperty, langterm, tooltipId) {
 		this[errorProperty] = this.localize(langterm);
