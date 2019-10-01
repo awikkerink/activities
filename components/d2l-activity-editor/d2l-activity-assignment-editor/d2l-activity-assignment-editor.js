@@ -1,12 +1,11 @@
 import '../d2l-activity-editor.js';
 import './d2l-activity-assignment-editor-detail.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { ACELocalizeMixin } from './d2l-activity-assignment-editor-localize-mixin';
 import { AssignmentActivityUsageEntity } from 'siren-sdk/src/activities/assignments/AssignmentActivityUsageEntity.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
-import { PendingContainerMixin } from 'siren-sdk/src/mixin/pending-container-mixin.js';
 
-class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
+class AssignmentEditor extends EntityMixinLit(ACELocalizeMixin(LitElement)) {
 
 	static get properties() {
 		return {
@@ -23,26 +22,6 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LocalizeMixi
 				display: none;
 			}
 		`;
-	}
-
-	static async getLocalizeResources(langs) {
-		for await (const lang of langs) {
-			let translations;
-			switch (lang) {
-				case 'en':
-					translations = await import('./lang/en.js');
-					break;
-			}
-
-			if (translations && translations.assignment) {
-				return {
-					language: lang,
-					resources: translations.assignment
-				};
-			}
-		}
-
-		return null;
 	}
 
 	constructor() {
@@ -66,7 +45,7 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LocalizeMixi
 
 	render() {
 		return html`
-			<d2l-activity-editor ?loading="${this._hasPendingChildren}">
+			<d2l-activity-editor>
 				<d2l-activity-assignment-editor-detail
 					.href="${this._assignmentHref}"
 					.token="${this.token}"
