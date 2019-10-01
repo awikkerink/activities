@@ -1,6 +1,6 @@
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 
-export const ErrorHandlingMixin = superclass => class extends superclass {
+export const ErrorHandlingMixin = superclass => class extends LocalizeMixin(superclass) {
 	constructor() {
 		super();
 	}
