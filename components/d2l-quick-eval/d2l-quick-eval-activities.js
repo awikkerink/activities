@@ -1,8 +1,8 @@
-import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
-import {QuickEvalLocalize} from './QuickEvalLocalize.js';
-import {QuickEvalLogging} from './QuickEvalLogging.js';
+import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { QuickEvalLocalize } from './QuickEvalLocalize.js';
+import { QuickEvalLogging } from './QuickEvalLogging.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
-import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
+import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 import 'd2l-alert/d2l-alert.js';
 import 'd2l-alert/d2l-alert-toast.js';
 import 'd2l-common/components/d2l-hm-filter/d2l-hm-filter.js';
@@ -17,6 +17,7 @@ import './d2l-quick-eval-search-results-summary-container.js';
 import './activities-list/d2l-quick-eval-activities-list.js';
 import './d2l-quick-eval-activities-skeleton.js';
 import './behaviors/d2l-quick-eval-telemetry-behavior.js';
+import '@brightspace-ui/core/components/dialog/dialog-confirm.js';
 
 /**
  * @customElement
@@ -24,10 +25,10 @@ import './behaviors/d2l-quick-eval-telemetry-behavior.js';
  */
 
 class D2LQuickEvalActivities extends mixinBehaviors(
-	[	D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior,
-		D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviour,
-		D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour,
-		D2L.PolymerBehaviors.QuickEval.TelemetryBehaviorImpl
+	[D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior,
+	D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviour,
+	D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour,
+	D2L.PolymerBehaviors.QuickEval.TelemetryBehaviorImpl
 	],
 	QuickEvalLogging(QuickEvalLocalize(PolymerElement))
 ) {
@@ -171,6 +172,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				on-d2l-quick-eval-activity-view-evaluate-all="_navigateEvaluateAll"
 				>
 			</d2l-quick-eval-activities-list>
+			<d2l-dialog-confirm title-text="[[localize('confirmation')]]" text="[[_publishAllDialogMessage]]">
+			<d2l-button slot="footer" primary dialog-action="yes">[[localize('yes')]]</d2l-button>
+			<d2l-button slot="footer" dialog-action="no">[[localize('no')]]</d2l-button>
+			</d2l-dialog-confirm>
 			<dom-repeat items="[[_publishAllToasts]]" as="toast">
 				<template>
 					<d2l-alert-toast type="default" open>[[_publishAllToastMessage(toast)]]</d2l-alert-toast>
@@ -218,6 +223,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			_showSearchSummary: {
 				type: Boolean,
 				computed: '_computeShowSearchSummary(_loading, filtersLoading, searchLoading, searchApplied)'
+			},
+			_publishAllDialogMessage: {
+				type: String
 			}
 		};
 	}
@@ -249,7 +257,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			this.logAndDestroyPerformanceEvent('activities', 'qeViewLoadStart', 'activitiesLoadEnd');
 		} catch (e) {
 			this._handleLoadFailure();
-			this._logError(e, {developerMessage: 'activities-view: Unable to load activities from entity.'});
+			this._logError(e, { developerMessage: 'activities-view: Unable to load activities from entity.' });
 			throw e;
 		} finally {
 			this._loading = false;
@@ -258,7 +266,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 	async _parseActivities(entity) {
 		const extraParams = this._getExtraParams(this._getHref(entity, 'self'));
-		const result = await Promise.all(entity.entities.map(async function(activity) {
+		const result = await Promise.all(entity.entities.map(async function (activity) {
 			try {
 				const evalStatus = await this._getEvaluationStatusPromise(activity, extraParams);
 				const courseName = await this._getCourseNamePromise(activity);
@@ -285,7 +293,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					evaluationStatusHref: evaluationStatusHref
 				};
 			} catch (e) {
-				this._logError(e, {developerMessage: `Error loading activity data for ${this._getHref(activity, 'self')}.`});
+				this._logError(e, { developerMessage: `Error loading activity data for ${this._getHref(activity, 'self')}.` });
 				return null;
 			}
 		}.bind(this)));
@@ -306,7 +314,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	_groupByCourse(act) {
 		if (act) {
 			const grouped = act.reduce((acts, a) => {
-				acts[a.key] = acts[a.key] || { name: a.courseName, activities: []};
+				acts[a.key] = acts[a.key] || { name: a.courseName, activities: [] };
 				acts[a.key].activities.push(a);
 				return acts;
 			}, {});
@@ -344,7 +352,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 	_updateSearchResultsCount(courses) {
 		this._searchResultsCount = courses.reduce(
-			(accumulator, course)=> accumulator + course.activities.length, 0);
+			(accumulator, course) => accumulator + course.activities.length, 0);
 	}
 
 	_shouldShowNoSubmissions() {
@@ -364,33 +372,23 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	}
 
 	_publishAll(evt) {
-		// THIS IS TEMPORARY - will switch to modal dialog when available; dialog will NOT load in demo page
-		const confirmEvent = D2L.LP.Web.UI.Html.JavaScript.Confirm(
-			this.localize('confirmation'),
-			evt.detail.confirmMessage,
-			'',
-			this.localize('yes'),
-			this.localize('no'),
-			this.localize('close'),
-			this._activitiesListId,
-			() => {}
-		);
+		this._publishAllDialogMessage = evt.detail.confirmMessage;
+		const dialog = this.shadowRoot.querySelector('d2l-dialog-confirm');
+		dialog.opened = true;
 
-		confirmEvent.AddListener(
-			(result) => {
-				if (result) {
-					this.performSirenAction(evt.detail.publishAll)
-						.then(evalStatusEntity => {
-							const evaluationStatusHref = this.getEvaluationStatusHref(evalStatusEntity);
-							const publishedActivity = this._updateEvaluationStatus(evaluationStatusHref, evalStatusEntity);
+		dialog.addEventListener('d2l-dialog-close', (result) => {
+			if (result && result.detail.action == "yes") {
+				this.performSirenAction(evt.detail.publishAll)
+					.then(evalStatusEntity => {
+						const evaluationStatusHref = this.getEvaluationStatusHref(evalStatusEntity);
+						const publishedActivity = this._updateEvaluationStatus(evaluationStatusHref, evalStatusEntity);
 
-							if (publishedActivity) {
-								this.push('_publishAllToasts', { activityName: publishedActivity.activityName });
-							}
-						});
-				}
+						if (publishedActivity) {
+							this.push('_publishAllToasts', { activityName: publishedActivity.activityName });
+						}
+					});
 			}
-		);
+		});
 	}
 
 	_computeActivitiesListId() {
@@ -453,7 +451,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 	ready() {
 		super.ready();
-		this.addEventListener('d2l-siren-entity-error', ()=> {
+		this.addEventListener('d2l-siren-entity-error', () => {
 			this._loading = false;
 			this._handleLoadFailure();
 		});
