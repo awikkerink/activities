@@ -1,15 +1,16 @@
 import 'd2l-inputs/d2l-input-text.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { ACELocalizeMixin } from './d2l-activity-assignment-editor-localize-mixin';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ErrorHandlingMixin } from '../error-handling-mixin.js';
+import { getLocalizeResources } from './localization.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { SirenFetchMixinLit } from 'siren-sdk/src/mixin/siren-fetch-mixin-lit.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
-class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(EntityMixinLit(ACELocalizeMixin(LitElement)))) {
+class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(EntityMixinLit(LocalizeMixin(LitElement)))) {
 
 	static get properties() {
 		return {
@@ -28,6 +29,10 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 				display: none;
 			}
 		`];
+	}
+
+	static async getLocalizeResources(langs) {
+		return getLocalizeResources(langs);
 	}
 
 	constructor() {

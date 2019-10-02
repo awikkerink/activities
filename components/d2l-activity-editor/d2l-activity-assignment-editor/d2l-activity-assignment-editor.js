@@ -1,11 +1,13 @@
 import '../d2l-activity-editor.js';
 import './d2l-activity-assignment-editor-detail.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { ACELocalizeMixin } from './d2l-activity-assignment-editor-localize-mixin';
 import { AssignmentActivityUsageEntity } from 'siren-sdk/src/activities/assignments/AssignmentActivityUsageEntity.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
+import { getLocalizeResources } from './localization.js';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { PendingContainerMixin } from 'siren-sdk/src/mixin/pending-container-mixin.js';
 
-class AssignmentEditor extends EntityMixinLit(ACELocalizeMixin(LitElement)) {
+class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
 
 	static get properties() {
 		return {
@@ -22,6 +24,10 @@ class AssignmentEditor extends EntityMixinLit(ACELocalizeMixin(LitElement)) {
 				display: none;
 			}
 		`;
+	}
+
+	static async getLocalizeResources(langs) {
+		return getLocalizeResources(langs);
 	}
 
 	constructor() {
@@ -45,7 +51,7 @@ class AssignmentEditor extends EntityMixinLit(ACELocalizeMixin(LitElement)) {
 
 	render() {
 		return html`
-			<d2l-activity-editor>
+			<d2l-activity-editor ?loading="${this._hasPendingChildren}">
 				<d2l-activity-assignment-editor-detail
 					.href="${this._assignmentHref}"
 					.token="${this.token}"
