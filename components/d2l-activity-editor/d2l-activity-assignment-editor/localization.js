@@ -9,24 +9,28 @@ export async function getLocalizeResources(langs) {
 		return SUPPORTED_LANGUAGES.indexOf(language) > -1;
 	});
 
-	const requests = supportedLanguages.map(language => {
+	const sergeLangterms = supportedLanguages.map(language => {
 		const url = resolveUrl(`./lang/${language}.json`, baseUrl);
 		if (cache[url]) {
 			return cache[url];
 		}
 
-		const request = fetch(url).then(res => res.json());
-		cache[url] = request;
-		return request;
+		const langterms = fetch(url).then(res => res.json()).then(json => {
+			const langterms = {};
+			for (const langterm in json) {
+				langterms[langterm] = json[langterm].translation;
+			}
+			return langterms;
+		});
+		cache[url] = langterms;
+		return langterms;
 	});
 
-	const responses = await Promise.all(requests);
+	const responses = await Promise.all(sergeLangterms);
 
 	const langterms = {};
 	responses.forEach(language => {
-		for (const langterm in language) {
-			langterms[langterm] = language[langterm].translation;
-		}
+		Object.assign(langterms, language);
 	});
 
 	return {
