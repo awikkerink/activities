@@ -151,6 +151,7 @@
 					});
 					test('toggling from submissions to activities will load activities', function(done) {
 						const verify = function() {
+							assert.equal(submissions.href, 'data/unassessedActivities.json');
 							assert.equal(activities.href, 'data/unassessedActivitiesCollection.json');
 							assert.isOk(activities.entity);
 							done();
@@ -178,6 +179,7 @@
 					test('toggling from activities to submissions will load submissions', function(done) {
 						const verify = function() {
 							assert.equal(submissions.href, 'data/unassessedActivities.json');
+							assert.equal(activities.href, 'data/unassessedActivitiesCollection.json');
 							assert.isOk(submissions.entity);
 							done();
 						};
