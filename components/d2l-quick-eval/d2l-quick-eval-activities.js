@@ -265,7 +265,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 	async _parseActivities(entity) {
 		const extraParams = this._getExtraParams(this._getHref(entity, 'self'));
-		const result = await Promise.all(entity.entities.map(async function (activity) {
+		const result = await Promise.all(entity.entities.map(async function(activity) {
 			try {
 				const evalStatus = await this._getEvaluationStatusPromise(activity, extraParams);
 				const courseName = await this._getCourseNamePromise(activity);
@@ -292,7 +292,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					evaluationStatusHref: evaluationStatusHref
 				};
 			} catch (e) {
-				this._logError(e, { developerMessage: `Error loading activity data for ${this._getHref(activity, 'self')}.` });
+				this._logError(e, {developerMessage: `Error loading activity data for ${this._getHref(activity, 'self')}.`});
 				return null;
 			}
 		}.bind(this)));
@@ -351,7 +351,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 	_updateSearchResultsCount(courses) {
 		this._searchResultsCount = courses.reduce(
-			(accumulator, course) => accumulator + course.activities.length, 0);
+			(accumulator, course)=> accumulator + course.activities.length, 0);
 	}
 
 	_shouldShowNoSubmissions() {
@@ -450,7 +450,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 	ready() {
 		super.ready();
-		this.addEventListener('d2l-siren-entity-error', () => {
+		this.addEventListener('d2l-siren-entity-error', ()=> {
 			this._loading = false;
 			this._handleLoadFailure();
 		});
