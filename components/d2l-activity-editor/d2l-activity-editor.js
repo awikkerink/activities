@@ -1,3 +1,4 @@
+import 'd2l-save-status/d2l-save-status.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 
 class ActivityEditor extends LitElement {
@@ -16,11 +17,32 @@ class ActivityEditor extends LitElement {
 			:host([hidden]) {
 				display: none;
 			}
+			d2l-save-status {
+				padding: 20px;
+				padding-bottom: 0px;
+			}
 		`;
+	}
+
+	firstUpdated(changedProperties) {
+		super.firstUpdated(changedProperties);
+
+		this.addEventListener('d2l-siren-entity-save-start', () => {
+			this.shadowRoot.querySelector('#save-status').start();
+		});
+		this.addEventListener('d2l-siren-entity-save-end', () => {
+			this.shadowRoot.querySelector('#save-status').end();
+		});
+		this.addEventListener('d2l-siren-entity-save-error', () => {
+			this.shadowRoot.querySelector('#save-status').error();
+		});
 	}
 
 	render() {
 		return html`
+			<d2l-save-status
+				id="save-status">
+			</d2l-save-status>
 			<div ?hidden="${!this.loading}">Loading ...</div>
 			<div ?hidden="${this.loading}">
 				<slot name="editor"></slot>
