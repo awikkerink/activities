@@ -1,12 +1,11 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import 'd2l-common/components/d2l-hm-search/d2l-hm-search.js';
-import 'd2l-typography/d2l-typography-shared-styles.js';
-import 'd2l-button/d2l-button.js';
+import { heading1Styles } from '@brightspace-ui/core/components/typography/styles.js';
+import '@brightspace-ui/core/components/button/button.js';
 
 class AdminList extends LitElement {
 	static get properties() {
 		return {
-			header: {
+			titleText: {
 				type: String
 			},
 			collectionHref: {
@@ -16,7 +15,7 @@ class AdminList extends LitElement {
 	}
 
 	static get styles() {
-		return css`
+		return [ heading1Styles, css`
 			:host {
 				display: block;
 			}
@@ -26,15 +25,15 @@ class AdminList extends LitElement {
 			.d2l-activity-admin-list-container {
 				display: flex;
 				justify-content: space-between;
-				align-items: baseline;
+				align-items: center;
 			}
-		`;
+		` ];
 	}
 
 	render() {
 		return html`
 		<div class="d2l-activity-admin-list-container">
-			<h1>${this.title}</h1>
+			<h1 class="d2l-heading-1">${this.titleText}</h1>
 			<d2l-button primary>Create Learning Path</d2l-button>
 		</div>
 		<div>
