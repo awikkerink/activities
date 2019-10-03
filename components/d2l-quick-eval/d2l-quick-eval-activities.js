@@ -17,6 +17,7 @@ import './d2l-quick-eval-search-results-summary-container.js';
 import './activities-list/d2l-quick-eval-activities-list.js';
 import './d2l-quick-eval-activities-skeleton.js';
 import './behaviors/d2l-quick-eval-telemetry-behavior.js';
+import '@brightspace-ui/core/components/dialog/dialog-confirm.js';
 
 /**
  * @customElement
@@ -171,9 +172,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				on-d2l-quick-eval-activity-view-evaluate-all="_navigateEvaluateAll"
 				>
 			</d2l-quick-eval-activities-list>
-			<d2l-dialog-confirm title-text="[[localize('confirmation')]]" text="[[_publishAllDialogMessage]]">
-			<d2l-button slot="footer" primary dialog-action="yes">[[localize('yes')]]</d2l-button>
-			<d2l-button slot="footer" dialog-action="no">[[localize('no')]]</d2l-button>
+			<d2l-dialog-confirm title-text="[[localize('confirmation')]]" text="[[_publishAllDialogMessage]]" opened="[[_dialogOpen]]" on-d2l-dialog-close="_closeConfirmDialog">
+				<d2l-button slot="footer" primary dialog-action="yes">[[localize('yes')]]</d2l-button>
+				<d2l-button slot="footer" dialog-action="no">[[localize('no')]]</d2l-button>
 			</d2l-dialog-confirm>
 			<dom-repeat items="[[_publishAllToasts]]" as="toast">
 				<template>
@@ -229,6 +230,13 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			},
 			_publishAllDialogMessage: {
 				type: String
+			},
+			_dialogOpen: {
+				type: Boolean,
+				value: false
+			},
+			_dialogEvt: {
+				type: Object
 			}
 		};
 	}
@@ -387,22 +395,24 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 	_publishAll(evt) {
 		this._publishAllDialogMessage = evt.detail.confirmMessage;
-		const dialog = this.shadowRoot.querySelector('d2l-dialog-confirm');
-		dialog.opened = true;
+		this._dialogOpen = true;
+		this._dialogEvt = evt;
+	}
 
-		dialog.addEventListener('d2l-dialog-close', (result) => {
-			if (result && result.detail.action === 'yes') {
-				this.performSirenAction(evt.detail.publishAll)
-					.then(evalStatusEntity => {
-						const evaluationStatusHref = this.getEvaluationStatusHref(evalStatusEntity);
-						const publishedActivity = this._updateEvaluationStatus(evaluationStatusHref, evalStatusEntity);
+	_closeConfirmDialog(evt) {
+		console.log(this);
+		console.log(evt);
+		if (evt && evt.detail.action === 'yes') {
+			this.performSirenAction(this._dialogEvt.detail.publishAll)
+				.then(evalStatusEntity => {
+					const evaluationStatusHref = this.getEvaluationStatusHref(evalStatusEntity);
+					const publishedActivity = this._updateEvaluationStatus(evaluationStatusHref, evalStatusEntity);
 
-						if (publishedActivity) {
-							this.push('_publishAllToasts', { activityName: publishedActivity.activityName });
-						}
-					});
-			}
-		});
+					if (publishedActivity) {
+						this.push('_publishAllToasts', { activityName: publishedActivity.activityName });
+					}
+				});
+		}
 	}
 
 	_computeActivitiesListId() {
