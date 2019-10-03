@@ -24,35 +24,25 @@ class ActivityEditor extends LitElement {
 		`;
 	}
 
-	constructor() {
-		super();
-		this.addEventListener('d2l-activity-editor-autosave', e => {
-			const saveStatus = this.shadowRoot.querySelector('#save-status');
-			switch(e.detail.message) {
-				case 'd2l-siren-entity-save-start':
-					saveStatus.start();
-					break;
-				case 'd2l-siren-entity-save-end':
-					saveStatus.end();
-					break;
-				case 'd2l-siren-entity-save-error':
-					saveStatus.error();
-					break;
-			}
-		});
-	}
+	firstUpdated(changedProperties) {
+		super.firstUpdated(changedProperties);
 
-	_getSaveStatus() {
-		return html`
-			<d2l-save-status
-				id="save-status">
-			</d2l-save-status>
-		`;
+		this.addEventListener('d2l-siren-entity-save-start', () => {
+			this.shadowRoot.querySelector('#save-status').start();
+		});
+		this.addEventListener('d2l-siren-entity-save-end', () => {
+			this.shadowRoot.querySelector('#save-status').end();
+		});
+		this.addEventListener('d2l-siren-entity-save-error', () => {
+			this.shadowRoot.querySelector('#save-status').error();
+		});
 	}
 
 	render() {
 		return html`
-			${this._getSaveStatus()}
+			<d2l-save-status
+				id="save-status">
+			</d2l-save-status>
 			<div ?hidden="${!this.loading}">Loading ...</div>
 			<div ?hidden="${this.loading}">
 				<slot name="editor"></slot>

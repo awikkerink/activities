@@ -38,17 +38,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 	constructor() {
 		super();
 		this._setEntityType(AssignmentEntity);
-
-		const redispatch = e => {
-			this.dispatchEvent(new CustomEvent('d2l-activity-editor-autosave', {
-				detail: { message: e.type },
-				bubbles: true,
-				composed: true
-			}));
-		};
-		this.addEventListener('d2l-siren-entity-save-start', redispatch);
-		this.addEventListener('d2l-siren-entity-save-end', redispatch);
-		this.addEventListener('d2l-siren-entity-save-error', redispatch);
 	}
 
 	set _entity(entity) {
