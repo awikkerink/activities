@@ -376,7 +376,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		dialog.opened = true;
 
 		dialog.addEventListener('d2l-dialog-close', (result) => {
-			if (result && result.detail.action == "yes") {
+			if (result && result.detail.action === 'yes') {
 				this.performSirenAction(evt.detail.publishAll)
 					.then(evalStatusEntity => {
 						const evaluationStatusHref = this.getEvaluationStatusHref(evalStatusEntity);
