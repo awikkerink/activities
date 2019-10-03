@@ -129,7 +129,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					token="[[token]]"
 					search-action="[[searchAction]]"
 					placeholder="[[localize('search')]]"
-					aria-label$="[[localize('search')]]"
+					label="[[localize('search')]]"
 					initial-value="[[searchTerm]]"
 					>
 				</d2l-hm-search>
