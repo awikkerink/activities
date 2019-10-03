@@ -256,7 +256,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			this.logAndDestroyPerformanceEvent('activities', 'qeViewLoadStart', 'activitiesLoadEnd');
 		} catch (e) {
 			this._handleLoadFailure();
-			this._logError(e, { developerMessage: 'activities-view: Unable to load activities from entity.' });
+			this._logError(e, {developerMessage: 'activities-view: Unable to load activities from entity.'});
 			throw e;
 		} finally {
 			this._loading = false;
@@ -313,7 +313,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	_groupByCourse(act) {
 		if (act) {
 			const grouped = act.reduce((acts, a) => {
-				acts[a.key] = acts[a.key] || { name: a.courseName, activities: [] };
+				acts[a.key] = acts[a.key] || { name: a.courseName, activities: []};
 				acts[a.key].activities.push(a);
 				return acts;
 			}, {});
