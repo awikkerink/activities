@@ -400,8 +400,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	}
 
 	_closeConfirmDialog(evt) {
-		console.log(this);
-		console.log(evt);
 		if (evt && evt.detail.action === 'yes') {
 			this.performSirenAction(this._dialogEvt.detail.publishAll)
 				.then(evalStatusEntity => {
