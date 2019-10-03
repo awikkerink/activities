@@ -25,8 +25,8 @@ jobs:
         echo "Running visual difference tests...";
         npm run test:diff || travis_terminate 1;
       fi
-after_success:
-- frauci-update-version && export TRAVIS_TAG=$(frauci-get-version)
+  - stage: update-version
+    script: frauci-update-version && export TRAVIS_TAG=$(frauci-get-version)
 deploy:
   provider: releases
   api_key: "$GITHUB_RELEASE_TOKEN"

@@ -223,6 +223,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				type: Boolean,
 				computed: '_computeShowSearchSummary(_loading, filtersLoading, searchLoading, searchApplied)'
 			},
+			_initialLoad: {
+				type: Boolean,
+				value: true
+			},
 			_publishAllDialogMessage: {
 				type: String
 			}
@@ -231,7 +235,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	static get observers() {
 		return [
 			'_loadData(entity)',
-			'_clearAllOnHidden(hidden)',
+			'_clearFilterAndSearch(hidden)',
 			'_onFilterErrorChange(filterError)',
 			'_onSearchErrorChange(searchError)',
 		];
@@ -242,6 +246,16 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			return;
 		}
 		this._loading = true;
+
+		if (this._initialLoad &&
+			entity.hasClass('empty') &&
+			(this.searchApplied || this.filterApplied)
+		) {
+			this._clearFilterAndSearch();
+			this._initialLoad = false;
+			return;
+		}
+
 		try {
 			if (entity.entities) {
 				const result = await this._parseActivities(entity);
@@ -260,6 +274,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			throw e;
 		} finally {
 			this._loading = false;
+			this._initialLoad = false;
 		}
 	}
 
@@ -299,7 +314,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		return this._groupByCourse(result.filter(r => r));
 	}
 
-	async _clearAllOnHidden() {
+	async _clearFilterAndSearch() {
 		// NOTE: clearFilters has to be before clearSearchResults or else
 		// it doesn't effectively clears the filters and searches
 		if (this.filterApplied) {

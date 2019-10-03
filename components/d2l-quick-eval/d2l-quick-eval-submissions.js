@@ -245,6 +245,10 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			_showSearchSummary: {
 				type: Boolean,
 				computed: '_computeShowSearchSummary(_loading, filtersLoading, searchLoading, searchApplied)'
+			},
+			_initialLoad: {
+				type: Boolean,
+				value: true
 			}
 		};
 	}
@@ -255,7 +259,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			'_handleSorts(entity)',
 			'_onFilterErrorChange(filterError)',
 			'_onSearchErrorChange(searchError)',
-			'_clearAllOnHidden(hidden)'
+			'_clearFilterAndSearch(hidden)'
 		];
 	}
 
@@ -264,6 +268,15 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			return Promise.resolve();
 		}
 		this._loading = true;
+
+		if (this._initialLoad &&
+			entity.hasClass('empty') &&
+			(this.searchApplied || this.filterApplied)
+		) {
+			this._clearFilterAndSearch();
+			this._initialLoad = false;
+			return;
+		}
 
 		try {
 			if (entity.entities) {
@@ -283,6 +296,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			return Promise.reject(e);
 		} finally {
 			this._loading = false;
+			this._initialLoad = false;
 		}
 	}
 
@@ -365,7 +379,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		return result;
 	}
 
-	async _clearAllOnHidden() {
+	async _clearFilterAndSearch() {
 		// NOTE: clearFilters has to be before clearSearchResults or else
 		// it doesn't effectively clears the filters and searches
 		if (this.filterApplied) {

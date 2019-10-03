@@ -3,12 +3,13 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
+import { ErrorHandlingMixin } from '../error-handling-mixin.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { SirenFetchMixinLit } from 'siren-sdk/src/mixin/siren-fetch-mixin-lit.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
-class AssignmentEditorDetail extends SirenFetchMixinLit(EntityMixinLit(LocalizeMixin(LitElement))) {
+class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(EntityMixinLit(LocalizeMixin(LitElement)))) {
 
 	static get properties() {
 		return {
@@ -82,10 +83,15 @@ class AssignmentEditorDetail extends SirenFetchMixinLit(EntityMixinLit(LocalizeM
 	_saveNameOnInput(e) {
 		const name = e.target.value;
 		const isNameEmpty = (name || '').trim().length === 0;
+
+		const errorProperty = '_nameError';
+		const emptyNameErrorLangterm = 'emptyNameError';
+		const tooltipId = 'name-tooltip';
+
 		if (isNameEmpty) {
-			this._nameError = this.localize('emptyNameError');
+			this.setError(errorProperty, emptyNameErrorLangterm, tooltipId);
 		} else {
-			this._nameError = '';
+			this.clearError(errorProperty);
 			this._debounceJob = Debouncer.debounce(
 				this._debounceJob,
 				timeOut.after(500),
