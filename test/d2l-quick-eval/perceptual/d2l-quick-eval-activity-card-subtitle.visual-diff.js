@@ -18,7 +18,9 @@ describe('d2l-subtitle', function() {
 	after(() => browser.close());
 
 	[
-		'default'
+		'assignment-due-date',
+		'assignment-only',
+		'due-date-only'
 	].forEach((name) => {
 		it(name, async function() {
 			const rect = await visualDiff.getRect(page, `#${name}`);
