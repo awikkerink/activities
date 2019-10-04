@@ -18,12 +18,12 @@ describe('d2l-activity-name', function() {
 	after(() => browser.close());
 
 	[
-        'quizzing-icon',
-        'discussions-icon',
-        'assignments-icon',
-        'long-name',
-        'no-icon',
-        'rtl'
+		'quizzing-icon',
+		'discussions-icon',
+		'assignments-icon',
+		'long-name',
+		'no-icon',
+		'rtl'
 	].forEach((name) => {
 		it(name, async function() {
 			const rect = await visualDiff.getRect(page, `#${name}`);

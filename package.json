@@ -8,7 +8,7 @@
   "scripts": {
     "build": "gulp build",
     "lint": "npm run lint:wc && npm run lint:js",
-    "lint:js": "eslint . --ext .js,.html test/**/*.js test/**/*.html demo/**/*.html",
+    "lint:js": "eslint . --ext .js,.html test/**/*.js test/**/*.html demo/**/*.html --fix",
     "lint:wc": "polymer lint -i \"./*\" \"components\" \"demo\" \"test\"",
     "test:diff": "mocha ./**/*.visual-diff.js -t 15000",
     "test:diff:golden": "mocha ./**/*.visual-diff.js -t 15000 --golden",

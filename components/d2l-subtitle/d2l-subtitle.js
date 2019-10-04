@@ -25,9 +25,9 @@ class D2LSubtitle extends PolymerElement {
 					}
 				}
 			</style>
-			<template is="dom-repeat" items="[[_displayText]]">
+			<dom-repeat items="[[_displayText]]">
 				<span>[[item]]</span>
-			</template>
+			</dom-repeat>
 		`;
 		subtitleTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
 		return subtitleTemplate;
