@@ -32,21 +32,21 @@ describe('d2l-quick-eval-activity-card', function() {
 		});
 	});
 
-	it("hovered", async function() {
-		page.hover("#hovered");
-		const rect = await visualDiff.getRect(page, `#hovered`);
+	it('hovered', async function() {
+		page.hover('#hovered');
+		const rect = await visualDiff.getRect(page, '#hovered');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
 
-	it("tablet-viewport", async function() {
+	it('tablet-viewport', async function() {
 		await page.setViewport({width: 899, height: 800, deviceScaleFactor: 2});
-		const rect = await visualDiff.getRect(page, `#tablet-viewport`);
+		const rect = await visualDiff.getRect(page, '#tablet-viewport');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
 
-	it("mobile-viewport", async function() {
+	it('mobile-viewport', async function() {
 		await page.setViewport({width: 524, height: 800, deviceScaleFactor: 2});
-		const rect = await visualDiff.getRect(page, `#mobile-viewport`);
+		const rect = await visualDiff.getRect(page, '#mobile-viewport');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
 
