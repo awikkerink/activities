@@ -28,7 +28,7 @@ describe('d2l-quick-eval-activity-card-action-button', function() {
 		describe(name, () => {
 			[ 'normal', 'hover', 'focus' ].forEach((state) => {
 				it(state, async function() {
-					switch(state) {
+					switch (state) {
 						case 'hover':
 							await page.hover(`.${name}`);
 							break;
@@ -37,7 +37,7 @@ describe('d2l-quick-eval-activity-card-action-button', function() {
 							break;
 					}
 					if (name.indexOf('width') !== -1) {
-						if (name.indexOf('small') !== -1 ) {
+						if (name.indexOf('small') !== -1) {
 							await page.setViewport({width: 899, height: 800, deviceScaleFactor: 2});
 						}
 					}
@@ -46,7 +46,5 @@ describe('d2l-quick-eval-activity-card-action-button', function() {
 				});
 			});
 		});
-		
 	});
-
 });
