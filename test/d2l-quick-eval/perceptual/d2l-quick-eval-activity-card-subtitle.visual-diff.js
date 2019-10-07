@@ -1,9 +1,9 @@
 const puppeteer = require('puppeteer');
 const VisualDiff = require('@brightspace-ui/visual-diff');
 
-describe('d2l-subtitle', function() {
+describe('d2l-quick-eval-activity-card-subtitle', function() {
 
-	const visualDiff = new VisualDiff('subtitle', __dirname);
+	const visualDiff = new VisualDiff('quick-eval-activity-card-subtitle', __dirname);
 
 	let browser, page;
 
