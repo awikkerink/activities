@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+		<title>d2l-activity-name visual diff tests</title>
+		<script type="module" src="../../../components/d2l-activity-name/d2l-activity-name.js"></script>
+		<style>
+		html {
+			font-size: 20px;
+		}
+		div {
+			margin: 10px;
+		}
+		</style>
+		<script type="module">
+			import '@brightspace-ui/core/components/typography/typography.js';
+		</script>
+	</head>
+	<body class="d2l-typography">
+		<div id="quizzing-icon">
+			<d2l-activity-name _activity-name="This is an activity name" _activity-icon="d2l-tier1:quizzing"></d2l-activity-name>
+        </div>
+        <div id="discussions-icon">
+			<d2l-activity-name _activity-name="This is an activity name" _activity-icon="d2l-tier1:discussions"></d2l-activity-name>
+        </div>
+        <div id="assignments-icon">
+			<d2l-activity-name _activity-name="This is an activity name" _activity-icon="d2l-tier1:assignments"></d2l-activity-name>
+        </div>
+        <div id="long-name">
+			<d2l-activity-name _activity-name="This is a really really really really really really really really really really really really really really really really really really reaaaaalllly long activity name" _activity-icon="d2l-tier1:assignments"></d2l-activity-name>
+        </div>
+        <div id="no-icon">
+			<d2l-activity-name _activity-name="This is an activity name"></d2l-activity-name>
+        </div>
+        <div id="rtl">
+			<d2l-activity-name _activity-name="This is an activity name" _activity-icon="d2l-tier1:assignments" dir="rtl"></d2l-activity-name>
+        </div>
+	</body>
+</html>
