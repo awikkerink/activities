@@ -22,8 +22,7 @@ describe('d2l-quick-eval-activity-card-action-button', function() {
 		'button-disabled',
 		'icon-only',
 		'text-only',
-		'tall-height',
-		'small-screen-width'
+		'tall-height'
 	].forEach((name) => {
 		describe(name, () => {
 			[ 'normal', 'hover', 'focus' ].forEach((state) => {
@@ -36,11 +35,29 @@ describe('d2l-quick-eval-activity-card-action-button', function() {
 							await page.focus(`.${name}`);
 							break;
 					}
-					if (name.indexOf('width') !== -1) {
-						if (name.indexOf('small') !== -1) {
-							await page.setViewport({width: 899, height: 800, deviceScaleFactor: 2});
-						}
+					const rect = await visualDiff.getRect(page, `#${name}`);
+					await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
+				});
+			});
+		});
+	});
+	//Screen width <900px
+	[
+		'text-and-icon',
+		'tall-height'
+	].forEach((name) => {
+		describe(`${name}-small-screen-width`, () => {
+			[ 'normal', 'hover', 'focus' ].forEach((state) => {
+				it(state, async function() {
+					switch (state) {
+						case 'hover':
+							await page.hover(`.${name}`);
+							break;
+						case 'focus':
+							await page.focus(`.${name}`);
+							break;
 					}
+					await page.setViewport({width: 899, height: 800, deviceScaleFactor: 2});
 					const rect = await visualDiff.getRect(page, `#${name}`);
 					await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 				});
