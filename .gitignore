@@ -1,4 +1,4 @@
 node_modules
 package-lock.json
-components/*/test/screenshots/current/
-components/*/test/screenshots/golden/
+/test/**/screenshots/current/
+/test/**/screenshots/golden/
