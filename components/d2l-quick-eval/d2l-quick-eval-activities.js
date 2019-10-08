@@ -248,11 +248,15 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		}
 		this._loading = true;
 
+		if (this._initialLoad) {
+			this._setApplied();
+		}
+
 		if (this._initialLoad &&
 			entity.hasClass('empty') &&
 			(this.searchApplied || this.filterApplied)
 		) {
-			this._clearFilterAndSearch();
+			await this._clearFilterAndSearch();
 			this._initialLoad = false;
 			return;
 		}
@@ -323,6 +327,15 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		}
 		if (this.searchApplied) {
 			await this.clearSearchResults();
+		}
+	}
+
+	_setApplied() {
+		if (this._hasNonEmptyQueryParam(this.href, 'filter')) {
+			this.filterApplied = true;
+		}
+		if (this._hasNonEmptyQueryParam(this.href, 'collectionSearch')) {
+			this.searchApplied = true;
 		}
 	}
 

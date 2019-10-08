@@ -117,6 +117,16 @@ D2L.PolymerBehaviors.Siren.D2LSirenHelperBehaviorImpl = {
 			return entity.getActionByName(name);
 		}
 		return null;
+	},
+
+	_hasNonEmptyQueryParam: function(url, queryParam) {
+		const parsed = new URL(url, 'https://ThisExistsToAvoidAnException.com');
+
+		if (!parsed.searchParams.has(queryParam)) {
+			return false;
+		}
+
+		return parsed.searchParams.get(queryParam) !== '';
 	}
 };
 
