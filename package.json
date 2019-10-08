@@ -22,7 +22,7 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@babel/polyfill": "^7.0.0",
-    "@brightspace-ui/visual-diff": "^1.0.0",
+    "@brightspace-ui/visual-diff": "^1.0.1",
     "@polymer/iron-component-page": "^3.0.0-pre.18",
     "@polymer/iron-demo-helpers": "^3.0.0-pre.18",
     "@polymer/iron-test-helpers": "^3.0.0-pre.18",
