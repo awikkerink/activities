@@ -34,6 +34,7 @@ describe('d2l-quick-eval-activity-card', function() {
 
 	it('hovered', async function() {
 		page.hover('#hovered');
+		await page.waitFor(200);
 		const rect = await visualDiff.getRect(page, '#hovered');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
