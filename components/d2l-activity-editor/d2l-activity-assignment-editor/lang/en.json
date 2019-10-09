@@ -6,5 +6,9 @@
   "emptyNameError": {
     "translation": "Name is required",
     "context": "Helpful hints to make the Serge translation better"
+  },
+  "instructions": {
+    "translation": "Instructions",
+    "context": "Helpful hints to make the Serge translation better"
   }
 }

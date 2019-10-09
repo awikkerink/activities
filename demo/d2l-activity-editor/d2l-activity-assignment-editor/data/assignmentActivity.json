@@ -4,6 +4,8 @@
 	],
 	"properties": {
 		"name": "Extra Special Assignment",
+		"instructions": "<p>Assignment instructions 6613</p><p><d2l-richtext-image><img loading=\"lazy\" src=\"http://kl81-rmahler.desire2learn.d2l:44444/components/d2l-activities/demo/d2l-activity-editor/d2l-activity-assignment-editor/data/city_small.jpg?_&amp;d2lSessionVal=g0cqWWI1pZYJFYNYB6DMpaAAS\" alt=\"city\" title=\"city\"/></d2l-richtext-image></p>",
+		"instructionsText": "Assignment instructions 6613",
 		"dueDate": "2019-09-20T03:59:00.000Z",
 		"outOf": 100.000000000,
 		"addToGrades": false,
@@ -75,6 +77,56 @@
 					]
 				}
 			]
+		},
+		{
+			"class": [
+				"richtext",
+				"instructions",
+				"annotated"
+			],
+			"rel": [
+				"item",
+				"https://assignments.api.brightspace.com/rels/instructions"
+			],
+			"properties": {
+				"text": "Assignment instructions 6613",
+				"html": "<p>Assignment instructions 6613</p><p><d2l-richtext-image><img loading=\"lazy\" src=\"http://kl81-rmahler.desire2learn.d2l:44444/components/d2l-activities/demo/d2l-activity-editor/d2l-activity-assignment-editor/data/city_small.jpg?_&amp;d2lSessionVal=g0cqWWI1pZYJFYNYB6DMpaAAS\" alt=\"city\" title=\"city\"/></d2l-richtext-image></p>"
+			},
+			"actions": [
+				{
+					"type": "application/x-www-form-urlencoded",
+					"href": "https://8b4b0787-25ca-43d2-89ab-b9495546ad09.assignments.api.proddev.d2l/6613/folders/3",
+					"name": "update-instructions",
+					"method": "PATCH",
+					"fields": [
+						{
+							"type": "text",
+							"name": "instructions",
+							"value": "<p>Assignment instructions {orgUnitId}</p><p><img loading=\"lazy\" src=\"/components/d2l-activities/demo/d2l-activity-editor/d2l-activity-assignment-editor/data/city_small.jpg\" alt=\"city\" title=\"city\"/></p>"
+						}
+					]
+				}
+			]
+		},
+		{
+			"class": [
+				"richtext-editor-config"
+			],
+			"rel": [
+				"https://api.brightspace.com/rels/richtext-editor-config"
+			],
+			"properties": {
+				"orgUnit": {
+					"OrgId": "6606",
+					"OrgUnitId": "6613"
+				},
+				"d2l_filter": {
+					"endpoint": "/d2l/lp/htmleditor/converttoabsolute?ou=6613"
+				},
+				"d2l_isf": {
+					"endpoint": "/d2l/common/dialogs/isf/selectItem.d2l?ou=6613&filterMode=Strict"
+				}
+			}
 		}
 	],
 	"links": [
