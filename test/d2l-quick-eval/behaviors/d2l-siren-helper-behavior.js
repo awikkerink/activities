@@ -269,5 +269,48 @@
 				assert.equal(evalLink, expectedEvalLink);
 			});
 		});
+		suite('_hasNonEmptyQueryParam', () => {
+
+			const queryParam = 'param';
+			const testCases = [
+				{
+					testName: 'query param is present',
+					url: 'https://d2l.com/?param=123',
+					expected: true
+				},
+				{
+					testName: 'query param is empty',
+					url: 'https://d2l.com/?param=',
+					expected: false
+				},
+				{
+					testName: 'no query param',
+					url: 'https://d2l.com/',
+					expected: false
+				},
+				{
+					testName: 'other query param',
+					url: 'https://d2l.com/?hello=123',
+					expected: false
+				},
+				{
+					testName: 'relative url with qp',
+					url: '/api/path/?param=123',
+					expected: true
+				},
+				{
+					testName: 'relative url without qp',
+					url: '/api/path/',
+					expected: false
+				}
+			];
+
+			testCases.forEach(testCase => {
+				test(testCase.testName, () => {
+					const actual = component._hasNonEmptyQueryParam(testCase.url, queryParam);
+					assert.equal(actual, testCase.expected);
+				});
+			})
+		});
 	});
 })();
