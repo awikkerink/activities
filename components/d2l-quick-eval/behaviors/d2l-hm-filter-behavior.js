@@ -78,6 +78,10 @@ D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviourImpl = {
 
 	_clearErrors: function() {
 		this.filterError = null;
+	},
+
+	filterAppliedShortcut: function() {
+		this.filterApplied = this._hasNonEmptyQueryParam(this.href, 'filter');
 	}
 };
 

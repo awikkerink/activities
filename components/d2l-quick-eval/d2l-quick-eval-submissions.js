@@ -270,7 +270,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		this._loading = true;
 
 		if (this._initialLoad) {
-			this._setApplied();
+			this.filterAppliedShortcut();
+			this.searchAppliedShortcut();
 		}
 
 		if (this._initialLoad &&
@@ -391,15 +392,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		}
 		if (this.searchApplied) {
 			await this.clearSearchResults();
-		}
-	}
-
-	_setApplied() {
-		if (this._hasNonEmptyQueryParam(this.href, 'filter')) {
-			this.filterApplied = true;
-		}
-		if (this._hasNonEmptyQueryParam(this.href, 'collectionSearch')) {
-			this.searchApplied = true;
 		}
 	}
 
