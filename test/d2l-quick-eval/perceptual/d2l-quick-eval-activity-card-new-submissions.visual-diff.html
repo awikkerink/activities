@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+		<title>d2l-quick-eval-activity-card-new-submissions visual diff tests</title>
+		<script type="module" src="../../../components/d2l-quick-eval/activity-card/d2l-quick-eval-activity-card-new-submissions.js"></script>
+		<style>
+		html {
+			font-size: 20px;
+		}
+		div {
+			margin: 10px;
+		}
+		</style>
+		<script type="module">
+			import '@brightspace-ui/core/components/typography/typography.js';
+		</script>
+	</head>
+	<body class="d2l-typography">
+		<div id="all-zeros">
+			<d2l-quick-eval-activity-card-new-submissions
+				new-submissions="0"
+				resubmitted="0"
+				activity-type="assignment"
+				></d2l-quick-eval-activity-card-new-submissions>
+		</div>
+		<div id="only-new">
+			<d2l-quick-eval-activity-card-new-submissions
+				new-submissions="10"
+				resubmitted="0"
+				activity-type="assignment"
+				></d2l-quick-eval-activity-card-new-submissions>
+		</div>
+		<div id="only-resubmitted">
+			<d2l-quick-eval-activity-card-new-submissions
+				new-submissions="0"
+				resubmitted="10"
+				activity-type="assignment"
+				></d2l-quick-eval-activity-card-new-submissions>
+		</div>
+		<div id="both">
+			<d2l-quick-eval-activity-card-new-submissions
+				new-submissions="10"
+				resubmitted="5"
+				activity-type="assignment"
+				></d2l-quick-eval-activity-card-new-submissions>
+		</div>
+		<div id="discussion">
+			<d2l-quick-eval-activity-card-new-submissions
+				new-submissions="10"
+				resubmitted="5"
+				activity-type="discussion"
+				></d2l-quick-eval-activity-card-new-submissions>
+		</div>
+		<div id="quiz">
+			<d2l-quick-eval-activity-card-new-submissions
+				new-submissions="10"
+				resubmitted="5"
+				activity-type="quiz"
+				></d2l-quick-eval-activity-card-new-submissions>
+		</div>
+		<div id="rtl">
+			<d2l-quick-eval-activity-card-new-submissions
+				new-submissions="10"
+				resubmitted="5"
+				activity-type="quiz"
+				dir="rtl"
+				></d2l-quick-eval-activity-card-new-submissions>
+		</div>
+	</body>
+</html>

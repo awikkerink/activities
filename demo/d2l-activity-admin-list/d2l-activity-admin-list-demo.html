@@ -11,12 +11,17 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<meta charset="UTF-8">
+		<style>
+			d2l-demo-snippet {
+				max-width: 100%;
+			}
+		</style>
 	</head>
 	<body>
 		<d2l-demo-page page-title="d2l-activity-admin-list">
 			<h2>d2l-activity-admin-list</h2>
-			<d2l-demo-snippet>
-				<d2l-activity-admin-list titleText="Learning Paths" collectionHref="data/collection.json"></d2l-activity-admin-list>
+			<d2l-demo-snippet no-padding>
+				<d2l-activity-admin-list title-text="Learning Paths" href="../data/base/collection.json" token="secret"></d2l-activity-admin-list>
 			</d2l-demo-snippet>
 		</d2l-demo-page>
 	</body>

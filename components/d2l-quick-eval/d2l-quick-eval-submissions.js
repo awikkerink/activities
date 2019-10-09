@@ -104,7 +104,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 					search-action="[[searchAction]]"
 					placeholder="[[localize('search')]]"
 					result-size="[[_numberOfActivitiesToShow]]"
-					aria-label$="[[localize('search')]]"
+					label="[[localize('search')]]"
 					initial-value="[[searchTerm]]">
 				</d2l-hm-search>
 			</div>
