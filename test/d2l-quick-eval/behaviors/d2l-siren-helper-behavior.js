@@ -310,7 +310,7 @@
 					const actual = component._hasNonEmptyQueryParam(testCase.url, queryParam);
 					assert.equal(actual, testCase.expected);
 				});
-			})
+			});
 		});
 	});
 })();
