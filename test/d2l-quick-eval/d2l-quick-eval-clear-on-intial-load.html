@@ -56,7 +56,7 @@
 						test('_initialLoad is false after empty initial load', (done) => {
 							const entity = makeEmptyEntity();
 							const clearSpy = sinon.spy();
-							module.searchApplied = true;
+							module.searchAppliedShortcut = () => module.searchApplied = true;
 							module._clearFilterAndSearch = clearSpy;
 
 							module._loadData(entity)
