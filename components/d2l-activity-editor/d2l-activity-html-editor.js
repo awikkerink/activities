@@ -12,7 +12,8 @@ class ActivityHtmlEditor extends LitElement {
 			value: { type: String },
 			ariaLabel: { type: String },
 			disabled: { type: Boolean },
-			_htmlEditorUniqueId: { type: String }
+			_htmlEditorUniqueId: { type: String },
+			_valueSet: { type: Boolean }
 		};
 	}
 
@@ -118,14 +119,18 @@ class ActivityHtmlEditor extends LitElement {
 	constructor() {
 		super();
 		this._htmlEditorUniqueId = `htmleditor-${getUniqueId()}`;
+		this._valueSet = false;
 	}
 
 	set value(newValue) {
 		const oldValue = this.value;
 
-		const editorContainer = this.shadowRoot.querySelector('d2l-html-editor > .d2l-html-editor-container');
-		if (editorContainer) {
-			editorContainer.innerHTML = newValue;
+		if (!this._valueSet) {
+			const editorContainer = this.shadowRoot.querySelector('d2l-html-editor > .d2l-html-editor-container');
+			if (editorContainer) {
+				this._valueSet = true;
+				editorContainer.innerHTML = newValue;
+			}
 		}
 
 		this.requestUpdate('value', oldValue);
@@ -168,7 +173,6 @@ class ActivityHtmlEditor extends LitElement {
 				<div
 					class="d2l-html-editor-container"
 					id="${this._htmlEditorUniqueId}"
-					value="${this.value}"
 					aria-label="${this.ariaLabel}"
 					?disabled="${this.disabled}"
 					role="textbox"

@@ -1,5 +1,5 @@
 import 'd2l-inputs/d2l-input-text.js';
-import './d2l-activity-html-editor.js';
+import '../d2l-activity-html-editor.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
