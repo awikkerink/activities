@@ -1,5 +1,5 @@
 import 'd2l-inputs/d2l-input-text.js';
-import './d2l-ace-html-editor.js';
+import './d2l-activity-html-editor.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
@@ -17,7 +17,8 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 		return {
 			_name: { type: String },
 			_nameError: { type: String },
-			_instructions: { type: String }
+			_instructions: { type: String },
+			_richtextEditorConfig: { type: Object }
 		};
 	}
 
@@ -56,6 +57,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 		if (assignment) {
 			this._name = assignment.name();
 			this._instructions = assignment.instructionsEditorHtml();
+			this._richtextEditorConfig = assignment.getRichTextEditorConfig();
 		}
 	}
 
@@ -67,7 +69,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 		if (super._entity.canEditName()) {
 			const action = super._entity.getSaveNameAction();
 			const fields = [{ 'name': 'name', 'value': value }];
-			this._performSirenAction(action, fields);
+			this._performSirenAction(action, fields, this.token);
 		}
 	}
 
@@ -75,7 +77,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 		if (super._entity.canEditInstructions()) {
 			const action = super._entity.getSaveInstructionsAction();
 			const fields = [{ name: 'instructions', value: value }];
-			this._performSirenAction(action, fields);
+			this._performSirenAction(action, fields, this.token);
 		}
 	}
 
@@ -142,16 +144,15 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 
 			<div id="assignment-instructions-container">
 				<label class="d2l-label-text" for="assignment-instructions">${this.localize('instructions')}</label>
-				<d2l-ace-html-editor
+				<d2l-activity-html-editor
 					id="assignment-instructions"
-					.href="${this.href}"
-					.token="${this.token}"
 					value="${this._instructions}"
+					.richtextEditorConfig="${this._richtextEditorConfig}"
 					@change="${this._saveOnChange('instructions')}"
 					@input="${this._saveInstructionsOnInput}"
 					aria-label="${this.localize('instructions')}"
 					?disabled="${super._entity && !super._entity.canEditInstructions()}">
-				</d2l-ace-html-editor>
+				</d2l-activity-html-editor>
 			</div>
 		`;
 	}

@@ -1,19 +1,14 @@
 import 'd2l-html-editor/d2l-html-editor.js';
 import 'd2l-html-editor/d2l-html-editor-client.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
-import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
+import { getUniqueId } from '@brightspace-ui/core/helpers/uniqueId';
 import { resolveUrl } from '@polymer/polymer/lib/utils/resolve-url.js';
 
-let htmlEditorId = 0;
-function getNextEditorId() {
-	return ++htmlEditorId;
-}
-
-class AceHtmlEditor extends EntityMixinLit(LitElement) {
+class ActivityHtmlEditor extends LitElement {
 
 	static get properties() {
 		return {
+			richtextEditorConfig: { type: Object },
 			value: { type: String },
 			ariaLabel: { type: String },
 			disabled: { type: Boolean },
@@ -122,8 +117,7 @@ class AceHtmlEditor extends EntityMixinLit(LitElement) {
 
 	constructor() {
 		super();
-		this._setEntityType(AssignmentEntity);
-		this._htmlEditorUniqueId = `htmleditor-${getNextEditorId()}`;
+		this._htmlEditorUniqueId = `htmleditor-${getUniqueId()}`;
 	}
 
 	set value(newValue) {
@@ -137,13 +131,16 @@ class AceHtmlEditor extends EntityMixinLit(LitElement) {
 		this.requestUpdate('value', oldValue);
 	}
 
-	set _entity(entity) {
-		if (this._entityHasChanged(entity)) {
-			const editorConfig = entity.getRichTextEditorConfig() || {};
-			this.shadowRoot.querySelector('d2l-html-editor').d2lPluginSettings = editorConfig.properties || {};
+	set richtextEditorConfig(newValue) {
+		const oldValue = this.richtextEditorConfig;
 
-			super._entity = entity;
+		const editorConfig = newValue || {};
+		const editor = this.shadowRoot.querySelector('d2l-html-editor');
+		if (editor) {
+			editor.d2lPluginSettings = editorConfig.properties || {};
 		}
+
+		this.requestUpdate('richtextEditorConfig', oldValue);
 	}
 
 	_resolveUrl() {
@@ -181,4 +178,4 @@ class AceHtmlEditor extends EntityMixinLit(LitElement) {
 	}
 }
 
-customElements.define('d2l-ace-html-editor', AceHtmlEditor);
+customElements.define('d2l-activity-html-editor', ActivityHtmlEditor);

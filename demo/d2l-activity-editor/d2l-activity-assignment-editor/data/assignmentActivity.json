@@ -106,27 +106,29 @@
 						}
 					]
 				}
-			]
-		},
-		{
-			"class": [
-				"richtext-editor-config"
 			],
-			"rel": [
-				"https://api.brightspace.com/rels/richtext-editor-config"
-			],
-			"properties": {
-				"orgUnit": {
-					"OrgId": "6606",
-					"OrgUnitId": "6613"
-				},
-				"d2l_filter": {
-					"endpoint": "/d2l/lp/htmleditor/converttoabsolute?ou=6613"
-				},
-				"d2l_isf": {
-					"endpoint": "/d2l/common/dialogs/isf/selectItem.d2l?ou=6613&filterMode=Strict"
+			"entities": [
+				{
+					"class": [
+						"richtext-editor-config"
+					],
+					"rel": [
+						"https://api.brightspace.com/rels/richtext-editor-config"
+					],
+					"properties": {
+						"orgUnit": {
+							"OrgId": "6606",
+							"OrgUnitId": "6613"
+						},
+						"d2l_filter": {
+							"endpoint": "/d2l/lp/htmleditor/converttoabsolute?ou=6613"
+						},
+						"d2l_isf": {
+							"endpoint": "/d2l/common/dialogs/isf/selectItem.d2l?ou=6613&filterMode=Strict"
+						}
+					}
 				}
-			}
+			]
 		}
 	],
 	"links": [
