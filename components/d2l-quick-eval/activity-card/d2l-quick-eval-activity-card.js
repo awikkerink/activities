@@ -405,7 +405,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 			return;
 		}
 
-		const confirmMessage = this.localize('publishAllConfirmDialogMessage', 'evaluated', this.evaluated, 'assigned', this.assigned);
+		const confirmMessage = this.localize('publishAllConfirmDialogMessage', 'evaluated', this.evaluated - this.published, 'assigned', this.assigned);
 
 		this.dispatchEvent(
 			new CustomEvent(
