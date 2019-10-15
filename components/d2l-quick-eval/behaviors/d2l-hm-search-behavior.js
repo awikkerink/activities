@@ -92,6 +92,10 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 	_clearErrors: function() {
 		this.searchError = null;
 	},
+
+	searchAppliedShortcut: function() {
+		this.searchApplied = this._hasNonEmptyQueryParam(this.href, 'collectionSearch');
+	}
 };
 
 /** @polymerBehavior */

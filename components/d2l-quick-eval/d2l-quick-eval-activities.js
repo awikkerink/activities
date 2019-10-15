@@ -248,11 +248,16 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		}
 		this._loading = true;
 
+		if (this._initialLoad) {
+			this.filterAppliedShortcut();
+			this.searchAppliedShortcut();
+		}
+
 		if (this._initialLoad &&
 			entity.hasClass('empty') &&
 			(this.searchApplied || this.filterApplied)
 		) {
-			this._clearFilterAndSearch();
+			await this._clearFilterAndSearch();
 			this._initialLoad = false;
 			return;
 		}
