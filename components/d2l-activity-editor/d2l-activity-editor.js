@@ -13,13 +13,13 @@ class ActivityEditor extends LitElement {
 		return css`
 			:host {
 				display: block;
+				padding: 20px;
 			}
 			:host([hidden]) {
 				display: none;
 			}
 			d2l-save-status {
-				padding: 20px;
-				padding-bottom: 0px;
+				padding-bottom: 20px;
 			}
 		`;
 	}
