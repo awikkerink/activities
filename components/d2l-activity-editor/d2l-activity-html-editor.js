@@ -2,7 +2,6 @@ import 'd2l-html-editor/d2l-html-editor.js';
 import 'd2l-html-editor/d2l-html-editor-client.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { getUniqueId } from '@brightspace-ui/core/helpers/uniqueId';
-import { resolveUrl } from '@polymer/polymer/lib/utils/resolve-url.js';
 
 class ActivityHtmlEditor extends LitElement {
 
@@ -149,7 +148,7 @@ class ActivityHtmlEditor extends LitElement {
 	}
 
 	_resolveUrl() {
-		return resolveUrl('../../../');
+		return `${import.meta.url}/../../../`;
 	}
 
 	getContent() {
