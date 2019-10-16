@@ -44,9 +44,6 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LocalizeMixi
 
 	_onAssignmentActivityUsageChange(assignmentActivityUsage) {
 		this._assignmentHref = assignmentActivityUsage.assignmentHref();
-		// assignmentActivityUsage.onAssignmentChange((assignment) => {
-		// 	this._name = assignment.name();
-		// });
 	}
 
 	render() {

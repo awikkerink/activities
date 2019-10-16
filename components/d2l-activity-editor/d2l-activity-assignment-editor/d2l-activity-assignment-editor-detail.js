@@ -1,4 +1,5 @@
 import 'd2l-inputs/d2l-input-text.js';
+import '../d2l-activity-due-date-editor.js';
 import '../d2l-activity-html-editor.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
@@ -18,7 +19,8 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 			_name: { type: String },
 			_nameError: { type: String },
 			_instructions: { type: String },
-			_richtextEditorConfig: { type: Object }
+			_richtextEditorConfig: { type: Object },
+			_activityUsageHref: { type: String }
 		};
 	}
 
@@ -58,6 +60,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 			this._name = assignment.name();
 			this._instructions = assignment.instructionsEditorHtml();
 			this._richtextEditorConfig = assignment.getRichTextEditorConfig();
+			this._activityUsageHref = assignment.activityUsageHref();
 		}
 	}
 
@@ -68,7 +71,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 	_saveName(value) {
 		if (super._entity.canEditName()) {
 			const action = super._entity.getSaveNameAction();
-			const fields = [{ 'name': 'name', 'value': value }];
+			const fields = [{ name: 'name', value: value }];
 			this._performSirenAction(action, fields);
 		}
 	}
@@ -140,6 +143,14 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 					prevent-submit>
 				</d2l-input-text>
 				${this._getNameTooltip()}
+			</div>
+
+			<div id="duedate-container">
+				<label class="d2l-label-text" for="due-date">${this.localize('dueDate')}</label>
+				<d2l-activity-due-date-editor
+					.href="${this._activityUsageHref}"
+					.token="${this.token}">
+				</d2l-activity-due-date-editor>
 			</div>
 
 			<div id="assignment-instructions-container">

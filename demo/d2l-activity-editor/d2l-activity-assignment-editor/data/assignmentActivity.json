@@ -1,240 +1,240 @@
 {
-	"class": [
-		"assignment"
-	],
-	"properties": {
-		"name": "Extra Special Assignment",
-		"instructions": "<p>Assignment instructions 6613</p><p><d2l-richtext-image><img loading=\"lazy\" src=\"http://kl81-rmahler.desire2learn.d2l:44444/components/d2l-activities/demo/d2l-activity-editor/d2l-activity-assignment-editor/data/city_small.jpg?_&amp;d2lSessionVal=g0cqWWI1pZYJFYNYB6DMpaAAS\" alt=\"city\" title=\"city\"/></d2l-richtext-image></p>",
-		"instructionsText": "Assignment instructions 6613",
-		"dueDate": "2019-09-20T03:59:00.000Z",
-		"outOf": 100.000000000,
-		"addToGrades": false,
-		"draft": false,
-		"submissionType": {
-			"title": "File submission",
-			"value": 0
-		},
-		"completionType": {
-			"title": "Automatically on submission",
-			"value": 0
-		}
-	},
-	"entities": [
-		{
-			"class": [
-				"date",
-				"due-date"
-			],
-			"rel": [
-				"https://api.brightspace.com/rels/date"
-			],
-			"properties": {
-				"date": "2019-09-20T03:59:00.000Z"
-			}
-		},
-		{
-			"class": [
-				"submission-metrics"
-			],
-			"rel": [
-				"https://assignments.api.brightspace.com/rels/submission-metrics"
-			],
-			"properties": {
-				"totalUsers": 1,
-				"totalUsersWithSubmissions": 0
-			}
-		},
-		{
-			"class": [
-				"attachments"
-			],
-			"rel": [
-				"https://assignments.api.brightspace.com/rels/attachments"
-			],
-			"actions": [
-				{
-					"type": "multipart/form-data",
-					"title": "Add file",
-					"href": "https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7/attach-file",
-					"name": "add-file",
-					"method": "POST"
-				},
-				{
-					"type": "application/x-www-form-urlencoded",
-					"title": "Attach a link to the assignment folder",
-					"href": "https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7/attach-link",
-					"name": "add-link",
-					"method": "POST",
-					"fields": [
-						{
-							"type": "text",
-							"name": "name"
-						},
-						{
-							"type": "text",
-							"name": "href"
-						}
-					]
-				}
-			]
-		},
-		{
-			"class": [
-				"richtext",
-				"instructions",
-				"annotated"
-			],
-			"rel": [
-				"item",
-				"https://assignments.api.brightspace.com/rels/instructions"
-			],
-			"properties": {
-				"text": "Assignment instructions 6613",
-				"html": "<p>Assignment instructions 6613</p><p><d2l-richtext-image><img loading=\"lazy\" src=\"http://kl81-rmahler.desire2learn.d2l:44444/components/d2l-activities/demo/d2l-activity-editor/d2l-activity-assignment-editor/data/city_small.jpg?_&amp;d2lSessionVal=g0cqWWI1pZYJFYNYB6DMpaAAS\" alt=\"city\" title=\"city\"/></d2l-richtext-image></p>"
-			},
-			"actions": [
-				{
-					"type": "application/x-www-form-urlencoded",
-					"href": "https://8b4b0787-25ca-43d2-89ab-b9495546ad09.assignments.api.proddev.d2l/6613/folders/3",
-					"name": "update-instructions",
-					"method": "PATCH",
-					"fields": [
-						{
-							"type": "text",
-							"name": "instructions",
-							"value": "<p>Assignment instructions {orgUnitId}</p><p><img loading=\"lazy\" src=\"/components/d2l-activities/demo/d2l-activity-editor/d2l-activity-assignment-editor/data/city_small.jpg\" alt=\"city\" title=\"city\"/></p>"
-						}
-					]
-				}
-			],
-			"entities": [
-				{
-					"class": [
-						"richtext-editor-config"
-					],
-					"rel": [
-						"https://api.brightspace.com/rels/richtext-editor-config"
-					],
-					"properties": {
-						"orgUnit": {
-							"OrgId": "6606",
-							"OrgUnitId": "6613"
-						},
-						"d2l_filter": {
-							"endpoint": "/d2l/lp/htmleditor/converttoabsolute?ou=6613"
-						},
-						"d2l_isf": {
-							"endpoint": "/d2l/common/dialogs/isf/selectItem.d2l?ou=6613&filterMode=Strict"
-						}
-					}
-				}
-			]
-		}
-	],
-	"links": [
-		{
-			"rel": [
-				"self"
-			],
-			"href": "https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7"
-		},
-		{
-			"rel": [
-				"service"
-			],
-			"href": "https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065"
-		},
-		{
-			"rel": [
-				"https://activities.api.brightspace.com/rels/internal-activity-id"
-			],
-			"href": "https://ids.brightspace.com/activities/dropbox/F074BF85-DA75-4C60-B5E9-181E7D731372-13"
-		},
-		{
-			"rel": [
-				"https://activities.api.brightspace.com/rels/activity-usage"
-			],
-			"href": "https://f5aa43d7-c082-485c-84f5-4808147fe98a.activities.api.dev.brightspace.com/activities/6606_2000_7/usages/123065"
-		},
-		{
-			"rel": [
-				"https://api.brightspace.com/rels/organization"
-			],
-			"href": "https://f5aa43d7-c082-485c-84f5-4808147fe98a.organizations.api.dev.brightspace.com/123065"
-		},
-		{
-			"rel": [
-				"alternate"
-			],
-			"type": "text/html",
-			"href": "https://alafqa.devlms.brightspace.com/d2l/lms/dropbox/admin/mark/folder_submissions_users.d2l?ou=123065&db=7"
-		}
-	],
-	"actions": [
-		{
-			"class": [
-				"link-attachment"
-			],
-			"type": "application/x-www-form-urlencoded",
-			"title": "Edit an assignment folder with defaults",
-			"href": "https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7",
-			"name": "quick-create-folder",
-			"method": "PUT",
-			"fields": [
-				{
-					"class": [
-						"required"
-					],
-					"type": "text",
-					"title": "Folder name",
-					"name": "name",
-					"value": "A111"
-				},
-				{
-					"type": "text",
-					"title": "Instructions",
-					"name": "instructions",
-					"value": ""
-				},
-				{
-					"type": "date",
-					"title": "Due date",
-					"name": "dueDate",
-					"value": "2019-09-20T03:59:00.000Z"
-				},
-				{
-					"type": "checkbox",
-					"title": "Draft",
-					"name": "draft",
-					"value": false
-				},
-				{
-					"type": "checkbox",
-					"title": "Create a grade item for the folder",
-					"name": "addToGrades",
-					"value": false
-				},
-				{
-					"type": "number",
-					"title": "Specify how many points the assignment is worth",
-					"name": "outOf",
-					"value": 100.000000000
-				}
-			]
-		},
-		{
-			"title": "Delete an assignment folder",
-			"href": "https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7",
-			"name": "delete-folder",
-			"method": "DELETE"
-		},
-		{
-			"href": "https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7",
-			"name": "update-name",
-			"method": "PATCH"
-		}
-	],
-	"rel": [
-		"https://assignments.api.brightspace.com/rels/assignment"
-	]
+  "class": [
+    "assignment"
+  ],
+  "properties": {
+    "name": "Extra Special Assignment",
+    "instructions": "<p>Assignment instructions 6613</p><p><d2l-richtext-image><img loading=\"lazy\" src=\"http://kl81-rmahler.desire2learn.d2l:44444/components/d2l-activities/demo/d2l-activity-editor/d2l-activity-assignment-editor/data/city_small.jpg?_&amp;d2lSessionVal=g0cqWWI1pZYJFYNYB6DMpaAAS\" alt=\"city\" title=\"city\"/></d2l-richtext-image></p>",
+    "instructionsText": "Assignment instructions 6613",
+    "dueDate": "2019-09-20T03:59:00.000Z",
+    "outOf": 100.000000000,
+    "addToGrades": false,
+    "draft": false,
+    "submissionType": {
+      "title": "File submission",
+      "value": 0
+    },
+    "completionType": {
+      "title": "Automatically on submission",
+      "value": 0
+    }
+  },
+  "entities": [
+    {
+      "class": [
+        "date",
+        "due-date"
+      ],
+      "rel": [
+        "https://api.brightspace.com/rels/date"
+      ],
+      "properties": {
+        "date": "2019-09-20T03:59:00.000Z"
+      }
+    },
+    {
+      "class": [
+        "submission-metrics"
+      ],
+      "rel": [
+        "https://assignments.api.brightspace.com/rels/submission-metrics"
+      ],
+      "properties": {
+        "totalUsers": 1,
+        "totalUsersWithSubmissions": 0
+      }
+    },
+    {
+      "class": [
+        "attachments"
+      ],
+      "rel": [
+        "https://assignments.api.brightspace.com/rels/attachments"
+      ],
+      "actions": [
+        {
+          "type": "multipart/form-data",
+          "title": "Add file",
+          "href": "https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7/attach-file",
+          "name": "add-file",
+          "method": "POST"
+        },
+        {
+          "type": "application/x-www-form-urlencoded",
+          "title": "Attach a link to the assignment folder",
+          "href": "https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7/attach-link",
+          "name": "add-link",
+          "method": "POST",
+          "fields": [
+            {
+              "type": "text",
+              "name": "name"
+            },
+            {
+              "type": "text",
+              "name": "href"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class": [
+        "richtext",
+        "instructions",
+        "annotated"
+      ],
+      "rel": [
+        "item",
+        "https://assignments.api.brightspace.com/rels/instructions"
+      ],
+      "properties": {
+        "text": "Assignment instructions 6613",
+        "html": "<p>Assignment instructions 6613</p><p><d2l-richtext-image><img loading=\"lazy\" src=\"http://kl81-rmahler.desire2learn.d2l:44444/components/d2l-activities/demo/d2l-activity-editor/d2l-activity-assignment-editor/data/city_small.jpg?_&amp;d2lSessionVal=g0cqWWI1pZYJFYNYB6DMpaAAS\" alt=\"city\" title=\"city\"/></d2l-richtext-image></p>"
+      },
+      "actions": [
+        {
+          "type": "application/x-www-form-urlencoded",
+          "href": "https://8b4b0787-25ca-43d2-89ab-b9495546ad09.assignments.api.proddev.d2l/6613/folders/3",
+          "name": "update-instructions",
+          "method": "PATCH",
+          "fields": [
+            {
+              "type": "text",
+              "name": "instructions",
+              "value": "<p>Assignment instructions {orgUnitId}</p><p><img loading=\"lazy\" src=\"/components/d2l-activities/demo/d2l-activity-editor/d2l-activity-assignment-editor/data/city_small.jpg\" alt=\"city\" title=\"city\"/></p>"
+            }
+          ]
+        }
+      ],
+      "entities": [
+        {
+          "class": [
+            "richtext-editor-config"
+          ],
+          "rel": [
+            "https://api.brightspace.com/rels/richtext-editor-config"
+          ],
+          "properties": {
+            "orgUnit": {
+              "OrgId": "6606",
+              "OrgUnitId": "6613"
+            },
+            "d2l_filter": {
+              "endpoint": "/d2l/lp/htmleditor/converttoabsolute?ou=6613"
+            },
+            "d2l_isf": {
+              "endpoint": "/d2l/common/dialogs/isf/selectItem.d2l?ou=6613&filterMode=Strict"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "rel": [
+        "self"
+      ],
+      "href": "https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7"
+    },
+    {
+      "rel": [
+        "service"
+      ],
+      "href": "https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065"
+    },
+    {
+      "rel": [
+        "https://activities.api.brightspace.com/rels/internal-activity-id"
+      ],
+      "href": "https://ids.brightspace.com/activities/dropbox/F074BF85-DA75-4C60-B5E9-181E7D731372-13"
+    },
+    {
+      "rel": [
+        "https://activities.api.brightspace.com/rels/activity-usage"
+      ],
+      "href": "./data/assignmentActivityUsage.json"
+    },
+    {
+      "rel": [
+        "https://api.brightspace.com/rels/organization"
+      ],
+      "href": "https://f5aa43d7-c082-485c-84f5-4808147fe98a.organizations.api.dev.brightspace.com/123065"
+    },
+    {
+      "rel": [
+        "alternate"
+      ],
+      "type": "text/html",
+      "href": "https://alafqa.devlms.brightspace.com/d2l/lms/dropbox/admin/mark/folder_submissions_users.d2l?ou=123065&db=7"
+    }
+  ],
+  "actions": [
+    {
+      "class": [
+        "link-attachment"
+      ],
+      "type": "application/x-www-form-urlencoded",
+      "title": "Edit an assignment folder with defaults",
+      "href": "https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7",
+      "name": "quick-create-folder",
+      "method": "PUT",
+      "fields": [
+        {
+          "class": [
+            "required"
+          ],
+          "type": "text",
+          "title": "Folder name",
+          "name": "name",
+          "value": "A111"
+        },
+        {
+          "type": "text",
+          "title": "Instructions",
+          "name": "instructions",
+          "value": ""
+        },
+        {
+          "type": "date",
+          "title": "Due date",
+          "name": "dueDate",
+          "value": "2019-09-20T03:59:00.000Z"
+        },
+        {
+          "type": "checkbox",
+          "title": "Draft",
+          "name": "draft",
+          "value": false
+        },
+        {
+          "type": "checkbox",
+          "title": "Create a grade item for the folder",
+          "name": "addToGrades",
+          "value": false
+        },
+        {
+          "type": "number",
+          "title": "Specify how many points the assignment is worth",
+          "name": "outOf",
+          "value": 100.000000000
+        }
+      ]
+    },
+    {
+      "title": "Delete an assignment folder",
+      "href": "https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7",
+      "name": "delete-folder",
+      "method": "DELETE"
+    },
+    {
+      "href": "https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7",
+      "name": "update-name",
+      "method": "PATCH"
+    }
+  ],
+  "rel": [
+    "https://assignments.api.brightspace.com/rels/assignment"
+  ]
 }
