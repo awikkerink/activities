@@ -69,7 +69,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 		if (super._entity.canEditName()) {
 			const action = super._entity.getSaveNameAction();
 			const fields = [{ 'name': 'name', 'value': value }];
-			this._performSirenAction(action, fields, this.token);
+			this._performSirenAction(action, fields);
 		}
 	}
 
@@ -77,7 +77,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 		if (super._entity.canEditInstructions()) {
 			const action = super._entity.getSaveInstructionsAction();
 			const fields = [{ name: 'instructions', value: value }];
-			this._performSirenAction(action, fields, this.token);
+			this._performSirenAction(action, fields);
 		}
 	}
 
