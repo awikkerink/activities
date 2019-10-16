@@ -1,14 +1,14 @@
 {
   "name": {
     "translation": "Name",
-    "context": "Helpful hints to make the Serge translation better"
+    "context": "Label for the name field when creating/editing an activity"
   },
   "emptyNameError": {
     "translation": "Name is required",
-    "context": "Helpful hints to make the Serge translation better"
+    "context": "Error message to inform user that the activity name is a required field"
   },
   "instructions": {
     "translation": "Instructions",
-    "context": "Helpful hints to make the Serge translation better"
+    "context": "Label for the instruction field when creating/editing an activity"
   }
 }
