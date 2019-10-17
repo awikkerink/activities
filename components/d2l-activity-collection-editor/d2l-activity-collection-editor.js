@@ -2,11 +2,13 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { heading1Styles, heading4Styles, bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
-import '../d2l-activity-usage-list-item/d2l-activity-usage-list-item.js';
 import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/colors/colors.js';
+import '@brightspace-ui/core/components/list/list.js';
+import '@brightspace-ui/core/components/list/list-item.js';
 import '@d2l/switch/d2l-switch.js';
+import 'd2l-organizations/components/d2l-organization-image/d2l-organization-image.js';
 
 class CollectionEditor extends EntityMixinLit(LitElement) {
 
@@ -32,8 +34,12 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 		this._items = [];
 		usage.onActivityCollectionChange((collection => {
 			collection.onItemsChange((item, index) => {
-				this._items[index] = item;
-				this.requestUpdate();
+				item.onActivityUsageChange((usage) => {
+					usage.onOrganizationChange((organization) => {
+						this._items[index] = organization;
+						this.requestUpdate();
+					});
+				});
 			});
 		}));
 	}
@@ -93,6 +99,14 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 	render() {
 		const icon = (this._visible ? 'tier1:visibility-show' : 'tier1:visibility-hide');
 		const term = (this._visible ? 'Visible' : 'Hidden');
+		const items = this._items.map(item =>
+			html`
+			<d2l-list-item>
+				<d2l-organization-image href=${item.self()} slot="illustration"></d2l-organization-image>
+				${item.name()}
+			</d2l-list-item>
+			`
+		);
 
 		return html`
 			<div class="d2l-activity-collection-header">
@@ -111,13 +125,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			<div class="d2l-activity-collection-body">
 				<d2l-button primary>Add Activity</d2l-button>
 				<div class="d2l-activity-collection-activities">
-					<d2l-list>
-	${this._items.map(item =>
-		html`
-			<d2l-activity-usage-list-item href=${item.activityUsageHref()} token=${this.token}></d2l-activity-usage-list-item>
-		`
-	)}
-					</d2l-list>
+					<d2l-list>${items}</d2l-list>
 				</div>
 			</div>
 		`;
