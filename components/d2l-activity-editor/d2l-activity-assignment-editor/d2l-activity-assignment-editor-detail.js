@@ -101,8 +101,8 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 		}
 	}
 
-	_saveInstructionsOnInput(e) {
-		const instructions = e.target.getContent();
+	_saveInstructionsOnChange(e) {
+		const instructions = e.detail.content;
 
 		this._debounceJobs.instructions = Debouncer.debounce(
 			this._debounceJobs.instructions,
@@ -148,8 +148,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 					id="assignment-instructions"
 					value="${this._instructions}"
 					.richtextEditorConfig="${this._richtextEditorConfig}"
-					@change="${this._saveOnChange('instructions')}"
-					@input="${this._saveInstructionsOnInput}"
+					@change="${this._saveInstructionsOnChange}"
 					aria-label="${this.localize('instructions')}"
 					?disabled="${super._entity && !super._entity.canEditInstructions()}">
 				</d2l-activity-html-editor>
