@@ -269,6 +269,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			} else {
 				this._data = [];
 			}
+			this._applyFilterHref();
 			this._updateSearchResultsCount(this._data);
 			this._clearErrors();
 			this._handleLoadSuccess();

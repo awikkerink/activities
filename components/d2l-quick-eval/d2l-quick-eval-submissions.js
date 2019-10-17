@@ -291,6 +291,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				this._data = [];
 				this._pageNextHref = undefined;
 			}
+			this._applyFilterHref();
 			this._updateSearchResultsCount(this._data.length);
 			this._clearAlerts();
 			this.perfMark('submissionsLoadEnd');
