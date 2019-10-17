@@ -4,7 +4,8 @@ import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/button/button.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ActivityUsageCollectionEntity } from 'siren-sdk/src/activities/ActivityUsageCollectionEntity.js';
-import '../d2l-activity-list-item/d2l-activity-list-item.js';
+import '../d2l-activity-usage-list-item/d2l-activity-usage-list-item.js';
+import '@brightspace-ui/core/components/list/list.js';
 
 class AdminList extends EntityMixinLit(LitElement) {
 	constructor() {
@@ -95,12 +96,13 @@ class AdminList extends EntityMixinLit(LitElement) {
 
 			<div class="d2l-activity-admin-list-content-container d2l-activity-admin-list-body-container">
 				<div class="d2l-activity-admin-list-content d2l-activity-admin-list-body">
-	${this._items.map(
-		item =>
-			html`
-				<d2l-activity-list-item href=${item.activityUsageHref()}></d2l-activity-list-item>
-			`
+					<d2l-list>
+	${this._items.map(item =>
+		html`
+			<d2l-activity-usage-list-item href=${item.activityUsageHref()} token=${this.token}></d2l-activity-usage-list-item>
+		`
 	)}
+					</d2l-list>
 				</div>
 			</div>
 		`;

@@ -61,7 +61,7 @@
   },
   "main": "d2l-activities.js",
   "dependencies": {
-    "@brightspace-ui/core": "^1.13.1",
+    "@brightspace-ui/core": "^1.14.0",
     "@d2l/switch": "Brightspace/d2l-switch.git#semver:^3",
     "@polymer/iron-resizable-behavior": "^3.0.0",
     "@polymer/polymer": "^3.0.0",
