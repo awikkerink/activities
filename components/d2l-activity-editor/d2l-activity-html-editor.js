@@ -151,8 +151,15 @@ class ActivityHtmlEditor extends LitElement {
 		return `${import.meta.url}/../../../`;
 	}
 
-	getContent() {
-		return this.shadowRoot.querySelector('d2l-html-editor').getContent();
+	_onContentChange() {
+		const content = this.shadowRoot.querySelector('d2l-html-editor').getContent();
+		this.dispatchEvent(new CustomEvent('d2l-activity-html-editor-change', {
+			bubbles: true,
+			composed: true,
+			detail: {
+				content: content
+			}
+		}));
 	}
 
 	render() {
@@ -161,8 +168,10 @@ class ActivityHtmlEditor extends LitElement {
 				id="assignment-instructions"
 				editor-id="${this._htmlEditorUniqueId}"
 				app-root="${this._resolveUrl()}"
+				@change="${this._onContentChange}"
+				@input="${this._onContentChange}"
 				inline="1"
-				min-rows="1"
+				min-rows="3"
 				max-rows="1000"
 				fullpage-enabled="0"
 				toolbar="bold italic bullist d2l_isf"
