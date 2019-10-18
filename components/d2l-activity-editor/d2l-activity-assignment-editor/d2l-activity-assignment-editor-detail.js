@@ -148,7 +148,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 					id="assignment-instructions"
 					value="${this._instructions}"
 					.richtextEditorConfig="${this._richtextEditorConfig}"
-					@change="${this._saveInstructionsOnChange}"
+					@d2l-activity-html-editor-change="${this._saveInstructionsOnChange}"
 					aria-label="${this.localize('instructions')}"
 					?disabled="${super._entity && !super._entity.canEditInstructions()}">
 				</d2l-activity-html-editor>

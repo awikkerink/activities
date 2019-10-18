@@ -151,11 +151,9 @@ class ActivityHtmlEditor extends LitElement {
 		return `${import.meta.url}/../../../`;
 	}
 
-	_onContentChange(e) {
-		e.stopPropagation();
-
+	_onContentChange() {
 		const content = this.shadowRoot.querySelector('d2l-html-editor').getContent();
-		this.dispatchEvent(new CustomEvent('change', {
+		this.dispatchEvent(new CustomEvent('d2l-activity-html-editor-change', {
 			bubbles: true,
 			composed: true,
 			detail: {
