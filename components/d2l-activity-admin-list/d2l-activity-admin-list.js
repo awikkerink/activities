@@ -1,10 +1,12 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { heading1Styles, bodyStandardStyles } from '@brightspace-ui/core/components/typography/styles.js';
-import '@brightspace-ui/core/components/colors/colors.js';
-import '@brightspace-ui/core/components/button/button.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ActivityUsageCollectionEntity } from 'siren-sdk/src/activities/ActivityUsageCollectionEntity.js';
-import '../d2l-activity-list-item/d2l-activity-list-item.js';
+import '@brightspace-ui/core/components/colors/colors.js';
+import '@brightspace-ui/core/components/button/button.js';
+import '@brightspace-ui/core/components/list/list.js';
+import '@brightspace-ui/core/components/list/list-item.js';
+import 'd2l-organizations/components/d2l-organization-image/d2l-organization-image.js';
 
 class AdminList extends EntityMixinLit(LitElement) {
 	constructor() {
@@ -17,14 +19,19 @@ class AdminList extends EntityMixinLit(LitElement) {
 		if (this._entityHasChanged(entity)) {
 			this._onActivityUsageCollectionChanged(entity);
 			super._entity = entity;
+			this.requestUpdate();
 		}
 	}
 
 	_onActivityUsageCollectionChanged(collection) {
 		this._items = [];
 		collection.onItemsChange((item, index) => {
-			this._items[index] = item;
-			this.requestUpdate();
+			item.onActivityUsageChange((usage) => {
+				usage.onOrganizationChange((organization) => {
+					this._items[index] = organization;
+					this.requestUpdate();
+				});
+			});
 		});
 	}
 
@@ -85,6 +92,14 @@ class AdminList extends EntityMixinLit(LitElement) {
 	}
 
 	render() {
+		const items = this._items.map(item =>
+			html`
+			<d2l-list-item>
+				<d2l-organization-image href=${item.self()} slot="illustration"></d2l-organization-image>
+				${item.name()}
+			</d2l-list-item>
+			`
+		);
 		return html`
 			<div class="d2l-activity-admin-list-content-container d2l-activity-admin-list-header-container">
 				<div class="d2l-activity-admin-list-content d2l-activity-admin-list-header">
@@ -95,12 +110,7 @@ class AdminList extends EntityMixinLit(LitElement) {
 
 			<div class="d2l-activity-admin-list-content-container d2l-activity-admin-list-body-container">
 				<div class="d2l-activity-admin-list-content d2l-activity-admin-list-body">
-	${this._items.map(
-		item =>
-			html`
-				<d2l-activity-list-item href=${item.activityUsageHref()}></d2l-activity-list-item>
-			`
-	)}
+					<d2l-list>${items}</d2l-list>
 				</div>
 			</div>
 		`;
