@@ -93,6 +93,6 @@
     "fastdom": "^1.0.8",
     "merge-stream": "^1.0.1",
     "require-dir": "^1.2.0",
-    "siren-sdk": "BrightspaceHypermediaComponents/siren-sdk#semver:^1.4.2"
+    "siren-sdk": "BrightspaceHypermediaComponents/siren-sdk#semver:^1"
   }
 }
