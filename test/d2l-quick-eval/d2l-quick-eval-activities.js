@@ -144,14 +144,14 @@ suite('d2l-quick-eval-activities', function() {
 		});
 	});
 
-	test('if data is loading or filtering or searching, show the loading skeleton', () => {
+	test('if data is loading or searching, show the loading skeleton (filtersLoading should not affect skeleton)', () => {
 		const skeletonComponent = act.shadowRoot.querySelector('d2l-quick-eval-activities-skeleton');
 		act._loading = true;
 		assert.notEqual(getComputedStyle(skeletonComponent).display, 'none');
 		act._loading = false;
 		assert.equal(getComputedStyle(skeletonComponent).display, 'none');
 		act.filtersLoading = true;
-		assert.notEqual(getComputedStyle(skeletonComponent).display, 'none');
+		assert.equal(getComputedStyle(skeletonComponent).display, 'none');
 		act.filtersLoading = false;
 		assert.equal(getComputedStyle(skeletonComponent).display, 'none');
 		act.searchLoading = true;
