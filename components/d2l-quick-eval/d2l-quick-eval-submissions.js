@@ -237,14 +237,14 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			},
 			_showLoadingSkeleton: {
 				type: Boolean,
-				computed: '_computeShowLoadingSkeleton(_loading, filtersLoading, searchLoading)'
+				computed: '_computeShowLoadingSkeleton(_loading, searchLoading)'
 			},
 			hidden: {
 				type: Boolean
 			},
 			_showSearchSummary: {
 				type: Boolean,
-				computed: '_computeShowSearchSummary(_loading, filtersLoading, searchLoading, searchApplied)'
+				computed: '_computeShowSearchSummary(_loading, searchLoading, searchApplied)'
 			},
 			_initialLoad: {
 				type: Boolean,
@@ -302,6 +302,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		} finally {
 			this._loading = false;
 			this._initialLoad = false;
+			this._applyFilterHref();
 		}
 	}
 
@@ -531,12 +532,12 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		return _loadingMore;
 	}
 
-	_computeShowLoadingSkeleton(_loading, filtersLoading, searchLoading) {
-		return _loading || filtersLoading || searchLoading;
+	_computeShowLoadingSkeleton(_loading, searchLoading) {
+		return _loading || searchLoading;
 	}
 
-	_computeShowSearchSummary(_loading, filtersLoading, searchLoading, searchApplied) {
-		return !_loading && !filtersLoading && !searchLoading && searchApplied;
+	_computeShowSearchSummary(_loading, searchLoading, searchApplied) {
+		return !_loading && !searchLoading && searchApplied;
 	}
 
 	ready() {
