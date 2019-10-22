@@ -28,7 +28,7 @@ class AdminList extends EntityMixinLit(LitElement) {
 		collection.onItemsChange((item, index) => {
 			item.onActivityUsageChange((usage) => {
 				usage.onOrganizationChange((organization) => {
-					this._items[index] = organization;
+					this._items[index] = {usage, organization};
 					this.requestUpdate();
 				});
 			});
@@ -92,14 +92,17 @@ class AdminList extends EntityMixinLit(LitElement) {
 	}
 
 	render() {
-		const items = this._items.map(item =>
-			html`
-			<d2l-list-item>
-				<d2l-organization-image href=${item.self()} slot="illustration"></d2l-organization-image>
-				${item.name()}
-			</d2l-list-item>
-			`
-		);
+		const items = this._items.map(item => {
+			const listItem = html`
+				<d2l-list-item>
+					<d2l-organization-image href=${item.organization.self()} slot="illustration"></d2l-organization-image>
+					${item.organization.name()}
+				</d2l-list-item>
+			`;
+			return item.usage.editHref() ?
+				html`<a href=${item.usage.editHref()}>${listItem}</a>` :
+				html`${listItem}`;
+		});
 		return html`
 			<div class="d2l-activity-admin-list-content-container d2l-activity-admin-list-header-container">
 				<div class="d2l-activity-admin-list-content d2l-activity-admin-list-header">
