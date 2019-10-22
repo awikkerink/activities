@@ -80,6 +80,10 @@ class D2LQuickEval extends
 				type: Boolean,
 				value: false
 			},
+			dismissEnabled: {
+				type: Boolean,
+				value: false
+			},
 			loggingEndpoint: {
 				type: String
 			},
