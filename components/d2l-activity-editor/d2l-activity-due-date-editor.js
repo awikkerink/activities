@@ -2,13 +2,14 @@ import 'd2l-datetime-picker/d2l-datetime-picker';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
-import { PendingContainerMixin } from 'siren-sdk/src/mixin/pending-container-mixin';
 import { SirenFetchMixinLit } from 'siren-sdk/src/mixin/siren-fetch-mixin-lit';
 
-class ActivityDueDateEditor extends PendingContainerMixin(SirenFetchMixinLit(EntityMixinLit(LitElement))) {
+class ActivityDueDateEditor extends SirenFetchMixinLit(EntityMixinLit(LitElement)) {
 
 	static get properties() {
 		return {
+			dateLabel: { type: String },
+			timeLabel: { type: String },
 			_date: { type: String },
 			_overrides: { type: Object }
 		};
@@ -73,6 +74,8 @@ class ActivityDueDateEditor extends PendingContainerMixin(SirenFetchMixinLit(Ent
 					hide-label
 					name="date"
 					id="date"
+					date-label="${this.dateLabel}"
+					time-label="${this.timeLabel}"
 					datetime="${this._date}"
 					overrides="${this._overrides}"
 					@d2l-datetime-picker-datetime-changed="${this._onDatetimePickerDatetimeChanged}"

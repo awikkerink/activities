@@ -146,21 +146,22 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 			</div>
 
 			<div id="duedate-container">
-				<label class="d2l-label-text" for="due-date">${this.localize('dueDate')}</label>
+				<label class="d2l-label-text">${this.localize('dueDate')}</label>
 				<d2l-activity-due-date-editor
+					dateLabel="${this.localize('dueDate')}"
+					timeLabel="${this.localize('dueTime')}"
 					.href="${this._activityUsageHref}"
 					.token="${this.token}">
 				</d2l-activity-due-date-editor>
 			</div>
 
 			<div id="assignment-instructions-container">
-				<label class="d2l-label-text" for="assignment-instructions">${this.localize('instructions')}</label>
+				<label class="d2l-label-text">${this.localize('instructions')}</label>
 				<d2l-activity-html-editor
-					id="assignment-instructions"
 					value="${this._instructions}"
 					.richtextEditorConfig="${this._richtextEditorConfig}"
 					@d2l-activity-html-editor-change="${this._saveInstructionsOnChange}"
-					aria-label="${this.localize('instructions')}"
+					ariaLabel="${this.localize('instructions')}"
 					?disabled="${super._entity && !super._entity.canEditInstructions()}">
 				</d2l-activity-html-editor>
 			</div>
