@@ -2,6 +2,7 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { heading1Styles, bodyStandardStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ActivityUsageCollectionEntity } from 'siren-sdk/src/activities/ActivityUsageCollectionEntity.js';
+import {ifDefined} from 'lit-html/directives/if-defined';
 import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/list/list.js';
@@ -28,7 +29,7 @@ class AdminList extends EntityMixinLit(LitElement) {
 		collection.onItemsChange((item, index) => {
 			item.onActivityUsageChange((usage) => {
 				usage.onOrganizationChange((organization) => {
-					this._items[index] = organization;
+					this._items[index] = {usage, organization};
 					this.requestUpdate();
 				});
 			});
@@ -94,9 +95,11 @@ class AdminList extends EntityMixinLit(LitElement) {
 	render() {
 		const items = this._items.map(item =>
 			html`
-			<d2l-list-item>
-				<d2l-organization-image href=${item.self()} slot="illustration"></d2l-organization-image>
-				${item.name()}
+			<d2l-list-item href=${ifDefined(item.usage.editHref())}>
+				<d2l-organization-image href=${item.organization.self()} slot="illustration"></d2l-organization-image>
+				<d2l-list-item-content>
+					<div>${item.organization.name()}</div>
+				</d2l-list-item-content>
 			</d2l-list-item>
 			`
 		);
