@@ -103,7 +103,9 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			html`
 			<d2l-list-item>
 				<d2l-organization-image href=${item.self()} slot="illustration"></d2l-organization-image>
-				${item.name()}
+				<d2l-list-item-content>
+					${item.name()}
+				<d2l-list-item-content>
 			</d2l-list-item>
 			`
 		);
