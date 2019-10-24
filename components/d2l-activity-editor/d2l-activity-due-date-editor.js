@@ -30,7 +30,7 @@ class ActivityDueDateEditor extends SirenFetchMixinLit(EntityMixinLit(LitElement
 		super();
 		this._setEntityType(ActivityUsageEntity);
 		this._date = '';
-		this._overrides = document.documentElement.intlOverrides || '{}';
+		this._overrides = document.documentElement.dataset.intlOverrides || '{}';
 	}
 
 	set _entity(entity) {
