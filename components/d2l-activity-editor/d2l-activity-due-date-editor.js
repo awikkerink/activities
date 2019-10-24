@@ -2,9 +2,9 @@ import 'd2l-datetime-picker/d2l-datetime-picker';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
-import { SirenFetchMixinLit } from 'siren-sdk/src/mixin/siren-fetch-mixin-lit';
+import { SaveStatusMixin } from './save-status-mixin';
 
-class ActivityDueDateEditor extends SirenFetchMixinLit(EntityMixinLit(LitElement)) {
+class ActivityDueDateEditor extends SaveStatusMixin(EntityMixinLit(LitElement)) {
 
 	static get properties() {
 		return {
@@ -46,7 +46,7 @@ class ActivityDueDateEditor extends SirenFetchMixinLit(EntityMixinLit(LitElement
 	}
 
 	_onDatetimePickerDatetimeCleared() {
-		this._updateDueDate('');
+		this.save(super._entity.setDueDate(''));
 	}
 
 	_onDatetimePickerDatetimeChanged(e) {
@@ -54,17 +54,7 @@ class ActivityDueDateEditor extends SirenFetchMixinLit(EntityMixinLit(LitElement
 			return;
 		}
 
-		this._updateDueDate(e.detail.toISOString());
-	}
-
-	_updateDueDate(dateString) {
-		if (!super._entity.canEditDueDate()) {
-			return;
-		}
-
-		const action = super._entity.saveDueDateAction();
-		const fields = [{ name: 'dueDate', value: dateString }];
-		this._performSirenAction(action, fields);
+		this.save(super._entity.setDueDate(e.detail.toISOString()));
 	}
 
 	render() {
