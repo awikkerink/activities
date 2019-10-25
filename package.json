@@ -6,6 +6,7 @@
   },
   "name": "d2l-activities",
   "scripts": {
+		"add-lang-term": "node components/d2l-quick-eval/lang/insert-lang-term.js",
     "build": "gulp build",
     "lint": "npm run lint:wc && npm run lint:js",
     "lint:js": "eslint . --ext .js,.html test/**/*.js test/**/*.html demo/**/*.html",
