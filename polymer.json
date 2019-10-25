@@ -3,7 +3,8 @@
   "lint": {
     "rules": ["polymer-3"],
     "ignoreWarnings": [
-      "not-loadable"
+      "not-loadable",
+      "could-not-resolve-reference"
     ]
   }
 }
