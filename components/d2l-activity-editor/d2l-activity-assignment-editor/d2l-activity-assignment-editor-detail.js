@@ -10,6 +10,7 @@ import { getLocalizeResources } from '../localization.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { SaveStatusMixin } from '../save-status-mixin.js';
+import { selectStyles } from '../select-styles.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
 const baseUrl = import.meta.url;
@@ -20,14 +21,17 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		return {
 			_name: { type: String },
 			_nameError: { type: String },
+			_canEditName: { type: Boolean },
 			_instructions: { type: String },
 			_richtextEditorConfig: { type: Object },
-			_activityUsageHref: { type: String }
+			_canEditInstructions: { type: Boolean },
+			_activityUsageHref: { type: String },
+			_submissionTypes: { type: Array }
 		};
 	}
 
 	static get styles() {
-		return [labelStyles, css`
+		return [labelStyles, selectStyles, css`
 			:host {
 				display: block;
 			}
@@ -48,6 +52,8 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		super();
 		this._setEntityType(AssignmentEntity);
 		this._debounceJobs = {};
+
+		this._submissionTypes = [];
 	}
 
 	set _entity(entity) {
@@ -58,12 +64,17 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 	}
 
 	_onAssignmentChange(assignment) {
-		if (assignment) {
-			this._name = assignment.name();
-			this._instructions = assignment.instructionsEditorHtml();
-			this._richtextEditorConfig = assignment.getRichTextEditorConfig();
-			this._activityUsageHref = assignment.activityUsageHref();
+		if (!assignment) {
+			return;
 		}
+
+		this._name = assignment.name();
+		this._canEditName = assignment.canEditName();
+		this._instructions = assignment.instructionsEditorHtml();
+		this._richtextEditorConfig = assignment.getRichTextEditorConfig();
+		this._canEditInstructions = assignment.canEditInstructions();
+		this._activityUsageHref = assignment.activityUsageHref();
+		this._submissionTypes = assignment.submissionTypeOptions();
 	}
 
 	_saveOnChange(jobName) {
@@ -76,6 +87,10 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 
 	_saveInstructions(value) {
 		this.wrapSaveAction(super._entity.setInstructions(value));
+	}
+
+	_saveSubmissionType(value) {
+		this.wrapSaveAction(super._entity.setSubmissionType(value, 1));
 	}
 
 	_saveNameOnInput(e) {
@@ -108,6 +123,16 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		);
 	}
 
+	_saveSubmissionTypeOnChange() {
+		const submissionType = this.shadowRoot.querySelector('select').value;
+
+		this._debounceJobs.submissionType = Debouncer.debounce(
+			this._debounceJobs.submissionType,
+			timeOut.after(500),
+			() => this._saveSubmissionType(submissionType)
+		);
+	}
+
 	_getNameTooltip() {
 		if (this._nameError) {
 			return html`
@@ -122,6 +147,12 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		}
 	}
 
+	_getSubmissionTypeOptions() {
+		return html`
+			${this._submissionTypes.map(option => html`<option value=${option.value} ?selected=${option.selected}>${option.title}</option>`)}
+		`;
+	}
+
 	render() {
 		return html`
 			<div id="assignment-name-container">
@@ -132,7 +163,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 					@change="${this._saveOnChange('name')}"
 					@input="${this._saveNameOnInput}"
 					aria-label="${this.localize('name')}"
-					?disabled="${super._entity && !super._entity.canEditName()}"
+					?disabled="${!this._canEditName}"
 					aria-invalid="${this._nameError ? 'true' : ''}"
 					prevent-submit>
 				</d2l-input-text>
@@ -154,8 +185,15 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 					.richtextEditorConfig="${this._richtextEditorConfig}"
 					@d2l-activity-html-editor-change="${this._saveInstructionsOnChange}"
 					ariaLabel="${this.localize('instructions')}"
-					?disabled="${super._entity && !super._entity.canEditInstructions()}">
+					?disabled="${!this._canEditInstructions}">
 				</d2l-activity-html-editor>
+			</div>
+
+			<div id="assignment-submission-type-container">
+				<label class="d2l-label-text">${this.localize('submissionType')}</label>
+				<select @change="${this._saveSubmissionTypeOnChange}">
+					${this._getSubmissionTypeOptions()}
+				</select>
 			</div>
 		`;
 	}
