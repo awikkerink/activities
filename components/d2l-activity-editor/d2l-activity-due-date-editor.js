@@ -46,7 +46,7 @@ class ActivityDueDateEditor extends SaveStatusMixin(EntityMixinLit(LitElement)) 
 	}
 
 	_onDatetimePickerDatetimeCleared() {
-		this.save(super._entity.setDueDate(''));
+		this.wrapSaveAction(super._entity.setDueDate(''));
 	}
 
 	_onDatetimePickerDatetimeChanged(e) {
@@ -54,7 +54,7 @@ class ActivityDueDateEditor extends SaveStatusMixin(EntityMixinLit(LitElement)) 
 			return;
 		}
 
-		this.save(super._entity.setDueDate(e.detail.toISOString()));
+		this.wrapSaveAction(super._entity.setDueDate(e.detail.toISOString()));
 	}
 
 	render() {

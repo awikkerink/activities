@@ -69,11 +69,11 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 	}
 
 	_saveName(value) {
-		this.save(super._entity.setName(value));
+		this.wrapSaveAction(super._entity.setName(value));
 	}
 
 	_saveInstructions(value) {
-		this.save(super._entity.setInstructions(value));
+		this.wrapSaveAction(super._entity.setInstructions(value));
 	}
 
 	_saveNameOnInput(e) {
