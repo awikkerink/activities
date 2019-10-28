@@ -2,9 +2,8 @@ import { resolveUrl } from '@polymer/polymer/lib/utils/resolve-url.js';
 
 const SUPPORTED_LANGUAGES = ['en', 'fr'];
 const cache = {};
-const baseUrl = import.meta.url;
 
-export async function getLocalizeResources(langs) {
+export async function getLocalizeResources(langs, baseUrl) {
 	const supportedLanguages = langs.reverse().filter(language => {
 		return SUPPORTED_LANGUAGES.indexOf(language) > -1;
 	});

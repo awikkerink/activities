@@ -2,14 +2,16 @@ import 'd2l-datetime-picker/d2l-datetime-picker';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
+import { getLocalizeResources } from './localization';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { SaveStatusMixin } from './save-status-mixin';
 
-class ActivityDueDateEditor extends SaveStatusMixin(EntityMixinLit(LitElement)) {
+const baseUrl = import.meta.url;
+
+class ActivityDueDateEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
 
 	static get properties() {
 		return {
-			dateLabel: { type: String },
-			timeLabel: { type: String },
 			_date: { type: String },
 			_overrides: { type: Object }
 		};
@@ -26,11 +28,15 @@ class ActivityDueDateEditor extends SaveStatusMixin(EntityMixinLit(LitElement)) 
 		`;
 	}
 
+	static async getLocalizeResources(langs) {
+		return getLocalizeResources(langs, baseUrl);
+	}
+
 	constructor() {
 		super();
 		this._setEntityType(ActivityUsageEntity);
 		this._date = '';
-		this._overrides = document.documentElement.intlOverrides || '{}';
+		this._overrides = document.documentElement.dataset.intlOverrides || '{}';
 	}
 
 	set _entity(entity) {
@@ -64,8 +70,8 @@ class ActivityDueDateEditor extends SaveStatusMixin(EntityMixinLit(LitElement)) 
 					hide-label
 					name="date"
 					id="date"
-					date-label="${this.dateLabel}"
-					time-label="${this.timeLabel}"
+					date-label="${this.localize('dueDate')}"
+					time-label="${this.localize('dueTime')}"
 					datetime="${this._date}"
 					overrides="${this._overrides}"
 					@d2l-datetime-picker-datetime-changed="${this._onDatetimePickerDatetimeChanged}"
