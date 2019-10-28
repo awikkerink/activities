@@ -9,12 +9,12 @@ import { ErrorHandlingMixin } from '../error-handling-mixin.js';
 import { getLocalizeResources } from '../localization.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
-import { SirenFetchMixinLit } from 'siren-sdk/src/mixin/siren-fetch-mixin-lit.js';
+import { SaveStatusMixin } from '../save-status-mixin.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
 const baseUrl = import.meta.url;
 
-class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(EntityMixinLit(LocalizeMixin(LitElement)))) {
+class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMixinLit(LocalizeMixin(LitElement)))) {
 
 	static get properties() {
 		return {
@@ -71,19 +71,11 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 	}
 
 	_saveName(value) {
-		if (super._entity.canEditName()) {
-			const action = super._entity.getSaveNameAction();
-			const fields = [{ name: 'name', value: value }];
-			this._performSirenAction(action, fields);
-		}
+		this.wrapSaveAction(super._entity.setName(value));
 	}
 
 	_saveInstructions(value) {
-		if (super._entity.canEditInstructions()) {
-			const action = super._entity.getSaveInstructionsAction();
-			const fields = [{ name: 'instructions', value: value }];
-			this._performSirenAction(action, fields);
-		}
+		this.wrapSaveAction(super._entity.setInstructions(value));
 	}
 
 	_saveNameOnInput(e) {

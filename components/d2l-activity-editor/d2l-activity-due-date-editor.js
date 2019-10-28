@@ -4,11 +4,11 @@ import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntit
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { getLocalizeResources } from './localization';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
-import { SirenFetchMixinLit } from 'siren-sdk/src/mixin/siren-fetch-mixin-lit';
+import { SaveStatusMixin } from './save-status-mixin';
 
 const baseUrl = import.meta.url;
 
-class ActivityDueDateEditor extends SirenFetchMixinLit(EntityMixinLit(LocalizeMixin(LitElement))) {
+class ActivityDueDateEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
 
 	static get properties() {
 		return {
@@ -52,7 +52,7 @@ class ActivityDueDateEditor extends SirenFetchMixinLit(EntityMixinLit(LocalizeMi
 	}
 
 	_onDatetimePickerDatetimeCleared() {
-		this._updateDueDate('');
+		this.wrapSaveAction(super._entity.setDueDate(''));
 	}
 
 	_onDatetimePickerDatetimeChanged(e) {
@@ -60,17 +60,7 @@ class ActivityDueDateEditor extends SirenFetchMixinLit(EntityMixinLit(LocalizeMi
 			return;
 		}
 
-		this._updateDueDate(e.detail.toISOString());
-	}
-
-	_updateDueDate(dateString) {
-		if (!super._entity.canEditDueDate()) {
-			return;
-		}
-
-		const action = super._entity.saveDueDateAction();
-		const fields = [{ name: 'dueDate', value: dateString }];
-		this._performSirenAction(action, fields);
+		this.wrapSaveAction(super._entity.setDueDate(e.detail.toISOString()));
 	}
 
 	render() {
