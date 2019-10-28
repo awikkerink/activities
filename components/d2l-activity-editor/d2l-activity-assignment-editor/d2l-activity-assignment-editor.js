@@ -3,9 +3,11 @@ import './d2l-activity-assignment-editor-detail.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentActivityUsageEntity } from 'siren-sdk/src/activities/assignments/AssignmentActivityUsageEntity.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
-import { getLocalizeResources } from './localization.js';
+import { getLocalizeResources } from '../localization.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { PendingContainerMixin } from 'siren-sdk/src/mixin/pending-container-mixin.js';
+
+const baseUrl = import.meta.url;
 
 class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
 
@@ -27,7 +29,7 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LocalizeMixi
 	}
 
 	static async getLocalizeResources(langs) {
-		return getLocalizeResources(langs);
+		return getLocalizeResources(langs, baseUrl);
 	}
 
 	constructor() {

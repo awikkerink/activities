@@ -2,14 +2,16 @@ import 'd2l-datetime-picker/d2l-datetime-picker';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
+import { getLocalizeResources } from './localization';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { SirenFetchMixinLit } from 'siren-sdk/src/mixin/siren-fetch-mixin-lit';
 
-class ActivityDueDateEditor extends SirenFetchMixinLit(EntityMixinLit(LitElement)) {
+const baseUrl = import.meta.url;
+
+class ActivityDueDateEditor extends SirenFetchMixinLit(EntityMixinLit(LocalizeMixin(LitElement))) {
 
 	static get properties() {
 		return {
-			dateLabel: { type: String },
-			timeLabel: { type: String },
 			_date: { type: String },
 			_overrides: { type: Object }
 		};
@@ -24,6 +26,10 @@ class ActivityDueDateEditor extends SirenFetchMixinLit(EntityMixinLit(LitElement
 				display: none;
 			}
 		`;
+	}
+
+	static async getLocalizeResources(langs) {
+		return getLocalizeResources(langs, baseUrl);
 	}
 
 	constructor() {
@@ -74,8 +80,8 @@ class ActivityDueDateEditor extends SirenFetchMixinLit(EntityMixinLit(LitElement
 					hide-label
 					name="date"
 					id="date"
-					date-label="${this.dateLabel}"
-					time-label="${this.timeLabel}"
+					date-label="${this.localize('dueDate')}"
+					time-label="${this.localize('dueTime')}"
 					datetime="${this._date}"
 					overrides="${this._overrides}"
 					@d2l-datetime-picker-datetime-changed="${this._onDatetimePickerDatetimeChanged}"

@@ -6,11 +6,13 @@ import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/Assignmen
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ErrorHandlingMixin } from '../error-handling-mixin.js';
-import { getLocalizeResources } from './localization.js';
+import { getLocalizeResources } from '../localization.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { SirenFetchMixinLit } from 'siren-sdk/src/mixin/siren-fetch-mixin-lit.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
+
+const baseUrl = import.meta.url;
 
 class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(EntityMixinLit(LocalizeMixin(LitElement)))) {
 
@@ -39,7 +41,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 	}
 
 	static async getLocalizeResources(langs) {
-		return getLocalizeResources(langs);
+		return getLocalizeResources(langs, baseUrl);
 	}
 
 	constructor() {
@@ -148,8 +150,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 			<div id="duedate-container">
 				<label class="d2l-label-text">${this.localize('dueDate')}</label>
 				<d2l-activity-due-date-editor
-					dateLabel="${this.localize('dueDate')}"
-					timeLabel="${this.localize('dueTime')}"
 					.href="${this._activityUsageHref}"
 					.token="${this.token}">
 				</d2l-activity-due-date-editor>
