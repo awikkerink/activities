@@ -26,7 +26,8 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 			_richtextEditorConfig: { type: Object },
 			_canEditInstructions: { type: Boolean },
 			_activityUsageHref: { type: String },
-			_submissionTypes: { type: Array }
+			_submissionTypes: { type: Array },
+			_canEditSubmissionType: { type: Boolean }
 		};
 	}
 
@@ -40,6 +41,11 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 			}
 			:host > div {
 				padding-bottom: 20px;
+			}
+
+			select {
+				width: 250px;
+				display: block;
 			}
 		`];
 	}
@@ -75,6 +81,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		this._canEditInstructions = assignment.canEditInstructions();
 		this._activityUsageHref = assignment.activityUsageHref();
 		this._submissionTypes = assignment.submissionTypeOptions();
+		this._canEditSubmissionType = assignment.canEditSubmissionType();
 	}
 
 	_saveOnChange(jobName) {
@@ -190,8 +197,12 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 			</div>
 
 			<div id="assignment-submission-type-container">
-				<label class="d2l-label-text">${this.localize('submissionType')}</label>
-				<select @change="${this._saveSubmissionTypeOnChange}">
+				<label class="d2l-label-text" for="assignment-submission-type">${this.localize('submissionType')}</label>
+				<select
+					id="assignment-submission-type"
+					@change="${this._saveSubmissionTypeOnChange}"
+					?disabled="${!this._canEditSubmissionType}">
+
 					${this._getSubmissionTypeOptions()}
 				</select>
 			</div>
