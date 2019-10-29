@@ -11,12 +11,12 @@
     "addToGrades": false,
     "draft": false,
     "submissionType": {
-      "title": "File submission",
-      "value": 0
+      "title": "On paper submission",
+      "value": 2
     },
     "completionType": {
-      "title": "Automatically on submission",
-      "value": 0
+      "title": "Automatically on due date",
+      "value": 1
     }
   },
   "entities": [
@@ -232,6 +232,52 @@
       "href": "https://f5aa43d7-c082-485c-84f5-4808147fe98a.assignments.api.dev.brightspace.com/123065/folders/7",
       "name": "update-name",
       "method": "PATCH"
+    },
+    {
+      "href": "https://8b4b0787-25ca-43d2-89ab-b9495546ad09.assignments.api.proddev.d2l/6613/folders/3",
+      "name": "update-submission-type",
+      "method": "PATCH",
+      "fields": [
+        {
+          "type": "radio",
+          "title": "Submission Type",
+          "name": "submissionType",
+          "value": [
+            {
+              "title": "File submission",
+              "value": 0,
+              "completionTypes": null,
+              "selected": false
+            },
+            {
+              "title": "Text submission",
+              "value": 1,
+              "completionTypes": null,
+              "selected": false
+            },
+            {
+              "title": "On paper submission",
+              "value": 2,
+              "completionTypes": [
+                1,
+                2,
+                3
+              ],
+              "selected": true
+            },
+            {
+              "title": "Observed in person",
+              "value": 3,
+              "completionTypes": [
+                1,
+                2,
+                3
+              ],
+              "selected": false
+            }
+          ]
+        }
+      ]
     }
   ],
   "rel": [
