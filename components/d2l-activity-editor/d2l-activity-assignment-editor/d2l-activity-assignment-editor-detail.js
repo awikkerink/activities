@@ -27,7 +27,10 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 			_canEditInstructions: { type: Boolean },
 			_activityUsageHref: { type: String },
 			_submissionTypes: { type: Array },
-			_canEditSubmissionType: { type: Boolean }
+			_canEditSubmissionType: { type: Boolean },
+			_completionTypes: { type: Array },
+			_canEditCompletionType: { type: Boolean },
+			_showCompletionType: { type: Boolean }
 		};
 	}
 
@@ -44,7 +47,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 			}
 
 			select {
-				width: 250px;
+				width: 300px;
 				display: block;
 			}
 		`];
@@ -60,6 +63,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		this._debounceJobs = {};
 
 		this._submissionTypes = [];
+		this._completionTypes = [];
 	}
 
 	set _entity(entity) {
@@ -82,6 +86,9 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		this._activityUsageHref = assignment.activityUsageHref();
 		this._submissionTypes = assignment.submissionTypeOptions();
 		this._canEditSubmissionType = assignment.canEditSubmissionType();
+		this._completionTypes = assignment.completionTypeOptions();
+		this._canEditCompletionType = assignment.canEditCompletionType();
+		this._showCompletionType = assignment.submissionType().value === 2 || assignment.submissionType().value === 3;
 	}
 
 	_saveOnChange(jobName) {
@@ -94,10 +101,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 
 	_saveInstructions(value) {
 		this.wrapSaveAction(super._entity.setInstructions(value));
-	}
-
-	_saveSubmissionType(value) {
-		this.wrapSaveAction(super._entity.setSubmissionType(value, 1));
 	}
 
 	_saveNameOnInput(e) {
@@ -131,13 +134,14 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 	}
 
 	_saveSubmissionTypeOnChange() {
-		const submissionType = this.shadowRoot.querySelector('select').value;
+		const submissionType = this.shadowRoot.querySelector('select#assignment-submission-type').value;
+		this._showCompletionType = submissionType === 2 || submissionType === 3;
+		this.wrapSaveAction(super._entity.setSubmissionType(submissionType));
+	}
 
-		this._debounceJobs.submissionType = Debouncer.debounce(
-			this._debounceJobs.submissionType,
-			timeOut.after(500),
-			() => this._saveSubmissionType(submissionType)
-		);
+	_saveCompletionTypeOnChange() {
+		const completionType = this.shadowRoot.querySelector('select#assignment-completion-type').value;
+		this.wrapSaveAction(super._entity.setCompletionType(completionType));
 	}
 
 	_getNameTooltip() {
@@ -157,6 +161,12 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 	_getSubmissionTypeOptions() {
 		return html`
 			${this._submissionTypes.map(option => html`<option value=${option.value} ?selected=${option.selected}>${option.title}</option>`)}
+		`;
+	}
+
+	_getCompletionTypeOptions() {
+		return html`
+			${this._completionTypes.map(option => html`<option value=${option.value} ?selected=${option.selected}>${option.title}</option>`)}
 		`;
 	}
 
@@ -204,6 +214,17 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 					?disabled="${!this._canEditSubmissionType}">
 
 					${this._getSubmissionTypeOptions()}
+				</select>
+			</div>
+
+			<div id="assignment-completion-type-container" ?hidden="${!this._showCompletionType}">
+				<label class="d2l-label-text" for="assignment-completion-type">${this.localize('completionType')}</label>
+				<select
+					id="assignment-completion-type"
+					@change="${this._saveCompletionTypeOnChange}"
+					?disabled="${!this._canEditCompletionType}">
+
+					${this._getCompletionTypeOptions()}
 				</select>
 			</div>
 		`;
