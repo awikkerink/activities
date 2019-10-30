@@ -88,7 +88,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		this._canEditSubmissionType = assignment.canEditSubmissionType();
 		this._completionTypes = assignment.completionTypeOptions();
 		this._canEditCompletionType = assignment.canEditCompletionType();
-		this._showCompletionType = assignment.submissionType().value === 2 || assignment.submissionType().value === 3;
 	}
 
 	_saveOnChange(jobName) {
@@ -135,7 +134,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 
 	_saveSubmissionTypeOnChange() {
 		const submissionType = this.shadowRoot.querySelector('select#assignment-submission-type').value;
-		this._showCompletionType = submissionType === 2 || submissionType === 3;
 		this.wrapSaveAction(super._entity.setSubmissionType(submissionType));
 	}
 
@@ -217,7 +215,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				</select>
 			</div>
 
-			<div id="assignment-completion-type-container" ?hidden="${!this._showCompletionType}">
+			<div id="assignment-completion-type-container" ?hidden="${!this._completionTypes.length > 0}">
 				<label class="d2l-label-text" for="assignment-completion-type">${this.localize('completionType')}</label>
 				<select
 					id="assignment-completion-type"
