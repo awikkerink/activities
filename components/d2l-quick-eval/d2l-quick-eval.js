@@ -70,7 +70,7 @@ class D2LQuickEval extends
 					<h1 class="d2l-quick-eval-header" hidden$="[[activitiesViewEnabled]]">[[headerText]]</h1>
 				</template>
 				<div class="spacer"></div>
-				<d2l-quick-eval-ellipsis-menu></d2l-quick-eval-ellipsis-menu>
+				<d2l-quick-eval-ellipsis-menu hidden$="[[!dismissEnabled]]"></d2l-quick-eval-ellipsis-menu>
 			</div>
 			<d2l-quick-eval-view-toggle current-selected="[[toggleState]]" toggle-href="[[toggleHref]]" hidden$="[[!activitiesViewEnabled]]" on-d2l-quick-eval-view-toggle-changed="_toggleView"></d2l-quick-eval-view-toggle>
 			<d2l-quick-eval-submissions href="[[_lazySubmissionsHref]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" data-telemetry-endpoint="[[dataTelemetryEndpoint]]" hidden$="[[_displayActivities(toggleState, activitiesViewEnabled)]]" master-teacher="[[masterTeacher]]"></d2l-quick-eval-submissions>
