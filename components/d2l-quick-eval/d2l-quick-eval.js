@@ -6,6 +6,7 @@ import './d2l-quick-eval-view-toggle.js';
 import './d2l-quick-eval-activities.js';
 import './d2l-quick-eval-submissions.js';
 import './behaviors/d2l-quick-eval-telemetry-behavior.js';
+import './dismiss/d2l-quick-eval-ellipsis-menu.js';
 
 const submissions = 'submissions';
 const activities = 'activities';
@@ -44,6 +45,15 @@ class D2LQuickEval extends
 				:host([hidden]) {
 					display: none;
 				}
+				.top-container {
+					display: flex;
+				}
+				.spacer {
+					flex-grow: 1;
+				}
+				.top-container d2l-quick-eval-ellipsis-menu {
+					align-self: center;
+				}
 				@media (min-width: 525px) {
 					d2l-quick-eval-view-toggle {
 						clear: both;
@@ -54,10 +64,14 @@ class D2LQuickEval extends
 					}
 				}
 			</style>
-			<template is="dom-if" if="[[headerText]]">
-				<h1 class="d2l-quick-eval-header-with-toggle" hidden$="[[!activitiesViewEnabled]]">[[headerText]]</h1>
-				<h1 class="d2l-quick-eval-header" hidden$="[[activitiesViewEnabled]]">[[headerText]]</h1>
-			</template>
+			<div class="top-container">
+				<template is="dom-if" if="[[headerText]]">
+					<h1 class="d2l-quick-eval-header-with-toggle" hidden$="[[!activitiesViewEnabled]]">[[headerText]]</h1>
+					<h1 class="d2l-quick-eval-header" hidden$="[[activitiesViewEnabled]]">[[headerText]]</h1>
+				</template>
+				<div class="spacer"></div>
+				<d2l-quick-eval-ellipsis-menu></d2l-quick-eval-ellipsis-menu>
+			</div>
 			<d2l-quick-eval-view-toggle current-selected="[[toggleState]]" toggle-href="[[toggleHref]]" hidden$="[[!activitiesViewEnabled]]" on-d2l-quick-eval-view-toggle-changed="_toggleView"></d2l-quick-eval-view-toggle>
 			<d2l-quick-eval-submissions href="[[_lazySubmissionsHref]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" data-telemetry-endpoint="[[dataTelemetryEndpoint]]" hidden$="[[_displayActivities(toggleState, activitiesViewEnabled)]]" master-teacher="[[masterTeacher]]"></d2l-quick-eval-submissions>
 			<d2l-quick-eval-activities href="[[_lazyActivitiesHref]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" hidden$="[[!_displayActivities(toggleState, activitiesViewEnabled)]]"></d2l-quick-eval-activities>
