@@ -48,7 +48,7 @@ class D2LQuickEval extends
 				.top-container {
 					display: flex;
 				}
-				.spacer {
+				.d2l-quick-eval-spacer {
 					flex-grow: 1;
 				}
 				.top-container d2l-quick-eval-ellipsis-menu {
@@ -69,7 +69,7 @@ class D2LQuickEval extends
 					<h1 class="d2l-quick-eval-header-with-toggle" hidden$="[[!activitiesViewEnabled]]">[[headerText]]</h1>
 					<h1 class="d2l-quick-eval-header" hidden$="[[activitiesViewEnabled]]">[[headerText]]</h1>
 				</template>
-				<div class="spacer"></div>
+				<div class="d2l-quick-eval-spacer"></div>
 				<d2l-quick-eval-ellipsis-menu hidden$="[[!dismissEnabled]]"></d2l-quick-eval-ellipsis-menu>
 			</div>
 			<d2l-quick-eval-view-toggle current-selected="[[toggleState]]" toggle-href="[[toggleHref]]" hidden$="[[!activitiesViewEnabled]]" on-d2l-quick-eval-view-toggle-changed="_toggleView"></d2l-quick-eval-view-toggle>
