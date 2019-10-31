@@ -6,5 +6,9 @@
   "dueTime": {
     "translation": "Due Time",
     "context": "ARIA label for the due time field when creating/editing an activity"
+  },
+  "noDueDate": {
+    "translation": "No due date",
+    "context": "Placeholder text for due date field when no due date is set"
   }
 }
