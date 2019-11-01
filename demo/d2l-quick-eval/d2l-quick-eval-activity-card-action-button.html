@@ -18,6 +18,7 @@
 			import 'd2l-typography/d2l-typography.js';
 			import './update-direction.js';
 			import '../../components/d2l-quick-eval/activity-card/d2l-quick-eval-activity-card-action-button.js';
+			import '../../components/d2l-quick-eval/activity-card/d2l-quick-eval-activity-card-action-button-more.js';
 
 			const $_documentContainer = document.createElement('template');
 			$_documentContainer.innerHTML = `
@@ -55,6 +56,14 @@
 				<template strip-whitespace>
 					<div class="button-wrapper-big"><d2l-quick-eval-activity-card-action-button text="button text" icon-name="publish-all"></d2l-quick-eval-activity-card-action-button></div>
 					<div class="button-wrapper-big"><d2l-quick-eval-activity-card-action-button text="button text" icon-name="publish-all" disabled></d2l-quick-eval-activity-card-action-button></div>
+					<div class="button-wrapper-big">
+						<d2l-quick-eval-activity-card-action-button-more>
+							<d2l-menu-item text="First thing"></d2l-menu-item>
+							<d2l-menu-item text="Second thing"></d2l-menu-item>
+							<d2l-menu-item text="Third thing"></d2l-menu-item>
+							<d2l-menu-item text="Fourth thing"></d2l-menu-item>
+						</d2l-quick-eval-activity-card-action-button-more>
+					</div>
 					<div class="button-wrapper-small"><d2l-quick-eval-activity-card-action-button text="button text" icon-name="publish-all"></d2l-quick-eval-activity-card-action-button></div>
 				</template>
 			</demo-snippet>
