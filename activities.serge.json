@@ -58,6 +58,9 @@
     ]
   },{
     "name": "activityEditor",
+    "parser_plugin": {
+      "plugin": "parse_d2l_fra"
+    },
     "source_dir": "components/d2l-activity-editor/lang",
     "output_file_path": "components/d2l-activity-editor/lang/%LANG%.json",
     "output_lang_rewrite": [
@@ -77,6 +80,9 @@
     ]
   },{
     "name": "assignmentActivityEditor",
+    "parser_plugin": {
+      "plugin": "parse_d2l_fra"
+    },
     "source_dir": "components/d2l-activity-editor/d2l-activity-assignment-editor/lang",
     "output_file_path": "components/d2l-activity-editor/d2l-activity-assignment-editor/lang/%LANG%.json",
     "output_lang_rewrite": [
