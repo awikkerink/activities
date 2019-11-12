@@ -13,8 +13,6 @@ import { SaveStatusMixin } from '../save-status-mixin.js';
 import { selectStyles } from '../select-styles.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
-const baseUrl = import.meta.url;
-
 class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMixinLit(LocalizeMixin(LitElement)))) {
 
 	static get properties() {
@@ -54,7 +52,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 	}
 
 	static async getLocalizeResources(langs) {
-		return getLocalizeResources(langs, baseUrl);
+		return getLocalizeResources(langs);
 	}
 
 	constructor() {
@@ -171,13 +169,13 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 	render() {
 		return html`
 			<div id="assignment-name-container">
-				<label class="d2l-label-text" for="assignment-name">${this.localize('name')}*</label>
+				<label class="d2l-label-text" for="assignment-name">${this.localize('assignmentName')}*</label>
 				<d2l-input-text
 					id="assignment-name"
 					value="${this._name}"
 					@change="${this._saveOnChange('name')}"
 					@input="${this._saveNameOnInput}"
-					aria-label="${this.localize('name')}"
+					aria-label="${this.localize('assignmentName')}"
 					?disabled="${!this._canEditName}"
 					aria-invalid="${this._nameError ? 'true' : ''}"
 					prevent-submit>
@@ -194,18 +192,18 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 			</div>
 
 			<div id="assignment-instructions-container">
-				<label class="d2l-label-text">${this.localize('instructions')}</label>
+				<label class="d2l-label-text">${this.localize('assignmentInstructions')}</label>
 				<d2l-activity-html-editor
 					value="${this._instructions}"
 					.richtextEditorConfig="${this._richtextEditorConfig}"
 					@d2l-activity-html-editor-change="${this._saveInstructionsOnChange}"
-					ariaLabel="${this.localize('instructions')}"
+					ariaLabel="${this.localize('assignmentInstructions')}"
 					?disabled="${!this._canEditInstructions}">
 				</d2l-activity-html-editor>
 			</div>
 
 			<div id="assignment-submission-type-container">
-				<label class="d2l-label-text" for="assignment-submission-type">${this.localize('submissionType')}</label>
+				<label class="d2l-label-text" for="assignment-submission-type">${this.localize('assignmentSubmissionType')}</label>
 				<select
 					id="assignment-submission-type"
 					@change="${this._saveSubmissionTypeOnChange}"
@@ -216,7 +214,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 			</div>
 
 			<div id="assignment-completion-type-container" ?hidden="${!this._completionTypes.length > 0}">
-				<label class="d2l-label-text" for="assignment-completion-type">${this.localize('completionType')}</label>
+				<label class="d2l-label-text" for="assignment-completion-type">${this.localize('assignmentCompletionType')}</label>
 				<select
 					id="assignment-completion-type"
 					@change="${this._saveCompletionTypeOnChange}"
