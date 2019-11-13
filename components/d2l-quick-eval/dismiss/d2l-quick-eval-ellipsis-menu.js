@@ -16,13 +16,13 @@ class D2LQuickEvalEllipsisMenu extends LocalizeMixin(LitElement) {
 	}
 	render() {
 		return html`
-			<d2l-dropdown-more text="Open!">
-					<d2l-dropdown-menu id="dropdown">
-						<d2l-menu label="activities menu">
-							<d2l-menu-item text="Dismissed-activities"></d2l-menu-item>
-						</d2l-menu>
-					</d2l-dropdown-menu>
-				</d2l-dropdown-more>
+		<d2l-dropdown-more>
+			<d2l-dropdown-menu>
+				<d2l-menu>
+					<d2l-menu-item text="Dismissed-activities"></d2l-menu-item>
+				</d2l-menu>
+			</d2l-dropdown-menu>
+		</d2l-dropdown-more>
 		`;
 	}
 }
