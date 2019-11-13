@@ -12,6 +12,8 @@
     "lint:wc": "polymer lint -i \"./*\" \"components\" \"demo\" \"test\"",
     "test:diff": "mocha test/**/*.visual-diff.js -t 40000",
     "test:diff:golden": "mocha test/**/*.visual-diff.js -t 40000 --golden",
+    "test:overall-diff": "mocha non-ci-perceptual/**/*.visual-diff.js -t 40000",
+    "test:overall-diff:golden": "mocha non-ci-perceptual/**/*.visual-diff.js -t 40000 --golden",
     "test:diff:golden:commit": "commit-goldens",
     "test:polymer:local": "polymer test --skip-plugin sauce",
     "test:polymer:sauce": "polymer test --skip-plugin local",

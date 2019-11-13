@@ -5,6 +5,8 @@ describe('d2l-quick-eval', function() {
 
 	const visualDiff = new VisualDiff('quick-eval', __dirname);
 
+// throw('__DIRNAME', __dirname);
+
 	let browser, page;
 
 	before(async() => {
