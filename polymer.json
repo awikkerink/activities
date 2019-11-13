@@ -4,7 +4,8 @@
     "rules": ["polymer-3"],
     "ignoreWarnings": [
       "not-loadable",
-      "could-not-resolve-reference"
+      "could-not-resolve-reference",
+      "non-literal-import"
     ]
   }
 }

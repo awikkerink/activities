@@ -27,7 +27,7 @@ class ActivityDueDateEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin
 	}
 
 	static async getLocalizeResources(langs) {
-		return getLocalizeResources(langs);
+		return getLocalizeResources(langs, import.meta.url);
 	}
 
 	constructor() {
