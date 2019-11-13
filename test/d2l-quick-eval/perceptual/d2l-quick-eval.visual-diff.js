@@ -29,12 +29,12 @@ describe('d2l-quick-eval', function() {
 		});
 	});
 
-	LANGUAGES.forEach((name, index) => {
+	LANGUAGES.forEach((name) => {
 		it(name, async function() {
 			const htmlHandle = await page.$('html');
-			await htmlHandle.evaluate((e,attrName)=>{e.setAttribute("lang", attrName)}, name);
+			await htmlHandle.evaluate((e, attrName)=>{e.setAttribute('lang', attrName);}, name);
 			await htmlHandle.dispose();
-			const rect = await visualDiff.getRect(page, `#lang`);
+			const rect = await visualDiff.getRect(page, '#lang');
 			await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 		});
 	});
