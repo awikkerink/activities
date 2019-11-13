@@ -31,15 +31,9 @@ class D2LQuickEval extends
 				h1 {
 					@apply --d2l-heading-1;
 					margin: 0;
-				}
-				.d2l-quick-eval-header {
-					float: left;
-				}
-				:host(:dir(rtl)) .d2l-quick-eval-header-with-toggle {
-					float: right;
+					flex-grow: 1;
 				}
 				.d2l-quick-eval-header-with-toggle {
-					float: left;
 					padding-bottom: 1.2rem;
 				}
 				:host([hidden]) {
@@ -69,7 +63,6 @@ class D2LQuickEval extends
 					<h1 class="d2l-quick-eval-header-with-toggle" hidden$="[[!activitiesViewEnabled]]">[[headerText]]</h1>
 					<h1 class="d2l-quick-eval-header" hidden$="[[activitiesViewEnabled]]">[[headerText]]</h1>
 				</template>
-				<div class="d2l-quick-eval-spacer"></div>
 				<d2l-quick-eval-ellipsis-menu hidden$="[[!dismissEnabled]]"></d2l-quick-eval-ellipsis-menu>
 			</div>
 			<d2l-quick-eval-view-toggle current-selected="[[toggleState]]" toggle-href="[[toggleHref]]" hidden$="[[!activitiesViewEnabled]]" on-d2l-quick-eval-view-toggle-changed="_toggleView"></d2l-quick-eval-view-toggle>
