@@ -42,9 +42,6 @@ class D2LQuickEval extends
 				.top-container {
 					display: flex;
 				}
-				.d2l-quick-eval-spacer {
-					flex-grow: 1;
-				}
 				.top-container d2l-quick-eval-ellipsis-menu {
 					align-self: center;
 				}
