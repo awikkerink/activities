@@ -72,6 +72,7 @@ class ActivityDueDateEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin
 					time-label="${this.localize('dueTime')}"
 					datetime="${this._date}"
 					overrides="${this._overrides}"
+					placeholder="${this.localize('noDueDate')}"
 					@d2l-datetime-picker-datetime-changed="${this._onDatetimePickerDatetimeChanged}"
 					@d2l-datetime-picker-datetime-cleared="${this._onDatetimePickerDatetimeCleared}">
 				</d2l-datetime-picker>
