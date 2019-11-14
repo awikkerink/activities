@@ -61,6 +61,7 @@
     "parser_plugin": {
       "plugin": "parse_js"
     },
+    "source_match": "en\\.js$",
     "source_dir": "components/d2l-activity-editor/lang",
     "output_file_path": "components/d2l-activity-editor/lang/%LANG%.js",
     "output_lang_rewrite": [
@@ -83,6 +84,7 @@
     "parser_plugin": {
       "plugin": "parse_js"
     },
+    "source_match": "en\\.js$",
     "source_dir": "components/d2l-activity-editor/d2l-activity-assignment-editor/lang",
     "output_file_path": "components/d2l-activity-editor/d2l-activity-assignment-editor/lang/%LANG%.js",
     "output_lang_rewrite": [
