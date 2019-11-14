@@ -6,8 +6,6 @@ import { getLocalizeResources } from './localization';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { SaveStatusMixin } from './save-status-mixin';
 
-const baseUrl = import.meta.url;
-
 class ActivityDueDateEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
 
 	static get properties() {
@@ -29,7 +27,7 @@ class ActivityDueDateEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin
 	}
 
 	static async getLocalizeResources(langs) {
-		return getLocalizeResources(langs, baseUrl);
+		return getLocalizeResources(langs, import.meta.url);
 	}
 
 	constructor() {
