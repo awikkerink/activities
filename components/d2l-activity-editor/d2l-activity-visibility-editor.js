@@ -13,9 +13,6 @@ class ActivityVisibilityEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMi
 	static get properties() {
 		return {
 			_isDraft: { type: Boolean },
-			_icon: { type: String },
-			_overrides: { type: Object },
-			_switchVisibilityText: { type: String },
 			_canEditDraft: {type: Boolean }
 		};
 	}
@@ -43,7 +40,6 @@ class ActivityVisibilityEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMi
 		super();
 		this._setEntityType(ActivityUsageEntity);
 		this._isDraft = false;
-		this._overrides = document.documentElement.dataset.intlOverrides || '{}';
 	}
 
 	set _entity(entity) {
@@ -57,8 +53,6 @@ class ActivityVisibilityEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMi
 	_onActivityUsageChange(activityUsage) {
 		if (activityUsage) {
 			this._isDraft = activityUsage.isDraft();
-			this._switchText = (this._isDraft ? this.localize('hidden') : this.localize('visible'));
-			this._icon = (this._isDraft ? 'tier1:visibility-hide' : 'tier1:visibility-show');
 			this._canEditDraft = activityUsage.canEditDraft();
 		}
 	}
@@ -68,22 +62,26 @@ class ActivityVisibilityEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMi
 	}
 
 	render() {
+
+		const switchVisibilityText = (this._isDraft ? this.localize('hidden') : this.localize('visible'));
+		const icon = (this._isDraft ? 'tier1:visibility-hide' : 'tier1:visibility-show');
+
 		return html`
 			<div ?hidden=${!this._canEditDraft}>
 				<d2l-switch
-					aria-label="${this._switchText}"
+					aria-label="${switchVisibilityText}"
 					label-right
 					.checked=${!this._isDraft}
 					@click="${this._updateVisibility}">
 						<div class="d2l-label-text">
-							<d2l-icon icon=${this._icon}></d2l-icon>
-							${this._switchText}
+							<d2l-icon icon=${icon}></d2l-icon>
+							${switchVisibilityText}
 						</div>
 				</d2l-switch>
 			</div>
 			<div d2l-label-text ?hidden=${this._canEditDraft}>
-				<d2l-icon icon=${this._icon}></d2l-icon>
-				${this._switchText}
+				<d2l-icon icon=${icon}></d2l-icon>
+				${switchVisibilityText}
 			</div>
 		`;
 	}

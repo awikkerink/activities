@@ -174,7 +174,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				<d2l-activity-visibility-editor
 					.href="${this._activityUsageHref}"
 					.token="${this.token}">
-				</d2l-activity-due-date-editor>
+				</d2l-activity-visibility-editor>
 			</div>
 			<div id="assignment-name-container">
 				<label class="d2l-label-text" for="assignment-name">${this.localize('name')}*</label>
