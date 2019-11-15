@@ -7,8 +7,16 @@
     "translation": "Due Time",
     "context": "ARIA label for the due time field when creating/editing an activity"
   },
+  "hidden": {
+    "translation": "Hidden",
+    "context": "Label displayed with the visibility switch when hidden"
+  },
   "noDueDate": {
     "translation": "No due date",
     "context": "Placeholder text for due date field when no due date is set"
+  },
+  "visible": {
+    "translation": "Visible",
+    "context": "Label displayed with the visibility switch when visible"
   }
 }
