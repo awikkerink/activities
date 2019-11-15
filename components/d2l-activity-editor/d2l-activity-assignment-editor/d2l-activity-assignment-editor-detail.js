@@ -13,8 +13,6 @@ import { SaveStatusMixin } from '../save-status-mixin.js';
 import { selectStyles } from '../select-styles.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
-const baseUrl = import.meta.url;
-
 class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMixinLit(LocalizeMixin(LitElement)))) {
 
 	static get properties() {
@@ -54,7 +52,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 	}
 
 	static async getLocalizeResources(langs) {
-		return getLocalizeResources(langs, baseUrl);
+		return getLocalizeResources(langs, import.meta.url);
 	}
 
 	constructor() {
