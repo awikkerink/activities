@@ -9,6 +9,7 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 
 	static get properties() {
 		return {
+			htmlEditorEnabled: { type: Boolean },
 			_assignmentHref: { type: String },
 		};
 	}
@@ -46,6 +47,7 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 				<d2l-activity-assignment-editor-detail
 					.href="${this._assignmentHref}"
 					.token="${this.token}"
+					?htmlEditorEnabled="${this.htmlEditorEnabled}"
 					slot="editor">
 				</d2l-activity-assignment-editor-detail>
 			</d2l-activity-editor>
