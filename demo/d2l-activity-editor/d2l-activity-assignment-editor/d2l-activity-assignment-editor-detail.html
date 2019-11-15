@@ -20,15 +20,29 @@
 			function changeLocale(locale) { // eslint-disable-line no-unused-vars
 				document.getElementsByTagName('html')[0].lang = locale;
 			}
+			function changeEditor() { // eslint-disable-line no-unused-vars
+				const editorSwitch = document.getElementById('editorSwitch');
+				const editor = document.querySelector('d2l-activity-assignment-editor-detail');
+
+				if (editorSwitch.hasAttribute('checked')) {
+					editorSwitch.removeAttribute('checked');
+					editor.setAttribute('htmlEditorEnabled', 'htmlEditorEnabled');
+				} else {
+					editorSwitch.setAttribute('checked', 'checked');
+					editor.removeAttribute('htmlEditorEnabled');
+				}
+			}
 		</script>
 		<d2l-demo-page page-title="d2l-activity-assignment-editor-detail">
 			<h2>d2l-activity-assignment-editor-detail</h2>
 			<d2l-demo-snippet>
-				<d2l-activity-assignment-editor-detail token="secret" href="./data/assignmentActivity.json"></d2l-activity-assignment-editor-detail>
+				<d2l-activity-assignment-editor-detail token="secret" href="./data/assignmentActivity.json" htmlEditorEnabled></d2l-activity-assignment-editor-detail>
 			</d2l-demo-snippet>
 
 			<button onclick="changeLocale('en')">Reset locale to "en"</button>
 			<button onclick="changeLocale('fr')">Change locale to "fr"</button>
+			<br/>
+			<label><input id="editorSwitch" type="checkbox" onchange="changeEditor()">Use plaintext editor for instructions</input></label>
 		</d2l-demo-page>
 	</body>
 </html>
