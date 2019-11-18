@@ -1,6 +1,7 @@
 import 'd2l-inputs/d2l-input-text.js';
 import '../d2l-activity-due-date-editor.js';
 import '../d2l-activity-text-editor.js';
+import '../d2l-activity-visibility-editor.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
@@ -169,6 +170,12 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 
 	render() {
 		return html`
+			<div id="assignment-visibility-container">
+				<d2l-activity-visibility-editor
+					.href="${this._activityUsageHref}"
+					.token="${this.token}">
+				</d2l-activity-visibility-editor>
+			</div>
 			<div id="assignment-name-container">
 				<label class="d2l-label-text" for="assignment-name">${this.localize('name')}*</label>
 				<d2l-input-text
