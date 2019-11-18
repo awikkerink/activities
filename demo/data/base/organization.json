@@ -1,5 +1,7 @@
 {
   "class":[
+     "named-entity",
+     "describable-entity",
      "active",
      "course-offering"
   ],
@@ -43,5 +45,37 @@
       ],
       "href":"../data/base/semester.json"
      }
+  ],
+  "actions": [
+    {
+        "href": "https://example.com/123061",
+        "name": "update-name",
+        "method": "PATCH",
+        "fields": [
+            {
+                "class": [
+                    "required"
+                ],
+                "type": "text",
+                "name": "name",
+                "value": "Course"
+            }
+        ]
+    },
+    {
+        "href": "https://example.com/123061",
+        "name": "update-description",
+        "method": "PATCH",
+        "fields": [
+            {
+                "class": [
+                    "required"
+                ],
+                "type": "text",
+                "name": "description",
+                "value": ""
+            }
+        ]
+    }
   ]
 }
