@@ -57,4 +57,3 @@ export const LangNl = {
 	'viewBy': 'Weergeven op:',
 	'yes': 'Ja'
 };
-
