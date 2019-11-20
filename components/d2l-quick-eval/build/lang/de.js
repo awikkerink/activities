@@ -10,6 +10,7 @@ export const LangDe = {
 	'confirmation': 'Bestätigung',
 	'courseName': 'Kurs',
 	'discussion': 'Diskussion',
+	'dismissedActivities': 'Dismissed activities',
 	'displayName': 'Vorname, Nachname',
 	'due': 'Abgabetermin:',
 	'evaluate': '{displayName} bewerten',
@@ -52,9 +53,8 @@ export const LangDe = {
 	'submissions': 'Abgaben',
 	'tableTitle': 'Liste nicht bewerteter Abgaben von Lernern in allen Kursen und Tools',
 	'toggleIndicatorLabelActions': 'Aktionen für {target} ausführen',
-	'toggleIndicatorLabelInfo': 'Informationen auf {target} anzeigen',
+	'toggleIndicatorLabelInfo': 'Informationen zu {target} anzeigen',
 	'tryAgain': 'Erneut versuchen',
 	'viewBy': 'Anzeigen nach:',
 	'yes': 'Ja'
 };
-

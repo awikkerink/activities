@@ -10,6 +10,7 @@ export const LangJa = {
 	'confirmation': '確認',
 	'courseName': 'コース',
 	'discussion': 'ディスカッション',
+	'dismissedActivities': 'Dismissed activities',
 	'displayName': '名、姓',
 	'due': '期限: {date}',
 	'evaluate': '{displayName} さんの評価',
@@ -57,4 +58,3 @@ export const LangJa = {
 	'viewBy': '表示対象:',
 	'yes': 'はい'
 };
-

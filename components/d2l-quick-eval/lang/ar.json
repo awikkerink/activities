@@ -10,7 +10,7 @@
    "confirmation" : "تأكيد",
    "courseName" : "المقرر التعليمي",
    "discussion" : "المناقشة",
-   "dismissActivity" : "Dismiss Activity",
+   "dismissedActivities" : "Dismissed activities",
    "displayName" : "الاسم الأول، اسم العائلة",
    "due" : "تاريخ الاستحقاق: {date}",
    "evaluate" : "تقييم {displayName}",
