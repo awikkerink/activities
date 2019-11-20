@@ -84,9 +84,9 @@ function CLISyncJsonFiles(){
 // 	});
 // }
 
-console.log("this code runs!");
-()=> {
-	throw "but this code never runs";
+// console.log("this code runs!");
+// ()=> {
+	// throw "but this code never runs";
 
 	const params = process.argv.slice(2);
 	const [command, langKey, langPhrase] = params;
@@ -97,21 +97,21 @@ console.log("this code runs!");
 	switch (command) {
 		case "sync":
 			console.log("syncing...");
-			// CLISyncJsonFiles();
-			something = true;
-			break;
+			CLISyncJsonFiles();
+			// something = true;
+			// break;
 			break;
 		case "add":
 		case "change": // add and change do the same thing, but easier in terms of usability
 			console.log("add or changing...");
-			// CLIAppendLangTerm(langKey, langPhrase);
+			CLIAppendLangTerm(langKey, langPhrase);
 			break;
 		case "remove":
 			console.log("removing...");
-			// CLIRemoveLangTerm(langKey, langPhrase);
+			CLIRemoveLangTerm(langKey, langPhrase);
 			break;
 		default:
 			if (!something) console.log("how is this running?");
 			throw "invalid command";
 	}
-}
+// }
