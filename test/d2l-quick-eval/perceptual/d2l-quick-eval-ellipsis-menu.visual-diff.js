@@ -21,7 +21,6 @@ describe('d2l-quick-eval-ellipsis-menu', function() {
 		'default',
 	].forEach((name) => {
 		it(name, async function() {
-			debugger;
 			const rect = await visualDiff.getRect(page, `#${name}`);
 			await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 		});

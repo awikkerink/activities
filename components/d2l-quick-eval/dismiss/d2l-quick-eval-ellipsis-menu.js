@@ -1,5 +1,5 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { LitQuickEvalLocalize } from '../LitQuickEvalLocalize.js'
+import { LitQuickEvalLocalize } from '../LitQuickEvalLocalize.js';
 import 'd2l-dropdown/d2l-dropdown-more.js';
 import 'd2l-dropdown/d2l-dropdown-menu.js';
 import 'd2l-menu/d2l-menu.js';
@@ -18,7 +18,7 @@ class D2LQuickEvalEllipsisMenu extends LitQuickEvalLocalize(LitElement) {
 		<d2l-dropdown-more>
 			<d2l-dropdown-menu>
 				<d2l-menu>
-					<d2l-menu-item text="${this.localize("dismissedActivities")}"></d2l-menu-item>
+					<d2l-menu-item text="${this.localize('dismissedActivities')}"></d2l-menu-item>
 				</d2l-menu>
 			</d2l-dropdown-menu>
 		</d2l-dropdown-more>
