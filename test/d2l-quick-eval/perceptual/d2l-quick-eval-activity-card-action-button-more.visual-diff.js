@@ -30,6 +30,7 @@ describe('d2l-quick-eval-activity-card-action-button-more', function() {
 						break;
 					case 'click':
 						await page.click(`.${name}`);
+						await page.waitFor(2000);
 						break;
 				}
 				const rect = await visualDiff.getRect(page, `#${name}`);
