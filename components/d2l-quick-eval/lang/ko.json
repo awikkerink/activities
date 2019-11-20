@@ -10,6 +10,7 @@
    "confirmation" : "확인",
    "courseName" : "강의",
    "discussion" : "토론",
+   "dismissActivity" : "Dismiss Activity",
    "displayName" : "이름, 성",
    "due" : "기한: {date}",
    "evaluate" : "{displayName} 평가",

@@ -10,6 +10,7 @@
    "confirmation" : "Confirmação",
    "courseName" : "Curso",
    "discussion" : "Discussão",
+   "dismissActivity" : "Dismiss Activity",
    "displayName" : "Nome e Sobrenome",
    "due" : "Prazo: {date}",
    "evaluate" : "Avaliar {displayName}",
