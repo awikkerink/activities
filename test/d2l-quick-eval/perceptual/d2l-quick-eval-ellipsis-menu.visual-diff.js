@@ -28,6 +28,7 @@ describe('d2l-quick-eval-ellipsis-menu', function() {
 
 	it('opened', async function() {
 		await page.click('#opened d2l-quick-eval-ellipsis-menu');
+		await page.waitFor(200);
 		const rect = await visualDiff.getRect(page, '#opened');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
