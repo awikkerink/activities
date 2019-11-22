@@ -37,7 +37,7 @@ describe('d2l-quick-eval-ellipsis-menu', function() {
 		await page.click('#dialog-opened d2l-quick-eval-ellipsis-menu');
 		await page.waitFor(200);
 		await page.evaluate(() => {
-			document.querySelector('#dialog-opened d2l-quick-eval-ellipsis-menu').shadowRoot.querySelector("d2l-quick-eval-ellipsis-dialog").opened = true
+			document.querySelector('#dialog-opened d2l-quick-eval-ellipsis-menu').shadowRoot.querySelector('d2l-quick-eval-ellipsis-dialog').opened = true;
 		});
 		await page.waitFor(200);
 		const rect = await visualDiff.getRect(page, 'body');

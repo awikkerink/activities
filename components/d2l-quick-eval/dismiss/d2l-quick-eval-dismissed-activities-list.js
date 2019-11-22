@@ -1,5 +1,5 @@
-import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { LitQuickEvalLocalize } from '../LitQuickEvalLocalize.js'
+import { html, LitElement } from 'lit-element/lit-element.js';
+import { LitQuickEvalLocalize } from '../LitQuickEvalLocalize.js';
 import '../activity-card/d2l-quick-eval-activity-card.js';
 import '@brightspace-ui/core/components/inputs/input-checkbox.js';
 import '../activity-card/d2l-quick-eval-activity-card.js';
