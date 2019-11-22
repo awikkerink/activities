@@ -11,6 +11,7 @@
    "confirmation" : "Confirmation",
    "courseName" : "Cours",
    "discussion" : "Discussion",
+   "dismissedActivities" : "Dismissed activities",
    "dismissedActivitiesList" : "Dismissed Activities List",
    "displayName" : "Prénom et Nom de famille",
    "due" : "Date d'échéance : {date}",

@@ -11,6 +11,7 @@ export const LangSv = {
 	'confirmation': 'Bekräftelse',
 	'courseName': 'Kurs',
 	'discussion': 'Diskussion',
+	'dismissedActivities': 'Dismissed activities',
 	'dismissedActivitiesList': 'Dismissed Activities List',
 	'displayName': 'Förnamn, efternamn',
 	'due': 'Förfaller: {date}',
@@ -55,9 +56,8 @@ export const LangSv = {
 	'submissions': 'inlämningar',
 	'tableTitle': 'Lista över ej utvärderade elevinlämningar från kurser och verktyg',
 	'toggleIndicatorLabelActions': 'Utför åtgärder på {target}',
-	'toggleIndicatorLabelInfo': 'Visa info om {target}',
+	'toggleIndicatorLabelInfo': 'Visa information om {target}',
 	'tryAgain': 'Försök på nytt',
 	'viewBy': 'Visa enligt:',
 	'yes': 'Ja'
 };
-

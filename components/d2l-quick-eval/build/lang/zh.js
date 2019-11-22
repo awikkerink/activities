@@ -11,6 +11,7 @@ export const LangZh = {
 	'confirmation': '确认',
 	'courseName': '课程',
 	'discussion': '讨论',
+	'dismissedActivities': 'Dismissed activities',
 	'dismissedActivitiesList': 'Dismissed Activities List',
 	'displayName': '名字，姓氏',
 	'due': '截止日期：{date}',
@@ -57,7 +58,6 @@ export const LangZh = {
 	'toggleIndicatorLabelActions': '在 {target} 上执行操作',
 	'toggleIndicatorLabelInfo': '查看有关 {target} 的信息',
 	'tryAgain': '请重试',
-	'viewBy': '查看方式：',
+	'viewBy': '查看人：',
 	'yes': '是'
 };
-

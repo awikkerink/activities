@@ -11,6 +11,7 @@ export const LangFr = {
 	'confirmation': 'Confirmation',
 	'courseName': 'Cours',
 	'discussion': 'Discussion',
+	'dismissedActivities': 'Dismissed activities',
 	'dismissedActivitiesList': 'Dismissed Activities List',
 	'displayName': 'Prénom et Nom de famille',
 	'due': 'Date d\'échéance : {date}',
@@ -55,9 +56,8 @@ export const LangFr = {
 	'submissions': 'Soumissions',
 	'tableTitle': 'Liste des soumissions des apprenants non évaluées provenant des cours et des outils',
 	'toggleIndicatorLabelActions': 'Exécuter des actions sur {target}',
-	'toggleIndicatorLabelInfo': 'Afficher l\'information sur {target}',
+	'toggleIndicatorLabelInfo': 'Afficher l’info sur {target}',
 	'tryAgain': 'Réessayer',
 	'viewBy': 'Afficher par :',
 	'yes': 'Oui'
 };
-

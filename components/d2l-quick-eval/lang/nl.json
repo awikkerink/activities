@@ -11,6 +11,7 @@
    "confirmation" : "Bevestiging",
    "courseName" : "Cursus",
    "discussion" : "Discussie",
+   "dismissedActivities" : "Dismissed activities",
    "dismissedActivitiesList" : "Dismissed Activities List",
    "displayName" : "Voornaam, achternaam",
    "due" : "Uiterste datum: {date}",

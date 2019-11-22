@@ -1,12 +1,12 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { LitQuickEvalLocalize } from '../LitQuickEvalLocalize.js';
 import 'd2l-dropdown/d2l-dropdown-more.js';
 import 'd2l-dropdown/d2l-dropdown-menu.js';
 import 'd2l-menu/d2l-menu.js';
 import 'd2l-menu/d2l-menu-item.js';
 import './d2l-quick-eval-ellipsis-dismiss-dialog.js';
 
-class D2LQuickEvalEllipsisMenu extends LocalizeMixin(LitElement) {
+class D2LQuickEvalEllipsisMenu extends LitQuickEvalLocalize(LitElement) {
 
 	static get properties() {
 		return {
@@ -28,7 +28,7 @@ class D2LQuickEvalEllipsisMenu extends LocalizeMixin(LitElement) {
 		<d2l-dropdown-more>
 			<d2l-dropdown-menu>
 				<d2l-menu>
-					<d2l-menu-item @click="${() => this.opened = true}" text="Dismissed-activities"></d2l-menu-item>
+					<d2l-menu-item @click="${() => this.opened = true}" text="${this.localize('dismissedActivities')}"></d2l-menu-item>
 				</d2l-menu>
 			</d2l-dropdown-menu>
 		</d2l-dropdown-more>

@@ -11,6 +11,7 @@
    "confirmation" : "Confirmación",
    "courseName" : "Curso",
    "discussion" : "Debate",
+   "dismissedActivities" : "Dismissed activities",
    "dismissedActivitiesList" : "Dismissed Activities List",
    "displayName" : "Nombre, Apellido",
    "due" : "Fecha de entrega: {date}",

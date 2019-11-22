@@ -11,6 +11,7 @@ export const LangAr = {
 	'confirmation': 'تأكيد',
 	'courseName': 'المقرر التعليمي',
 	'discussion': 'المناقشة',
+	'dismissedActivities': 'Dismissed activities',
 	'dismissedActivitiesList': 'Dismissed Activities List',
 	'displayName': 'الاسم الأول، اسم العائلة',
 	'due': 'تاريخ الاستحقاق: {date}',
@@ -60,4 +61,3 @@ export const LangAr = {
 	'viewBy': 'عرض حسب:',
 	'yes': 'نعم'
 };
-

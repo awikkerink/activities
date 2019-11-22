@@ -11,6 +11,7 @@ export const LangEs = {
 	'confirmation': 'Confirmación',
 	'courseName': 'Curso',
 	'discussion': 'Debate',
+	'dismissedActivities': 'Dismissed activities',
 	'dismissedActivitiesList': 'Dismissed Activities List',
 	'displayName': 'Nombre, Apellido',
 	'due': 'Fecha de entrega: {date}',
@@ -55,9 +56,8 @@ export const LangEs = {
 	'submissions': 'Materiales enviados',
 	'tableTitle': 'Lista de envíos no evaluados del estudiante de todos los cursos y herramientas',
 	'toggleIndicatorLabelActions': 'Realizar acciones en {target}',
-	'toggleIndicatorLabelInfo': 'Ver información sobre {target}',
+	'toggleIndicatorLabelInfo': 'Ver información en {target}',
 	'tryAgain': 'Volver a intentarlo',
 	'viewBy': 'Ver por:',
 	'yes': 'Sí'
 };
-

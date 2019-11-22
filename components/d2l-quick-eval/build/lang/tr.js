@@ -11,6 +11,7 @@ export const LangTr = {
 	'confirmation': 'Onay',
 	'courseName': 'Ders',
 	'discussion': 'Tartışma',
+	'dismissedActivities': 'Dismissed activities',
 	'dismissedActivitiesList': 'Dismissed Activities List',
 	'displayName': 'Ad, Soyad',
 	'due': 'Bitiş:{date}',
@@ -55,9 +56,8 @@ export const LangTr = {
 	'submissions': 'Gönderimler',
 	'tableTitle': 'Dersler ve araçlar genelinde değerlendirilmemiş Öğrenci gönderilerinin listesi',
 	'toggleIndicatorLabelActions': '{target} Üzerinde Eylemler Gerçekleştir',
-	'toggleIndicatorLabelInfo': 'Şuradaki bilgileri görüntüleyin: {target}',
+	'toggleIndicatorLabelInfo': '{target} ile ilgili bilgileri görüntüleyin',
 	'tryAgain': 'Tekrar Dene',
 	'viewBy': 'Görüntüleme ölçütü:',
 	'yes': 'Evet'
 };
-
