@@ -1,29 +1,41 @@
 import 'd2l-inputs/d2l-input-text.js';
-import '../d2l-activity-html-editor.js';
+import '../d2l-activity-due-date-editor.js';
+import '../d2l-activity-text-editor.js';
+import '../d2l-activity-visibility-editor.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ErrorHandlingMixin } from '../error-handling-mixin.js';
-import { getLocalizeResources } from './localization.js';
+import { getLocalizeResources } from '../localization.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
-import { SirenFetchMixinLit } from 'siren-sdk/src/mixin/siren-fetch-mixin-lit.js';
+import { SaveStatusMixin } from '../save-status-mixin.js';
+import { selectStyles } from '../select-styles.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
-class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(EntityMixinLit(LocalizeMixin(LitElement)))) {
+class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMixinLit(LocalizeMixin(LitElement)))) {
 
 	static get properties() {
 		return {
+			htmlEditorEnabled: { type: Boolean },
 			_name: { type: String },
 			_nameError: { type: String },
+			_canEditName: { type: Boolean },
 			_instructions: { type: String },
-			_richtextEditorConfig: { type: Object }
+			_instructionsRichTextEditorConfig: { type: Object },
+			_canEditInstructions: { type: Boolean },
+			_activityUsageHref: { type: String },
+			_submissionTypes: { type: Array },
+			_canEditSubmissionType: { type: Boolean },
+			_completionTypes: { type: Array },
+			_canEditCompletionType: { type: Boolean },
+			_showCompletionType: { type: Boolean }
 		};
 	}
 
 	static get styles() {
-		return [labelStyles, css`
+		return [labelStyles, selectStyles, css`
 			:host {
 				display: block;
 			}
@@ -33,17 +45,25 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 			:host > div {
 				padding-bottom: 20px;
 			}
+
+			select {
+				width: 300px;
+				display: block;
+			}
 		`];
 	}
 
 	static async getLocalizeResources(langs) {
-		return getLocalizeResources(langs);
+		return getLocalizeResources(langs, import.meta.url);
 	}
 
 	constructor() {
 		super();
 		this._setEntityType(AssignmentEntity);
 		this._debounceJobs = {};
+
+		this._submissionTypes = [];
+		this._completionTypes = [];
 	}
 
 	set _entity(entity) {
@@ -54,11 +74,20 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 	}
 
 	_onAssignmentChange(assignment) {
-		if (assignment) {
-			this._name = assignment.name();
-			this._instructions = assignment.instructionsEditorHtml();
-			this._richtextEditorConfig = assignment.getRichTextEditorConfig();
+		if (!assignment) {
+			return;
 		}
+
+		this._name = assignment.name();
+		this._canEditName = assignment.canEditName();
+		this._instructions = assignment.instructionsEditorHtml();
+		this._instructionsRichTextEditorConfig = assignment.instructionsRichTextEditorConfig();
+		this._canEditInstructions = assignment.canEditInstructions();
+		this._activityUsageHref = assignment.activityUsageHref();
+		this._submissionTypes = assignment.submissionTypeOptions();
+		this._canEditSubmissionType = assignment.canEditSubmissionType();
+		this._completionTypes = assignment.completionTypeOptions();
+		this._canEditCompletionType = assignment.canEditCompletionType();
 	}
 
 	_saveOnChange(jobName) {
@@ -66,19 +95,11 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 	}
 
 	_saveName(value) {
-		if (super._entity.canEditName()) {
-			const action = super._entity.getSaveNameAction();
-			const fields = [{ 'name': 'name', 'value': value }];
-			this._performSirenAction(action, fields);
-		}
+		this.wrapSaveAction(super._entity.setName(value));
 	}
 
 	_saveInstructions(value) {
-		if (super._entity.canEditInstructions()) {
-			const action = super._entity.getSaveInstructionsAction();
-			const fields = [{ name: 'instructions', value: value }];
-			this._performSirenAction(action, fields);
-		}
+		this.wrapSaveAction(super._entity.setInstructions(value));
 	}
 
 	_saveNameOnInput(e) {
@@ -111,6 +132,16 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 		);
 	}
 
+	_saveSubmissionTypeOnChange() {
+		const submissionType = this.shadowRoot.querySelector('select#assignment-submission-type').value;
+		this.wrapSaveAction(super._entity.setSubmissionType(submissionType));
+	}
+
+	_saveCompletionTypeOnChange() {
+		const completionType = this.shadowRoot.querySelector('select#assignment-completion-type').value;
+		this.wrapSaveAction(super._entity.setCompletionType(completionType));
+	}
+
 	_getNameTooltip() {
 		if (this._nameError) {
 			return html`
@@ -125,8 +156,26 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 		}
 	}
 
+	_getSubmissionTypeOptions() {
+		return html`
+			${this._submissionTypes.map(option => html`<option value=${option.value} ?selected=${option.selected}>${option.title}</option>`)}
+		`;
+	}
+
+	_getCompletionTypeOptions() {
+		return html`
+			${this._completionTypes.map(option => html`<option value=${option.value} ?selected=${option.selected}>${option.title}</option>`)}
+		`;
+	}
+
 	render() {
 		return html`
+			<div id="assignment-visibility-container">
+				<d2l-activity-visibility-editor
+					.href="${this._activityUsageHref}"
+					.token="${this.token}">
+				</d2l-activity-visibility-editor>
+			</div>
 			<div id="assignment-name-container">
 				<label class="d2l-label-text" for="assignment-name">${this.localize('name')}*</label>
 				<d2l-input-text
@@ -135,23 +184,53 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SirenFetchMixinLit(Entit
 					@change="${this._saveOnChange('name')}"
 					@input="${this._saveNameOnInput}"
 					aria-label="${this.localize('name')}"
-					?disabled="${super._entity && !super._entity.canEditName()}"
+					?disabled="${!this._canEditName}"
 					aria-invalid="${this._nameError ? 'true' : ''}"
 					prevent-submit>
 				</d2l-input-text>
 				${this._getNameTooltip()}
 			</div>
 
+			<div id="duedate-container">
+				<label class="d2l-label-text">${this.localize('dueDate')}</label>
+				<d2l-activity-due-date-editor
+					.href="${this._activityUsageHref}"
+					.token="${this.token}">
+				</d2l-activity-due-date-editor>
+			</div>
+
 			<div id="assignment-instructions-container">
-				<label class="d2l-label-text" for="assignment-instructions">${this.localize('instructions')}</label>
-				<d2l-activity-html-editor
-					id="assignment-instructions"
+				<label class="d2l-label-text">${this.localize('instructions')}</label>
+				<d2l-activity-text-editor
 					value="${this._instructions}"
-					.richtextEditorConfig="${this._richtextEditorConfig}"
-					@d2l-activity-html-editor-change="${this._saveInstructionsOnChange}"
-					aria-label="${this.localize('instructions')}"
-					?disabled="${super._entity && !super._entity.canEditInstructions()}">
-				</d2l-activity-html-editor>
+					?htmlEditorEnabled="${this.htmlEditorEnabled}"
+					.richtextEditorConfig="${this._instructionsRichTextEditorConfig}"
+					@d2l-activity-text-editor-change="${this._saveInstructionsOnChange}"
+					ariaLabel="${this.localize('instructions')}"
+					?disabled="${!this._canEditInstructions}">
+				</d2l-activity-text-editor>
+			</div>
+
+			<div id="assignment-submission-type-container">
+				<label class="d2l-label-text" for="assignment-submission-type">${this.localize('submissionType')}</label>
+				<select
+					id="assignment-submission-type"
+					@change="${this._saveSubmissionTypeOnChange}"
+					?disabled="${!this._canEditSubmissionType}">
+
+					${this._getSubmissionTypeOptions()}
+				</select>
+			</div>
+
+			<div id="assignment-completion-type-container" ?hidden="${!this._completionTypes.length > 0}">
+				<label class="d2l-label-text" for="assignment-completion-type">${this.localize('completionType')}</label>
+				<select
+					id="assignment-completion-type"
+					@change="${this._saveCompletionTypeOnChange}"
+					?disabled="${!this._canEditCompletionType}">
+
+					${this._getCompletionTypeOptions()}
+				</select>
 			</div>
 		`;
 	}

@@ -2,6 +2,9 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { heading1Styles, heading4Styles, bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
+import { NamedEntityMixin } from 'siren-sdk/src/entityAddons/named-entity-mixin.js';
+import { DescribableEntityMixin } from 'siren-sdk/src/entityAddons/describable-entity-mixin.js';
+import { SimpleEntity } from 'siren-sdk/src/es6/SimpleEntity.js';
 import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/colors/colors.js';
@@ -28,8 +31,8 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 	}
 
 	_onActivityUsageChange(usage) {
-		usage.onOrganizationChange((organization) => {
-			this._organization = organization;
+		usage.onSpecializationChange(NamedEntityMixin(DescribableEntityMixin(SimpleEntity)), (specialization) => {
+			this._specialization = specialization;
 		});
 		this._items = [];
 		usage.onActivityCollectionChange((collection => {
@@ -52,7 +55,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			_collection: {
 				type: Object
 			},
-			_organization: {
+			_specialization: {
 				type: Object
 			},
 			_items: {
@@ -103,7 +106,9 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			html`
 			<d2l-list-item>
 				<d2l-organization-image href=${item.self()} slot="illustration"></d2l-organization-image>
-				${item.name()}
+				<d2l-list-item-content>
+					${item.name()}
+				<d2l-list-item-content>
 			</d2l-list-item>
 			`
 		);
@@ -112,14 +117,14 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			<div class="d2l-activity-collection-header">
 				<div>Edit Learning Path</div>
 				<div class="d2l-activity-collection-title">
-					<h1 class="d2l-heading-1">${this._organization.name()}</h1>
+					<h1 class="d2l-heading-1">${this._specialization.getName()}</h1>
 					<div class="d2l-activity-collection-toggle-container">
 						<d2l-switch aria-label="Visibility Toggle" label-right @click="${this._updateVisibility}"></d2l-switch>
 						<div class="d2l-label-text"><d2l-icon icon=${icon}></d2l-icon> ${term}</div>
 					</div>
 				</div>
 				<div class="d2l-body-compact">
-					${this._organization.description()}
+					${this._specialization.getDescription()}
 				</div>
 			</div>
 			<div class="d2l-activity-collection-body">

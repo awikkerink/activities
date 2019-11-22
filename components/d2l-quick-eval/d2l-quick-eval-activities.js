@@ -124,7 +124,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			<div class="d2l-quick-eval-activity-list-modifiers">
 				<d2l-hm-filter
 					href="[[filterHref]]"
-					token="[[token]]">
+					token="[[token]]"
+					lazy-load-options>
 				</d2l-hm-filter>
 				<d2l-hm-search
 					token="[[token]]"
@@ -207,7 +208,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			},
 			_showLoadingSkeleton: {
 				type: Boolean,
-				computed: '_computeShowLoadingSkeleton(_loading, searchLoading)'
+				computed: '_computeShowLoadingSkeleton(_loading, filtersLoading, searchLoading)'
 			},
 			_isError: {
 				type: Boolean,
@@ -222,13 +223,16 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			},
 			_showSearchSummary: {
 				type: Boolean,
-				computed: '_computeShowSearchSummary(_loading, searchLoading, searchApplied)'
+				computed: '_computeShowSearchSummary(_loading, filtersLoading, searchLoading, searchApplied)'
 			},
 			_initialLoad: {
 				type: Boolean,
 				value: true
 			},
 			_publishAllDialogMessage: {
+				type: String
+			},
+			dataTelemetryEndpoint: {
 				type: String
 			}
 		};
@@ -281,7 +285,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		} finally {
 			this._loading = false;
 			this._initialLoad = false;
-			this._applyFilterHref();
 		}
 	}
 
@@ -388,8 +391,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		return _data.length && !_showLoadingSkeleton;
 	}
 
-	_computeShowLoadingSkeleton(_loading, searchLoading) {
-		return _loading || searchLoading;
+	_computeShowLoadingSkeleton(_loading, filtersLoading, searchLoading) {
+		return _loading || filtersLoading || searchLoading;
 	}
 
 	_publishAll(evt) {
@@ -464,8 +467,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		return this.localize('publishAllToastMessage', 'activityName', toast.activityName);
 	}
 
-	_computeShowSearchSummary(_loading, searchLoading, searchApplied) {
-		return !_loading && !searchLoading && searchApplied;
+	_computeShowSearchSummary(_loading, filtersLoading, searchLoading, searchApplied) {
+		return !_loading && !filtersLoading && !searchLoading && searchApplied;
 	}
 
 	ready() {

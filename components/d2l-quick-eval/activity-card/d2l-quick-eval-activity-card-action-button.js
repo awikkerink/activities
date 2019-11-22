@@ -140,6 +140,10 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 			iconName: {
 				type: String
 			},
+			// Icon override, in case you don't want the default behaviour (t2 on small widths, t3 on large)
+			iconFullName: {
+				type: String
+			},
 			_labelledbyId: {
 				type: String,
 				computed: '_computeLabelledbyId()'
@@ -155,6 +159,9 @@ class D2LQuickEvalActivityCardActionButton extends mixinBehaviors(
 	}
 
 	_computeIcon(tier) {
+		if (this.iconFullName) {
+			return this.iconFullName;
+		}
 		return `d2l-tier${tier}:${this.iconName}`;
 	}
 
