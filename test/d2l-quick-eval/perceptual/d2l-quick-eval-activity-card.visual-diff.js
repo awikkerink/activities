@@ -32,6 +32,14 @@ describe('d2l-quick-eval-activity-card', function() {
 		});
 	});
 
+	it ('dismiss', async function() {
+		// The differences between this and the "regular" card is only in the buttons which only appear on hover.
+		page.hover('#dismiss');
+		await page.waitFor(2000);
+		const rect = await visualDiff.getRect(page, '#dismiss');
+		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
+	});
+
 	it('hovered', async function() {
 		page.hover('#hovered');
 		await page.waitFor(200);
@@ -45,10 +53,21 @@ describe('d2l-quick-eval-activity-card', function() {
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
 
+	it('dismiss-tablet-viewport', async function() {
+		await page.setViewport({width: 899, height: 800, deviceScaleFactor: 2});
+		const rect = await visualDiff.getRect(page, '#dismiss');
+		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
+	});
+
 	it('mobile-viewport', async function() {
 		await page.setViewport({width: 524, height: 800, deviceScaleFactor: 2});
 		const rect = await visualDiff.getRect(page, '#mobile-viewport');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
 
+	it('dismiss-mobile-viewport', async function() {
+		await page.setViewport({width: 524, height: 800, deviceScaleFactor: 2});
+		const rect = await visualDiff.getRect(page, '#dismiss');
+		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
+	});
 });
