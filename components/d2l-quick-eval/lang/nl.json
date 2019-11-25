@@ -10,6 +10,7 @@
    "confirmation" : "Bevestiging",
    "courseName" : "Cursus",
    "discussion" : "Discussie",
+   "dismissedActivities" : "Dismissed activities",
    "displayName" : "Voornaam, achternaam",
    "due" : "Uiterste datum: {date}",
    "evaluate" : "{displayName} evalueren",

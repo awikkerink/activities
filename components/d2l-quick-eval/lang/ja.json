@@ -10,6 +10,7 @@
    "confirmation" : "確認",
    "courseName" : "コース",
    "discussion" : "ディスカッション",
+   "dismissedActivities" : "Dismissed activities",
    "displayName" : "名、姓",
    "due" : "期限: {date}",
    "evaluate" : "{displayName} さんの評価",

@@ -10,6 +10,7 @@
    "confirmation" : "确认",
    "courseName" : "课程",
    "discussion" : "讨论",
+   "dismissedActivities" : "Dismissed activities",
    "displayName" : "名字，姓氏",
    "due" : "截止日期：{date}",
    "evaluate" : "评估 {displayName}",
