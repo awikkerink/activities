@@ -28,16 +28,26 @@ class D2LQuickEvalEllipsisMenu extends LitQuickEvalLocalize(LitElement) {
 		<d2l-dropdown-more>
 			<d2l-dropdown-menu>
 				<d2l-menu>
-					<d2l-menu-item @click="${() => this.opened = true}" text="${this.localize('dismissedActivities')}"></d2l-menu-item>
+					<d2l-menu-item
+					@d2l-menu-item-select="${this._open.bind(this)}"
+					text="${this.localize('dismissedActivities')}"></d2l-menu-item>
 				</d2l-menu>
 			</d2l-dropdown-menu>
 		</d2l-dropdown-more>
-		<d2l-quick-eval-ellipsis-dialog .opened="${this.opened}" @on-close="${() => this.opened = false}"></d2l-quick-eval-ellipsis-dialog>
+		<d2l-quick-eval-ellipsis-dialog .opened="${this.opened}" @on-close="${this._close.bind(this)}"></d2l-quick-eval-ellipsis-dialog>
 		`;
 	}
 
 	constructor() {
 		super();
+		this._close();
+	}
+
+	_open() {
+		this.opened = true;
+	}
+
+	_close() {
 		this.opened = false;
 	}
 
