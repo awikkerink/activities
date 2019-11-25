@@ -38,11 +38,14 @@ class D2LQuickEvalActivityCardActionButtonMore extends LitQuickEvalLocalize(LitE
 			</d2l-dropdown>
 		`;
 	}
+	constructor() {
+		super();
+		this.tabIndexNumber = 0;
+	}
 	static get properties() {
 		return {
 			tabIndexNumber: {
-				type: Number,
-				value: 0
+				type: Number
 			}
 		};
 	}
