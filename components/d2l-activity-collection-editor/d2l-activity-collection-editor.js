@@ -7,7 +7,6 @@ import { DescribableEntityMixin } from 'siren-sdk/src/entityAddons/describable-e
 import { SimpleEntity } from 'siren-sdk/src/es6/SimpleEntity.js';
 import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/button/button.js';
-import '@brightspace-ui/core/components/button/button-subtle.js';
 import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/list/list.js';
 import '@brightspace-ui/core/components/list/list-item.js';
