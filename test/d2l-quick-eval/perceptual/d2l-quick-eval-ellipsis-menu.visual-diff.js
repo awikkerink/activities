@@ -26,10 +26,21 @@ describe('d2l-quick-eval-ellipsis-menu', function() {
 		});
 	});
 
-	it('opened', async function() {
-		await page.click('#opened d2l-quick-eval-ellipsis-menu');
+	it('dropdown-opened', async function() {
+		await page.click('#dropdown-opened d2l-quick-eval-ellipsis-menu');
 		await page.waitFor(200);
-		const rect = await visualDiff.getRect(page, '#opened');
+		const rect = await visualDiff.getRect(page, '#dropdown-opened');
+		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
+	});
+
+	it('dialog-opened', async function() {
+		await page.click('#dialog-opened d2l-quick-eval-ellipsis-menu');
+		await page.waitFor(200);
+		await page.evaluate(() => {
+			document.querySelector('#dialog-opened d2l-quick-eval-ellipsis-menu').shadowRoot.querySelector('d2l-quick-eval-ellipsis-dialog').opened = true;
+		});
+		await page.waitFor(200);
+		const rect = await visualDiff.getRect(page, 'body');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
 
