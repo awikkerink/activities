@@ -10,6 +10,7 @@ export const LangAr = {
 	'confirmation': 'تأكيد',
 	'courseName': 'المقرر التعليمي',
 	'discussion': 'المناقشة',
+	'dismissedActivities': 'Dismissed activities',
 	'displayName': 'الاسم الأول، اسم العائلة',
 	'due': 'تاريخ الاستحقاق: {date}',
 	'evaluate': 'تقييم {displayName}',
@@ -57,4 +58,3 @@ export const LangAr = {
 	'viewBy': 'عرض حسب:',
 	'yes': 'نعم'
 };
-

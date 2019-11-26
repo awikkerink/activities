@@ -10,6 +10,7 @@
    "confirmation" : "Bekräftelse",
    "courseName" : "Kurs",
    "discussion" : "Diskussion",
+   "dismissedActivities" : "Dismissed activities",
    "displayName" : "Förnamn, efternamn",
    "due" : "Förfaller: {date}",
    "evaluate" : "Utvärdera {displayName}",

@@ -10,6 +10,7 @@ export const LangPt = {
 	'confirmation': 'Confirmação',
 	'courseName': 'Curso',
 	'discussion': 'Discussão',
+	'dismissedActivities': 'Dismissed activities',
 	'displayName': 'Nome e Sobrenome',
 	'due': 'Prazo: {date}',
 	'evaluate': 'Avaliar {displayName}',
@@ -52,9 +53,8 @@ export const LangPt = {
 	'submissions': 'Envios',
 	'tableTitle': 'Lista de envios de alunos não avaliados de todos os cursos e ferramentas',
 	'toggleIndicatorLabelActions': 'Executar ações em {target}',
-	'toggleIndicatorLabelInfo': 'Visualizar informação em {target}',
+	'toggleIndicatorLabelInfo': 'Exibir informações em {target}',
 	'tryAgain': 'Tentar novamente',
 	'viewBy': 'Exibir por:',
 	'yes': 'Sim'
 };
-

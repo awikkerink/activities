@@ -10,6 +10,7 @@
    "confirmation" : "Onay",
    "courseName" : "Ders",
    "discussion" : "Tartışma",
+   "dismissedActivities" : "Dismissed activities",
    "displayName" : "Ad, Soyad",
    "due" : "Bitiş:{date}",
    "evaluate" : "Değerlendir: {displayName}",

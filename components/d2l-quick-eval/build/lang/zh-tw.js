@@ -10,6 +10,7 @@ export const LangZhtw = {
 	'confirmation': '確認',
 	'courseName': '課程',
 	'discussion': '討論',
+	'dismissedActivities': 'Dismissed activities',
 	'displayName': '名字，姓氏',
 	'due': '截止日期：{date}',
 	'evaluate': '評估{displayName}',
@@ -52,9 +53,8 @@ export const LangZhtw = {
 	'submissions': '提交項目',
 	'tableTitle': '此清單包含所有課程和工具中未評估的學習者提交項目',
 	'toggleIndicatorLabelActions': '對 {target} 執行動作',
-	'toggleIndicatorLabelInfo': '在 {target} 上檢視資訊',
+	'toggleIndicatorLabelInfo': '檢視 {target} 相關資訊',
 	'tryAgain': '再試一次',
 	'viewBy': '檢視依據：',
 	'yes': '是'
 };
-

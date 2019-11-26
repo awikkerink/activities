@@ -10,6 +10,7 @@ export const LangNl = {
 	'confirmation': 'Bevestiging',
 	'courseName': 'Cursus',
 	'discussion': 'Discussie',
+	'dismissedActivities': 'Dismissed activities',
 	'displayName': 'Voornaam, achternaam',
 	'due': 'Uiterste datum: {date}',
 	'evaluate': '{displayName} evalueren',
@@ -52,7 +53,7 @@ export const LangNl = {
 	'submissions': 'Indieningen',
 	'tableTitle': 'Lijst van niet-geëvalueerde indieningen van cursisten van alle cursussen en tools',
 	'toggleIndicatorLabelActions': 'Acties uitvoeren op {target}',
-	'toggleIndicatorLabelInfo': 'Informatie over {target} weergeven',
+	'toggleIndicatorLabelInfo': 'Info weergave over {target}',
 	'tryAgain': 'Probeer het opnieuw',
 	'viewBy': 'Weergeven op:',
 	'yes': 'Ja'
