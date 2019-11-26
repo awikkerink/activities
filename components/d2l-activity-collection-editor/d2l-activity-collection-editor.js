@@ -148,5 +148,13 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			</div>
 		`;
 	}
+
+	_TitleChanged(e) {
+		this._specialization.setName(e.target.value);
+	}
+
+	_DescriptionChanged(e) {
+		this._specialization.setDescription(e.target.value)
+	}
 }
 customElements.define('d2l-activity-collection-editor', CollectionEditor);
