@@ -27,7 +27,7 @@ describe('d2l-quick-eval-activity-card', function() {
 		'publish-all-disabled',
 	].forEach((name) => {
 		it(name, async function() {
-			const rect = await visualDiff.getRect(page, `#${name}`); 
+			const rect = await visualDiff.getRect(page, `#${name}`);
 			await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 		});
 	});
