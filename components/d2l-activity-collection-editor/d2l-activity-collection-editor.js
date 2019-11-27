@@ -53,7 +53,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			_description: { type: String },
 			_items: { type: Array },
 			_name: { type: String },
-			_visibile: { type: Boolean }
+			_visible: { type: Boolean }
 		};
 	}
 
@@ -67,7 +67,6 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			}
 			.d2l-activity-collection-header {
 				box-shadow: inset 0 -1px 0 0 var(--d2l-color-gypsum);
-				width: 100%;
 				padding: 15px 30px;
 			}
 			.d2l-activity-collection-title {
@@ -97,10 +96,6 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 		` ];
 	}
 
-	_updateVisibility() {
-		this._visible = !this._visible;
-	}
-
 	render() {
 		const icon = (this._visible ? 'tier1:visibility-show' : 'tier1:visibility-hide');
 		const term = (this._visible ? 'Visible' : 'Hidden');
@@ -120,10 +115,10 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				<div>Edit Learning Path</div>
 				<div class="d2l-activity-collection-title">
 					<h1 class="d2l-heading-1 d2l-activity-collection-title-header">
-						<d2l-labs-edit-in-place size="49" placeholder="Untitled Learning Path" maxlength="128" value="${this._name()}" @change=${this._TitleChanged}></d2l-labs-edit-in-place>
+						<d2l-labs-edit-in-place size="49" placeholder="Untitled Learning Path" maxlength="128" value="${this._name}" @change=${this._TitleChanged}></d2l-labs-edit-in-place>
 					</h1>
 					<div class="d2l-activity-collection-toggle-container">
-						<d2l-switch aria-label="Visibility Toggle" label-right @click="${this._updateVisibility}"></d2l-switch>
+						<d2l-switch aria-label="Visibility Toggle" label-right @click="${() => this._visible = !this._visible}"></d2l-switch>
 						<div class="d2l-label-text d2l-activity-visbility-label"><d2l-icon icon=${icon}></d2l-icon> ${term}</div>
 					</div>
 				</div>
