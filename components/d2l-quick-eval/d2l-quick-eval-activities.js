@@ -18,7 +18,7 @@ import './activities-list/d2l-quick-eval-activities-list.js';
 import './d2l-quick-eval-activities-skeleton.js';
 import './behaviors/d2l-quick-eval-telemetry-behavior.js';
 import '@brightspace-ui/core/components/dialog/dialog-confirm.js';
-import './dismiss/d2l-quick-eval-action-dismiss-dialog.js'
+import './dismiss/d2l-quick-eval-action-dismiss-dialog.js';
 
 /**
  * @customElement
