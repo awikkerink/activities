@@ -18,6 +18,7 @@ import './activities-list/d2l-quick-eval-activities-list.js';
 import './d2l-quick-eval-activities-skeleton.js';
 import './behaviors/d2l-quick-eval-telemetry-behavior.js';
 import '@brightspace-ui/core/components/dialog/dialog-confirm.js';
+import './dismiss/d2l-quick-eval-action-dismiss-dialog.js'
 
 /**
  * @customElement
@@ -180,6 +181,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				<d2l-button slot="footer" primary dialog-action="yes">[[localize('yes')]]</d2l-button>
 				<d2l-button slot="footer" dialog-action="no">[[localize('no')]]</d2l-button>
 			</d2l-dialog-confirm>
+			<d2l-quick-eval-action-dialog></d2l-quick-eval-action-dialog>
 			<dom-repeat items="[[_publishAllToasts]]" as="toast">
 				<template>
 					<d2l-alert-toast type="default" open>[[_publishAllToastMessage(toast)]]</d2l-alert-toast>
@@ -421,7 +423,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	}
 
 	_dismissUntil() {
-		//console.log('dismiss until');
+		const actionDialog = this.shadowRoot.querySelector('d2l-quick-eval-action-dialog');
+		actionDialog.open();
 	}
 
 	_editActivity() {
