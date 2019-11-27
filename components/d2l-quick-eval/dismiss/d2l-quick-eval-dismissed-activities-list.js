@@ -30,7 +30,7 @@ class D2LQuickEvalDismissedActivitiesList extends LitQuickEvalLocalize(LitElemen
 	}
 
 	_computeSubtitleText(act) {
-		return [act.course, this.localize('dismissedOn', {date: act.dismissedDate})];
+		return [act.course, this.localize('dismissedOn', {date: this.formatDateTime(new Date(act.dismissedDate))})];
 	}
 
 	_computeIcon(type) {
