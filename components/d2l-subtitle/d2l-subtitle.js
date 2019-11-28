@@ -1,36 +1,34 @@
-import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
+import { css, html, LitElement } from 'lit-element/lit-element.js';
 
-class D2LSubtitle extends PolymerElement {
-	static get template() {
-		const subtitleTemplate =  html`
-			<style>
+class D2LSubtitle extends LitElement {
+	static get styles() {
+		return css`
+			span {
+				font-size: .6rem;
+			}
+			span::before {
+				content: "\u2022";
+				margin: .2rem;
+			}
+			:host span:first-of-type::before {
+				content: "";
+				margin: 0;
+			}
+			@media (min-width: 900px) {
 				span {
-					font-size: .6rem;
+					font-size: .7rem;
+					line-height: .9rem;
 				}
-				span::before {
-					content: "\u2022";
-					margin: .2rem;
+				:host {
+					line-height: .9rem;
 				}
-				:host span:first-of-type::before {
-					content: "";
-					margin: 0;
-				}
-				@media (min-width: 900px) {
-					span {
-						font-size: .7rem;
-						line-height: .9rem;
-					}
-					:host {
-						line-height: .9rem;
-					}
-				}
-			</style>
-			<template is="dom-repeat" items="[[_displayText]]">
-				<span>[[item]]</span>
-			</template>
+			}
 		`;
-		subtitleTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
-		return subtitleTemplate;
+	}
+	render() {
+		return html`${this._displayText && this._displayText.length ?
+			this._displayText.map(dt => html`<span>${dt}</span>`) :
+			''}`;
 	}
 
 	static get properties() {
@@ -39,10 +37,17 @@ class D2LSubtitle extends PolymerElement {
 				type: Array
 			},
 			_displayText: {
-				type: Array,
-				computed: '_computeDisplayText(text)'
+				type: Array
 			}
 		};
+	}
+
+	updated(changedProperties) {
+		changedProperties.forEach((_, propName) => {
+			if (propName === 'text') {
+				this._displayText = this._computeDisplayText(this.text);
+			}
+		});
 	}
 
 	_computeDisplayText(text) {
