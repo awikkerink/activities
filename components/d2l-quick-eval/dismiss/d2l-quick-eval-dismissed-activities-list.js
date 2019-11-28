@@ -13,10 +13,8 @@ class D2LQuickEvalDismissedActivitiesList extends LitQuickEvalLocalize(LitElemen
 				<d2l-list-item selectable>
 					<d2l-icon slot="illustration" icon="${this._computeIcon(act.type)}" aria-label="${this.localize(act.type)}"></d2l-icon>
 					<d2l-list-item-content>
-						<div>${act.name}</div>
-						<div slot="secondary">
-							<d2l-subtitle .text="${this._computeSubtitleText(act)}"></d2l-subtitle>
-						</div>
+						${act.name}
+						<d2l-subtitle slot="secondary" .text="${this._computeSubtitleText(act)}"></d2l-subtitle>
 					</d2l-list-item-content>
 				</d2l-list-item>`) : ''}
 			</d2l-list>
