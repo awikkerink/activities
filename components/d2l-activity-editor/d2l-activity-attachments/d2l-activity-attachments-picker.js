@@ -6,8 +6,9 @@ import { AttachmentCollectionEntity } from 'siren-sdk/src/activities/AttachmentC
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { getLocalizeResources } from '../localization.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { SaveStatusMixin } from '../save-status-mixin';
 
-class ActivityAttachmentsPicker extends EntityMixinLit(LocalizeMixin(LitElement)) {
+class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
 	static get properties() {
 		return {
 			_canAddLink: { type: Boolean },
@@ -63,34 +64,123 @@ class ActivityAttachmentsPicker extends EntityMixinLit(LocalizeMixin(LitElement)
 		super._entity = entity;
 	}
 
+	_openDialog(opener, settings, callback) {
+		const match = this.href.match(/\.(com|d2l)\/(\d+)\//);
+		if (!match || match.length < 3) {
+			return;
+		}
+		const orgUnitId = match[2];
+
+		const params = new URLSearchParams();
+		params.set('initialViewType', 'Items');
+		params.set('canChangeType', false); // Hides the top toolbar which allows changing the dialog picker type
+		params.set('customTitle', ''); // Hides "Insert Quicklink" title on dialog
+		params.set('outputFormat', 'html'); // Only valid value is "html"
+
+		for (const setting in settings) {
+			params.set(setting, settings[setting]);
+		}
+
+		const location = `/d2l/lp/quicklinks/manage/${orgUnitId}/CreateDialog?${params.toString()}`;
+
+		const event = D2L.LP.Web.UI.Common.MasterPages.Dialog.Open(
+			opener,
+			new D2L.LP.Web.Http.UrlLocation(location)
+		);
+
+		event.AddListener(callback);
+
+		return orgUnitId;
+	}
+
+	_launchAddQuicklinkDialog() {
+		const opener = this.shadowRoot.querySelector('#add-quicklink-button');
+		const settings = {
+			typeKey: '',
+			initialViewType: 'Default',
+			pickOnly: true // Prevents creating new items from the picker
+		};
+
+		const orgUnitId = this._openDialog(opener, settings, async event => {
+			const quicklinkUrl = `/d2l/api/lp/unstable/${orgUnitId}/quickLinks/${event.m_typeKey}/${event.m_id}`;
+			const response = await fetch(quicklinkUrl);
+			const json = await response.json();
+			this.wrapSaveAction(super._entity.addLinkAttachment(event.m_title, json.QuickLink));
+		});
+	}
+
+	_launchAddLinkDialog() {
+		const opener = this.shadowRoot.querySelector('#add-link-button');
+		const settings = {
+			typeKey: 'url',
+			showCancelButton: false, // Uses urlShowCancelButtonInline instead
+			urlShowCancelButtonInline: true, // Shows the Cancel button next to Insert button
+			urlShowTarget: false // Hides ability to set URL to open in same window/new window
+		};
+
+		this._openDialog(opener, settings, event => {
+			this.wrapSaveAction(super._entity.addLinkAttachment(event.m_title, event.m_url));
+		});
+	}
+
+	_launchAddGoogleDriveLinkDialog() {
+		const opener = this.shadowRoot.querySelector('#add-google-drive-link-button');
+		const settings = {
+			typeKey: 'google-drive',
+			customTitleLangTerm: 'Pickers.Quicklinks.titleAddMaterials',
+			showCancelButton: false // Google Drive picker has its own cancel button
+		};
+
+		this._openDialog(opener, settings, event => {
+			this.wrapSaveAction(super._entity.addGoogleDriveLinkAttachment(event.m_title, event.m_url));
+		});
+	}
+
+	_launchAddOneDriveLinkDialog() {
+		const opener = this.shadowRoot.querySelector('#add-onedrive-link-button');
+		const settings = {
+			typeKey: 'one-drive',
+			customTitleLangTerm: 'Pickers.Quicklinks.titleAddMaterials',
+			showCancelButton: false // OneDrive picker has its own cancel button
+		};
+
+		this._openDialog(opener, settings, event => {
+			this.wrapSaveAction(super._entity.addOneDriveLinkAttachment(event.m_title, event.m_url));
+		});
+	}
+
 	render() {
 		return html`
 			<div id="button-container">
 				<d2l-button-icon
 					id="add-quicklink-button"
 					icon="d2l-tier1:quicklink"
-					?hidden="${!this._canAddLink}">
+					?hidden="${!this._canAddLink}"
+					@click="${this._launchAddQuicklinkDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip for="add-quicklink-button">${this.localize('addQuicklink')}</d2l-tooltip>
 
 				<d2l-button-icon
 					id="add-link-button"
 					icon="d2l-tier1:link"
-					?hidden="${!this._canAddLink}">
+					?hidden="${!this._canAddLink}"
+					@click="${this._launchAddLinkDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip for="add-link-button">${this.localize('addLink')}</d2l-tooltip>
 
 				<d2l-button-icon
 					id="add-google-drive-link-button"
 					icon="d2l-tier1:google-drive"
-					?hidden="${!this._canAddGoogleDriveLink}">
+					?hidden="${!this._canAddGoogleDriveLink}"
+					@click="${this._launchAddGoogleDriveLinkDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip for="add-google-drive-link-button">${this.localize('addGoogleDriveLink')}</d2l-tooltip>
 
 				<d2l-button-icon
 					id="add-onedrive-link-button"
 					icon="d2l-tier1:one-drive"
-					?hidden="${!this._canAddOneDriveLink}">
+					?hidden="${!this._canAddOneDriveLink}"
+					@click="${this._launchAddOneDriveLinkDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip for="add-onedrive-link-button">${this.localize('addOneDriveLink')}</d2l-tooltip>
 			</div>
