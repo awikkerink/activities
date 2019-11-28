@@ -9,7 +9,7 @@ import '../../d2l-subtitle/d2l-subtitle.js';
 class D2LQuickEvalDismissedActivitiesList extends LitQuickEvalLocalize(LitElement) {
 	render() {
 		return html`
-			<d2l-list separators>${this.dismissedActivities && this.dismissedActivities.length ? this.dismissedActivities.map(act => html`
+			<d2l-list separators="all">${this.dismissedActivities && this.dismissedActivities.length ? this.dismissedActivities.map(act => html`
 				<d2l-list-item selectable>
 					<d2l-icon slot="illustration" icon="${this._computeIcon(act.type)}" aria-label="${this.localize(act.type)}"></d2l-icon>
 					<d2l-list-item-content>
