@@ -5,8 +5,9 @@ import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { getLocalizeResources } from './localization';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { SaveStatusMixin } from './save-status-mixin';
+import { connect } from './connect-mixin.js';
 
-class ActivityDueDateEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
+class ActivityDueDateEditor extends connect(SaveStatusMixin(EntityMixinLit(LocalizeMixin(LitElement)))) {
 
 	static get properties() {
 		return {

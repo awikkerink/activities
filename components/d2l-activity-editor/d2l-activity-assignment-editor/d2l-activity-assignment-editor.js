@@ -4,8 +4,9 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentActivityUsageEntity } from 'siren-sdk/src/activities/assignments/AssignmentActivityUsageEntity.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { PendingContainerMixin } from 'siren-sdk/src/mixin/pending-container-mixin.js';
+import { ProviderMixin } from '../instance-provider-mixin.js';
 
-class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement)) {
+class AssignmentEditor extends ProviderMixin(PendingContainerMixin(EntityMixinLit(LitElement))) {
 
 	static get properties() {
 		return {
@@ -28,6 +29,14 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 	constructor() {
 		super();
 		this._setEntityType(AssignmentActivityUsageEntity);
+		this.provideInstance('store', {
+			subscribe() {
+				return () => {};
+			},
+			getState() {
+				return {};
+			}
+		})
 	}
 
 	set _entity(entity) {
