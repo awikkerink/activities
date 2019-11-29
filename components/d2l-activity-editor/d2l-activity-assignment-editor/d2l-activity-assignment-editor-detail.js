@@ -1,7 +1,9 @@
 import 'd2l-inputs/d2l-input-text.js';
 import '../d2l-activity-due-date-editor.js';
+import 'd2l-inputs/d2l-input-checkbox.js';
 import '../d2l-activity-text-editor.js';
 import '../d2l-activity-visibility-editor.js';
+import '../d2l-activity-attachments/d2l-activity-attachments-editor.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
@@ -30,7 +32,10 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 			_canEditSubmissionType: { type: Boolean },
 			_completionTypes: { type: Array },
 			_canEditCompletionType: { type: Boolean },
-			_showCompletionType: { type: Boolean }
+			_showCompletionType: { type: Boolean },
+			_canSeeAnnotations: {type: Boolean },
+			_annotationToolsAvailable: { type: Boolean },
+			_attachmentsHref: { type: String }
 		};
 	}
 
@@ -88,6 +93,9 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		this._canEditSubmissionType = assignment.canEditSubmissionType();
 		this._completionTypes = assignment.completionTypeOptions();
 		this._canEditCompletionType = assignment.canEditCompletionType();
+		this._canSeeAnnotations = assignment.canSeeAnnotations();
+		this._annotationToolsAvailable = assignment.getAvailableAnnotationTools();
+		this._attachmentsHref = assignment.attachmentsCollectionHref();
 	}
 
 	_saveOnChange(jobName) {
@@ -168,6 +176,11 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		`;
 	}
 
+	_toggleAnnotationToolsAvailability() {
+		this._annotationToolsAvailable = !this._annotationToolsAvailable;
+		this.wrapSaveAction(super._entity.setAnnotationToolsAvailability(this._annotationToolsAvailable));
+	}
+
 	render() {
 		return html`
 			<div id="assignment-visibility-container">
@@ -232,6 +245,24 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 					${this._getCompletionTypeOptions()}
 				</select>
 			</div>
+
+			<div id="assignment-attachments-editor-container" ?hidden="${!this._attachmentsHref}">
+				<d2l-activity-attachments-editor
+					.href="${this._attachmentsHref}"
+					.token="${this.token}">
+				</d2l-activity-attachments-editor>
+			</div>
+
+			<div id="annotations-checkbox-container" ?hidden="${!this._canSeeAnnotations}">
+				<label class="d2l-label-text">${this.localize('annotationTools')}</label>
+					<d2l-input-checkbox
+						@change="${this._toggleAnnotationToolsAvailability}"
+						?checked="${this._annotationToolsAvailable}">
+						ariaLabel=${this.localize('annotationToolDescription')}>
+						${this.localize('annotationToolDescription')}
+					</d2l-input-checkbox>
+			</div>
+
 		`;
 	}
 }
