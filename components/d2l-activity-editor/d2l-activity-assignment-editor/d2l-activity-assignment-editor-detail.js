@@ -257,8 +257,8 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				<label class="d2l-label-text">${this.localize('annotationTools')}</label>
 					<d2l-input-checkbox
 						@change="${this._toggleAnnotationToolsAvailability}"
-						?checked="${this._annotationToolsAvailable}">
-						ariaLabel=${this.localize('annotationToolDescription')}>
+						?checked="${this._annotationToolsAvailable}"
+						ariaLabel="${this.localize('annotationToolDescription')}">
 						${this.localize('annotationToolDescription')}
 					</d2l-input-checkbox>
 			</div>
