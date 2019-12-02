@@ -47,4 +47,4 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 	}
 }
 
-window.customElements.define('d2l-quick-eval-action-dialog', D2LQuickEvalActionDialog);
+window.customElements.define('d2l-quick-eval-action-dismiss-dialog', D2LQuickEvalActionDialog);

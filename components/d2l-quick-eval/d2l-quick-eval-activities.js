@@ -181,7 +181,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				<d2l-button slot="footer" primary dialog-action="yes">[[localize('yes')]]</d2l-button>
 				<d2l-button slot="footer" dialog-action="no">[[localize('no')]]</d2l-button>
 			</d2l-dialog-confirm>
-			<d2l-quick-eval-action-dialog></d2l-quick-eval-action-dialog>
+			<d2l-quick-eval-action-dismiss-dialog></d2l-quick-eval-action-dismiss-dialog>
 			<dom-repeat items="[[_publishAllToasts]]" as="toast">
 				<template>
 					<d2l-alert-toast type="default" open>[[_publishAllToastMessage(toast)]]</d2l-alert-toast>
@@ -423,7 +423,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	}
 
 	_dismissUntil() {
-		const actionDialog = this.shadowRoot.querySelector('d2l-quick-eval-action-dialog');
+		const actionDialog = this.shadowRoot.querySelector('d2l-quick-eval-action-dismiss-dialog');
 		actionDialog.open();
 	}
 
