@@ -27,10 +27,10 @@ class D2LSubtitle extends LitElement {
 	}
 	render() {
 		const displayText = this._computeDisplayText(this.text);
-
-		return html`${displayText && displayText.length ?
-			displayText.map(dt => html`<span>${dt}</span>`) :
-			''}`;
+		if (displayText && displayText.length) {
+			return html`${displayText.map(dt => html`<span>${dt}</span>`)}`;
+		}
+		return html``;
 	}
 
 	static get properties() {
@@ -42,7 +42,10 @@ class D2LSubtitle extends LitElement {
 	}
 
 	_computeDisplayText(text) {
-		return text.filter(t => t !== null && t !== undefined && t !== '');
+		if (text) {
+			return text.filter(t => t !== null && t !== undefined && t !== '');
+		}
+		return text;
 	}
 }
 
