@@ -20,6 +20,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 		super();
 		this._visible = false;
 		this._items = [];
+		this._specialization = {};
 		this._setEntityType(ActivityUsageEntity);
 	}
 
@@ -27,13 +28,14 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 		if (this._entityHasChanged(entity)) {
 			this._onActivityUsageChange(entity);
 			super._entity = entity;
-			this.requestUpdate();
 		}
 	}
 
 	_onActivityUsageChange(usage) {
 		usage.onSpecializationChange(NamedEntityMixin(DescribableEntityMixin(SimpleEntity)), (specialization) => {
 			this._specialization = specialization;
+			this._name = specialization.getName();
+			this._description = specialization.getDescription();
 		});
 		this._items = [];
 		usage.onActivityCollectionChange((collection => {
@@ -41,7 +43,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				item.onActivityUsageChange((usage) => {
 					usage.onOrganizationChange((organization) => {
 						this._items[index] = organization;
-						this.requestUpdate();
+						this.requestUpdate('_items', []);
 					});
 				});
 			});
@@ -50,18 +52,11 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 
 	static get properties() {
 		return {
-			_visibile: {
-				type: Boolean
-			},
-			_collection: {
-				type: Object
-			},
-			_specialization: {
-				type: Object
-			},
-			_items: {
-				type: Array
-			}
+			_description: { type: String },
+			_items: { type: Array },
+			_name: { type: String },
+			_specialization: { type: Object },
+			_visible: { type: Boolean }
 		};
 	}
 
@@ -75,7 +70,6 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			}
 			.d2l-activity-collection-header {
 				box-shadow: inset 0 -1px 0 0 var(--d2l-color-gypsum);
-				width: 100%;
 				padding: 15px 30px;
 			}
 			.d2l-activity-collection-title {
@@ -105,11 +99,6 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 		` ];
 	}
 
-	_updateVisibility() {
-		this._visible = !this._visible;
-		this.requestUpdate();
-	}
-
 	render() {
 		const icon = (this._visible ? 'tier1:visibility-show' : 'tier1:visibility-hide');
 		const term = (this._visible ? 'Visible' : 'Hidden');
@@ -129,15 +118,15 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				<div>Edit Learning Path</div>
 				<div class="d2l-activity-collection-title">
 					<h1 class="d2l-heading-1 d2l-activity-collection-title-header">
-						<d2l-labs-edit-in-place size="49" placeholder="Untitled Learning Path" maxlength="128" value="${this._specialization.getName()}" @change=${this._TitleChanged}></d2l-labs-edit-in-place>
+						<d2l-labs-edit-in-place size="49" placeholder="Untitled Learning Path" maxlength="128" value="${this._name}" @change=${this._titleChanged}></d2l-labs-edit-in-place>
 					</h1>
 					<div class="d2l-activity-collection-toggle-container">
-						<d2l-switch aria-label="Visibility Toggle" label-right @click="${this._updateVisibility}"></d2l-switch>
+						<d2l-switch aria-label="Visibility Toggle" label-right @click="${() => this._visible = !this._visible}"></d2l-switch>
 						<div class="d2l-label-text d2l-activity-visbility-label"><d2l-icon icon=${icon}></d2l-icon> ${term}</div>
 					</div>
 				</div>
 				<div class="d2l-body-compact">
-					<d2l-labs-edit-in-place size="49" placeholder="Enter a description" value="${this._specialization.getDescription()}" @change=${this._DescriptionChanged}></d2l-labs-edit-in-place>
+					<d2l-labs-edit-in-place size="49" placeholder="Enter a description" value="${this._description}" @change=${this._descriptionChanged}></d2l-labs-edit-in-place>
 				</div>
 			</div>
 			<div class="d2l-activity-collection-body">
@@ -149,12 +138,12 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 		`;
 	}
 
-	_TitleChanged(e) {
-		this._specialization.setName(e.target.value);
+	_titleChanged(e) {
+		this._specialization.setName && this._specialization.setName(e.target.value);
 	}
 
-	_DescriptionChanged(e) {
-		this._specialization.setDescription(e.target.value);
+	_descriptionChanged(e) {
+		this._specialization.setDescription && this._specialization.setDescription(e.target.value);
 	}
 }
 customElements.define('d2l-activity-collection-editor', CollectionEditor);
