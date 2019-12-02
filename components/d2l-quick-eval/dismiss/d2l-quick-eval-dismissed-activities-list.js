@@ -40,7 +40,7 @@ class D2LQuickEvalDismissedActivitiesList extends LitQuickEvalLocalize(LitElemen
 			case 'discussion':
 				return 'tier2:discussions';
 		}
-		return '';
+		throw new Error(`Activity type '${type}' is not a valid type for quick eval.`);
 	}
 }
 
