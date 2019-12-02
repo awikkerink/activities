@@ -26,19 +26,16 @@ class D2LSubtitle extends LitElement {
 		`;
 	}
 	render() {
-		this._displayText = this._computeDisplayText(this.text);
+		const displayText = this._computeDisplayText(this.text);
 
-		return html`${this._displayText && this._displayText.length ?
-			this._displayText.map(dt => html`<span>${dt}</span>`) :
+		return html`${displayText && displayText.length ?
+			displayText.map(dt => html`<span>${dt}</span>`) :
 			''}`;
 	}
 
 	static get properties() {
 		return {
 			text: {
-				type: Array
-			},
-			_displayText: {
 				type: Array
 			}
 		};
