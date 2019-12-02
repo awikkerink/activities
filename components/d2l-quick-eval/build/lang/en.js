@@ -13,6 +13,7 @@ export const LangEn = {
 	'discussion': 'Discussion',
 	'dismissedActivities': 'Dismissed activities',
 	'dismissedActivitiesList': 'Dismissed Activities List',
+	'dismissedOn': 'Dismissed on {date}',
 	'dismissUntil': 'Dismiss until...',
 	'displayName': 'First Name, Last Name',
 	'due': 'Due: {date}',
