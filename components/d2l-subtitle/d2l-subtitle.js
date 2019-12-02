@@ -27,7 +27,7 @@ class D2LSubtitle extends LitElement {
 	}
 	render() {
 		this._displayText = this._computeDisplayText(this.text);
-		
+
 		return html`${this._displayText && this._displayText.length ?
 			this._displayText.map(dt => html`<span>${dt}</span>`) :
 			''}`;
