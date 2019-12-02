@@ -26,6 +26,8 @@ class D2LSubtitle extends LitElement {
 		`;
 	}
 	render() {
+		this._displayText = this._computeDisplayText(this.text);
+		
 		return html`${this._displayText && this._displayText.length ?
 			this._displayText.map(dt => html`<span>${dt}</span>`) :
 			''}`;
@@ -40,14 +42,6 @@ class D2LSubtitle extends LitElement {
 				type: Array
 			}
 		};
-	}
-
-	updated(changedProperties) {
-		changedProperties.forEach((_, propName) => {
-			if (propName === 'text') {
-				this._displayText = this._computeDisplayText(this.text);
-			}
-		});
 	}
 
 	_computeDisplayText(text) {
