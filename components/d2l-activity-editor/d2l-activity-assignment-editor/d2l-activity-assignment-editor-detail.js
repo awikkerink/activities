@@ -1,16 +1,18 @@
 import 'd2l-inputs/d2l-input-text.js';
+import '../d2l-activity-availability-dates-editor.js';
 import '../d2l-activity-due-date-editor.js';
+import '../d2l-activity-release-conditions-editor.js';
 import 'd2l-inputs/d2l-input-checkbox.js';
 import '../d2l-activity-text-editor.js';
 import '../d2l-activity-visibility-editor.js';
 import '../d2l-activity-attachments/d2l-activity-attachments-editor.js';
+import { bodySmallStyles, heading4Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ErrorHandlingMixin } from '../error-handling-mixin.js';
 import { getLocalizeResources } from '../localization.js';
-import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { SaveStatusMixin } from '../save-status-mixin.js';
 import { selectStyles } from '../select-styles.js';
@@ -40,7 +42,12 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 	}
 
 	static get styles() {
-		return [labelStyles, selectStyles, css`
+		return [
+			bodySmallStyles,
+			heading4Styles,
+			labelStyles,
+			selectStyles,
+			css`
 			:host {
 				display: block;
 			}
@@ -55,7 +62,16 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				width: 300px;
 				display: block;
 			}
-		`];
+
+			.d2l-heading-4 {
+				margin: 0 0 0.6rem 0;
+			}
+
+			.d2l-body-small {
+				margin: 0 0 0.3rem 0;
+			}
+			`
+		];
 	}
 
 	static async getLocalizeResources(langs) {
@@ -253,12 +269,35 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				</select>
 			</div>
 
+			<div id="availability-dates-container">
+				<d2l-activity-availability-dates-editor
+					.href="${this._activityUsageHref}"
+					.token="${this.token}">
+				</d2l-activity-availability-dates-editor>
+			</div>
+
+			<div id="assignment-attachments-editor-container" ?hidden="${!this._attachmentsHref}">
+				<d2l-activity-attachments-editor
+					.href="${this._attachmentsHref}"
+					.token="${this.token}">
+				</d2l-activity-attachments-editor>
+			</div>
+
+			<div id="assignment-release-conditions-container">
+				<h3 class="d2l-heading-4">${this.localize('hdrReleaseConditions')}</h3>
+				<p class="d2l-body-small">${this.localize('hlpReleaseConditions')}</p>
+				<d2l-activity-release-conditions-editor
+					.href="${this._activityUsageHref}"
+					.token="${this.token}">
+				</d2l-activity-release-conditions-editor>
+			</div>
+
 			<div id="annotations-checkbox-container" ?hidden="${!this._canSeeAnnotations}">
 				<label class="d2l-label-text">${this.localize('annotationTools')}</label>
 					<d2l-input-checkbox
 						@change="${this._toggleAnnotationToolsAvailability}"
-						?checked="${this._annotationToolsAvailable}">
-						ariaLabel=${this.localize('annotationToolDescription')}>
+						?checked="${this._annotationToolsAvailable}"
+						ariaLabel="${this.localize('annotationToolDescription')}">
 						${this.localize('annotationToolDescription')}
 					</d2l-input-checkbox>
 			</div>

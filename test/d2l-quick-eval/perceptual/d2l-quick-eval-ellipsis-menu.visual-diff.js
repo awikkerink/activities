@@ -39,7 +39,7 @@ describe('d2l-quick-eval-ellipsis-menu', function() {
 		await page.evaluate(() => {
 			document.querySelector('#dialog-opened d2l-quick-eval-ellipsis-menu').shadowRoot.querySelector('d2l-quick-eval-ellipsis-dialog').opened = true;
 		});
-		await page.waitFor(200);
+		await page.waitFor(2000);
 		const rect = await visualDiff.getRect(page, 'body');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
