@@ -1,6 +1,7 @@
 /* eslint quotes: 0 */
 
 export default {
+	"btnEditReleaseConditions": "Edit Release Conditions", // edit release conditions button
 	"dueDate": "Due Date", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "End Date", // ARIA label for the due date field when creating/editing an activity
 	"startDate": "Start Date", // ARIA label for the due date field when creating/editing an activity
