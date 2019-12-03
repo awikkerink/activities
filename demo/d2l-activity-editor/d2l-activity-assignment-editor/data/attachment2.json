@@ -1,0 +1,25 @@
+{
+  "class": [
+    "link"
+  ],
+  "properties": {
+    "name": "A Quicklink to another Assignment",
+    "href": "/d2l/common/dialogs/quickLink/quickLink.d2l?ou=6613&type=dropbox&rcode=Dev-4"
+  },
+  "links": [
+    {
+      "rel": [
+        "self"
+      ],
+      "href": "https://48f75f25-ef9b-47aa-b86a-d32525a5dcac.assignments.api.proddev.d2l/6613/folders/3/links/1"
+    }
+  ],
+  "actions": [
+    {
+      "title": "Delete link",
+      "href": "https://48f75f25-ef9b-47aa-b86a-d32525a5dcac.assignments.api.proddev.d2l/6613/folders/3/links/1",
+      "name": "delete",
+      "method": "DELETE"
+    }
+  ]
+}
