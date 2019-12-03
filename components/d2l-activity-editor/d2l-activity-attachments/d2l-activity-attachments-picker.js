@@ -74,7 +74,6 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 		const params = new URLSearchParams();
 		params.set('initialViewType', 'Items');
 		params.set('canChangeType', false); // Hides the top toolbar which allows changing the dialog picker type
-		params.set('customTitle', ''); // Hides "Insert Quicklink" title on dialog
 		params.set('outputFormat', 'html'); // Only valid value is "html"
 
 		for (const setting in settings) {
@@ -113,6 +112,7 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 		const opener = this.shadowRoot.querySelector('#add-link-button');
 		const settings = {
 			typeKey: 'url',
+			customTitle: '', // Hides "Insert Quicklink" title on dialog
 			showCancelButton: false, // Uses urlShowCancelButtonInline instead
 			urlShowCancelButtonInline: true, // Shows the Cancel button next to Insert button
 			urlShowTarget: false // Hides ability to set URL to open in same window/new window
