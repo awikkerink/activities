@@ -276,13 +276,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				</d2l-activity-availability-dates-editor>
 			</div>
 
-			<div id="assignment-attachments-editor-container" ?hidden="${!this._attachmentsHref}">
-				<d2l-activity-attachments-editor
-					.href="${this._attachmentsHref}"
-					.token="${this.token}">
-				</d2l-activity-attachments-editor>
-			</div>
-
 			<div id="assignment-release-conditions-container">
 				<h3 class="d2l-heading-4">${this.localize('hdrReleaseConditions')}</h3>
 				<p class="d2l-body-small">${this.localize('hlpReleaseConditions')}</p>
