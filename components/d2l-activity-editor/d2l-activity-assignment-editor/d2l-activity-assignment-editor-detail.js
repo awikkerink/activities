@@ -240,6 +240,13 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				</d2l-activity-text-editor>
 			</div>
 
+			<div id="assignment-attachments-editor-container" ?hidden="${!this._attachmentsHref}">
+				<d2l-activity-attachments-editor
+					.href="${this._attachmentsHref}"
+					.token="${this.token}">
+				</d2l-activity-attachments-editor>
+			</div>
+
 			<div id="assignment-submission-type-container">
 				<label class="d2l-label-text" for="assignment-submission-type">${this.localize('submissionType')}</label>
 				<select
