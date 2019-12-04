@@ -306,6 +306,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				const activityNameHref = this._getActivityNameHref(activity);
 				const activityName = await this._getActivityName(activity);
 				const evaluationStatusHref = this.getEvaluationStatusHref(activity);
+				const dismissHref = this.getDismissHref(activity);
 				return {
 					courseName: courseName,
 					assigned: evalStatus.assigned,
@@ -323,7 +324,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					activityType: this._getActivityType(activity),
 					activityNameHref: activityNameHref,
 					activityName: activityName,
-					evaluationStatusHref: evaluationStatusHref
+					evaluationStatusHref: evaluationStatusHref,
+					dismissHref: dismissHref
 				};
 			} catch (e) {
 				this._logError(e, {developerMessage: `Error loading activity data for ${this._getHref(activity, 'self')}.`});

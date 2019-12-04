@@ -81,6 +81,11 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 		return entity.getLinkByRel(Rels.Activities.evaluationStatus).href;
 	},
 
+	getDismissHref: function(entity) {
+		//TODO: change once it's in its final form in HM constants.
+		return entity.getLinkByRel('https://api.brightspace.com/rels/dismiss');
+	},
+
 	_getEvaluationStatusPromise: async function(entity, extraParams) {
 		return this._followLink(entity, Rels.Activities.evaluationStatus)
 			.then(function(e) {
