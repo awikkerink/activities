@@ -29,14 +29,6 @@ class AssignmentEditor extends ProviderMixin(PendingContainerMixin(EntityMixinLi
 	constructor() {
 		super();
 		this._setEntityType(AssignmentActivityUsageEntity);
-		this.provideInstance('store', {
-			subscribe() {
-				return () => {};
-			},
-			getState() {
-				return {};
-			}
-		})
 	}
 
 	set _entity(entity) {

@@ -1,17 +1,18 @@
 import 'd2l-datetime-picker/d2l-datetime-picker';
 import { css, html, LitElement } from 'lit-element/lit-element';
-import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
-import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
+import { connect } from './connect-mixin.js';
+import { ActivityEditorMixin } from './d2l-activity-editor-mixin.js';
 import { getLocalizeResources } from './localization';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
-import { SaveStatusMixin } from './save-status-mixin';
-import { connect } from './connect-mixin.js';
+import activityUsage  from './state/reducers/activity-usage.js';
+import { fetchEntity, updateDueDate } from './state/actions/activity-usage.js';
 
-class ActivityDueDateEditor extends connect(SaveStatusMixin(EntityMixinLit(LocalizeMixin(LitElement)))) {
+class ActivityDueDateEditor extends connect(ActivityEditorMixin(LocalizeMixin(LitElement))) {
 
 	static get properties() {
 		return {
 			_date: { type: String },
+			_canEdit: { type: Boolean },
 			_overrides: { type: Object }
 		};
 	}
@@ -33,39 +34,55 @@ class ActivityDueDateEditor extends connect(SaveStatusMixin(EntityMixinLit(Local
 
 	constructor() {
 		super();
-		this._setEntityType(ActivityUsageEntity);
+		// this._setEntityType(ActivityUsageEntity);
 		this._date = '';
 		this._overrides = document.documentElement.dataset.intlOverrides || '{}';
 	}
 
-	set _entity(entity) {
-		if (!this._entityHasChanged(entity)) {
-			return;
-		}
+	get _reducers() {
+		return { activityUsage };
+	}
 
-		if (entity) {
-			this._date = entity.dueDate();
-		}
+	_mapStateToProps(state) {
+		const activity = state.activityUsage.entities[this.href];
+		return activity ? {
+			_date: activity.dueDate,
+			_canEdit: activity.canEditDueDate
+		} : {};
+	}
 
-		super._entity = entity;
+	_mapDispatchToProps(dispatch) {
+		return {
+			_fetchEntity: () => dispatch(fetchEntity(this.href, this.token)),
+			_updateDueDate: (date) => dispatch(updateDueDate(this.href, this.token, date))
+		}
+	}
+
+	updated(changedProperties) {
+		super.updated(changedProperties);
+
+		if ((changedProperties.has('href') || changedProperties.has('token')) &&
+			this.href && this.token) {
+			this._fetchEntity();
+		}
 	}
 
 	_onDatetimePickerDatetimeCleared() {
-		this.wrapSaveAction(super._entity.setDueDate(''));
+		this._updateDueDate('');
 	}
 
 	_onDatetimePickerDatetimeChanged(e) {
 		if (e.detail.isSame(this._date)) {
 			return;
 		}
-
-		this.wrapSaveAction(super._entity.setDueDate(e.detail.toISOString()));
+		this._updateDueDate(e.detail.toISOString());
 	}
 
 	render() {
 		return html`
 			<div id="datetime-picker-container">
 				<d2l-datetime-picker
+					?disabled="${!this._canEdit}"
 					hide-label
 					name="date"
 					id="date"

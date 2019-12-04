@@ -1,14 +1,16 @@
 import '@d2l/switch/d2l-switch.js';
 import 'd2l-colors/d2l-colors';
 import { css, html, LitElement } from 'lit-element/lit-element';
-import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
-import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { getLocalizeResources } from './localization';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
-import { SaveStatusMixin } from './save-status-mixin';
+import activityUsage from './state/reducers/activity-usage.js';
+import { fetchEntity, updateVisibility } from './state/actions/activity-usage.js';
+import { connect } from './connect-mixin.js';
+import { ActivityEditorMixin } from './d2l-activity-editor-mixin.js';
 
 const baseUrl = import.meta.url;
-class ActivityVisibilityEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
+
+class ActivityVisibilityEditor extends connect(ActivityEditorMixin(LocalizeMixin(LitElement))) {
 
 	static get properties() {
 		return {
@@ -38,27 +40,35 @@ class ActivityVisibilityEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMi
 
 	constructor() {
 		super();
-		this._setEntityType(ActivityUsageEntity);
 		this._isDraft = false;
 	}
 
-	set _entity(entity) {
-		if (this._entityHasChanged(entity)) {
-			this._onActivityUsageChange(entity);
-		}
-
-		super._entity = entity;
+	get _reducers() {
+		return { activityUsage };
 	}
 
-	_onActivityUsageChange(activityUsage) {
-		if (activityUsage) {
-			this._isDraft = activityUsage.isDraft();
-			this._canEditDraft = activityUsage.canEditDraft();
+	_mapStateToProps(state) {
+		const activity = state.activityUsage.entities[this.href];
+		return activity ? {
+			_isDraft: activity.isDraft,
+			_canEditDraft: activity.canEditDraft,
+		} : {};
+	}
+
+	_mapDispatchToProps(dispatch) {
+		return {
+			_fetchEntity: () => dispatch(fetchEntity(this.href, this.token)),
+			_updateVisibility: () => dispatch(updateVisibility(this.href, this.token, !this._isDraft))
 		}
 	}
 
-	_updateVisibility() {
-		this.wrapSaveAction(super._entity.setDraftStatus(!this._isDraft));
+	updated(changedProperties) {
+		super.updated(changedProperties);
+
+		if ((changedProperties.has('href') || changedProperties.has('token')) &&
+			this.href && this.token) {
+			this._fetchEntity(this.href, this.token);
+		}
 	}
 
 	render() {

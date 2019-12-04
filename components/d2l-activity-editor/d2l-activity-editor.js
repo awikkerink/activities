@@ -1,7 +1,10 @@
 import 'd2l-save-status/d2l-save-status.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { ProviderMixin } from './instance-provider-mixin.js';
+import { store } from './state/store.js';
 
-class ActivityEditor extends LitElement {
+
+class ActivityEditor extends ProviderMixin(LitElement) {
 
 	static get properties() {
 		return {
@@ -22,6 +25,11 @@ class ActivityEditor extends LitElement {
 				padding-bottom: 20px;
 			}
 		`;
+	}
+
+	constructor() {
+		super();
+		this.provideInstance('activity-store', store);
 	}
 
 	firstUpdated(changedProperties) {
