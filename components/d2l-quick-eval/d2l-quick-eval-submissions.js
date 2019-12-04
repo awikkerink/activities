@@ -98,6 +98,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 					token="[[token]]"
 					category-whitelist="[[_filterIds]]"
 					result-size="[[_numberOfActivitiesToShow]]"
+					on-d2l-hm-filter-filters-loaded="_handleFilterLoad"
 					lazy-load-options>
 				</d2l-hm-filter>
 				<d2l-hm-search
@@ -265,23 +266,14 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	}
 
 	async _loadData(entity) {
+		this._loading = true;
 		if (!entity) {
 			return Promise.resolve();
 		}
-		this._loading = true;
 
 		if (this._initialLoad) {
 			this.filterAppliedShortcut();
 			this.searchAppliedShortcut();
-		}
-
-		if (this._initialLoad &&
-			entity.hasClass('empty') &&
-			(this.searchApplied || this.filterApplied)
-		) {
-			await this._clearFilterAndSearch();
-			this._initialLoad = false;
-			return;
 		}
 
 		try {
@@ -393,6 +385,21 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		}
 		if (this.searchApplied) {
 			await this.clearSearchResults();
+		}
+	}
+
+	async _handleFilterLoad() {
+		if(this._initialLoad) {
+			this._loading = true;
+			await this._filterLoadHandler().then ( () => {
+				this._loading = false;
+			} )
+		}
+	}
+
+	async _filterLoadHandler() {
+		if(this.entity && this.entity.getSubEntities().length == 0) {
+			await this._clearFilterAndSearch();
 		}
 	}
 
