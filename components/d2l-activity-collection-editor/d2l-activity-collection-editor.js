@@ -10,15 +10,14 @@ import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/list/list.js';
 import '@brightspace-ui/core/components/list/list-item.js';
-import '@d2l/switch/d2l-switch.js';
 import 'd2l-organizations/components/d2l-organization-image/d2l-organization-image.js';
 import '@brightspace-ui-labs/edit-in-place/d2l-labs-edit-in-place.js';
+import '../d2l-activity-editor/d2l-activity-visibility-editor.js';
 
 class CollectionEditor extends EntityMixinLit(LitElement) {
 
 	constructor() {
 		super();
-		this._visible = false;
 		this._items = [];
 		this._specialization = {};
 		this._setEntityType(ActivityUsageEntity);
@@ -32,6 +31,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 	}
 
 	_onActivityUsageChange(usage) {
+
 		usage.onSpecializationChange(NamedEntityMixin(DescribableEntityMixin(SimpleEntity)), (specialization) => {
 			this._specialization = specialization;
 			this._name = specialization.getName();
@@ -55,8 +55,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			_description: { type: String },
 			_items: { type: Array },
 			_name: { type: String },
-			_specialization: { type: Object },
-			_visible: { type: Boolean }
+			_specialization: { type: Object }
 		};
 	}
 
@@ -100,8 +99,6 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 	}
 
 	render() {
-		const icon = (this._visible ? 'tier1:visibility-show' : 'tier1:visibility-hide');
-		const term = (this._visible ? 'Visible' : 'Hidden');
 		const items = this._items.map(item =>
 			html`
 			<d2l-list-item>
@@ -121,8 +118,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 						<d2l-labs-edit-in-place size="49" placeholder="Untitled Learning Path" maxlength="128" value="${this._name}" @change=${this._titleChanged}></d2l-labs-edit-in-place>
 					</h1>
 					<div class="d2l-activity-collection-toggle-container">
-						<d2l-switch aria-label="Visibility Toggle" label-right @click="${() => this._visible = !this._visible}"></d2l-switch>
-						<div class="d2l-label-text d2l-activity-visbility-label"><d2l-icon icon=${icon}></d2l-icon> ${term}</div>
+						<d2l-activity-visibility-editor .href="${this.href}" .token="${this.token}"></d2l-activity-visibility-editor>
 					</div>
 				</div>
 				<div class="d2l-body-compact">
