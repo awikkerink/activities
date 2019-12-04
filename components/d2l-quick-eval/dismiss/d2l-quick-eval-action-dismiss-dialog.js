@@ -92,31 +92,11 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 		if (selectedRadio === DISMISS_UNTIL_OPTIONS.date) {
 			return html`
 				<div class="datepicker-container">
-					<d2l-datetime-picker placeholder="${this.getPlaceHOlderFormat()}" hide-label></d2l-datetime-picker>
+					<d2l-datetime-picker placeholder="MM|DD|YYYY" hide-label></d2l-datetime-picker>
 				</div>
 			`;
 		}
 		return null;
-	}
-
-	getPlaceHOlderFormat() {
-		const overrides = this.tryParseHtmlElemAttr('data-intl-overrides', {});
-		if (overrides && overrides.date && overrides.date.formats && overrides.date.formats.dateFormats && overrides.date.formats.dateFormats.short) {
-			return overrides.date.formats.dateFormats.short;
-		}
-		return 'MM|DD|YYYY';
-	}
-
-	tryParseHtmlElemAttr(attrName, defaultValue) {
-		const htmlElem = window.document.getElementsByTagName('html')[0];
-		if (htmlElem.hasAttribute(attrName)) {
-			try {
-				return JSON.parse(htmlElem.getAttribute(attrName));
-			} catch (e) {
-				throw new Error("Could not fetch 'data-intl-overrides' attribute in the html tag");
-			}
-		}
-		return defaultValue;
 	}
 
 	_genGroupID() {
