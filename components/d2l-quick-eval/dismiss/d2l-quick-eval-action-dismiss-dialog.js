@@ -6,6 +6,7 @@ import { labelStyles, bodyStandardStyles } from '@brightspace-ui/core/components
 import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@brightspace-ui/core/components/button/button.js';
 import 'd2l-datetime-picker/d2l-datetime-picker.js';
+import 'd2l-polymer-behaviors/d2l-id.js';
 
 // shim for vaadin calendar to overlay on top of the dialog
 (()=>{
@@ -50,6 +51,8 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 	}
 
 	render() {
+		const groupID = this._genGroupID();
+
 		return html`
 			<d2l-dialog title-text="Dismiss Activity">
 				<div class="d2l-body-standard">Dismissing an activity hides it from Quick Eval, but won't affect the activity</div>
@@ -57,12 +60,12 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 				<p class="d2l-label-text">Dismiss until...</p>
 				<div class="radio-container">
 					<label class="d2l-input-radio-label">
-						<input @change="${this._updateProp.bind(this, DISMISS_UNTIL_OPTIONS.date)}" type="radio" name="myGroup">
+						<input @change="${this._updateProp.bind(this, DISMISS_UNTIL_OPTIONS.date)}" type="radio" name="${groupID}">
 						A specific date
 					</label>
 					${this.renderDatePicker(this.selectedRadio)}
 					<label class="d2l-input-radio-label">
-						<input @change="${this._updateProp.bind(this, DISMISS_UNTIL_OPTIONS.forever)}" type="radio" name="myGroup">
+						<input @change="${this._updateProp.bind(this, DISMISS_UNTIL_OPTIONS.forever)}" type="radio" name="${groupID}">
 						Forever
 					</label>
 				</div>
@@ -116,6 +119,9 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 		return defaultValue;
 	}
 
+	_genGroupID() {
+		return D2L.Id.getUniqueId();
+	}
 }
 
-window.customElements.define('d2l-quick-eval-action-dialog', D2LQuickEvalActionDialog);
+window.customElements.define('d2l-quick-eval-action-dismiss-dialog', D2LQuickEvalActionDialog);

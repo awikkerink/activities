@@ -20,6 +20,7 @@ export const SaveStatusMixin = superclass => class extends superclass {
 					bubbles: true,
 					composed: true
 				}));
+				throw error;
 			});
 	}
 };
