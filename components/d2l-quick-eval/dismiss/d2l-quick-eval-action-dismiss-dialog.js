@@ -13,17 +13,22 @@ import 'd2l-datetime-picker/d2l-datetime-picker.js';
 		window.D2L.DialogMixin.preferNative = false;
 	}
 
-	var styling = `
+	const styling = `
 		vaadin-date-picker-overlay {
 			z-index: 1000;
 		}
 	`;
-	var head = document.head || document.getElementsByTagName('head')[0];
-	var style = document.createElement('style');
+	const head = document.head || document.getElementsByTagName('head')[0];
+	const style = document.createElement('style');
 	head.appendChild(style);
 	style.type = 'text/css';
 	style.appendChild(document.createTextNode(styling));
-})()
+})();
+
+const DISMISS_UNTIL_OPTIONS = {
+	forever: 'forever',
+	date: 'date'
+};
 
 class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)) {
 
@@ -52,35 +57,23 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 				<p class="d2l-label-text">Dismiss until...</p>
 				<div class="radio-container">
 					<label class="d2l-input-radio-label">
-						<input @change="${this._updateProp.bind(this, "submission")}" type="radio" name="myGroup">
-						Next submission
-					</label>
-					<label class="d2l-input-radio-label">
-						<input @change="${this._updateProp.bind(this, "date")}" type="radio" name="myGroup">
+						<input @change="${this._updateProp.bind(this, DISMISS_UNTIL_OPTIONS.date)}" type="radio" name="myGroup">
 						A specific date
 					</label>
-					${this.selectedRadio === "date"? html`
-						<div class="datepicker-container">
-							<d2l-datetime-picker placeholder="11|12|2019" hide-label></d2l-datetime-picker>
-						</div>
-						`: null }
+					${this.renderDatePicker(this.selectedRadio)}
 					<label class="d2l-input-radio-label">
-						<input @change="${this._updateProp.bind(this, "forever")}" type="radio" name="myGroup">
+						<input @change="${this._updateProp.bind(this, DISMISS_UNTIL_OPTIONS.forever)}" type="radio" name="myGroup">
 						Forever
 					</label>
 				</div>
-				<d2l-button slot="footer" primary dialog-action="done">${this.localize('restore')}</d2l-button>
+				<d2l-button slot="footer" primary dialog-action="done">Dismiss Activity</d2l-button>
 				<d2l-button slot="footer" dialog-action>${this.localize('cancel')}</d2l-button>
 			</d2l-dialog>
 		`;
 	}
 
 	open() {
-		this._getDialog().open();
-	}
-
-	constructor() {
-		super();
+		return this._getDialog().open();
 	}
 
 	_getDialog() {
@@ -90,6 +83,37 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 	_updateProp(propName) {
 		this.selectedRadio = propName;
 		this._getDialog().resize();
+	}
+
+	renderDatePicker(selectedRadio) {
+		if (selectedRadio === DISMISS_UNTIL_OPTIONS.date) {
+			return html`
+				<div class="datepicker-container">
+					<d2l-datetime-picker placeholder="${this.getPlaceHOlderFormat()}" hide-label></d2l-datetime-picker>
+				</div>
+			`;
+		}
+		return null;
+	}
+
+	getPlaceHOlderFormat() {
+		const overrides = this.tryParseHtmlElemAttr('data-intl-overrides', {});
+		if (overrides && overrides.date && overrides.date.formats && overrides.date.formats.dateFormats && overrides.date.formats.dateFormats.short) {
+			return overrides.date.formats.dateFormats.short;
+		}
+		return 'MM|DD|YYYY';
+	}
+
+	tryParseHtmlElemAttr(attrName, defaultValue) {
+		const htmlElem = window.document.getElementsByTagName('html')[0];
+		if (htmlElem.hasAttribute(attrName)) {
+			try {
+				return JSON.parse(htmlElem.getAttribute(attrName));
+			} catch (e) {
+				throw new Error("Could not fetch 'data-intl-overrides' attribute in the html tag");
+			}
+		}
+		return defaultValue;
 	}
 
 }
