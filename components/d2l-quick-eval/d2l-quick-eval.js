@@ -66,7 +66,6 @@ class D2LQuickEval extends
 			<d2l-quick-eval-submissions href="[[_lazySubmissionsHref]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" data-telemetry-endpoint="[[dataTelemetryEndpoint]]" hidden$="[[_displayActivities(toggleState, activitiesViewEnabled)]]" master-teacher="[[masterTeacher]]"></d2l-quick-eval-submissions>
 			<d2l-quick-eval-activities 
 				href="[[_lazyActivitiesHref]]"
-				dismissed-activities-href="[[dismissedActivitiesHref]]"
 				token="[[token]]" 
 				logging-endpoint="[[loggingEndpoint]]" 
 				hidden$="[[!_displayActivities(toggleState, activitiesViewEnabled)]]"
