@@ -243,6 +243,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			dismissEnabled: {
 				type: Boolean,
 				value: false
+			},
+			dismissedActivitiesHref: {
+				type: String
 			}
 		};
 	}
