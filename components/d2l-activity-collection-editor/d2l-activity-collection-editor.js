@@ -78,16 +78,18 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			}
 			.d2l-activity-collection-title-header {
 				min-height:52px;
-				margin-top:6px;
-				margin-bottom:6px;
-				margin-right: 6px;
+				margin: 6px 0px 0px 0px;
+				padding: 0px 6px 6px 0px;
 				overflow:hidden;
 			}
 			.d2l-activity-visbility-label {
 				white-space: nowrap;
 			}
+			.d2l-activity-collection-description {
+				overflow:hidden;
+			}
 			.d2l-activity-collection-body {
-				padding: 15px 30px;
+				padding: 15px 6px;
 				background-color: var(--d2l-color-regolith);
 				height: 100%;
 			}
@@ -121,7 +123,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 						<d2l-activity-visibility-editor .href="${this.href}" .token="${this.token}"></d2l-activity-visibility-editor>
 					</div>
 				</div>
-				<div class="d2l-body-compact">
+				<div class="d2l-body-compact d2l-activity-collection-description">
 					<d2l-labs-edit-in-place size="49" placeholder="Enter a description" value="${this._description}" @change=${this._descriptionChanged}></d2l-labs-edit-in-place>
 				</div>
 			</div>
