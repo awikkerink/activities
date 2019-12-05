@@ -31,6 +31,7 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 
 	static get properties() {
 		return {
+			_date: String,
 			selectedRadio: String,
 		};
 	}
@@ -65,7 +66,8 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 						Forever
 					</label>
 				</div>
-				<d2l-button slot="footer" primary dialog-action="${this.selectedRadio}">Dismiss Activity</d2l-button>
+				<d2l-button slot="footer" primary
+					dialog-action="${this.computeAction(this.selectedRadio, this._date)}">Dismiss Activity</d2l-button>
 				<d2l-button slot="footer" dialog-action>${this.localize('cancel')}</d2l-button>
 			</d2l-dialog>
 		`;
@@ -88,7 +90,9 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 		if (selectedRadio === DISMISS_TYPES.date) {
 			return html`
 				<div class="datepicker-container">
-					<d2l-datetime-picker placeholder="MM|DD|YYYY" hide-label></d2l-datetime-picker>
+					<d2l-datetime-picker
+					@d2l-datetime-picker-datetime-changed="${this._onDatetimePickerDatetimeChanged}"
+					placeholder="MM|DD|YYYY" hide-label></d2l-datetime-picker>
 				</div>
 			`;
 		}
@@ -98,6 +102,18 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 	_genGroupID() {
 		return D2L.Id.getUniqueId();
 	}
+
+	_onDatetimePickerDatetimeChanged(e) {
+		if (e.detail.isSame(this._date)) {
+			return;
+		}
+		this._date = e.detail;
+	}
+
+	computeAction(selectedRadio, date) {
+		return JSON.stringify({selectedRadio, date: date ? date.toISOString() : ''});
+	}
+
 }
 
 window.customElements.define('d2l-quick-eval-action-dismiss-dialog', D2LQuickEvalActionDialog);

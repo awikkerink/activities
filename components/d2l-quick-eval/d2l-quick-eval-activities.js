@@ -427,9 +427,19 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	_dismissUntil(evt) {
 		const actionDialog = this.shadowRoot.querySelector('d2l-quick-eval-action-dismiss-dialog');
 
-		return actionDialog.open().then(action => {
-			if (action === DISMISS_TYPES.forever) {
-				return this._dismissActivity(evt.detail.dismissHref, action).then(() => {
+		return actionDialog.open().then((action) => {
+			const {selectedRadio, date} = JSON.parse(action);
+			if (selectedRadio === DISMISS_TYPES.forever) {
+				return this._dismissActivity(evt.detail.dismissHref, selectedRadio).then(() => {
+					const selfHref = this._getSelfLink(this.entity);
+					// bypass cache
+					window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true);
+				});
+			} else if (selectedRadio === DISMISS_TYPES.date) {
+				if (!date) {
+					throw new Error('missing date in this dismiss action');
+				}
+				return this._dismissActivity(evt.detail.dismissHref, selectedRadio, date).then(() => {
 					const selfHref = this._getSelfLink(this.entity);
 					// bypass cache
 					window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true);
