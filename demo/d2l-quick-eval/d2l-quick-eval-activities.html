@@ -12,6 +12,9 @@
 		<script type="module" src="../../node_modules/whatwg-fetch/fetch.js"></script>
 		<script type="module" src="../../node_modules/url-polyfill/url-polyfill.js"></script>
 
+		<script type="text/javascript" src="https://s.brightspace.com/lib/moment.js/2.15.2/moment.min.js"></script>
+		<script type="text/javascript" src="https://s.brightspace.com/lib/moment-timezone/0.5.10/moment-timezone-with-data.min.js"></script>
+
 		<script type="module">
 			import '@polymer/iron-demo-helpers/demo-pages-shared-styles';
 			import '@polymer/iron-demo-helpers/demo-snippet';
@@ -63,7 +66,7 @@
 				</template>
 			</demo-snippet>
 		</div>
-		
+
 		<script type="module">
 			window.requestAnimationFrame(function() {
 				document.querySelector('input.toggle-data').addEventListener('click', function() {
