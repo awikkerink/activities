@@ -65,7 +65,7 @@ class D2LQuickEval extends
 			<d2l-quick-eval-view-toggle current-selected="[[toggleState]]" toggle-href="[[toggleHref]]" hidden$="[[!activitiesViewEnabled]]" on-d2l-quick-eval-view-toggle-changed="_toggleView"></d2l-quick-eval-view-toggle>
 			<d2l-quick-eval-submissions href="[[_lazySubmissionsHref]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" data-telemetry-endpoint="[[dataTelemetryEndpoint]]" hidden$="[[_displayActivities(toggleState, activitiesViewEnabled)]]" master-teacher="[[masterTeacher]]"></d2l-quick-eval-submissions>
 			<d2l-quick-eval-activities 
-				href="[[_lazyActivitiesHref]]" 
+				href="[[_lazyActivitiesHref]]"
 				token="[[token]]" 
 				logging-endpoint="[[loggingEndpoint]]" 
 				hidden$="[[!_displayActivities(toggleState, activitiesViewEnabled)]]"
@@ -119,6 +119,9 @@ class D2LQuickEval extends
 			toggleState: {
 				type: String,
 				value: submissions
+			},
+			dismissedActivitiesHref: {
+				type: String
 			},
 			token: {
 				type: Object,
