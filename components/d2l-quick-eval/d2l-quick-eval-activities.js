@@ -19,7 +19,7 @@ import './d2l-quick-eval-activities-skeleton.js';
 import './behaviors/d2l-quick-eval-telemetry-behavior.js';
 import '@brightspace-ui/core/components/dialog/dialog-confirm.js';
 import './dismiss/d2l-quick-eval-action-dismiss-dialog.js';
-
+import { DISMISS_TYPES } from './dismiss/dismiss-types.js';
 /**
  * @customElement
  * @polymer
@@ -426,7 +426,14 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 	_dismissUntil() {
 		const actionDialog = this.shadowRoot.querySelector('d2l-quick-eval-action-dismiss-dialog');
-		actionDialog.open();
+
+		actionDialog.open().then(action => {
+			if (action === DISMISS_TYPES.forever) {
+				console.log('dismiss forever');
+			} else if (action === DISMISS_TYPES.date) {
+				console.log('dismiss until');
+			}
+		});
 	}
 
 	_editActivity() {
