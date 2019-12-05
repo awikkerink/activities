@@ -429,7 +429,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 		return actionDialog.open().then(action => {
 			if (action === DISMISS_TYPES.forever) {
-				return this._dismissActivity(evt.detail.dismissHref, action).then(e => {
+				return this._dismissActivity(evt.detail.dismissHref, action).then(() => {
 					const selfHref = this._getSelfLink(this.entity);
 					// bypass cache
 					window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true);

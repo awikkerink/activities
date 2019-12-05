@@ -269,8 +269,8 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 	},
 
 	_dismissActivity: function(dismissHref, actionName) {
-		return this._followHref(dismissHref).then(x => {
-			const action = this._getAction(x.entity, actionName);
+		return this._followHref(dismissHref).then(dismissEntity => {
+			const action = this._getAction(dismissEntity.entity, actionName);
 			return this.performSirenAction(action);
 		});
 	}
