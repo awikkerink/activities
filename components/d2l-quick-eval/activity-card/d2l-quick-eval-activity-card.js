@@ -277,7 +277,11 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 									hidden$="[[!dismissEnabled]]"
 									tabindexnumber="[[_computeTabstop(_indicatorPressed, _desktopView)]]"
 									aria-hidden$="[[_computeOppositeIndicatorPressed(_indicatorPressed, _desktopView)]]">
-										<d2l-menu-item text="[[localize('publishAll')]]" on-d2l-menu-item-select="_dispatchPublishAllEvent" disabled$="[[_disablePublishAllButton(publishAll)]]"></d2l-menu-item>
+										<d2l-menu-item 
+											text="[[localize('publishAll')]]" 
+											on-d2l-menu-item-select="_dispatchPublishAllEvent" 
+											disabled$="[[_disablePublishAllButton(publishAll)]]"
+											aria-disabled$="[[_disablePublishAllButton(publishAll)]]"></d2l-menu-item>
 										<d2l-menu-item text="[[localize('dismissUntil')]]" on-d2l-menu-item-select="_dispatchDismissUntilEvent"></d2l-menu-item>
 										<d2l-menu-item text="[[localize('editActivity')]]" on-d2l-menu-item-select="_dispatchEditActivityEvent"></d2l-menu-item>
 									</d2l-quick-eval-activity-card-action-button-more>
@@ -351,6 +355,10 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 			dismissEnabled: {
 				type: Boolean,
 				value: false
+			},
+			dismissHref: {
+				type: String,
+				value: ''
 			},
 			_indicatorPressed: {
 				type: Boolean,
@@ -444,7 +452,7 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				'd2l-quick-eval-activity-dismiss-until',
 				{
 					detail: {
-
+						dismissHref: this.dismissHref
 					},
 					composed: true,
 					bubbles: true
