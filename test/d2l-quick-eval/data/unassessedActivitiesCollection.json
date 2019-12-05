@@ -42,6 +42,9 @@
 				},{
 					"rel":["https://activities.api.brightspace.com/rels/evaluation-status"],
 					"href":"data/assignmentEvaluationStatus.json"
+				},{
+					"rel":["https://api.brightspace.com/rels/dismiss"],
+					"href":"data/assignmentDismiss.json"
 				}
 			],
 			"entities":[
@@ -80,6 +83,9 @@
 				},{
 					"rel":["https://api.brightspace.com/rels/quiz"],
 					"href":"data/quiz.json"
+				},{
+					"rel":["https://api.brightspace.com/rels/dismiss"],
+					"href":"data/quizDismiss.json"
 				}
 			],
 			"entities":[
@@ -119,6 +125,9 @@
 				},{
 					"rel":["https://assessments.api.brightspace.com/rels/grade"],
 					"href":"data/discussionGrade.json"
+				},{
+					"rel":["https://api.brightspace.com/rels/dismiss"],
+					"href":"data/topicDismiss.json"
 				}
 			],
 			"entities":[
