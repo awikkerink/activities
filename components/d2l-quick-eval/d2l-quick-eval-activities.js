@@ -427,9 +427,13 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	_dismissUntil(evt) {
 		const actionDialog = this.shadowRoot.querySelector('d2l-quick-eval-action-dismiss-dialog');
 
-		actionDialog.open().then(action => {
+		return actionDialog.open().then(action => {
 			if (action === DISMISS_TYPES.forever) {
-				return this._dismissActivity(evt.detail.dismissHref, action);
+				return this._dismissActivity(evt.detail.dismissHref, action).then(e => {
+					const selfHref = this._getSelfLink(this.entity);
+					// bypass cache
+					window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true);
+				});
 			}
 		});
 	}
