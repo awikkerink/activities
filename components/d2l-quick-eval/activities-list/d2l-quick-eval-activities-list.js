@@ -81,6 +81,7 @@ class D2LQuickEvalActivitiesList extends QuickEvalLocalize(PolymerElement) {
 										activity-name-href="[[a.activityNameHref]]"
 										activity-name="[[a.activityName]]"
 										dismiss-enabled="[[dismissEnabled]]"
+										dismiss-href="[[a.dismissHref]]"
 										token="[[token]]"
 										on-mouseenter="_handleOnMouseenter"
 										on-mouseleave="_handleOnMouseleave"></d2l-quick-eval-activity-card>
