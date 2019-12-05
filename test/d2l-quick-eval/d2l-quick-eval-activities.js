@@ -11,6 +11,8 @@ suite('d2l-quick-eval-activities', function() {
 				key: 'data/org.json',
 				courseName: 'Org Name',
 				activityNameHref: 'data/assignmentActivity.json',
+				evaluationStatusHref: 'data/assignmentEvaluationStatus.json',
+				dismissHref: 'data/assignmentDismiss.json',
 				assigned: 21,
 				completed: 22,
 				published: 23,
@@ -28,6 +30,8 @@ suite('d2l-quick-eval-activities', function() {
 				key: 'data/org.json',
 				courseName: 'Org Name',
 				activityNameHref: 'data/quizActivity.json',
+				evaluationStatusHref: 'data/quizEvaluationStatus.json',
+				dismissHref: 'data/quizDismiss.json',
 				assigned: 11,
 				completed: 12,
 				published: 13,
@@ -45,6 +49,8 @@ suite('d2l-quick-eval-activities', function() {
 				key: 'data/org.json',
 				courseName: 'Org Name',
 				activityNameHref: 'data/topicActivity.json',
+				evaluationStatusHref: 'data/topicEvaluationStatus.json',
+				dismissHref: 'data/topicDismiss.json',
 				assigned: 1,
 				completed: 2,
 				published: 3,
@@ -128,6 +134,8 @@ suite('d2l-quick-eval-activities', function() {
 					assert.equal(act._data[0].activities[i].publishAll.href, expectedData[0].activities[i].publishAll.href);
 					assert.equal(act._data[0].activities[i].dueDate, expectedData[0].activities[i].dueDate);
 					assert.equal(act._data[0].activities[i].activityType, expectedData[0].activities[i].activityType);
+					assert.equal(act._data[0].activities[i].evaluationStatusHref, expectedData[0].activities[i].evaluationStatusHref);
+					assert.equal(act._data[0].activities[i].dismissHref, expectedData[0].activities[i].dismissHref);
 				}
 
 				act.removeEventListener('d2l-siren-entity-changed', checkData);
