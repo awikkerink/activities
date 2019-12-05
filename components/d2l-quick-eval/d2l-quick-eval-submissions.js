@@ -266,15 +266,24 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	}
 
 	async _loadData(entity) {
-		this._loading = true;
 		if (!entity) {
 			return Promise.resolve();
 		}
+		this._loading = true;
 
 		if (this._initialLoad) {
 			this.filterAppliedShortcut();
 			this.searchAppliedShortcut();
 		}
+
+		if (this._initialLoad &&
+			entity.hasClass('empty') &&
+			(this.searchApplied || this.filterApplied)
+		) {
+			await this._clearFilterAndSearch();
+			this._initialLoad = false;
+			return;
+		}	
 
 		try {
 			if (entity.entities) {
@@ -398,7 +407,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	}
 
 	async _filterLoadHandler() {
-		if(this.entity && this.entity.getSubEntities().length == 0) {
+		if(this.entity && this.entity.getSubEntities().length === 0) {
 			await this._clearFilterAndSearch();
 		}
 	}
