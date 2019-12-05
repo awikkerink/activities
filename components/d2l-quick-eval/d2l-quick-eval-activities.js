@@ -424,14 +424,12 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		});
 	}
 
-	_dismissUntil() {
+	_dismissUntil(evt) {
 		const actionDialog = this.shadowRoot.querySelector('d2l-quick-eval-action-dismiss-dialog');
 
 		actionDialog.open().then(action => {
 			if (action === DISMISS_TYPES.forever) {
-				console.log('dismiss forever');
-			} else if (action === DISMISS_TYPES.date) {
-				console.log('dismiss until');
+				return this._dismissActivity(evt.detail.dismissHref, action);
 			}
 		});
 	}

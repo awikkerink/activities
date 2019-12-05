@@ -1,4 +1,4 @@
 export const DISMISS_TYPES = {
-	forever: 'forever',
-	date: 'date'
+	forever: 'dismiss-forever',
+	date: 'dismiss-until'
 };
