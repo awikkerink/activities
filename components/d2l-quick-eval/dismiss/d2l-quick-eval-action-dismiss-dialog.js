@@ -7,6 +7,7 @@ import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@brightspace-ui/core/components/button/button.js';
 import 'd2l-datetime-picker/d2l-datetime-picker.js';
 import 'd2l-polymer-behaviors/d2l-id.js';
+import { DISMISS_TYPES } from './dismiss-types.js';
 
 // shim for vaadin calendar to overlay on top of the dialog
 (()=>{
@@ -26,15 +27,11 @@ import 'd2l-polymer-behaviors/d2l-id.js';
 	style.appendChild(document.createTextNode(styling));
 })();
 
-const DISMISS_UNTIL_OPTIONS = {
-	forever: 'forever',
-	date: 'date'
-};
-
 class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)) {
 
 	static get properties() {
 		return {
+			_date: String,
 			selectedRadio: String,
 		};
 	}
@@ -60,16 +57,20 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 				<p class="d2l-label-text">Dismiss until...</p>
 				<div class="radio-container">
 					<label class="d2l-input-radio-label">
-						<input @change="${this._updateProp.bind(this, DISMISS_UNTIL_OPTIONS.date)}" type="radio" name="${groupID}">
+						<input @change="${this._updateProp.bind(this, DISMISS_TYPES.date)}" type="radio" name="${groupID}">
 						A specific date
 					</label>
 					${this.renderDatePicker(this.selectedRadio)}
 					<label class="d2l-input-radio-label">
-						<input @change="${this._updateProp.bind(this, DISMISS_UNTIL_OPTIONS.forever)}" type="radio" name="${groupID}">
+						<input @change="${this._updateProp.bind(this, DISMISS_TYPES.forever)}" type="radio" name="${groupID}">
 						Forever
 					</label>
 				</div>
-				<d2l-button slot="footer" primary dialog-action="done">Dismiss Activity</d2l-button>
+				<d2l-button
+					slot="footer"
+					primary
+					dialog-action="${this.computeAction(this.selectedRadio, this._date)}"
+				>Dismiss Activity</d2l-button>
 				<d2l-button slot="footer" dialog-action>${this.localize('cancel')}</d2l-button>
 			</d2l-dialog>
 		`;
@@ -89,10 +90,15 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 	}
 
 	renderDatePicker(selectedRadio) {
-		if (selectedRadio === DISMISS_UNTIL_OPTIONS.date) {
+		if (selectedRadio === DISMISS_TYPES.date) {
 			return html`
 				<div class="datepicker-container">
-					<d2l-datetime-picker placeholder="MM|DD|YYYY" hide-label></d2l-datetime-picker>
+					<d2l-datetime-picker
+						@d2l-datetime-picker-datetime-changed="${this._onDatetimePickerDatetimeChanged}"
+						@d2l-datetime-picker-datetime-cleared="${this._onDatetimePickerDatetimeCleared}"
+						placeholder="MM|DD|YYYY"
+						hide-label
+					></d2l-datetime-picker>
 				</div>
 			`;
 		}
@@ -102,6 +108,19 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 	_genGroupID() {
 		return D2L.Id.getUniqueId();
 	}
+
+	_onDatetimePickerDatetimeCleared() {
+		this.date = undefined;
+	}
+
+	_onDatetimePickerDatetimeChanged(e) {
+		this._date = e.detail.toISOString();
+	}
+
+	computeAction(selectedRadio, date) {
+		return JSON.stringify({ selectedRadio, date });
+	}
+
 }
 
 window.customElements.define('d2l-quick-eval-action-dismiss-dialog', D2LQuickEvalActionDialog);

@@ -19,7 +19,7 @@ import './d2l-quick-eval-activities-skeleton.js';
 import './behaviors/d2l-quick-eval-telemetry-behavior.js';
 import '@brightspace-ui/core/components/dialog/dialog-confirm.js';
 import './dismiss/d2l-quick-eval-action-dismiss-dialog.js';
-
+import { DISMISS_TYPES } from './dismiss/dismiss-types.js';
 /**
  * @customElement
  * @polymer
@@ -424,9 +424,29 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		});
 	}
 
-	_dismissUntil() {
+	_dismissUntil(evt) {
 		const actionDialog = this.shadowRoot.querySelector('d2l-quick-eval-action-dismiss-dialog');
-		actionDialog.open();
+
+		return actionDialog.open().then(action => {
+
+			const { selectedRadio, date } = JSON.parse(action);
+			let dismissAction;
+
+			if (selectedRadio === DISMISS_TYPES.forever) {
+				dismissAction = this._dismissActivity(evt.detail.dismissHref, selectedRadio);
+			} else if (selectedRadio === DISMISS_TYPES.date) {
+				if (!date) {
+					throw new Error('Missing date in this dismiss action');
+				}
+				dismissAction = this._dismissActivity(evt.detail.dismissHref, selectedRadio, date);
+			}
+
+			return dismissAction.then(() => {
+				const selfHref = this._getSelfLink(this.entity);
+				// bypass cache and reload
+				window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true);
+			});
+		});
 	}
 
 	_editActivity() {

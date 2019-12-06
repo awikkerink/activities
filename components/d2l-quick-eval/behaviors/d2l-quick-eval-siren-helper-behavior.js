@@ -266,6 +266,17 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 		}
 
 		return false;
+	},
+
+	_dismissActivity: function(dismissHref, actionName, dismissUntil) {
+		return this._followHref(dismissHref).then(dismissEntity => {
+			const action = this._getAction(dismissEntity.entity, actionName);
+			if (dismissUntil) {
+				const field = action.getField('dismissUntil');
+				field.value = dismissUntil;
+			}
+			return this.performSirenAction(action);
+		});
 	}
 };
 
