@@ -9,7 +9,14 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 
 	static get properties() {
 		return {
+			/**
+			 * True if the user's settings allow for rendering the WYSIWYG HTML editor
+			 */
 			htmlEditorEnabled: { type: Boolean },
+			/**
+			 * API endpoint for attachment unfurling service
+			 */
+			unfurlEndpoint: { type: String },
 			_assignmentHref: { type: String },
 		};
 	}
@@ -43,13 +50,17 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 
 	render() {
 		return html`
-			<d2l-activity-editor ?loading="${this._hasPendingChildren}">
+			<d2l-activity-editor
+				?loading="${this._hasPendingChildren}"
+				unfurlEndpoint="${this.unfurlEndpoint}">
+
 				<d2l-activity-assignment-editor-detail
 					.href="${this._assignmentHref}"
 					.token="${this.token}"
 					?htmlEditorEnabled="${this.htmlEditorEnabled}"
 					slot="editor">
 				</d2l-activity-assignment-editor-detail>
+
 			</d2l-activity-editor>
 		`;
 	}
