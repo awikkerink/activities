@@ -126,6 +126,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				<d2l-hm-filter
 					href="[[filterHref]]"
 					token="[[token]]"
+					category-whitelist="[[_filterIds]]"
 					lazy-load-options>
 				</d2l-hm-filter>
 				<d2l-hm-search
@@ -198,6 +199,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			_data: {
 				type: Array,
 				value: []
+			},
+			_filterIds: {
+				type: Array,
+				computed: '_getFilterIds()'
 			},
 			_searchResultsCount: {
 				type: Number,
@@ -357,6 +362,12 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		} else {
 			return [];
 		}
+	}
+
+	_getFilterIds() {
+		// [ 'activity-name', 'enrollments' ]
+		const filters = [ 'c806bbc6-cfb3-4b6b-ae74-d5e4e319183d', 'f2b32f03-556a-4368-945a-2614b9f41f76' ];
+		return filters;
 	}
 
 	// @override - do not change the name
