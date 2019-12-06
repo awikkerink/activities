@@ -33,10 +33,7 @@ class ActivityAttachment extends EntityMixinLit(LitElement) {
 			this._attachment = {
 				id: entity.href(),
 				url: entity.href(),
-				name: entity.name(),
-				isDeleted: false,
-				isInFocus: false,
-				isNew: false
+				name: entity.name()
 			};
 			this._editing = entity.canDeleteAttachment();
 		}

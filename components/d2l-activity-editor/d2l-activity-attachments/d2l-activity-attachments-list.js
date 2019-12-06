@@ -16,7 +16,7 @@ class ActivityAttachmentsList extends EntityMixinLit(LitElement) {
 			:host {
 				display: block;
 			}
-			:host > * {
+			d2l-activity-attachment {
 				margin-bottom: 20px;
 			}
 		`;
@@ -39,9 +39,8 @@ class ActivityAttachmentsList extends EntityMixinLit(LitElement) {
 					return attachment.href;
 				}
 
-				// TODO use self link not this nonsense
-				return attachment.getActionByName('delete').href;
-			})
+				return attachment.getLinkByRel('self').href;
+			});
 		}
 
 		super._entity = entity;
