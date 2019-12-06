@@ -400,16 +400,14 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	async _handleFilterLoad() {
 		// When the filter finishes loading, we check to see if the filter is empty
 		// If the filter is empty, we remove all filters
+		this._loading = true;
 		if(this._initialLoad) {
-			this._loading = true;
-			await this._handleEmptyFilter().then (() => {
-				this._loading = false;
-			});
+			await this._handleEmptyFilter();
 		}
+		this._loading = false;
 	}
 
 	async _handleEmptyFilter() {
-		console.log(this.entity);
 		// Remove filter if we have no elements within the current filter.
 		if(this.entity && this.entity.entities && this.entity.getSubEntities().length === 0) {
 			await this._clearFilterAndSearch();
