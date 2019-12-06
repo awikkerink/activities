@@ -1,5 +1,6 @@
 import {Rels, Classes} from 'd2l-hypermedia-constants';
 import './d2l-siren-helper-behavior.js';
+import {DISMISS_TYPES} from '../dismiss/dismiss-types.js';
 
 window.D2L = window.D2L || {};
 window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
@@ -135,6 +136,19 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 			}.bind(this));
 	},
 
+	_getDismissPromise: function(entity) {
+		return this._followLink(entity, 'https://api.brightspace.com/rels/dismiss')
+			.then(function(d) {
+				return {
+					dismissed: d.entity.properties.isDismissed,
+					dismissedOn: d.entity.properties.dismissedOn,
+					unDismissAction: this._getAction(d.entity, DISMISS_TYPES.unDismiss),
+					dismissForeverAction: this._getAction(d.entity, DISMISS_TYPES.forever),
+					dismissUntilAction: this._getAction(d.entity, DISMISS_TYPES.date)
+				};
+			}.bind(this));
+	},
+
 	_getUserPromise: function(entity, item) {
 		return this._followLink(entity, Rels.user)
 			.then(function(u) {
@@ -227,7 +241,6 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 				} else {
 					return Promise.resolve();
 				}
-
 				return this._followLink(a.entity, rel);
 			}.bind(this))
 			.then(function(n) {
