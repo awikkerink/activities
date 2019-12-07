@@ -1,5 +1,3 @@
-import { fetchEntity } from './state/actions/app.js';
-
 export const ActivityEditorMixin = superclass => class extends superclass {
 
 	static get properties() {

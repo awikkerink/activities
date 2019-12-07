@@ -14,8 +14,7 @@ import { selectStyles } from '../select-styles.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 import { connect } from '../connect-mixin.js';
 import { ActivityEditorMixin } from '../d2l-activity-editor-mixin.js';
-import { fetchEntity } from './state/assignment.js';
-import assignmentEditor from './state/assignment.js';
+import reducer, { fetchEntity, selectActivity, selectActivityEntity, updateName, updateInstructions } from './state/assignment.js';
 
 class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMixin(LocalizeMixin(LitElement)))) {
 
@@ -66,7 +65,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 
 	constructor() {
 		super();
-		// this._setEntityType(AssignmentEntity);
 		this._debounceJobs = {};
 
 		this._submissionTypes = [];
@@ -101,23 +99,23 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 	// }
 
 	get _reducers() {
-		return {
-			assignmentEditor
-		 };
+		return reducer;
 	}
 
 	_mapStateToProps(state) {
-		const assignment = state.assignmentEditor.entities[this.href];
+		const assignment = selectActivity(state, this.href, this.token);
 		return assignment ? {
 			_name: assignment.name,
 			_instructions: assignment.instructions,
-			_entity: assignment.entity,
+			_entity: selectActivityEntity(state, this.href, this.token),
 		} : {};
 	}
 
 	_mapDispatchToProps(dispatch) {
 		return {
-			_fetchEntity: () => dispatch(fetchEntity(this.href, this.token))
+			_fetchEntity: () => dispatch(fetchEntity(this.href, this.token)),
+			_updateName: (name) => dispatch(updateName({ href: this.href, token: this.token, name })),
+			_saveInstructions: (instructions) => dispatch(updateInstructions({ href: this.href, token: this.token, instructions }))
 		}
 	}
 
@@ -132,14 +130,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 
 	_saveOnChange(jobName) {
 		this._debounceJobs[jobName] && this._debounceJobs[jobName].flush();
-	}
-
-	_saveName(value) {
-		this.wrapSaveAction(super._entity.setName(value));
-	}
-
-	_saveInstructions(value) {
-		this.wrapSaveAction(super._entity.setInstructions(value));
 	}
 
 	_saveNameOnInput(e) {
@@ -157,7 +147,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 			this._debounceJobs.name = Debouncer.debounce(
 				this._debounceJobs.name,
 				timeOut.after(500),
-				() => this._saveName(name)
+				() => this._updateName(name)
 			);
 		}
 	}
@@ -219,12 +209,12 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 		}
 
 		return html`
-			<!-- <div id="assignment-visibility-container">
+			<div id="assignment-visibility-container">
 				<d2l-activity-visibility-editor
 					.href="${this._entity.activityUsageHref()}"
 					.token="${this.token}">
 				</d2l-activity-visibility-editor>
-			</div> -->
+			</div>
 			<div id="assignment-name-container">
 				<label class="d2l-label-text" for="assignment-name">${this.localize('name')}*</label>
 				<d2l-input-text

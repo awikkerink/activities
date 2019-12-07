@@ -1,23 +1,22 @@
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
-import { createAction } from 'siren-sdk/src/redux-toolkit/createAction.js';
-import { createReducer } from 'siren-sdk/src/redux-toolkit/createReducer.js';
+import { createSlice } from 'siren-sdk/src/redux-toolkit/createSlice.js';
 
-const addEntity = createAction('ADD_ASSIGNMENT_ENTITY', (payload) => {
-	const assignment = new AssignmentEntity(payload.entity, payload.token, { remove: () => { } });
+const prepareAddEntity = (payload) => {
+	const entity = new AssignmentEntity(payload.entity, payload.token, { remove: () => { } });
 	return {
 		payload: {
 			href: payload.href,
 			token: payload.token,
-			name: assignment.name(),
-			instructions: assignment.instructionsEditorHtml(),
-			entity: assignment
+			entity,
+			name: entity.name(),
+			instructions: entity.instructionsEditorHtml(),
 		}
 	}
-});
+};
 
 export const fetchEntity = (href, token) => async (dispatch) => {
 	const entity = await window.D2L.Siren.EntityStore.fetch(href, token);
-	const action = addEntity({
+	const action = addActivity({
 		href,
 		token,
 		entity: entity.entity
@@ -26,11 +25,43 @@ export const fetchEntity = (href, token) => async (dispatch) => {
 };
 
 const INITIAL_STATE = {
-	entities: {}
+	activities: {}
 };
 
-export default createReducer(INITIAL_STATE, {
-	[addEntity]: (state, action) => {
-		state.entities[action.payload.href] = action.payload;
+const activitySlice = createSlice({
+	name: 'assignmentEditor',
+	initialState: INITIAL_STATE,
+	reducers: {
+		updateName: (state, action) => {
+			state.activities[action.payload.href].name = action.payload.name;
+		},
+		updateInstructions: (state, action) => {
+			state.activities[action.payload.href].instructions = action.payload.instructions;
+		},
+		addActivity: {
+			reducer: (state, action) => {
+				state.activities[action.payload.href] = action.payload;
+			},
+			prepare: prepareAddEntity
+		}
 	}
 });
+
+const selectActivities = (state) => {
+	return state.assignmentEditor.activities;
+}
+
+export const selectActivity = (state, href, token) => {
+	return selectActivities(state)[href];
+}
+
+export const selectActivityEntity = (state, href, token) => {
+	return selectActivities(state)[href].entity;
+}
+
+const { addActivity} = activitySlice.actions;
+export const { updateName, updateInstructions } = activitySlice.actions;
+
+export default {
+	assignmentEditor: activitySlice.reducer
+}

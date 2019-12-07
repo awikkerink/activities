@@ -121,31 +121,31 @@ class ActivityHtmlEditor extends LitElement {
 		this._valueSet = false;
 	}
 
-	set value(newValue) {
-		const oldValue = this.value;
+	// set value(newValue) {
+	// 	const oldValue = this.value;
 
-		if (!this._valueSet) {
-			const editorContainer = this.shadowRoot.querySelector('d2l-html-editor > .d2l-html-editor-container');
-			if (editorContainer) {
-				this._valueSet = true;
-				editorContainer.innerHTML = newValue;
-			}
-		}
+	// 	if (!this._valueSet) {
+	// 		const editorContainer = this.shadowRoot.querySelector('d2l-html-editor > .d2l-html-editor-container');
+	// 		if (editorContainer) {
+	// 			this._valueSet = true;
+	// 			editorContainer.innerHTML = newValue;
+	// 		}
+	// 	}
 
-		this.requestUpdate('value', oldValue);
-	}
+	// 	this.requestUpdate('value', oldValue);
+	// }
 
-	set richtextEditorConfig(newValue) {
-		const oldValue = this.richtextEditorConfig;
+	// set richtextEditorConfig(newValue) {
+	// 	const oldValue = this.richtextEditorConfig;
 
-		const editorConfig = newValue || {};
-		const editor = this.shadowRoot.querySelector('d2l-html-editor');
-		if (editor) {
-			editor.d2lPluginSettings = editorConfig.properties || {};
-		}
+	// 	const editorConfig = newValue || {};
+	// 	const editor = this.shadowRoot.querySelector('d2l-html-editor');
+	// 	if (editor) {
+	// 		editor.d2lPluginSettings = editorConfig.properties || {};
+	// 	}
 
-		this.requestUpdate('richtextEditorConfig', oldValue);
-	}
+	// 	this.requestUpdate('richtextEditorConfig', oldValue);
+	// }
 
 	_resolveUrl() {
 		return `${import.meta.url}/../../../`;
@@ -160,6 +160,18 @@ class ActivityHtmlEditor extends LitElement {
 				content: content
 			}
 		}));
+	}
+
+	firstUpdated() {
+		const editorConfig = this.richtextEditorConfig || {};
+		const editor = this.shadowRoot.querySelector('d2l-html-editor');
+		if (editor) {
+			editor.d2lPluginSettings = editorConfig.properties || {};
+		}
+		const editorContainer = this.shadowRoot.querySelector('d2l-html-editor > .d2l-html-editor-container');
+		if (editorContainer) {
+			editorContainer.innerHTML = this.value;
+		}
 	}
 
 	render() {

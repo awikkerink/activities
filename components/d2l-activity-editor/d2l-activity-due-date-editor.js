@@ -4,15 +4,14 @@ import { connect } from './connect-mixin.js';
 import { ActivityEditorMixin } from './d2l-activity-editor-mixin.js';
 import { getLocalizeResources } from './localization';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
-import activityUsage  from './state/reducers/activity-usage.js';
-import { fetchEntity, updateDueDate } from './state/actions/activity-usage.js';
+import reducer, { fetchEntity, updateDueDate, selectActivityEntity, selectActivity } from './state/activity-usage.js';
 
 class ActivityDueDateEditor extends connect(ActivityEditorMixin(LocalizeMixin(LitElement))) {
 
 	static get properties() {
 		return {
 			_date: { type: String },
-			_canEdit: { type: Boolean },
+			_entity: { type: Object },
 			_overrides: { type: Object }
 		};
 	}
@@ -34,27 +33,26 @@ class ActivityDueDateEditor extends connect(ActivityEditorMixin(LocalizeMixin(Li
 
 	constructor() {
 		super();
-		// this._setEntityType(ActivityUsageEntity);
 		this._date = '';
 		this._overrides = document.documentElement.dataset.intlOverrides || '{}';
 	}
 
 	get _reducers() {
-		return { activityUsage };
+		return reducer;
 	}
 
 	_mapStateToProps(state) {
-		const activity = state.activityUsage.entities[this.href];
+		const activity = selectActivity(state, this.href, this.token);
 		return activity ? {
 			_date: activity.dueDate,
-			_canEdit: activity.canEditDueDate
+			_entity: selectActivityEntity(state, this.href, this.token)
 		} : {};
 	}
 
 	_mapDispatchToProps(dispatch) {
 		return {
 			_fetchEntity: () => dispatch(fetchEntity(this.href, this.token)),
-			_updateDueDate: (date) => dispatch(updateDueDate(this.href, this.token, date))
+			_updateDueDate: (date) => dispatch(updateDueDate({href: this.href, token: this.token, date}))
 		}
 	}
 
@@ -79,10 +77,14 @@ class ActivityDueDateEditor extends connect(ActivityEditorMixin(LocalizeMixin(Li
 	}
 
 	render() {
+		if (!this._entity) {
+			return html``;
+		}
+
 		return html`
 			<div id="datetime-picker-container">
 				<d2l-datetime-picker
-					?disabled="${!this._canEdit}"
+					?disabled="${!this._entity.canEditDueDate()}"
 					hide-label
 					name="date"
 					id="date"

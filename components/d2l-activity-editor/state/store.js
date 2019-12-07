@@ -5,8 +5,6 @@ import {
 	createStore,
 } from 'redux';
 
-import activityEditor from './reducers/activity-editor.js';
-
 import { lazyReducerEnhancer } from 'pwa-helpers/lazy-reducer-enhancer.js';
 
 import thunk from 'redux-thunk';
@@ -26,8 +24,3 @@ export const store = createStore(
 		lazyReducerEnhancer(combineReducers),
 		applyMiddleware(thunk))
 );
-
-// Initially loaded reducers.
-store.addReducers({
-	activityEditor
-});
