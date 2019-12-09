@@ -1,3 +1,4 @@
+import './d2l-activity-attachments-list';
 import './d2l-activity-attachments-picker';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { AttachmentCollectionEntity } from 'siren-sdk/src/activities/AttachmentCollectionEntity';
@@ -14,6 +15,9 @@ class ActivityAttachmentsEditor extends EntityMixinLit(LitElement) {
 		return css`
 			:host {
 				display: block;
+			}
+			:host > * {
+				margin-bottom: 20px;
 			}
 		`;
 	}
@@ -37,6 +41,10 @@ class ActivityAttachmentsEditor extends EntityMixinLit(LitElement) {
 
 	render() {
 		return html`
+			<d2l-activity-attachments-list
+				.href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-attachments-list>
 			<d2l-activity-attachments-picker
 				?hidden="${!this._canAddAttachments}"
 				.href="${this.href}"

@@ -63,6 +63,7 @@
   "dependencies": {
     "@brightspace-ui-labs/edit-in-place": "^1.0.7",
     "@brightspace-ui/core": "^1.17.0",
+    "@d2l/d2l-attachment": "Brightspace/attachment#semver:^1",
     "@d2l/switch": "Brightspace/d2l-switch.git#semver:^3",
     "@polymer/iron-resizable-behavior": "^3.0.0",
     "@polymer/polymer": "^3.0.0",
@@ -93,8 +94,9 @@
     "d2l-users": "BrightspaceHypermediaComponents/users#semver:^2",
     "del": "^3.0.0",
     "fastdom": "^1.0.8",
+    "lit-html": "^1.1.2",
     "merge-stream": "^1.0.1",
     "require-dir": "^1.2.0",
-    "siren-sdk": "BrightspaceHypermediaComponents/siren-sdk#semver:^1"
+    "siren-sdk": "BrightspaceHypermediaComponents/siren-sdk#semver:^1.7.18"
   }
 }
