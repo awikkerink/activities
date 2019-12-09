@@ -52,7 +52,7 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 
 		return html`
 			<d2l-dialog title-text="${this.localize('dismissActivity')}">
-				<div class="d2l-body-standard">${this.localize('dissmissingAnActivityHides')}</div>
+				<div class="d2l-body-standard">${this.localize('dismissingAnActivityHides')}</div>
 				<br/>
 				<p class="d2l-label-text">${this.localize('dismissUntil')}</p>
 				<div class="radio-container">

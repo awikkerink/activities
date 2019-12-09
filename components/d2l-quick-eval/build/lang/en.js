@@ -15,7 +15,7 @@ export const LangEn = {
 	'dismissedActivitiesList': 'Dismissed Activities List',
 	'dismissActivity': 'Dismiss Activity',
 	'dismissedOn': 'Dismissed on {date}',
-	'dissmissingAnActivityHides': 'Dismissing an activity hides it from Quick Eval, but won\'t affect the activity',
+	'dismissingAnActivityHides': 'Dismissing an activity hides it from Quick Eval, but won\'t affect the activity',
 	'dismissUntil': 'Dismiss until...',
 	'displayName': 'First Name, Last Name',
 	'due': 'Due: {date}',
