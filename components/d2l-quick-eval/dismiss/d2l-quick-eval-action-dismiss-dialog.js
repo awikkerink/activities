@@ -51,26 +51,26 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 		const groupID = this._genGroupID();
 
 		return html`
-			<d2l-dialog title-text="Dismiss Activity">
-				<div class="d2l-body-standard">Dismissing an activity hides it from Quick Eval, but won't affect the activity</div>
+			<d2l-dialog title-text="${this.localize('dismissActivity')}">
+				<div class="d2l-body-standard">${this.localize('dissmissingAnActivityHides')}</div>
 				<br/>
-				<p class="d2l-label-text">Dismiss until...</p>
+				<p class="d2l-label-text">${this.localize('dismissUntil')}</p>
 				<div class="radio-container">
 					<label class="d2l-input-radio-label">
 						<input @change="${this._updateProp.bind(this, DISMISS_TYPES.date)}" type="radio" name="${groupID}">
-						A specific date
+						${this.localize('specificDate')}
 					</label>
 					${this.renderDatePicker(this.selectedRadio)}
 					<label class="d2l-input-radio-label">
 						<input @change="${this._updateProp.bind(this, DISMISS_TYPES.forever)}" type="radio" name="${groupID}">
-						Forever
+						${this.localize('forever')}
 					</label>
 				</div>
 				<d2l-button
 					slot="footer"
 					primary
 					dialog-action="${this.computeAction(this.selectedRadio, this._date)}"
-				>Dismiss Activity</d2l-button>
+				>${this.localize('dismissActivity')}</d2l-button>
 				<d2l-button slot="footer" dialog-action>${this.localize('cancel')}</d2l-button>
 			</d2l-dialog>
 		`;
