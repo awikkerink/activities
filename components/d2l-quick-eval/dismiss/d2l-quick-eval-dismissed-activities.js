@@ -3,7 +3,7 @@ import {QuickEvalLocalize} from '../QuickEvalLocalize.js';
 import {QuickEvalLogging} from '../QuickEvalLogging.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
 import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
-import './d2l-quick-eval-dismissed-activities-list.js';
+import './d2l-quick-eval-ellipsis-dismiss-dialog.js';
 import '../behaviors/d2l-quick-eval-siren-helper-behavior.js';
 
 /**
@@ -19,9 +19,9 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 ) {
 	static get template() {
 		const quickEvalActivitiesTemplate = html`
-			<d2l-quick-eval-dismissed-activities-list
+			<d2l-quick-eval-ellipsis-dialog
 				dismissed-activities="[[_data]]"
-				on-d2l-quick-eval-dismissed-activity-selected="_handleListItemSelected"></d2l-quick-eval-dismissed-activities-list>
+				on-d2l-quick-eval-dismissed-activity-selected="_handleListItemSelected"></d2l-quick-eval-ellipsis-dialog>
 		`;
 
 		quickEvalActivitiesTemplate.setAttribute('strip-whitespace', 'strip-whitespace');

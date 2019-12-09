@@ -52,7 +52,8 @@ class D2LQuickEvalDismissedActivitiesList extends LitQuickEvalLocalize(LitElemen
 		// Since we want to actually deal with this event in the controller, we pass it up the chain here.
 		this.dispatchEvent(new CustomEvent('d2l-quick-eval-dismissed-activity-selected', {
 			detail: e.detail,
-			bubbles: true
+			bubbles: true,
+			composed: true
 		}));
 	}
 }
