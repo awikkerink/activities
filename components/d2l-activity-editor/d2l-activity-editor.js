@@ -6,6 +6,10 @@ class ActivityEditor extends LitElement {
 	static get properties() {
 		return {
 			loading: { type: Boolean },
+			/**
+			 * API endpoint for attachment unfurling service
+			 */
+			unfurlEndpoint: { type: String }
 		};
 	}
 
@@ -35,6 +39,13 @@ class ActivityEditor extends LitElement {
 		});
 		this.addEventListener('d2l-siren-entity-save-error', () => {
 			this.shadowRoot.querySelector('#save-status').error();
+		});
+
+		this.addEventListener('d2l-request-provider', e => {
+			if (e.detail.key === 'd2l-provider-unfurl-api-endpoint') {
+				e.detail.provider = () => this.unfurlEndpoint;
+				e.stopPropagation();
+			}
 		});
 	}
 
