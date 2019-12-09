@@ -43,7 +43,6 @@ class ActivityAttachment extends EntityMixinLit(LitElement) {
 
 	_onAttachmentRemoved() {
 		super._entity.deleteAttachment();
-		this._deleted = true;
 	}
 
 	render() {
