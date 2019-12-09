@@ -1,5 +1,5 @@
 {
-  "class": ["quiz-activity","activity"],
+  "class": ["user-quiz-activity","activity"],
   "rel":["https://activities.api.brightspace.com/rels/user-activity-usage"],
   "links":[
     {

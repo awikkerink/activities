@@ -10,7 +10,7 @@ class D2LQuickEvalDismissedActivitiesList extends LitQuickEvalLocalize(LitElemen
 	render() {
 		return html`
 			<d2l-list separators="all">${this.dismissedActivities && this.dismissedActivities.length ? this.dismissedActivities.map((act, index) => html`
-				<d2l-list-item selectable key="${index}">
+				<d2l-list-item selectable key="${index}" @d2l-list-item-selected=${this._handleItemSelected}>
 					<d2l-icon slot="illustration" icon="${this._computeIcon(act.type)}" aria-label="${this.localize(act.type)}"></d2l-icon>
 					<d2l-list-item-content>
 						${act.name}
@@ -28,7 +28,11 @@ class D2LQuickEvalDismissedActivitiesList extends LitQuickEvalLocalize(LitElemen
 	}
 
 	_computeSubtitleText(act) {
-		return [act.course, this.localize('dismissedOn', {date: this.formatDateTime(new Date(act.dismissedDate))})];
+		const result = [act.course];
+		if (act.dismissedDate) {
+			result.push(this.localize('dismissedOn', {date: this.formatDateTime(new Date(act.dismissedDate))}));
+		}
+		return result;
 	}
 
 	_computeIcon(type) {
@@ -41,6 +45,16 @@ class D2LQuickEvalDismissedActivitiesList extends LitQuickEvalLocalize(LitElemen
 				return 'tier2:discussions';
 		}
 		throw new Error(`Activity type '${type}' is not a valid type for quick eval.`);
+	}
+
+	_handleItemSelected(e) {
+		// The list item event bubbles, but is not composed and so does not pass through the shadow DOM boundary.
+		// Since we want to actually deal with this event in the controller, we pass it up the chain here.
+		this.dispatchEvent(new CustomEvent('d2l-quick-eval-dismissed-activity-selected', {
+			detail: e.detail,
+			bubbles: true,
+			composed: true
+		}));
 	}
 }
 
