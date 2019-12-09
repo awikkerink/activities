@@ -183,6 +183,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				<d2l-button slot="footer" dialog-action="no">[[localize('no')]]</d2l-button>
 			</d2l-dialog-confirm>
 			<d2l-quick-eval-action-dismiss-dialog></d2l-quick-eval-action-dismiss-dialog>
+			<d2l-alert-toast id="toast-dismiss-success" type="success">Activity Dismissed</d2l-alert-toast>
+			<d2l-alert-toast id="toast-dismiss-critical" type="critical">Activity could not be dismissed. Please try again.</d2l-alert-toast>
 			<dom-repeat items="[[_publishAllToasts]]" as="toast">
 				<template>
 					<d2l-alert-toast type="default" open>[[_publishAllToastMessage(toast)]]</d2l-alert-toast>
@@ -450,7 +452,11 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				const selfHref = this._getSelfLink(this.entity);
 				// bypass cache and reload
 				window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true);
-			});
+				this.shadowRoot.querySelector('#toast-dismiss-success').open = true;
+			}).catch((error) => {
+				this.shadowRoot.querySelector('#toast-dismiss-critical').open = true;
+				throw new Error(`could not dismiss activity, error: ${error}`);
+			});;
 		});
 	}
 
