@@ -456,7 +456,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			}).catch((error) => {
 				this.shadowRoot.querySelector('#toast-dismiss-critical').open = true;
 				throw new Error(`could not dismiss activity, error: ${error}`);
-			});;
+			});
 		});
 	}
 
