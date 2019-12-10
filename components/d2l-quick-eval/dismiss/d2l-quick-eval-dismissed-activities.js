@@ -50,13 +50,13 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 				type: Boolean,
 				value: false,
 			},
-			count: {
+			selectedCount: {
 				type: Number,
 				value: 0,
 			},
 			successMessage: {
 				type: String,
-				computed: '_computeSuccessMessage(count)',
+				computed: '_computeSuccessMessage(selectedCount)',
 			}
 		};
 	}
@@ -115,8 +115,8 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 		return [];
 	}
 
-	_computeSuccessMessage(count) {
-		return this.localize('activityRestored', 'count', count);
+	_computeSuccessMessage(selectedCount) {
+		return this.localize('activityRestored', 'count', selectedCount);
 	}
 
 	_handleLoadFailure() {
@@ -140,7 +140,7 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 	_submitData(e) {
 		if (e.detail.action === 'done') {
 			const selectedData = this._getSelectedActivities();
-			this.count = selectedData.length;
+			this.selectedCount = selectedData.length;
 			const result = Promise.all(selectedData.map((act)=> {
 				return this.performSirenAction(act.unDismiss);
 			}));
