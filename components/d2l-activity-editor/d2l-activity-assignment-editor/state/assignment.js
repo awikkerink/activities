@@ -2,49 +2,36 @@ import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/Assignmen
 import { AssignmentActivityUsageEntity } from 'siren-sdk/src/activities/assignments/AssignmentActivityUsageEntity.js';
 import { createSlice } from 'siren-sdk/src/redux-toolkit/createSlice.js';
 export { default as storeName } from '../../state/store-name.js';
+import fetchEntity from '../../state/fetch-entity.js';
 
 const prepareAddAssignment = (payload) => {
-	const entity = new AssignmentEntity(payload.entity, payload.token, { remove: () => { } });
+	const entity = new AssignmentEntity(payload.sirenEntity, payload.token, { remove: () => { } });
 	return {
 		payload: {
 			href: payload.href,
 			token: payload.token,
-			entity,
+			_entity: entity,
+			_sirenEntity: entity,
 			name: entity.name(),
 			instructions: entity.instructionsEditorHtml(),
 		}
 	}
 };
 
-export const fetchAssignment = (href, token) => async (dispatch) => {
-	const entity = await window.D2L.Siren.EntityStore.fetch(href, token);
-	const action = addAssignment({
-		href,
-		token,
-		entity: entity.entity
-	});
-	dispatch(action);
+export const fetchAssignment = (href, token) => (dispatch, getState) => {
+	fetchEntity(getState(), dispatch, href, token, selectAssignmentSirenEntity, addAssignment);
 };
 
 const prepareAddActivity = (payload) => {
-	const entity = new AssignmentActivityUsageEntity(payload.entity, payload.token, { remove: () => { } });
+	const entity = new AssignmentActivityUsageEntity(payload.sirenEntity, payload.token, { remove: () => { } });
 	return {
 		payload: {
 			href: payload.href,
 			token: payload.token,
-			entity
+			_entity: entity,
+			_sirenEntity: payload.sirenEntity
 		}
 	}
-};
-
-export const fetchActivity = (href, token) => async (dispatch) => {
-	const entity = await window.D2L.Siren.EntityStore.fetch(href, token);
-	const action = addActivity({
-		href,
-		token,
-		entity: entity.entity
-	});
-	dispatch(action);
 };
 
 export const saveAssignment = (href, token) => async (dispatch, getState) => {
@@ -52,15 +39,11 @@ export const saveAssignment = (href, token) => async (dispatch, getState) => {
 	const entity = selectAssignmentEntity(getState(), href, token);
 	await entity.save(assignment.name, assignment.instructions);
 
-	// dispatch(action);
+	dispatch(fetchAssignment(href, token));
 };
 
-export const saveActivity = (href, token) => async (dispatch, getState) => {
-	const activity = selectAssignment(getState(), href, token);
-	const entity = selectActivityEntity(getState(), href, token);
-	await entity.save(activity.name, activity.instructions);
-
-	// dispatch(action);
+export const fetchActivity = (href, token) => (dispatch, getState) => {
+	fetchEntity(getState(), dispatch, href, token, selectActivitySirenEntity, addActivity);
 };
 
 const INITIAL_STATE = {
@@ -102,7 +85,13 @@ export const selectActivity = (state, href, token) => {
 }
 
 export const selectActivityEntity = (state, href, token) => {
-	return selectActivities(state)[href].entity;
+	const activity = selectActivity(state, href, token);
+	return activity ? activity._entity : null;
+}
+
+export const selectActivitySirenEntity = (state, href, token) => {
+	const activity = selectActivity(state, href, token);
+	return activity ? activity._sirenEntity : null;
 }
 
 const selectAssignments = (state) => {
@@ -114,7 +103,13 @@ export const selectAssignment = (state, href, token) => {
 }
 
 export const selectAssignmentEntity = (state, href, token) => {
-	return selectAssignments(state)[href].entity;
+	const assignment = selectAssignment(state, href, token);
+	return assignment ? assignment._entity : null;
+}
+
+const selectAssignmentSirenEntity = (state, href, token) => {
+	const assignment = selectAssignment(state, href, token);
+	return assignment ? assignment._sirenEntity : null;
 }
 
 const { addAssignment, addActivity } = assignmentSlice.actions;

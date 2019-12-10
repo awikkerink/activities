@@ -1,36 +1,32 @@
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
 import { createSlice } from 'siren-sdk/src/redux-toolkit/createSlice.js';
 export { default as storeName } from './store-name.js';
+import fetchEntity from './fetch-entity.js';
 
 const prepareAddActivity = (payload) => {
-	const entity = new ActivityUsageEntity(payload.entity, payload.token, { remove: () => { } });
+	const entity = new ActivityUsageEntity(payload.sirenEntity, payload.token, { remove: () => { } });
 	return {
 		payload: {
 			href: payload.href,
 			token: payload.token,
-			entity,
+			_entity: entity,
+			_sirenEntity: payload.sirenEntity,
 			dueDate: entity.dueDate(),
 			isDraft: entity.isDraft()
 		}
 	}
 };
 
-export const fetchActivity = (href, token) => async (dispatch) => {
-	const entity = await window.D2L.Siren.EntityStore.fetch(href, token);
-	const action = addActivity({
-		href,
-		token,
-		entity: entity.entity
-	});
-	dispatch(action);
-};
+export const fetchActivity = (href, token) => (dispatch, getState) => {
+	fetchEntity(getState(), dispatch, href, token, selectActivitySirenEntity, addActivity);
+}
 
 export const saveActivity = (href, token) => async (dispatch, getState) => {
 	const activity = selectActivity(getState(), href, token);
 	const entity = selectActivityEntity(getState(), href, token);
 	await entity.save(activity);
 
-	// dispatch(action);
+	dispatch(fetchActivity(href, token));
 };
 
 const INITIAL_STATE = {
@@ -61,8 +57,15 @@ export const selectActivity = (state, href, token) => {
 }
 
 export const selectActivityEntity = (state, href, token) => {
-	return state.activityEditor.activities[href].entity;
+	const activity = selectActivity(state, href, token);
+	return activity ? activity._entity : null;
 }
+
+const selectActivitySirenEntity = (state, href, token) => {
+	const activity = selectActivity(state, href, token);
+	return activity ? activity._sirenEntity : null;
+}
+
 
 const { addActivity } = activitySlice.actions;
 export const { updateDueDate, updateVisibility } = activitySlice.actions;
