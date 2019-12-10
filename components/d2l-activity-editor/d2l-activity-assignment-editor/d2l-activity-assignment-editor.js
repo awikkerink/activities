@@ -17,6 +17,10 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 			 * API endpoint for attachment unfurling service
 			 */
 			unfurlEndpoint: { type: String },
+			/**
+			 * API endpoint for determining whether a domain is trusted
+			 */
+			trustedSitesEndpoint: { type: String },
 			_assignmentHref: { type: String },
 		};
 	}
@@ -52,7 +56,8 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 		return html`
 			<d2l-activity-editor
 				?loading="${this._hasPendingChildren}"
-				unfurlEndpoint="${this.unfurlEndpoint}">
+				unfurlEndpoint="${this.unfurlEndpoint}"
+				trustedSitesEndpoint="${this.trustedSitesEndpoint}">
 
 				<d2l-activity-assignment-editor-detail
 					.href="${this._assignmentHref}"
