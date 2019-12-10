@@ -139,7 +139,7 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 
 	_submitData(e) {
 		if (e.detail.action === 'done') {
-			const selectedData = this._data.filter(d=>d.selected);
+			const selectedData = this._getSelectedActivities();
 			this.count = selectedData.length;
 			const result = Promise.all(selectedData.map((act)=> {
 				return this.performSirenAction(act.unDismiss);
