@@ -194,6 +194,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 										title="[[_localizeEvaluationText(s, _headerColumns.0.meta.firstThenLast)]]"
 										href="[[s.activityLink]]"
 										aria-label$="[[_localizeEvaluationText(s, _headerColumns.0.meta.firstThenLast)]]"
+										class="d2l-user-name-link"
 									>[[_formatDisplayName(s, _headerColumns.0.meta.firstThenLast)]]</d2l-link>
 									<d2l-activity-evaluation-icon-base draft$="[[s.isDraft]]"></d2l-activity-evaluation-icon-base>
 								</d2l-td>
@@ -301,7 +302,8 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 	}
 	static get observers() {
 		return [
-			'_handleNameSwap(_headerColumns.0.headers.*)'
+			'_handleNameSwap(_headerColumns.0.headers.*)',
+			'_handleNameFocusOnPageForwardBack(showLoadingSkeleton, _data)'
 		];
 	}
 
@@ -317,6 +319,15 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 			this.set('_headerColumns.0.headers.0.suffix', ',');
 			this.set('_headerColumns.0.headers.1.suffix', '');
 			this.set('_headerColumns.0.meta.firstThenLast', this._headerColumns[0].headers[0].key === 'firstName');
+		}
+	}
+
+	_handleNameFocusOnPageForwardBack() {
+		if (!this.showLoadingSkeleton && this._data.length > 0 && window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) {
+			const firstUserLink = this.shadowRoot.querySelector('.d2l-user-name-link');
+			if (firstUserLink) {
+				firstUserLink.focus();
+			}
 		}
 	}
 
