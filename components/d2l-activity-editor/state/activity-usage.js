@@ -12,7 +12,6 @@ const prepareAddActivity = (payload) => {
 	return {
 		payload: {
 			href: payload.href,
-			token: payload.token,
 			_entity: entity,
 			_sirenEntity: payload.sirenEntity,
 			dueDate: entity.dueDate(),

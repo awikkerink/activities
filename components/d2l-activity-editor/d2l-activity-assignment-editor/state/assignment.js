@@ -13,7 +13,6 @@ const prepareAddAssignment = (payload) => {
 	return {
 		payload: {
 			href: payload.href,
-			token: payload.token,
 			_entity: entity,
 			_sirenEntity: entity,
 			name: entity.name(),
@@ -25,7 +24,7 @@ const prepareAddAssignment = (payload) => {
 export const saveAssignment = (href, token) => async (dispatch, getState) => {
 	const assignment = selectAssignment(getState(), href, token);
 	const entity = selectAssignmentEntity(getState(), href, token);
-	await entity.save(assignment.name, assignment.instructions);
+	await entity.save(assignment);
 
 	dispatch(fetchAssignment(href, token));
 };
@@ -39,7 +38,6 @@ const prepareAddActivity = (payload) => {
 	return {
 		payload: {
 			href: payload.href,
-			token: payload.token,
 			_entity: entity,
 			_sirenEntity: payload.sirenEntity
 		}
