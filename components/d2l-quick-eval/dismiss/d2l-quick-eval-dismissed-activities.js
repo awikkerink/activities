@@ -24,8 +24,8 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 				dismissed-activities="[[_data]]"
 				on-d2l-dialog-close="_submitData"
 				on-d2l-quick-eval-dismissed-activity-selected="_handleListItemSelected"></d2l-quick-eval-ellipsis-dialog>
-			<d2l-alert-toast id="toast-dismiss-list-success" type="success">[[successMessage]]</d2l-alert-toast>
-			<d2l-alert-toast id="toast-dismiss-list-critical" type="critical">[[localize('failedToRestoreActivity')]]</d2l-alert-toast>
+			<d2l-alert-toast class="d2l-quick-eval-dismissed-list-success" type="success">[[successMessage]]</d2l-alert-toast>
+			<d2l-alert-toast class="d2l-quick-eval-dismissed-list-critical" type="critical">[[localize('failedToRestoreActivity')]]</d2l-alert-toast>
 		`;
 
 		quickEvalActivitiesTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
@@ -145,10 +145,10 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 				return this.performSirenAction(act.unDismiss);
 			}));
 			result.then(()=> {
-				this.shadowRoot.querySelector('#toast-dismiss-list-success').open = true;
+				this.shadowRoot.querySelector('.d2l-quick-eval-dismissed-list-success').open = true;
 			}).catch((e)=> {
 				this._logError(e, {developerMessage: 'Error dismissing activities'});
-				this.shadowRoot.querySelector('#toast-dismiss-list-critical').open = true;
+				this.shadowRoot.querySelector('.d2l-quick-eval-dismissed-list-critical').open = true;
 			});
 		}
 	}
