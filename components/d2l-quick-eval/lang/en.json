@@ -45,6 +45,7 @@
    "no" : "No",
    "noCriteriaMatch" : "There are no submissions that match your criteria.",
    "noCriteriaMatchActivities" : "There are no activities that match your criteria.",
+   "noDismissedActivities": "You currently have no dismissed activities. Dismissed activities can be viewed and restored here.",
    "noResults" : "No results here.",
    "noSubmissions" : "There are no submissions that need your attention.",
    "publishAll" : "Publish All",
