@@ -3,7 +3,7 @@ import 'd2l-colors/d2l-colors';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { getLocalizeResources } from './localization';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
-import reducer, { fetchEntity, updateVisibility, selectActivityEntity, selectActivity } from './state/activity-usage.js';
+import reducer, { storeName, fetchActivity, updateVisibility, selectActivityEntity, selectActivity } from './state/activity-usage.js';
 import { connect } from './connect-mixin.js';
 import { ActivityEditorMixin } from './d2l-activity-editor-mixin.js';
 
@@ -40,6 +40,7 @@ class ActivityVisibilityEditor extends connect(ActivityEditorMixin(LocalizeMixin
 	constructor() {
 		super();
 		this._isDraft = false;
+		this._storeName = storeName;
 	}
 
 	get _reducers() {
@@ -56,7 +57,7 @@ class ActivityVisibilityEditor extends connect(ActivityEditorMixin(LocalizeMixin
 
 	_mapDispatchToProps(dispatch) {
 		return {
-			_fetchEntity: () => dispatch(fetchEntity(this.href, this.token)),
+			_fetchActivity: () => dispatch(fetchActivity(this.href, this.token)),
 			_updateVisibility: () => dispatch(updateVisibility({href: this.href, token: this.token, isDraft: !this._isDraft}))
 		}
 	}
@@ -66,7 +67,7 @@ class ActivityVisibilityEditor extends connect(ActivityEditorMixin(LocalizeMixin
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
-			this._fetchEntity(this.href, this.token);
+			this._fetchActivity(this.href, this.token);
 		}
 	}
 

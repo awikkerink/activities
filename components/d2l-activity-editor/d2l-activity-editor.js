@@ -1,10 +1,11 @@
+import '@brightspace-ui/core/components/button/button.js';
 import 'd2l-save-status/d2l-save-status.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { ProviderMixin } from './instance-provider-mixin.js';
-import { store } from './state/store.js';
+import { connect } from './connect-mixin.js';
+import { ActivityEditorMixin } from './d2l-activity-editor-mixin.js';
+import reducer, { storeName, fetchActivity, saveActivity } from './state/activity-usage.js';
 
-
-class ActivityEditor extends ProviderMixin(LitElement) {
+class ActivityEditor extends connect(ActivityEditorMixin(LitElement)) {
 
 	static get properties() {
 		return {
@@ -29,7 +30,42 @@ class ActivityEditor extends ProviderMixin(LitElement) {
 
 	constructor() {
 		super();
-		this.provideInstance('activity-store', store);
+		this._storeName = storeName;
+	}
+
+	get _reducers() {
+		return reducer;
+	}
+
+	_mapStateToProps() {
+		return {};
+	}
+
+	_mapDispatchToProps(dispatch) {
+		return {
+			_fetchActivity: () => dispatch(fetchActivity(this.href, this.token)),
+			_saveActivity: () => dispatch(saveActivity(this.href, this.token))
+		}
+	}
+
+	updated(changedProperties) {
+		super.updated(changedProperties);
+
+		if ((changedProperties.has('href') || changedProperties.has('token')) &&
+			this.href && this.token) {
+			this._fetchActivity();
+		}
+	}
+
+	async _save() {
+		await this._saveActivity();
+
+		const event = new CustomEvent('d2l-activity-editor-save', {
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+		this.dispatchEvent(event);
 	}
 
 	firstUpdated(changedProperties) {
@@ -54,6 +90,7 @@ class ActivityEditor extends ProviderMixin(LitElement) {
 			<div ?hidden="${!this.loading}">Loading ...</div>
 			<div ?hidden="${this.loading}">
 				<slot name="editor"></slot>
+				<d2l-button @click="${this._save}" primary>Save</d2l-button>
 			</div>
 		`;
 	}

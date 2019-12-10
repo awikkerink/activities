@@ -1,10 +1,10 @@
 import { RequesterMixin } from './instance-requester-mixin.js';
 
-export const connect = superclass => class extends RequesterMixin(superclass) {
+export const connect = (superclass) => class extends RequesterMixin(superclass) {
 
 	connectedCallback() {
 		super.connectedCallback();
-		const store = this.requestInstance('activity-store');
+		const store = this.requestInstance(this._storeName);
 		store.addReducers(this._reducers);
 		this._unsubscribeFromStore = store.subscribe(() => {
 			const newProps = this._mapStateToProps(store.getState());

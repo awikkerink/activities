@@ -12,9 +12,9 @@ import { labelStyles } from '@brightspace-ui/core/components/typography/styles.j
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { selectStyles } from '../select-styles.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
-import { connect } from '../connect-mixin.js';
 import { ActivityEditorMixin } from '../d2l-activity-editor-mixin.js';
-import reducer, { fetchEntity, selectActivity, selectActivityEntity, updateName, updateInstructions } from './state/assignment.js';
+import { connect } from '../connect-mixin.js';
+import reducer, { storeName, fetchAssignment, selectAssignment, selectAssignmentEntity, updateName, updateInstructions } from './state/assignment.js';
 
 class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMixin(LocalizeMixin(LitElement)))) {
 
@@ -69,6 +69,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 
 		this._submissionTypes = [];
 		this._completionTypes = [];
+		this._storeName = storeName;
 	}
 
 	// set _entity(entity) {
@@ -103,17 +104,17 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 	}
 
 	_mapStateToProps(state) {
-		const assignment = selectActivity(state, this.href, this.token);
+		const assignment = selectAssignment(state, this.href, this.token);
 		return assignment ? {
 			_name: assignment.name,
 			_instructions: assignment.instructions,
-			_entity: selectActivityEntity(state, this.href, this.token),
+			_entity: selectAssignmentEntity(state, this.href, this.token),
 		} : {};
 	}
 
 	_mapDispatchToProps(dispatch) {
 		return {
-			_fetchEntity: () => dispatch(fetchEntity(this.href, this.token)),
+			_fetchAssignment: () => dispatch(fetchAssignment(this.href, this.token)),
 			_updateName: (name) => dispatch(updateName({ href: this.href, token: this.token, name })),
 			_saveInstructions: (instructions) => dispatch(updateInstructions({ href: this.href, token: this.token, instructions }))
 		}
@@ -124,7 +125,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
-			this._fetchEntity();
+			this._fetchAssignment();
 		}
 	}
 

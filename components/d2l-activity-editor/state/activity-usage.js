@@ -1,6 +1,6 @@
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
-// import { createSelector } from 'reselect';
 import { createSlice } from 'siren-sdk/src/redux-toolkit/createSlice.js';
+export { default as storeName } from './store-name.js';
 
 const prepareAddActivity = (payload) => {
 	const entity = new ActivityUsageEntity(payload.entity, payload.token, { remove: () => { } });
@@ -15,7 +15,7 @@ const prepareAddActivity = (payload) => {
 	}
 };
 
-export const fetchEntity = (href, token) => async (dispatch) => {
+export const fetchActivity = (href, token) => async (dispatch) => {
 	const entity = await window.D2L.Siren.EntityStore.fetch(href, token);
 	const action = addActivity({
 		href,
@@ -23,6 +23,14 @@ export const fetchEntity = (href, token) => async (dispatch) => {
 		entity: entity.entity
 	});
 	dispatch(action);
+};
+
+export const saveActivity = (href, token) => async (dispatch, getState) => {
+	const activity = selectActivity(getState(), href, token);
+	const entity = selectActivityEntity(getState(), href, token);
+	await entity.save(activity);
+
+	// dispatch(action);
 };
 
 const INITIAL_STATE = {
@@ -48,31 +56,6 @@ const activitySlice = createSlice({
 	}
 });
 
-// const selectActivities = state => {
-// 	return state.activityEditor.activities;
-// }
-// const selectHref = (state, href) => {
-// 	return href;
-// }
-
-// const selectToken = (state, href, token) => {
-// 	return token;
-// }
-
-// export const selectActivityEntity = createSelector(
-// 	[selectActivities, selectHref, selectToken],
-// 	(activities, href, token) => {
-// 		return new ActivityUsageEntity(activities[href].entity, token, { remove: () => { } });
-// 	}
-// );
-
-// export const selectActivity = createSelector(
-// 	[selectActivities, selectHref, selectToken],
-// 	(activities, href, token) => {
-// 		return activities[href];
-// 	}
-// )
-
 export const selectActivity = (state, href, token) => {
 	return state.activityEditor.activities[href];
 }
@@ -80,13 +63,6 @@ export const selectActivity = (state, href, token) => {
 export const selectActivityEntity = (state, href, token) => {
 	return state.activityEditor.activities[href].entity;
 }
-
-// export const selectActivity = createSelector(
-// 	[selectActivities, selectHref, selectToken],
-// 	(activities, href, token) => {
-// 		return activities[href];
-// 	}
-// )
 
 const { addActivity } = activitySlice.actions;
 export const { updateDueDate, updateVisibility } = activitySlice.actions;
