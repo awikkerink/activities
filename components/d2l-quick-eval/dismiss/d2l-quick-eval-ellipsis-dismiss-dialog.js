@@ -17,8 +17,7 @@ class D2LQuickEvalEllipsisDialog extends LitQuickEvalLocalize(LitElement) {
 		return html`
 			<d2l-dialog
 				title-text="${this.localize('dismissedActivitiesList')}"
-				.opened="${this.opened}"
-				@d2l-dialog-close="${this._onClose.bind(this)}">
+				.opened="${this.opened}">
 				<d2l-quick-eval-dismissed-activities-list .dismissedActivities=${this.dismissedActivities}></d2l-quick-eval-dismissed-activities-list>
 				<d2l-button slot="footer" primary dialog-action="done">${this.localize('restore')}</d2l-button>
 				<d2l-button slot="footer" dialog-action>${this.localize('cancel')}</d2l-button>
@@ -31,10 +30,15 @@ class D2LQuickEvalEllipsisDialog extends LitQuickEvalLocalize(LitElement) {
 		this.opened = false;
 	}
 
-	_onClose() {
-		this.dispatchEvent(new Event('on-close'));
+	_getDialog() {
+		return this.shadowRoot.querySelector('d2l-dialog');
 	}
 
+	updated() {
+		if (this._getDialog() && this.dismissedActivities && this.dismissedActivities.length) {
+			setTimeout(()=>this._getDialog().resize(), 0);
+		}
+	}
 }
 
 window.customElements.define('d2l-quick-eval-ellipsis-dialog', D2LQuickEvalEllipsisDialog);
