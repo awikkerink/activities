@@ -3,6 +3,10 @@ import { createSlice } from 'siren-sdk/src/redux-toolkit/createSlice.js';
 export { default as storeName } from './store-name.js';
 import fetchEntity from './fetch-entity.js';
 
+export const fetchActivity = (href, token) => (dispatch, getState) => {
+	fetchEntity(dispatch, getState(), href, token, selectActivitySirenEntity, addActivity);
+}
+
 const prepareAddActivity = (payload) => {
 	const entity = new ActivityUsageEntity(payload.sirenEntity, payload.token, { remove: () => { } });
 	return {
@@ -16,10 +20,6 @@ const prepareAddActivity = (payload) => {
 		}
 	}
 };
-
-export const fetchActivity = (href, token) => (dispatch, getState) => {
-	fetchEntity(getState(), dispatch, href, token, selectActivitySirenEntity, addActivity);
-}
 
 export const saveActivity = (href, token) => async (dispatch, getState) => {
 	const activity = selectActivity(getState(), href, token);

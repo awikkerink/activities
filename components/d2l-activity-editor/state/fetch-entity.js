@@ -1,5 +1,5 @@
 
-export default async (state, dispatch, href, token, prevEntitySelector, actionCreator) => {
+export default async (dispatch, state, href, token, prevEntitySelector, actionCreator) => {
 	const fetched = await window.D2L.Siren.EntityStore.fetch(href, token);
 	if (!fetched) {
 		return;

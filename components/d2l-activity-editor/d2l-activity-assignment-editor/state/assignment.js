@@ -4,6 +4,10 @@ import { createSlice } from 'siren-sdk/src/redux-toolkit/createSlice.js';
 export { default as storeName } from '../../state/store-name.js';
 import fetchEntity from '../../state/fetch-entity.js';
 
+export const fetchAssignment = (href, token) => (dispatch, getState) => {
+	fetchEntity(dispatch, getState(), href, token, selectAssignmentSirenEntity, addAssignment);
+};
+
 const prepareAddAssignment = (payload) => {
 	const entity = new AssignmentEntity(payload.sirenEntity, payload.token, { remove: () => { } });
 	return {
@@ -18,8 +22,16 @@ const prepareAddAssignment = (payload) => {
 	}
 };
 
-export const fetchAssignment = (href, token) => (dispatch, getState) => {
-	fetchEntity(getState(), dispatch, href, token, selectAssignmentSirenEntity, addAssignment);
+export const saveAssignment = (href, token) => async (dispatch, getState) => {
+	const assignment = selectAssignment(getState(), href, token);
+	const entity = selectAssignmentEntity(getState(), href, token);
+	await entity.save(assignment.name, assignment.instructions);
+
+	dispatch(fetchAssignment(href, token));
+};
+
+export const fetchActivity = (href, token) => (dispatch, getState) => {
+	fetchEntity(dispatch, getState(), href, token, selectActivitySirenEntity, addActivity);
 };
 
 const prepareAddActivity = (payload) => {
@@ -32,18 +44,6 @@ const prepareAddActivity = (payload) => {
 			_sirenEntity: payload.sirenEntity
 		}
 	}
-};
-
-export const saveAssignment = (href, token) => async (dispatch, getState) => {
-	const assignment = selectAssignment(getState(), href, token);
-	const entity = selectAssignmentEntity(getState(), href, token);
-	await entity.save(assignment.name, assignment.instructions);
-
-	dispatch(fetchAssignment(href, token));
-};
-
-export const fetchActivity = (href, token) => (dispatch, getState) => {
-	fetchEntity(getState(), dispatch, href, token, selectActivitySirenEntity, addActivity);
 };
 
 const INITIAL_STATE = {
@@ -76,12 +76,8 @@ const assignmentSlice = createSlice({
 	}
 });
 
-const selectActivities = (state) => {
-	return state.assignmentEditor.activities;
-}
-
 export const selectActivity = (state, href, token) => {
-	return selectActivities(state)[href];
+	return state.assignmentEditor.activities[href];
 }
 
 export const selectActivityEntity = (state, href, token) => {
@@ -94,12 +90,8 @@ export const selectActivitySirenEntity = (state, href, token) => {
 	return activity ? activity._sirenEntity : null;
 }
 
-const selectAssignments = (state) => {
-	return state.assignmentEditor.assignments;
-}
-
 export const selectAssignment = (state, href, token) => {
-	return selectAssignments(state)[href];
+	return state.assignmentEditor.assignments[href];
 }
 
 export const selectAssignmentEntity = (state, href, token) => {
