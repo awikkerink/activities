@@ -1,1 +1,1 @@
-export default 'activity-store';
+export default 'd2l-activity-editor-store';

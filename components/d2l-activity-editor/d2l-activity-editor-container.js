@@ -33,24 +33,6 @@ class ActivityEditorContainer extends ProviderMixin(LitElement) {
 		this.provideInstance(activityStoreName, store);
 	}
 
-	_save() {
-
-	}
-
-	firstUpdated(changedProperties) {
-		super.firstUpdated(changedProperties);
-
-		this.addEventListener('d2l-siren-entity-save-start', () => {
-			this.shadowRoot.querySelector('#save-status').start();
-		});
-		this.addEventListener('d2l-siren-entity-save-end', () => {
-			this.shadowRoot.querySelector('#save-status').end();
-		});
-		this.addEventListener('d2l-siren-entity-save-error', () => {
-			this.shadowRoot.querySelector('#save-status').error();
-		});
-	}
-
 	render() {
 		return html`
 			<slot></slot>
