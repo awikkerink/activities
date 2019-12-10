@@ -105,11 +105,14 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 			pickOnly: true // Prevents creating new items from the picker
 		};
 
+		// Required for the async handler below to work in Edge
+		const superEntity = super._entity;
+
 		const orgUnitId = this._openDialog(opener, settings, async event => {
 			const quicklinkUrl = `/d2l/api/lp/unstable/${orgUnitId}/quickLinks/${event.m_typeKey}/${event.m_id}`;
 			const response = await fetch(quicklinkUrl);
 			const json = await response.json();
-			this.wrapSaveAction(super._entity.addLinkAttachment(event.m_title, json.QuickLink));
+			this.wrapSaveAction(superEntity.addLinkAttachment(event.m_title, json.QuickLink));
 		});
 	}
 
