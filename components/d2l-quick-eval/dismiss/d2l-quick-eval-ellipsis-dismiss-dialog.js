@@ -35,8 +35,9 @@ class D2LQuickEvalEllipsisDialog extends LitQuickEvalLocalize(LitElement) {
 	}
 
 	updated() {
-		if (this._getDialog() && this.dismissedActivities && this.dismissedActivities.length) {
-			setTimeout(()=>this._getDialog().resize(), 0);
+		const dialog = this._getDialog();
+		if (dialog && this.dismissedActivities && this.dismissedActivities.length) {
+			requestAnimationFrame(()=>dialog.resize(), 0);
 		}
 	}
 }
