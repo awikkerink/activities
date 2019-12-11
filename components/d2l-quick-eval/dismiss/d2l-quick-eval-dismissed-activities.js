@@ -28,7 +28,7 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 				restore-disabled= "[[_restoreDisabled]]"
 				on-d2l-quick-eval-dismissed-activity-selected="_handleListItemSelected"></d2l-quick-eval-ellipsis-dialog>
 			<d2l-alert-toast class="d2l-quick-eval-dismissed-list-success" type="success">[[successMessage]]</d2l-alert-toast>
-			<d2l-alert-toast class="d2l-quick-eval-dismissed-list-critical" type="critical">[[localize('failedToRestoreActivity')]]</d2l-alert-toast>
+			<d2l-alert-toast class="d2l-quick-eval-dismissed-list-critical" type="critical">[[failedMessage]]</d2l-alert-toast>
 		`;
 
 		quickEvalActivitiesTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
@@ -57,9 +57,17 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 				type: Number,
 				value: 0,
 			},
+			failedCount: {
+				type: Number,
+				value: 0,
+			},
 			successMessage: {
 				type: String,
 				computed: '_computeSuccessMessage(selectedCount)',
+			},
+			failedMessage: {
+				type: String,
+				computed: '_computeFailedMessage(selectedCount, failedCount)',
 			},
 			_restoreDisabled: {
 				type: Boolean,
@@ -126,6 +134,14 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 		return this.localize('activityRestored', 'count', selectedCount);
 	}
 
+	_computeFailedMessage(selectedCount, failedCount) {
+		if (failedCount === selectedCount) {
+			return this.localize('failedToRestoreActivity');
+		} else {
+			return this.localize('failedToRestoreSomeActivities', 'x', failedCount, 'y', selectedCount);
+		}
+	}
+
 	_handleLoadFailure() {
 		this._isError = true;
 	}
@@ -149,13 +165,20 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 			const selectedData = this._getSelectedActivities();
 			this.selectedCount = selectedData.length;
 			const result = Promise.all(selectedData.map((act)=> {
-				return this.performSirenAction(act.unDismiss);
+				try {
+					return this.performSirenAction(act.unDismiss);
+				} catch (e) {
+					return new Error();
+				}
 			}));
-			result.then(()=> {
-				this.shadowRoot.querySelector('.d2l-quick-eval-dismissed-list-success').open = true;
-			}).catch((e)=> {
-				this._logError(e, {developerMessage: 'Error dismissing activities'});
-				this.shadowRoot.querySelector('.d2l-quick-eval-dismissed-list-critical').open = true;
+			result.then((results)=> {
+				this.failedCount = results.filter(a=>a instanceof Error).length;
+				if (this.failedCount > 0) {
+					this._logError(e, {developerMessage: 'Error dismissing activities'});
+					this.shadowRoot.querySelector('.d2l-quick-eval-dismissed-list-critical').open = true;
+				} else {
+					this.shadowRoot.querySelector('.d2l-quick-eval-dismissed-list-success').open = true;
+				}
 			});
 		}
 	}
