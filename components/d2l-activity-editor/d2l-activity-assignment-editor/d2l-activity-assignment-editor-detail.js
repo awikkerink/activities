@@ -14,7 +14,12 @@ import { selectStyles } from '../select-styles.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 import { ActivityEditorMixin } from '../d2l-activity-editor-mixin.js';
 import { connect } from '../connect-mixin.js';
-import reducer, { storeName, fetchAssignment, selectAssignment, selectAssignmentEntity, updateName, updateInstructions } from './state/assignment.js';
+import reducer, {
+	storeName,
+	selectAssignment,
+	selectAssignmentEntity,
+	actions
+} from './state/assignment.js';
 
 class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMixin(LocalizeMixin(LitElement)))) {
 
@@ -25,18 +30,10 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 			_nameError: { type: String },
 			_instructions: { type: String },
 			_entity: { type: Object },
-			_canEditName: { type: Boolean },
-			_instructionsRichTextEditorConfig: { type: Object },
-			_canEditInstructions: { type: Boolean },
-			_activityUsageHref: { type: String },
-			_submissionTypes: { type: Array },
-			_canEditSubmissionType: { type: Boolean },
-			_completionTypes: { type: Array },
-			_canEditCompletionType: { type: Boolean },
-			_showCompletionType: { type: Boolean },
-			_canSeeAnnotations: {type: Boolean },
+			_submissionType: { type: Number },
+			_completionType: { type: Number },
 			_annotationToolsAvailable: { type: Boolean },
-			_attachmentsHref: { type: String }
+			// _attachmentsHref: { type: String }
 		};
 	}
 
@@ -66,9 +63,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 	constructor() {
 		super();
 		this._debounceJobs = {};
-
-		this._submissionTypes = [];
-		this._completionTypes = [];
 		this._storeName = storeName;
 	}
 
@@ -84,18 +78,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 	// 		return;
 	// 	}
 
-	// 	this._name = assignment.name();
-	// 	this._canEditName = assignment.canEditName();
-	// 	this._instructions = assignment.instructionsEditorHtml();
-	// 	this._instructionsRichTextEditorConfig = assignment.instructionsRichTextEditorConfig();
-	// 	this._canEditInstructions = assignment.canEditInstructions();
-	// 	this._activityUsageHref = assignment.activityUsageHref();
-	// 	this._submissionTypes = assignment.submissionTypeOptions();
-	// 	this._canEditSubmissionType = assignment.canEditSubmissionType();
-	// 	this._completionTypes = assignment.completionTypeOptions();
-	// 	this._canEditCompletionType = assignment.canEditCompletionType();
-	// 	this._canSeeAnnotations = assignment.canSeeAnnotations();
-	// 	this._annotationToolsAvailable = assignment.getAvailableAnnotationTools();
 	// 	this._attachmentsHref = assignment.attachmentsCollectionHref();
 	// }
 
@@ -108,15 +90,21 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 		return assignment ? {
 			_name: assignment.name,
 			_instructions: assignment.instructions,
+			_submissionType: assignment.submissionType,
+			_completionType: assignment.completionType,
+			_annotationToolsAvailable: assignment.annotationToolsAvailable,
 			_entity: selectAssignmentEntity(state, this.href, this.token),
 		} : {};
 	}
 
 	_mapDispatchToProps(dispatch) {
 		return {
-			_fetchAssignment: () => dispatch(fetchAssignment(this.href, this.token)),
-			_updateName: (name) => dispatch(updateName({ href: this.href, token: this.token, name })),
-			_saveInstructions: (instructions) => dispatch(updateInstructions({ href: this.href, token: this.token, instructions }))
+			_fetchAssignment: () => dispatch(actions.fetchAssignment(this.href, this.token)),
+			_updateName: (name) => dispatch(actions.updateName({ href: this.href, token: this.token, name })),
+			_updateInstructions: (instructions) => dispatch(actions.updateInstructions({ href: this.href, token: this.token, instructions })),
+			_updateSubmissionType: (submissionType) => dispatch(actions.updateSubmissionType({ href: this.href, token: this.token, submissionType })),
+			_updateCompletionType: (completionType) => dispatch(actions.updateCompletionType({ href: this.href, token: this.token, completionType })),
+			_updateAnnotationToolsAvailable: (annotationToolsAvailable) => dispatch(actions.updateAnnotationToolsAvailable({ href: this.href, token: this.token, annotationToolsAvailable }))
 		}
 	}
 
@@ -159,18 +147,18 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 		this._debounceJobs.instructions = Debouncer.debounce(
 			this._debounceJobs.instructions,
 			timeOut.after(500),
-			() => this._saveInstructions(instructions)
+			() => this._updateInstructions(instructions)
 		);
 	}
 
 	_saveSubmissionTypeOnChange() {
 		const submissionType = this.shadowRoot.querySelector('select#assignment-submission-type').value;
-		this.wrapSaveAction(super._entity.setSubmissionType(submissionType));
+		this._updateSubmissionType(submissionType);
 	}
 
 	_saveCompletionTypeOnChange() {
 		const completionType = this.shadowRoot.querySelector('select#assignment-completion-type').value;
-		this.wrapSaveAction(super._entity.setCompletionType(completionType));
+		this._updateCompletionType(completionType);
 	}
 
 	_getNameTooltip() {
@@ -187,21 +175,38 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 		}
 	}
 
-	_getSubmissionTypeOptions() {
+	get _renderSubmissionType() {
+		const submissionTypes = this._entity.submissionTypeOptions()
 		return html`
-			${this._submissionTypes.map(option => html`<option value=${option.value} ?selected=${option.selected}>${option.title}</option>`)}
+			<div id="assignment-submission-type-container">
+				<label class="d2l-label-text" for="assignment-submission-type">${this.localize('submissionType')}</label>
+				<select
+					id="assignment-submission-type"
+					@change="${this._saveSubmissionTypeOnChange}"
+					?disabled="${!this._entity.canEditSubmissionType()}">
+						${submissionTypes.map(option => html`<option value=${option.value} ?selected=${String(option.value) === this._submissionType}>${option.title}</option>`)}
+				</select>
+			</div>
 		`;
 	}
 
-	_getCompletionTypeOptions() {
+	get _renderCompletionType() {
+		const completionTypes = this._entity.validCompletionTypeOptions(this._submissionType);
 		return html`
-			${this._completionTypes.map(option => html`<option value=${option.value} ?selected=${option.selected}>${option.title}</option>`)}
+			<div id="assignment-completion-type-container" ?hidden="${!completionTypes.length > 0}">
+				<label class="d2l-label-text" for="assignment-completion-type">${this.localize('completionType')}</label>
+				<select
+					id="assignment-completion-type"
+						@change="${this._saveCompletionTypeOnChange}"
+						?disabled="${!this._entity.canEditCompletionType()}">
+							${completionTypes.map(option => html`<option value=${option.value} ?selected=${String(option.value) === this._completionType}>${option.title}</option>`)}
+				</select>
+			</div >
 		`;
 	}
 
 	_toggleAnnotationToolsAvailability() {
-		this._annotationToolsAvailable = !this._annotationToolsAvailable;
-		this.wrapSaveAction(super._entity.setAnnotationToolsAvailability(this._annotationToolsAvailable));
+		this.updateAnnotationToolsAvailable(!this._annotationToolsAvailable);
 	}
 
 	render() {
@@ -251,27 +256,8 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 				</d2l-activity-text-editor>
 			</div>
 
-			<div id="assignment-submission-type-container">
-				<label class="d2l-label-text" for="assignment-submission-type">${this.localize('submissionType')}</label>
-				<select
-					id="assignment-submission-type"
-					@change="${this._saveSubmissionTypeOnChange}"
-					?disabled="${!this._canEditSubmissionType}">
-
-					${this._getSubmissionTypeOptions()}
-				</select>
-			</div>
-
-			<div id="assignment-completion-type-container" ?hidden="${!this._completionTypes.length > 0}">
-				<label class="d2l-label-text" for="assignment-completion-type">${this.localize('completionType')}</label>
-				<select
-					id="assignment-completion-type"
-					@change="${this._saveCompletionTypeOnChange}"
-					?disabled="${!this._canEditCompletionType}">
-
-					${this._getCompletionTypeOptions()}
-				</select>
-			</div>
+			${this._renderSubmissionType}
+			${this._renderCompletionType}
 
 			<div id="assignment-attachments-editor-container" ?hidden="${!this._attachmentsHref}">
 				<d2l-activity-attachments-editor
@@ -280,7 +266,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 				</d2l-activity-attachments-editor>
 			</div>
 
-			<div id="annotations-checkbox-container" ?hidden="${!this._canSeeAnnotations}">
+			<div id="annotations-checkbox-container" ?hidden="${!this._entity.canSeeAnnotations()}">
 				<label class="d2l-label-text">${this.localize('annotationTools')}</label>
 					<d2l-input-checkbox
 						@change="${this._toggleAnnotationToolsAvailability}"

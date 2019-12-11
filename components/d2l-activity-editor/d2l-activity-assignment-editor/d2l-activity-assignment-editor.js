@@ -5,7 +5,7 @@ import { PendingContainerMixin } from 'siren-sdk/src/mixin/pending-container-mix
 import { ProviderMixin } from '../instance-provider-mixin.js';
 import { ActivityEditorMixin } from '../d2l-activity-editor-mixin.js';
 import { connect } from '../connect-mixin.js';
-import reducer, { storeName, fetchActivity, selectActivityEntity, saveAssignment } from './state/assignment.js';
+import reducer, { storeName, selectActivityEntity, actions } from './state/assignment.js';
 
 
 class AssignmentEditor extends ProviderMixin(connect(PendingContainerMixin(ActivityEditorMixin(LitElement)))) {
@@ -46,8 +46,8 @@ class AssignmentEditor extends ProviderMixin(connect(PendingContainerMixin(Activ
 
 	_mapDispatchToProps(dispatch) {
 		return {
-			_fetchActivity: () => dispatch(fetchActivity(this.href, this.token)),
-			_saveAssignment: () => dispatch(saveAssignment(this._entity.assignmentHref(), this.token))
+			_fetchActivity: () => dispatch(actions.fetchActivity(this.href, this.token)),
+			_saveAssignment: () => dispatch(actions.saveAssignment(this._entity.assignmentHref(), this.token))
 		}
 	}
 

@@ -4,7 +4,7 @@ import { createSlice } from 'siren-sdk/src/redux-toolkit/createSlice.js';
 export { default as storeName } from '../../state/store-name.js';
 import fetchEntity from '../../state/fetch-entity.js';
 
-export const fetchAssignment = (href, token) => (dispatch, getState) => {
+const fetchAssignment = (href, token) => (dispatch, getState) => {
 	fetchEntity(dispatch, getState(), href, token, selectAssignmentSirenEntity, addAssignment);
 };
 
@@ -17,11 +17,25 @@ const prepareAddAssignment = (payload) => {
 			_sirenEntity: entity,
 			name: entity.name(),
 			instructions: entity.instructionsEditorHtml(),
+			submissionType: `${entity.submissionType().value}`,
+			completionType: `${entity.completionType().value}`,
+			annotationToolsAvailable: entity.getAvailableAnnotationTools()
 		}
 	}
 };
 
-export const saveAssignment = (href, token) => async (dispatch, getState) => {
+const updateSubmissionType = (payload) => (dispatch, getState) => {
+	dispatch(assignmentSlice.actions.updateSubmissionType(payload));
+
+	const assignment = selectAssignment(getState(), payload.href, payload.token);
+	const entity = selectAssignmentEntity(getState(), payload.href, payload.token);
+	const completionType = entity.ensureValidCompletionType(payload.submissionType, assignment.completionType);
+	if (completionType !== assignment.completionType) {
+		dispatch(actions.updateCompletionType({ href: payload.href, token: payload.token, completionType }));
+	}
+}
+
+const saveAssignment = (href, token) => async (dispatch, getState) => {
 	const assignment = selectAssignment(getState(), href, token);
 	const entity = selectAssignmentEntity(getState(), href, token);
 	await entity.save(assignment);
@@ -29,7 +43,7 @@ export const saveAssignment = (href, token) => async (dispatch, getState) => {
 	dispatch(fetchAssignment(href, token));
 };
 
-export const fetchActivity = (href, token) => (dispatch, getState) => {
+const fetchActivity = (href, token) => (dispatch, getState) => {
 	fetchEntity(dispatch, getState(), href, token, selectActivitySirenEntity, addActivity);
 };
 
@@ -58,6 +72,15 @@ const assignmentSlice = createSlice({
 		},
 		updateInstructions: (state, action) => {
 			state.assignments[action.payload.href].instructions = action.payload.instructions;
+		},
+		updateSubmissionType: (state, action) => {
+			state.assignments[action.payload.href].submissionType = action.payload.submissionType;
+		},
+		updateCompletionType: (state, action) => {
+			state.assignments[action.payload.href].completionType = action.payload.completionType;
+		},
+		updateAnnotationToolsAvailable: (state, action) => {
+			state.assignments[action.payload.href].annotationToolsAvailable = action.payload.annotationToolsAvailable;
 		},
 		addAssignment: {
 			reducer: (state, action) => {
@@ -103,7 +126,17 @@ const selectAssignmentSirenEntity = (state, href, token) => {
 }
 
 const { addAssignment, addActivity } = assignmentSlice.actions;
-export const { updateName, updateInstructions } = assignmentSlice.actions;
+
+export const actions = {
+	fetchAssignment,
+	fetchActivity,
+	saveAssignment,
+	updateName: assignmentSlice.actions.updateName,
+	updateInstructions: assignmentSlice.actions.updateInstructions,
+	updateSubmissionType,
+	updateCompletionType: assignmentSlice.actions.updateCompletionType,
+	updateAnnotationToolsAvailable: assignmentSlice.actions.updateAnnotationToolsAvailable,
+};
 
 export default {
 	assignmentEditor: assignmentSlice.reducer
