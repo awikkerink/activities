@@ -1,3 +1,4 @@
+/* global moment:false */
 suite('_getIso8601Date', () => {
 
 	let component;

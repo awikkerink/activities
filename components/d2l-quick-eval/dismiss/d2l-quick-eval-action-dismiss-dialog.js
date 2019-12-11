@@ -100,6 +100,7 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 	}
 
 	renderDatePicker(selectedRadio) {
+		/* global moment:false */
 		const now = moment();
 		const minDate = this._getIso8601Date(now);
 
