@@ -20,6 +20,7 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 	static get template() {
 		const quickEvalActivitiesTemplate = html`
 			<d2l-quick-eval-ellipsis-dialog
+				opened="[[opened]]"
 				dismissed-activities="[[_data]]"
 				loading="[[_loading]]"
 				restore-disabled= "[[_restoreDisabled]]"
@@ -41,6 +42,10 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 				value: true
 			},
 			_isError: {
+				type: Boolean,
+				value: false,
+			},
+			opened: {
 				type: Boolean,
 				value: false,
 			},
