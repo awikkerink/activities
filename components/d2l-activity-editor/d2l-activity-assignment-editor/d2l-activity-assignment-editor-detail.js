@@ -23,7 +23,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 
 	static get properties() {
 		return {
-			htmlEditorEnabled: { type: Boolean },
 			_name: { type: String },
 			_nameError: { type: String },
 			_canEditName: { type: Boolean },
@@ -233,7 +232,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				<label class="d2l-label-text">${this.localize('instructions')}</label>
 				<d2l-activity-text-editor
 					value="${this._instructions}"
-					?htmlEditorEnabled="${this.htmlEditorEnabled}"
 					.richtextEditorConfig="${this._instructionsRichTextEditorConfig}"
 					@d2l-activity-text-editor-change="${this._saveInstructionsOnChange}"
 					ariaLabel="${this.localize('instructions')}"
