@@ -2,6 +2,7 @@ import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 import {QuickEvalLocalize} from '../QuickEvalLocalize.js';
 import {QuickEvalLogging} from '../QuickEvalLogging.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
+import 'd2l-alert/d2l-alert-toast.js';
 import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
 import './d2l-quick-eval-ellipsis-dismiss-dialog.js';
 import '../behaviors/d2l-quick-eval-siren-helper-behavior.js';
@@ -22,9 +23,12 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 			<d2l-quick-eval-ellipsis-dialog
 				opened="[[opened]]"
 				dismissed-activities="[[_data]]"
+				on-d2l-dialog-close="_submitData"
 				loading="[[_loading]]"
 				restore-disabled= "[[_restoreDisabled]]"
 				on-d2l-quick-eval-dismissed-activity-selected="_handleListItemSelected"></d2l-quick-eval-ellipsis-dialog>
+			<d2l-alert-toast class="d2l-quick-eval-dismissed-list-success" type="success">[[successMessage]]</d2l-alert-toast>
+			<d2l-alert-toast class="d2l-quick-eval-dismissed-list-critical" type="critical">[[failedMessage]]</d2l-alert-toast>
 		`;
 
 		quickEvalActivitiesTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
@@ -48,6 +52,22 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 			opened: {
 				type: Boolean,
 				value: false,
+			},
+			selectedCount: {
+				type: Number,
+				value: 0,
+			},
+			failedCount: {
+				type: Number,
+				value: 0,
+			},
+			successMessage: {
+				type: String,
+				computed: '_computeSuccessMessage(selectedCount)',
+			},
+			failedMessage: {
+				type: String,
+				computed: '_computeFailedMessage(selectedCount, failedCount)',
 			},
 			_restoreDisabled: {
 				type: Boolean,
@@ -110,6 +130,18 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 		return [];
 	}
 
+	_computeSuccessMessage(selectedCount) {
+		return this.localize('activityRestored', 'count', selectedCount);
+	}
+
+	_computeFailedMessage(selectedCount, failedCount) {
+		if (failedCount === selectedCount) {
+			return this.localize('failedToRestoreActivity');
+		} else {
+			return this.localize('failedToRestoreSomeActivities', 'x', failedCount, 'y', selectedCount);
+		}
+	}
+
 	_handleLoadFailure() {
 		this._isError = true;
 	}
@@ -128,6 +160,28 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 		}
 	}
 
+	_submitData(e) {
+		if (e.detail.action === 'done') {
+			const selectedData = this._getSelectedActivities();
+			this.selectedCount = selectedData.length;
+			const result = Promise.all(selectedData.map((act)=> {
+				try {
+					return this.performSirenAction(act.unDismiss);
+				} catch (e) {
+					return new Error();
+				}
+			}));
+			result.then((results)=> {
+				this.failedCount = results.filter(a=>a instanceof Error).length;
+				if (this.failedCount > 0) {
+					this._logError(e, {developerMessage: 'Error dismissing activities'});
+					this.shadowRoot.querySelector('.d2l-quick-eval-dismissed-list-critical').open = true;
+				} else {
+					this.shadowRoot.querySelector('.d2l-quick-eval-dismissed-list-success').open = true;
+				}
+			});
+		}
+	}
 	_computeRestoreDisabled(loading, data) {
 		return loading || !(data.base && data.base.some(d => d.selected));
 	}
