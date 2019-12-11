@@ -39,7 +39,11 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			this._description = specialization.getDescription();
 		});
 		let hasACollection = false;
-		usage.onActivityCollectionChange((collection => {
+		usage.onActivityCollectionChange((collection, error) => {
+			if (error) {
+				return;
+			}
+
 			hasACollection = true;
 			const items = [];
 			let itemsLoadedOnce = false;
@@ -58,7 +62,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				this._items = items;
 				itemsLoadedOnce = true;
 			});
-		}));
+		});
 
 		usage.subEntitiesLoaded().then(() => {
 			if (!hasACollection) {
