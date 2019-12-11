@@ -127,12 +127,6 @@ D2L.PolymerBehaviors.Siren.D2LSirenHelperBehaviorImpl = {
 		}
 
 		return parsed.searchParams.get(queryParam) !== '';
-	},
-
-	_getIso8601Date: function(date) {
-		const pad = x => x < 10 ? '0' + x : x;
-
-		return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 	}
 };
 

@@ -89,6 +89,12 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 		this._getDialog().resize();
 	}
 
+	_getIso8601Date(date) {
+		const pad = x => x < 10 ? '0' + x : x;
+
+		return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+	}
+
 	renderDatePicker(selectedRadio) {
 		const now = new Date();
 		const minDate = this._getIso8601Date(now);
