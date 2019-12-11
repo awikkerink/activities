@@ -90,6 +90,9 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 	}
 
 	renderDatePicker(selectedRadio) {
+		const now = new Date();
+		const minDate = this._getIso8601Date(now);
+
 		if (selectedRadio === DISMISS_TYPES.date) {
 			return html`
 				<div class="datepicker-container">
@@ -97,6 +100,7 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 						@d2l-datetime-picker-datetime-changed="${this._onDatetimePickerDatetimeChanged}"
 						@d2l-datetime-picker-datetime-cleared="${this._onDatetimePickerDatetimeCleared}"
 						placeholder="MM|DD|YYYY"
+						min="${minDate}"
 						hide-label
 					></d2l-datetime-picker>
 				</div>
