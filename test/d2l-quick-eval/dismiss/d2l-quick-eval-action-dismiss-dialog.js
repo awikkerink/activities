@@ -9,12 +9,12 @@ suite('_getIso8601Date', () => {
 	const testCases = [
 		{
 			testName: 'no padding',
-			date: new Date(1999, 9, 10),
+			date: moment(new Date(1999, 9, 10)),
 			expected: '1999-10-10'
 		},
 		{
 			testName: 'pad month and day',
-			date: new Date(2020, 0, 9),
+			date: moment(new Date(2020, 0, 9)),
 			expected: '2020-01-09'
 		}
 	];

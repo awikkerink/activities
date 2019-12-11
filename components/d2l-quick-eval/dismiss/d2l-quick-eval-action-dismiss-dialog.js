@@ -90,13 +90,17 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 	}
 
 	_getIso8601Date(date) {
-		const pad = x => x < 10 ? '0' + x : x;
+		const timezone = this.getTimezone().identifier;
 
-		return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+		if (timezone) {
+			return date.tz(timezone).format('YYYY-MM-DD');
+		} else {
+			return date.format('YYYY-MM-DD');
+		}
 	}
 
 	renderDatePicker(selectedRadio) {
-		const now = new Date();
+		const now = moment();
 		const minDate = this._getIso8601Date(now);
 
 		if (selectedRadio === DISMISS_TYPES.date) {
