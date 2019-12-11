@@ -23,6 +23,8 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 				opened="[[opened]]"
 				dismissed-activities="[[_data]]"
 				on-d2l-dialog-close="_submitData"
+				loading="[[_loading]]"
+				restore-disabled= "[[_restoreDisabled]]"
 				on-d2l-quick-eval-dismissed-activity-selected="_handleListItemSelected"></d2l-quick-eval-ellipsis-dialog>
 			<d2l-alert-toast class="d2l-quick-eval-dismissed-list-success" type="success">[[successMessage]]</d2l-alert-toast>
 			<d2l-alert-toast class="d2l-quick-eval-dismissed-list-critical" type="critical">[[localize('failedToRestoreActivity')]]</d2l-alert-toast>
@@ -57,6 +59,10 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 			successMessage: {
 				type: String,
 				computed: '_computeSuccessMessage(selectedCount)',
+			},
+			_restoreDisabled: {
+				type: Boolean,
+				computed: '_computeRestoreDisabled(_loading, _data.*)'
 			}
 		};
 	}
@@ -132,7 +138,7 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 		{
 			const act = this._data[e.detail.key];
 			if (act) {
-				act.selected = e.detail.selected;
+				this.set(`_data.${e.detail.key}.selected`, e.detail.selected);
 			}
 		}
 	}
@@ -151,6 +157,9 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 				this.shadowRoot.querySelector('.d2l-quick-eval-dismissed-list-critical').open = true;
 			});
 		}
+	}
+	_computeRestoreDisabled(loading, data) {
+		return loading || !(data.base && data.base.some(d => d.selected));
 	}
 
 	ready() {
