@@ -280,8 +280,8 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 										<d2l-menu-item 
 											text="[[localize('publishAll')]]" 
 											on-d2l-menu-item-select="_dispatchPublishAllEvent" 
-											disabled$="[[_disablePublishAllButton(publishAll)]]"
-											aria-disabled$="[[_disablePublishAllButton(publishAll)]]"></d2l-menu-item>
+											disabled="[[_disablePublishAllButton(publishAll)]]"
+											aria-disabled$="[[_disablePublishAllButtonString(publishAll)]]"></d2l-menu-item>
 										<d2l-menu-item text="[[localize('dismissUntil')]]" on-d2l-menu-item-select="_dispatchDismissUntilEvent"></d2l-menu-item>
 										<d2l-menu-item text="[[localize('editActivity')]]" on-d2l-menu-item-select="_dispatchEditActivityEvent"></d2l-menu-item>
 									</d2l-quick-eval-activity-card-action-button-more>
@@ -520,6 +520,9 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 
 	_disablePublishAllButton() {
 		return !this.publishAll;
+	}
+	_disablePublishAllButtonString() {
+		return this._disablePublishAllButton().toString();
 	}
 }
 
