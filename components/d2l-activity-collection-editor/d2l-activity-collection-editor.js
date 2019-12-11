@@ -124,7 +124,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 					</div>
 				</div>
 				<div class="d2l-body-compact d2l-activity-collection-description">
-					<d2l-labs-edit-in-place size="49" placeholder="Enter a description" value="${this._description}" @change=${this._descriptionChanged}></d2l-labs-edit-in-place>
+					<d2l-labs-edit-in-place size="49" placeholder="Enter a description" maxlength="280" value="${this._description}" @change=${this._descriptionChanged}></d2l-labs-edit-in-place>
 				</div>
 			</div>
 			<div class="d2l-activity-collection-body">
