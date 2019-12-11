@@ -2,6 +2,7 @@ import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 import {QuickEvalLocalize} from '../QuickEvalLocalize.js';
 import {QuickEvalLogging} from '../QuickEvalLogging.js';
 import 'd2l-typography/d2l-typography-shared-styles.js';
+import 'd2l-alert/d2l-alert-toast.js';
 import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
 import './d2l-quick-eval-ellipsis-dismiss-dialog.js';
 import '../behaviors/d2l-quick-eval-siren-helper-behavior.js';
