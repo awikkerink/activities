@@ -1,4 +1,5 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
+import {repeat} from 'lit-html/directives/repeat';
 import { heading1Styles, heading4Styles, bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
@@ -37,17 +38,33 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			this._name = specialization.getName();
 			this._description = specialization.getDescription();
 		});
-		this._items = [];
+		let hasACollection = false;
 		usage.onActivityCollectionChange((collection => {
+			hasACollection = true;
+			const items = [];
+			let itemsLoadedOnce = false;
 			collection.onItemsChange((item, index) => {
 				item.onActivityUsageChange((usage) => {
 					usage.onOrganizationChange((organization) => {
-						this._items[index] = organization;
-						this.requestUpdate('_items', []);
+						items[index] = organization;
+						if (itemsLoadedOnce) {
+							this._items = items;
+						}
 					});
 				});
 			});
+
+			collection.subEntitiesLoaded().then(() => {
+				this._items = items;
+				itemsLoadedOnce = true;
+			});
 		}));
+
+		usage.subEntitiesLoaded().then(() => {
+			if (!hasACollection) {
+				this._items = [];
+			}
+		});
 	}
 
 	static get properties() {
@@ -101,7 +118,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 	}
 
 	render() {
-		const items = this._items.map(item =>
+		const items = repeat(this._items, (item) => item.self(), item =>
 			html`
 			<d2l-list-item>
 				<d2l-organization-image href=${item.self()} slot="illustration"></d2l-organization-image>
