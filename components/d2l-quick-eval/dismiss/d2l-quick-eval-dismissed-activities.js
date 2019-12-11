@@ -22,6 +22,8 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 			<d2l-quick-eval-ellipsis-dialog
 				opened="[[opened]]"
 				dismissed-activities="[[_data]]"
+				loading="[[_loading]]"
+				restore-disabled= "[[_restoreDisabled]]"
 				on-d2l-quick-eval-dismissed-activity-selected="_handleListItemSelected"></d2l-quick-eval-ellipsis-dialog>
 		`;
 
@@ -47,6 +49,10 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 				type: Boolean,
 				value: false,
 			},
+			_restoreDisabled: {
+				type: Boolean,
+				computed: '_computeRestoreDisabled(_loading, _data.*)'
+			}
 		};
 	}
 	static get observers() {
@@ -117,9 +123,13 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 		{
 			const act = this._data[e.detail.key];
 			if (act) {
-				act.selected = e.detail.selected;
+				this.set(`_data.${e.detail.key}.selected`, e.detail.selected);
 			}
 		}
+	}
+
+	_computeRestoreDisabled(loading, data) {
+		return loading || !(data.base && data.base.some(d => d.selected));
 	}
 
 	ready() {
