@@ -81,8 +81,8 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 		this._date = undefined;
 
 		// Get the Div holding the radio buttons and clear them all
-		let elements = this.shadowRoot.querySelector('.radio-container').children;
-		for(let element of elements) {
+		const elements = this.shadowRoot.querySelector('.radio-container').children;
+		for (const element of elements) {
 			element.children[0].checked = false;
 		}
 	}
