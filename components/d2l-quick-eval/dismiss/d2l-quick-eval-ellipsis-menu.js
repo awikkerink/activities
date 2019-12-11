@@ -4,7 +4,6 @@ import 'd2l-dropdown/d2l-dropdown-more.js';
 import 'd2l-dropdown/d2l-dropdown-menu.js';
 import 'd2l-menu/d2l-menu.js';
 import 'd2l-menu/d2l-menu-item.js';
-import './d2l-quick-eval-ellipsis-dismiss-dialog.js';
 import './d2l-quick-eval-dismissed-activities.js';
 
 class D2LQuickEvalEllipsisMenu extends LitQuickEvalLocalize(LitElement) {
@@ -19,7 +18,7 @@ class D2LQuickEvalEllipsisMenu extends LitQuickEvalLocalize(LitElement) {
 			},
 			opened: {
 				type: Boolean,
-			},
+			}
 		};
 	}
 
@@ -42,7 +41,7 @@ class D2LQuickEvalEllipsisMenu extends LitQuickEvalLocalize(LitElement) {
 			</d2l-dropdown-menu>
 		</d2l-dropdown-more>
 		<d2l-quick-eval-dismissed-activities
-			href="${this.href}"
+			href="${this._computeLazyHref()}"
 			token="${this.token}"
 			.opened="${this.opened}"
 			@d2l-dialog-close="${this._close.bind(this)}"
@@ -53,9 +52,11 @@ class D2LQuickEvalEllipsisMenu extends LitQuickEvalLocalize(LitElement) {
 	constructor() {
 		super();
 		this._close();
+		this._dropdownOpened = false;
 	}
 
 	_open() {
+		this._dropdownOpened = true;
 		this.opened = true;
 	}
 
@@ -63,6 +64,12 @@ class D2LQuickEvalEllipsisMenu extends LitQuickEvalLocalize(LitElement) {
 		this.opened = false;
 	}
 
+	_computeLazyHref() {
+		if (this._dropdownOpened) {
+			return this.href;
+		}
+		return '';
+	}
 }
 
 window.customElements.define('d2l-quick-eval-ellipsis-menu', D2LQuickEvalEllipsisMenu);
