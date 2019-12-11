@@ -1,52 +1,51 @@
-import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
+import { css, html, LitElement } from 'lit-element/lit-element.js';
 
-class D2LSubtitle extends PolymerElement {
-	static get template() {
-		const subtitleTemplate =  html`
-			<style>
+class D2LSubtitle extends LitElement {
+	static get styles() {
+		return css`
+			span {
+				font-size: .6rem;
+			}
+			span::before {
+				content: "\u2022";
+				margin: .2rem;
+			}
+			:host span:first-of-type::before {
+				content: "";
+				margin: 0;
+			}
+			@media (min-width: 900px) {
 				span {
-					font-size: .6rem;
+					font-size: .7rem;
+					line-height: .9rem;
 				}
-				span::before {
-					content: "\u2022";
-					margin: .2rem;
+				:host {
+					line-height: .9rem;
 				}
-				:host span:first-of-type::before {
-					content: "";
-					margin: 0;
-				}
-				@media (min-width: 900px) {
-					span {
-						font-size: .7rem;
-						line-height: .9rem;
-					}
-					:host {
-						line-height: .9rem;
-					}
-				}
-			</style>
-			<template is="dom-repeat" items="[[_displayText]]">
-				<span>[[item]]</span>
-			</template>
+			}
 		`;
-		subtitleTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
-		return subtitleTemplate;
+	}
+	render() {
+		const displayText = this._computeDisplayText(this.text);
+		if (displayText && displayText.length) {
+			return html`${displayText.map(dt => html`<span>${dt}</span>`)}`;
+		}
+		return html``;
 	}
 
 	static get properties() {
 		return {
 			text: {
 				type: Array
-			},
-			_displayText: {
-				type: Array,
-				computed: '_computeDisplayText(text)'
 			}
 		};
 	}
 
 	_computeDisplayText(text) {
-		return text.filter(t => t !== null && t !== undefined && t !== '');
+		if (text) {
+			return text.filter(t => t !== null && t !== undefined && t !== '');
+		}
+		return text;
 	}
 }
 

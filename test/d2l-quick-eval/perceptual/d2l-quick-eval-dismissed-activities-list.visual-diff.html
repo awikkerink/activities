@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+		<title>d2l-quick-eval-dismissed-activities-list visual diff tests</title>
+		<script type="module" src="../../../components/d2l-quick-eval/dismiss/d2l-quick-eval-dismissed-activities-list.js"></script>
+		<style>
+			html {
+				font-size: 20px;
+			}
+			div {
+				margin: 15px;
+			}
+		</style>
+		<script type="module">
+			import '@brightspace-ui/core/components/typography/typography.js';
+		</script>
+	</head>
+	<body class="d2l-typography">
+		<div id="default">
+			<d2l-quick-eval-dismissed-activities-list dismissedactivities='[{"name":"Activity A","course":"Course A","type":"quiz","dismissedDate":"2019-05-05"},{"name":"Activity B","course":"Course A","type":"discussion","dismissedDate":"2019-06-06"},{"name":"Activity C","course":"Course B","type":"quiz","dismissedDate":"2019-07-07"},{"name":"Activity D","course":"Course B","type":"assignment","dismissedDate":"2019-08-08"}]'></d2l-quick-eval-dismissed-activities-list>
+		</div>
+	</body>
+</html>

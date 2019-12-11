@@ -9,14 +9,14 @@
         "item",
         "https://assignments.api.brightspace.com/rels/link"
       ],
-      "href": "./attachment.json"
+      "href": "./data/attachment1.json"
     },
     {
       "rel": [
         "item",
         "https://assignments.api.brightspace.com/rels/link"
       ],
-      "href": "attachment.json"
+      "href": "./data/attachment2.json"
     }
   ],
   "links": [

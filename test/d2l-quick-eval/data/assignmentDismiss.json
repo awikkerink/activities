@@ -1,0 +1,18 @@
+{
+	"actions":[
+		{ 
+			"name": "un-dismiss",
+			"href": "assignment/un-dismiss"
+		},{ 
+			"name": "dismiss-until",
+			"href": "assignment/dismiss-until"
+		},{ 
+			"name": "dismiss-forever",
+			"href": "assignment/dismiss-forever"
+		}
+	],
+	"properties":{
+		"isDismissed": false,
+		"dismissedOn": "2019-03-03T03:03:03.003Z"
+	}
+}

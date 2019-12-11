@@ -12,6 +12,7 @@ class ActivityDueDateEditor extends connect(ActivityEditorMixin(LocalizeMixin(Li
 		return {
 			_date: { type: String },
 			_entity: { type: Object },
+			_canEditDueDate: { type: Boolean },
 			_overrides: { type: Object }
 		};
 	}
@@ -42,11 +43,25 @@ class ActivityDueDateEditor extends connect(ActivityEditorMixin(LocalizeMixin(Li
 		return reducer;
 	}
 
+	get _entity() {
+		return this.__entity;
+	}
+
+	set _entity(entity) {
+		if (entity === this.__entity) {
+			return;
+		}
+		entity.canEditDueDate().then(result => this._canEditDueDate = result);
+		const oldEntity = this.__entity;
+		this.__entity = entity;
+		this.requestUpdate(this.__entity, oldEntity);
+	}
+
 	_mapStateToProps(state) {
 		const activity = selectActivity(state, this.href, this.token);
 		return activity ? {
 			_date: activity.dueDate,
-			_entity: selectActivityEntity(state, this.href, this.token)
+			_entity: selectActivityEntity(state, this.href, this.token),
 		} : {};
 	}
 
@@ -85,7 +100,7 @@ class ActivityDueDateEditor extends connect(ActivityEditorMixin(LocalizeMixin(Li
 		return html`
 			<div id="datetime-picker-container">
 				<d2l-datetime-picker
-					?disabled="${!this._entity.canEditDueDate()}"
+					?disabled="${this._canEditDueDate}"
 					hide-label
 					name="date"
 					id="date"

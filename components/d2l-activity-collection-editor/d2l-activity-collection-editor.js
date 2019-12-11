@@ -10,16 +10,16 @@ import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/list/list.js';
 import '@brightspace-ui/core/components/list/list-item.js';
-import '@d2l/switch/d2l-switch.js';
 import 'd2l-organizations/components/d2l-organization-image/d2l-organization-image.js';
 import '@brightspace-ui-labs/edit-in-place/d2l-labs-edit-in-place.js';
+import '../d2l-activity-editor/d2l-activity-visibility-editor.js';
 
 class CollectionEditor extends EntityMixinLit(LitElement) {
 
 	constructor() {
 		super();
-		this._visible = false;
 		this._items = [];
+		this._specialization = {};
 		this._setEntityType(ActivityUsageEntity);
 	}
 
@@ -27,13 +27,15 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 		if (this._entityHasChanged(entity)) {
 			this._onActivityUsageChange(entity);
 			super._entity = entity;
-			this.requestUpdate();
 		}
 	}
 
 	_onActivityUsageChange(usage) {
+
 		usage.onSpecializationChange(NamedEntityMixin(DescribableEntityMixin(SimpleEntity)), (specialization) => {
 			this._specialization = specialization;
+			this._name = specialization.getName();
+			this._description = specialization.getDescription();
 		});
 		this._items = [];
 		usage.onActivityCollectionChange((collection => {
@@ -41,7 +43,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				item.onActivityUsageChange((usage) => {
 					usage.onOrganizationChange((organization) => {
 						this._items[index] = organization;
-						this.requestUpdate();
+						this.requestUpdate('_items', []);
 					});
 				});
 			});
@@ -50,18 +52,10 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 
 	static get properties() {
 		return {
-			_visibile: {
-				type: Boolean
-			},
-			_collection: {
-				type: Object
-			},
-			_specialization: {
-				type: Object
-			},
-			_items: {
-				type: Array
-			}
+			_description: { type: String },
+			_items: { type: Array },
+			_name: { type: String },
+			_specialization: { type: Object }
 		};
 	}
 
@@ -75,7 +69,6 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			}
 			.d2l-activity-collection-header {
 				box-shadow: inset 0 -1px 0 0 var(--d2l-color-gypsum);
-				width: 100%;
 				padding: 15px 30px;
 			}
 			.d2l-activity-collection-title {
@@ -85,16 +78,18 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			}
 			.d2l-activity-collection-title-header {
 				min-height:52px;
-				margin-top:6px;
-				margin-bottom:6px;
-				margin-right: 6px;
+				margin: 6px 0px 0px 0px;
+				padding: 0px 6px 6px 0px;
 				overflow:hidden;
 			}
 			.d2l-activity-visbility-label {
 				white-space: nowrap;
 			}
+			.d2l-activity-collection-description {
+				overflow:hidden;
+			}
 			.d2l-activity-collection-body {
-				padding: 15px 30px;
+				padding: 15px 6px;
 				background-color: var(--d2l-color-regolith);
 				height: 100%;
 			}
@@ -105,14 +100,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 		` ];
 	}
 
-	_updateVisibility() {
-		this._visible = !this._visible;
-		this.requestUpdate();
-	}
-
 	render() {
-		const icon = (this._visible ? 'tier1:visibility-show' : 'tier1:visibility-hide');
-		const term = (this._visible ? 'Visible' : 'Hidden');
 		const items = this._items.map(item =>
 			html`
 			<d2l-list-item>
@@ -129,15 +117,14 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				<div>Edit Learning Path</div>
 				<div class="d2l-activity-collection-title">
 					<h1 class="d2l-heading-1 d2l-activity-collection-title-header">
-						<d2l-labs-edit-in-place size="49" placeholder="Untitled Learning Path" maxlength="128" value="${this._specialization.getName()}" @change=${this._TitleChanged}></d2l-labs-edit-in-place>
+						<d2l-labs-edit-in-place size="49" placeholder="Untitled Learning Path" maxlength="128" value="${this._name}" @change=${this._titleChanged}></d2l-labs-edit-in-place>
 					</h1>
 					<div class="d2l-activity-collection-toggle-container">
-						<d2l-switch aria-label="Visibility Toggle" label-right @click="${this._updateVisibility}"></d2l-switch>
-						<div class="d2l-label-text d2l-activity-visbility-label"><d2l-icon icon=${icon}></d2l-icon> ${term}</div>
+						<d2l-activity-visibility-editor .href="${this.href}" .token="${this.token}"></d2l-activity-visibility-editor>
 					</div>
 				</div>
-				<div class="d2l-body-compact">
-					<d2l-labs-edit-in-place size="49" placeholder="Enter a description" value="${this._specialization.getDescription()}" @change=${this._DescriptionChanged}></d2l-labs-edit-in-place>
+				<div class="d2l-body-compact d2l-activity-collection-description">
+					<d2l-labs-edit-in-place size="49" placeholder="Enter a description" value="${this._description}" @change=${this._descriptionChanged}></d2l-labs-edit-in-place>
 				</div>
 			</div>
 			<div class="d2l-activity-collection-body">
@@ -149,12 +136,12 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 		`;
 	}
 
-	_TitleChanged(e) {
-		this._specialization.setName(e.target.value);
+	_titleChanged(e) {
+		this._specialization.setName && this._specialization.setName(e.target.value);
 	}
 
-	_DescriptionChanged(e) {
-		this._specialization.setDescription(e.target.value);
+	_descriptionChanged(e) {
+		this._specialization.setDescription && this._specialization.setDescription(e.target.value);
 	}
 }
 customElements.define('d2l-activity-collection-editor', CollectionEditor);

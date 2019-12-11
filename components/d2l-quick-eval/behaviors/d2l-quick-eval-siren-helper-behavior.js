@@ -1,5 +1,6 @@
 import {Rels, Classes} from 'd2l-hypermedia-constants';
 import './d2l-siren-helper-behavior.js';
+import {DISMISS_TYPES} from '../dismiss/dismiss-types.js';
 
 window.D2L = window.D2L || {};
 window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
@@ -81,6 +82,11 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 		return entity.getLinkByRel(Rels.Activities.evaluationStatus).href;
 	},
 
+	getDismissHref: function(entity) {
+		//TODO: change once it's in its final form in HM constants.
+		return entity.getLinkByRel('https://api.brightspace.com/rels/dismiss').href;
+	},
+
 	_getEvaluationStatusPromise: async function(entity, extraParams) {
 		return this._followLink(entity, Rels.Activities.evaluationStatus)
 			.then(function(e) {
@@ -126,6 +132,19 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 					evaluateNewHref: this._formBackToQuickEvalLink(evaluateNewHref),
 					newSubmissions: p.newsubmissions || 0,
 					resubmitted: p.resubmissions || 0
+				};
+			}.bind(this));
+	},
+
+	_getDismissPromise: function(entity) {
+		return this._followLink(entity, 'https://api.brightspace.com/rels/dismiss')
+			.then(function(d) {
+				return {
+					dismissed: d.entity.properties.isDismissed,
+					dismissedOn: d.entity.properties.dismissedOn,
+					unDismissAction: this._getAction(d.entity, DISMISS_TYPES.unDismiss),
+					dismissForeverAction: this._getAction(d.entity, DISMISS_TYPES.forever),
+					dismissUntilAction: this._getAction(d.entity, DISMISS_TYPES.date)
 				};
 			}.bind(this));
 	},
@@ -222,7 +241,6 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 				} else {
 					return Promise.resolve();
 				}
-
 				return this._followLink(a.entity, rel);
 			}.bind(this))
 			.then(function(n) {
@@ -261,6 +279,17 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehaviorImpl = {
 		}
 
 		return false;
+	},
+
+	_dismissActivity: function(dismissHref, actionName, dismissUntil) {
+		return this._followHref(dismissHref).then(dismissEntity => {
+			const action = this._getAction(dismissEntity.entity, actionName);
+			if (dismissUntil) {
+				const field = action.getField('dismissUntil');
+				field.value = dismissUntil;
+			}
+			return this.performSirenAction(action);
+		});
 	}
 };
 

@@ -18,7 +18,8 @@ import './activities-list/d2l-quick-eval-activities-list.js';
 import './d2l-quick-eval-activities-skeleton.js';
 import './behaviors/d2l-quick-eval-telemetry-behavior.js';
 import '@brightspace-ui/core/components/dialog/dialog-confirm.js';
-
+import './dismiss/d2l-quick-eval-action-dismiss-dialog.js';
+import { DISMISS_TYPES } from './dismiss/dismiss-types.js';
 /**
  * @customElement
  * @polymer
@@ -125,6 +126,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				<d2l-hm-filter
 					href="[[filterHref]]"
 					token="[[token]]"
+					category-whitelist="[[_filterIds]]"
 					lazy-load-options>
 				</d2l-hm-filter>
 				<d2l-hm-search
@@ -180,6 +182,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				<d2l-button slot="footer" primary dialog-action="yes">[[localize('yes')]]</d2l-button>
 				<d2l-button slot="footer" dialog-action="no">[[localize('no')]]</d2l-button>
 			</d2l-dialog-confirm>
+			<d2l-quick-eval-action-dismiss-dialog></d2l-quick-eval-action-dismiss-dialog>
+			<d2l-alert-toast id="toast-dismiss-success" type="success">[[localize('activityDismissed')]]</d2l-alert-toast>
+			<d2l-alert-toast id="toast-dismiss-critical" type="critical">[[localize('failedToDismissActivity')]]</d2l-alert-toast>
 			<dom-repeat items="[[_publishAllToasts]]" as="toast">
 				<template>
 					<d2l-alert-toast type="default" open>[[_publishAllToastMessage(toast)]]</d2l-alert-toast>
@@ -196,6 +201,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			_data: {
 				type: Array,
 				value: []
+			},
+			_filterIds: {
+				type: Array,
+				value: [ 'c806bbc6-cfb3-4b6b-ae74-d5e4e319183d', 'f2b32f03-556a-4368-945a-2614b9f41f76' ]
 			},
 			_searchResultsCount: {
 				type: Number,
@@ -304,6 +313,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				const activityNameHref = this._getActivityNameHref(activity);
 				const activityName = await this._getActivityName(activity);
 				const evaluationStatusHref = this.getEvaluationStatusHref(activity);
+				const dismissHref = this.getDismissHref(activity);
 				return {
 					courseName: courseName,
 					assigned: evalStatus.assigned,
@@ -321,7 +331,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					activityType: this._getActivityType(activity),
 					activityNameHref: activityNameHref,
 					activityName: activityName,
-					evaluationStatusHref: evaluationStatusHref
+					evaluationStatusHref: evaluationStatusHref,
+					dismissHref: dismissHref
 				};
 			} catch (e) {
 				this._logError(e, {developerMessage: `Error loading activity data for ${this._getHref(activity, 'self')}.`});
@@ -420,8 +431,33 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		});
 	}
 
-	_dismissUntil() {
-		//console.log('dismiss until');
+	_dismissUntil(evt) {
+		const actionDialog = this.shadowRoot.querySelector('d2l-quick-eval-action-dismiss-dialog');
+
+		return actionDialog.open().then(action => {
+
+			const { selectedRadio, date } = JSON.parse(action);
+			let dismissAction;
+
+			if (selectedRadio === DISMISS_TYPES.forever) {
+				dismissAction = this._dismissActivity(evt.detail.dismissHref, selectedRadio);
+			} else if (selectedRadio === DISMISS_TYPES.date) {
+				if (!date) {
+					throw new Error('Missing date in this dismiss action');
+				}
+				dismissAction = this._dismissActivity(evt.detail.dismissHref, selectedRadio, date);
+			}
+
+			return dismissAction.then(() => {
+				const selfHref = this._getSelfLink(this.entity);
+				// bypass cache and reload
+				window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true);
+				this.shadowRoot.querySelector('#toast-dismiss-success').open = true;
+			}).catch((error) => {
+				this.shadowRoot.querySelector('#toast-dismiss-critical').open = true;
+				this._logError(error, {developerMessage: `Error dismissing activity href ${evt.detail.dismissHref}`});
+			});
+		});
 	}
 
 	_editActivity() {

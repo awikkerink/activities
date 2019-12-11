@@ -5,11 +5,18 @@ import 'd2l-dropdown/d2l-dropdown-menu.js';
 import 'd2l-menu/d2l-menu.js';
 import 'd2l-menu/d2l-menu-item.js';
 import './d2l-quick-eval-ellipsis-dismiss-dialog.js';
+import './d2l-quick-eval-dismissed-activities.js';
 
 class D2LQuickEvalEllipsisMenu extends LitQuickEvalLocalize(LitElement) {
 
 	static get properties() {
 		return {
+			href: {
+				type: String,
+			},
+			token: {
+				type: String,
+			},
 			opened: {
 				type: Boolean,
 			},
@@ -34,7 +41,12 @@ class D2LQuickEvalEllipsisMenu extends LitQuickEvalLocalize(LitElement) {
 				</d2l-menu>
 			</d2l-dropdown-menu>
 		</d2l-dropdown-more>
-		<d2l-quick-eval-ellipsis-dialog .opened="${this.opened}" @on-close="${this._close.bind(this)}"></d2l-quick-eval-ellipsis-dialog>
+		<d2l-quick-eval-dismissed-activities
+			href="${this.href}"
+			token="${this.token}"
+			.opened="${this.opened}"
+			@d2l-dialog-close="${this._close.bind(this)}"
+			></d2l-quick-eval-dismissed-activities>
 		`;
 	}
 
