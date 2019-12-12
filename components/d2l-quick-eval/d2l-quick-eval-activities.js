@@ -174,7 +174,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				on-d2l-quick-eval-activity-view-submission-list="_navigateSubmissionList"
 				on-d2l-quick-eval-activity-view-evaluate-all="_navigateEvaluateAll"
 				on-d2l-quick-eval-activity-dismiss-until="_dismissUntil"
-				on-d2l-quick-eval-activity-edit-activity="_editActivity"
 				>
 			</d2l-quick-eval-activities-list>
 			<d2l-dialog-confirm title-text="[[localize('confirmation')]]" text="[[_publishAllDialogMessage]]">
@@ -447,10 +446,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true);
 			});
 		});
-	}
-
-	_editActivity() {
-		//console.log('edit activity');
 	}
 
 	_computeActivitiesListId() {
