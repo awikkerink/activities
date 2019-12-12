@@ -283,7 +283,6 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 											disabled$="[[_disablePublishAllButton(publishAll)]]"
 											aria-disabled$="[[_disablePublishAllButton(publishAll)]]"></d2l-menu-item>
 										<d2l-menu-item text="[[localize('dismissUntil')]]" on-d2l-menu-item-select="_dispatchDismissUntilEvent"></d2l-menu-item>
-										<d2l-menu-item text="[[localize('editActivity')]]" on-d2l-menu-item-select="_dispatchEditActivityEvent"></d2l-menu-item>
 									</d2l-quick-eval-activity-card-action-button-more>
 							</d2l-quick-eval-activity-card-items>
 						</div>
@@ -453,21 +452,6 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 				{
 					detail: {
 						dismissHref: this.dismissHref
-					},
-					composed: true,
-					bubbles: true
-				}
-			)
-		);
-	}
-
-	_dispatchEditActivityEvent() {
-		this.dispatchEvent(
-			new CustomEvent(
-				'd2l-quick-eval-activity-edit-activity',
-				{
-					detail: {
-
 					},
 					composed: true,
 					bubbles: true
