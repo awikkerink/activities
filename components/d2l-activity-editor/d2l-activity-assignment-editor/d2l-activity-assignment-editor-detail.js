@@ -201,7 +201,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		return html`
 			<div id="assignment-visibility-container">
 				<d2l-activity-visibility-editor
-					.href="${this._activityUsageHref}"
+					href="${this._activityUsageHref}"
 					.token="${this.token}">
 				</d2l-activity-visibility-editor>
 			</div>
@@ -223,7 +223,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 			<div id="duedate-container">
 				<label class="d2l-label-text">${this.localize('dueDate')}</label>
 				<d2l-activity-due-date-editor
-					.href="${this._activityUsageHref}"
+					href="${this._activityUsageHref}"
 					.token="${this.token}">
 				</d2l-activity-due-date-editor>
 			</div>
@@ -241,7 +241,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 
 			<div id="assignment-attachments-editor-container" ?hidden="${!this._attachmentsHref}">
 				<d2l-activity-attachments-editor
-					.href="${this._attachmentsHref}"
+					href="${this._attachmentsHref}"
 					.token="${this.token}">
 				</d2l-activity-attachments-editor>
 			</div>
@@ -270,7 +270,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 
 			<div id="availability-dates-container">
 				<d2l-activity-availability-dates-editor
-					.href="${this._activityUsageHref}"
+					href="${this._activityUsageHref}"
 					.token="${this.token}">
 				</d2l-activity-availability-dates-editor>
 			</div>
@@ -279,12 +279,12 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				<h3 class="d2l-heading-4">${this.localize('hdrReleaseConditions')}</h3>
 				<p class="d2l-body-small">${this.localize('hlpReleaseConditions')}</p>
 				<d2l-activity-release-conditions-editor
-					.href="${this._activityUsageHref}"
+					href="${this._activityUsageHref}"
 					.token="${this.token}">
 				</d2l-activity-release-conditions-editor>
 			</div>
 
-			<d2l-assignment-turnitin-editor .token="${this.token}" .href="${this.href}">
+			<d2l-assignment-turnitin-editor .token="${this.token}" href="${this.href}">
 			</d2l-assignment-turnitin-editor>
 
 			<div id="annotations-checkbox-container" ?hidden="${!this._canSeeAnnotations}">

@@ -55,7 +55,7 @@ class ActivityAttachmentsList extends EntityMixinLit(LitElement) {
 				${repeat(this._attachmentUrls, href => href, href => html`
 					<li slot="attachment" class="panel">
 						<d2l-activity-attachment
-							.href="${href}"
+							href="${href}"
 							.token="${this.token}">
 						</d2l-activity-attachment>
 					</li>
