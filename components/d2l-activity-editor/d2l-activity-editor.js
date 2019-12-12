@@ -3,7 +3,7 @@ import 'd2l-save-status/d2l-save-status.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { connect } from './connect-mixin.js';
 import { ActivityEditorMixin } from './d2l-activity-editor-mixin.js';
-import reducer, { storeName, fetchActivity, saveActivity } from './state/activity-usage.js';
+import reducer, { storeName, actions} from './state/activity-usage.js';
 
 class ActivityEditor extends connect(ActivityEditorMixin(LitElement)) {
 
@@ -51,8 +51,8 @@ class ActivityEditor extends connect(ActivityEditorMixin(LitElement)) {
 
 	_mapDispatchToProps(dispatch) {
 		return {
-			_fetchActivity: () => dispatch(fetchActivity(this.href, this.token)),
-			_saveActivity: () => dispatch(saveActivity(this.href, this.token))
+			_fetchActivity: () => dispatch(actions.fetchActivity(this.href, this.token)),
+			_saveActivity: () => dispatch(actions.saveActivity(this.href, this.token))
 		}
 	}
 

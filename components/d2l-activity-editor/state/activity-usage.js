@@ -3,7 +3,7 @@ import { createSlice } from 'siren-sdk/src/redux-toolkit/createSlice.js';
 export { default as storeName } from './store-name.js';
 import fetchEntity from './fetch-entity.js';
 
-export const fetchActivity = (href, token) => (dispatch, getState) => {
+const fetchActivity = (href, token) => (dispatch, getState) => {
 	fetchEntity(dispatch, getState(), href, token, selectActivitySirenEntity, addActivity);
 }
 
@@ -15,12 +15,14 @@ const prepareAddActivity = (payload) => {
 			_entity: entity,
 			_sirenEntity: payload.sirenEntity,
 			dueDate: entity.dueDate(),
+			startDate: entity.startDate(),
+			endDate: entity.endDate(),
 			isDraft: entity.isDraft()
 		}
 	}
 };
 
-export const saveActivity = (href, token) => async (dispatch, getState) => {
+const saveActivity = (href, token) => async (dispatch, getState) => {
 	const activity = selectActivity(getState(), href, token);
 	const entity = selectActivityEntity(getState(), href, token);
 	await entity.save(activity);
@@ -38,6 +40,12 @@ const activitySlice = createSlice({
 	reducers: {
 		updateDueDate: (state, action) => {
 			state.activities[action.payload.href].dueDate = action.payload.date;
+		},
+		updateStartDate: (state, action) => {
+			state.activities[action.payload.href].startDate = action.payload.date;
+		},
+		updateEndDate: (state, action) => {
+			state.activities[action.payload.href].endDate = action.payload.date;
 		},
 		updateVisibility: (state, action) => {
 			state.activities[action.payload.href].isDraft = action.payload.isDraft;
@@ -68,6 +76,15 @@ const selectActivitySirenEntity = (state, href, token) => {
 
 const { addActivity } = activitySlice.actions;
 export const { updateDueDate, updateVisibility } = activitySlice.actions;
+
+export const actions = {
+	fetchActivity,
+	saveActivity,
+	updateDueDate: activitySlice.actions.updateDueDate,
+	updateStartDate: activitySlice.actions.updateStartDate,
+	updateEndDate: activitySlice.actions.updateEndDate,
+	updateVisibility: activitySlice.actions.updateVisibility,
+};
 
 export default {
 	activityEditor: activitySlice.reducer

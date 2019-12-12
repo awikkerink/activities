@@ -1,19 +1,20 @@
 import 'd2l-datetime-picker/d2l-datetime-picker';
+import { connect } from './connect-mixin.js';
+import { ActivityEditorMixin } from './d2l-activity-editor-mixin.js';
+import reducer, { storeName, actions, selectActivityEntity, selectActivity } from './state/activity-usage.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
-import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
-import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { getLocalizeResources } from './localization';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
-import { SaveStatusMixin } from './save-status-mixin';
 
-class ActivityAvailabilityDatesEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
+class ActivityAvailabilityDatesEditor extends connect(ActivityEditorMixin(LocalizeMixin(LitElement))) {
 
 	static get properties() {
 		return {
 			_startDate: { type: String },
 			_endDate: { type: String },
 			_overrides: { type: Object },
+			_entity: { type: Object },
 			_canEditStartDate: {type: Boolean},
 			_canEditEndDate: {type: Boolean},
 		};
@@ -36,54 +37,82 @@ class ActivityAvailabilityDatesEditor extends SaveStatusMixin(EntityMixinLit(Loc
 
 	constructor() {
 		super();
-		this._setEntityType(ActivityUsageEntity);
 		this._endDate = '';
 		this._startDate = '';
 		this._canEditStartDate = false;
 		this._canEditEndDate = false;
 		this._overrides = document.documentElement.dataset.intlOverrides || '{}';
+		this._storeName = storeName;
+	}
+
+	get _reducers() {
+		return reducer;
+	}
+
+	get _entity() {
+		return this.__entity;
 	}
 
 	set _entity(entity) {
-		if (!this._entityHasChanged(entity)) {
+		if (entity === this.__entity) {
 			return;
 		}
 
-		if (entity) {
-			this._startDate = entity.startDate();
-			this._endDate = entity.endDate();
-			entity.canEditEndDate().then(
-				canEditEndDateResult => {this._canEditEndDate = canEditEndDateResult;}
-			);
-			entity.canEditStartDate().then(
-				canEditStartDateResult => {this._canEditStartDate = canEditStartDateResult;}
-			);
-		}
+		entity.canEditStartDate().then(result => this._canEditStartDate = result);
+		entity.canEditEndDate().then(result => this._canEditEndDate = result);
 
-		super._entity = entity;
+		const oldEntity = this.__entity;
+		this.__entity = entity;
+		this.requestUpdate(this.__entity, oldEntity);
+	}
+
+	_mapStateToProps(state) {
+		const activity = selectActivity(state, this.href, this.token);
+		return activity ? {
+			_date: activity.dueDate,
+			_startDate: activity.startDate,
+			_endDate: activity.endDate,
+			_entity: selectActivityEntity(state, this.href, this.token),
+		} : {};
+	}
+
+	_mapDispatchToProps(dispatch) {
+		return {
+			_fetchActivity: () => dispatch(actions.fetchActivity(this.href, this.token)),
+			_updateStartDate: (date) => dispatch(actions.updateStartDate({ href: this.href, token: this.token, date })),
+			_updateEndDate: (date) => dispatch(actions.updateEndDate({ href: this.href, token: this.token, date }))
+		}
+	}
+
+	updated(changedProperties) {
+		super.updated(changedProperties);
+
+		if ((changedProperties.has('href') || changedProperties.has('token')) &&
+			this.href && this.token) {
+			this._fetchActivity();
+		}
 	}
 
 	_onStartDatetimePickerDatetimeCleared() {
-		this.wrapSaveAction(super._entity.setStartDate(''));
+		this._updateStartDate('');
 	}
 
 	_onStartDatetimePickerDatetimeChanged(e) {
 		if (e.detail.isSame(this._startDate)) {
 			return;
 		}
-		this.wrapSaveAction(super._entity.setStartDate(e.detail.toISOString()));
+		this._updateStartDate(e.detail.toISOString());
 	}
 
 	_onEndDatetimePickerDatetimeCleared() {
-		this.wrapSaveAction(super._entity.setEndDate(''));
+		this._updateEndDate('');
 	}
 
 	_onEndDatetimePickerDatetimeChanged(e) {
 		if (e.detail.isSame(this._endDate)) {
 			return;
 		}
-
-		this.wrapSaveAction(super._entity.setEndDate(e.detail.toISOString()));
+		this._updateEndDate(e.detail.toISOString());
 	}
 
 	render() {

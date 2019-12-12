@@ -4,7 +4,7 @@ import { connect } from './connect-mixin.js';
 import { ActivityEditorMixin } from './d2l-activity-editor-mixin.js';
 import { getLocalizeResources } from './localization';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
-import reducer, { storeName, fetchActivity, updateDueDate, selectActivityEntity, selectActivity } from './state/activity-usage.js';
+import reducer, { storeName, actions, selectActivityEntity, selectActivity } from './state/activity-usage.js';
 
 class ActivityDueDateEditor extends connect(ActivityEditorMixin(LocalizeMixin(LitElement))) {
 
@@ -67,8 +67,8 @@ class ActivityDueDateEditor extends connect(ActivityEditorMixin(LocalizeMixin(Li
 
 	_mapDispatchToProps(dispatch) {
 		return {
-			_fetchActivity: () => dispatch(fetchActivity(this.href, this.token)),
-			_updateDueDate: (date) => dispatch(updateDueDate({href: this.href, token: this.token, date}))
+			_fetchActivity: () => dispatch(actions.fetchActivity(this.href, this.token)),
+			_updateDueDate: (date) => dispatch(actions.updateDueDate({href: this.href, token: this.token, date}))
 		}
 	}
 

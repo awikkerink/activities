@@ -3,7 +3,7 @@ import 'd2l-colors/d2l-colors';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { getLocalizeResources } from './localization';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
-import reducer, { storeName, fetchActivity, updateVisibility, selectActivityEntity, selectActivity } from './state/activity-usage.js';
+import reducer, { storeName, actions, selectActivityEntity, selectActivity } from './state/activity-usage.js';
 import { connect } from './connect-mixin.js';
 import { ActivityEditorMixin } from './d2l-activity-editor-mixin.js';
 
@@ -57,8 +57,8 @@ class ActivityVisibilityEditor extends connect(ActivityEditorMixin(LocalizeMixin
 
 	_mapDispatchToProps(dispatch) {
 		return {
-			_fetchActivity: () => dispatch(fetchActivity(this.href, this.token)),
-			_updateVisibility: () => dispatch(updateVisibility({href: this.href, token: this.token, isDraft: !this._isDraft}))
+			_fetchActivity: () => dispatch(actions.fetchActivity(this.href, this.token)),
+			_updateVisibility: () => dispatch(actions.updateVisibility({href: this.href, token: this.token, isDraft: !this._isDraft}))
 		}
 	}
 
