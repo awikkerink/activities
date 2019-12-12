@@ -65,9 +65,6 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 						<input @change="${this._updateProp.bind(this, DISMISS_TYPES.forever)}" type="radio" name="${groupID}">
 						${this.localize('forever')}
 					</label>
-					<label class="d2l-input-radio-label">
-						<input checked="true" type="radio" name="${groupID}">
-					</label>
 				</div>
 				<d2l-button
 					slot="footer"
