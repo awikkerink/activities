@@ -62,7 +62,7 @@ D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviourImpl = {
 			this.searchApplied = true;
 		}
 
-		return searchTerm;
+		return searchTerm || '';
 	},
 
 	onSearchResultsLoading: function() {
