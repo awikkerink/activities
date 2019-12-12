@@ -121,7 +121,8 @@ class D2LQuickEval extends
 				value: submissions
 			},
 			dismissedActivitiesHref: {
-				type: String
+				type: String,
+				value: ''
 			},
 			token: {
 				type: Object,
