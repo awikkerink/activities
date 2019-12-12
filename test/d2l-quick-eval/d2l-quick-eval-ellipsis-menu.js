@@ -23,7 +23,7 @@ suite('d2l-quick-eval-ellipsis-menu', function() {
 		} else {
 			setTimeout(function() {
 				waitForDialog(controller, callback);
-			});
+			}, 30);
 		}
 	}
 	function waitForContent(controller, dialog, callback) {
