@@ -449,9 +449,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			}
 
 			return dismissAction.then(() => {
-				const selfHref = this._getSelfLink(this.entity);
-				// bypass cache and reload
-				window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true);
+				window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh-activities'));
+				window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh-submissions'));
+				window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh-dismissed'));
 				this.shadowRoot.querySelector('#toast-dismiss-success').open = true;
 			}).catch((error) => {
 				this.shadowRoot.querySelector('#toast-dismiss-critical').open = true;
@@ -528,6 +528,28 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			this._loading = false;
 			this._handleLoadFailure();
 		});
+	}
+
+	constructor() {
+		super();
+		this._boundRefresh = this.refresh.bind(this);
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+		window.addEventListener('d2l-quick-eval-refresh-activities', this._boundRefresh);
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		window.removeEventListener('d2l-quick-eval-refresh-activities', this._boundRefresh);
+	}
+
+	refresh() {
+		const selfHref = this._getSelfLink(this.entity);
+		if (selfHref) {
+			window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true);
+		}
 	}
 }
 window.customElements.define('d2l-quick-eval-activities', D2LQuickEvalActivities);

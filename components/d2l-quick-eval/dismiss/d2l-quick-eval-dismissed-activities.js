@@ -179,6 +179,10 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 				} else {
 					this.shadowRoot.querySelector('.d2l-quick-eval-dismissed-list-success').open = true;
 				}
+			}).then(() => {
+				window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh-activities'));
+				window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh-submissions'));
+				window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh-dismissed'));
 			});
 		}
 	}
@@ -192,6 +196,28 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 			this._loading = false;
 			this._handleLoadFailure();
 		});
+	}
+
+	constructor() {
+		super();
+		this._boundRefresh = this.refresh.bind(this);
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+		window.addEventListener('d2l-quick-eval-refresh-dismissed', this._boundRefresh);
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		window.removeEventListener('d2l-quick-eval-refresh-dismissed', this._boundRefresh);
+	}
+
+	refresh() {
+		const selfHref = this._getSelfLink(this.entity);
+		if (selfHref) {
+			window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true);
+		}
 	}
 }
 window.customElements.define('d2l-quick-eval-dismissed-activities', D2LQuickEvalDismissedActivities);
