@@ -175,7 +175,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				on-d2l-quick-eval-activity-view-submission-list="_navigateSubmissionList"
 				on-d2l-quick-eval-activity-view-evaluate-all="_navigateEvaluateAll"
 				on-d2l-quick-eval-activity-dismiss-until="_dismissUntil"
-				on-d2l-quick-eval-activity-edit-activity="_editActivity"
 				>
 			</d2l-quick-eval-activities-list>
 			<d2l-dialog-confirm title-text="[[localize('confirmation')]]" text="[[_publishAllDialogMessage]]">
@@ -458,10 +457,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				this._logError(error, {developerMessage: `Error dismissing activity href ${evt.detail.dismissHref}`});
 			});
 		});
-	}
-
-	_editActivity() {
-		//console.log('edit activity');
 	}
 
 	_computeActivitiesListId() {
