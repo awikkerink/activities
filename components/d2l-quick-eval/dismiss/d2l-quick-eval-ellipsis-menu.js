@@ -42,7 +42,7 @@ class D2LQuickEvalEllipsisMenu extends LitQuickEvalLocalize(LitElement) {
 		</d2l-dropdown-more>
 		<d2l-quick-eval-dismissed-activities
 			href="${this._computeLazyHref()}"
-			token="${this.token}"
+			.token="${this.token}"
 			.opened="${this.opened}"
 			@d2l-dialog-close="${this._close.bind(this)}"
 			></d2l-quick-eval-dismissed-activities>
