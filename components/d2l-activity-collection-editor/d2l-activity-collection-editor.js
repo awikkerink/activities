@@ -51,6 +51,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				item.onActivityUsageChange((usage) => {
 					usage.onOrganizationChange((organization) => {
 						items[index] = organization;
+						items[index].removeItem = () => collection.removeItem(item.self());
 						if (itemsLoadedOnce) {
 							this._items = items;
 						}
@@ -128,7 +129,8 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				<d2l-organization-image href=${item.self()} slot="illustration"></d2l-organization-image>
 				<d2l-list-item-content>
 					${item.name()}
-				<d2l-list-item-content>
+				</d2l-list-item-content>
+				<d2l-button-icon slot="actions" text="Remove Course" icon="d2l-tier1:close-default" @click=${item.removeItem}>
 			</d2l-list-item>
 			`
 		);
