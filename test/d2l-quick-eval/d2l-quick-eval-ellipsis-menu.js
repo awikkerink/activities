@@ -3,6 +3,41 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 suite('d2l-quick-eval-ellipsis-menu', function() {
 	let menu;
 
+	function waitForController(callback) {
+		const controller = menu.shadowRoot.querySelector('d2l-quick-eval-dismissed-activities');
+
+		if (controller) {
+			waitForDialog(controller, callback);
+		} else {
+			setTimeout(function() {
+				waitForController(callback);
+			}, 30);
+		}
+	}
+	function waitForDialog(controller, callback) {
+		const dialog = controller.shadowRoot.querySelector('d2l-quick-eval-ellipsis-dialog')
+			.shadowRoot.querySelector('d2l-dialog');
+
+		if (dialog) {
+			waitForContent(controller, dialog, callback);
+		} else {
+			setTimeout(function() {
+				waitForDialog(controller, callback);
+			});
+		}
+	}
+	function waitForContent(controller, dialog, callback) {
+		const content = dialog.shadowRoot.querySelector('.d2l-dialog-content');
+
+		if (content) {
+			callback(controller);
+		} else {
+			setTimeout(function() {
+				waitForContent(controller, dialog, callback);
+			}, 30);
+		}
+	}
+
 	setup(function() {
 		menu = fixture('basic');
 	});
@@ -14,37 +49,18 @@ suite('d2l-quick-eval-ellipsis-menu', function() {
 		assert.equal(menu.href, 'h');
 	});
 	test('lazy loading works correctly', function(done) {
-
-		setTimeout(() => {
-			const controller = menu.shadowRoot.querySelector('d2l-quick-eval-dismissed-activities');
-			console.log(controller);
+		function verify(controller) {
 			assert.equal(controller.href, '');
-			assert.equal(menu._dropdownOpened, false);
+			assert.equal(menu._initialLoad, true);
 
 			menu._open();
 			menu.updateComplete
 				.then(() => {
 					assert.equal(controller.href, menu.href);
-					assert.equal(menu._dropdownOpened, true);
+					assert.equal(menu._initialLoad, false);
 					done();
 				});
-		}, 2000);
-
-		// menu.updateComplete
-		// 	.then((u) => {
-		// 		console.log(menu.renderComplete);
-		// 		const controller = menu.shadowRoot.querySelector('d2l-quick-eval-dismissed-activities');
-		// 		console.log(controller);
-		// 		assert.equal(controller.href, '');
-		// 		assert.equal(menu._dropdownOpened, false);
-
-		// 		menu._open();
-		// 		menu.updateComplete
-		// 			.then(() => {
-		// 				assert.equal(controller.href, menu.href);
-		// 				assert.equal(menu._dropdownOpened, true);
-		// 				done();
-		// 			});
-		// 	});
+		}
+		waitForController(verify);
 	});
 });

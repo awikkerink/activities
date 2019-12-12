@@ -52,11 +52,11 @@ class D2LQuickEvalEllipsisMenu extends LitQuickEvalLocalize(LitElement) {
 	constructor() {
 		super();
 		this._close();
-		this._dropdownOpened = false;
+		this._initialLoad = true;
 	}
 
 	_open() {
-		this._dropdownOpened = true;
+		this._initialLoad = false;
 		this.opened = true;
 	}
 
@@ -65,7 +65,7 @@ class D2LQuickEvalEllipsisMenu extends LitQuickEvalLocalize(LitElement) {
 	}
 
 	_computeLazyHref() {
-		if (this._dropdownOpened) {
+		if (!this._initialLoad) {
 			return this.href;
 		}
 		return '';
