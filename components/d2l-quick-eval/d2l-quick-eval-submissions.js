@@ -567,7 +567,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 	refresh() {
 		const selfHref = this._getSelfLink(this.entity);
 		if (selfHref) {
-			window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true);
+			window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true).then(x => this.entity = x.entity);
 		}
 	}
 }
