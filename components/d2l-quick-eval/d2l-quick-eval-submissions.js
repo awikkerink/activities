@@ -283,7 +283,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			await this._clearFilterAndSearch();
 			this._initialLoad = false;
 			return;
-		}	
+		}
 
 		try {
 			if (entity.entities) {
@@ -401,7 +401,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		// When the filter finishes loading, we check to see if the filter is empty
 		// If the filter is empty, we remove all filters
 		this._loading = true;
-		if(this._initialLoad) {
+		if (this._initialLoad) {
 			await this._handleEmptyFilter();
 		}
 		this._loading = false;
@@ -409,7 +409,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 
 	async _handleEmptyFilter() {
 		// Remove filter if we have no elements within the current filter.
-		if(this.entity && this.entity.entities && this.entity.getSubEntities().length === 0) {
+		if (this.entity && this.entity.entities && this.entity.getSubEntities().length === 0) {
 			await this._clearFilterAndSearch();
 		}
 	}
