@@ -51,7 +51,7 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 			},
 			opened: {
 				type: Boolean,
-				value: false,
+				value: false
 			},
 			selectedCount: {
 				type: Number,
