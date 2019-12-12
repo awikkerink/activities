@@ -92,16 +92,15 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				box-shadow: inset 0 -1px 0 0 var(--d2l-color-gypsum);
 				padding: 15px 30px;
 			}
-			.d2l-activity-collection-title {
+			.d2l-activity-collection-base-info {
 				display: flex;
 				justify-content: space-between;
-				align-items: center;
 			}
 			.d2l-activity-collection-title-header {
-				min-height:52px;
 				margin: 6px 0px 0px 0px;
+				min-height: 52px;
+				overflow: hidden;
 				padding: 0px 6px 6px 0px;
-				overflow:hidden;
 			}
 			.d2l-activity-visbility-label {
 				white-space: nowrap;
@@ -116,7 +115,8 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			}
 			.d2l-activity-collection-toggle-container {
 				display: flex;
-				align-items: center;
+				align-self: flex-start;
+				margin: 0.55rem 1.5rem;
 			}
 		` ];
 	}
@@ -136,16 +136,16 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 		return html`
 			<div class="d2l-activity-collection-header">
 				<div>Edit Learning Path</div>
-				<div class="d2l-activity-collection-title">
-					<h1 class="d2l-heading-1 d2l-activity-collection-title-header">
-						<d2l-labs-edit-in-place size="49" placeholder="Untitled Learning Path" maxlength="128" value="${this._name}" @change=${this._titleChanged}></d2l-labs-edit-in-place>
-					</h1>
-					<div class="d2l-activity-collection-toggle-container">
-						<d2l-activity-visibility-editor .href="${this.href}" .token="${this.token}"></d2l-activity-visibility-editor>
+				<div class="d2l-activity-collection-base-info">
+					<div>
+						<h1 class="d2l-heading-1 d2l-activity-collection-title-header">
+							<d2l-labs-edit-in-place size="49" placeholder="Untitled Learning Path" maxlength="128" value="${this._name}" @change=${this._titleChanged}></d2l-labs-edit-in-place>
+						</h1>
+						<div class="d2l-body-compact d2l-activity-collection-description">
+							<d2l-labs-edit-in-place size="49" placeholder="Enter a description" maxlength="280" value="${this._description}" @change=${this._descriptionChanged}></d2l-labs-edit-in-place>
+						</div>
 					</div>
-				</div>
-				<div class="d2l-body-compact d2l-activity-collection-description">
-					<d2l-labs-edit-in-place size="49" placeholder="Enter a description" maxlength="280" value="${this._description}" @change=${this._descriptionChanged}></d2l-labs-edit-in-place>
+					<d2l-activity-visibility-editor class="d2l-activity-collection-toggle-container" .href="${this.href}" .token="${this.token}"></d2l-activity-visibility-editor>
 				</div>
 			</div>
 			<div class="d2l-activity-collection-body">
