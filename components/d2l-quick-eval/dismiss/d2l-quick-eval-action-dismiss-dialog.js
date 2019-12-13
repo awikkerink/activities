@@ -57,12 +57,20 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 				<p class="d2l-label-text">${this.localize('dismissUntil')}</p>
 				<div class="radio-container">
 					<label class="d2l-input-radio-label">
-						<input @change="${this._updateProp.bind(this, DISMISS_TYPES.date)}" type="radio" name="${groupID}">
+						<input
+						type="radio"
+						name="${groupID}"
+						.checked="${this.selectedRadio === DISMISS_TYPES.date}"
+						@change="${this._updateProp.bind(this, DISMISS_TYPES.date)}">
 						${this.localize('specificDate')}
 					</label>
 					${this.renderDatePicker(this.selectedRadio)}
 					<label class="d2l-input-radio-label">
-						<input @change="${this._updateProp.bind(this, DISMISS_TYPES.forever)}" type="radio" name="${groupID}">
+						<input
+						type="radio"
+						name="${groupID}"
+						.checked="${this.selectedRadio === DISMISS_TYPES.forever}"
+						@change="${this._updateProp.bind(this, DISMISS_TYPES.forever)}">
 						${this.localize('forever')}
 					</label>
 				</div>
@@ -77,14 +85,8 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 	}
 
 	_clearSelectedOptions() {
-		this.selectedRadio = undefined;
-		this._date = undefined;
-
-		// Get the Div holding the radio buttons and clear them all
-		const elements = this.shadowRoot.querySelector('.radio-container').children;
-		for (const element of elements) {
-			element.children[0].checked = false;
-		}
+		this.selectedRadio = null;
+		this._date = null;
 	}
 
 	open() {
