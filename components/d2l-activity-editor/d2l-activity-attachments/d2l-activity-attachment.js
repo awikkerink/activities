@@ -37,6 +37,7 @@ class ActivityAttachment extends EntityMixinLit(LitElement) {
 				name: entity.name()
 			};
 			this._editing = entity.canDeleteAttachment();
+			this.creating = entity.canDeleteAttachment();
 		}
 
 		super._entity = entity;

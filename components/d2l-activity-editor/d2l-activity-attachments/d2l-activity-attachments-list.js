@@ -8,7 +8,6 @@ import { repeat } from 'lit-html/directives/repeat';
 class ActivityAttachmentsList extends EntityMixinLit(LitElement) {
 	static get properties() {
 		return {
-			creating: { type: Boolean },
 			_attachmentUrls: { type: Array },
 			_isEditMode: { type: Boolean }
 		};
@@ -56,7 +55,6 @@ class ActivityAttachmentsList extends EntityMixinLit(LitElement) {
 				${repeat(this._attachmentUrls, href => href, href => html`
 					<li slot="attachment" class="panel">
 						<d2l-activity-attachment
-							?creating="${this.creating}"
 							.href="${href}"
 							.token="${this.token}">
 						</d2l-activity-attachment>

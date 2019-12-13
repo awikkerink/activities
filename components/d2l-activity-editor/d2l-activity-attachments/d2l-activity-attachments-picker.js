@@ -112,8 +112,7 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 			const quicklinkUrl = `/d2l/api/lp/unstable/${orgUnitId}/quickLinks/${event.m_typeKey}/${event.m_id}`;
 			const response = await fetch(quicklinkUrl);
 			const json = await response.json();
-			this.wrapSaveAction(superEntity.addLinkAttachment(event.m_title, json.QuickLink))
-				.then(this._dispatchAddedEvent.bind(this));
+			this.wrapSaveAction(superEntity.addLinkAttachment(event.m_title, json.QuickLink));
 		});
 	}
 
@@ -128,8 +127,7 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 		};
 
 		this._openDialog(opener, settings, event => {
-			this.wrapSaveAction(super._entity.addLinkAttachment(event.m_title, event.m_url))
-				.then(this._dispatchAddedEvent.bind(this));
+			this.wrapSaveAction(super._entity.addLinkAttachment(event.m_title, event.m_url));
 		});
 	}
 
@@ -142,8 +140,7 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 		};
 
 		this._openDialog(opener, settings, event => {
-			this.wrapSaveAction(super._entity.addGoogleDriveLinkAttachment(event.m_title, event.m_url))
-				.then(this._dispatchAddedEvent.bind(this));
+			this.wrapSaveAction(super._entity.addGoogleDriveLinkAttachment(event.m_title, event.m_url));
 		});
 	}
 
@@ -156,16 +153,8 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 		};
 
 		this._openDialog(opener, settings, event => {
-			this.wrapSaveAction(super._entity.addOneDriveLinkAttachment(event.m_title, event.m_url))
-				.then(this._dispatchAddedEvent.bind(this));
+			this.wrapSaveAction(super._entity.addOneDriveLinkAttachment(event.m_title, event.m_url));
 		});
-	}
-
-	_dispatchAddedEvent() {
-		this.dispatchEvent(new CustomEvent('d2l-activity-attachment-added', {
-			composed: true,
-			bubbles: true
-		}));
 	}
 
 	render() {

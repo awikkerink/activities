@@ -7,8 +7,7 @@ import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 class ActivityAttachmentsEditor extends EntityMixinLit(LitElement) {
 	static get properties() {
 		return {
-			_canAddAttachments: { type: Boolean },
-			_creating: { type: Boolean }
+			_canAddAttachments: { type: Boolean }
 		};
 	}
 
@@ -40,19 +39,13 @@ class ActivityAttachmentsEditor extends EntityMixinLit(LitElement) {
 		super._entity = entity;
 	}
 
-	_onAttachmentAdded() {
-		this._creating = true;
-	}
-
 	render() {
 		return html`
 			<d2l-activity-attachments-list
-				?creating="${this._creating}"
 				.href="${this.href}"
 				.token="${this.token}">
 			</d2l-activity-attachments-list>
 			<d2l-activity-attachments-picker
-				@d2l-activity-attachment-added="${this._onAttachmentAdded}"
 				?hidden="${!this._canAddAttachments}"
 				.href="${this.href}"
 				.token="${this.token}">
