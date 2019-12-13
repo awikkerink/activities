@@ -41,6 +41,7 @@ class ActivityVisibilityEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMi
 		super();
 		this._setEntityType(ActivityUsageEntity);
 		this._isDraft = false;
+		this.disabled = false;
 	}
 
 	set _entity(entity) {
