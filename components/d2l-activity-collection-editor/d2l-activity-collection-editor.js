@@ -1,4 +1,4 @@
-import { css, html, LitElement, nothing } from 'lit-element/lit-element.js';
+import { css, html, LitElement } from 'lit-element/lit-element.js';
 import {repeat} from 'lit-html/directives/repeat';
 import { heading1Styles, heading4Styles, bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
@@ -131,7 +131,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				<d2l-organization-image href=${item.self()} slot="illustration"></d2l-organization-image>
 				<d2l-list-item-content>
 					${item.name()}
-					<div slot="secondary">${item.hasClass(organizationClasses.courseOffering) ? 'Course' : nothing}</div>
+					<div slot="secondary">${item.hasClass(organizationClasses.courseOffering) ? 'Course' : null}</div>
 				</d2l-list-item-content>
 				<d2l-button-icon slot="actions" text="Remove Course" icon="d2l-tier1:close-default" @click=${item.removeItem}>
 			</d2l-list-item>
