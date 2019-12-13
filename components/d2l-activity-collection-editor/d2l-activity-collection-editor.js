@@ -147,7 +147,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 							<d2l-labs-edit-in-place size="49" placeholder="Enter a description" maxlength="280" value="${this._description}" @change=${this._descriptionChanged}></d2l-labs-edit-in-place>
 						</div>
 					</div>
-					<d2l-activity-visibility-editor class="d2l-activity-collection-toggle-container" .href="${this.href}" .token="${this.token}"></d2l-activity-visibility-editor>
+					<d2l-activity-visibility-editor class="d2l-activity-collection-toggle-container" ?disabled="${!this._items.length}" .href="${this.href}" .token="${this.token}"></d2l-activity-visibility-editor>
 				</div>
 			</div>
 			<div class="d2l-activity-collection-body">

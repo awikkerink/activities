@@ -12,6 +12,7 @@ class ActivityVisibilityEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMi
 
 	static get properties() {
 		return {
+			disabled: { type: Boolean },
 			_isDraft: { type: Boolean },
 			_canEditDraft: {type: Boolean }
 		};
@@ -40,6 +41,7 @@ class ActivityVisibilityEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMi
 		super();
 		this._setEntityType(ActivityUsageEntity);
 		this._isDraft = false;
+		this.disabled = false;
 	}
 
 	set _entity(entity) {
@@ -65,9 +67,8 @@ class ActivityVisibilityEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMi
 
 		const switchVisibilityText = (this._isDraft ? this.localize('hidden') : this.localize('visible'));
 		const icon = (this._isDraft ? 'tier1:visibility-hide' : 'tier1:visibility-show');
-
-		return html`
-			<div ?hidden=${!this._canEditDraft}>
+		const switchEnabled = this._canEditDraft && !this.disabled
+			? html`
 				<d2l-switch
 					aria-label="${switchVisibilityText}"
 					label-right
@@ -78,12 +79,15 @@ class ActivityVisibilityEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMi
 							${switchVisibilityText}
 						</div>
 				</d2l-switch>
-			</div>
-			<div d2l-label-text ?hidden=${this._canEditDraft}>
-				<d2l-icon icon=${icon}></d2l-icon>
-				${switchVisibilityText}
-			</div>
-		`;
+			`
+			: html`
+				<div d2l-label-text>
+					<d2l-icon icon=${icon}></d2l-icon>
+					${switchVisibilityText}
+				</div>
+			`;
+
+		return switchEnabled;
 	}
 
 }
