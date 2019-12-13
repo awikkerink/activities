@@ -12,6 +12,7 @@ class ActivityVisibilityEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMi
 
 	static get properties() {
 		return {
+			disabled: { type: Boolean },
 			_isDraft: { type: Boolean },
 			_canEditDraft: {type: Boolean }
 		};
@@ -67,7 +68,7 @@ class ActivityVisibilityEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMi
 		const icon = (this._isDraft ? 'tier1:visibility-hide' : 'tier1:visibility-show');
 
 		return html`
-			<div ?hidden=${!this._canEditDraft}>
+			<div ?hidden=${!this._canEditDraft || this.disabled}>
 				<d2l-switch
 					aria-label="${switchVisibilityText}"
 					label-right
@@ -79,7 +80,7 @@ class ActivityVisibilityEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMi
 						</div>
 				</d2l-switch>
 			</div>
-			<div d2l-label-text ?hidden=${this._canEditDraft}>
+			<div d2l-label-text ?hidden=${this._canEditDraft && !this.disabled}>
 				<d2l-icon icon=${icon}></d2l-icon>
 				${switchVisibilityText}
 			</div>
