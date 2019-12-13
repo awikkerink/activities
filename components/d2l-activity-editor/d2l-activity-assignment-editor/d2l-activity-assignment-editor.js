@@ -68,7 +68,7 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 				@d2l-request-provider="${this._onRequestProvider}">
 
 				<d2l-activity-assignment-editor-detail
-					.href="${this._assignmentHref}"
+					href="${this._assignmentHref}"
 					.token="${this.token}"
 					slot="editor">
 				</d2l-activity-assignment-editor-detail>
