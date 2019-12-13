@@ -87,7 +87,6 @@ class ActivityVisibilityEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMi
 				</div>
 			`;
 
-
 		return switchEnabled;
 	}
 
