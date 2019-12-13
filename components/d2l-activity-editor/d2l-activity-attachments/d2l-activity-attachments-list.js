@@ -1,3 +1,4 @@
+import '@d2l/d2l-attachment/components/attachment-list';
 import './d2l-activity-attachment';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { AttachmentCollectionEntity } from 'siren-sdk/src/activities/AttachmentCollectionEntity';
@@ -7,7 +8,8 @@ import { repeat } from 'lit-html/directives/repeat';
 class ActivityAttachmentsList extends EntityMixinLit(LitElement) {
 	static get properties() {
 		return {
-			_attachmentUrls: { type: Array }
+			_attachmentUrls: { type: Array },
+			_isEditMode: { type: Boolean }
 		};
 	}
 
@@ -41,6 +43,7 @@ class ActivityAttachmentsList extends EntityMixinLit(LitElement) {
 
 				return attachment.getLinkByRel('self').href;
 			});
+			this._isEditMode = entity.canAddAttachments();
 		}
 
 		super._entity = entity;
@@ -48,12 +51,16 @@ class ActivityAttachmentsList extends EntityMixinLit(LitElement) {
 
 	render() {
 		return html`
-			${repeat(this._attachmentUrls, href => href, href => html`
-				<d2l-activity-attachment
-					.href="${href}"
-					.token="${this.token}">
-				</d2l-activity-attachment>
-			`)}
+			<d2l-labs-attachment-list ?editing="${this._isEditMode}">
+				${repeat(this._attachmentUrls, href => href, href => html`
+					<li slot="attachment" class="panel">
+						<d2l-activity-attachment
+							.href="${href}"
+							.token="${this.token}">
+						</d2l-activity-attachment>
+					</li>
+				`)}
+			</d2l-labs-attachment-list>
 		`;
 	}
 }
