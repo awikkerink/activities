@@ -85,6 +85,8 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 
 		this._submissionTypes = [];
 		this._completionTypes = [];
+		this._activityUsageHref = '';
+		this._attachmentsHref = '';
 	}
 
 	set _entity(entity) {

@@ -39,6 +39,7 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 	constructor() {
 		super();
 		this._setEntityType(AssignmentActivityUsageEntity);
+		this._assignmentHref = '';
 	}
 
 	set _entity(entity) {
