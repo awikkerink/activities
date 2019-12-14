@@ -65,11 +65,11 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 	}
 
 	_openDialog(opener, settings, callback) {
-		const match = this.href.match(/\.(com|d2l)\/(\d+)\//);
-		if (!match || match.length < 3) {
-			return;
-		}
-		const orgUnitId = match[2];
+		// const match = this.href.match(/\.(com|d2l)\/(\d+)\//);
+		// if (!match || match.length < 3) {
+		// 	return;
+		// }
+		const orgUnitId = '121213'// match[2];
 
 		const params = new URLSearchParams();
 		params.set('initialViewType', 'Items');

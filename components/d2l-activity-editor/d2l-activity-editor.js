@@ -3,7 +3,7 @@ import 'd2l-save-status/d2l-save-status.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { connect } from './connect-mixin.js';
 import { ActivityEditorMixin } from './d2l-activity-editor-mixin.js';
-import reducer, { storeName, actions} from './state/activity-usage.js';
+import reducer, { storeName, actions } from './state/activity-usage.js';
 
 class ActivityEditor extends connect(ActivityEditorMixin(LitElement)) {
 
@@ -65,9 +65,11 @@ class ActivityEditor extends connect(ActivityEditorMixin(LitElement)) {
 		}
 	}
 
-	async _save() {
+	async save() {
 		await this._saveActivity();
+	}
 
+	async _save() {
 		const event = new CustomEvent('d2l-activity-editor-save', {
 			bubbles: true,
 			composed: true,

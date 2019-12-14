@@ -31,6 +31,20 @@ class ActivityEditorContainer extends ProviderMixin(LitElement) {
 	constructor() {
 		super();
 		this.provideInstance(activityStoreName, store);
+		this.addEventListener('d2l-activity-editor-connected', this._registerEditor);
+		this.addEventListener('d2l-activity-editor-save', this._saveEditor)
+		this._editors = new Set();
+	}
+
+	_registerEditor(e) {
+		e.detail ? this._editors.add(e.composedPath()[0]) : this._editors.delete(e.composedPath()[0]);
+		e.preventDefault();
+	}
+
+	async _saveEditor(e) {
+		for (let editor of this._editors) {
+			await editor.save();
+		}
 	}
 
 	render() {

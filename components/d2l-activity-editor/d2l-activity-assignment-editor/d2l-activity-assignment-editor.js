@@ -58,7 +58,6 @@ class AssignmentEditor extends ProviderMixin(connect(PendingContainerMixin(Activ
 	_mapDispatchToProps(dispatch) {
 		return {
 			_fetchActivity: () => dispatch(actions.fetchActivity(this.href, this.token)),
-			_saveAssignment: () => dispatch(actions.saveAssignment(this._entity.assignmentHref(), this.token))
 		}
 	}
 
@@ -80,7 +79,6 @@ class AssignmentEditor extends ProviderMixin(connect(PendingContainerMixin(Activ
 			<d2l-activity-editor
 				.href="${this.href}"
 				.token="${this.token}"
-				@d2l-activity-editor-save="${this._saveAssignment}"
 				?loading="${this._hasPendingChildren}"
 				unfurlEndpoint="${this.unfurlEndpoint}"
 				trustedSitesEndpoint="${this.trustedSitesEndpoint}">

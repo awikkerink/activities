@@ -36,7 +36,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 			_submissionType: { type: Number },
 			_completionType: { type: Number },
 			_annotationToolsAvailable: { type: Boolean },
-			// _attachmentsHref: { type: String }
 		};
 	}
 
@@ -83,21 +82,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 		this._storeName = storeName;
 	}
 
-	// set _entity(entity) {
-	// 	if (this._entityHasChanged(entity)) {
-	// 		this._onAssignmentChange(entity);
-	// 		super._entity = entity;
-	// 	}
-	// }
-
-	// _onAssignmentChange(assignment) {
-	// 	if (!assignment) {
-	// 		return;
-	// 	}
-
-	// 	this._attachmentsHref = assignment.attachmentsCollectionHref();
-	// }
-
 	get _reducers() {
 		return reducer;
 	}
@@ -115,14 +99,23 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 	}
 
 	_mapDispatchToProps(dispatch) {
+		const dispatchAndSave = this._autoSave ? async (action) => {
+			await dispatch(action);
+			this.save();
+		} : dispatch;
 		return {
 			_fetchAssignment: () => dispatch(actions.fetchAssignment(this.href, this.token)),
-			_updateName: (name) => dispatch(actions.updateName({ href: this.href, token: this.token, name })),
-			_updateInstructions: (instructions) => dispatch(actions.updateInstructions({ href: this.href, token: this.token, instructions })),
-			_updateSubmissionType: (submissionType) => dispatch(actions.updateSubmissionType({ href: this.href, token: this.token, submissionType })),
-			_updateCompletionType: (completionType) => dispatch(actions.updateCompletionType({ href: this.href, token: this.token, completionType })),
-			_updateAnnotationToolsAvailable: (annotationToolsAvailable) => dispatch(actions.updateAnnotationToolsAvailable({ href: this.href, token: this.token, annotationToolsAvailable }))
+			_updateName: (name) => dispatchAndSave(actions.updateName({ href: this.href, token: this.token, name })),
+			_updateInstructions: (instructions) => dispatchAndSave(actions.updateInstructions({ href: this.href, token: this.token, instructions })),
+			_updateSubmissionType: (submissionType) => dispatchAndSave(actions.updateSubmissionType({ href: this.href, token: this.token, submissionType })),
+			_updateCompletionType: (completionType) => dispatchAndSave(actions.updateCompletionType({ href: this.href, token: this.token, completionType })),
+			_updateAnnotationToolsAvailable: (annotationToolsAvailable) => dispatchAndSave(actions.updateAnnotationToolsAvailable({ href: this.href, token: this.token, annotationToolsAvailable })),
+			_saveAssignmentDetails: () => dispatch(actions.saveAssignmentDetails({ href: this.href, token: this.token }))
 		}
+	}
+
+	async save() {
+		await this._saveAssignmentDetails();
 	}
 
 	updated(changedProperties) {

@@ -35,12 +35,12 @@ const updateSubmissionType = (payload) => (dispatch, getState) => {
 	}
 }
 
-const saveAssignment = (href, token) => async (dispatch, getState) => {
-	const assignment = selectAssignment(getState(), href, token);
-	const entity = selectAssignmentEntity(getState(), href, token);
+const saveAssignmentDetails = (payload) => async (dispatch, getState) => {
+	const assignment = selectAssignment(getState(), payload.href, payload.token);
+	const entity = selectAssignmentEntity(getState(), payload.href, payload.token);
 	await entity.save(assignment);
 
-	dispatch(fetchAssignment(href, token));
+	dispatch(fetchAssignment(payload.href, payload.token));
 };
 
 const fetchActivity = (href, token) => (dispatch, getState) => {
@@ -130,7 +130,7 @@ const { addAssignment, addActivity } = assignmentSlice.actions;
 export const actions = {
 	fetchAssignment,
 	fetchActivity,
-	saveAssignment,
+	saveAssignmentDetails,
 	updateName: assignmentSlice.actions.updateName,
 	updateInstructions: assignmentSlice.actions.updateInstructions,
 	updateSubmissionType,
