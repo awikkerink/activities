@@ -70,6 +70,13 @@ class AssignmentEditor extends ProviderMixin(connect(PendingContainerMixin(Activ
 		}
 	}
 
+	_onRequestProvider(e) {
+		if (e.detail.key === 'd2l-provider-html-editor-enabled') {
+			e.detail.provider = this.htmlEditorEnabled;
+			e.stopPropagation();
+		}
+	}
+
 	render() {
 		if (!this._entity) {
 			return html``;
@@ -81,12 +88,12 @@ class AssignmentEditor extends ProviderMixin(connect(PendingContainerMixin(Activ
 				.token="${this.token}"
 				?loading="${this._hasPendingChildren}"
 				unfurlEndpoint="${this.unfurlEndpoint}"
-				trustedSitesEndpoint="${this.trustedSitesEndpoint}">
+				trustedSitesEndpoint="${this.trustedSitesEndpoint}"
+				@d2l-request-provider="${this._onRequestProvider}">
 
 				<d2l-activity-assignment-editor-detail
-					.href="${this._entity.assignmentHref()}"
+					href="${this._entity.assignmentHref()}"
 					.token="${this.token}"
-					?htmlEditorEnabled="${this.htmlEditorEnabled}"
 					slot="editor">
 				</d2l-activity-assignment-editor-detail>
 

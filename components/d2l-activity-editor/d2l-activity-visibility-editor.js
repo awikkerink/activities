@@ -13,6 +13,7 @@ class ActivityVisibilityEditor extends connect(ActivityEditorMixin(LocalizeMixin
 
 	static get properties() {
 		return {
+			disabled: { type: Boolean },
 			_isDraft: { type: Boolean },
 			_entity: { type: Object }
 		};
@@ -41,6 +42,7 @@ class ActivityVisibilityEditor extends connect(ActivityEditorMixin(LocalizeMixin
 		super();
 		this._isDraft = false;
 		this._storeName = storeName;
+		this.disabled = false;
 	}
 
 	get _reducers() {
@@ -78,26 +80,28 @@ class ActivityVisibilityEditor extends connect(ActivityEditorMixin(LocalizeMixin
 
 		const switchVisibilityText = (this._isDraft ? this.localize('hidden') : this.localize('visible'));
 		const icon = (this._isDraft ? 'tier1:visibility-hide' : 'tier1:visibility-show');
+		const switchEnabled = this._entity.canEditDraft() && !this.disabled
+			? html`
+					<d2l-switch
+						aria-label="${switchVisibilityText}"
+						label-right
+						.checked=${!this._isDraft}
+						@click="${this._updateVisibility}">
+							<div class="d2l-label-text">
+								<d2l-icon icon=${icon}></d2l-icon>
+								${switchVisibilityText}
+							</div>
+					</d2l-switch>
+				`
+			: html`
+					<div d2l-label-text>
+						<d2l-icon icon=${icon}></d2l-icon>
+						${switchVisibilityText}
+					</div>
+				`;
 
-		return html`
-			<div ?hidden=${!this._entity.canEditDraft()}>
-				<d2l-switch
-					aria-label="${switchVisibilityText}"
-					label-right
-					.checked=${!this._isDraft}
-					@click="${this._updateVisibility}">
-						<div class="d2l-label-text">
-							<d2l-icon icon=${icon}></d2l-icon>
-							${switchVisibilityText}
-						</div>
-				</d2l-switch>
-			</div>
-			<div d2l-label-text ?hidden=${this._entity.canEditDraft()}>
-				<d2l-icon icon=${icon}></d2l-icon>
-				${switchVisibilityText}
-			</div>
-		`;
+		return switchEnabled;
 	}
-
 }
+
 customElements.define('d2l-activity-visibility-editor', ActivityVisibilityEditor);

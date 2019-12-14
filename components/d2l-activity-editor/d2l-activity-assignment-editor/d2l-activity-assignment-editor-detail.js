@@ -28,7 +28,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 
 	static get properties() {
 		return {
-			htmlEditorEnabled: { type: Boolean },
 			_name: { type: String },
 			_nameError: { type: String },
 			_instructions: { type: String },
@@ -227,7 +226,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 		return html`
 			<div id="assignment-visibility-container">
 				<d2l-activity-visibility-editor
-					.href="${this._entity.activityUsageHref()}"
+					href="${this._entity.activityUsageHref()}"
 					.token="${this.token}">
 				</d2l-activity-visibility-editor>
 			</div>
@@ -249,7 +248,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 			<div id="duedate-container">
 				<label class="d2l-label-text">${this.localize('dueDate')}</label>
 				<d2l-activity-due-date-editor
-					.href="${this._entity.activityUsageHref()}"
+					href="${this._entity.activityUsageHref()}"
 					.token="${this.token}">
 				</d2l-activity-due-date-editor>
 			</div>
@@ -258,7 +257,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 				<label class="d2l-label-text">${this.localize('instructions')}</label>
 				<d2l-activity-text-editor
 					value="${this._instructions}"
-					?htmlEditorEnabled="${this.htmlEditorEnabled}"
 					.richtextEditorConfig="${this._entity.instructionsRichTextEditorConfig()}"
 					@d2l-activity-text-editor-change="${this._saveInstructionsOnChange}"
 					ariaLabel="${this.localize('instructions')}"
@@ -268,7 +266,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 
 			<div id="assignment-attachments-editor-container" ?hidden="${!this._entity.attachmentsCollectionHref()}">
 				<d2l-activity-attachments-editor
-					.href="${this._entity.attachmentsCollectionHref()}"
+					href="${this._entity.attachmentsCollectionHref()}"
 					.token="${this.token}">
 				</d2l-activity-attachments-editor>
 			</div>
@@ -278,7 +276,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 
 			<div id="availability-dates-container">
 				<d2l-activity-availability-dates-editor
-					.href="${this._entity.activityUsageHref()}"
+					href="${this._entity.activityUsageHref()}"
 					.token="${this.token}">
 				</d2l-activity-availability-dates-editor>
 			</div>
@@ -287,12 +285,12 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(connect(ActivityEditorMi
 				<h3 class="d2l-heading-4">${this.localize('hdrReleaseConditions')}</h3>
 				<p class="d2l-body-small">${this.localize('hlpReleaseConditions')}</p>
 				<d2l-activity-release-conditions-editor
-					.href="${this._entity.activityUsageHref()}"
+					href="${this._entity.activityUsageHref()}"
 					.token="${this.token}">
 				</d2l-activity-release-conditions-editor>
 			</div>
 
-			<d2l-assignment-turnitin-editor .token="${this.token}" .href="${this.href}">
+			<d2l-assignment-turnitin-editor .token="${this.token}" href="${this.href}">
 			</d2l-assignment-turnitin-editor>
 
 			<div id="annotations-checkbox-container" ?hidden="${!this._entity.canSeeAnnotations()}">

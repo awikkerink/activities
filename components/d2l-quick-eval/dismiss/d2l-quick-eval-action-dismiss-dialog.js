@@ -76,7 +76,19 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 		`;
 	}
 
+	_clearSelectedOptions() {
+		this.selectedRadio = undefined;
+		this._date = undefined;
+
+		// Get the Div holding the radio buttons and clear them all
+		const elements = this.shadowRoot.querySelector('.radio-container').children;
+		for (const element of elements) {
+			element.children[0].checked = false;
+		}
+	}
+
 	open() {
+		this._clearSelectedOptions();
 		return this._getDialog().open();
 	}
 
@@ -89,7 +101,21 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 		this._getDialog().resize();
 	}
 
+	_getIso8601Date(date) {
+		const timezone = this.getTimezone().identifier;
+
+		if (timezone) {
+			return date.tz(timezone).format('YYYY-MM-DD');
+		} else {
+			return date.format('YYYY-MM-DD');
+		}
+	}
+
 	renderDatePicker(selectedRadio) {
+		/* global moment:false */
+		const now = moment();
+		const minDate = this._getIso8601Date(now);
+
 		if (selectedRadio === DISMISS_TYPES.date) {
 			return html`
 				<div class="datepicker-container">
@@ -97,6 +123,7 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 						@d2l-datetime-picker-datetime-changed="${this._onDatetimePickerDatetimeChanged}"
 						@d2l-datetime-picker-datetime-cleared="${this._onDatetimePickerDatetimeCleared}"
 						placeholder="MM|DD|YYYY"
+						min="${minDate}"
 						hide-label
 					></d2l-datetime-picker>
 				</div>

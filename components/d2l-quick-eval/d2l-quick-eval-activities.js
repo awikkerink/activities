@@ -175,7 +175,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				on-d2l-quick-eval-activity-view-submission-list="_navigateSubmissionList"
 				on-d2l-quick-eval-activity-view-evaluate-all="_navigateEvaluateAll"
 				on-d2l-quick-eval-activity-dismiss-until="_dismissUntil"
-				on-d2l-quick-eval-activity-edit-activity="_editActivity"
 				>
 			</d2l-quick-eval-activities-list>
 			<d2l-dialog-confirm title-text="[[localize('confirmation')]]" text="[[_publishAllDialogMessage]]">
@@ -449,19 +448,15 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			}
 
 			return dismissAction.then(() => {
-				const selfHref = this._getSelfLink(this.entity);
-				// bypass cache and reload
-				window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true);
+				window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh-activities'));
+				window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh-submissions'));
+				window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh-dismissed'));
 				this.shadowRoot.querySelector('#toast-dismiss-success').open = true;
 			}).catch((error) => {
 				this.shadowRoot.querySelector('#toast-dismiss-critical').open = true;
 				this._logError(error, {developerMessage: `Error dismissing activity href ${evt.detail.dismissHref}`});
 			});
 		});
-	}
-
-	_editActivity() {
-		//console.log('edit activity');
 	}
 
 	_computeActivitiesListId() {
@@ -528,6 +523,28 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			this._loading = false;
 			this._handleLoadFailure();
 		});
+	}
+
+	constructor() {
+		super();
+		this._boundRefresh = this.refresh.bind(this);
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+		window.addEventListener('d2l-quick-eval-refresh-activities', this._boundRefresh);
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		window.removeEventListener('d2l-quick-eval-refresh-activities', this._boundRefresh);
+	}
+
+	refresh() {
+		const selfHref = this._getSelfLink(this.entity);
+		if (selfHref) {
+			window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true);
+		}
 	}
 }
 window.customElements.define('d2l-quick-eval-activities', D2LQuickEvalActivities);

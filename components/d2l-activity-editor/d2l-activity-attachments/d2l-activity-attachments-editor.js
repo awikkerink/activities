@@ -42,12 +42,12 @@ class ActivityAttachmentsEditor extends EntityMixinLit(LitElement) {
 	render() {
 		return html`
 			<d2l-activity-attachments-list
-				.href="${this.href}"
+				href="${this.href}"
 				.token="${this.token}">
 			</d2l-activity-attachments-list>
 			<d2l-activity-attachments-picker
 				?hidden="${!this._canAddAttachments}"
-				.href="${this.href}"
+				href="${this.href}"
 				.token="${this.token}">
 			</d2l-activity-attachments-picker>
 		`;

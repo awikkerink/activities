@@ -7,7 +7,6 @@ class ActivityTextEditor extends LitElement {
 	static get properties() {
 		return {
 			value: { type: String },
-			htmlEditorEnabled: { type: Boolean },
 			richtextEditorConfig: { type: Object },
 			disabled: { type: Boolean },
 			ariaLabel: { type: String },
@@ -35,7 +34,17 @@ class ActivityTextEditor extends LitElement {
 	}
 
 	render() {
-		if (this.htmlEditorEnabled) {
+		const event = new CustomEvent('d2l-request-provider', {
+			detail: { key: 'd2l-provider-html-editor-enabled' },
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+		this.dispatchEvent(event);
+
+		const htmlEditorEnabled = event.detail.provider;
+
+		if (htmlEditorEnabled) {
 			return html`
 				<d2l-activity-html-editor
 					ariaLabel="${this.ariaLabel}"

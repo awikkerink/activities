@@ -6,6 +6,7 @@ import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 class ActivityAttachment extends EntityMixinLit(LitElement) {
 	static get properties() {
 		return {
+			creating: { type: Boolean },
 			_attachment: { type: Object },
 			_editing: { type: Boolean }
 		};
@@ -36,6 +37,7 @@ class ActivityAttachment extends EntityMixinLit(LitElement) {
 				name: entity.name()
 			};
 			this._editing = entity.canDeleteAttachment();
+			this.creating = entity.canDeleteAttachment();
 		}
 
 		super._entity = entity;

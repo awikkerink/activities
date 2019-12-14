@@ -548,6 +548,28 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			this._handleFullLoadFailure();
 		}.bind(this));
 	}
+
+	constructor() {
+		super();
+		this._boundRefresh = this.refresh.bind(this);
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+		window.addEventListener('d2l-quick-eval-refresh-submissions', this._boundRefresh);
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		window.removeEventListener('d2l-quick-eval-refresh-submissions', this._boundRefresh);
+	}
+
+	refresh() {
+		const selfHref = this._getSelfLink(this.entity);
+		if (selfHref) {
+			window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true).then(x => this.entity = x.entity);
+		}
+	}
 }
 
 window.customElements.define('d2l-quick-eval-submissions', D2LQuickEvalSubmissions);
