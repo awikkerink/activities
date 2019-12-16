@@ -23,7 +23,7 @@ describe('d2l-quick-eval-action-dismiss-dialog', function() {
 			dialog.open();
 		});
 		await page.waitFor(2000);
-		const rect = await visualDiff.getRect(page, `#default`);
+		const rect = await visualDiff.getRect(page, '#default');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
 
@@ -35,7 +35,7 @@ describe('d2l-quick-eval-action-dismiss-dialog', function() {
 			forever.click();
 		});
 		await page.waitFor(2000);
-		const rect = await visualDiff.getRect(page, `#default`);
+		const rect = await visualDiff.getRect(page, '#default');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
 
@@ -47,7 +47,7 @@ describe('d2l-quick-eval-action-dismiss-dialog', function() {
 			specDate.click();
 		});
 		await page.waitFor(2000);
-		const rect = await visualDiff.getRect(page, `#default`);
+		const rect = await visualDiff.getRect(page, '#default');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
 });
