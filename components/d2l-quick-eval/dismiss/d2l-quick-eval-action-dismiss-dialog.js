@@ -142,6 +142,7 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 
 	_onDatetimePickerDatetimeChanged(e) {
 		this._date = e.detail.toISOString();
+		this._getDialog().resize();
 	}
 
 	computeAction(selectedRadio, date) {
