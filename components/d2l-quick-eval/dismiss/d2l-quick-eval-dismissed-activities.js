@@ -161,9 +161,9 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 		}
 	}
 
-	_onOpened(opened) {
+	_onOpened() {
 		if (this._data) {
-			this._data.forEach((_,index)=>  this.set(`_data.${index}.selected`, false));
+			this._data.forEach((_, index)=>  this.set(`_data.${index}.selected`, false));
 		}
 	}
 
