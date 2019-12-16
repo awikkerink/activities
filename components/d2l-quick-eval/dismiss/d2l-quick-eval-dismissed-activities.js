@@ -77,7 +77,8 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 	}
 	static get observers() {
 		return [
-			'_loadData(entity)'
+			'_loadData(entity)',
+			'_onOpened(opened)'
 		];
 	}
 
@@ -157,6 +158,12 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 			if (act) {
 				this.set(`_data.${e.detail.key}.selected`, e.detail.selected);
 			}
+		}
+	}
+
+	_onOpened(opened) {
+		if (this._data) {
+			this._data.forEach((_,index)=>  this.set(`_data.${index}.selected`, false));
 		}
 	}
 
