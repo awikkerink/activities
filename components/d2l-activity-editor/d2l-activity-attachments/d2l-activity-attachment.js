@@ -23,6 +23,7 @@ class ActivityAttachment extends EntityMixinLit(LitElement) {
 	constructor() {
 		super();
 		this._setEntityType(AttachmentEntity);
+		this._attachment = {};
 	}
 
 	set _entity(entity) {

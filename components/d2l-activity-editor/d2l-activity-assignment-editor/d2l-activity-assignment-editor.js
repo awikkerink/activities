@@ -22,6 +22,7 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 			 */
 			trustedSitesEndpoint: { type: String },
 			_assignmentHref: { type: String },
+			_initialLoadComplete: { type: Boolean }
 		};
 	}
 
@@ -60,13 +61,20 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 		}
 	}
 
+	_onPendingResolved() {
+		// Once we've loaded the page once, this prevents us from ever showing
+		// the "Loading..." div again, even if page components are (re)loading
+		this._initialLoadComplete = true;
+	}
+
 	render() {
 		return html`
 			<d2l-activity-editor
-				?loading="${this._hasPendingChildren}"
+				?loading="${this._hasPendingChildren && !this._initialLoadComplete}"
 				unfurlEndpoint="${this.unfurlEndpoint}"
 				trustedSitesEndpoint="${this.trustedSitesEndpoint}"
-				@d2l-request-provider="${this._onRequestProvider}">
+				@d2l-request-provider="${this._onRequestProvider}"
+				@d2l-pending-resolved="${this._onPendingResolved}">
 
 				<d2l-activity-assignment-editor-detail
 					href="${this._assignmentHref}"
