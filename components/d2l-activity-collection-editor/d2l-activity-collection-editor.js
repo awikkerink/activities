@@ -3,6 +3,7 @@ import {repeat} from 'lit-html/directives/repeat';
 import { heading1Styles, heading4Styles, bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
+import { classes as organizationClasses } from 'siren-sdk/src/organizations/OrganizationEntity.js';
 import { NamedEntityMixin } from 'siren-sdk/src/entityAddons/named-entity-mixin.js';
 import { DescribableEntityMixin } from 'siren-sdk/src/entityAddons/describable-entity-mixin.js';
 import { SimpleEntity } from 'siren-sdk/src/es6/SimpleEntity.js';
@@ -11,6 +12,7 @@ import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/list/list.js';
 import '@brightspace-ui/core/components/list/list-item.js';
+import '@brightspace-ui/core/components/list//list-item-content.js';
 import 'd2l-organizations/components/d2l-organization-image/d2l-organization-image.js';
 import '@brightspace-ui-labs/edit-in-place/d2l-labs-edit-in-place.js';
 import '../d2l-activity-editor/d2l-activity-visibility-editor.js';
@@ -129,6 +131,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				<d2l-organization-image href=${item.self()} slot="illustration"></d2l-organization-image>
 				<d2l-list-item-content>
 					${item.name()}
+					<div slot="secondary">${item.hasClass(organizationClasses.courseOffering) ? 'Course' : null}</div>
 				</d2l-list-item-content>
 				<d2l-button-icon slot="actions" text="Remove Course" icon="d2l-tier1:close-default" @click=${item.removeItem}>
 			</d2l-list-item>
