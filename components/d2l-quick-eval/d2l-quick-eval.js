@@ -82,7 +82,7 @@ class D2LQuickEval extends
 		super.created();
 		const searchParams = window.location.search;
 		if (searchParams && searchParams.includes('returningToQuickEval=true')) {
-			this._returningToQuickEval = true
+			this._returningToQuickEval = true;
 		}
 	}
 
