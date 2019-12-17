@@ -95,20 +95,6 @@ D2L.PolymerBehaviors.Siren.D2LSirenHelperBehaviorImpl = {
 			);
 		}
 
-		// const isReturningToQuickEval = GetQueryStringParam('returningToQuickEval', parsedUrl);
-		// console.log(isReturningToQuickEval)
-		// if (isReturningToQuickEval === true || isReturningToQuickEval === false) {
-		// 	extraParams.push(
-		// 		{
-		// 			name: 'returningToQuickEval',
-		// 			value: isReturningToQuickEval
-		// 		}
-		// 	)
-		// }
-
-		// console.log(extraParams);
-		// console.log(window.location.search)
-
 		return extraParams;
 	},
 
