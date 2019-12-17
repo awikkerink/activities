@@ -138,14 +138,14 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 
 	static get properties() {
 		return {
+			_actionCollectionEntity: { type: Object },
+			_addExistingAction: { type: Object },
+			_candidateItems: { type: Array },
 			_description: { type: String },
 			_items: { type: Array },
-			_candidateItems: { type: Array },
 			_name: { type: String },
-			_specialization: { type: Object },
-			_addExistingAction: { type: Object },
-			_actionCollectionEntity: { type: Object },
-			_selectionCount: { type: Number }
+			_selectionCount: { type: Number },
+			_specialization: { type: Object }
 		};
 	}
 
@@ -157,13 +157,21 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			:host([hidden]) {
 				display: none;
 			}
-			.d2l-activity-collection-header {
-				box-shadow: inset 0 -1px 0 0 var(--d2l-color-gypsum);
-				padding: 15px 30px;
-			}
 			.d2l-activity-collection-base-info {
 				display: flex;
 				justify-content: space-between;
+			}
+			.d2l-activity-collection-body {
+				padding: 15px 6px;
+				background-color: var(--d2l-color-regolith);
+				height: 100%;
+			}
+			.d2l-activity-collection-description {
+				overflow:hidden;
+			}
+			.d2l-activity-collection-header {
+				box-shadow: inset 0 -1px 0 0 var(--d2l-color-gypsum);
+				padding: 15px 30px;
 			}
 			.d2l-activity-collection-title-header {
 				margin: 6px 0px 0px 0px;
@@ -171,21 +179,13 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				overflow: hidden;
 				padding: 0px 6px 6px 0px;
 			}
-			.d2l-activity-visbility-label {
-				white-space: nowrap;
-			}
-			.d2l-activity-collection-description {
-				overflow:hidden;
-			}
-			.d2l-activity-collection-body {
-				padding: 15px 6px;
-				background-color: var(--d2l-color-regolith);
-				height: 100%;
-			}
 			.d2l-activity-collection-toggle-container {
 				display: flex;
 				align-self: flex-start;
 				margin: 0.55rem 1.5rem;
+			}
+			.d2l-activity-visbility-label {
+				white-space: nowrap;
 			}
 			.d2l-add-activity-dialog {
 				min-height: 500px;
@@ -196,16 +196,16 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				padding-bottom: 10px;
 				justify-content: space-between;
 			}
-			.d2l-list-item-secondary {
-				color: var(--d2l-color-olivine-minus-1);
-				font-size: 14px;
+			.d2l-add-activity-dialog-load-more {
+				padding-top: 10px;
 			}
 			.d2l-add-activity-dialog-selection-count {
 				color: var(--d2l-color-ferrite);
 				font-size: 16px;
 			}
-			.d2l-add-activity-dialog-load-more {
-				padding-top: 10px;
+			.d2l-list-item-secondary {
+				color: var(--d2l-color-olivine-minus-1);
+				font-size: 14px;
 			}
 		` ];
 	}
