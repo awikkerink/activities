@@ -333,9 +333,9 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 				if (firstNameLink) {
 					this.async(() => {
 						firstNameLink.focus();
-					})
+					});
 				}
-			})
+			});
 		}
 	}
 
