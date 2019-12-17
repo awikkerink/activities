@@ -18,7 +18,7 @@ describe('d2l-quick-eval-action-dismiss-dialog', function() {
 	after(() => browser.close());
 
 	function open() {
-		return page.evaluate(async () => {
+		return page.evaluate(async() => {
 			const dialog = document.querySelector('#default d2l-quick-eval-action-dismiss-dialog');
 			const d2lDialog = dialog.shadowRoot.querySelector('d2l-dialog');
 			dialog.open();
