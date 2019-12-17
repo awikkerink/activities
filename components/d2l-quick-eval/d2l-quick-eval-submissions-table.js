@@ -194,7 +194,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 										title="[[_localizeEvaluationText(s, _headerColumns.0.meta.firstThenLast)]]"
 										href="[[s.activityLink]]"
 										aria-label$="[[_localizeEvaluationText(s, _headerColumns.0.meta.firstThenLast)]]"
-										class="d2l-user-name-link"
+										class="d2l-quick-eval-submissions-table-name-link"
 									>[[_formatDisplayName(s, _headerColumns.0.meta.firstThenLast)]]</d2l-link>
 									<d2l-activity-evaluation-icon-base draft$="[[s.isDraft]]"></d2l-activity-evaluation-icon-base>
 								</d2l-td>
@@ -327,19 +327,15 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 	}
 
 	_handleNameFocusOnPageForwardBack() {
-		// console.table([this.showLoadingSkeleton, this._data.length, window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD, this.returningToQuickEval])
-		if (!this.showLoadingSkeleton && this._data.length > 0) {
-			// if ((window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) || (this.returningToQuickEval === true)) {
-				const firstUserLink = this.shadowRoot.querySelector('d2l-link');
-				console.log(firstUserLink)
-				// console.log(document.shadowRoot.querySelector('.user-name-link'))
-				console.log(document.querySelector('d2l-link'))
-				if (firstUserLink) {
-					firstUserLink.focus();
-					console.log('focused')					
+		if (((window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) || (this.returningToQuickEval === true)) && !this.showLoadingSkeleton && this._data.length > 0) {
+			this.async(() => {
+				const firstNameLink = this.shadowRoot.querySelector('.d2l-quick-eval-submissions-table-name-link');
+				if (firstNameLink) {
+					this.async(() => {
+						firstNameLink.focus();
+					})
 				}
-				// this.returningToQuickEval = false;
-			// }
+			})
 		}
 	}
 
