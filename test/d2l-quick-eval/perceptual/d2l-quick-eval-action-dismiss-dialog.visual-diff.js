@@ -17,36 +17,40 @@ describe('d2l-quick-eval-action-dismiss-dialog', function() {
 
 	after(() => browser.close());
 
-	it('default', async function() {
-		await page.evaluate(() => {
+	function open() {
+		return page.evaluate(async () => {
 			const dialog = document.querySelector('#default d2l-quick-eval-action-dismiss-dialog');
+			const d2lDialog = dialog.shadowRoot.querySelector('d2l-dialog');
 			dialog.open();
+			// This seems to allow us to delay until after the animations finish.
+			await d2lDialog.updateComplete;
 		});
-		await page.waitFor(2000);
+	}
+
+	it('default', async function() {
+		await open();
 		const rect = await visualDiff.getRect(page, '#default');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
 
 	it('forever', async function() {
+		await open();
 		await page.evaluate(() => {
 			const dialog = document.querySelector('#default d2l-quick-eval-action-dismiss-dialog');
-			dialog.open();
 			const forever = dialog.shadowRoot.querySelectorAll('input')[1];
 			forever.click();
 		});
-		await page.waitFor(2000);
 		const rect = await visualDiff.getRect(page, '#default');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
 
 	it('specific-date', async function() {
+		await open();
 		await page.evaluate(() => {
 			const dialog = document.querySelector('#default d2l-quick-eval-action-dismiss-dialog');
-			dialog.open();
 			const specDate = dialog.shadowRoot.querySelectorAll('input')[0];
 			specDate.click();
 		});
-		await page.waitFor(2000);
 		const rect = await visualDiff.getRect(page, '#default');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
