@@ -47,7 +47,7 @@ Quick Eval should be pulled directly from `my-unassessed-activities`:
 [ci-url]: https://travis-ci.org/BrightspaceUI/activities
 [ci-image]: https://travis-ci.org/BrightspaceUI/activities.svg?branch=master
 
-### Visual Differnce Testing
+### Visual Difference Testing
 
 In order to do visual difference testing, you must generate the "golden" images first as the baseline to compare to.
 
