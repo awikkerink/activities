@@ -367,6 +367,16 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 
 			});
 		});
+		test('Ensure that focus is on the first name of the submissions table when returning to quick eval', (done) => {
+			list.returningToQuickEval = true
+			flush(function() {
+				var firstName = list.shadowRoot.querySelector('.d2l-quick-eval-submissions-table-name-link');
+				if (firstName) {
+					assert.equal(true, firstName.hasAttribute('autofocus'))
+				}
+				done()
+			});
+		});
 		test('_getWidthCssClass returns correct value when passed column key (with master teacher off)', () => {
 			const validColumnKeys = ['displayName', 'activityName', 'courseName', 'submissionDate'];
 			const expectedCssClasses = ['d2l-quick-eval-30-column', 'd2l-quick-eval-25-column', 'd2l-quick-eval-25-column', 'd2l-quick-eval-20-column'];
