@@ -20,6 +20,7 @@ import './behaviors/d2l-quick-eval-telemetry-behavior.js';
 import '@brightspace-ui/core/components/dialog/dialog-confirm.js';
 import './dismiss/d2l-quick-eval-action-dismiss-dialog.js';
 import { DISMISS_TYPES } from './dismiss/dismiss-types.js';
+import './behaviors/d2l-quick-eval-refresh-behavior.js';
 /**
  * @customElement
  * @polymer
@@ -29,7 +30,8 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 	[	D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior,
 		D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviour,
 		D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour,
-		D2L.PolymerBehaviors.QuickEval.TelemetryBehaviorImpl
+		D2L.PolymerBehaviors.QuickEval.TelemetryBehaviorImpl,
+		D2L.PolymerBehaviors.QuickEval.D2LQuickEvalRefreshBehavior
 	],
 	QuickEvalLogging(QuickEvalLocalize(PolymerElement))
 ) {
@@ -448,9 +450,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			}
 
 			return dismissAction.then(() => {
-				window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh-activities'));
-				window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh-submissions'));
-				window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh-dismissed'));
+				window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh'));
 				this.shadowRoot.querySelector('#toast-dismiss-success').open = true;
 			}).catch((error) => {
 				this.shadowRoot.querySelector('#toast-dismiss-critical').open = true;
@@ -523,28 +523,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			this._loading = false;
 			this._handleLoadFailure();
 		});
-	}
-
-	constructor() {
-		super();
-		this._boundRefresh = this.refresh.bind(this);
-	}
-
-	connectedCallback() {
-		super.connectedCallback();
-		window.addEventListener('d2l-quick-eval-refresh-activities', this._boundRefresh);
-	}
-
-	disconnectedCallback() {
-		super.disconnectedCallback();
-		window.removeEventListener('d2l-quick-eval-refresh-activities', this._boundRefresh);
-	}
-
-	refresh() {
-		const selfHref = this._getSelfLink(this.entity);
-		if (selfHref) {
-			window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true);
-		}
 	}
 }
 window.customElements.define('d2l-quick-eval-activities', D2LQuickEvalActivities);
