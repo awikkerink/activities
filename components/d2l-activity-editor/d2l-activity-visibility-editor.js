@@ -55,7 +55,7 @@ class ActivityVisibilityEditor extends connect(ActivityEditorMixin(LocalizeMixin
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
-			this._activity = this.store.fetchActivity(this.href, this.token);
+			this._activity = this.store.fetchActivity(this.href, this.token, this._autoSave);
 		}
 	}
 

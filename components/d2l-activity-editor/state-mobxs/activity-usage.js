@@ -18,16 +18,29 @@ export class ActivityUsage {
 
 	@observable loaded = false;
 
-	constructor(href, token) {
+	constructor(href, token, autoSave = false) {
 		this.href = href;
 		this.token = token;
+		this.autoSave = autoSave;
 		this.fetchActivity();
+	}
+
+	async fetchEntity(href, token) {
+		let entity = await window.D2L.Siren.EntityStore.get(href, token);
+		if (!entity) {
+			const fetched = await window.D2L.Siren.EntityStore.fetch(href, token);
+			if (!fetched || !fetched.entity) {
+				throw new Error('Cannot load entity');
+			}
+			entity = fetched.entity;
+		}
+		return entity;
 	}
 
 	@action
 	async fetchActivity() {
 		try {
-			const entity = await fetchEntity(this.href, this.token);
+			const entity = await fetchEntity(this.href, this.token, this.autoSave);
 			this.activityUsage = new ActivityUsageEntity(entity, this.token, { remove: () => { } });
 
 			const canEditDueDate = await this.activityUsage.canEditDueDate();
