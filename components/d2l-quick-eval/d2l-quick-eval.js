@@ -63,7 +63,7 @@ class D2LQuickEval extends
 				<d2l-quick-eval-ellipsis-menu href="[[dismissedActivitiesHref]]" token="[[token]]" hidden$="[[!dismissEnabled]]"></d2l-quick-eval-ellipsis-menu>
 			</div>
 			<d2l-quick-eval-view-toggle current-selected="[[toggleState]]" toggle-href="[[toggleHref]]" hidden$="[[!activitiesViewEnabled]]" on-d2l-quick-eval-view-toggle-changed="_toggleView"></d2l-quick-eval-view-toggle>
-			<d2l-quick-eval-submissions href="[[_lazySubmissionsHref]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" data-telemetry-endpoint="[[dataTelemetryEndpoint]]" hidden$="[[_displayActivities(toggleState, activitiesViewEnabled)]]" master-teacher="[[masterTeacher]]" returning-to-quick-eval="[[_returningToQuickEval]]"></d2l-quick-eval-submissions>
+			<d2l-quick-eval-submissions href="[[_lazySubmissionsHref]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" data-telemetry-endpoint="[[dataTelemetryEndpoint]]" hidden$="[[_displayActivities(toggleState, activitiesViewEnabled)]]" master-teacher="[[masterTeacher]]" returning-to-quick-eval="[[returningToQuickEval]]"></d2l-quick-eval-submissions>
 			<d2l-quick-eval-activities 
 				href="[[_lazyActivitiesHref]]"
 				token="[[token]]"
@@ -76,14 +76,6 @@ class D2LQuickEval extends
 	ready() {
 		super.ready();
 		this.perfMark('qeViewLoadStart');
-	}
-
-	created() {
-		super.created();
-		const searchParams = window.location.search;
-		if (searchParams && searchParams.includes('returningToQuickEval=true')) {
-			this._returningToQuickEval = true;
-		}
 	}
 
 	static get properties() {
@@ -137,7 +129,7 @@ class D2LQuickEval extends
 			token: {
 				type: Object,
 			},
-			_returningToQuickEval: {
+			returningToQuickEval: {
 				type: Boolean,
 				value: false
 			}
