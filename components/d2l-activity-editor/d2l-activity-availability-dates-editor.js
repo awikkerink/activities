@@ -1,22 +1,21 @@
 import 'd2l-datetime-picker/d2l-datetime-picker';
-import { connect } from './connect-mixin.js';
-import { ActivityEditorMixin } from './d2l-activity-editor-mixin.js';
-import reducer, { storeName, actions, selectActivityEntity, selectActivity } from './state/activity-usage.js';
-import { css, html, LitElement } from 'lit-element/lit-element';
-import { getLocalizeResources } from './localization';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
+import { css, html } from 'lit-element/lit-element';
+import { getLocalizeResources } from './localization';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import storeName from './state-mobxs/store-name.js';
+import { connect } from './mobxs-connect-mixin.js';
+import { ActivityEditorMixin } from './d2l-activity-editor-mixin.js';
+import { MobxLitElement } from '@adobe/lit-mobx';
 
-class ActivityAvailabilityDatesEditor extends connect(ActivityEditorMixin(LocalizeMixin(LitElement))) {
+class ActivityAvailabilityDatesEditor extends connect(ActivityEditorMixin(LocalizeMixin(MobxLitElement))) {
+
+	static storeName = storeName;
 
 	static get properties() {
 		return {
-			_startDate: { type: String },
-			_endDate: { type: String },
 			_overrides: { type: Object },
-			_entity: { type: Object },
-			_canEditStartDate: {type: Boolean},
-			_canEditEndDate: {type: Boolean},
+			_activity: { type: Object },
 		};
 	}
 
@@ -37,51 +36,15 @@ class ActivityAvailabilityDatesEditor extends connect(ActivityEditorMixin(Locali
 
 	constructor() {
 		super();
-		this._endDate = '';
-		this._startDate = '';
-		this._canEditStartDate = false;
-		this._canEditEndDate = false;
 		this._overrides = document.documentElement.dataset.intlOverrides || '{}';
-		this._storeName = storeName;
 	}
 
-	get _reducers() {
-		return reducer;
+	_updateStartDate(date) {
+		this._activity.setStartDate(date);
 	}
 
-	get _entity() {
-		return this.__entity;
-	}
-
-	set _entity(entity) {
-		if (entity === this.__entity) {
-			return;
-		}
-
-		entity.canEditStartDate().then(result => this._canEditStartDate = result);
-		entity.canEditEndDate().then(result => this._canEditEndDate = result);
-
-		const oldEntity = this.__entity;
-		this.__entity = entity;
-		this.requestUpdate(this.__entity, oldEntity);
-	}
-
-	_mapStateToProps(state) {
-		const activity = selectActivity(state, this.href, this.token);
-		return activity ? {
-			_date: activity.dueDate,
-			_startDate: activity.startDate,
-			_endDate: activity.endDate,
-			_entity: selectActivityEntity(state, this.href, this.token),
-		} : {};
-	}
-
-	_mapDispatchToProps(dispatch) {
-		return {
-			_fetchActivity: () => dispatch(actions.fetchActivity(this.href, this.token)),
-			_updateStartDate: (date) => dispatch(actions.updateStartDate({ href: this.href, token: this.token, date })),
-			_updateEndDate: (date) => dispatch(actions.updateEndDate({ href: this.href, token: this.token, date }))
-		}
+	_updateEndDate(date) {
+		this._activity.setEndDate(date);
 	}
 
 	updated(changedProperties) {
@@ -89,7 +52,7 @@ class ActivityAvailabilityDatesEditor extends connect(ActivityEditorMixin(Locali
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
-			this._fetchActivity();
+			this._activity = this.store.fetchActivity(this.href, this.token);
 		}
 	}
 
@@ -116,31 +79,42 @@ class ActivityAvailabilityDatesEditor extends connect(ActivityEditorMixin(Locali
 	}
 
 	render() {
+		if (!this._activity) {
+			return html``;
+		}
+
+		const {
+			startDate,
+			canEditStartDate,
+			endDate,
+			canEditEndDate
+		} = this._activity;
+
 		return html`
-		<label class="d2l-label-text" ?hidden=${!this._canEditStartDate}>${this.localize('startDate')}</label>
-		<div id="startdate-container" ?hidden=${!this._canEditStartDate}>
+		<label class="d2l-label-text" ?hidden=${!canEditStartDate}>${this.localize('startDate')}</label>
+		<div id="startdate-container" ?hidden=${!canEditStartDate}>
 			<d2l-datetime-picker
 				hide-label
 				name="startDate"
 				id="startDate"
 				date-label="${this.localize('startDate')}"
 				time-label="${this.localize('startTime')}"
-				datetime="${this._startDate}"
+				datetime="${startDate}"
 				overrides="${this._overrides}"
 				placeholder="${this.localize('noStartDate')}"
 				@d2l-datetime-picker-datetime-changed="${this._onStartDatetimePickerDatetimeChanged}"
 				@d2l-datetime-picker-datetime-cleared="${this._onStartDatetimePickerDatetimeCleared}">
 			</d2l-datetime-picker>
 		</div>
-		<label class="d2l-label-text" ?hidden=${!this._canEditEndDate}>${this.localize('endDate')}</label>
-		<div id="enddate-container" ?hidden=${!this._canEditEndDate}>
+		<label class="d2l-label-text" ?hidden=${!canEditEndDate}>${this.localize('endDate')}</label>
+		<div id="enddate-container" ?hidden=${!canEditEndDate}>
 			<d2l-datetime-picker
 				hide-label
 				name="endDate"
 				id="endDate"
 				date-label="${this.localize('endDate')}"
 				time-label="${this.localize('endTime')}"
-				datetime="${this._endDate}"
+				datetime="${endDate}"
 				overrides="${this._overrides}"
 				placeholder="${this.localize('noEndDate')}"
 				@d2l-datetime-picker-datetime-changed="${this._onEndDatetimePickerDatetimeChanged}"
@@ -149,6 +123,5 @@ class ActivityAvailabilityDatesEditor extends connect(ActivityEditorMixin(Locali
 		</div>
 		`;
 	}
-
 }
 customElements.define('d2l-activity-availability-dates-editor', ActivityAvailabilityDatesEditor);

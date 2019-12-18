@@ -1,11 +1,15 @@
 import '@brightspace-ui/core/components/button/button.js';
 import 'd2l-save-status/d2l-save-status.js';
-import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { connect } from './connect-mixin.js';
-import { ActivityEditorMixin } from './d2l-activity-editor-mixin.js';
-import reducer, { storeName, actions } from './state/activity-usage.js';
 
-class ActivityEditor extends connect(ActivityEditorMixin(LitElement)) {
+import { css, html } from 'lit-element/lit-element';
+import storeName from './state-mobxs/store-name.js';
+import { connect } from './mobxs-connect-mixin.js';
+import { ActivityEditorMixin } from './d2l-activity-editor-mixin.js';
+import { MobxLitElement } from '@adobe/lit-mobx';
+
+class ActivityEditor extends connect(ActivityEditorMixin(MobxLitElement)) {
+
+	static storeName = storeName;
 
 	static get properties() {
 		return {
@@ -18,6 +22,8 @@ class ActivityEditor extends connect(ActivityEditorMixin(LitElement)) {
 			 * API endpoint for determining whether a domain is trusted
 			 */
 			trustedSitesEndpoint: { type: String },
+
+			_activity: { type: Object },
 		};
 	}
 
@@ -36,37 +42,17 @@ class ActivityEditor extends connect(ActivityEditorMixin(LitElement)) {
 		`;
 	}
 
-	constructor() {
-		super();
-		this._storeName = storeName;
-	}
-
-	get _reducers() {
-		return reducer;
-	}
-
-	_mapStateToProps() {
-		return {};
-	}
-
-	_mapDispatchToProps(dispatch) {
-		return {
-			_fetchActivity: () => dispatch(actions.fetchActivity(this.href, this.token)),
-			_saveActivity: () => dispatch(actions.saveActivity(this.href, this.token))
-		}
-	}
-
 	updated(changedProperties) {
 		super.updated(changedProperties);
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
-			this._fetchActivity();
+			this._activity = this.store.fetchActivity(this.href, this.token);
 		}
 	}
 
 	async save() {
-		await this._saveActivity();
+		await this._activity.saveActivity();
 	}
 
 	async _save() {

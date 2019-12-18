@@ -1,0 +1,1 @@
+export default 'd2l-activity-editor-store-mobxs';

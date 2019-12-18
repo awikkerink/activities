@@ -1,21 +1,23 @@
 import '@d2l/switch/d2l-switch.js';
 import 'd2l-colors/d2l-colors';
-import { css, html, LitElement } from 'lit-element/lit-element';
+import { css, html } from 'lit-element/lit-element';
 import { getLocalizeResources } from './localization';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
-import reducer, { storeName, actions, selectActivityEntity, selectActivity } from './state/activity-usage.js';
-import { connect } from './connect-mixin.js';
+import storeName from './state-mobxs/store-name.js';
+import { connect } from './mobxs-connect-mixin.js';
 import { ActivityEditorMixin } from './d2l-activity-editor-mixin.js';
+import { MobxLitElement } from '@adobe/lit-mobx';
 
 const baseUrl = import.meta.url;
 
-class ActivityVisibilityEditor extends connect(ActivityEditorMixin(LocalizeMixin(LitElement))) {
+class ActivityVisibilityEditor extends connect(ActivityEditorMixin(LocalizeMixin(MobxLitElement))) {
+
+	static storeName = storeName;
 
 	static get properties() {
 		return {
 			disabled: { type: Boolean },
-			_isDraft: { type: Boolean },
-			_entity: { type: Object }
+			_activity: { type: Object }
 		};
 	}
 
@@ -41,27 +43,11 @@ class ActivityVisibilityEditor extends connect(ActivityEditorMixin(LocalizeMixin
 	constructor() {
 		super();
 		this._isDraft = false;
-		this._storeName = storeName;
 		this.disabled = false;
 	}
 
-	get _reducers() {
-		return reducer;
-	}
-
-	_mapStateToProps(state) {
-		const activity = selectActivity(state, this.href, this.token);
-		return activity ? {
-			_isDraft: activity.isDraft,
-			_entity: selectActivityEntity(state, this.href, this.token)
-		} : {};
-	}
-
-	_mapDispatchToProps(dispatch) {
-		return {
-			_fetchActivity: () => dispatch(actions.fetchActivity(this.href, this.token)),
-			_updateVisibility: () => dispatch(actions.updateVisibility({href: this.href, token: this.token, isDraft: !this._isDraft}))
-		}
+	_updateVisibility() {
+		this._activity.setDraftStatus(!this._activity.isDraft);
 	}
 
 	updated(changedProperties) {
@@ -69,23 +55,28 @@ class ActivityVisibilityEditor extends connect(ActivityEditorMixin(LocalizeMixin
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
-			this._fetchActivity(this.href, this.token);
+			this._activity = this.store.fetchActivity(this.href, this.token);
 		}
 	}
 
 	render() {
-		if (!this._entity) {
+		if (!this._activity) {
 			return html``;
 		}
 
-		const switchVisibilityText = (this._isDraft ? this.localize('hidden') : this.localize('visible'));
-		const icon = (this._isDraft ? 'tier1:visibility-hide' : 'tier1:visibility-show');
-		const switchEnabled = this._entity.canEditDraft() && !this.disabled
+		const {
+			isDraft,
+			canEditDraft
+		} = this._activity;
+
+		const switchVisibilityText = (isDraft ? this.localize('hidden') : this.localize('visible'));
+		const icon = (isDraft ? 'tier1:visibility-hide' : 'tier1:visibility-show');
+		const switchEnabled = canEditDraft && !this.disabled
 			? html`
 					<d2l-switch
 						aria-label="${switchVisibilityText}"
 						label-right
-						.checked=${!this._isDraft}
+						.checked=${!isDraft}
 						@click="${this._updateVisibility}">
 							<div class="d2l-label-text">
 								<d2l-icon icon=${icon}></d2l-icon>

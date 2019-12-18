@@ -4,6 +4,8 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { ProviderMixin } from './instance-provider-mixin.js';
 import { store } from './state/store.js';
 import activityStoreName from './state/store-name.js';
+import { ActivityStore } from './state-mobxs/activity-store.js';
+import activityStoreNameMobx from './state-mobxs/store-name.js';
 
 class ActivityEditorContainer extends ProviderMixin(LitElement) {
 
@@ -31,6 +33,7 @@ class ActivityEditorContainer extends ProviderMixin(LitElement) {
 	constructor() {
 		super();
 		this.provideInstance(activityStoreName, store);
+		this.provideInstance(activityStoreNameMobx, new ActivityStore());
 		this.addEventListener('d2l-activity-editor-connected', this._registerEditor);
 		this.addEventListener('d2l-activity-editor-save', this._saveEditor)
 		this._editors = new Set();
