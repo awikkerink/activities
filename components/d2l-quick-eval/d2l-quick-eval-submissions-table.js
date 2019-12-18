@@ -327,7 +327,10 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 	}
 
 	_handleNameFocusOnPageForwardBack() {
-		if (((window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) || (this.returningToQuickEval === true)) && !this.showLoadingSkeleton && this._data.length > 0) {
+		const isComingFromBrowserButton = (window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD);
+		const isTableReady = !this.showLoadingSkeleton && this._data.length > 0;
+
+		if ((isComingFromBrowserButton || this.returningToQuickEval) && isTableReady) {
 			this.async(() => {
 				const firstNameLink = this.shadowRoot.querySelector('.d2l-quick-eval-submissions-table-name-link');
 				if (firstNameLink) {
