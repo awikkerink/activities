@@ -21,7 +21,6 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalRefreshBehaviorImpl = {
 	},
 
 	refresh: function() {
-		console.log(this);
 		const selfHref = this._getSelfLink(this.entity);
 
 		if (selfHref) {
