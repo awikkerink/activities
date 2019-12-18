@@ -12,6 +12,7 @@ import 'd2l-common/components/d2l-hm-search/d2l-hm-search.js';
 import 'd2l-alert/d2l-alert.js';
 import './d2l-quick-eval-search-results-summary-container.js';
 import './behaviors/d2l-quick-eval-telemetry-behavior.js';
+import './behaviors/d2l-quick-eval-refresh-behavior.js';
 
 class D2LQuickEvalSubmissions extends mixinBehaviors(
 	[
@@ -19,7 +20,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		D2L.PolymerBehaviors.QuickEval.D2LHMSortBehaviour,
 		D2L.PolymerBehaviors.QuickEval.TelemetryBehaviorImpl,
 		D2L.PolymerBehaviors.QuickEval.D2LHMFilterBehaviour,
-		D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour
+		D2L.PolymerBehaviors.QuickEval.D2LHMSearchBehaviour,
+		D2L.PolymerBehaviors.QuickEval.D2LQuickEvalRefreshBehavior
 	],
 	QuickEvalLogging(QuickEvalLocalize(PolymerElement))
 ) {
@@ -547,28 +549,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			this._loadingMore = false;
 			this._handleFullLoadFailure();
 		}.bind(this));
-	}
-
-	constructor() {
-		super();
-		this._boundRefresh = this.refresh.bind(this);
-	}
-
-	connectedCallback() {
-		super.connectedCallback();
-		window.addEventListener('d2l-quick-eval-refresh-submissions', this._boundRefresh);
-	}
-
-	disconnectedCallback() {
-		super.disconnectedCallback();
-		window.removeEventListener('d2l-quick-eval-refresh-submissions', this._boundRefresh);
-	}
-
-	refresh() {
-		const selfHref = this._getSelfLink(this.entity);
-		if (selfHref) {
-			window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true).then(x => this.entity = x.entity);
-		}
 	}
 }
 
