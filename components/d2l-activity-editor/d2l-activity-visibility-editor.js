@@ -55,7 +55,7 @@ class ActivityVisibilityEditor extends connect(ActivityEditorMixin(LocalizeMixin
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
-			this._activity = this.store.fetchActivity(this.href, this.token, this._autoSave);
+			this._activity = this.store.fetchActivity(this.href, this.token, this.autoSave);
 		}
 	}
 
@@ -66,7 +66,8 @@ class ActivityVisibilityEditor extends connect(ActivityEditorMixin(LocalizeMixin
 
 		const {
 			isDraft,
-			canEditDraft
+			canEditDraft,
+			dueDate
 		} = this._activity;
 
 		const switchVisibilityText = (isDraft ? this.localize('hidden') : this.localize('visible'));
@@ -80,14 +81,14 @@ class ActivityVisibilityEditor extends connect(ActivityEditorMixin(LocalizeMixin
 						@click="${this._updateVisibility}">
 							<div class="d2l-label-text">
 								<d2l-icon icon=${icon}></d2l-icon>
-								${switchVisibilityText}
+								${switchVisibilityText}-${dueDate}
 							</div>
 					</d2l-switch>
 				`
 			: html`
 					<div d2l-label-text>
 						<d2l-icon icon=${icon}></d2l-icon>
-						${switchVisibilityText}
+						${switchVisibilityText}-${dueDate}
 					</div>
 				`;
 

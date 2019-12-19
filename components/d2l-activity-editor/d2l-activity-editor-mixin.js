@@ -16,13 +16,14 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 			/**
 			 * Entity object that extends the Entity class.
 			 */
+			autoSave: { type: Boolean },
 			_entity: { type: Object }
 		};
 	}
 
 	constructor() {
 		super();
-		this._autoSave = true;
+		this.autoSave = true;
 	}
 
 	async save() {}
@@ -36,7 +37,7 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 		});
 		this.dispatchEvent(event);
 		if (event.defaultPrevented) {
-			this._autoSave = false;
+			this.autoSave = false;
 		}
 	}
 

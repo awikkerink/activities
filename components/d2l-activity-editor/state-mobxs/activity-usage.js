@@ -1,6 +1,6 @@
 import { observable, action, runInAction } from 'mobx';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
-import fetchEntity from './fetch-entity.js';
+import { entityFactory, dispose } from 'siren-sdk/src/es6/EntityFactory.js';
 
 export class ActivityUsage {
 
@@ -22,42 +22,43 @@ export class ActivityUsage {
 		this.href = href;
 		this.token = token;
 		this.autoSave = autoSave;
-		this.fetchActivity();
+		this._fetchEntity();
 	}
 
-	async fetchEntity(href, token) {
-		let entity = await window.D2L.Siren.EntityStore.get(href, token);
-		if (!entity) {
-			const fetched = await window.D2L.Siren.EntityStore.fetch(href, token);
-			if (!fetched || !fetched.entity) {
-				throw new Error('Cannot load entity');
+	async _fetchEntity() {
+		dispose(this._entity);
+
+		entityFactory(ActivityUsageEntity, this.href, this.token, (entity, error) => {
+			if (entity) {
+				const newEntity = this.autoSave || !this._entity ? entity : this._entity;
+				if (newEntity !== this._entity) {
+					this.loadActivity(newEntity);
+				}
+			} else {
+				// TODO handle error
 			}
-			entity = fetched.entity;
-		}
-		return entity;
+		});
 	}
 
 	@action
-	async fetchActivity() {
+	async loadActivity(entity) {
 		try {
-			const entity = await fetchEntity(this.href, this.token, this.autoSave);
-			this.activityUsage = new ActivityUsageEntity(entity, this.token, { remove: () => { } });
-
-			const canEditDueDate = await this.activityUsage.canEditDueDate();
-			const canEditStartDate = await this.activityUsage.canEditStartDate();
-			const canEditEndDate = await this.activityUsage.canEditEndDate();
+			this._entity = entity;
+			const canEditDueDate = await this._entity.canEditDueDate();
+			const canEditStartDate = await this._entity.canEditStartDate();
+			const canEditEndDate = await this._entity.canEditEndDate();
 
 			runInAction(() => {
-				this.isDraft = this.activityUsage.isDraft();
-				this.canEditDraft = this.activityUsage.canEditDraft();
+				this.isDraft = this._entity.isDraft();
+				this.canEditDraft = this._entity.canEditDraft();
 
-				this.dueDate = this.activityUsage.dueDate();
+				this.dueDate = this._entity.dueDate();
 				this.canEditDueDate = canEditDueDate;
 
-				this.startDate = this.activityUsage.startDate();
+				this.startDate = this._entity.startDate();
 				this.canEditStartDate = canEditStartDate;
 
-				this.endDate = this.activityUsage.endDate();
+				this.endDate = this._entity.endDate();
 				this.canEditEndDate = canEditEndDate;
 
 				this.loaded = true;
@@ -68,30 +69,62 @@ export class ActivityUsage {
 		}
 	}
 
-	@action setDraftStatus(isDraft) {
+	@action
+	async setDraftStatus(isDraft) {
+		if (isDraft === this.isDraft) {
+			return;
+		}
+
 		this.isDraft = isDraft;
+		if (this.autoSave) {
+			await this._entity.setDraftStatus(isDraft);
+		}
 	}
 
-	@action setDueDate(date) {
+	@action
+	async setDueDate(date) {
+		if (date === this.dueDate) {
+			return;
+		}
+
 		this.dueDate = date;
+		if (this.autoSave) {
+			await this._entity.setDueDate(date);
+		}
 	}
 
-	@action setStartDate(date) {
+	@action
+	async setStartDate(date) {
+		if (date === this.startDate) {
+			return;
+		}
+
 		this.startDate = date;
+		if (this.autoSave) {
+			await this._entity.setStartDate(date);
+		}
 	}
 
-	@action setEndDate(date) {
+	@action
+	async setEndDate(date) {
+		if (date === this.endDate) {
+			return;
+		}
+
 		this.endDate = date;
+		if (this.autoSave) {
+			await this._entity.setEndDate(date);
+		}
 	}
 
 	@action
 	async saveActivity() {
-		await this.activityUsage.save({
+		await this._entity.save({
 			dueDate: this.dueDate,
 			startDate: this.startDate,
 			endDate: this.endDate,
 			isDraft: this.isDraft
 		});
-		await this.fetchActivity();
+		this._fetchEntity();
 	}
 }

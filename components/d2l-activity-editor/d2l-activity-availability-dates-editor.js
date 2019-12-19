@@ -52,7 +52,7 @@ class ActivityAvailabilityDatesEditor extends connect(ActivityEditorMixin(Locali
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
-			this._activity = this.store.fetchActivity(this.href, this.token);
+			this._activity = this.store.fetchActivity(this.href, this.token, this.autoSave);
 		}
 	}
 

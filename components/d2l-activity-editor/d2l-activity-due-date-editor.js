@@ -47,7 +47,7 @@ class ActivityDueDateEditor extends connect(ActivityEditorMixin(LocalizeMixin(Mo
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
-			this._activity = this.store.fetchActivity(this.href, this.token);
+			this._activity = this.store.fetchActivity(this.href, this.token, this.autoSave);
 		}
 	}
 
