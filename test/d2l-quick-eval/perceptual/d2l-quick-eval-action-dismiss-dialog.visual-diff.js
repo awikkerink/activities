@@ -17,24 +17,43 @@ describe('d2l-quick-eval-action-dismiss-dialog', function() {
 
 	after(() => browser.close());
 
-	function open() {
-		return page.evaluate(async() => {
-			const dialog = document.querySelector('#default d2l-quick-eval-action-dismiss-dialog');
-			const d2lDialog = dialog.shadowRoot.querySelector('d2l-dialog');
-			dialog.open();
-			// This seems to allow us to delay until after the animations finish.
-			await d2lDialog.updateComplete;
-		});
+	async function waitForOpen(element) {
+		await page.evaluate((element) => {
+			return new Promise((resolve) => {
+				const el = document.querySelector(element);
+				const onEnd = function() {
+					el.removeEventListener('d2l-dialog-open', onEnd);
+					resolve();
+				};
+				el.addEventListener('d2l-dialog-open', onEnd);
+				el.open();
+			});
+		}, element);
+	}
+
+	async function waitForClose(element) {
+		await page.evaluate((element) => {
+			return new Promise((resolve) => {
+				const el = document.querySelector(element);
+				const onEnd = function() {
+					el.removeEventListener('d2l-dialog-close', onEnd);
+					resolve();
+				};
+				el.addEventListener('d2l-dialog-close', onEnd);
+				el.shadowRoot.querySelector('d2l-dialog')._close();
+			});
+		}, element);
 	}
 
 	it('default', async function() {
-		await open();
+		await waitForOpen('#default d2l-quick-eval-action-dismiss-dialog');
 		const rect = await visualDiff.getRect(page, '#default');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
+		await waitForClose('#default d2l-quick-eval-action-dismiss-dialog');
 	});
 
 	it('forever', async function() {
-		await open();
+		await waitForOpen('#default d2l-quick-eval-action-dismiss-dialog');
 		await page.evaluate(() => {
 			const dialog = document.querySelector('#default d2l-quick-eval-action-dismiss-dialog');
 			const forever = dialog.shadowRoot.querySelectorAll('input')[1];
@@ -42,10 +61,11 @@ describe('d2l-quick-eval-action-dismiss-dialog', function() {
 		});
 		const rect = await visualDiff.getRect(page, '#default');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
+		await waitForClose('#default d2l-quick-eval-action-dismiss-dialog');
 	});
 
 	it('specific-date', async function() {
-		await open();
+		await waitForOpen('#default d2l-quick-eval-action-dismiss-dialog');
 		await page.evaluate(() => {
 			const dialog = document.querySelector('#default d2l-quick-eval-action-dismiss-dialog');
 			const specDate = dialog.shadowRoot.querySelectorAll('input')[0];
@@ -53,5 +73,6 @@ describe('d2l-quick-eval-action-dismiss-dialog', function() {
 		});
 		const rect = await visualDiff.getRect(page, '#default');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
+		await waitForClose('#default d2l-quick-eval-action-dismiss-dialog');
 	});
 });
