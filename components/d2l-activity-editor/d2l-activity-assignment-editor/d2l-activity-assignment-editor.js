@@ -24,7 +24,8 @@ class AssignmentEditor extends ProviderMixin(connect(PendingContainerMixin(Activ
 			/**
 			 * API endpoint for determining whether a domain is trusted
 			 */
-			trustedSitesEndpoint: { type: String }
+			trustedSitesEndpoint: { type: String },
+			_initialLoadComplete: { type: Boolean }
 		};
 	}
 
@@ -77,6 +78,12 @@ class AssignmentEditor extends ProviderMixin(connect(PendingContainerMixin(Activ
 		}
 	}
 
+	_onPendingResolved() {
+		// Once we've loaded the page once, this prevents us from ever showing
+		// the "Loading..." div again, even if page components are (re)loading
+		this._initialLoadComplete = true;
+	}
+
 	render() {
 		if (!this._entity) {
 			return html``;
@@ -86,10 +93,11 @@ class AssignmentEditor extends ProviderMixin(connect(PendingContainerMixin(Activ
 			<d2l-activity-editor
 				.href="${this.href}"
 				.token="${this.token}"
-				?loading="${this._hasPendingChildren}"
+				?loading="${this._hasPendingChildren && !this._initialLoadComplete}"
 				unfurlEndpoint="${this.unfurlEndpoint}"
 				trustedSitesEndpoint="${this.trustedSitesEndpoint}"
-				@d2l-request-provider="${this._onRequestProvider}">
+				@d2l-request-provider="${this._onRequestProvider}"
+				@d2l-pending-resolved="${this._onPendingResolved}">
 
 				<d2l-activity-assignment-editor-detail
 					href="${this._entity.assignmentHref()}"

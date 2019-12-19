@@ -434,6 +434,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		const actionDialog = this.shadowRoot.querySelector('d2l-quick-eval-action-dismiss-dialog');
 
 		return actionDialog.open().then(action => {
+			if (!action) return;
 
 			const { selectedRadio, date } = JSON.parse(action);
 			let dismissAction;
