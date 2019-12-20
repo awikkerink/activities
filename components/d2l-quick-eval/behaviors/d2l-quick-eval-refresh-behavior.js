@@ -1,3 +1,5 @@
+import 'd2l-polymer-siren-behaviors/store/entity-behavior.js';
+
 window.D2L = window.D2L || {};
 window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
 window.D2L.PolymerBehaviors.QuickEval = window.D2L.PolymerBehaviors.QuickEval || {};
@@ -24,7 +26,7 @@ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalRefreshBehaviorImpl = {
 		const selfHref = this._getSelfLink(this.entity);
 
 		if (selfHref) {
-			window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true).then(response => {
+			return window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true).then(response => {
 				this.entity = response.entity;
 			});
 		}
