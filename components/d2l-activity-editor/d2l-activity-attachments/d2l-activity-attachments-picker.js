@@ -184,7 +184,7 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 			const quicklinkUrl = `/d2l/api/lp/unstable/${this._orgUnitId}/quickLinks/${event.m_typeKey}/${event.m_id}`;
 			const response = await fetch(quicklinkUrl);
 			const json = await response.json();
-			this.wrapSaveAction(superEntity.addLinkAttachment(event.m_title, json.QuickLink));
+			this.wrapSaveAction(superEntity.addLinkAttachment(event.m_title, json.QuickLinkTemplate));
 		});
 	}
 
