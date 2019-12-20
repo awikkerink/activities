@@ -6,6 +6,7 @@ import 'd2l-alert/d2l-alert-toast.js';
 import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
 import './d2l-quick-eval-ellipsis-dismiss-dialog.js';
 import '../behaviors/d2l-quick-eval-siren-helper-behavior.js';
+import '../behaviors/d2l-quick-eval-refresh-behavior.js';
 
 /**
  * @customElement
@@ -14,7 +15,9 @@ import '../behaviors/d2l-quick-eval-siren-helper-behavior.js';
 
 // This is being made as a Polymer component so that we can take advantage of the helper functions in D2LQuickEvalSirenHelperBehavior.
 class D2LQuickEvalDismissedActivities extends mixinBehaviors(
-	[ D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior
+	[
+		D2L.PolymerBehaviors.QuickEval.D2LQuickEvalSirenHelperBehavior,
+		D2L.PolymerBehaviors.QuickEval.D2LQuickEvalRefreshBehavior
 	],
 	QuickEvalLogging(QuickEvalLocalize(PolymerElement))
 ) {
@@ -180,9 +183,7 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 					this.shadowRoot.querySelector('.d2l-quick-eval-dismissed-list-success').open = true;
 				}
 			}).then(() => {
-				window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh-activities'));
-				window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh-submissions'));
-				window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh-dismissed'));
+				window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh'));
 			});
 		}
 	}
@@ -196,28 +197,6 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 			this._loading = false;
 			this._handleLoadFailure();
 		});
-	}
-
-	constructor() {
-		super();
-		this._boundRefresh = this.refresh.bind(this);
-	}
-
-	connectedCallback() {
-		super.connectedCallback();
-		window.addEventListener('d2l-quick-eval-refresh-dismissed', this._boundRefresh);
-	}
-
-	disconnectedCallback() {
-		super.disconnectedCallback();
-		window.removeEventListener('d2l-quick-eval-refresh-dismissed', this._boundRefresh);
-	}
-
-	refresh() {
-		const selfHref = this._getSelfLink(this.entity);
-		if (selfHref) {
-			window.D2L.Siren.EntityStore.fetch(selfHref, this.token, true);
-		}
 	}
 }
 window.customElements.define('d2l-quick-eval-dismissed-activities', D2LQuickEvalDismissedActivities);
