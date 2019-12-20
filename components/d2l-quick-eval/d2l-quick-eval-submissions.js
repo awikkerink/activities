@@ -137,6 +137,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				_health="[[_health]]"
 				show-no-submissions="[[_showNoSubmissions]]"
 				show-no-criteria="[[_showNoCriteria]]"
+				returning-to-quick-eval="[[returningToQuickEval]]"
 				on-d2l-quick-eval-submissions-table-load-more="_loadMore"
 				on-d2l-quick-eval-submissions-table-sort-requested="_handleSortRequested">
 			</d2l-quick-eval-submissions-table>
@@ -252,6 +253,10 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			_initialLoad: {
 				type: Boolean,
 				value: true
+			},
+			returningToQuickEval: {
+				type: Boolean,
+				value: false
 			}
 		};
 	}
