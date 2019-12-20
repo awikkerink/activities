@@ -1,6 +1,6 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { repeat } from 'lit-html/directives/repeat';
-import { heading1Styles, heading4Styles, bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
+import { heading1Styles, heading4Styles, bodyCompactStyles, labelStyles} from '@brightspace-ui/core/components/typography/styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
 import { classes as organizationClasses } from 'siren-sdk/src/organizations/OrganizationEntity.js';
@@ -162,23 +162,45 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				justify-content: space-between;
 			}
 			.d2l-activity-collection-body {
-				padding: 15px 6px;
-				background-color: var(--d2l-color-regolith);
-				height: 100%;
+				margin: auto;
+				max-width: 1230px;
+			}
+			.d2l-activity-collection-body-content {
+				max-width: 820px;
+				margin: 0 0.3rem;
+			}
+			.d2l-activity-collection-list-actions {
+				align-items: baseline;
+				display: flex;
+				justify-content: space-between;
+				margin: 0.9rem 0;
+				max-width: 820px;
+			}
+			.d2l-activity-collection-description {
+				margin-bottom: 0.95rem;
 			}
 			.d2l-activity-collection-header {
+				background: white;
 				box-shadow: inset 0 -1px 0 0 var(--d2l-color-gypsum);
-				padding: 15px 30px;
+				padding: 0.75rem 1.5rem 0 1.5rem;
+			}
+			.d2l-activity-collection-header-content {
+				box-sizing: border-box;
+				margin: 0 auto;
+				max-width: 1230px;
+				padding: 0 0.3rem;
 				overflow:hidden;
 			}
+			.d2l-activity-collection-header-col1 {
+				max-width: 600px;
+			}
 			.d2l-activity-collection-title-header {
-				margin: 6px 0px 0px 0px;
+				margin: 9px 0px 6px 0;
 				min-height: 52px;
-				padding: 0px 6px 6px 0px;
 			}
 			.d2l-activity-collection-toggle-container {
-				display: flex;
 				align-self: flex-start;
+				display: flex;
 				margin: 0.55rem 1.5rem;
 			}
 			.d2l-activity-visbility-label {
@@ -188,10 +210,10 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				min-height: 500px;
 			}
 			.d2l-add-activity-dialog-header {
-				display: flex;
 				align-items: baseline;
-				padding-bottom: 10px;
+				display: flex;
 				justify-content: space-between;
+				padding-bottom: 10px;
 			}
 			.d2l-add-activity-dialog-load-more {
 				padding-top: 10px;
@@ -203,6 +225,9 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			.d2l-list-item-secondary {
 				color: var(--d2l-color-olivine-minus-1);
 				font-size: 14px;
+			}
+			.d2l-activity-collection-sub-header {
+				margin: 0;
 			}
 		` ];
 	}
@@ -221,42 +246,60 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			`
 		);
 
+		return html`
+			<div class="d2l-activity-collection-header">
+				<div class="d2l-activity-collection-header-content">
+					<div class="d2l-heading-4 d2l-activity-collection-sub-header">Edit Learning Path</div>
+					<div class="d2l-activity-collection-base-info">
+						<div class="d2l-activity-collection-header-col1">
+							<h1 class="d2l-heading-1 d2l-activity-collection-title-header">
+								<d2l-labs-edit-in-place size="49" placeholder="Untitled Learning Path" maxlength="128" value="${this._name}" @change=${this._titleChanged}></d2l-labs-edit-in-place>
+							</h1>
+							<div class="d2l-body-compact d2l-activity-collection-description">
+								<d2l-labs-edit-in-place size="49" placeholder="Enter a description" maxlength="280" value="${this._description}" @change=${this._descriptionChanged}></d2l-labs-edit-in-place>
+							</div>
+						</div>
+						<d2l-activity-visibility-editor class="d2l-activity-collection-toggle-container" ?disabled="${!this._items.length}" .href="${this.href}" .token="${this.token}"></d2l-activity-visibility-editor>
+					</div>
+				</div>
+			</div>
+			<div class="d2l-activity-collection-body">
+				<div class="d2l-activity-collection-body-content">
+					<div class="d2l-activity-collection-list-actions">
+						<d2l-button @click="${this.open}" primary>Add Activity</d2l-button>
+						<div class="d2l-body-compact">${this._items.length} Activities</div>
+					</div>
+					<div class="d2l-activity-collection-activities">
+						<d2l-list>${items}</d2l-list>
+					</div>
+				</div>
+			</div>
+			${this._renderCandidates()}
+
+		`;
+	}
+
+	_renderCandidates() {
 		const candidates = repeat(this._candidateItems, (candidate) => candidate.item.getActionState(), candidate =>
 			html`
 			<d2l-list-item ?selectable=${!candidate.alreadyAdded} key=${candidate.item.getActionState()}>
 				<d2l-organization-image href=${candidate.organization.self()} slot="illustration"></d2l-organization-image>
 				<d2l-list-item-content>
 					${candidate.organization.name()}
-					<div slot="secondary" class="d2l-list-item-secondary">${candidate.alreadyAdded ? html`Already added` : html``}</div>
+					<div slot="secondary" class="d2l-list-item-secondary">${candidate.alreadyAdded ? html`Already added` : null}</div>
 				<d2l-list-item-content>
 			</d2l-list-item>
 			`
 		);
 
-		const selectedNav = this._selectionCount > 0 ?
-			html`${this._selectionCount} selected. <d2l-link @click=${this.clearAllSelected}>Clear Selection</d2l-link>` :
-			html``;
+		const selectedNav = this._selectionCount > 0
+			? html`${this._selectionCount} selected. <d2l-link @click=${this.clearAllSelected}>Clear Selection</d2l-link>`
+			: null;
 
 		return html`
-			<div class="d2l-activity-collection-header">
-				<div>Edit Learning Path</div>
-				<div class="d2l-activity-collection-base-info">
-					<div>
-						<h1 class="d2l-heading-1 d2l-activity-collection-title-header">
-							<d2l-labs-edit-in-place size="49" placeholder="Untitled Learning Path" maxlength="128" value="${this._name}" @change=${this._titleChanged}></d2l-labs-edit-in-place>
-						</h1>
-						<div class="d2l-body-compact">
-							<d2l-labs-edit-in-place size="49" placeholder="Enter a description" maxlength="280" value="${this._description}" @change=${this._descriptionChanged}></d2l-labs-edit-in-place>
-						</div>
-					</div>
-					<d2l-activity-visibility-editor class="d2l-activity-collection-toggle-container" ?disabled="${!this._items.length}" .href="${this.href}" .token="${this.token}"></d2l-activity-visibility-editor>
-				</div>
-			</div>
-			<div class="d2l-activity-collection-body">
-				<d2l-button @click="${this.open}" primary>Add Activity</d2l-button>
 				<div class="dialog-div">
 				<d2l-dialog id="dialog" title-text="Browse Activity Library" @d2l-dialog-close=${this.clearDialog}>
-				  <div class="d2l-add-activity-dialog">
+					<div class="d2l-add-activity-dialog">
 						<div class="d2l-add-activity-dialog-header">
 							<div>
 								<d2l-input-search label="Search" @d2l-input-search-searched=${this.handleSearch}></d2l-input-search>
@@ -269,14 +312,10 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 						</div>
 					</div>
 
-				  <d2l-button slot="footer" primary dialog-action="add" @click=${this.addActivities}>Add</d2l-button>
-				  <d2l-button slot="footer" dialog-action>Cancel</d2l-button>
+					<d2l-button slot="footer" primary dialog-action="add" @click=${this.addActivities}>Add</d2l-button>
+					<d2l-button slot="footer" dialog-action>Cancel</d2l-button>
 				</d2l-dialog>
-				</div>
-				<div class="d2l-activity-collection-activities">
-					<d2l-list>${items}</d2l-list>
-				</div>
-			</div>
+
 		`;
 	}
 
