@@ -182,7 +182,6 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			.d2l-activity-collection-header {
 				background: white;
 				box-shadow: inset 0 -1px 0 0 var(--d2l-color-gypsum);
-				overflow:hidden;
 				padding: 0.75rem 1.5rem 0 1.5rem;
 			}
 			.d2l-activity-collection-header-content {
@@ -190,6 +189,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				margin: 0 auto;
 				max-width: 1230px;
 				padding: 0 0.3rem;
+				overflow:hidden;
 			}
 			.d2l-activity-collection-header-col1 {
 				max-width: 600px;
