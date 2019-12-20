@@ -156,8 +156,9 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 		const callback = () => {
 			const files = D2L.LP.Web.UI.Desktop.MasterPages.Dialog.FileSelectorDialog.GetFiles(dialogId);
 			for (const file of files) {
+				const fileSystemType = file.m_fileSystemType;
 				const fileId = file.m_id;
-				this.wrapSaveAction(super._entity.addTempFileAttachment(fileId));
+				this.wrapSaveAction(super._entity.addFileAttachment(fileSystemType, fileId));
 			}
 		};
 
