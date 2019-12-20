@@ -11,6 +11,7 @@ import { SaveStatusMixin } from '../save-status-mixin';
 class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
 	static get properties() {
 		return {
+			_canAddFile: { type: Boolean },
 			_canAddLink: { type: Boolean },
 			_canAddGoogleDriveLink: { type: Boolean },
 			_canAddOneDriveLink: { type: Boolean }
@@ -61,7 +62,8 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 		}
 
 		if (entity) {
-			this._canAddLink  = entity.canAddLinkAttachment();
+			this._canAddFile = entity.canAddFileAttachment();
+			this._canAddLink = entity.canAddLinkAttachment();
 			this._canAddGoogleDriveLink = entity.canAddGoogleDriveLinkAttachment();
 			this._canAddOneDriveLink = entity.canAddOneDriveLinkAttachment();
 		}
@@ -69,13 +71,16 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 		super._entity = entity;
 	}
 
-	_openDialog(opener, settings, callback) {
+	get _orgUnitId() {
 		const match = this.href.match(/\.(com|d2l)\/(\d+)\//);
 		if (!match || match.length < 3) {
-			return;
+			return -1;
 		}
 		const orgUnitId = match[2];
+		return orgUnitId;
+	}
 
+	_openDialog(opener, settings, callback) {
 		const params = new URLSearchParams();
 		params.set('initialViewType', 'Items');
 		params.set('canChangeType', false); // Hides the top toolbar which allows changing the dialog picker type
@@ -85,7 +90,7 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 			params.set(setting, settings[setting]);
 		}
 
-		const location = `/d2l/lp/quicklinks/manage/${orgUnitId}/CreateDialog?${params.toString()}`;
+		const location = `/d2l/lp/quicklinks/manage/${this._orgUnitId}/CreateDialog?${params.toString()}`;
 
 		const event = D2L.LP.Web.UI.Common.MasterPages.Dialog.Open(
 			opener,
@@ -93,8 +98,74 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 		);
 
 		event.AddListener(callback);
+	}
 
-		return orgUnitId;
+	_launchAddFileDialog() {
+		const opener = this.shadowRoot.querySelector('#add-file-button');
+
+		const params = new URLSearchParams();
+		params.set('ou', this._orgUnitId);
+		params.set('af', 'mycomputer,oufiles,sharedfiles,mylocker,grouplocker'); // Area Filters
+		params.set('am', '0'); // Allow Multiple files, 0 = don't allow
+		params.set('fsc', '0'); // Force Save to Course files, 0 = don't force
+		params.set('asc', '0'); // Allow Save to Course files, 0 = don't allow
+		params.set('mfs', '0'); // Max File Size, 0 = don't set (use system setting)
+		params.set('afid', '0'); // Ask For Image Description, 0 = don't ask
+		params.set('uih', ''); // Upload Inline Help langterm, '' = don't show any upload help text (below file picker in My Computer)
+		params.set('area', ''); // File Area to show by default, '' = list of areas (rather than specific view e.g. My Computer)
+		params.set('f', ''); // Filetype, '' = allow all file types
+		params.set('path', ''); // Default path for uploads, '' = org unit's files
+		const location = new D2L.LP.Web.Http.UrlLocation(`/d2l/common/dialogs/file/main.d2l?${params.toString()}`);
+
+		const buttons = [
+			{
+				Key: 'save',
+				Text: this.localize('save'),
+				ResponseType: 1, // D2L.Dialog.ResponseType.Positive
+				IsPrimary: true,
+				IsEnabled: true,
+				Param: 'next' // key for fileArea.js
+			},
+			{
+				Text: this.localize('back'),
+				ResponseType: 2, // D2L.Dialog.ResponseType.Negative
+				IsPrimary: false,
+				IsEnabled: true,
+				Param: 'back' // key for fileArea.js
+			}
+		];
+
+		const dialog = D2L.LP.Web.UI.Legacy.MasterPages.Dialog.Open.bind(
+			this,
+			opener,
+			location,
+			'DialogCallback', // srcCallback
+			'', // resizeCallback
+			'files', // responseDataKey
+			720, // width
+			1280, // height
+			this.localize('closeFilePickerDialog'), // closeText
+			buttons, // buttons
+			false // forceTriggerOnCancel
+		);
+
+		const dialogId = {
+			GetValue: () => 'AttachmentPickerDialog'
+		};
+
+		const callback = () => {
+			const files = D2L.LP.Web.UI.Desktop.MasterPages.Dialog.FileSelectorDialog.GetFiles(dialogId);
+			for (const file of files) {
+				const fileId = file.m_id;
+				this.wrapSaveAction(super._entity.addTempFileAttachment(fileId));
+			}
+		};
+
+		D2L.LP.Web.UI.Desktop.MasterPages.Dialog.FileSelectorDialog.OpenDialog(
+			dialog,
+			dialogId,
+			callback
+		);
 	}
 
 	_launchAddQuicklinkDialog() {
@@ -108,8 +179,8 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 		// Required for the async handler below to work in Edge
 		const superEntity = super._entity;
 
-		const orgUnitId = this._openDialog(opener, settings, async event => {
-			const quicklinkUrl = `/d2l/api/lp/unstable/${orgUnitId}/quickLinks/${event.m_typeKey}/${event.m_id}`;
+		this._openDialog(opener, settings, async event => {
+			const quicklinkUrl = `/d2l/api/lp/unstable/${this._orgUnitId}/quickLinks/${event.m_typeKey}/${event.m_id}`;
 			const response = await fetch(quicklinkUrl);
 			const json = await response.json();
 			this.wrapSaveAction(superEntity.addLinkAttachment(event.m_title, json.QuickLink));
@@ -160,6 +231,18 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 	render() {
 		return html`
 			<div id="button-container">
+				<d2l-button-icon
+					id="add-file-button"
+					icon="d2l-tier1:upload"
+					?hidden="${!this._canAddFile}"
+					@click="${this._launchAddFileDialog}">
+				</d2l-button-icon>
+				<d2l-tooltip
+					for="add-file-button"
+					.boundary="${this._tooltipBoundary}">
+					${this.localize('addFile')}
+				</d2l-tooltip>
+
 				<d2l-button-icon
 					id="add-quicklink-button"
 					icon="d2l-tier1:quicklink"
