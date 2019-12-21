@@ -1,19 +1,22 @@
 import '@brightspace-ui/core/components/button/button';
 import '@brightspace-ui/core/components/colors/colors';
 import 'd2l-tooltip/d2l-tooltip';
-import { css, html, LitElement } from 'lit-element/lit-element';
-import { AttachmentCollectionEntity } from 'siren-sdk/src/activities/AttachmentCollectionEntity';
-import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { getLocalizeResources } from '../localization.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
-import { SaveStatusMixin } from '../save-status-mixin';
+import { css, html } from 'lit-element/lit-element';
+import storeName from './state-mobxs/store-name.js';
+import { connect } from '../mobxs-connect-mixin.js';
+import { ActivityEditorMixin } from '../d2l-activity-editor-mixin.js';
+import { MobxLitElement } from '@adobe/lit-mobx';
 
-class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
+
+class ActivityAttachmentsPicker extends connect(ActivityEditorMixin(LocalizeMixin(MobxLitElement))) {
+
+	static storeName = storeName;
+
 	static get properties() {
 		return {
-			_canAddLink: { type: Boolean },
-			_canAddGoogleDriveLink: { type: Boolean },
-			_canAddOneDriveLink: { type: Boolean }
+			_collection: { type: Object }
 		};
 	}
 
@@ -29,6 +32,8 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 				border: 1px solid var(--d2l-color-mica);
 				padding: 12px;
 			}
+
+			:host([hidden]) { display: none; }
 
 			.button-container {
 				display: flex;
@@ -47,26 +52,11 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 
 	constructor() {
 		super();
-		this._setEntityType(AttachmentCollectionEntity);
 
 		this._tooltipBoundary = {
 			left: 20 + 12, // padding-left applied to d2l-activity-attachments-picker + padding-left of d2l-button-icon
 			right: 0
 		};
-	}
-
-	set _entity(entity) {
-		if (!this._entityHasChanged(entity)) {
-			return;
-		}
-
-		if (entity) {
-			this._canAddLink  = entity.canAddLinkAttachment();
-			this._canAddGoogleDriveLink = entity.canAddGoogleDriveLinkAttachment();
-			this._canAddOneDriveLink = entity.canAddOneDriveLinkAttachment();
-		}
-
-		super._entity = entity;
 	}
 
 	_openDialog(opener, settings, callback) {
@@ -158,12 +148,22 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 	}
 
 	render() {
+		if (!this._collection) {
+			return html``;
+		}
+
+		const {
+			canAddLink,
+			canAddGoogleDriveLink,
+			canAddOneDriveLink,
+		} = this._collection;
+
 		return html`
 			<div id="button-container">
 				<d2l-button-icon
 					id="add-quicklink-button"
 					icon="d2l-tier1:quicklink"
-					?hidden="${!this._canAddLink}"
+					?hidden="${!canAddLink}"
 					@click="${this._launchAddQuicklinkDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip
@@ -175,7 +175,7 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 				<d2l-button-icon
 					id="add-link-button"
 					icon="d2l-tier1:link"
-					?hidden="${!this._canAddLink}"
+					?hidden="${!canAddLink}"
 					@click="${this._launchAddLinkDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip
@@ -187,7 +187,7 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 				<d2l-button-icon
 					id="add-google-drive-link-button"
 					icon="d2l-tier1:google-drive"
-					?hidden="${!this._canAddGoogleDriveLink}"
+					?hidden="${!canAddGoogleDriveLink}"
 					@click="${this._launchAddGoogleDriveLinkDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip
@@ -199,7 +199,7 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 				<d2l-button-icon
 					id="add-onedrive-link-button"
 					icon="d2l-tier1:one-drive"
-					?hidden="${!this._canAddOneDriveLink}"
+					?hidden="${!canAddOneDriveLink}"
 					@click="${this._launchAddOneDriveLinkDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip
@@ -209,6 +209,15 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 				</d2l-tooltip>
 			</div>
 		`;
+	}
+
+	updated(changedProperties) {
+		super.updated(changedProperties);
+
+		if ((changedProperties.has('href') || changedProperties.has('token')) &&
+			this.href && this.token) {
+			this._collection = this.store.fetchCollection(this.href, this.token, this.autoSave);
+		}
 	}
 }
 customElements.define('d2l-activity-attachments-picker', ActivityAttachmentsPicker);

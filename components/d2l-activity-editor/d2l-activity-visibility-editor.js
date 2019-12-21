@@ -42,7 +42,6 @@ class ActivityVisibilityEditor extends connect(ActivityEditorMixin(LocalizeMixin
 
 	constructor() {
 		super();
-		this._isDraft = false;
 		this.disabled = false;
 	}
 

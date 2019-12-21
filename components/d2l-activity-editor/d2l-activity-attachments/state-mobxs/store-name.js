@@ -1,0 +1,1 @@
+export default 'd2l-activity-attachments-store-mobxs';

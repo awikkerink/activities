@@ -1,15 +1,20 @@
 import '@d2l/d2l-attachment/components/attachment-list';
 import './d2l-activity-attachment';
-import { css, html, LitElement } from 'lit-element/lit-element';
-import { AttachmentCollectionEntity } from 'siren-sdk/src/activities/AttachmentCollectionEntity';
-import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { repeat } from 'lit-html/directives/repeat';
+import { css, html } from 'lit-element/lit-element';
+import storeName from './state-mobxs/store-name.js';
+import { connect } from '../mobxs-connect-mixin.js';
+import { ActivityEditorMixin } from '../d2l-activity-editor-mixin.js';
+import { MobxLitElement } from '@adobe/lit-mobx';
 
-class ActivityAttachmentsList extends EntityMixinLit(LitElement) {
+class ActivityAttachmentsList extends connect(ActivityEditorMixin(MobxLitElement)) {
+
+	static storeName = storeName;
+
 	static get properties() {
 		return {
-			_attachmentUrls: { type: Array },
-			_isEditMode: { type: Boolean }
+			_isEditMode: { type: Boolean },
+			_collection: { type: Object }
 		};
 	}
 
@@ -24,35 +29,18 @@ class ActivityAttachmentsList extends EntityMixinLit(LitElement) {
 		`;
 	}
 
-	constructor() {
-		super();
-		this._setEntityType(AttachmentCollectionEntity);
-	}
-
-	set _entity(entity) {
-		if (!this._entityHasChanged(entity)) {
-			return;
-		}
-
-		if (entity) {
-			const attachments = entity.getAttachmentEntities();
-			this._attachmentUrls = attachments.map(attachment => {
-				if (attachment.href) {
-					return attachment.href;
-				}
-
-				return attachment.getLinkByRel('self').href;
-			});
-			this._isEditMode = entity.canAddAttachments();
-		}
-
-		super._entity = entity;
-	}
-
 	render() {
+		if (!this._collection) {
+			return html``;
+		}
+
+		const {
+			attachments
+		} = this._collection;
+
 		return html`
 			<d2l-labs-attachment-list ?editing="${this._isEditMode}">
-				${repeat(this._attachmentUrls, href => href, href => html`
+				${repeat(attachments, href => href, href => html`
 					<li slot="attachment" class="panel">
 						<d2l-activity-attachment
 							href="${href}"
@@ -62,6 +50,15 @@ class ActivityAttachmentsList extends EntityMixinLit(LitElement) {
 				`)}
 			</d2l-labs-attachment-list>
 		`;
+	}
+
+	updated(changedProperties) {
+		super.updated(changedProperties);
+
+		if ((changedProperties.has('href') || changedProperties.has('token')) &&
+			this.href && this.token) {
+			this._collection = this.store.fetchCollection(this.href, this.token, this.autoSave);
+		}
 	}
 }
 

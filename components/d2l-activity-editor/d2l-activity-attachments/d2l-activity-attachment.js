@@ -1,14 +1,17 @@
 import '@d2l/d2l-attachment/components/attachment';
-import { css, html, LitElement } from 'lit-element/lit-element';
-import { AttachmentEntity } from 'siren-sdk/src/activities/AttachmentEntity';
-import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
+import { css, html } from 'lit-element/lit-element';
+import storeName from './state-mobxs/store-name.js';
+import { connect } from '../mobxs-connect-mixin.js';
+import { ActivityEditorMixin } from '../d2l-activity-editor-mixin.js';
+import { MobxLitElement } from '@adobe/lit-mobx';
 
-class ActivityAttachment extends EntityMixinLit(LitElement) {
+class ActivityAttachment extends connect(ActivityEditorMixin(MobxLitElement)) {
+
+	static storeName = storeName;
+
 	static get properties() {
 		return {
-			creating: { type: Boolean },
 			_attachment: { type: Object },
-			_editing: { type: Boolean }
 		};
 	}
 
@@ -22,41 +25,42 @@ class ActivityAttachment extends EntityMixinLit(LitElement) {
 
 	constructor() {
 		super();
-		this._setEntityType(AttachmentEntity);
-		this._attachment = {};
-	}
-
-	set _entity(entity) {
-		if (!this._entityHasChanged(entity)) {
-			return;
-		}
-
-		if (entity) {
-			this._attachment = {
-				id: entity.href(),
-				url: entity.href(),
-				name: entity.name()
-			};
-			this._editing = entity.canDeleteAttachment();
-			this.creating = entity.canDeleteAttachment();
-		}
-
-		super._entity = entity;
 	}
 
 	_onAttachmentRemoved() {
-		super._entity.deleteAttachment();
+		this._attachment.deleteAttachment(!this._attachment.deleted);
 	}
 
 	render() {
+		if (!this._attachment) {
+			return html``;
+		}
+
+		const {
+			attachment,
+			editing,
+			deleted
+		} = this._attachment;
+
 		return html`
 			<d2l-labs-attachment
-				attachmentId="${this._attachment.id}"
-				.attachment="${this._attachment}"
-				?editing="${this._editing}"
-				@d2l-attachment-removed="${this._onAttachmentRemoved}">
+				attachmentId="${attachment.id}"
+				.attachment="${attachment}"
+				?deleted="${deleted}"
+				?editing="${editing}"
+				@d2l-attachment-removed="${this._onAttachmentRemoved}"
+				@d2l-attachment-restored="${this._onAttachmentRemoved}">
 			</d2l-labs-attachment>
 		`;
+	}
+
+	updated(changedProperties) {
+		super.updated(changedProperties);
+
+		if ((changedProperties.has('href') || changedProperties.has('token')) &&
+			this.href && this.token) {
+			this._attachment = this.store.fetchAttachment(this.href, this.token, this.autoSave);
+		}
 	}
 }
 
