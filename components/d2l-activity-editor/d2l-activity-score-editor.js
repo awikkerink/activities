@@ -33,13 +33,28 @@ class ActivityScoreEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(L
 		return getLocalizeResources(langs, import.meta.url);
 	}
 
+	_toggleScoreState(isUngraded) {
+		const ungradedButton = this.shadowRoot.querySelector('#ungraded-button-container');
+		const scoreInfo = this.shadowRoot.querySelector('#score-info-container');
+
+		const toHide = isUngraded ? scoreInfo : ungradedButton;
+		const toShow = isUngraded ? ungradedButton : scoreInfo;
+
+		toHide.setAttribute('hidden', 'hidden');
+		toShow.removeAttribute('hidden', 'hidden');
+	}
+
 	render() {
 		return html`
-            <div id="button-container">
-                <d2l-button>${this.localize('ungraded')}</d2l-button>
+            <div id="ungraded-button-container">
+				<d2l-button
+					@click="${() => this._toggleScoreState(false)}"
+				>
+					${this.localize('ungraded')}
+				</d2l-button>
 			</div>
 
-			<div id="score-info-container">
+			<div id="score-info-container" hidden> <!-- hidden will be replaced with a check on current score value-->
 				<d2l-input-text
 					size=4
 					label="${this.localize('scoreOutOf')}"
