@@ -84,6 +84,13 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 		`;
 	}
 
+	updated(changedProperties) {
+		super.updated()
+		if (changedProperties.has('selectedRadio')) {
+			this._getDialog().resize()
+		}
+	}
+
 	_clearSelectedOptions() {
 		this.selectedRadio = null;
 		this._date = null;
