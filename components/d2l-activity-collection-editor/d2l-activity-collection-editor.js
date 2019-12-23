@@ -281,6 +281,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 					display: block;
 					position: fixed;
 					right: 1.5rem;
+					margin-top: 0.35rem;
 				}
 				.d2l-activity-collection-toggle-container {
 					display: none;
