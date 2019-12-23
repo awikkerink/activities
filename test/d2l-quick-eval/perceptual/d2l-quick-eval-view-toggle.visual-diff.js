@@ -36,14 +36,15 @@ describe('d2l-quick-eval-view-toggle', function() {
 	['hover', 'focus'].forEach((state) => {
 		[true, false].forEach((selected) => {
 			it(`${selected ? '' : 'in'}active-${state}`, async function() {
+				await helpers.reset(page);
 				await helpers[state](page, buttonSelector(selected));
 				await ss(this);
-				await helpers.reset(page);
 			});
 		});
 	});
 
 	it('change-selection', async function() {
+		await helpers.reset(page);
 		await page.evaluate(function() {
 			const toggle = document.querySelector('#default d2l-quick-eval-view-toggle');
 			toggle.shadowRoot.querySelector('button:not([selected])').click();
