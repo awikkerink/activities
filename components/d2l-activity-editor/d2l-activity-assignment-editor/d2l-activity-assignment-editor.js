@@ -1,5 +1,6 @@
 import '../d2l-activity-editor.js';
 import './d2l-activity-assignment-editor-detail.js';
+import '@brightspace-ui/core/templates/primary-secondary/primary-secondary.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentActivityUsageEntity } from 'siren-sdk/src/activities/assignments/AssignmentActivityUsageEntity.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
@@ -33,6 +34,9 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 			}
 			:host([hidden]) {
 				display: none;
+			}
+			.activity-assignment-editor-detail-panel, .activity-assignment-editor-secondary-panel {
+				padding: 20px;
 			}
 		`;
 	}
@@ -76,12 +80,17 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 				@d2l-request-provider="${this._onRequestProvider}"
 				@d2l-pending-resolved="${this._onPendingResolved}">
 
-				<d2l-activity-assignment-editor-detail
-					href="${this._assignmentHref}"
-					.token="${this.token}"
-					slot="editor">
-				</d2l-activity-assignment-editor-detail>
-
+				<d2l-template-primary-secondary slot="editor">
+					<slot name="editor-nav" slot="header"></slot>
+					<d2l-activity-assignment-editor-detail
+						href="${this._assignmentHref}"
+						.token="${this.token}"
+						slot="primary"
+						class="activity-assignment-editor-detail-panel">
+					</d2l-activity-assignment-editor-detail>
+					<div class="activity-assignment-editor-secondary-panel" slot="secondary"></div>
+					<div slot="footer"></div>
+				</d2l-template-primary-secondary>
 			</d2l-activity-editor>
 		`;
 	}
