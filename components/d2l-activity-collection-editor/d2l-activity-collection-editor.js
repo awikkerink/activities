@@ -246,6 +246,17 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				display: none;
 			}
 
+			@media only screen and (max-width: 929px) {
+				.d2l-activity-collection-header {
+					padding-left: 1.2rem;
+					padding-right: 1.2rem;
+				}
+				.d2l-activity-collection-body {
+					padding-left: 1.2rem;
+					padding-right: 1.2rem;
+				}
+			}
+
 			@media only screen and (max-width: 615px) {
 				.d2l-activity-collection-toggle-container {
 					position: fixed;
@@ -255,6 +266,14 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 					margin-bottom: 0;
 					margin-right: 7.5rem;
 					min-height: 2.3rem;
+				}
+				.d2l-activity-collection-header {
+					padding-left: 0.8rem;
+					padding-right: 0.8rem;
+				}
+				.d2l-activity-collection-body {
+					padding-left: 0.8rem;
+					padding-right: 0.8rem;
 				}
 			}
 			@media only screen and (max-width: 480px) {
