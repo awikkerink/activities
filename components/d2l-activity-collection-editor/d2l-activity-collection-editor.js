@@ -325,7 +325,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 						<d2l-button-icon
 							class="d2l-activity-collection-toggle-container-button"
 							?disabled="${!this._canEditDraft || this.disabled}"
-							@click="${() => typeof this._setVisibility === "function" && this._setVisibility(!this._isDraft)}"
+							@click="${() => typeof this._setVisibility === 'function' && this._setVisibility(!this._isDraft)}"
 							icon=${icon}>
 						</d2l-button-icon>
 					</div>
