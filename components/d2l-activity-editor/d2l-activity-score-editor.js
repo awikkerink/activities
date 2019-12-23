@@ -17,7 +17,8 @@ class ActivityScoreEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(L
 		return {
 			_scoreOutOf: { type: String },
 			_inGrades: { type: Boolean },
-			_gradeType: { type: String }
+			_gradeType: { type: String },
+			_preventNewGrade: { type: Boolean }
 		};
 	}
 
@@ -48,6 +49,7 @@ class ActivityScoreEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(L
 		this._scoreOutOf = '';
 		this._inGrades = false;
 		this._gradeType = '';
+		this._preventNewGrade = false;
 	}
 
 	set _entity(entity) {
@@ -79,12 +81,36 @@ class ActivityScoreEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(L
 		return !this._inGrades && this._scoreOutOf.length == 0;
 	}
 
+	_showInGrades() {
+		return this._inGrades || (!this._preventNewGrade && this._scoreOutOf.length == 0);
+	}
+
 	_onScoreOutOfChanged() {
 		const scoreOutOf = this.shadowRoot.querySelector('#score-out-of').value;
 		if (scoreOutOf == this._scoreOutOf) {
 			return;
 		}
-		this.wrapSaveAction(super._entity.setScoreOutOf(scoreOutOf, this._isUngraded()));
+		this.wrapSaveAction(super._entity.setScoreOutOf(scoreOutOf, this._isUngraded() && !this._preventNewGrade));
+	}
+
+	_addToGrades() {
+		this._preventNewGrade = false;
+		this.wrapSaveAction(super._entity.addToGrades());
+	}
+
+	_removeFromGrades() {
+		if (this._scoreOutOf.length == 0) {
+			this._preventNewGrade = true;
+		} else {
+			this._preventNewGrade = false;
+			this.wrapSaveAction(super._entity.removeFromGrades());
+		}
+	}
+
+	_setUngraded() {
+		this._preventNewGrade = false;
+		this.wrapSaveAction(super._entity.setUngraded());
+		this._toggleScoreState(true);
 	}
 
 	render() {
@@ -109,11 +135,29 @@ class ActivityScoreEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(L
 				<span class="d2l-body-small">${this._gradeType}</span>
 				<d2l-icon icon="tier1:divider-solid"></d2l-icon>
 				<d2l-dropdown>
-					<d2l-button>
-						<d2l-icon icon="tier1:grade"></d2l-icon>
-						${this.localize('inGrades')}
+					<d2l-button class="d2l-dropdown-opener">
+						<d2l-icon icon="tier1:grade" ?hidden="${!this._showInGrades()}"></d2l-icon>
+						${this._showInGrades() ? this.localize('inGrades') : this.localize('notInGrades')}
 						<d2l-icon icon="tier1:chevron-down"></d2l-icon>
 					</d2l-button>
+					<d2l-dropdown-menu id="grade-dropdown">
+						<d2l-menu label="${this._showInGrades() ? this.localize('inGrades') : this.localize('notInGrades')}">
+							<d2l-menu-item
+								text="${this.localize('addToGrades')}"
+								?hidden="${this._showInGrades()}"
+								@d2l-menu-item-select="${this._addToGrades}"
+							></d2l-menu-item>
+							<d2l-menu-item
+								text="${this.localize('removeFromGrades')}"
+								?hidden="${!this._showInGrades()}"
+								@d2l-menu-item-select="${this._removeFromGrades}"
+							></d2l-menu-item>
+							<d2l-menu-item
+								text="${this.localize('setUngraded')}"
+								@d2l-menu-item-select="${this._setUngraded}"
+							></d2l-menu-item>
+						</d2l-menu>
+					</d2l-dropdown-menu>
 				</d2l-dropdown>
 			</div>
 		`;

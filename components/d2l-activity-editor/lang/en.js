@@ -13,7 +13,11 @@ export default {
 	"noEndDate": "No end date", // Placeholder text for due date field when no due date is set
 	"noStartDate": "No start date", // Placeholder text for due date field when no due date is set
 	"visible": "Visible", // Label displayed with the visibility switch when visible
-	"ungraded": "Ungraded", // State of score field when there is no score, when creating/editing an activity
+	"ungraded": "Ungraded", // State of score field when there is no score and no grade item, when creating/editing an activity
 	"inGrades": "In Grades", // State of the grades field when there is a score, and an associated grade item
+	"notInGrades": "Not in Grades", // State of the grades field when there is a score, but no associated grade item
+	"addToGrades": "Add to Grades", // Menu item for adding grade association
+	"removeFromGrades": "Remove from Grades", // Menu item for removing grade association
+	"setUngraded": "Set Ungraded", // Menu item for setting the activity to ungraded
 	"scoreOutOf": "Score Out Of" // ARIA label for the score out of field, when creating/editing an activity
 };
