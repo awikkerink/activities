@@ -51,7 +51,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 		this._canEditDraft = usage.canEditDraft();
 		this._setVisibility = (draftStatus) => {
 			this._isDraft = draftStatus;
-			usage.setDraftStatus(draftStatus).then(usage.update);
+			usage.setDraftStatus(draftStatus).then(() => usage.update());
 		};
 
 		let hasACollection = false;
