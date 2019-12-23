@@ -127,6 +127,7 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 						placeholder="MM|DD|YYYY"
 						min="${minDate}"
 						hide-label
+						always-show-time
 					></d2l-datetime-picker>
 				</div>
 			`;
