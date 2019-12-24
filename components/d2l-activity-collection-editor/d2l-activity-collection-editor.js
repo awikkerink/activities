@@ -9,6 +9,7 @@ import { DescribableEntityMixin } from 'siren-sdk/src/entityAddons/describable-e
 import { SimpleEntity } from 'siren-sdk/src/es6/SimpleEntity.js';
 import { ActionCollectionEntity } from 'siren-sdk/src/activities/ActionCollectionEntity.js';
 import { performSirenAction } from 'siren-sdk/src/es6/SirenAction.js';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/colors/colors.js';
@@ -21,8 +22,10 @@ import '@brightspace-ui/core/components/inputs/input-search.js';
 import 'd2l-organizations/components/d2l-organization-image/d2l-organization-image.js';
 import '@brightspace-ui-labs/edit-in-place/d2l-labs-edit-in-place.js';
 import '../d2l-activity-editor/d2l-activity-visibility-editor.js';
+import { getLocalizeResources } from './localization.js';
 
-class CollectionEditor extends EntityMixinLit(LitElement) {
+const baseUrl = import.meta.url;
+class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 
 	constructor() {
 		super();
@@ -30,6 +33,10 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 		this._candidateItems = [];
 		this._specialization = {};
 		this._setEntityType(ActivityUsageEntity);
+	}
+
+	static async getLocalizeResources(langs) {
+		return getLocalizeResources(langs, baseUrl);
 	}
 
 	set _entity(entity) {
@@ -302,9 +309,9 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				<d2l-organization-image href=${item.self()} slot="illustration"></d2l-organization-image>
 				<d2l-list-item-content>
 					${item.name()}
-					<div slot="secondary">${item.hasClass(organizationClasses.courseOffering) ? 'Course' : null}</div>
+					<div slot="secondary">${item.hasClass(organizationClasses.courseOffering) ? this.localize('course') : null}</div>
 				</d2l-list-item-content>
-				<d2l-button-icon slot="actions" text="Remove Course" icon="d2l-tier1:close-default" @click=${item.removeItem}>
+				<d2l-button-icon slot="actions" text="${this.localize('removeActivity', 'courseName', item.name())}" icon="d2l-tier1:close-default" @click=${item.removeItem}>
 			</d2l-list-item>
 			`
 		);
@@ -312,14 +319,14 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 		return html`
 			<div class="d2l-activity-collection-header">
 				<div class="d2l-activity-collection-header-content">
-					<div class="d2l-heading-4 d2l-activity-collection-sub-header">Edit Learning Path</div>
+					<div class="d2l-heading-4 d2l-activity-collection-sub-header">${this.localize('editLearningPath')}</div>
 					<div class="d2l-activity-collection-base-info">
 						<div class="d2l-activity-collection-header-col1">
 							<h1 class="d2l-heading-1 d2l-activity-collection-title-header">
-								<d2l-labs-edit-in-place size="49" placeholder="Untitled Learning Path" maxlength="128" value="${this._name}" @change=${this._titleChanged}></d2l-labs-edit-in-place>
+								<d2l-labs-edit-in-place size="49" placeholder="${this.localize('untitledLearningPath')}" maxlength="128" value="${this._name}" @change=${this._titleChanged}></d2l-labs-edit-in-place>
 							</h1>
 							<div class="d2l-body-compact d2l-activity-collection-description">
-								<d2l-labs-edit-in-place size="49" placeholder="Enter a description" maxlength="280" value="${this._description}" @change=${this._descriptionChanged}></d2l-labs-edit-in-place>
+								<d2l-labs-edit-in-place size="49" placeholder="${this.localize('enterADescription')}" maxlength="280" value="${this._description}" @change=${this._descriptionChanged}></d2l-labs-edit-in-place>
 							</div>
 						</div>
 						<d2l-activity-visibility-editor class="d2l-activity-collection-toggle-container" ?disabled="${!this._items.length}" .href="${this.href}" .token="${this.token}"></d2l-activity-visibility-editor>
@@ -335,8 +342,8 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			<div class="d2l-activity-collection-body">
 				<div class="d2l-activity-collection-body-content">
 					<div class="d2l-activity-collection-list-actions">
-						<d2l-button @click="${this.open}" primary>Add Activity</d2l-button>
-						<div class="d2l-body-compact">${this._items.length} Activities</div>
+						<d2l-button @click="${this.open}" primary>${this.localize('addActivity')}</d2l-button>
+						<div class="d2l-body-compact">${this.localize('numberOfActivities', 'count', this._items.length)}</div>
 					</div>
 					<div class="d2l-activity-collection-activities">
 						<d2l-list>${items}</d2l-list>
@@ -355,34 +362,34 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				<d2l-organization-image href=${candidate.organization.self()} slot="illustration"></d2l-organization-image>
 				<d2l-list-item-content>
 					${candidate.organization.name()}
-					<div slot="secondary" class="d2l-list-item-secondary">${candidate.alreadyAdded ? html`Already added` : null}</div>
+					<div slot="secondary" class="d2l-list-item-secondary">${candidate.alreadyAdded ? html`${this.localize('alreadyAdded')}` : null}</div>
 				<d2l-list-item-content>
 			</d2l-list-item>
 			`
 		);
 
 		const selectedNav = this._selectionCount > 0
-			? html`${this._selectionCount} selected. <d2l-link @click=${this.clearAllSelected}>Clear Selection</d2l-link>`
+			? html`${this.localize('selected', 'count', this._selectionCount)} <d2l-link @click=${this.clearAllSelected}>${this.localize('clearSelected')}</d2l-link>`
 			: null;
 
 		return html`
 				<div class="dialog-div">
-				<d2l-dialog id="dialog" title-text="Browse Activity Library" @d2l-dialog-close=${this.clearDialog}>
+				<d2l-dialog id="dialog" title-text="${this.localize('browseActivityLibrary')}" @d2l-dialog-close=${this.clearDialog}>
 					<div class="d2l-add-activity-dialog">
 						<div class="d2l-add-activity-dialog-header">
 							<div>
-								<d2l-input-search label="Search" @d2l-input-search-searched=${this.handleSearch}></d2l-input-search>
+								<d2l-input-search label="${this.localize('search')}" @d2l-input-search-searched=${this.handleSearch}></d2l-input-search>
 							</div>
 							<div class="d2l-add-activity-dialog-selection-count">${selectedNav}</div>
 						</div>
 						<d2l-list @d2l-list-selection-change=${this.handleSelectionChange}>${candidates}</d2l-list>
 						<div class="d2l-add-activity-dialog-load-more">
-							${this._actionCollectionEntity && this._actionCollectionEntity.getNextAction() ? html`<d2l-button @click=${this.loadMore}>Load More</d2l-button>` :	html``}
+							${this._actionCollectionEntity && this._actionCollectionEntity.getNextAction() ? html`<d2l-button @click=${this.loadMore}>${this.localize('loadMore')}</d2l-button>` :	null}
 						</div>
 					</div>
 
-					<d2l-button slot="footer" primary dialog-action="add" @click=${this.addActivities}>Add</d2l-button>
-					<d2l-button slot="footer" dialog-action>Cancel</d2l-button>
+					<d2l-button slot="footer" primary dialog-action="add" @click=${this.addActivities}>${this.localize('add')}</d2l-button>
+					<d2l-button slot="footer" dialog-action>${this.localize('cancel')}</d2l-button>
 				</d2l-dialog>
 
 		`;
