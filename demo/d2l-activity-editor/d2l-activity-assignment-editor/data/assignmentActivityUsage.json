@@ -30,6 +30,53 @@
           ]
         }
       ]
+    },
+    {
+				"class": [
+					"score-out-of"
+      ],
+				"rel": [
+					"https://activities.api.brightspace.com/rels/score-out-of"
+      ],
+				"properties": {
+					"scoreOutOf": 100.000000000,
+					"inGrades": false
+      },
+				"actions": [
+        {
+						"href": "https://8b4b0787-25ca-43d2-89ab-b9495546ad09.activities.api.proddev.d2l/assignments/6609/folders/31/score-out-of",
+						"name": "update",
+						"method": "POST",
+						"fields": [
+            {
+								"type": "number",
+								"name": "scoreOutOf",
+								"value": 100.000000000
+            },
+            {
+								"type": "checkbox",
+								"name": "inGrades",
+								"value": false
+            },
+            {
+								"type": "radio",
+								"name": "gradeType",
+								"value": [
+                {
+										"title": "Points",
+										"value": "Numeric",
+										"selected": false
+                },
+                {
+										"title": "Letter",
+										"value": "SelectBox",
+										"selected": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "links": [
