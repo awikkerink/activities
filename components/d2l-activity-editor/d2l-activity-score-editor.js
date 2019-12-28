@@ -4,7 +4,8 @@ import '@brightspace-ui/core/components/inputs/input-text.js';
 import '@brightspace-ui/core/components/colors/colors.js';
 import 'd2l-dropdown/d2l-dropdown.js';
 import 'd2l-dropdown/d2l-dropdown-menu.js';
-import { bodySmallStyles  } from '@brightspace-ui/core/components/typography/styles.js';
+import { bodySmallStyles } from '@brightspace-ui/core/components/typography/styles.js';
+import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
@@ -27,6 +28,7 @@ class ActivityScoreEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(R
 	static get styles() {
 		return [
 			bodySmallStyles,
+			inputStyles,
 			css`
 			:host {
 				display: block;
@@ -34,8 +36,12 @@ class ActivityScoreEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(R
 			:host([hidden]) {
 				display: none;
 			}
-			d2l-input-text {
+			d2l-input-text,
+			.ungraded {
 				width: auto;
+			}
+			.ungraded {
+				cursor: pointer;
 			}
 			.grade-info {
 				border: 1px solid transparent;
@@ -147,11 +153,11 @@ class ActivityScoreEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(R
 	render() {
 		return html`
             <div id="ungraded-button-container" ?hidden="${!this._isUngraded()}">
-				<d2l-button
+				<button class="ungraded d2l-input"
 					@click="${() => this._toggleScoreState(false)}"
 				>
 					${this.localize('ungraded')}
-				</d2l-button>
+				</button>
 			</div>
 
 			<div id="score-info-container" ?hidden="${this._isUngraded()}">
