@@ -1,6 +1,7 @@
 import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/inputs/input-text.js';
+import '@brightspace-ui/core/components/colors/colors.js';
 import 'd2l-dropdown/d2l-dropdown.js';
 import 'd2l-dropdown/d2l-dropdown-menu.js';
 import { bodySmallStyles  } from '@brightspace-ui/core/components/typography/styles.js';
@@ -9,9 +10,10 @@ import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntit
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { getLocalizeResources } from './localization';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SaveStatusMixin } from './save-status-mixin';
 
-class ActivityScoreEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
+class ActivityScoreEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(RtlMixin(LitElement)))) {
 
 	static get properties() {
 		return {
@@ -34,6 +36,35 @@ class ActivityScoreEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(L
 			}
 			d2l-input-text {
 				width: auto;
+			}
+			.grade-info {
+				border: 1px solid transparent;
+				background: none;
+				outline: none;
+				border-radius: 0.3rem;
+				padding: .5rem .75rem .4rem;
+				cursor: pointer;
+			}
+			.grade-info:hover,
+			.grade-info:focus {
+				border-color: var(--d2l-color-mica);
+			}
+			.grade-info:hover span,
+			.grade-info:focus span {
+				color: var(--d2l-color-celestine);
+			}
+			.grade-info > * {
+				margin-right: 0.5rem;
+			}
+			.grade-info > *:last-child {
+				margin-right: 0;
+			}
+			:host([dir="rtl"]) .grade-info > * {
+				margin-right: 0;
+				margin-left: 0.5rem;
+			}
+			:host([dir="rtl"]) .grade-info > *:last-child {
+				margin-left: 0;
 			}
 			`
 		];
@@ -135,11 +166,11 @@ class ActivityScoreEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(L
 				<span class="d2l-body-small">${this._gradeType}</span>
 				<d2l-icon icon="tier1:divider-solid"></d2l-icon>
 				<d2l-dropdown>
-					<d2l-button class="d2l-dropdown-opener">
+					<button class="grade-info d2l-dropdown-opener">
 						<d2l-icon icon="tier1:grade" ?hidden="${!this._showInGrades()}"></d2l-icon>
-						${this._showInGrades() ? this.localize('inGrades') : this.localize('notInGrades')}
+						<span>${this._showInGrades() ? this.localize('inGrades') : this.localize('notInGrades')}</span>
 						<d2l-icon icon="tier1:chevron-down"></d2l-icon>
-					</d2l-button>
+					</button>
 					<d2l-dropdown-menu id="grade-dropdown">
 						<d2l-menu label="${this._showInGrades() ? this.localize('inGrades') : this.localize('notInGrades')}">
 							<d2l-menu-item
