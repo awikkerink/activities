@@ -1,15 +1,15 @@
 import '@brightspace-ui/core/components/button/button.js';
+import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/inputs/input-text.js';
-import '@brightspace-ui/core/components/colors/colors.js';
 import 'd2l-dropdown/d2l-dropdown.js';
 import 'd2l-dropdown/d2l-dropdown-menu.js';
-import { bodySmallStyles } from '@brightspace-ui/core/components/typography/styles.js';
-import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
+import { bodySmallStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { getLocalizeResources } from './localization';
+import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SaveStatusMixin } from './save-status-mixin';
@@ -114,17 +114,21 @@ class ActivityScoreEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(R
 		toShow.removeAttribute('hidden', 'hidden');
 	}
 
+	_setGraded() {
+		this._toggleScoreState(false);
+	}
+
 	_isUngraded() {
-		return !this._inGrades && this._scoreOutOf.length == 0;
+		return !this._inGrades && this._scoreOutOf.length === 0;
 	}
 
 	_showInGrades() {
-		return this._inGrades || (!this._preventNewGrade && this._scoreOutOf.length == 0);
+		return this._inGrades || (!this._preventNewGrade && this._scoreOutOf.length === 0);
 	}
 
 	_onScoreOutOfChanged() {
 		const scoreOutOf = this.shadowRoot.querySelector('#score-out-of').value;
-		if (scoreOutOf == this._scoreOutOf) {
+		if (scoreOutOf === this._scoreOutOf) {
 			return;
 		}
 		this.wrapSaveAction(super._entity.setScoreOutOf(scoreOutOf, this._isUngraded() && !this._preventNewGrade));
@@ -136,7 +140,7 @@ class ActivityScoreEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(R
 	}
 
 	_removeFromGrades() {
-		if (this._scoreOutOf.length == 0) {
+		if (this._scoreOutOf.length === 0) {
 			this._preventNewGrade = true;
 		} else {
 			this._preventNewGrade = false;
@@ -154,7 +158,7 @@ class ActivityScoreEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(R
 		return html`
             <div id="ungraded-button-container" ?hidden="${!this._isUngraded()}">
 				<button class="ungraded d2l-input"
-					@click="${() => this._toggleScoreState(false)}"
+					@click="${this._setGraded}"
 				>
 					${this.localize('ungraded')}
 				</button>
@@ -166,7 +170,7 @@ class ActivityScoreEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(R
 					size=4
 					label="${this.localize('scoreOutOf')}"
 					label-hidden
-					value="${this._scoreOutOf}",
+					value="${this._scoreOutOf}"
 					@change="${this._onScoreOutOfChanged}"
 				></d2l-input-text>
 				<span class="d2l-body-small">${this._gradeType}</span>
