@@ -62,7 +62,7 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 						name="${groupID}"
 						.checked="${this.selectedRadio === DISMISS_TYPES.nextSubmission}"
 						@change="${this._updateProp.bind(this, DISMISS_TYPES.nextSubmission)}">
-						Next Submission
+						${this.localize('nextSubmission')}
 					</label>
 					<label class="d2l-input-radio-label">
 						<input
