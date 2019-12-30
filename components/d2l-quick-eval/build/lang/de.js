@@ -2,7 +2,7 @@ export const LangDe = {
 			'activities': 'Aktivitäten',
 			'activityDismissed': 'Aktivität verworfen',
 			'activityName': 'Name der Aktivität',
-			'activityRestored': '{count, plural, =1 {1 Aktivität} other {{Anzahl} Aktivitäten}} wurden wiederhergestellt',
+			'activityRestored': '{count, plural, =1 {1 Aktivität} other {{count} Aktivitäten}} wurden wiederhergestellt',
 			'assignment': 'Übung',
 			'cancel': 'Abbrechen',
 			'caughtUp': 'Sie sind auf dem neuesten Stand!',

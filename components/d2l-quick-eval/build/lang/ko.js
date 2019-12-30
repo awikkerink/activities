@@ -2,7 +2,7 @@ export const LangKo = {
 			'activities': '활동',
 			'activityDismissed': '활동이 해제됨',
 			'activityName': '활동 이름',
-			'activityRestored': '{Count,plural,=1{1개 활동} other {{count}개 활동}}이(가) 복원되었습니다',
+			'activityRestored': '{count, plural, =1 {1개 활동} other {{count}개 활동}}이(가) 복원되었습니다',
 			'assignment': '과제',
 			'cancel': '취소',
 			'caughtUp': '거의 따라잡았습니다!',
