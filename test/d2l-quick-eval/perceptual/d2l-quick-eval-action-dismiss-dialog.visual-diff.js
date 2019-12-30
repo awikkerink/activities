@@ -56,7 +56,7 @@ describe('d2l-quick-eval-action-dismiss-dialog', function() {
 		await waitForOpen('#default d2l-quick-eval-action-dismiss-dialog');
 		await page.evaluate(() => {
 			const dialog = document.querySelector('#default d2l-quick-eval-action-dismiss-dialog');
-			const forever = dialog.shadowRoot.querySelectorAll('input')[1];
+			const forever = dialog.shadowRoot.querySelectorAll('input')[2];
 			forever.click();
 		});
 		const rect = await visualDiff.getRect(page, '#default');
@@ -68,8 +68,20 @@ describe('d2l-quick-eval-action-dismiss-dialog', function() {
 		await waitForOpen('#default d2l-quick-eval-action-dismiss-dialog');
 		await page.evaluate(() => {
 			const dialog = document.querySelector('#default d2l-quick-eval-action-dismiss-dialog');
-			const specDate = dialog.shadowRoot.querySelectorAll('input')[0];
+			const specDate = dialog.shadowRoot.querySelectorAll('input')[1];
 			specDate.click();
+		});
+		const rect = await visualDiff.getRect(page, '#default');
+		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
+		await waitForClose('#default d2l-quick-eval-action-dismiss-dialog');
+	});
+
+	it('next-submission', async function() {
+		await waitForOpen('#default d2l-quick-eval-action-dismiss-dialog');
+		await page.evaluate(() => {
+			const dialog = document.querySelector('#default d2l-quick-eval-action-dismiss-dialog');
+			const nextSub = dialog.shadowRoot.querySelectorAll('input')[0];
+			nextSub.click();
 		});
 		const rect = await visualDiff.getRect(page, '#default');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
