@@ -19,5 +19,7 @@ export default {
 	"addToGrades": "Add to Grades", // Menu item for adding grade association
 	"removeFromGrades": "Remove from Grades", // Menu item for removing grade association
 	"setUngraded": "Set Ungraded", // Menu item for setting the activity to ungraded
-	"scoreOutOf": "Score Out Of" // ARIA label for the score out of field, when creating/editing an activity
+	"scoreOutOf": "Score Out Of", // ARIA label for the score out of field, when creating/editing an activity
+	"emptyScoreOutOfError": "Score Out Of is required when in grades", // Error message to inform user that the score out of value is a required field when a grade item is associated
+	"invalidScoreOutOfError": "Score Out Of must be greater than or equal to 0.01 and less than or equal to 9,999,999,999" // Error message when an invalid score out of value is entered
 };

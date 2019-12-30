@@ -4,21 +4,24 @@ import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/inputs/input-text.js';
 import 'd2l-dropdown/d2l-dropdown.js';
 import 'd2l-dropdown/d2l-dropdown-menu.js';
+import 'd2l-tooltip/d2l-tooltip';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
 import { bodySmallStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
+import { ErrorHandlingMixin } from './error-handling-mixin.js';
 import { getLocalizeResources } from './localization';
 import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SaveStatusMixin } from './save-status-mixin';
 
-class ActivityScoreEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(RtlMixin(LitElement)))) {
+class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixinLit(LocalizeMixin(RtlMixin(LitElement))))) {
 
 	static get properties() {
 		return {
 			_scoreOutOf: { type: String },
+			_scoreOutOfError: { type: String },
 			_inGrades: { type: Boolean },
 			_gradeType: { type: String },
 			_preventNewGrade: { type: Boolean }
@@ -87,6 +90,11 @@ class ActivityScoreEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(R
 		this._inGrades = false;
 		this._gradeType = '';
 		this._preventNewGrade = false;
+
+		this._tooltipBoundary = {
+			left: 5,
+			right: 150
+		};
 	}
 
 	set _entity(entity) {
@@ -131,12 +139,28 @@ class ActivityScoreEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(R
 		if (scoreOutOf === this._scoreOutOf) {
 			return;
 		}
-		this.wrapSaveAction(super._entity.setScoreOutOf(scoreOutOf, this._isUngraded() && !this._preventNewGrade));
+		const isScoreEmpty = (scoreOutOf || '').trim().length === 0;
+		const scoreFloat = parseFloat(scoreOutOf);
+		const isScoreInvalid = scoreOutOf &&
+			(isNaN(scoreFloat) || scoreFloat < 0.01 || scoreFloat > 9999999999);
+
+		const scoreErrorLangterm = isScoreEmpty ? 'emptyScoreOutOfError' : 'invalidScoreOutOfError';
+		const errorProperty = '_scoreOutOfError';
+		const tooltipId = 'score-tooltip';
+
+		if ((this._inGrades && isScoreEmpty) || isScoreInvalid) {
+			this.setError(errorProperty, scoreErrorLangterm, tooltipId);
+		} else {
+			this.clearError(errorProperty);
+			this.wrapSaveAction(super._entity.setScoreOutOf(scoreOutOf, this._isUngraded() && !this._preventNewGrade));
+		}
 	}
 
 	_addToGrades() {
-		this._preventNewGrade = false;
-		this.wrapSaveAction(super._entity.addToGrades());
+		if (!this._scoreOutOfError) {
+			this._preventNewGrade = false;
+			this.wrapSaveAction(super._entity.addToGrades());
+		}
 	}
 
 	_removeFromGrades() {
@@ -172,7 +196,18 @@ class ActivityScoreEditor extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(R
 					label-hidden
 					value="${this._scoreOutOf}"
 					@change="${this._onScoreOutOfChanged}"
+					aria-invalid="${this._scoreOutOfError ? 'true' : ''}"
 				></d2l-input-text>
+				<d2l-tooltip
+					?hidden="${!this._scoreOutOfError}"
+					id="score-tooltip"
+					for="score-out-of"
+					position="bottom"
+					?showing="${this._scoreOutOfError}"
+					.boundary="${this._tooltipBoundary}"
+				>
+					${this._scoreOutOfError}
+				</d2l-tooltip>
 				<span class="d2l-body-small">${this._gradeType}</span>
 				<d2l-icon icon="tier1:divider-solid"></d2l-icon>
 				<d2l-dropdown>

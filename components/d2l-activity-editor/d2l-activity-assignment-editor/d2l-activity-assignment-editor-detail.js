@@ -8,6 +8,7 @@ import 'd2l-inputs/d2l-input-checkbox.js';
 import '../d2l-activity-text-editor.js';
 import '../d2l-activity-visibility-editor.js';
 import '../d2l-activity-attachments/d2l-activity-attachments-editor.js';
+import 'd2l-tooltip/d2l-tooltip';
 import { bodySmallStyles, heading4Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
