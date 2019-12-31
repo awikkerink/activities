@@ -35,8 +35,8 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		this._specialization = {};
 		this._showImages = false;
 		this._loadedImages = 0;
-		this._mainPageLoad = new Promise((resolve) => null);
-		this.ariaBusy = "true";
+		this._mainPageLoad = new Promise(() => null);
+		this.ariaBusy = 'true';
 		this.ariaLive = 'polite';
 		this._setEntityType(ActivityUsageEntity);
 	}
@@ -65,7 +65,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		this._setVisibility = (draftStatus) => {
 			this._isDraft = draftStatus;
 			usage.setDraftStatus(draftStatus).then(() => {
-				usage.update()
+				usage.update();
 			});
 		};
 
@@ -100,7 +100,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			if (!hasACollection) {
 				this._items = [];
 			}
-			this.ariaBusy = "false";
+			this.ariaBusy = 'false';
 			this._loaded = true;
 		});
 	}
@@ -395,7 +395,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 				<h1 class="d2l-heading-1 d2l-activity-collection-title-header">
 					<d2l-labs-edit-in-place size="49" placeholder="${this.localize('untitledLearningPath')}" maxlength="128" value="${this._name}" @change=${this._titleChanged}></d2l-labs-edit-in-place>
 				</h1>
-			`
+			`;
 		});
 		const learningPathTitleSketeton = html`
 			<div class="d2l-activity-collection-title-header d2l-activity-collection-header-1-skeleton">
@@ -410,7 +410,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 				<div class="d2l-body-compact d2l-activity-collection-description">
 					<d2l-labs-edit-in-place size="49" placeholder="${this.localize('enterADescription')}" maxlength="280" value="${this._description}" @change=${this._descriptionChanged}></d2l-labs-edit-in-place>
 				</div>
-			`
+			`;
 		});
 		const learningPathDescriptionSketeton = html`
 			<div class="d2l-activity-collection-description d2l-activity-collection-body-compact-skeleton">
@@ -431,7 +431,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 					@click="${() => typeof this._setVisibility === 'function' && this._setVisibility(!this._isDraft)}"
 					icon=${icon}>
 				</d2l-button-icon>
-			`
+			`;
 		}, () => {
 			return html`
 				<div class="d2l-activity-collection-toggle-container">
@@ -445,7 +445,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 						<rect x="0" width="42" y="0" height="42" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
 					</svg>
 				</div>
-			`
+			`;
 		});
 
 		const addActivityButton = this._handleFirstLoad(() => {
@@ -516,7 +516,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 					</d2l-list-item-content>
 					<d2l-button-icon slot="actions" text="${this.localize('removeActivity', 'courseName', item.name())}" icon="d2l-tier1:close-default" @click=${item.removeItem}>
 				</d2l-list-item>
-			`
+			`;
 		});
 
 		return html`<d2l-list>${items}</d2l-list>`;
