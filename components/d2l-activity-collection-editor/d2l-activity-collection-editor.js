@@ -1,7 +1,6 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { repeat } from 'lit-html/directives/repeat';
 import { until } from 'lit-html/directives/until.js';
-import { cache } from 'lit-html/directives/cache.js';
 import { heading1Styles, heading4Styles, bodyCompactStyles, labelStyles} from '@brightspace-ui/core/components/typography/styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
@@ -37,6 +36,8 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		this._showImages = false;
 		this._loadedImages = 0;
 		this._mainPageLoad = new Promise((resolve) => null);
+		this.ariaBusy = "true";
+		this.ariaLive = 'polite';
 		this._setEntityType(ActivityUsageEntity);
 	}
 
@@ -99,6 +100,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			if (!hasACollection) {
 				this._items = [];
 			}
+			this.ariaBusy = "false";
 			this._loaded = true;
 		});
 	}
@@ -171,7 +173,9 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			_name: { type: String },
 			_selectionCount: { type: Number },
 			_showImages: {type: Boolean },
-			_specialization: { type: Object }
+			_specialization: { type: Object },
+			ariaBusy: { type: String, reflect: true, attribute: 'aria-busy' },
+			ariaLive: { type: String, reflect: true, attribute: 'aria-live' }
 		};
 	}
 
@@ -365,9 +369,9 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			@media only screen and (max-width: 480px) {
 				.d2l-activity-collection-toggle-container-button {
 					display: block;
+					margin-top: 0.35rem;
 					position: fixed;
 					right: 1.5rem;
-					margin-top: 0.35rem;
 				}
 				.d2l-activity-collection-toggle-container {
 					display: none;
