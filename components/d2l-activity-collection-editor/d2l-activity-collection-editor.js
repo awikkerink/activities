@@ -36,6 +36,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		this._specialization = {};
 		this._showImages = false;
 		this._loadedImages = 0;
+		this._mainPageLoad = new Promise((resolve) => null);
 		this._setEntityType(ActivityUsageEntity);
 	}
 
@@ -290,6 +291,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 
 			.d2l-activity-collection-list-actions-skeleton {
 				align-self: center;
+				flex-shrink: 0;
 			}
 
 			.d2l-activitiy-collection-list-item-illustration {
@@ -305,6 +307,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			@keyframes loadingPulse {
 				0% { fill: var(--d2l-color-sylvite); }
 				50% { fill: var(--d2l-color-regolith); }
+				75% { fill: var(--d2l-color-sylvite); }
 				100% { fill: var(--d2l-color-sylvite); }
 			}
 
@@ -320,6 +323,9 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 				.d2l-activity-collection-body {
 					padding-left: 1.2rem;
 					padding-right: 1.2rem;
+				}
+				.d2l-activity-collection-body-compact-skeleton {
+					min-width: 15rem;
 				}
 			}
 
@@ -340,6 +346,20 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 				.d2l-activity-collection-body {
 					padding-left: 0.8rem;
 					padding-right: 0.8rem;
+				}
+				.d2l-activity-collection-body-small-skeleton-svg {
+					height: 0.4rem;
+				}
+				.d2l-activity-collection-header-1-skeleton {
+					height: 1.8rem;
+					min-width: 10rem;
+				}
+
+				.d2l-activity-collection-header-1-skeleton-svg {
+					max-height: 0.95rem;
+				}
+				.d2l-activity-collection-body-compact-skeleton {
+					min-width: 12rem;
 				}
 			}
 			@media only screen and (max-width: 480px) {
@@ -413,7 +433,12 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 				<div class="d2l-activity-collection-toggle-container">
 					<svg viewBox="0 0 150 38" width="150" height="38">
 						<rect x="1" width="60" y="5" height="30" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
-						<rect x="72" width="90" y="15" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect d2l-activity-collection-body-compact-skeleton-svg"></rect>
+						<rect x="72" width="70" y="15" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect d2l-activity-collection-body-compact-skeleton-svg"></rect>
+					</svg>
+				</div>
+				<div class="d2l-activity-collection-toggle-container-button">
+					<svg viewBox="0 0 42 42" width="42" height="42">
+						<rect x="0" width="42" y="0" height="42" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
 					</svg>
 				</div>
 			`
@@ -430,7 +455,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		});
 
 		const activityCount = this._handleFirstLoad(() => {
-			return this.localize('numberOfActivities', 'count', this._items.length);
+			return html`<div class="d2l-body-compact">${this.localize('numberOfActivities', 'count', this._items.length)}</div>`;
 		},	() => {
 			return html`
 				<svg width="90" class="d2l-activity-collection-body-compact-skeleton-svg d2l-activity-collection-list-actions-skeleton">
@@ -439,7 +464,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			`;
 		});
 
-		const items = this._handleFirstLoad(this._renderItemList.bind(this), () => html`${this._renderItemListSkeleton(5)}`);
+		const items = this._handleFirstLoad(this._renderItemList.bind(this), () => html`${this._renderItemListSkeleton(3)}`);
 
 		return html`
 			<div class="d2l-activity-collection-header">
@@ -458,7 +483,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 				<div class="d2l-activity-collection-body-content">
 					<div class="d2l-activity-collection-list-actions">
 						${addActivityButton}
-						<div class="d2l-body-compact">${activityCount}</div>
+						${activityCount}
 					</div>
 					<div class="d2l-activity-collection-activities">
 						${items}
@@ -507,11 +532,11 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 				${this._renderCourseImageSkeleton()}
 				<d2l-list-item-content>
 					<svg width="100%" class="d2l-activity-collection-body-compact-skeleton-svg">
-						<rect x="0" width="25%" y="0" height="100%" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
+						<rect x="0" width="40%" y="0" height="100%" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
 					</svg>
 					<div slot="secondary">
 						<svg width="100%" class="d2l-activity-collection-body-small-skeleton-svg">
-							<rect x="0" width="10%" y="0" height="100%" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
+							<rect x="0" width="30%" y="0" height="100%" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
 						</svg>
 					</div>
 				</d2l-list-item-content>
