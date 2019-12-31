@@ -46,6 +46,14 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			this._name = specialization.getName();
 			this._description = specialization.getDescription();
 		});
+
+		this._isDraft = usage.isDraft();
+		this._canEditDraft = usage.canEditDraft();
+		this._setVisibility = (draftStatus) => {
+			this._isDraft = draftStatus;
+			usage.setDraftStatus(draftStatus).then(() => usage.update());
+		};
+
 		let hasACollection = false;
 		usage.onActivityCollectionChange((collection, error) => {
 			if (error) {
@@ -141,7 +149,9 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			_actionCollectionEntity: { type: Object },
 			_addExistingAction: { type: Object },
 			_candidateItems: { type: Array },
+			_canEditDraft: { type: Boolean },
 			_description: { type: String },
+			_isDraft: { type: Boolean },
 			_items: { type: Array },
 			_name: { type: String },
 			_selectionCount: { type: Number },
@@ -164,10 +174,11 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			.d2l-activity-collection-body {
 				margin: auto;
 				max-width: 1230px;
+				padding: 0 1.5rem;
 			}
 			.d2l-activity-collection-body-content {
 				max-width: 820px;
-				margin: 0 0.3rem;
+				padding: 0 0.3rem;
 			}
 			.d2l-activity-collection-list-actions {
 				align-items: baseline;
@@ -188,8 +199,8 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				box-sizing: border-box;
 				margin: 0 auto;
 				max-width: 1230px;
+				overflow: hidden;
 				padding: 0 0.3rem;
-				overflow:hidden;
 			}
 			.d2l-activity-collection-header-col1 {
 				max-width: 600px;
@@ -201,8 +212,10 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			.d2l-activity-collection-toggle-container {
 				align-self: flex-start;
 				display: flex;
-				margin: 0.55rem 1.5rem;
+				flex-shrink: 0;
+				margin: 0.55rem 0 0.55rem 1.5rem;
 			}
+
 			.d2l-activity-visbility-label {
 				white-space: nowrap;
 			}
@@ -229,10 +242,60 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			.d2l-activity-collection-sub-header {
 				margin: 0;
 			}
+			.d2l-activity-collection-toggle-container-button {
+				display: none;
+			}
+
+			@media only screen and (max-width: 929px) {
+				.d2l-activity-collection-header {
+					padding-left: 1.2rem;
+					padding-right: 1.2rem;
+				}
+				.d2l-activity-collection-body {
+					padding-left: 1.2rem;
+					padding-right: 1.2rem;
+				}
+			}
+
+			@media only screen and (max-width: 615px) {
+				.d2l-activity-collection-toggle-container {
+					position: fixed;
+					right: 1.5rem;
+				}
+				.d2l-activity-collection-title-header {
+					margin-bottom: 0;
+					margin-right: 7.5rem;
+					min-height: 2.3rem;
+				}
+				.d2l-activity-collection-header {
+					padding-left: 0.8rem;
+					padding-right: 0.8rem;
+				}
+				.d2l-activity-collection-body {
+					padding-left: 0.8rem;
+					padding-right: 0.8rem;
+				}
+			}
+			@media only screen and (max-width: 480px) {
+				.d2l-activity-collection-toggle-container-button {
+					display: block;
+					position: fixed;
+					right: 1.5rem;
+					margin-top: 0.35rem;
+				}
+				.d2l-activity-collection-toggle-container {
+					display: none;
+				}
+				.d2l-activity-collection-title-header {
+					margin-right: 2.1rem;
+				}
+			}
 		` ];
 	}
 
 	render() {
+		const icon = (this._isDraft ? 'tier1:visibility-hide' : 'tier1:visibility-show');
+
 		const items = repeat(this._items, (item) => item.self(), item =>
 			html`
 			<d2l-list-item>
@@ -260,6 +323,12 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 							</div>
 						</div>
 						<d2l-activity-visibility-editor class="d2l-activity-collection-toggle-container" ?disabled="${!this._items.length}" .href="${this.href}" .token="${this.token}"></d2l-activity-visibility-editor>
+						<d2l-button-icon
+							class="d2l-activity-collection-toggle-container-button"
+							?disabled="${!this._canEditDraft || this.disabled}"
+							@click="${() => typeof this._setVisibility === 'function' && this._setVisibility(!this._isDraft)}"
+							icon=${icon}>
+						</d2l-button-icon>
 					</div>
 				</div>
 			</div>
