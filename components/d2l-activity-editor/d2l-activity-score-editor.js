@@ -120,6 +120,11 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 
 		toHide.setAttribute('hidden', 'hidden');
 		toShow.removeAttribute('hidden', 'hidden');
+
+		const toFocus = isUngraded ?
+			this.shadowRoot.querySelector('#ungraded') :
+			this.shadowRoot.querySelector('#score-out-of');;
+		toFocus.focus();
 	}
 
 	_setGraded() {
@@ -181,7 +186,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 	render() {
 		return html`
             <div id="ungraded-button-container" ?hidden="${!this._isUngraded()}">
-				<button class="ungraded d2l-input"
+				<button id="ungraded" class="ungraded d2l-input"
 					@click="${this._setGraded}"
 				>
 					${this.localize('ungraded')}
