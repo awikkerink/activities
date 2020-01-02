@@ -25,10 +25,8 @@ class ActivityEditor extends LitElement {
 			:host([hidden]) {
 				display: none;
 			}
-			d2l-save-status { /* TEMPORARY until we finalize the position of it */
-				position: fixed;
-    			right: 40px;
-    			top: 90px;
+			d2l-save-status {
+				padding-bottom: 20px;
 			}
 			.d2l-activity-editor-loading {
 				padding: 20px;
