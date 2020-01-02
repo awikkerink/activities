@@ -1,5 +1,6 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { repeat } from 'lit-html/directives/repeat';
+import { until } from 'lit-html/directives/until.js';
 import { heading1Styles, heading4Styles, bodyCompactStyles, labelStyles} from '@brightspace-ui/core/components/typography/styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
@@ -9,6 +10,7 @@ import { DescribableEntityMixin } from 'siren-sdk/src/entityAddons/describable-e
 import { SimpleEntity } from 'siren-sdk/src/es6/SimpleEntity.js';
 import { ActionCollectionEntity } from 'siren-sdk/src/activities/ActionCollectionEntity.js';
 import { performSirenAction } from 'siren-sdk/src/es6/SirenAction.js';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/colors/colors.js';
@@ -21,15 +23,26 @@ import '@brightspace-ui/core/components/inputs/input-search.js';
 import 'd2l-organizations/components/d2l-organization-image/d2l-organization-image.js';
 import '@brightspace-ui-labs/edit-in-place/d2l-labs-edit-in-place.js';
 import '../d2l-activity-editor/d2l-activity-visibility-editor.js';
+import { getLocalizeResources } from './localization.js';
 
-class CollectionEditor extends EntityMixinLit(LitElement) {
+const baseUrl = import.meta.url;
+class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 
 	constructor() {
 		super();
 		this._items = [];
 		this._candidateItems = [];
 		this._specialization = {};
+		this._showImages = false;
+		this._loadedImages = 0;
+		this._mainPageLoad = new Promise(() => null);
+		this.ariaBusy = 'true';
+		this.ariaLive = 'polite';
 		this._setEntityType(ActivityUsageEntity);
+	}
+
+	static async getLocalizeResources(langs) {
+		return getLocalizeResources(langs, baseUrl);
 	}
 
 	set _entity(entity) {
@@ -51,7 +64,9 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 		this._canEditDraft = usage.canEditDraft();
 		this._setVisibility = (draftStatus) => {
 			this._isDraft = draftStatus;
-			usage.setDraftStatus(draftStatus).then(() => usage.update());
+			usage.setDraftStatus(draftStatus).then(() => {
+				usage.update();
+			});
 		};
 
 		let hasACollection = false;
@@ -81,10 +96,12 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			this._addExistingAction = collection._entity.getActionByName('start-add-existing-activity');
 		});
 
-		usage.subEntitiesLoaded().then(() => {
+		this._mainPageLoad = usage.subEntitiesLoaded().then(() => {
 			if (!hasACollection) {
 				this._items = [];
 			}
+			this.ariaBusy = 'false';
+			this._loaded = true;
 		});
 	}
 
@@ -155,7 +172,10 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 			_items: { type: Array },
 			_name: { type: String },
 			_selectionCount: { type: Number },
-			_specialization: { type: Object }
+			_showImages: {type: Boolean },
+			_specialization: { type: Object },
+			ariaBusy: { type: String, reflect: true, attribute: 'aria-busy' },
+			ariaLive: { type: String, reflect: true, attribute: 'aria-live' }
 		};
 	}
 
@@ -201,6 +221,7 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				max-width: 1230px;
 				overflow: hidden;
 				padding: 0 0.3rem;
+				position: relative;
 			}
 			.d2l-activity-collection-header-col1 {
 				max-width: 600px;
@@ -246,6 +267,58 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				display: none;
 			}
 
+			.d2l-activity-collection-header-1-skeleton {
+				height: 2.4rem;
+				display: flex;
+				align-items: center;
+				min-width: 20rem;
+			}
+
+			.d2l-activity-collection-header-1-skeleton-svg {
+				max-height: 1.45rem;
+			}
+
+			.d2l-activity-collection-body-compact-skeleton {
+				height: 3.6rem;
+				display: flex;
+				align-items: center;
+				min-width: 25rem;
+			}
+
+			.d2l-activity-collection-body-compact-skeleton-svg {
+				height: 0.55rem;
+			}
+
+			.d2l-activity-collection-body-small-skeleton-svg {
+				height: 0.5rem;
+			}
+
+			.d2l-activity-collection-list-actions-skeleton {
+				align-self: center;
+				flex-shrink: 0;
+			}
+
+			.d2l-activitiy-collection-list-item-illustration {
+				display: flex;
+				position: relative;
+			}
+
+			.d2l-activitiy-collection-organization-image {
+				top: 0;
+				position: absolute;
+			}
+
+			@keyframes loadingPulse {
+				0% { fill: var(--d2l-color-sylvite); }
+				50% { fill: var(--d2l-color-regolith); }
+				75% { fill: var(--d2l-color-sylvite); }
+				100% { fill: var(--d2l-color-sylvite); }
+			}
+
+			.d2l-activity-collection-skeleton-rect {
+				animation: loadingPulse 1.8s linear infinite;
+			}
+
 			@media only screen and (max-width: 929px) {
 				.d2l-activity-collection-header {
 					padding-left: 1.2rem;
@@ -254,6 +327,9 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				.d2l-activity-collection-body {
 					padding-left: 1.2rem;
 					padding-right: 1.2rem;
+				}
+				.d2l-activity-collection-body-compact-skeleton {
+					min-width: 15rem;
 				}
 			}
 
@@ -275,13 +351,27 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 					padding-left: 0.8rem;
 					padding-right: 0.8rem;
 				}
+				.d2l-activity-collection-body-small-skeleton-svg {
+					height: 0.4rem;
+				}
+				.d2l-activity-collection-header-1-skeleton {
+					height: 1.8rem;
+					min-width: 10rem;
+				}
+
+				.d2l-activity-collection-header-1-skeleton-svg {
+					max-height: 0.95rem;
+				}
+				.d2l-activity-collection-body-compact-skeleton {
+					min-width: 12rem;
+				}
 			}
 			@media only screen and (max-width: 480px) {
 				.d2l-activity-collection-toggle-container-button {
 					display: block;
+					margin-top: 0.35rem;
 					position: fixed;
 					right: 1.5rem;
-					margin-top: 0.35rem;
 				}
 				.d2l-activity-collection-toggle-container {
 					display: none;
@@ -294,58 +384,170 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 	}
 
 	render() {
+		if (!this._mainPageLoad) {
+			return null;
+		}
+
 		const icon = (this._isDraft ? 'tier1:visibility-hide' : 'tier1:visibility-show');
 
-		const items = repeat(this._items, (item) => item.self(), item =>
-			html`
-			<d2l-list-item>
-				<d2l-organization-image href=${item.self()} slot="illustration"></d2l-organization-image>
-				<d2l-list-item-content>
-					${item.name()}
-					<div slot="secondary">${item.hasClass(organizationClasses.courseOffering) ? 'Course' : null}</div>
-				</d2l-list-item-content>
-				<d2l-button-icon slot="actions" text="Remove Course" icon="d2l-tier1:close-default" @click=${item.removeItem}>
-			</d2l-list-item>
-			`
-		);
+		const learningPathTitle = this._mainPageLoad.then(() => {
+			return html`
+				<h1 class="d2l-heading-1 d2l-activity-collection-title-header">
+					<d2l-labs-edit-in-place size="49" placeholder="${this.localize('untitledLearningPath')}" maxlength="128" value="${this._name}" @change=${this._titleChanged}></d2l-labs-edit-in-place>
+				</h1>
+			`;
+		});
+		const learningPathTitleSketeton = html`
+			<div class="d2l-activity-collection-title-header d2l-activity-collection-header-1-skeleton">
+				<svg width="100%" class="d2l-activity-collection-header-1-skeleton-svg">
+					<rect x="0" width="70%" y="0" height="100%" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
+				</svg>
+			</div>
+		`;
+
+		const learningPathDescription = this._mainPageLoad.then(() => {
+			return html`
+				<div class="d2l-body-compact d2l-activity-collection-description">
+					<d2l-labs-edit-in-place size="49" placeholder="${this.localize('enterADescription')}" maxlength="280" value="${this._description}" @change=${this._descriptionChanged}></d2l-labs-edit-in-place>
+				</div>
+			`;
+		});
+		const learningPathDescriptionSketeton = html`
+			<div class="d2l-activity-collection-description d2l-activity-collection-body-compact-skeleton">
+				<svg width="100%" height="100%">
+					<rect x="0" width="100%" y="6" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect d2l-activity-collection-body-compact-skeleton-svg"></rect>
+					<rect x="0" width="100%" y="30" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect d2l-activity-collection-body-compact-skeleton-svg"></rect>
+					<rect x="0" width="80%" y="54" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect d2l-activity-collection-body-compact-skeleton-svg"></rect>
+				</svg>
+			</div>
+		`;
+
+		const learningPathVisibilityToggle = this._handleFirstLoad(() => {
+			return html`
+				<d2l-activity-visibility-editor class="d2l-activity-collection-toggle-container" ?disabled="${!this._items.length}" .href="${this.href}" .token="${this.token}"></d2l-activity-visibility-editor>
+				<d2l-button-icon
+					class="d2l-activity-collection-toggle-container-button"
+					?disabled="${!this._canEditDraft || this.disabled}"
+					@click="${() => typeof this._setVisibility === 'function' && this._setVisibility(!this._isDraft)}"
+					icon=${icon}>
+				</d2l-button-icon>
+			`;
+		}, () => {
+			return html`
+				<div class="d2l-activity-collection-toggle-container">
+					<svg viewBox="0 0 150 38" width="150" height="38">
+						<rect x="1" width="60" y="5" height="30" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
+						<rect x="72" width="70" y="15" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect d2l-activity-collection-body-compact-skeleton-svg"></rect>
+					</svg>
+				</div>
+				<div class="d2l-activity-collection-toggle-container-button">
+					<svg viewBox="0 0 42 42" width="42" height="42">
+						<rect x="0" width="42" y="0" height="42" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
+					</svg>
+				</div>
+			`;
+		});
+
+		const addActivityButton = this._handleFirstLoad(() => {
+			return html`<d2l-button @click="${this.open}" primary>${this.localize('addActivity')}</d2l-button>`;
+		},	() => {
+			return html`
+				<svg viewBox="0 0 142 42" width="142" height="42" class="d2l-activity-collection-list-actions-skeleton">
+					<rect x="0" width="142" y="0" height="42" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
+				</svg>
+			`;
+		});
+
+		const activityCount = this._handleFirstLoad(() => {
+			return html`<div class="d2l-body-compact">${this.localize('numberOfActivities', 'count', this._items.length)}</div>`;
+		},	() => {
+			return html`
+				<svg width="90" class="d2l-activity-collection-body-compact-skeleton-svg d2l-activity-collection-list-actions-skeleton">
+					<rect x="0" width="100%" y="0" height="100%" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
+				</svg>
+			`;
+		});
+
+		const items = this._handleFirstLoad(this._renderItemList.bind(this), () => html`${this._renderItemListSkeleton(3)}`);
 
 		return html`
 			<div class="d2l-activity-collection-header">
 				<div class="d2l-activity-collection-header-content">
-					<div class="d2l-heading-4 d2l-activity-collection-sub-header">Edit Learning Path</div>
+					<div class="d2l-heading-4 d2l-activity-collection-sub-header">${this.localize('editLearningPath')}</div>
 					<div class="d2l-activity-collection-base-info">
-						<div class="d2l-activity-collection-header-col1">
-							<h1 class="d2l-heading-1 d2l-activity-collection-title-header">
-								<d2l-labs-edit-in-place size="49" placeholder="Untitled Learning Path" maxlength="128" value="${this._name}" @change=${this._titleChanged}></d2l-labs-edit-in-place>
-							</h1>
-							<div class="d2l-body-compact d2l-activity-collection-description">
-								<d2l-labs-edit-in-place size="49" placeholder="Enter a description" maxlength="280" value="${this._description}" @change=${this._descriptionChanged}></d2l-labs-edit-in-place>
-							</div>
+						<div class="d2l-activity-collection-header-col1" style="position: relative">
+							${until(learningPathTitle, learningPathTitleSketeton)}
+							${until(learningPathDescription, learningPathDescriptionSketeton)}
 						</div>
-						<d2l-activity-visibility-editor class="d2l-activity-collection-toggle-container" ?disabled="${!this._items.length}" .href="${this.href}" .token="${this.token}"></d2l-activity-visibility-editor>
-						<d2l-button-icon
-							class="d2l-activity-collection-toggle-container-button"
-							?disabled="${!this._canEditDraft || this.disabled}"
-							@click="${() => typeof this._setVisibility === 'function' && this._setVisibility(!this._isDraft)}"
-							icon=${icon}>
-						</d2l-button-icon>
+						${learningPathVisibilityToggle}
 					</div>
 				</div>
 			</div>
 			<div class="d2l-activity-collection-body">
 				<div class="d2l-activity-collection-body-content">
 					<div class="d2l-activity-collection-list-actions">
-						<d2l-button @click="${this.open}" primary>Add Activity</d2l-button>
-						<div class="d2l-body-compact">${this._items.length} Activities</div>
+						${addActivityButton}
+						${activityCount}
 					</div>
 					<div class="d2l-activity-collection-activities">
-						<d2l-list>${items}</d2l-list>
+						${items}
 					</div>
 				</div>
 			</div>
 			${this._renderCandidates()}
-
 		`;
+	}
+
+	_handleFirstLoad(whenLoaded, whileLoading = () => null) {
+		return this._loaded ? whenLoaded() : until(this._mainPageLoad.then(whenLoaded), whileLoading());
+	}
+
+	_renderItemList() {
+		const items = repeat(this._items, (item) => item.self(), item => {
+			return html`
+				<d2l-list-item>
+					<div slot="illustration" class="d2l-activitiy-collection-list-item-illustration">
+						${this._renderCourseImageSkeleton()}
+						<d2l-organization-image class="d2l-activitiy-collection-organization-image" href=${item.self()} @d2l-organization-image-loaded="${this._onListImageLoaded}" ?hidden="${!this._showImages}"></d2l-organization-image>
+					</div>
+					<d2l-list-item-content>
+						${item.name()}
+						<div slot="secondary">${item.hasClass(organizationClasses.courseOffering) ? this.localize('course') : null}</div>
+					</d2l-list-item-content>
+					<d2l-button-icon slot="actions" text="${this.localize('removeActivity', 'courseName', item.name())}" icon="d2l-tier1:close-default" @click=${item.removeItem}>
+				</d2l-list-item>
+			`;
+		});
+
+		return html`<d2l-list>${items}</d2l-list>`;
+	}
+
+	_renderCourseImageSkeleton() {
+		return html`
+			<svg viewBox="0 0 180 77" width="100%" slot="illustration">
+				<rect x="0" width="100%" y="0" height="100%" stroke="none" class="d2l-activity-collection-skeleton-rect"></rect>
+			</svg>
+		`;
+	}
+
+	_renderItemListSkeleton(numberOfItems) {
+		const itemsSkeleton = html`
+			<d2l-list-item>
+				${this._renderCourseImageSkeleton()}
+				<d2l-list-item-content>
+					<svg width="100%" class="d2l-activity-collection-body-compact-skeleton-svg">
+						<rect x="0" width="40%" y="0" height="100%" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
+					</svg>
+					<div slot="secondary">
+						<svg width="100%" class="d2l-activity-collection-body-small-skeleton-svg">
+							<rect x="0" width="30%" y="0" height="100%" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
+						</svg>
+					</div>
+				</d2l-list-item-content>
+				<d2l-button-icon slot="actions" text="${this.localize('removeActivity', 'courseName', 'Title')}" icon="d2l-tier1:close-default" disabled>
+			</d2l-list-item>
+		`;
+		return html`<d2l-list>${(new Array(numberOfItems)).fill(itemsSkeleton)}</d2l-list>`;
 	}
 
 	_renderCandidates() {
@@ -355,37 +557,44 @@ class CollectionEditor extends EntityMixinLit(LitElement) {
 				<d2l-organization-image href=${candidate.organization.self()} slot="illustration"></d2l-organization-image>
 				<d2l-list-item-content>
 					${candidate.organization.name()}
-					<div slot="secondary" class="d2l-list-item-secondary">${candidate.alreadyAdded ? html`Already added` : null}</div>
+					<div slot="secondary" class="d2l-list-item-secondary">${candidate.alreadyAdded ? html`${this.localize('alreadyAdded')}` : null}</div>
 				<d2l-list-item-content>
 			</d2l-list-item>
 			`
 		);
 
 		const selectedNav = this._selectionCount > 0
-			? html`${this._selectionCount} selected. <d2l-link @click=${this.clearAllSelected}>Clear Selection</d2l-link>`
+			? html`${this.localize('selected', 'count', this._selectionCount)} <d2l-link @click=${this.clearAllSelected}>${this.localize('clearSelected')}</d2l-link>`
 			: null;
 
 		return html`
 				<div class="dialog-div">
-				<d2l-dialog id="dialog" title-text="Browse Activity Library" @d2l-dialog-close=${this.clearDialog}>
+				<d2l-dialog id="dialog" title-text="${this.localize('browseActivityLibrary')}" @d2l-dialog-close=${this.clearDialog}>
 					<div class="d2l-add-activity-dialog">
 						<div class="d2l-add-activity-dialog-header">
 							<div>
-								<d2l-input-search label="Search" @d2l-input-search-searched=${this.handleSearch}></d2l-input-search>
+								<d2l-input-search label="${this.localize('search')}" @d2l-input-search-searched=${this.handleSearch}></d2l-input-search>
 							</div>
 							<div class="d2l-add-activity-dialog-selection-count">${selectedNav}</div>
 						</div>
 						<d2l-list @d2l-list-selection-change=${this.handleSelectionChange}>${candidates}</d2l-list>
 						<div class="d2l-add-activity-dialog-load-more">
-							${this._actionCollectionEntity && this._actionCollectionEntity.getNextAction() ? html`<d2l-button @click=${this.loadMore}>Load More</d2l-button>` :	html``}
+							${this._actionCollectionEntity && this._actionCollectionEntity.getNextAction() ? html`<d2l-button @click=${this.loadMore}>${this.localize('loadMore')}</d2l-button>` :	null}
 						</div>
 					</div>
 
-					<d2l-button slot="footer" primary dialog-action="add" @click=${this.addActivities}>Add</d2l-button>
-					<d2l-button slot="footer" dialog-action>Cancel</d2l-button>
+					<d2l-button slot="footer" primary dialog-action="add" @click=${this.addActivities}>${this.localize('add')}</d2l-button>
+					<d2l-button slot="footer" dialog-action>${this.localize('cancel')}</d2l-button>
 				</d2l-dialog>
 
 		`;
+	}
+
+	_onListImageLoaded() {
+		this._loadedImages++;
+		if (this._loadedImages >= this._items.length) {
+			this._showImages = true;
+		}
 	}
 
 	_titleChanged(e) {
