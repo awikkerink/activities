@@ -1,12 +1,15 @@
 import '../d2l-activity-editor.js';
 import './d2l-activity-assignment-editor-detail.js';
+import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/templates/primary-secondary/primary-secondary.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentActivityUsageEntity } from 'siren-sdk/src/activities/assignments/AssignmentActivityUsageEntity.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
+import { getLocalizeResources } from '../localization.js';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { PendingContainerMixin } from 'siren-sdk/src/mixin/pending-container-mixin.js';
 
-class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement)) {
+class AssignmentEditor extends PendingContainerMixin(LocalizeMixin(EntityMixinLit(LitElement))) {
 
 	static get properties() {
 		return {
@@ -35,10 +38,17 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 			:host([hidden]) {
 				display: none;
 			}
-			.activity-assignment-editor-detail-panel, .activity-assignment-editor-secondary-panel {
+			.d2l-activity-assignment-editor-detail-panel, .d2l-activity-assignment-editor-secondary-panel {
 				padding: 20px;
 			}
+			.d2l-activity-assignment-editor-footer {
+				padding: 0.75rem 1rem 0;
+			}
 		`;
+	}
+
+	static async getLocalizeResources(langs) {
+		return getLocalizeResources(langs, import.meta.url);
 	}
 
 	constructor() {
@@ -86,10 +96,13 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 						href="${this._assignmentHref}"
 						.token="${this.token}"
 						slot="primary"
-						class="activity-assignment-editor-detail-panel">
+						class="d2l-activity-assignment-editor-detail-panel">
 					</d2l-activity-assignment-editor-detail>
-					<div class="activity-assignment-editor-secondary-panel" slot="secondary"></div>
-					<div slot="footer"></div>
+					<div class="d2l-activity-assignment-editor-secondary-panel" slot="secondary"></div>
+					<div class="d2l-activity-assignment-editor-footer" slot="footer">
+						<d2l-button primary>${this.localize('btnSave')}</d2l-button>
+						<d2l-button>${this.localize('btnCancel')}</d2l-button>
+					</div>
 				</d2l-template-primary-secondary>
 			</d2l-activity-editor>
 		`;
