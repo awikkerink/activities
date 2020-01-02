@@ -106,15 +106,13 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 		const params = new URLSearchParams();
 		params.set('ou', this._orgUnitId);
 		params.set('af', 'mycomputer,oufiles,sharedfiles,mylocker,grouplocker'); // Area Filters
-		params.set('am', '0'); // Allow Multiple files, 0 = don't allow
+		params.set('am', '1'); // Allow Multiple files, 1 = allow
 		params.set('fsc', '0'); // Force Save to Course files, 0 = don't force
 		params.set('asc', '0'); // Allow Save to Course files, 0 = don't allow
 		params.set('mfs', '0'); // Max File Size, 0 = don't set (use system setting)
 		params.set('afid', '0'); // Ask For Image Description, 0 = don't ask
 		params.set('uih', ''); // Upload Inline Help langterm, '' = don't show any upload help text (below file picker in My Computer)
-		params.set('area', ''); // File Area to show by default, '' = list of areas (rather than specific view e.g. My Computer)
 		params.set('f', ''); // Filetype, '' = allow all file types
-		params.set('path', ''); // Default path for uploads, '' = org unit's files
 		const location = new D2L.LP.Web.Http.UrlLocation(`/d2l/common/dialogs/file/main.d2l?${params.toString()}`);
 
 		const buttons = [
