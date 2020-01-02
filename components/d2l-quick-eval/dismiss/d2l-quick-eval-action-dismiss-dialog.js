@@ -84,6 +84,13 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 		`;
 	}
 
+	updated(changedProperties) {
+		super.updated();
+		if (changedProperties.has('selectedRadio')) {
+			this._getDialog().resize();
+		}
+	}
+
 	_clearSelectedOptions() {
 		this.selectedRadio = null;
 		this._date = null;
@@ -127,6 +134,7 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 						placeholder="MM|DD|YYYY"
 						min="${minDate}"
 						hide-label
+						always-show-time
 					></d2l-datetime-picker>
 				</div>
 			`;
