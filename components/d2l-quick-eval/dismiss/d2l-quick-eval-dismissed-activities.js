@@ -163,21 +163,23 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 		}
 	}
 
-	_submitData(e) {
-		if (e.detail.action === 'done') {
+	_submitData(evt) {
+		if (evt.detail.action === 'done') {
 			const selectedData = this._getSelectedActivities();
 			this.selectedCount = selectedData.length;
-			const result = Promise.all(selectedData.map((act)=> {
-				try {
-					return this.performSirenAction(act.unDismiss);
-				} catch (e) {
-					return new Error();
-				}
-			}));
-			result.then((results)=> {
-				this.failedCount = results.filter(a=>a instanceof Error).length;
+
+			return Promise.all(selectedData.map(act => {
+
+				return this.performSirenAction(act.unDismiss).catch(err => {
+					return err;
+				});
+			})).then(results => {
+
+				const failures = results.filter(err => err instanceof Error);
+				this.failedCount = failures.length;
+
 				if (this.failedCount > 0) {
-					this._logError(e, {developerMessage: 'Error dismissing activities'});
+					this._logError(failures, { developerMessage: 'Error dismissing activities' });
 					this.shadowRoot.querySelector('.d2l-quick-eval-dismissed-list-critical').open = true;
 				} else {
 					this.shadowRoot.querySelector('.d2l-quick-eval-dismissed-list-success').open = true;
