@@ -57,14 +57,14 @@ class AssignmentEditorSecondary extends ErrorHandlingMixin(SaveStatusMixin(RtlMi
 
 			.d2l-body-small {
 				margin: 0 0 0.3rem 0;
-            }
-            d2l-input-checkbox {
-                padding-right: 20px;
-            }
-            :host([dir="rtl"]) d2l-input-checkbox {
-                padding-right: 0;
-                padding-left: 20px;
-            }
+			}
+			d2l-input-checkbox {
+				padding-right: 20px;
+			}
+			:host([dir="rtl"]) d2l-input-checkbox {
+				padding-right: 0;
+				padding-left: 20px;
+			}
 			`
 		];
 	}
@@ -93,7 +93,7 @@ class AssignmentEditorSecondary extends ErrorHandlingMixin(SaveStatusMixin(RtlMi
 	_onAssignmentChange(assignment) {
 		if (!assignment) {
 			return;
-        }
+		}
 
 		this._activityUsageHref = assignment.activityUsageHref();
 		this._submissionTypes = assignment.submissionTypeOptions();
