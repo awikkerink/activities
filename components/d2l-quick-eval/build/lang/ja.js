@@ -46,6 +46,7 @@ export const LangJa = {
 	'newPosts': '新規投稿',
 	'newSubmissionDetails': '{newNum, plural, =0 {{resub, plural, =1 {1 件の再送信} other {{resub} 件の再送信}}} other {{resub, plural, =0 {{newNum} new} =1{{newNum} 新しい 1 件の再送信} other {{newNum} 新しい {resub} 件の再送信}}}}',
 	'newSubmissions': '新規送信',
+	'nextSubmission': 'Next Submission',
 	'no': 'いいえ',
 	'noCriteriaMatch': '条件に一致する送信物はありません。',
 	'noCriteriaMatchActivities': '条件に一致するアクティビティはありません。',
