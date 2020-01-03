@@ -56,7 +56,7 @@ describe('d2l-quick-eval-action-dismiss-dialog', function() {
 		await waitForOpen('#default d2l-quick-eval-action-dismiss-dialog');
 		await page.evaluate(() => {
 			const dialog = document.querySelector('#default d2l-quick-eval-action-dismiss-dialog');
-			const forever = dialog.shadowRoot.querySelectorAll('input')[2];
+			const forever = dialog.shadowRoot.querySelector('#dismiss-action-dialog-radio-input-forever');
 			forever.click();
 		});
 		const rect = await visualDiff.getRect(page, '#default');
@@ -68,7 +68,7 @@ describe('d2l-quick-eval-action-dismiss-dialog', function() {
 		await waitForOpen('#default d2l-quick-eval-action-dismiss-dialog');
 		await page.evaluate(() => {
 			const dialog = document.querySelector('#default d2l-quick-eval-action-dismiss-dialog');
-			const specDate = dialog.shadowRoot.querySelectorAll('input')[1];
+			const specDate = dialog.shadowRoot.querySelector('#dismiss-action-dialog-radio-input-specificDate');
 			specDate.click();
 		});
 		const rect = await visualDiff.getRect(page, '#default');
@@ -80,7 +80,7 @@ describe('d2l-quick-eval-action-dismiss-dialog', function() {
 		await waitForOpen('#default d2l-quick-eval-action-dismiss-dialog');
 		await page.evaluate(() => {
 			const dialog = document.querySelector('#default d2l-quick-eval-action-dismiss-dialog');
-			const nextSub = dialog.shadowRoot.querySelectorAll('input')[0];
+			const nextSub = dialog.shadowRoot.querySelector('#dismiss-action-dialog-radio-input-nextSubmission');
 			nextSub.click();
 		});
 		const rect = await visualDiff.getRect(page, '#default');
