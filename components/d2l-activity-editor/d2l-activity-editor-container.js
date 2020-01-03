@@ -46,6 +46,8 @@ class ActivityEditorContainer extends ProviderMixin(LitElement) {
 
 	async _saveEditor(e) {
 		for (let editor of this._editors) {
+			// TODO - Should we run these concurrently using an array of promises?
+			// Siren action helper will still serialize them though so might not be much benefit?
 			await editor.save();
 		}
 	}

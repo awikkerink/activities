@@ -8,12 +8,15 @@ export class Attachment {
 	@observable attachment = {};
 	@observable editing = false;
 	@observable deleted = false;
+	@observable creating = false;
 
 	constructor(href, token, autoSave = false) {
 		this.href = href;
 		this.token = token;
 		this.autoSave = autoSave;
-		this._fetchEntity();
+		if (this.href) {
+			this._fetchEntity();
+		}
 	}
 
 	async _fetchEntity() {
@@ -23,7 +26,7 @@ export class Attachment {
 			if (entity) {
 				const newEntity = this.autoSave || !this._entity ? entity : this._entity;
 				if (newEntity !== this._entity) {
-					this.loadAttachment(newEntity);
+					this.loadAttachmentFromEntity(newEntity);
 				}
 			} else {
 				// TODO handle error
@@ -32,7 +35,7 @@ export class Attachment {
 	}
 
 	@action
-	async loadAttachment(entity) {
+	async loadAttachmentFromEntity(entity) {
 		try {
 			this._entity = entity;
 			this.editing = entity.canDeleteAttachment();
@@ -48,10 +51,28 @@ export class Attachment {
 	}
 
 	@action
+	async loadAttachment(name, url) {
+		this.editing = true;
+		this.creating = true;
+		this.attachment = {
+			id: url,
+			name: name,
+			url: url
+		}
+		this.loaded = true;
+	}
+
+	@action
 	async deleteAttachment(deleted) {
 		this.deleted = deleted;
 
 		if (this.autoSave && deleted) {
+			await this.delete();
+		}
+	}
+
+	async delete() {
+		if (this._entity) {
 			await this._entity.deleteAttachment();
 		}
 	}

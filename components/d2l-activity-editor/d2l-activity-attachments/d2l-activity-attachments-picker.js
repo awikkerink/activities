@@ -117,7 +117,8 @@ class ActivityAttachmentsPicker extends connect(ActivityEditorMixin(LocalizeMixi
 		};
 
 		this._openDialog(opener, settings, event => {
-			this.wrapSaveAction(super._entity.addLinkAttachment(event.m_title, event.m_url));
+			// this.wrapSaveAction(super._entity.addLinkAttachment(event.m_title, event.m_url));
+			this._collection.addLinkAttachment(event.m_title, event.m_url);
 		});
 	}
 

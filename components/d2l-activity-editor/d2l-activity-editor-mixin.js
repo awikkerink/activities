@@ -16,8 +16,9 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 			/**
 			 * Entity object that extends the Entity class.
 			 */
+			_entity: { type: Object },
+
 			autoSave: { type: Boolean },
-			_entity: { type: Object }
 		};
 	}
 

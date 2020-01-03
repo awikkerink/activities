@@ -25,6 +25,7 @@ export class AttachmentCollection {
 
 	async _fetchEntity() {
 		dispose(this._entity);
+		this._entity = null;
 
 		entityFactory(AttachmentCollectionEntity, this.href, this.token, (entity, error) => {
 			if (entity) {
@@ -48,6 +49,8 @@ export class AttachmentCollection {
 			this.canAddGoogleDriveLink = entity.canAddGoogleDriveLinkAttachment();
 			this.canAddOneDriveLink = entity.canAddOneDriveLinkAttachment();
 
+			this.attachments = [];
+
 			const attachments = entity.getAttachmentEntityHrefs();
 			attachments.map(href => {
 				this.store.fetchAttachment(href, this.token, this.autoSave, this.shared);
@@ -65,10 +68,33 @@ export class AttachmentCollection {
 	@action
 	async addLinkAttachment(name, url) {
 
-		// TODO - create a new attachment and add to list of attachments
+		const newId = this.store.addNewAttachment();
+		const attachment = this.store.fetchAttachment(newId);
+		attachment.loadAttachment(name, url);
+		this.attachments.push(newId);
 
 		if (this.autoSave) {
 			await this._entity.addLinkAttachment(name, url);
 		}
+	}
+
+	async saveAttachments() {
+		for (let href of this.attachments) {
+			// TODO - Should we run these concurrently using an array of promises?
+			// Siren action helper will still serialize them though so might not be much benefit?
+			const attachment = this.store.fetchAttachment(href);
+			if (attachment.deleted && !attachment.creating) {
+				await attachment.delete();
+			}
+			if (attachment.creating && !attachment.deleted) {
+				await this._entity.addLinkAttachment(attachment.attachment.name, attachment.attachment.url);
+			}
+
+			// Clean up store reference to temporary or deleted attachments
+			if (attachment.creating || attachment.deleted) {
+				this.store.clearAttachment(href);
+			}
+		}
+		this._fetchEntity();
 	}
 }

@@ -5,6 +5,8 @@ import { configure as configureMobx } from 'mobx'
 
 configureMobx({ enforceActions: 'observed' });
 
+let newAttachmentId = 0;
+
 export class AttachmentCollectionsStore {
 	collections = new Map();
 	attachments = new Map();
@@ -44,5 +46,17 @@ export class AttachmentCollectionsStore {
 			this.attachments.set(href, attachment);
 		}
 		return attachment;
+	}
+
+	addNewAttachment() {
+		const attachment = new Attachment();
+		newAttachmentId += 1;
+		const tempHref = newAttachmentId.toString();
+		this.attachments.set(tempHref, attachment);
+		return tempHref;
+	}
+
+	clearAttachment(href) {
+		this.attachments.delete(href);
 	}
 }

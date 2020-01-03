@@ -64,5 +64,9 @@ class ActivityAttachmentsEditor extends connect(ProviderMixin(ActivityEditorMixi
 			this._collection = this.store.fetchCollection(this.href, this.token, this.autoSave);
 		}
 	}
+
+	async save() {
+		await this._collection.saveAttachments();
+	}
 }
 customElements.define('d2l-activity-attachments-editor', ActivityAttachmentsEditor);

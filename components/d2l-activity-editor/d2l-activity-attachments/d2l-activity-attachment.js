@@ -39,6 +39,7 @@ class ActivityAttachment extends connect(ActivityEditorMixin(MobxLitElement)) {
 		const {
 			attachment,
 			editing,
+			creating,
 			deleted
 		} = this._attachment;
 
@@ -47,6 +48,7 @@ class ActivityAttachment extends connect(ActivityEditorMixin(MobxLitElement)) {
 				attachmentId="${attachment.id}"
 				.attachment="${attachment}"
 				?deleted="${deleted}"
+				?creating="${creating}"
 				?editing="${editing}"
 				@d2l-attachment-removed="${this._onAttachmentRemoved}"
 				@d2l-attachment-restored="${this._onAttachmentRemoved}">
