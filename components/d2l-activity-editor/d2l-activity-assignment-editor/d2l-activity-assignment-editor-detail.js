@@ -33,15 +33,15 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		return [
 			labelStyles,
 			css`
-			:host {
-				display: block;
-			}
-			:host([hidden]) {
-				display: none;
-			}
-			:host > div {
-				padding-bottom: 20px;
-			}
+				:host {
+					display: block;
+				}
+				:host([hidden]) {
+					display: none;
+				}
+				:host > div {
+					padding-bottom: 20px;
+				}
 			`
 		];
 	}

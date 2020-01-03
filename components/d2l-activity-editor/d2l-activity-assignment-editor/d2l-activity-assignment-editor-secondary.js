@@ -6,14 +6,13 @@ import { bodySmallStyles, heading4Styles, labelStyles } from '@brightspace-ui/co
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
-import { ErrorHandlingMixin } from '../error-handling-mixin.js';
 import { getLocalizeResources } from '../localization.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SaveStatusMixin } from '../save-status-mixin.js';
 import { selectStyles } from '../select-styles.js';
 
-class AssignmentEditorSecondary extends ErrorHandlingMixin(SaveStatusMixin(RtlMixin(EntityMixinLit(LocalizeMixin(LitElement))))) {
+class AssignmentEditorSecondary extends SaveStatusMixin(RtlMixin(EntityMixinLit(LocalizeMixin(LitElement)))) {
 
 	static get properties() {
 		return {
@@ -36,36 +35,38 @@ class AssignmentEditorSecondary extends ErrorHandlingMixin(SaveStatusMixin(RtlMi
 			labelStyles,
 			selectStyles,
 			css`
-			:host {
-				display: block;
-			}
-			:host([hidden]) {
-				display: none;
-			}
-			:host > div {
-				padding-bottom: 20px;
-			}
+				:host {
+					display: block;
+				}
+				:host([hidden]) {
+					display: none;
+				}
+				:host > div {
+					padding-bottom: 20px;
+				}
 
-			select {
-				width: 100%;
-				max-width: 300px;
-				display: block;
-			}
+				select {
+					width: 100%;
+					max-width: 300px;
+					display: block;
+				}
 
-			.d2l-heading-4 {
-				margin: 0 0 0.6rem 0;
-			}
+				.d2l-heading-4 {
+					margin: 0 0 0.6rem 0;
+				}
 
-			.d2l-body-small {
-				margin: 0 0 0.3rem 0;
-			}
-			d2l-input-checkbox {
-				padding-right: 20px;
-			}
-			:host([dir="rtl"]) d2l-input-checkbox {
-				padding-right: 0;
-				padding-left: 20px;
-			}
+				.d2l-body-small {
+					margin: 0 0 0.3rem 0;
+				}
+
+				d2l-input-checkbox {
+					padding-right: 20px;
+				}
+
+				:host([dir="rtl"]) d2l-input-checkbox {
+					padding-right: 0;
+					padding-left: 20px;
+				}
 			`
 		];
 	}
