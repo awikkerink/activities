@@ -1,5 +1,6 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { LitQuickEvalLocalize } from '../LitQuickEvalLocalize.js';
+import { getDocumentLocaleSettings } from '@brightspace-ui/intl/lib/common.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
 import { labelStyles, bodyStandardStyles } from '@brightspace-ui/core/components/typography/styles.js';
@@ -111,7 +112,7 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 	}
 
 	_getIso8601Date(date) {
-		const timezone = this.getTimezone().identifier;
+		const timezone = getDocumentLocaleSettings().timezone.identifier;
 
 		if (timezone) {
 			return date.tz(timezone).format('YYYY-MM-DD');
