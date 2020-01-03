@@ -21,13 +21,15 @@ class ActivityEditor extends LitElement {
 		return css`
 			:host {
 				display: block;
-				padding: 20px;
 			}
 			:host([hidden]) {
 				display: none;
 			}
 			d2l-save-status {
 				padding-bottom: 20px;
+			}
+			.d2l-activity-editor-loading {
+				padding: 20px;
 			}
 		`;
 	}
@@ -100,7 +102,7 @@ class ActivityEditor extends LitElement {
 			<d2l-save-status
 				id="save-status">
 			</d2l-save-status>
-			<div ?hidden="${!this.loading}">Loading ...</div>
+			<div class="d2l-activity-editor-loading" ?hidden="${!this.loading}">Loading ...</div>
 			<div
 				?hidden="${this.loading}"
 				@d2l-request-provider="${this._onRequestProvider}">
