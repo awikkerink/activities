@@ -55,6 +55,11 @@ class D2LQuickEvalActivityCardNewSubmissions extends QuickEvalLocalize(PolymerEl
 						line-height: 0.5rem;
 					}
 				}
+				@media (min-width: 900px) {
+					.d2l-quick-eval-activity-card-submissions-subtitle {
+						line-height: 0.9rem;
+					}
+				}
 				.d2l-quick-eval-activity-card-submissions-container a {
 					text-decoration: none;
 					outline: none;
