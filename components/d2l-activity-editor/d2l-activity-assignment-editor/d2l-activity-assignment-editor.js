@@ -1,5 +1,6 @@
 import '../d2l-activity-editor.js';
 import './d2l-activity-assignment-editor-detail.js';
+import './d2l-activity-assignment-editor-secondary.js';
 import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/templates/primary-secondary/primary-secondary.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
@@ -103,7 +104,12 @@ class AssignmentEditor extends PendingContainerMixin(LocalizeMixin(RtlMixin(Enti
 						slot="primary"
 						class="d2l-activity-assignment-editor-detail-panel">
 					</d2l-activity-assignment-editor-detail>
-					<div class="d2l-activity-assignment-editor-secondary-panel" slot="secondary"></div>
+					<d2l-activity-assignment-editor-secondary
+						href="${this._assignmentHref}"
+						.token="${this.token}"
+						slot="secondary"
+						class="d2l-activity-assignment-editor-secondary-panel">
+					</d2l-activity-assignment-editor-secondary>
 					<div class="d2l-activity-assignment-editor-footer" slot="footer">
 						<d2l-button primary>${this.localize('btnSave')}</d2l-button>
 						<d2l-button>${this.localize('btnCancel')}</d2l-button>
