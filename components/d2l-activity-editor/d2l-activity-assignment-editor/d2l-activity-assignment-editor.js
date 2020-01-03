@@ -42,9 +42,6 @@ class AssignmentEditor extends PendingContainerMixin(LocalizeMixin(RtlMixin(Enti
 			.d2l-activity-assignment-editor-detail-panel, .d2l-activity-assignment-editor-secondary-panel {
 				padding: 20px;
 			}
-			.d2l-activity-assignment-editor-footer {
-				padding: 0.75rem 1rem 0;
-			}
 			.d2l-activity-assignment-editor-footer d2l-button {
 				margin-right: 0.75rem;
 			}
