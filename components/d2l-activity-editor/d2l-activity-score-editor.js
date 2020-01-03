@@ -24,7 +24,8 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			_scoreOutOfError: { type: String },
 			_inGrades: { type: Boolean },
 			_gradeType: { type: String },
-			_preventNewGrade: { type: Boolean }
+			_preventNewGrade: { type: Boolean },
+			_showUngraded: { type: Boolean }
 		};
 	}
 
@@ -93,7 +94,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 
 		this._tooltipBoundary = {
 			left: 5,
-			right: 150
+			right: 400
 		};
 	}
 
@@ -105,34 +106,32 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 		if (entity) {
 			this._scoreOutOf = entity.scoreOutOf();
 			this._inGrades = entity.inGrades();
-			this._gradeType = entity.gradeType();
+			this._gradeType = entity.gradeType() || 'Points';
+			this._showUngraded = this._isUngraded();
 		}
 
 		super._entity = entity;
 	}
 
-	_toggleScoreState(isUngraded) {
-		const ungradedButton = this.shadowRoot.querySelector('#ungraded-button-container');
-		const scoreInfo = this.shadowRoot.querySelector('#score-info-container');
-
-		const toHide = isUngraded ? scoreInfo : ungradedButton;
-		const toShow = isUngraded ? ungradedButton : scoreInfo;
-
-		toHide.setAttribute('hidden', 'hidden');
-		toShow.removeAttribute('hidden', 'hidden');
-
-		const toFocus = isUngraded ?
-			this.shadowRoot.querySelector('#ungraded') :
-			this.shadowRoot.querySelector('#score-out-of');;
-		toFocus.focus();
-	}
-
 	_setGraded() {
-		this._toggleScoreState(false);
+		this._showUngraded = false;
 	}
 
 	_isUngraded() {
 		return !this._inGrades && this._scoreOutOf.length === 0;
+	}
+
+	updated(changedProperties) {
+		super.updated(changedProperties);
+
+		changedProperties.forEach((oldValue, propName) => {
+			if (propName === '_showUngraded') {
+				const toFocus = this._showUngraded ?
+					this.shadowRoot.querySelector('#ungraded') :
+					this.shadowRoot.querySelector('#score-out-of');
+				toFocus.focus();
+			}
+		});
 	}
 
 	_showInGrades() {
@@ -180,12 +179,12 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 	_setUngraded() {
 		this._preventNewGrade = false;
 		this.wrapSaveAction(super._entity.setUngraded());
-		this._toggleScoreState(true);
+		this._showUngraded = true;
 	}
 
 	render() {
 		return html`
-            <div id="ungraded-button-container" ?hidden="${!this._isUngraded()}">
+      		<div id="ungraded-button-container" ?hidden="${!this._showUngraded}">
 				<button id="ungraded" class="ungraded d2l-input"
 					@click="${this._setGraded}"
 				>
@@ -193,7 +192,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 				</button>
 			</div>
 
-			<div id="score-info-container" ?hidden="${this._isUngraded()}">
+			<div id="score-info-container" ?hidden="${this._showUngraded}">
 				<d2l-input-text
 					id="score-out-of"
 					size=4
