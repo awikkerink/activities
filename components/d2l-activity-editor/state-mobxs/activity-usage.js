@@ -27,6 +27,7 @@ export class ActivityUsage {
 
 	async _fetchEntity() {
 		dispose(this._entity);
+		this._entity = null;
 
 		entityFactory(ActivityUsageEntity, this.href, this.token, (entity, error) => {
 			if (entity) {
