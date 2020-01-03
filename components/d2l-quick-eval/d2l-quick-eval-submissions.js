@@ -289,7 +289,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			if (entity.hasClass('empty') && (this.searchApplied || this.filterApplied)) {
 				this.addEventListener('d2l-hm-filter-filters-loaded', this._handleFilterLoadedNoResultsOnInitialLoad);
 				this._initialLoad = false;
-				return;
+				return Promise.resolve();
 			}
 		}
 
