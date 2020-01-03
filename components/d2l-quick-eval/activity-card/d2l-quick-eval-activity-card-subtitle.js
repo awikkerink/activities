@@ -1,4 +1,5 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
+import {formatDateTime} from '@brightspace-ui/intl/lib/dateTime.js';
 import {QuickEvalLocalize} from '../QuickEvalLocalize.js';
 import '../../d2l-subtitle/d2l-subtitle.js';
 
@@ -39,7 +40,7 @@ class D2LQuickEvalActivityCardSubtitle extends QuickEvalLocalize(PolymerElement)
 		if (dueDate) {
 			const formattedDateTime = Date.parse(dueDate);
 			if (formattedDateTime) {
-				result.push(this.localize('due', 'date', this.formatDateTime(new Date(dueDate))));
+				result.push(this.localize('due', 'date', formatDateTime(new Date(dueDate))));
 			}
 		}
 		return result;
