@@ -47,7 +47,8 @@ class AssignmentEditorSecondary extends ErrorHandlingMixin(SaveStatusMixin(RtlMi
 			}
 
 			select {
-				width: 280px;
+				width: 100%;
+				max-width: 300px;
 				display: block;
 			}
 
