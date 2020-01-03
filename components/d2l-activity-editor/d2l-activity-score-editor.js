@@ -112,18 +112,6 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 		super._entity = entity;
 	}
 
-	_setGraded() {
-		this._inGrades = true;
-	}
-
-	_isUngraded() {
-		return !this._inGrades && this._scoreOutOf.length === 0;
-	}
-
-	_shouldCreateNewGradeItem() {
-		return this._scoreOutOf.length === 0 && !super._entity.inGrades();
-	}
-
 	updated(changedProperties) {
 		super.updated(changedProperties);
 
@@ -135,6 +123,18 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 				toFocus.focus();
 			}
 		});
+	}
+
+	_setGraded() {
+		this._inGrades = true;
+	}
+
+	_isUngraded() {
+		return !this._inGrades && this._scoreOutOf.length === 0;
+	}
+
+	_shouldCreateNewGradeItem() {
+		return this._scoreOutOf.length === 0 && !super._entity.inGrades();
 	}
 
 	_onScoreOutOfChanged() {
@@ -163,7 +163,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 	}
 
 	_addToGrades() {
-		if (!_isError()) {
+		if (!this._isError()) {
 			this.wrapSaveAction(super._entity.addToGrades());
 		}
 	}
