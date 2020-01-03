@@ -116,8 +116,8 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 		super.updated(changedProperties);
 
 		changedProperties.forEach((oldValue, propName) => {
-			if (propName === '_showUngraded') {
-				const toFocus = this._showUngraded ?
+			if (propName === '_inGrades') {
+				const toFocus = this._isUngraded() ?
 					this.shadowRoot.querySelector('#ungraded') :
 					this.shadowRoot.querySelector('#score-out-of');
 				toFocus.focus();
@@ -145,9 +145,8 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			return;
 		}
 		const isScoreEmpty = (scoreOutOf || '').trim().length === 0;
-		const scoreFloat = parseFloat(scoreOutOf);
-		const isScoreInvalid = scoreOutOf &&
-			(isNaN(scoreFloat) || scoreFloat < 0.01 || scoreFloat > 9999999999);
+		const isScoreInvalid = scoreOutOf && scoreOutOf.length !== 0 &&
+			(isNaN(scoreOutOf) || scoreOutOf < 0.01 || scoreOutOf > 9999999999);
 
 		const scoreErrorLangterm = isScoreEmpty ? 'emptyScoreOutOfError' : 'invalidScoreOutOfError';
 		const errorProperty = isScoreEmpty ? '_emptyScoreOutOfError' : '_invalidScoreOutOfError';
