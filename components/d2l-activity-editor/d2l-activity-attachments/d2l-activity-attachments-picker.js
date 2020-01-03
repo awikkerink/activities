@@ -102,7 +102,8 @@ class ActivityAttachmentsPicker extends connect(ActivityEditorMixin(LocalizeMixi
 			const quicklinkUrl = `/d2l/api/lp/unstable/${orgUnitId}/quickLinks/${event.m_typeKey}/${event.m_id}`;
 			const response = await fetch(quicklinkUrl);
 			const json = await response.json();
-			this.wrapSaveAction(superEntity.addLinkAttachment(event.m_title, json.QuickLink));
+			this._collection.addLinkAttachment(event.m_title, json.QuickLinkTemplate);
+			// this.wrapSaveAction(superEntity.addLinkAttachment(event.m_title, json.QuickLink));
 		});
 	}
 
@@ -131,7 +132,8 @@ class ActivityAttachmentsPicker extends connect(ActivityEditorMixin(LocalizeMixi
 		};
 
 		this._openDialog(opener, settings, event => {
-			this.wrapSaveAction(super._entity.addGoogleDriveLinkAttachment(event.m_title, event.m_url));
+			// this.wrapSaveAction(super._entity.addGoogleDriveLinkAttachment(event.m_title, event.m_url));
+			this._collection.addLinkAttachment(event.m_title, event.m_url);
 		});
 	}
 
@@ -144,7 +146,8 @@ class ActivityAttachmentsPicker extends connect(ActivityEditorMixin(LocalizeMixi
 		};
 
 		this._openDialog(opener, settings, event => {
-			this.wrapSaveAction(super._entity.addOneDriveLinkAttachment(event.m_title, event.m_url));
+			// this.wrapSaveAction(super._entity.addOneDriveLinkAttachment(event.m_title, event.m_url));
+			this._collection.addLinkAttachment(event.m_title, event.m_url);
 		});
 	}
 
