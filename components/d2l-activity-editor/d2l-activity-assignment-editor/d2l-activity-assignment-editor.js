@@ -3,6 +3,7 @@ import './d2l-activity-assignment-editor-detail.js';
 import './d2l-activity-assignment-editor-secondary.js';
 import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/templates/primary-secondary/primary-secondary.js';
+import 'd2l-save-status/d2l-save-status.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentActivityUsageEntity } from 'siren-sdk/src/activities/assignments/AssignmentActivityUsageEntity.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
@@ -50,6 +51,9 @@ class AssignmentEditor extends PendingContainerMixin(LocalizeMixin(RtlMixin(Enti
 				margin-left: 0.75rem;
 				margin-right: 0;
 			}
+			d2l-save-status {
+				display: inline-block;
+			}
 		`;
 	}
 
@@ -68,6 +72,20 @@ class AssignmentEditor extends PendingContainerMixin(LocalizeMixin(RtlMixin(Enti
 			this._onAssignmentActivityUsageChange(entity);
 			super._entity = entity;
 		}
+	}
+
+	firstUpdated(changedProperties) {
+		super.firstUpdated(changedProperties);
+
+		this.addEventListener('d2l-siren-entity-save-start', () => {
+			this.shadowRoot.querySelector('#save-status').start();
+		});
+		this.addEventListener('d2l-siren-entity-save-end', () => {
+			this.shadowRoot.querySelector('#save-status').end();
+		});
+		this.addEventListener('d2l-siren-entity-save-error', () => {
+			this.shadowRoot.querySelector('#save-status').error();
+		});
 	}
 
 	_onAssignmentActivityUsageChange(assignmentActivityUsage) {
@@ -113,6 +131,7 @@ class AssignmentEditor extends PendingContainerMixin(LocalizeMixin(RtlMixin(Enti
 					<div class="d2l-activity-assignment-editor-footer" slot="footer">
 						<d2l-button primary>${this.localize('btnSave')}</d2l-button>
 						<d2l-button>${this.localize('btnCancel')}</d2l-button>
+						<d2l-save-status id="save-status"></d2l-save-status>
 					</div>
 				</d2l-template-primary-secondary>
 			</d2l-activity-editor>
