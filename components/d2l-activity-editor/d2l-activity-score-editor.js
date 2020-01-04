@@ -24,7 +24,8 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			_emptyScoreOutOfError: { type: String },
 			_invalidScoreOutOfError: { type: String },
 			_inGrades: { type: Boolean },
-			_gradeType: { type: String }
+			_gradeType: { type: String },
+			_isUngraded: { type: Boolean }
 		};
 	}
 
@@ -89,6 +90,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 		this._scoreOutOf = '';
 		this._inGrades = false;
 		this._gradeType = '';
+		this._isUngraded = true;
 
 		this._tooltipBoundary = {
 			left: 5,
@@ -116,21 +118,13 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 		super.updated(changedProperties);
 
 		changedProperties.forEach((oldValue, propName) => {
-			if (propName === '_inGrades') {
-				const toFocus = this._isUngraded() ?
+			if (propName === '_isUngraded') {
+				const toFocus = this._isUngraded ?
 					this.shadowRoot.querySelector('#ungraded') :
 					this.shadowRoot.querySelector('#score-out-of');
 				toFocus.focus();
 			}
 		});
-	}
-
-	_setGraded() {
-		this._inGrades = true;
-	}
-
-	_isUngraded() {
-		return !this._inGrades && this._scoreOutOf.length === 0;
 	}
 
 	_onScoreOutOfChanged() {
@@ -172,9 +166,15 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 		}
 	}
 
+	_setGraded() {
+		this._isUngraded = false;
+		this._inGrades = true;
+	}
+
 	_setUngraded() {
 		this.clearError('_emptyScoreOutOfError');
 		this.clearError('_invalidScoreOutOfError');
+		this._isUngraded = true;
 		this.wrapSaveAction(super._entity.setUngraded());
 	}
 
@@ -184,7 +184,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 
 	render() {
 		return html`
-      		<div id="ungraded-button-container" ?hidden="${!this._isUngraded()}">
+      		<div id="ungraded-button-container" ?hidden="${!this._isUngraded}">
 				<button id="ungraded" class="ungraded d2l-input"
 					@click="${this._setGraded}"
 				>
@@ -192,7 +192,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 				</button>
 			</div>
 
-			<div id="score-info-container" ?hidden="${this._isUngraded()}">
+			<div id="score-info-container" ?hidden="${this._isUngraded}">
 				<d2l-input-text
 					id="score-out-of"
 					size=4
