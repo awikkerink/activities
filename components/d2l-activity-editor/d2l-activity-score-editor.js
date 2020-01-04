@@ -133,10 +133,6 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 		return !this._inGrades && this._scoreOutOf.length === 0;
 	}
 
-	_shouldCreateNewGradeItem() {
-		return this._scoreOutOf.length === 0 && !super._entity.inGrades();
-	}
-
 	_onScoreOutOfChanged() {
 		this.clearError('_emptyScoreOutOfError');
 		this.clearError('_invalidScoreOutOfError');
@@ -157,7 +153,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			this.setError(errorProperty, scoreErrorLangterm, tooltipId);
 		} else {
 			this.clearError(errorProperty);
-			this.wrapSaveAction(super._entity.setScoreOutOf(scoreOutOf, this._shouldCreateNewGradeItem()));
+			this.wrapSaveAction(super._entity.setScoreOutOf(scoreOutOf, this._inGrades));
 		}
 	}
 
