@@ -46,6 +46,7 @@ export const LangTr = {
 	'newPosts': 'Yeni Gönderiler',
 	'newSubmissionDetails': '{newNum, plural, =0 {{resub, plural, =1 {1 yeniden gönderim} other {{resub} yeniden gönderim}}} other {{resub, plural, =0 {{newNum} new} =1{{newNum} new, 1 yeniden gönderim} other {{newNum} new, {resub} yeniden gönderim}}}}',
 	'newSubmissions': 'Yeni Gönderim Kutusu Gönderimleri',
+	'nextSubmission': 'Next Submission',
 	'no': 'Hayır',
 	'noCriteriaMatch': 'Kriterinizle eşleşen gönderi yok.',
 	'noCriteriaMatchActivities': 'Kriterinizle eşleşen etkinlik yok.',

@@ -58,6 +58,16 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 				<div class="radio-container">
 					<label class="d2l-input-radio-label">
 						<input
+						id="dismiss-action-dialog-radio-input-nextSubmission"
+						type="radio"
+						name="${groupID}"
+						.checked="${this.selectedRadio === DISMISS_TYPES.nextSubmission}"
+						@change="${this._updateProp.bind(this, DISMISS_TYPES.nextSubmission)}">
+						${this.localize('nextSubmission')}
+					</label>
+					<label class="d2l-input-radio-label">
+						<input
+						id="dismiss-action-dialog-radio-input-specificDate"
 						type="radio"
 						name="${groupID}"
 						.checked="${this.selectedRadio === DISMISS_TYPES.date}"
@@ -67,6 +77,7 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 					${this.renderDatePicker(this.selectedRadio)}
 					<label class="d2l-input-radio-label">
 						<input
+						id="dismiss-action-dialog-radio-input-forever"
 						type="radio"
 						name="${groupID}"
 						.checked="${this.selectedRadio === DISMISS_TYPES.forever}"
@@ -82,6 +93,13 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 				<d2l-button slot="footer" dialog-action>${this.localize('cancel')}</d2l-button>
 			</d2l-dialog>
 		`;
+	}
+
+	updated(changedProperties) {
+		super.updated();
+		if (changedProperties.has('selectedRadio')) {
+			this._getDialog().resize();
+		}
 	}
 
 	_clearSelectedOptions() {
@@ -127,6 +145,7 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 						placeholder="MM|DD|YYYY"
 						min="${minDate}"
 						hide-label
+						always-show-time
 					></d2l-datetime-picker>
 				</div>
 			`;

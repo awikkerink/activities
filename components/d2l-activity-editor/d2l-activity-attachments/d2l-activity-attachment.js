@@ -23,7 +23,6 @@ class ActivityAttachment extends EntityMixinLit(LitElement) {
 	constructor() {
 		super();
 		this._setEntityType(AttachmentEntity);
-		this._attachment = {};
 	}
 
 	set _entity(entity) {
@@ -49,6 +48,10 @@ class ActivityAttachment extends EntityMixinLit(LitElement) {
 	}
 
 	render() {
+		if (!this._attachment) {
+			return html``;
+		}
+
 		return html`
 			<d2l-labs-attachment
 				attachmentId="${this._attachment.id}"
