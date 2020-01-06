@@ -135,8 +135,24 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 				.d2l-body-standard {
 					@apply --d2l-body-compact-text;
 				}
+				.d2l-quick-eval-activities-course-name-heading {
+					@apply --d2l-heading-3;
+					margin-top: 0.9rem;
+					margin-bottom: 0.6rem;
+					max-width: 24rem;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					overflow: hidden;
+				}
+				@media (min-width: 525px) {
+					.d2l-quick-eval-activities-course-name-heading {
+						margin-top: 1.8rem;
+						margin-bottom: .8rem;
+					}
+				}
 			</style>
 			<d2l-offscreen id$="[[_tableDescriptionId]]">[[localize('tableTitle')]]</d2l-offscreen>
+			<h2 title="TODO CHANGE" class="d2l-quick-eval-activities-course-name-heading">TODO CHANGE</h2>			
 			<d2l-table class="d2l-quick-eval-table" type="light" hidden$="[[showLoadingSkeleton]]" aria-describedby$="[[_tableDescriptionId]]" aria-colcount$="[[_headerColumns.length]]" aria-rowcount$="[[_data.length]]">
 				<d2l-thead>
 					<d2l-tr>
