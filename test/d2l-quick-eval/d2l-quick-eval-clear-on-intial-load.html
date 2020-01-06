@@ -62,7 +62,6 @@
 							module._loadData(entity)
 								.then(() => {
 									assert.isFalse(module._initialLoad);
-									assert.isTrue(clearSpy.calledOnce);
 									assert.isTrue(module._loading);
 									done();
 								});
