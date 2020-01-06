@@ -4,8 +4,8 @@ import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/Assignmen
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { getLocalizeResources } from '../localization.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
-import { SaveStatusMixin } from '../save-status-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
+import { SaveStatusMixin } from '../save-status-mixin.js';
 
 class AssignmentEditorFooter extends SaveStatusMixin(EntityMixinLit(RtlMixin(LocalizeMixin(LitElement)))) {
 
@@ -17,26 +17,26 @@ class AssignmentEditorFooter extends SaveStatusMixin(EntityMixinLit(RtlMixin(Loc
 
 	static get styles() {
 		return css`
-            :host {
-                display: flex;
-            }
-            :host([hidden]) {
-                display: none;
-            }
-            d2l-button {
-                margin-right: 0.75rem;
-            }
-            :host([dir="rtl"]) d2l-button {
-                margin-left: 0.75rem;
-                margin-right: 0;
-            }
-            d2l-activity-visibility-editor {
-                display: inline-block;
-            }
-            .d2l-activity-assignment-editor-footer-left {
-                flex: 1;
-            }
-        `;
+			:host {
+				display: flex;
+			}
+			:host([hidden]) {
+				display: none;
+			}
+			d2l-button {
+				margin-right: 0.75rem;
+			}
+			:host([dir="rtl"]) d2l-button {
+				margin-left: 0.75rem;
+				margin-right: 0;
+			}
+			d2l-activity-visibility-editor {
+				display: inline-block;
+			}
+			.d2l-activity-assignment-editor-footer-left {
+				flex: 1;
+			}
+		`;
 	}
 
 	static async getLocalizeResources(langs) {
@@ -66,18 +66,18 @@ class AssignmentEditorFooter extends SaveStatusMixin(EntityMixinLit(RtlMixin(Loc
 	}
 
 	render() {
-        return html`
-            <div class="d2l-activity-assignment-editor-footer-left">
-                <d2l-button primary>${this.localize('btnSave')}</d2l-button>
-                <d2l-button>${this.localize('btnCancel')}</d2l-button>
-                <d2l-activity-visibility-editor
-                    href="${this._activityUsageHref}"
-                    .token="${this.token}">
-                </d2l-activity-visibility-editor>
-            </div>
-            <div class="d2l-activity-assignment-editor-footer-right">
-                <slot name="save-status"></slot>
-            </div>
+		return html`
+			<div class="d2l-activity-assignment-editor-footer-left">
+				<d2l-button primary>${this.localize('btnSave')}</d2l-button>
+				<d2l-button>${this.localize('btnCancel')}</d2l-button>
+				<d2l-activity-visibility-editor
+					href="${this._activityUsageHref}"
+					.token="${this.token}">
+				</d2l-activity-visibility-editor>
+			</div>
+			<div class="d2l-activity-assignment-editor-footer-right">
+				<slot name="save-status"></slot>
+			</div>
 		`;
 	}
 }
