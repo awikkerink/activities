@@ -1,5 +1,7 @@
 import 'd2l-inputs/d2l-input-text.js';
+import 'd2l-tooltip/d2l-tooltip';
 import '../d2l-activity-due-date-editor.js';
+import '../d2l-activity-score-editor.js';
 import '../d2l-activity-text-editor.js';
 import '../d2l-activity-visibility-editor.js';
 import '../d2l-activity-attachments/d2l-activity-attachments-editor.js';
@@ -185,6 +187,13 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				</d2l-activity-attachments-editor>
 			</div>
 
+			<div id="score-container">
+				<label class="d2l-label-text">${this.localize('scoreOutOf')}</label>
+				<d2l-activity-score-editor
+					href="${this._activityUsageHref}"
+					.token="${this.token}">
+				</d2l-activity-score-editor>
+			</div>
 		`;
 	}
 }

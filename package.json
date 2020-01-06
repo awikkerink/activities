@@ -74,6 +74,7 @@
     "d2l-common": "BrightspaceHypermediaComponents/common#semver:^2",
     "d2l-course-image": "Brightspace/course-image#semver:^3",
     "d2l-datetime-picker": "BrightspaceUI/datetime-picker#semver:^4",
+    "d2l-dropdown": "BrightspaceUI/dropdown#semver:^7",
     "d2l-fetch": "Brightspace/d2l-fetch.git#semver:^2",
     "d2l-html-editor": "Brightspace/d2l-html-editor#semver:^2",
     "d2l-hypermedia-constants": "Brightspace/d2l-hypermedia-constants#semver:^6",
