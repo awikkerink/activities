@@ -1,7 +1,7 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { repeat } from 'lit-html/directives/repeat';
 import { until } from 'lit-html/directives/until.js';
-import { heading1Styles, heading4Styles, bodyCompactStyles, labelStyles} from '@brightspace-ui/core/components/typography/styles.js';
+import { heading1Styles, heading4Styles, bodyCompactStyles, bodyStandardStyles, labelStyles} from '@brightspace-ui/core/components/typography/styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
 import { classes as organizationClasses } from 'siren-sdk/src/organizations/OrganizationEntity.js';
@@ -180,7 +180,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	}
 
 	static get styles() {
-		return [ heading1Styles, heading4Styles, bodyCompactStyles, labelStyles, css`
+		return [ heading1Styles, heading4Styles, bodyCompactStyles, bodyStandardStyles, labelStyles, css`
 			:host {
 				display: block;
 			}
@@ -317,6 +317,13 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 
 			.d2l-activity-collection-skeleton-rect {
 				animation: loadingPulse 1.8s linear infinite;
+			}
+
+			.d2l-activity-collection-no-activity {
+				background-color: var(--d2l-color-regolith);
+				border: solid 1px var(--d2l-color-gypsum);
+				border-radius: 8px;
+				padding: 2.1rem 2rem;
 			}
 
 			@media only screen and (max-width: 929px) {
@@ -503,6 +510,9 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	}
 
 	_renderItemList() {
+		if (this._items.length <= 0) {
+			return html`<div class="d2l-activity-collection-no-activity d2l-body-standard">${this.localize('noActivitiesInLearningPath')}</div>`;
+		}
 		const items = repeat(this._items, (item) => item.self(), item => {
 			return html`
 				<d2l-list-item>
