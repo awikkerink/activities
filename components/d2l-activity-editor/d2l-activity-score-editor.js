@@ -5,9 +5,9 @@ import '@brightspace-ui/core/components/inputs/input-text.js';
 import 'd2l-dropdown/d2l-dropdown.js';
 import 'd2l-dropdown/d2l-dropdown-menu.js';
 import 'd2l-tooltip/d2l-tooltip';
+import { bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
-import { bodyCompactStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { ErrorHandlingMixin } from './error-handling-mixin.js';
 import { getLocalizeResources } from './localization';
@@ -35,6 +35,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 	static get styles() {
 		return [
 			bodyCompactStyles,
+			labelStyles,
 			inputStyles,
 			css`
 			:host {
@@ -84,19 +85,11 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 				background: none;
 				outline: none;
 				border-radius: 0.3rem;
-				padding: .5rem .75rem .4rem;
+				padding: .5rem .6rem;
 				cursor: pointer;
 			}
-			.grade-info:hover,
-			.grade-info:focus {
-				border-color: var(--d2l-color-mica);
-			}
-			.grade-info:hover span,
-			.grade-info:focus span {
-				color: var(--d2l-color-celestine);
-			}
 			.grade-info > * {
-				margin-right: 0.5rem;
+				margin-right: 0.3rem;
 			}
 			.grade-info > *:last-child {
 				margin-right: 0;
@@ -107,6 +100,24 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			}
 			:host([dir="rtl"]) .grade-info > *:last-child {
 				margin-left: 0;
+			}
+			.grade-info:hover,
+			.grade-info[active] {
+				border-color: var(--d2l-color-mica);
+			}
+			.grade-info:focus {
+				border-color: var(--d2l-color-celestine);
+				border-width: 2px;
+				padding: calc(.5rem - 1px) calc(.6rem - 1px);
+			}
+			.grade-info:hover > *,
+			.grade-info:focus > * {
+				color: var(--d2l-color-celestine-minus-1);
+			}
+			button {
+				/* needed otherwise user agent style overrides this */
+				font-family: inherit;
+				color: inherit;
 			}
 			`
 		];
@@ -259,7 +270,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 				<div id="grade-info-container" ?hidden="${!this._canSeeGrades}">
 					<div class="divider"></div>
 					<d2l-dropdown>
-						<button class="grade-info d2l-dropdown-opener">
+						<button class="d2l-label-text grade-info d2l-dropdown-opener">
 							<d2l-icon icon="tier1:grade" ?hidden="${!this._inGrades}"></d2l-icon>
 							<span>${this._inGrades ? this.localize('inGrades') : this.localize('notInGrades')}</span>
 							<d2l-icon icon="tier1:chevron-down"></d2l-icon>
