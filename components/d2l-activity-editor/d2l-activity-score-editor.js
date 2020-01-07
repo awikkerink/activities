@@ -111,6 +111,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			}
 			this._inGrades = entity.inGrades();
 			this._gradeType = entity.gradeType() || 'Points';
+			this._isUngraded = !this._inGrades && this._scoreOutOf.length === 0;
 		}
 
 		super._entity = entity;
@@ -162,7 +163,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 	_removeFromGrades() {
 		this.clearError('_emptyScoreOutOfError');
 		if (this._scoreOutOf.length === 0) {
-			this._setUngraded();
+			this._inGrades = false;
 		} else {
 			this.wrapSaveAction(super._entity.removeFromGrades());
 		}
