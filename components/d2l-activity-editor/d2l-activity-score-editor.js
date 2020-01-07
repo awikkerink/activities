@@ -45,11 +45,17 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 				display: none;
 			}
 			d2l-input-text,
-			.ungraded {
+			#ungraded {
 				width: auto;
 			}
-			.ungraded {
+			#ungraded {
 				cursor: pointer;
+				--d2l-input-padding: 0.4rem 1.65rem 0.4rem 0.75rem;
+				--d2l-input-padding-focus: calc(0.4rem - 1px) calc(1.65rem - 1px) calc(0.4rem - 1px) calc(0.75rem - 1px);
+			}
+			:host([dir="rtl"]) #ungraded {
+				--d2l-input-padding: 0.4rem 0.75rem 0.4rem 1.65rem;
+				--d2l-input-padding-focus: calc(0.4rem - 1px) calc(0.75rem - 1px) calc(0.4rem - 1px) calc(1.65rem - 1px);
 			}
 			.grade-info {
 				border: 1px solid transparent;
@@ -195,8 +201,8 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 
 	render() {
 		return html`
-      		<div id="ungraded-button-container" ?hidden="${!this._isUngraded}">
-				<button id="ungraded" class="ungraded d2l-input"
+			<div id="ungraded-button-container" ?hidden="${!this._isUngraded}">
+				<button id="ungraded" class="d2l-input"
 					@click="${this._setGraded}"
 				>
 					${this.localize('ungraded')}
