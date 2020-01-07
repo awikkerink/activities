@@ -7,7 +7,7 @@ describe('d2l-quick-eval-view-toggle-button', function() {
 
 	let browser, page;
 
-	before(async() => {
+	beforeEach(async() => {
 		browser = await puppeteer.launch();
 		page = await browser.newPage();
 		await page.setViewport({width: 900, height: 800, deviceScaleFactor: 2});
@@ -15,7 +15,7 @@ describe('d2l-quick-eval-view-toggle-button', function() {
 		await page.bringToFront();
 	});
 
-	after(() => browser.close());
+	afterEach(() => browser.close());
 
 	['basic', 'right', 'left', 'selected'].forEach((name) => {
 		describe(name, () => {
@@ -25,9 +25,10 @@ describe('d2l-quick-eval-view-toggle-button', function() {
 					switch (state) {
 						case 'hover':
 							await page.hover(selector);
+							await page.waitFor(1000);
 							break;
 						case 'focus':
-							await page.focus(selector);
+							await focus(page, selector);
 							break;
 						case 'click':
 							await page.click(selector);
@@ -40,4 +41,9 @@ describe('d2l-quick-eval-view-toggle-button', function() {
 		});
 	});
 
+	async function focus(page, selector) {
+		await page.evaluate((selector) => {
+			document.querySelector(selector).shadowRoot.querySelector('button').focus();
+		}, selector);
+	}
 });
