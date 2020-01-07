@@ -172,13 +172,15 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 		this.selectedCount = activitiesToRestore.length;
 		const failures = [];
 
-		for (const act of activitiesToRestore) {
-			try {
-				await this.performSirenAction(act.unDismiss);
-			} catch (err) {
-				failures.push(err);
-			}
-		}
+		await Promise.all(
+			activitiesToRestore.map(async act => {
+				try {
+					await this.performSirenAction(act.unDismiss);
+				} catch (err) {
+					failures.push(err);
+				}
+			})
+		);
 
 		this.failedCount = failures.length;
 
