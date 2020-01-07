@@ -40,7 +40,9 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			:host([hidden]) {
 				display: none;
 			}
-			d2l-input-text,
+			d2l-input-text {
+				width: 4rem;
+			}
 			.ungraded {
 				width: auto;
 			}
@@ -183,6 +185,8 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 	}
 
 	render() {
+		const minScore = 0.01;
+		const maxScore = 9999999999;
 		return html`
       		<div id="ungraded-button-container" ?hidden="${!this._isUngraded}">
 				<button id="ungraded" class="ungraded d2l-input"
@@ -195,10 +199,13 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			<div id="score-info-container" ?hidden="${this._isUngraded}">
 				<d2l-input-text
 					id="score-out-of"
-					size=4
+					type="number"
 					label="${this.localize('scoreOutOf')}"
 					label-hidden
 					value="${this._scoreOutOf}"
+					min="${minScore}"
+					max="${maxScore}"
+					step="any"
 					@change="${this._onScoreOutOfChanged}"
 					aria-invalid="${this._isError() ? 'true' : ''}"
 				></d2l-input-text>
