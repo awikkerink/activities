@@ -275,7 +275,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 							<span>${this._inGrades ? this.localize('inGrades') : this.localize('notInGrades')}</span>
 							<d2l-icon icon="tier1:chevron-down"></d2l-icon>
 						</button>
-						<d2l-dropdown-menu id="grade-dropdown">
+						<d2l-dropdown-menu id="grade-dropdown" align="start" no-pointer vertical-offset="3px">
 							<d2l-menu label="${this._inGrades ? this.localize('inGrades') : this.localize('notInGrades')}">
 								<d2l-menu-item
 									text="${this.localize('addToGrades')}"
