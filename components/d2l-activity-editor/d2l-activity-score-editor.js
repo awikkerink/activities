@@ -7,7 +7,7 @@ import 'd2l-dropdown/d2l-dropdown-menu.js';
 import 'd2l-tooltip/d2l-tooltip';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
-import { bodySmallStyles } from '@brightspace-ui/core/components/typography/styles.js';
+import { bodyCompactStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { ErrorHandlingMixin } from './error-handling-mixin.js';
 import { getLocalizeResources } from './localization';
@@ -34,7 +34,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 
 	static get styles() {
 		return [
-			bodySmallStyles,
+			bodyCompactStyles,
 			inputStyles,
 			css`
 			:host {
@@ -56,6 +56,17 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			:host([dir="rtl"]) #ungraded {
 				--d2l-input-padding: 0.4rem 0.75rem 0.4rem 1.65rem;
 				--d2l-input-padding-focus: calc(0.4rem - 1px) calc(0.75rem - 1px) calc(0.4rem - 1px) calc(1.65rem - 1px);
+			}
+			#score-info-container,
+			#score-out-of-container {
+				display: flex;
+				align-items: baseline;
+			}
+			.grade-type-text {
+				margin: 0 0.6rem;
+			}
+			#grade-info-container {
+				border-left: solid 1px var(--d2l-color-galena);
 			}
 			.grade-info {
 				border: 1px solid transparent;
@@ -121,7 +132,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 				this._scoreOutOf = entity.scoreOutOf();
 			}
 			this._inGrades = entity.inGrades();
-			this._gradeType = entity.gradeType() || 'Points';
+			this._gradeType = (entity.gradeType() || 'Points').toLowerCase();
 			this._isUngraded = !this._inGrades && !this._scoreOutOf;
 			this._canEditScoreOutOf = entity.canEditScoreOutOf();
 			this._canSeeGrades = entity.canSeeGrades();
@@ -210,54 +221,57 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			</div>
 
 			<div id="score-info-container" ?hidden="${this._isUngraded}">
-				<d2l-input-text
-					id="score-out-of"
-					label="${this.localize('scoreOutOf')}"
-					label-hidden
-					value="${this._scoreOutOf}"
-					size=4
-					@change="${this._onScoreOutOfChanged}"
-					aria-invalid="${this._isError() ? 'true' : ''}"
-					?disabled="${!this._canEditScoreOutOf}"
-				></d2l-input-text>
-				<d2l-tooltip
-					?hidden="${!this._isError()}"
-					id="score-tooltip"
-					for="score-out-of"
-					position="bottom"
-					?showing="${this._isError()}"
-					.boundary="${this._tooltipBoundary}"
-				>
-					<span ?hidden="${!this._emptyScoreOutOfError}">${this._emptyScoreOutOfError}</span>
-					<span ?hidden="${!this._invalidScoreOutOfError}">${this._invalidScoreOutOfError}</span>
-				</d2l-tooltip>
-				<span class="d2l-body-small">${this._gradeType}</span>
-				<d2l-icon ?hidden="${!this._canSeeGrades}" icon="tier1:divider-solid"></d2l-icon>
-				<d2l-dropdown ?hidden="${!this._canSeeGrades}">
-					<button class="grade-info d2l-dropdown-opener">
-						<d2l-icon icon="tier1:grade" ?hidden="${!this._inGrades}"></d2l-icon>
-						<span>${this._inGrades ? this.localize('inGrades') : this.localize('notInGrades')}</span>
-						<d2l-icon icon="tier1:chevron-down"></d2l-icon>
-					</button>
-					<d2l-dropdown-menu id="grade-dropdown">
-						<d2l-menu label="${this._inGrades ? this.localize('inGrades') : this.localize('notInGrades')}">
-							<d2l-menu-item
-								text="${this.localize('addToGrades')}"
-								?hidden="${this._inGrades || !this._canEditGrades}"
-								@d2l-menu-item-select="${this._addToGrades}"
-							></d2l-menu-item>
-							<d2l-menu-item
-								text="${this.localize('removeFromGrades')}"
-								?hidden="${!this._inGrades || !this._canEditGrades}"
-								@d2l-menu-item-select="${this._removeFromGrades}"
-							></d2l-menu-item>
-							<d2l-menu-item
-								text="${this.localize('setUngraded')}"
-								@d2l-menu-item-select="${this._setUngraded}"
-							></d2l-menu-item>
-						</d2l-menu>
-					</d2l-dropdown-menu>
-				</d2l-dropdown>
+				<div id="score-out-of-container">
+					<d2l-input-text
+						id="score-out-of"
+						label="${this.localize('scoreOutOf')}"
+						label-hidden
+						value="${this._scoreOutOf}"
+						size=4
+						@change="${this._onScoreOutOfChanged}"
+						aria-invalid="${this._isError() ? 'true' : ''}"
+						?disabled="${!this._canEditScoreOutOf}"
+					></d2l-input-text>
+					<d2l-tooltip
+						?hidden="${!this._isError()}"
+						id="score-tooltip"
+						for="score-out-of"
+						position="bottom"
+						?showing="${this._isError()}"
+						.boundary="${this._tooltipBoundary}"
+					>
+						<span ?hidden="${!this._emptyScoreOutOfError}">${this._emptyScoreOutOfError}</span>
+						<span ?hidden="${!this._invalidScoreOutOfError}">${this._invalidScoreOutOfError}</span>
+					</d2l-tooltip>
+					<div class="d2l-body-compact grade-type-text">${this._gradeType}</div>
+				</div>
+				<div id="grade-info-container" ?hidden="${!this._canSeeGrades}">
+					<d2l-dropdown>
+						<button class="grade-info d2l-dropdown-opener">
+							<d2l-icon icon="tier1:grade" ?hidden="${!this._inGrades}"></d2l-icon>
+							<span>${this._inGrades ? this.localize('inGrades') : this.localize('notInGrades')}</span>
+							<d2l-icon icon="tier1:chevron-down"></d2l-icon>
+						</button>
+						<d2l-dropdown-menu id="grade-dropdown">
+							<d2l-menu label="${this._inGrades ? this.localize('inGrades') : this.localize('notInGrades')}">
+								<d2l-menu-item
+									text="${this.localize('addToGrades')}"
+									?hidden="${this._inGrades || !this._canEditGrades}"
+									@d2l-menu-item-select="${this._addToGrades}"
+								></d2l-menu-item>
+								<d2l-menu-item
+									text="${this.localize('removeFromGrades')}"
+									?hidden="${!this._inGrades || !this._canEditGrades}"
+									@d2l-menu-item-select="${this._removeFromGrades}"
+								></d2l-menu-item>
+								<d2l-menu-item
+									text="${this.localize('setUngraded')}"
+									@d2l-menu-item-select="${this._setUngraded}"
+								></d2l-menu-item>
+							</d2l-menu>
+						</d2l-dropdown-menu>
+					</d2l-dropdown>
+				</div>
 			</div>
 		`;
 	}
