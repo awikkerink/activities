@@ -43,7 +43,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			}
 			:host([hidden]),
 			[hidden] {
-				display: none;
+				display: none !important;
 			}
 			d2l-input-text,
 			#ungraded {
