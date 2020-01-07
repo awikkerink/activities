@@ -58,15 +58,26 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 				--d2l-input-padding-focus: calc(0.4rem - 1px) calc(0.75rem - 1px) calc(0.4rem - 1px) calc(1.65rem - 1px);
 			}
 			#score-info-container,
-			#score-out-of-container {
+			#score-out-of-container,
+			#grade-info-container {
 				display: flex;
 				align-items: baseline;
 			}
 			.grade-type-text {
-				margin: 0 0.6rem;
+				margin: 0 0.75rem 0 0.6rem;
 			}
-			#grade-info-container {
+			:host([dir="rtl"]) .grade-type-text {
+				margin: 0 0.6rem 0 0.75rem;
+			}
+			.divider {
+				height: 1.5rem;
+				align-self: center;
 				border-left: solid 1px var(--d2l-color-galena);
+				margin-right: 0.3rem;
+			}
+			:host([dir="rtl"]) .divider {
+				margin-right: 0;
+				margin-left: 0.3rem;
 			}
 			.grade-info {
 				border: 1px solid transparent;
@@ -246,6 +257,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 					<div class="d2l-body-compact grade-type-text">${this._gradeType}</div>
 				</div>
 				<div id="grade-info-container" ?hidden="${!this._canSeeGrades}">
+					<div class="divider"></div>
 					<d2l-dropdown>
 						<button class="grade-info d2l-dropdown-opener">
 							<d2l-icon icon="tier1:grade" ?hidden="${!this._inGrades}"></d2l-icon>
