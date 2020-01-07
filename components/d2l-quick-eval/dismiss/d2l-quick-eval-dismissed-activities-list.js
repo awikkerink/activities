@@ -1,3 +1,4 @@
+import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime.js';
 import { html, LitElement } from 'lit-element/lit-element.js';
 import { LitQuickEvalLocalize } from '../LitQuickEvalLocalize.js';
 import '@brightspace-ui/core/components/list/list.js';
@@ -30,7 +31,7 @@ class D2LQuickEvalDismissedActivitiesList extends LitQuickEvalLocalize(LitElemen
 	_computeSubtitleText(act) {
 		const result = [act.course];
 		if (act.dismissedDate) {
-			result.push(this.localize('dismissedOn', {date: this.formatDateTime(new Date(act.dismissedDate))}));
+			result.push(this.localize('dismissedOn', {date: formatDateTime(new Date(act.dismissedDate))}));
 		}
 		return result;
 	}
