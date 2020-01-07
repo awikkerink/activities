@@ -21,11 +21,14 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 	static get properties() {
 		return {
 			_scoreOutOf: { type: String },
+			_canEditScoreOutOf: { type: Boolean },
 			_emptyScoreOutOfError: { type: String },
 			_invalidScoreOutOfError: { type: String },
 			_inGrades: { type: Boolean },
 			_gradeType: { type: String },
-			_isUngraded: { type: Boolean }
+			_isUngraded: { type: Boolean },
+			_canSeeGrades: { type: Boolean },
+			_canEditGrades: { type: Boolean }
 		};
 	}
 
@@ -37,7 +40,8 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			:host {
 				display: block;
 			}
-			:host([hidden]) {
+			:host([hidden]),
+			[hidden] {
 				display: none;
 			}
 			d2l-input-text {
@@ -93,6 +97,9 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 		this._inGrades = false;
 		this._gradeType = '';
 		this._isUngraded = true;
+		this._canEditScoreOutOf = false;
+		this._canSeeGrades = false;
+		this._canEditGrades = false;
 
 		this._tooltipBoundary = {
 			left: 5,
@@ -112,6 +119,9 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			this._inGrades = entity.inGrades();
 			this._gradeType = entity.gradeType() || 'Points';
 			this._isUngraded = !this._inGrades && this._scoreOutOf.length === 0;
+			this._canEditScoreOutOf = entity.canEditScoreOutOf();
+			this._canSeeGrades = entity.canSeeGrades();
+			this._canEditGrades = entity.canEditGrades();
 		}
 
 		super._entity = entity;
@@ -171,7 +181,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 
 	_setGraded() {
 		this._isUngraded = false;
-		this._inGrades = true;
+		this._inGrades = this._canEditGrades;
 	}
 
 	_setUngraded() {
@@ -209,6 +219,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 					step="any"
 					@change="${this._onScoreOutOfChanged}"
 					aria-invalid="${this._isError() ? 'true' : ''}"
+					?disabled="${!this._canEditScoreOutOf}"
 				></d2l-input-text>
 				<d2l-tooltip
 					?hidden="${!this._isError()}"
@@ -222,8 +233,8 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 					<span ?hidden="${!this._invalidScoreOutOfError}">${this._invalidScoreOutOfError}</span>
 				</d2l-tooltip>
 				<span class="d2l-body-small">${this._gradeType}</span>
-				<d2l-icon icon="tier1:divider-solid"></d2l-icon>
-				<d2l-dropdown>
+				<d2l-icon ?hidden="${!this._canSeeGrades}" icon="tier1:divider-solid"></d2l-icon>
+				<d2l-dropdown ?hidden="${!this._canSeeGrades}">
 					<button class="grade-info d2l-dropdown-opener">
 						<d2l-icon icon="tier1:grade" ?hidden="${!this._inGrades}"></d2l-icon>
 						<span>${this._inGrades ? this.localize('inGrades') : this.localize('notInGrades')}</span>
@@ -233,12 +244,12 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 						<d2l-menu label="${this._inGrades ? this.localize('inGrades') : this.localize('notInGrades')}">
 							<d2l-menu-item
 								text="${this.localize('addToGrades')}"
-								?hidden="${this._inGrades}"
+								?hidden="${this._inGrades || !this._canEditGrades}"
 								@d2l-menu-item-select="${this._addToGrades}"
 							></d2l-menu-item>
 							<d2l-menu-item
 								text="${this.localize('removeFromGrades')}"
-								?hidden="${!this._inGrades}"
+								?hidden="${!this._inGrades || !this._canEditGrades}"
 								@d2l-menu-item-select="${this._removeFromGrades}"
 							></d2l-menu-item>
 							<d2l-menu-item
