@@ -99,8 +99,8 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						max-width: 100%;
 					}
 					d2l-quick-eval-activity-card-new-submissions {
-						flex-grow: 1;
 						border: none;
+						flex-grow: 1;
 						padding-top: .9rem;
 						width: 25%;
 					}
@@ -176,12 +176,15 @@ class D2LQuickEvalActivityCard extends QuickEvalLocalize(PolymerElement) {
 						padding: 0;
 						order: -1;
 					}
-					d2l-quick-eval-activity-card-new-submissions,
+					d2l-quick-eval-activity-card-new-submissions {
+						height: 2.5rem;
+						width: 7.5rem;
+					}
 					.d2l-quick-eval-card-meters span,
 					.d2l-quick-eval-card-actions d2l-quick-eval-activity-card-action-button,
 					.d2l-quick-eval-card-actions d2l-quick-eval-activity-card-action-button-more {
-						width: 7.5rem;
 						height: 3rem;
+						width: 7.5rem;
 					}
 					[not-seen-desktop] {
 						opacity: 0;

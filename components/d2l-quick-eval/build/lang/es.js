@@ -46,6 +46,7 @@ export const LangEs = {
 	'newPosts': 'Nuevas publicaciones',
 	'newSubmissionDetails': '{newNum, plural, =0 {{resub, plural, =1 {1 reenvío} other {{resub} reenvíos}}} other {{resub, plural, =0 {{newNum} new} =1{{newNum} new, 1 reenvío} other {{newNum} new, {resub} reenvíos}}}}',
 	'newSubmissions': 'Nuevos materiales enviados',
+	'nextSubmission': 'Next Submission',
 	'no': 'No',
 	'noCriteriaMatch': 'No hay materiales enviados que coincidan con sus criterios.',
 	'noCriteriaMatchActivities': 'No hay actividades que coincidan con sus criterios.',

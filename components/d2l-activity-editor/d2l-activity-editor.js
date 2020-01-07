@@ -1,4 +1,3 @@
-import 'd2l-save-status/d2l-save-status.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 
 class ActivityEditor extends LitElement {
@@ -21,29 +20,14 @@ class ActivityEditor extends LitElement {
 		return css`
 			:host {
 				display: block;
-				padding: 20px;
 			}
 			:host([hidden]) {
 				display: none;
 			}
-			d2l-save-status {
-				padding-bottom: 20px;
+			.d2l-activity-editor-loading {
+				padding: 20px;
 			}
 		`;
-	}
-
-	firstUpdated(changedProperties) {
-		super.firstUpdated(changedProperties);
-
-		this.addEventListener('d2l-siren-entity-save-start', () => {
-			this.shadowRoot.querySelector('#save-status').start();
-		});
-		this.addEventListener('d2l-siren-entity-save-end', () => {
-			this.shadowRoot.querySelector('#save-status').end();
-		});
-		this.addEventListener('d2l-siren-entity-save-error', () => {
-			this.shadowRoot.querySelector('#save-status').error();
-		});
 	}
 
 	_onRequestProvider(e) {
@@ -97,16 +81,11 @@ class ActivityEditor extends LitElement {
 
 	render() {
 		return html`
-			<d2l-save-status
-				id="save-status">
-			</d2l-save-status>
-			<div ?hidden="${!this.loading}">Loading ...</div>
+			<div class="d2l-activity-editor-loading" ?hidden="${!this.loading}">Loading ...</div>
 			<div
 				?hidden="${this.loading}"
 				@d2l-request-provider="${this._onRequestProvider}">
-
 				<slot name="editor"></slot>
-
 			</div>
 		`;
 	}

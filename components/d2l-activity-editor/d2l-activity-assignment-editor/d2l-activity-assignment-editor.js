@@ -1,5 +1,9 @@
 import '../d2l-activity-editor.js';
 import './d2l-activity-assignment-editor-detail.js';
+import './d2l-activity-assignment-editor-secondary.js';
+import './d2l-activity-assignment-editor-footer.js';
+import '@brightspace-ui/core/templates/primary-secondary/primary-secondary.js';
+import 'd2l-save-status/d2l-save-status.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentActivityUsageEntity } from 'siren-sdk/src/activities/assignments/AssignmentActivityUsageEntity.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
@@ -34,6 +38,12 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 			:host([hidden]) {
 				display: none;
 			}
+			.d2l-activity-assignment-editor-detail-panel, .d2l-activity-assignment-editor-secondary-panel {
+				padding: 20px;
+			}
+			d2l-save-status {
+				display: inline-block;
+			}
 		`;
 	}
 
@@ -48,6 +58,20 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 			this._onAssignmentActivityUsageChange(entity);
 			super._entity = entity;
 		}
+	}
+
+	firstUpdated(changedProperties) {
+		super.firstUpdated(changedProperties);
+
+		this.addEventListener('d2l-siren-entity-save-start', () => {
+			this.shadowRoot.querySelector('#save-status').start();
+		});
+		this.addEventListener('d2l-siren-entity-save-end', () => {
+			this.shadowRoot.querySelector('#save-status').end();
+		});
+		this.addEventListener('d2l-siren-entity-save-error', () => {
+			this.shadowRoot.querySelector('#save-status').error();
+		});
 	}
 
 	_onAssignmentActivityUsageChange(assignmentActivityUsage) {
@@ -76,12 +100,28 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 				@d2l-request-provider="${this._onRequestProvider}"
 				@d2l-pending-resolved="${this._onPendingResolved}">
 
-				<d2l-activity-assignment-editor-detail
-					href="${this._assignmentHref}"
-					.token="${this.token}"
-					slot="editor">
-				</d2l-activity-assignment-editor-detail>
-
+				<d2l-template-primary-secondary slot="editor">
+					<slot name="editor-nav" slot="header"></slot>
+					<d2l-activity-assignment-editor-detail
+						href="${this._assignmentHref}"
+						.token="${this.token}"
+						slot="primary"
+						class="d2l-activity-assignment-editor-detail-panel">
+					</d2l-activity-assignment-editor-detail>
+					<d2l-activity-assignment-editor-secondary
+						href="${this._assignmentHref}"
+						.token="${this.token}"
+						slot="secondary"
+						class="d2l-activity-assignment-editor-secondary-panel">
+					</d2l-activity-assignment-editor-secondary>
+					<d2l-activity-assignment-editor-footer
+						href="${this._assignmentHref}"
+						.token="${this.token}"
+						slot="footer"
+						class="d2l-activity-assignment-editor-footer">
+						<d2l-save-status id="save-status" slot="save-status"></d2l-save-status>
+					</d2l-activity-assignment-editor-footer>
+				</d2l-template-primary-secondary>
 			</d2l-activity-editor>
 		`;
 	}
