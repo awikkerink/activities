@@ -132,6 +132,16 @@ class D2LQuickEval extends
 			returningToQuickEval: {
 				type: Boolean,
 				value: false
+			},
+			courseLevel: {
+				type: Boolean,
+				value: false
+			},
+			submissionFilters: {
+				type: Array
+			},
+			activityFilters: {
+				type: Array
 			}
 		};
 	}
