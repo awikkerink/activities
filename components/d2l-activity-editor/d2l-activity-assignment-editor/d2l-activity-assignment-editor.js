@@ -52,6 +52,8 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 		super();
 		this._setEntityType(AssignmentActivityUsageEntity);
 		this._assignmentHref = '';
+		this.summaryTitle = "Summary Title";
+		this.summary = [1,2];
 	}
 
 	set _entity(entity) {
@@ -111,9 +113,8 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 					</d2l-activity-assignment-editor-detail>
 					<d2l-activity-assignment-editor-summary 
 						slot="secondary"
-						summaryTitle="summary title"
-						
-						>
+						summaryTitle=${this.summaryTitle}
+						.summary=${this.summary}>
 						<d2l-activity-assignment-editor-secondary
 							href="${this._assignmentHref}"
 							.token="${this.token}"
