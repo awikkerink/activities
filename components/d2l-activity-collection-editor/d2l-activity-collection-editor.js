@@ -1,6 +1,10 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { ifDefined } from 'lit-html/directives/if-defined';
 import { repeat } from 'lit-html/directives/repeat';
 import { until } from 'lit-html/directives/until.js';
+import { guard } from 'lit-html/directives/guard';
+import {cache} from 'lit-html/directives/cache.js';
+
 import { heading1Styles, heading4Styles, bodyCompactStyles, bodyStandardStyles, labelStyles} from '@brightspace-ui/core/components/typography/styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
@@ -20,6 +24,7 @@ import '@brightspace-ui/core/components/list/list.js';
 import '@brightspace-ui/core/components/list/list-item.js';
 import '@brightspace-ui/core/components/list/list-item-content.js';
 import '@brightspace-ui/core/components/inputs/input-search.js';
+import '@brightspace-ui/core/components/loading-spinner/loading-spinner.js';
 import 'd2l-organizations/components/d2l-organization-image/d2l-organization-image.js';
 import '@brightspace-ui-labs/edit-in-place/d2l-labs-edit-in-place.js';
 import '../d2l-activity-editor/d2l-activity-visibility-editor.js';
@@ -32,12 +37,15 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		super();
 		this._items = [];
 		this._candidateItems = [];
+		this._currentSelection = {};
 		this._specialization = {};
-		this._showImages = false;
-		this._loadedImages = 0;
+		this._organizationImageChunk = {};
+		this._loadedImages = [];
 		this._mainPageLoad = new Promise(() => null);
+		this._candidateLoad = new Promise(() => null);
 		this.ariaBusy = 'true';
 		this.ariaLive = 'polite';
+		this._dialogOpen = false;
 		this._setEntityType(ActivityUsageEntity);
 	}
 
@@ -77,11 +85,20 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			hasACollection = true;
 			const items = [];
 			let itemsLoadedOnce = false;
+			const imageChunk = this._loadedImages.length;
+			this._loadedImages[imageChunk] = { loaded: 0, total: null };
+			let totalInLoadingChunk = 0;
 			collection.onItemsChange((item, index) => {
 				item.onActivityUsageChange((usage) => {
 					usage.onOrganizationChange((organization) => {
 						items[index] = organization;
 						items[index].removeItem = () => collection.removeItem(item.self());
+						items[index].itemSelf = item.self();
+						if (typeof this._organizationImageChunk[item.self()] === 'undefined') {
+							this._organizationImageChunk[item.self()] = imageChunk;
+							totalInLoadingChunk++;
+						}
+
 						if (itemsLoadedOnce) {
 							this._items = items;
 						}
@@ -89,14 +106,20 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 				});
 			});
 
+			this._collection = collection;
+			this._addExistingAction = collection._entity.getActionByName('start-add-existing-activity');
+
 			collection.subEntitiesLoaded().then(() => {
 				this._items = items;
 				itemsLoadedOnce = true;
+				this._loadedImages[imageChunk].total = totalInLoadingChunk;
 			});
-			this._addExistingAction = collection._entity.getActionByName('start-add-existing-activity');
 		});
 
 		this._mainPageLoad = usage.subEntitiesLoaded().then(() => {
+			if (!this._loaded) {
+				this._candidateLoad = this.getCandidates(this._addExistingAction, null, true);
+			}
 			if (!hasACollection) {
 				this._items = [];
 			}
@@ -106,27 +129,38 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	}
 
 	async getCandidates(action, fields = null, clearList = false) {
-		const resp = await performSirenAction(this.token, action, fields, true);
-		this._actionCollectionEntity = new ActionCollectionEntity(resp, this._token, null);
-		if (clearList) {
-			this._candidateItems = [];
+		this._candidateLoad = new Promise(() => null);
+		if (!this._collection) {
+			return;
 		}
+		const resp = await performSirenAction(this.token, action, fields, true);
+		this._actionCollectionEntity = new ActionCollectionEntity(this._collection, resp);
+		const candidateItems = [];
+		const imageChunk = this._loadedImages.length;
+		this._loadedImages[imageChunk] = { loaded: 0, total: null };
+		let totalInLoadingChunk = 0;
 		this._actionCollectionEntity._items().forEach(item => {
 			item.onActivityUsageChange(async usage => {
 				usage.onOrganizationChange((organization) => {
 					const alreadyAdded = this._items.findIndex(item => item.self() === organization.self()) >= 0;
-					this._candidateItems.push({ item, organization, alreadyAdded });
-					if (this._candidateItems.length >= this._actionCollectionEntity._items().length) {
-						this.requestUpdate('_candidateItems', []);
-					}
+					candidateItems.push({ item, organization, alreadyAdded, itemSelf: organization.self() });
+					this._organizationImageChunk[organization.self()] = imageChunk;
+					totalInLoadingChunk++;
 				});
 			});
 		});
+		await this._collection.subEntitiesLoaded()
+		if (clearList) {
+			this._candidateItems = candidateItems;
+		} else {
+			this._candidateItems = this._candidateItems.concat(candidateItems);
+		}
+		this._loadedImages[imageChunk].total = totalInLoadingChunk;
 	}
 
 	async addActivities() {
 		const addAction = this._actionCollectionEntity.getExecuteMultipleAction();
-		const keys = this.shadowRoot.querySelector('d2l-dialog d2l-list').getSelectionInfo().keys;
+		const keys = this._selectedActivities();
 		const fields = [{ name: 'actionStates', value: keys }];
 		await performSirenAction(this.token, addAction, fields, true);
 	}
@@ -134,22 +168,27 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	handleSearch(event) {
 		const searchAction = this._actionCollectionEntity.getSearchAction();
 		const fields = [{ name: 'collectionSearch', value: event.detail.value }];
-		this.clearAllSelected();
-		this.getCandidates(searchAction, fields, true);
+		this._candidateLoad = this.getCandidates(searchAction, fields, true);
 	}
 
-	handleSelectionChange() {
-		this._selectionCount = this.shadowRoot.querySelector('d2l-dialog d2l-list').getSelectionInfo().keys.length;
+	handleSelectionChange(e) {
+		this._currentSelection[e.detail.key] = e.detail.selected;
+		this._selectionCount = this._selectedActivities().length;
+	}
+
+	_selectedActivities() {
+		return Object.keys(this._currentSelection).filter((key) => this._currentSelection[key]);
 	}
 
 	clearAllSelected() {
-		const items = this.shadowRoot.querySelectorAll('d2l-dialog d2l-list d2l-list-item');
-		items.forEach(item => item.setSelected(false, false));
+		const items = this.shadowRoot.querySelectorAll('d2l-dialog d2l-list d2l-list-item:not([disabled])');
+		items.forEach(item => item.setSelected(false, true));
+		this._currentSelection = {};
+		this._selectionCount = 0;
 	}
 
 	clearDialog() {
 		this.clearAllSelected();
-		this.shadowRoot.querySelector('.d2l-add-activity-dialog-header d2l-input-search').value = '';
 	}
 
 	loadMore() {
@@ -157,13 +196,11 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	}
 
 	async open() {
-		this.getCandidates(this._addExistingAction, null, true);
 		await this.shadowRoot.querySelector('d2l-dialog').open();
 	}
 
 	static get properties() {
 		return {
-			_actionCollectionEntity: { type: Object },
 			_addExistingAction: { type: Object },
 			_candidateItems: { type: Array },
 			_canEditDraft: { type: Boolean },
@@ -172,8 +209,6 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			_items: { type: Array },
 			_name: { type: String },
 			_selectionCount: { type: Number },
-			_showImages: {type: Boolean },
-			_specialization: { type: Object },
 			ariaBusy: { type: String, reflect: true, attribute: 'aria-busy' },
 			ariaLive: { type: String, reflect: true, attribute: 'aria-live' }
 		};
@@ -513,12 +548,18 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		if (this._items.length <= 0) {
 			return html`<div class="d2l-activity-collection-no-activity d2l-body-standard">${this.localize('noActivitiesInLearningPath')}</div>`;
 		}
+
 		const items = repeat(this._items, (item) => item.self(), item => {
 			return html`
 				<d2l-list-item>
 					<div slot="illustration" class="d2l-activitiy-collection-list-item-illustration">
 						${this._renderCourseImageSkeleton()}
-						<d2l-organization-image class="d2l-activitiy-collection-organization-image" href=${item.self()} @d2l-organization-image-loaded="${this._onListImageLoaded}" ?hidden="${!this._showImages}"></d2l-organization-image>
+						<d2l-organization-image
+							class="d2l-activitiy-collection-organization-image"
+							href=${item.self()}
+							@d2l-organization-image-loaded="${() => this._onListImageLoaded(this._organizationImageChunk[item.itemSelf])}"
+							?hidden="${!this._loadedImages[this._organizationImageChunk[item.itemSelf]].allLoaded}">
+						</d2l-organization-image>
 					</div>
 					<d2l-list-item-content>
 						${item.name()}
@@ -561,24 +602,50 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	}
 
 	_renderCandidates() {
-		const candidates = repeat(this._candidateItems, (candidate) => candidate.item.getActionState(), candidate =>
-			html`
-			<d2l-list-item ?selectable=${!candidate.alreadyAdded} key=${candidate.item.getActionState()}>
-				<d2l-organization-image href=${candidate.organization.self()} slot="illustration"></d2l-organization-image>
-				<d2l-list-item-content>
-					${candidate.organization.name()}
-					<div slot="secondary" class="d2l-list-item-secondary">${candidate.alreadyAdded ? html`${this.localize('alreadyAdded')}` : null}</div>
-				<d2l-list-item-content>
-			</d2l-list-item>
-			`
-		);
+		const candidates = this._candidateLoad.then(() => {
+			return this._candidateItems.length === 0
+				? html`<div class="d2l-activity-collection-no-activity d2l-body-standard">${this.localize('noActivitiesInLearningPath')}</div>`
+				: html`<d2l-list @d2l-list-selection-change=${this.handleSelectionChange}>
+					${this._candidateItems.map((candidate) => {
+						return html`
+							<d2l-list-item selectable ?disabled=${candidate.alreadyAdded} ?selected=${candidate.alreadyAdded || this._currentSelection[candidate.item.getActionState()]} key=${candidate.alreadyAdded ? ifDefined(undefined) : candidate.item.getActionState()}>
+								<div slot="illustration" class="d2l-activitiy-collection-list-item-illustration">
+									${this._renderCourseImageSkeleton()}
+									<d2l-organization-image
+										class="d2l-activitiy-collection-organization-image"
+										href="${candidate.organization.self()}"
+										@d2l-organization-image-loaded="${() => this._onListImageLoaded(this._organizationImageChunk[candidate.itemSelf])}"
+										?hidden="${!this._loadedImages[this._organizationImageChunk[candidate.itemSelf]].allLoaded}">
+									</d2l-organization-image>
+								</div>
+								<d2l-list-item-content>
+									${candidate.organization.name()}
+									<div slot="secondary" class="d2l-list-item-secondary">${candidate.alreadyAdded ? html`${this.localize('alreadyAdded')}` : null}</div>
+								<d2l-list-item-content>
+							</d2l-list-item>
+						`;
+					})}
+					</d2l-list>
+				`;
+		});
 
+		const spaceKeyDown = 32;
+		const spaceKeyEnter = 13;
 		const selectedNav = this._selectionCount > 0
-			? html`${this.localize('selected', 'count', this._selectionCount)} <d2l-link @click=${this.clearAllSelected}>${this.localize('clearSelected')}</d2l-link>`
+			? html`
+				${this.localize('selected', 'count', this._selectionCount)}
+				<d2l-link
+					tabindex="0"
+					role="button"
+					@click=${this.clearAllSelected}
+					@keydown="${(e) => (e.keyCode === spaceKeyDown || e.keyCode === spaceKeyEnter) && this.clearAllSelected()}">
+						${this.localize('clearSelected')}
+				</d2l-link>
+			`
 			: null;
 
 		return html`
-				<div class="dialog-div">
+			<div class="dialog-div">
 				<d2l-dialog id="dialog" title-text="${this.localize('browseActivityLibrary')}" @d2l-dialog-close=${this.clearDialog}>
 					<div class="d2l-add-activity-dialog">
 						<div class="d2l-add-activity-dialog-header">
@@ -587,23 +654,24 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 							</div>
 							<div class="d2l-add-activity-dialog-selection-count">${selectedNav}</div>
 						</div>
-						<d2l-list @d2l-list-selection-change=${this.handleSelectionChange}>${candidates}</d2l-list>
+						${until(candidates, html`<d2l-loading-spinner></d2l-loading-spinner>`)}
 						<div class="d2l-add-activity-dialog-load-more">
 							${this._actionCollectionEntity && this._actionCollectionEntity.getNextAction() ? html`<d2l-button @click=${this.loadMore}>${this.localize('loadMore')}</d2l-button>` :	null}
 						</div>
 					</div>
 
-					<d2l-button slot="footer" primary dialog-action="add" @click=${this.addActivities}>${this.localize('add')}</d2l-button>
+					<d2l-button slot="footer" primary dialog-action="add" @click=${this.addActivities} ?disabled="${!this._selectionCount}">${this.localize('add')}</d2l-button>
 					<d2l-button slot="footer" dialog-action>${this.localize('cancel')}</d2l-button>
 				</d2l-dialog>
-
+			</div>
 		`;
 	}
 
-	_onListImageLoaded() {
-		this._loadedImages++;
-		if (this._loadedImages >= this._items.length) {
-			this._showImages = true;
+	_onListImageLoaded(imageChunk) {
+		this._loadedImages[imageChunk].loaded++;
+		if (!this._loadedImages[imageChunk].allLoaded && this._loadedImages[imageChunk].total && this._loadedImages[imageChunk].loaded >= this._loadedImages[imageChunk].total) {
+			this._loadedImages[imageChunk].allLoaded = true;
+			this.requestUpdate('_loadedImages', []);
 		}
 	}
 
