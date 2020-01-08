@@ -64,19 +64,22 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 				display: flex;
 				align-items: baseline;
 			}
+			#score-info-container {
+				flex-wrap: wrap;
+			}
 			.grade-type-text {
 				margin: 0 0.75rem 0 0.6rem;
 			}
 			:host([dir="rtl"]) .grade-type-text {
 				margin: 0 0.6rem 0 0.75rem;
 			}
-			.divider {
+			#divider {
 				height: 1.5rem;
 				align-self: center;
 				border-left: solid 1px var(--d2l-color-galena);
 				margin-right: 0.3rem;
 			}
-			:host([dir="rtl"]) .divider {
+			:host([dir="rtl"]) #divider {
 				margin-right: 0;
 				margin-left: 0.3rem;
 			}
@@ -87,6 +90,14 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 				border-radius: 0.3rem;
 				padding: .5rem .6rem;
 				cursor: pointer;
+				display: flex;
+				flex-wrap: nowrap;
+			}
+			.grade-info div {
+				flex-shrink: 1;
+			}
+			.grade-info d2l-icon {
+				flex-shrink: 0;
 			}
 			.grade-info > * {
 				margin-right: 0.3rem;
@@ -268,11 +279,11 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 					<div class="d2l-body-compact grade-type-text">${this._gradeType}</div>
 				</div>
 				<div id="grade-info-container" ?hidden="${!this._canSeeGrades}">
-					<div class="divider"></div>
+					<div id="divider"></div>
 					<d2l-dropdown>
 						<button class="d2l-label-text grade-info d2l-dropdown-opener">
 							<d2l-icon icon="tier1:grade" ?hidden="${!this._inGrades}"></d2l-icon>
-							<span>${this._inGrades ? this.localize('inGrades') : this.localize('notInGrades')}</span>
+							<div>${this._inGrades ? this.localize('inGrades') : this.localize('notInGrades')}</div>
 							<d2l-icon icon="tier1:chevron-down"></d2l-icon>
 						</button>
 						<d2l-dropdown-menu id="grade-dropdown" align="start" no-pointer vertical-offset="3px">
