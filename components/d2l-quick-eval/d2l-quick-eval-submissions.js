@@ -138,6 +138,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				show-no-submissions="[[_showNoSubmissions]]"
 				show-no-criteria="[[_showNoCriteria]]"
 				returning-to-quick-eval="[[returningToQuickEval]]"
+				course-level="[[courseLevel]]"
+				course-level-name="[[courseLevelName]]"
 				on-d2l-quick-eval-submissions-table-load-more="_loadMore"
 				on-d2l-quick-eval-submissions-table-sort-requested="_handleSortRequested">
 			</d2l-quick-eval-submissions-table>
@@ -257,6 +259,14 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			returningToQuickEval: {
 				type: Boolean,
 				value: false
+			},
+			courseLevel: {
+				type: Boolean,
+				value: false
+			},
+			courseLevelName: {
+				type: String,
+				value: ''
 			}
 		};
 	}

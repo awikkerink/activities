@@ -63,7 +63,7 @@ class D2LQuickEval extends
 				<d2l-quick-eval-ellipsis-menu href="[[dismissedActivitiesHref]]" token="[[token]]" hidden$="[[!dismissEnabled]]"></d2l-quick-eval-ellipsis-menu>
 			</div>
 			<d2l-quick-eval-view-toggle current-selected="[[toggleState]]" toggle-href="[[toggleHref]]" hidden$="[[!activitiesViewEnabled]]" on-d2l-quick-eval-view-toggle-changed="_toggleView"></d2l-quick-eval-view-toggle>
-			<d2l-quick-eval-submissions href="[[_lazySubmissionsHref]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" data-telemetry-endpoint="[[dataTelemetryEndpoint]]" hidden$="[[_displayActivities(toggleState, activitiesViewEnabled)]]" master-teacher="[[masterTeacher]]" returning-to-quick-eval="[[returningToQuickEval]]"></d2l-quick-eval-submissions>
+			<d2l-quick-eval-submissions href="[[_lazySubmissionsHref]]" token="[[token]]" logging-endpoint="[[loggingEndpoint]]" data-telemetry-endpoint="[[dataTelemetryEndpoint]]" hidden$="[[_displayActivities(toggleState, activitiesViewEnabled)]]" master-teacher="[[masterTeacher]]" returning-to-quick-eval="[[returningToQuickEval]]" course-level="[[courseLevel]]" course-level-name="[[courseLevelName]]"></d2l-quick-eval-submissions>
 			<d2l-quick-eval-activities 
 				href="[[_lazyActivitiesHref]]"
 				token="[[token]]"
@@ -132,6 +132,14 @@ class D2LQuickEval extends
 			returningToQuickEval: {
 				type: Boolean,
 				value: false
+			},
+			courseLevel: {
+				type: Boolean,
+				value: true
+			},
+			courseLevelName: {
+				type: String,
+				value: ''
 			}
 		};
 	}
