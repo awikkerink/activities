@@ -25,15 +25,12 @@ describe('d2l-quick-eval-view-toggle-button', function() {
 					switch (state) {
 						case 'hover':
 							await page.hover(selector);
-							await page.waitFor(1000);
 							break;
 						case 'focus':
 							await focus(page, selector);
-							await page.waitFor(1000);
 							break;
 						case 'click':
 							await page.click(selector);
-							await page.waitFor(1000);
 							break;
 					}
 					const rect = await visualDiff.getRect(page, `#${name}`);

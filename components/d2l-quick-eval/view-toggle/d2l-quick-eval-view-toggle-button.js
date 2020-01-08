@@ -41,7 +41,6 @@ class D2LQuickEvalViewToggleButton extends LitElement {
 			outline: none;
 			padding: 0.5rem 1.5rem;
 			text-align: center;
-			transition: box-shadow 0.2s;
 			user-select: none;
 			vertical-align: middle;
 			white-space: nowrap;
