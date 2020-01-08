@@ -52,7 +52,7 @@
     "wct-mocha": "^1.0.1",
     "whatwg-fetch": "^3.0.0"
   },
-  "version": "3.50.59",
+  "version": "3.50.63",
   "resolutions": {
     "inherits": "2.0.3",
     "samsam": "1.1.3",
@@ -63,6 +63,7 @@
   "dependencies": {
     "@brightspace-ui-labs/edit-in-place": "^1.0.7",
     "@brightspace-ui/core": "^1.17.0",
+    "@brightspace-ui/intl": "^3.0.1",
     "@d2l/d2l-attachment": "Brightspace/attachment#semver:^1",
     "@d2l/switch": "Brightspace/d2l-switch.git#semver:^3",
     "@polymer/iron-resizable-behavior": "^3.0.0",
