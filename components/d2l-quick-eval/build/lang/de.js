@@ -46,6 +46,7 @@ export const LangDe = {
 			'newPosts': 'Neue Beiträge',
 			'newSubmissionDetails': '{newNum, plural, =0 {{resub, plural, =1 {1 erneute Abgabe} other {{resub} erneute Abgaben}}} other {{resub, plural, =0 {{newNum} neu} =1{{newNum} neu, 1 erneute Abgabe} other {{newNum} neu, {resub} erneute Abgaben}}}}',
 			'newSubmissions': 'Neue Abgaben',
+			'nextSubmission': 'Next submission',
 			'no': 'Nein',
 			'noCriteriaMatch': 'Es gibt keine Abgaben, die mit Ihren Kriterien übereinstimmen.',
 			'noCriteriaMatchActivities': 'Es gibt keine Aktivitäten, die mit Ihren Kriterien übereinstimmen.',

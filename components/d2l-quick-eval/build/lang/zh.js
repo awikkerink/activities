@@ -46,6 +46,7 @@ export const LangZh = {
 			'newPosts': '新的发布',
 			'newSubmissionDetails': '{newNum, plural, =0 {{resub, plural, =1 {1 resubmission} other {{resub} resubmissions}}} other {{resub, plural, =0 {{newNum} new} =1{{newNum} new, 1 resubmission} other {{newNum} new, {resub} resubmissions}}}}',
 			'newSubmissions': '新的提交',
+			'nextSubmission': 'Next submission',
 			'no': '否',
 			'noCriteriaMatch': '没有与筛选条件匹配的提交。',
 			'noCriteriaMatchActivities': '没有与您的条件匹配的活动。',

@@ -46,6 +46,7 @@ export const LangNl = {
 			'newPosts': 'Nieuwe publicaties',
 			'newSubmissionDetails': '{newNum, plural, =0 {{resub, plural, =1 {1 herindiening} other {{resub} herindieningen}}} other {{resub, plural, =0 {{newNum} nieuw} =1{{newNum} nieuw, 1 herindiening} other {{newNum} nieuw, {resub} herindieningen}}}}',
 			'newSubmissions': 'Nieuwe herindieningen',
+			'nextSubmission': 'Next submission',
 			'no': 'Geen',
 			'noCriteriaMatch': 'Er zijn geen indieningen die overeenkomen met uw criteria.',
 			'noCriteriaMatchActivities': 'Er zijn geen activiteiten die overeenkomen met uw criteria.',

@@ -44,6 +44,7 @@ export const LangFrfr = {
 			'newPosts': 'New Posts',
 			'newSubmissionDetails': '{newNum, plural, =0 {{resub, plural, =1 {1 resubmission} other {{resub} resubmissions}}} other {{resub, plural, =0 {{newNum} new} =1{{newNum} new, 1 resubmission} other {{newNum} new, {resub} resubmissions}}}}',
 			'newSubmissions': 'New Submissions',
+			'nextSubmission': 'Next submission',
 			'no': 'No',
 			'noCriteriaMatch': 'Aucune soumission ne correspond à vos critères.',
 			'noCriteriaMatchActivities': 'There are no activities that match your criteria.',

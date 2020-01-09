@@ -18,6 +18,10 @@ class D2LQuickEvalEllipsisMenu extends LitQuickEvalLocalize(LitElement) {
 			},
 			opened: {
 				type: Boolean,
+			},
+			courseLevel: {
+				type: Boolean,
+				value: false
 			}
 		};
 	}

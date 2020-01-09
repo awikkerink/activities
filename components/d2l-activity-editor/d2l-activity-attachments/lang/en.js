@@ -7,6 +7,6 @@ export default {
 	"addOneDriveLink": "Attach from OneDrive", // Tooltip for a button that adds a link to a OneDrive file
 	"addQuicklink": "Attach Link to Existing Activity", // Tooltip for a button that adds a link to an existing activity
 	"back": "Back", // Text for a back button
-	"closeFilePickerDialog": "Close Dialog", // ARIA text for button to close file picker dialog
+	"closeDialog": "Close Dialog", // ARIA text for button to close dialog
 	"save": "Save", // Text for a save button
 };

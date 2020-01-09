@@ -46,6 +46,7 @@ export const LangSv = {
 			'newPosts': 'Nya inlägg',
 			'newSubmissionDetails': '{new Num, plural, =0 {{resub, plural, =1 {1 återinlämning} other {{resub} återinlämningar}}} other {{resub, plural, =0 {{newNum} new} =1{{newNum} ny, 1 återinlämning} other {{newNum} new, {resub} återinlämningar}}}}',
 			'newSubmissions': 'Nya inlämningar',
+			'nextSubmission': 'Next submission',
 			'no': 'Nej',
 			'noCriteriaMatch': 'Det finns inga inlämningar som matchar dina kriterier.',
 			'noCriteriaMatchActivities': 'Det finns inga aktiviteter som matchar dina kriterier.',

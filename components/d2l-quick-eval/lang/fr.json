@@ -46,6 +46,7 @@
    "newPosts" : "Nouvelles publications",
    "newSubmissionDetails" : "{newNum, plural, =0 {{resub, plural, =1 {1 resoumission} other {{resub} resoumissions}}} other {{resub, plural, =0 {{newNum} nouvelle} =1{{newNum} nouvelle, 1 resoumission} other {{newNum} nouvelles, {resub} resoumissions}}}}",
    "newSubmissions" : "Nouvelles soumissions",
+   "nextSubmission" : "Next submission",
    "no" : "Non",
    "noCriteriaMatch" : "Aucune soumission ne correspond à vos critères.",
    "noCriteriaMatchActivities" : "Aucune activité ne correspond à vos critères.",

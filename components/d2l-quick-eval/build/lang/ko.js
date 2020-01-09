@@ -46,6 +46,7 @@ export const LangKo = {
 			'newPosts': '뉴스 게시물',
 			'newSubmissionDetails': '{newNum, plural, =0 {{resub, plural, =1 {1 resubmission} other {{resub} resubmissions}}} other{{resub, plural, =0 {{newNum} new} =1{{newNum} new, 1 resubmission} other {{newNum} new, {resub} resubmissions}}}}',
 			'newSubmissions': '새 제출',
+			'nextSubmission': 'Next submission',
 			'no': '아니요',
 			'noCriteriaMatch': '기준과 일치하는 제출 항목이 없습니다',
 			'noCriteriaMatchActivities': '기준과 일치하는 활동이 없습니다',

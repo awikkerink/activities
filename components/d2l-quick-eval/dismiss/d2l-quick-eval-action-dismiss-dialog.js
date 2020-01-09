@@ -1,5 +1,6 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { LitQuickEvalLocalize } from '../LitQuickEvalLocalize.js';
+import { getDocumentLocaleSettings } from '@brightspace-ui/intl/lib/common.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
 import { labelStyles, bodyStandardStyles } from '@brightspace-ui/core/components/typography/styles.js';
@@ -58,6 +59,16 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 				<div class="radio-container">
 					<label class="d2l-input-radio-label">
 						<input
+						id="dismiss-action-dialog-radio-input-nextSubmission"
+						type="radio"
+						name="${groupID}"
+						.checked="${this.selectedRadio === DISMISS_TYPES.nextSubmission}"
+						@change="${this._updateProp.bind(this, DISMISS_TYPES.nextSubmission)}">
+						${this.localize('nextSubmission')}
+					</label>
+					<label class="d2l-input-radio-label">
+						<input
+						id="dismiss-action-dialog-radio-input-specificDate"
 						type="radio"
 						name="${groupID}"
 						.checked="${this.selectedRadio === DISMISS_TYPES.date}"
@@ -67,6 +78,7 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 					${this.renderDatePicker(this.selectedRadio)}
 					<label class="d2l-input-radio-label">
 						<input
+						id="dismiss-action-dialog-radio-input-forever"
 						type="radio"
 						name="${groupID}"
 						.checked="${this.selectedRadio === DISMISS_TYPES.forever}"
@@ -111,7 +123,7 @@ class D2LQuickEvalActionDialog extends RtlMixin(LitQuickEvalLocalize(LitElement)
 	}
 
 	_getIso8601Date(date) {
-		const timezone = this.getTimezone().identifier;
+		const timezone = getDocumentLocaleSettings().timezone.identifier;
 
 		if (timezone) {
 			return date.tz(timezone).format('YYYY-MM-DD');

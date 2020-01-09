@@ -251,6 +251,14 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			dismissEnabled: {
 				type: Boolean,
 				value: false
+			},
+			courseLevel: {
+				type: Boolean,
+				value: false
+			},
+			activityFilters: {
+				type: Array,
+				value: []
 			}
 		};
 	}
@@ -441,7 +449,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			const { selectedRadio, date } = JSON.parse(action);
 			let dismissAction;
 
-			if (selectedRadio === DISMISS_TYPES.forever) {
+			if (selectedRadio === DISMISS_TYPES.forever || selectedRadio === DISMISS_TYPES.nextSubmission) {
 				dismissAction = this._dismissActivity(evt.detail.dismissHref, selectedRadio);
 			} else if (selectedRadio === DISMISS_TYPES.date) {
 				if (!date) {

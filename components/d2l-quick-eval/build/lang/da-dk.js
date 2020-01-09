@@ -44,6 +44,7 @@ export const LangDadk = {
 			'newPosts': 'New Posts',
 			'newSubmissionDetails': '{newNum, plural, =0 {{resub, plural, =1 {1 resubmission} other {{resub} resubmissions}}} other {{resub, plural, =0 {{newNum} new} =1{{newNum} new, 1 resubmission} other {{newNum} new, {resub} resubmissions}}}}',
 			'newSubmissions': 'New Submissions',
+			'nextSubmission': 'Next submission',
 			'no': 'No',
 			'noCriteriaMatch': 'Der er ingen afleveringer, der matcher dine kriterier.',
 			'noCriteriaMatchActivities': 'There are no activities that match your criteria.',

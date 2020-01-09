@@ -46,6 +46,7 @@ export const LangPt = {
 			'newPosts': 'Novas postagens',
 			'newSubmissionDetails': '{newNum, plural, =0 {{resub, plural, =1 {1 reenvio} other {{resub} reenvios}}} other {{resub, plural, =0 {{newNum} new} =1{{newNum} new, 1 reenvio} other {{newNum} new, {resub} reenvios}}}}',
 			'newSubmissions': 'Novos Envios',
+			'nextSubmission': 'Next submission',
 			'no': 'Não',
 			'noCriteriaMatch': 'Não há nenhum envio correspondente aos seus critérios.',
 			'noCriteriaMatchActivities': 'Não há nenhuma atividade correspondente aos seus critérios.',

@@ -46,6 +46,7 @@ export const LangAr = {
 			'newPosts': 'منشورات جديدة',
 			'newSubmissionDetails': '{newNum, plural, =0 {{resub, plural, =1 {عملية إعادة إرسال واحدة} other {{resub} من عمليات إعادة الإرسال}}} other {{resub, plural, =0 {{newNum} إعادة محاولة جديدة} =1{{newNum} عملية إعادة إرسال واحدة جديدة} other {{newNum} {resub} من عمليات إعادة الإرسال الجديدة}}}}',
 			'newSubmissions': 'إرسالات جديدة',
+			'nextSubmission': 'Next submission',
 			'no': 'لا',
 			'noCriteriaMatch': 'لا تتوفر أي عمليات إرسال تتوافق مع معاييرك.',
 			'noCriteriaMatchActivities': 'لا تتوفر أي أنشطة تتطابق مع معاييرك.',
