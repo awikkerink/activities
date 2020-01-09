@@ -271,6 +271,11 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		];
 	}
 
+	async _handleFilterLoadedNoResultsOnInitialLoad(e) {
+		this.removeEventListener(e.type, this._handleFilterLoadedNoResultsOnInitialLoad);
+		await this._clearFilterAndSearch();
+	}
+
 	async _loadData(entity) {
 		if (!entity) {
 			return;
@@ -278,17 +283,14 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 		this._loading = true;
 
 		if (this._initialLoad) {
+			this._initialLoad = false;
 			this.filterAppliedShortcut();
 			this.searchAppliedShortcut();
-		}
 
-		if (this._initialLoad &&
-			entity.hasClass('empty') &&
-			(this.searchApplied || this.filterApplied)
-		) {
-			await this._clearFilterAndSearch();
-			this._initialLoad = false;
-			return;
+			if (entity.hasClass('empty') && (this.searchApplied || this.filterApplied)) {
+				this.addEventListener('d2l-hm-filter-filters-loaded', this._handleFilterLoadedNoResultsOnInitialLoad);
+				return;
+			}
 		}
 
 		try {
@@ -309,7 +311,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			throw e;
 		} finally {
 			this._loading = false;
-			this._initialLoad = false;
 		}
 	}
 

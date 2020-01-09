@@ -291,11 +291,11 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		this._loading = true;
 
 		if (this._initialLoad) {
+			this._initialLoad = false;
 			this.filterAppliedShortcut();
 			this.searchAppliedShortcut();
 
 			if (entity.hasClass('empty') && (this.searchApplied || this.filterApplied)) {
-				this._initialLoad = false;
 				this.addEventListener('d2l-hm-filter-filters-loaded', this._handleFilterLoadedNoResultsOnInitialLoad);
 				return;
 			}
@@ -319,7 +319,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			return Promise.reject(e);
 		} finally {
 			this._loading = false;
-			this._initialLoad = false;
 		}
 	}
 
