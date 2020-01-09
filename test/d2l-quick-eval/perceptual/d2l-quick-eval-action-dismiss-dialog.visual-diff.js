@@ -49,7 +49,7 @@ describe('d2l-quick-eval-action-dismiss-dialog', function() {
 		await waitForOpen('#default d2l-quick-eval-action-dismiss-dialog');
 		const rect = await visualDiff.getRect(page, '#default');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
-		return await waitForClose('#default d2l-quick-eval-action-dismiss-dialog');
+		await waitForClose('#default d2l-quick-eval-action-dismiss-dialog');
 	});
 
 	it('forever', async function() {
@@ -61,7 +61,7 @@ describe('d2l-quick-eval-action-dismiss-dialog', function() {
 		});
 		const rect = await visualDiff.getRect(page, '#default');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
-		return await waitForClose('#default d2l-quick-eval-action-dismiss-dialog');
+		await waitForClose('#default d2l-quick-eval-action-dismiss-dialog');
 	});
 
 	it('specific-date', async function() {
@@ -73,7 +73,7 @@ describe('d2l-quick-eval-action-dismiss-dialog', function() {
 		});
 		const rect = await visualDiff.getRect(page, '#default');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
-		return await waitForClose('#default d2l-quick-eval-action-dismiss-dialog');
+		await waitForClose('#default d2l-quick-eval-action-dismiss-dialog');
 	});
 
 	it('next-submission', async function() {
@@ -85,6 +85,6 @@ describe('d2l-quick-eval-action-dismiss-dialog', function() {
 		});
 		const rect = await visualDiff.getRect(page, '#default');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
-		return await waitForClose('#default d2l-quick-eval-action-dismiss-dialog');
+		await waitForClose('#default d2l-quick-eval-action-dismiss-dialog');
 	});
 });
