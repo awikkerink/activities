@@ -365,8 +365,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 
 				const getUserName = this._getUserPromise(activity, item);
 				const getCourseName = this.courseLevel
-						? Promise.resolve()
-						: this._getCoursePromise(activity, item);
+					? Promise.resolve()
+					: this._getCoursePromise(activity, item);
 
 				const getMasterTeacherName =
 					this.masterTeacher
@@ -578,7 +578,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		];
 
 		if (courseLevel) {
-			return headers.filter(h => h.key != 'courseName');
+			return headers.filter(h => h.key !== 'courseName');
 		}
 
 		return headers;
