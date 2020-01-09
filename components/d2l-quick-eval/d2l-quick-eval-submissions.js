@@ -264,6 +264,10 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				type: Boolean,
 				value: false
 			},
+			courseLevelName: {
+				type: String,
+				value: ''
+			},
 			submissionFilters: {
 				type: Array,
 				value: []
