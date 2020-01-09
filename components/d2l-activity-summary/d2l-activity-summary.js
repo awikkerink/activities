@@ -1,19 +1,19 @@
 import 'd2l-accordion/d2l-accordion.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 
-class AssignmentEditorSummary extends LitElement {
+class ActivitySummary extends LitElement {
 
 	static get properties() {
 		return {
 			summaryTitle: {type: String},
 			summary: {type: Array},
-			getSummarizedContent: {type: Function}
+			_isOpened: {type: Boolean}
 		};
 	}
 
 	constructor(){
 		super();
-		this.isOpened = false;
+		this._isOpened = false;
 	}
 
 	static get styles() {
@@ -29,24 +29,27 @@ class AssignmentEditorSummary extends LitElement {
 		];
 	}
 
+	_handleClick(event) {
+		this._isOpened = event.target.opened;
+	}
+
 	render() {
 		return html`
 			<d2l-accordion>
 				<d2l-accordion-collapse 
 				title=${this.summaryTitle} 
-				?opened=${this.isOpened} 
-				onclick=${this.isOpened = !this.isOpened} 
+				@click=${this._handleClick} 
 				flex>
-					<slot name="content"></slot>
+					<slot name="detailed-content"></slot>
 				</d2l-accordion-collapse>
-				${!this.isOpened? 
+				${this._isOpened? 
+					null:
 					html`<ul>
-						${this.summary.map(i => html`<li>${i}</li>`)}
-					</ul>` :
-					null
+						${this.summary.map(row => html`<li>${row}</li>`)}
+					</ul>` 
 				}
 			</d2l-accordion>
 		`;
 	}
 }
-customElements.define('d2l-activity-assignment-editor-summary', AssignmentEditorSummary);
+customElements.define('d2l-activity-summary', ActivitySummary);

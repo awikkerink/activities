@@ -2,7 +2,7 @@ import '../d2l-activity-editor.js';
 import './d2l-activity-assignment-editor-detail.js';
 import './d2l-activity-assignment-editor-secondary.js';
 import './d2l-activity-assignment-editor-footer.js';
-import './d2l-activity-assignment-editor-summary.js';
+import '../../d2l-activity-summary/d2l-activity-summary.js';
 import '@brightspace-ui/core/templates/primary-secondary/primary-secondary.js';
 import 'd2l-save-status/d2l-save-status.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
@@ -52,8 +52,9 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 		super();
 		this._setEntityType(AssignmentActivityUsageEntity);
 		this._assignmentHref = '';
-		this.summaryTitle = "Summary Title";
-		this.summary = [1,2];
+		this._summaryTitle = "Summary Title";
+		this._summary = ["one", "two"];
+		debugger;
 	}
 
 	set _entity(entity) {
@@ -111,17 +112,17 @@ class AssignmentEditor extends PendingContainerMixin(EntityMixinLit(LitElement))
 						slot="primary"
 						class="d2l-activity-assignment-editor-detail-panel">
 					</d2l-activity-assignment-editor-detail>
-					<d2l-activity-assignment-editor-summary 
+					<d2l-activity-summary 
 						slot="secondary"
-						summaryTitle=${this.summaryTitle}
-						.summary=${this.summary}>
+						summaryTitle=${this._summaryTitle}
+						.summary=${this._summary}>
 						<d2l-activity-assignment-editor-secondary
 							href="${this._assignmentHref}"
 							.token="${this.token}"
-							slot="content"
+							slot="detailed-content"
 							class="d2l-activity-assignment-editor-secondary-panel">
 						</d2l-activity-assignment-editor-secondary>
-					</d2l-activity-assignment-editor-summary>
+					</d2l-activity-summary>
 					<d2l-activity-assignment-editor-footer
 						href="${this._assignmentHref}"
 						.token="${this.token}"
