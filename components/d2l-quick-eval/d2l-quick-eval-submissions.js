@@ -156,32 +156,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			},
 			_headerColumns: {
 				type: Array,
-				value: [
-					{
-						key: 'displayName',
-						meta: { firstThenLast: true },
-						headers: [
-							{ key: 'firstName', sortClass: 'first-name', suffix: ',', canSort: false, sorted: false, desc: false },
-							{ key: 'lastName', sortClass: 'last-name', canSort: false, sorted: false, desc: false }
-						]
-					},
-					{
-						key: 'activityName',
-						headers: [{ key: 'activityName', sortClass: 'activity-name', canSort: false, sorted: false, desc: false }]
-					},
-					{
-						key: 'courseName',
-						headers: [{ key: 'courseName', sortClass: 'course-name', canSort: false, sorted: false, desc: false }]
-					},
-					{
-						key: 'submissionDate',
-						headers: [{ key: 'submissionDate', sortClass: 'completion-date', canSort: false, sorted: false, desc: false }]
-					},
-					{
-						key: 'masterTeacher',
-						headers: [{ key: 'masterTeacher', sortClass: 'primary-facilitator', canSort: false, sorted: false, desc: false }]
-					}
-				]
+				computed: '_computeHeaderColumns(courseLevel)'
 			},
 			_numberOfActivitiesToShow: {
 				type: Number,
@@ -389,7 +364,10 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				};
 
 				const getUserName = this._getUserPromise(activity, item);
-				const getCourseName = this._getCoursePromise(activity, item);
+				const getCourseName = this.courseLevel
+						? Promise.resolve()
+						: this._getCoursePromise(activity, item);
+
 				const getMasterTeacherName =
 					this.masterTeacher
 						? this._getMasterTeacherPromise(activity, item)
@@ -569,6 +547,41 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			this._loadingMore = false;
 			this._handleFullLoadFailure();
 		}.bind(this));
+	}
+
+	_computeHeaderColumns(courseLevel) {
+		const headers = [
+			{
+				key: 'displayName',
+				meta: { firstThenLast: true },
+				headers: [
+					{ key: 'firstName', sortClass: 'first-name', suffix: ',', canSort: false, sorted: false, desc: false },
+					{ key: 'lastName', sortClass: 'last-name', canSort: false, sorted: false, desc: false }
+				]
+			},
+			{
+				key: 'activityName',
+				headers: [{ key: 'activityName', sortClass: 'activity-name', canSort: false, sorted: false, desc: false }]
+			},
+			{
+				key: 'courseName',
+				headers: [{ key: 'courseName', sortClass: 'course-name', canSort: false, sorted: false, desc: false }]
+			},
+			{
+				key: 'submissionDate',
+				headers: [{ key: 'submissionDate', sortClass: 'completion-date', canSort: false, sorted: false, desc: false }]
+			},
+			{
+				key: 'masterTeacher',
+				headers: [{ key: 'masterTeacher', sortClass: 'primary-facilitator', canSort: false, sorted: false, desc: false }]
+			}
+		];
+
+		if (courseLevel) {
+			return headers.filter(h => h.key != 'courseName');
+		}
+
+		return headers;
 	}
 }
 
