@@ -311,7 +311,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			return Promise.reject(e);
 		} finally {
 			this._loading = false;
-			this._initialLoad = false;
 		}
 	}
 

@@ -303,7 +303,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			throw e;
 		} finally {
 			this._loading = false;
-			this._initialLoad = false;
 		}
 	}
 
