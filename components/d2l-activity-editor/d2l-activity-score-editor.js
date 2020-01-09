@@ -64,10 +64,16 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			#score-out-of-container,
 			#grade-info-container {
 				display: flex;
-				align-items: baseline;
 			}
 			#score-info-container {
 				flex-wrap: wrap;
+				align-items: center;
+			}
+			#score-out-of-container {
+				align-items: baseline;
+			}
+			#grade-info-container {
+				align-items: center;
 			}
 			.grade-type-text {
 				margin: 0 0.75rem 0 0.6rem;
@@ -76,8 +82,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 				margin: 0 0.6rem 0 0.75rem;
 			}
 			#divider {
-				height: 1.5rem;
-				align-self: center;
+				height: 30px;
 				border-left: solid 1px var(--d2l-color-galena);
 				margin-right: 0.3rem;
 			}
@@ -86,11 +91,12 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 				margin-left: 0.3rem;
 			}
 			.grade-info {
+				height: 42px;
 				border: 1px solid transparent;
 				background: none;
 				outline: none;
 				border-radius: 0.3rem;
-				padding: .5rem .6rem;
+				padding: .5rem .6rem .4rem;
 				cursor: pointer;
 				display: flex;
 				flex-wrap: nowrap;
@@ -209,7 +215,9 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			this._scoreOutOf = scoreOutOf;
 			this.clearError(clearErrorProperty);
 			this.setError(setErrorProperty, scoreErrorLangterm, tooltipId);
-		} else {
+		} else if (!this.inGrades && isScoreEmpty) {
+			this._scoreOutOf = scoreOutOf;
+		}else {
 			this.clearError('_emptyScoreOutOfError');
 			this.clearError('_invalidScoreOutOfError');
 			this._debounceJobs.scoreOutOf = Debouncer.debounce(
@@ -223,16 +231,22 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 
 	_addToGrades() {
 		if (!this._isError()) {
-			this.wrapSaveAction(super._entity.addToGrades());
+			if (!this._scoreOutOf) {
+				this._inGrades = true;
+			} else {
+				this.wrapSaveAction(super._entity.addToGrades());
+			}
 		}
 	}
 
 	_removeFromGrades() {
 		this.clearError('_emptyScoreOutOfError');
-		if (!this._scoreOutOf) {
-			this._inGrades = false;
-		} else {
-			this.wrapSaveAction(super._entity.removeFromGrades());
+		if (!this._isError()) {
+			if (!this._scoreOutOf) {
+				this._inGrades = false;
+			} else {
+				this.wrapSaveAction(super._entity.removeFromGrades());
+			}
 		}
 	}
 
