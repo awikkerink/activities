@@ -192,8 +192,6 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 	}
 
 	_onScoreOutOfChanged() {
-		this.clearError('_emptyScoreOutOfError');
-		this.clearError('_invalidScoreOutOfError');
 		const scoreOutOf = this.shadowRoot.querySelector('#score-out-of').value;
 		if (scoreOutOf === this._scoreOutOf) {
 			return;
@@ -203,14 +201,17 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			(isNaN(scoreOutOf) || scoreOutOf < 0.01 || scoreOutOf > 9999999999);
 
 		const scoreErrorLangterm = isScoreEmpty ? 'emptyScoreOutOfError' : 'invalidScoreOutOfError';
-		const errorProperty = isScoreEmpty ? '_emptyScoreOutOfError' : '_invalidScoreOutOfError';
+		const setErrorProperty = isScoreEmpty ? '_emptyScoreOutOfError' : '_invalidScoreOutOfError';
+		const clearErrorProperty = isScoreEmpty ? '_invalidScoreOutOfError' : '_emptyScoreOutOfError';
 		const tooltipId = 'score-tooltip';
 
 		if ((this._inGrades && isScoreEmpty) || isScoreInvalid) {
 			this._scoreOutOf = scoreOutOf;
-			this.setError(errorProperty, scoreErrorLangterm, tooltipId);
+			this.clearError(clearErrorProperty);
+			this.setError(setErrorProperty, scoreErrorLangterm, tooltipId);
 		} else {
-			this.clearError(errorProperty);
+			this.clearError('_emptyScoreOutOfError');
+			this.clearError('_invalidScoreOutOfError');
 			this._debounceJobs.scoreOutOf = Debouncer.debounce(
 				this._debounceJobs.scoreOutOf,
 				timeOut.after(500),
