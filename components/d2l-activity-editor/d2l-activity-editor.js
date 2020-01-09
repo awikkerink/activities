@@ -26,6 +26,11 @@ class ActivityEditor extends LitElement {
 			}
 			.d2l-activity-editor-loading {
 				padding: 20px;
+				position: fixed;
+				background-color: #fff;
+				width: 100%;
+				height: 100vh;
+				z-index: 100001;
 			}
 		`;
 	}
@@ -83,7 +88,6 @@ class ActivityEditor extends LitElement {
 		return html`
 			<div class="d2l-activity-editor-loading" ?hidden="${!this.loading}">Loading ...</div>
 			<div
-				?hidden="${this.loading}"
 				@d2l-request-provider="${this._onRequestProvider}">
 				<slot name="editor"></slot>
 			</div>

@@ -264,9 +264,9 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				type: Boolean,
 				value: false
 			},
-			courseLevelName: {
-				type: String,
-				value: ''
+			submissionFilters: {
+				type: Array,
+				value: []
 			}
 		};
 	}
@@ -281,6 +281,11 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		];
 	}
 
+	async _handleFilterLoadedNoResultsOnInitialLoad(e) {
+		this.removeEventListener(e.type, this._handleFilterLoadedNoResultsOnInitialLoad);
+		await this._clearFilterAndSearch();
+	}
+
 	async _loadData(entity) {
 		if (!entity) {
 			return Promise.resolve();
@@ -290,15 +295,12 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		if (this._initialLoad) {
 			this.filterAppliedShortcut();
 			this.searchAppliedShortcut();
-		}
 
-		if (this._initialLoad &&
-			entity.hasClass('empty') &&
-			(this.searchApplied || this.filterApplied)
-		) {
-			await this._clearFilterAndSearch();
-			this._initialLoad = false;
-			return;
+			if (entity.hasClass('empty') && (this.searchApplied || this.filterApplied)) {
+				this._initialLoad = false;
+				this.addEventListener('d2l-hm-filter-filters-loaded', this._handleFilterLoadedNoResultsOnInitialLoad);
+				return;
+			}
 		}
 
 		try {

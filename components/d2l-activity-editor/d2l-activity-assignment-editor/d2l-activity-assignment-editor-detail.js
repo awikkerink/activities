@@ -1,7 +1,8 @@
 import 'd2l-inputs/d2l-input-text.js';
+import 'd2l-tooltip/d2l-tooltip';
 import '../d2l-activity-due-date-editor.js';
+import '../d2l-activity-score-editor.js';
 import '../d2l-activity-text-editor.js';
-import '../d2l-activity-visibility-editor.js';
 import '../d2l-activity-attachments/d2l-activity-attachments-editor.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
@@ -11,10 +12,11 @@ import { ErrorHandlingMixin } from '../error-handling-mixin.js';
 import { getLocalizeResources } from '../localization.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SaveStatusMixin } from '../save-status-mixin.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
-class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMixinLit(LocalizeMixin(LitElement)))) {
+class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMixinLit(LocalizeMixin(RtlMixin(LitElement))))) {
 
 	static get properties() {
 		return {
@@ -41,6 +43,17 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				}
 				:host > div {
 					padding-bottom: 20px;
+				}
+				#score-and-duedate-container {
+					display: flex;
+					flex-wrap: wrap;
+				}
+				#score-container {
+					margin-right: 40px;
+				}
+				:host([dir="rtl"]) #score-container {
+					margin-right: 0;
+					margin-left: 40px;
 				}
 			`
 		];
@@ -138,12 +151,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 
 	render() {
 		return html`
-			<div id="assignment-visibility-container">
-				<d2l-activity-visibility-editor
-					href="${this._activityUsageHref}"
-					.token="${this.token}">
-				</d2l-activity-visibility-editor>
-			</div>
 			<div id="assignment-name-container">
 				<label class="d2l-label-text" for="assignment-name">${this.localize('name')}*</label>
 				<d2l-input-text
@@ -159,12 +166,22 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				${this._getNameTooltip()}
 			</div>
 
-			<div id="duedate-container">
-				<label class="d2l-label-text">${this.localize('dueDate')}</label>
-				<d2l-activity-due-date-editor
-					href="${this._activityUsageHref}"
-					.token="${this.token}">
-				</d2l-activity-due-date-editor>
+			<div id="score-and-duedate-container">
+				<div id="score-container">
+					<label class="d2l-label-text">${this.localize('scoreOutOf')}</label>
+					<d2l-activity-score-editor
+						href="${this._activityUsageHref}"
+						.token="${this.token}">
+					</d2l-activity-score-editor>
+				</div>
+
+				<div id="duedate-container">
+					<label class="d2l-label-text">${this.localize('dueDate')}</label>
+					<d2l-activity-due-date-editor
+						href="${this._activityUsageHref}"
+						.token="${this.token}">
+					</d2l-activity-due-date-editor>
+				</div>
 			</div>
 
 			<div id="assignment-instructions-container">
@@ -184,7 +201,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 					.token="${this.token}">
 				</d2l-activity-attachments-editor>
 			</div>
-
 		`;
 	}
 }

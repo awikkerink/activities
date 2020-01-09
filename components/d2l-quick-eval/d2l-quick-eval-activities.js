@@ -251,6 +251,14 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			dismissEnabled: {
 				type: Boolean,
 				value: false
+			},
+			courseLevel: {
+				type: Boolean,
+				value: false
+			},
+			activityFilters: {
+				type: Array,
+				value: []
 			}
 		};
 	}

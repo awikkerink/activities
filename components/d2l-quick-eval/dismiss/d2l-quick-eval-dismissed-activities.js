@@ -163,30 +163,37 @@ class D2LQuickEvalDismissedActivities extends mixinBehaviors(
 		}
 	}
 
-	_submitData(e) {
-		if (e.detail.action === 'done') {
-			const selectedData = this._getSelectedActivities();
-			this.selectedCount = selectedData.length;
-			const result = Promise.all(selectedData.map((act)=> {
-				try {
-					return this.performSirenAction(act.unDismiss);
-				} catch (e) {
-					return new Error();
-				}
-			}));
-			result.then((results)=> {
-				this.failedCount = results.filter(a=>a instanceof Error).length;
-				if (this.failedCount > 0) {
-					this._logError(e, {developerMessage: 'Error dismissing activities'});
-					this.shadowRoot.querySelector('.d2l-quick-eval-dismissed-list-critical').open = true;
-				} else {
-					this.shadowRoot.querySelector('.d2l-quick-eval-dismissed-list-success').open = true;
-				}
-			}).then(() => {
-				window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh'));
-			});
+	async _submitData(evt) {
+		if (evt.detail.action !== 'done') {
+			return;
 		}
+
+		const activitiesToRestore = this._getSelectedActivities();
+		this.selectedCount = activitiesToRestore.length;
+		const failures = [];
+
+		await Promise.all(
+			activitiesToRestore.map(async act => {
+				try {
+					await this.performSirenAction(act.unDismiss);
+				} catch (err) {
+					failures.push(err);
+				}
+			})
+		);
+
+		this.failedCount = failures.length;
+
+		if (this.failedCount > 0) {
+			this._logError(failures, { developerMessage: 'Error dismissing activities' });
+			this.shadowRoot.querySelector('.d2l-quick-eval-dismissed-list-critical').open = true;
+		} else {
+			this.shadowRoot.querySelector('.d2l-quick-eval-dismissed-list-success').open = true;
+		}
+
+		window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh'));
 	}
+
 	_computeRestoreDisabled(loading, data) {
 		return loading || !(data.base && data.base.some(d => d.selected));
 	}
