@@ -217,7 +217,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			this.setError(setErrorProperty, scoreErrorLangterm, tooltipId);
 		} else if (!this.inGrades && isScoreEmpty) {
 			this._scoreOutOf = scoreOutOf;
-		}else {
+		} else {
 			this.clearError('_emptyScoreOutOfError');
 			this.clearError('_invalidScoreOutOfError');
 			this._debounceJobs.scoreOutOf = Debouncer.debounce(
