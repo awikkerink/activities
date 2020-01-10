@@ -282,7 +282,22 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 				white-space: nowrap;
 			}
 			.d2l-add-activity-dialog {
+				align-content: start;
+				align-items: start;
+				display: grid;
+				grid-template-areas: "." "list" ".";
+				grid-template-columns: 100%;
 				min-height: 500px;
+  				grid-template-rows: auto auto auto;
+			}
+			.d2l-add-activity-dialog-list-disabled,
+			.d2l-add-activity-dialog d2l-loading-spinner,
+			.d2l-add-activity-dialog d2l-list {
+				grid-area: list;
+			}
+			.d2l-add-activity-dialog-list-disabled {
+				filter: grayscale(100%);
+				opacity: 0.6;
 			}
 			.d2l-add-activity-dialog-header {
 				align-items: baseline;
@@ -291,7 +306,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 				padding-bottom: 10px;
 			}
 			.d2l-add-activity-dialog-load-more {
-				padding-top: 10px;
+				margin: 10px 0;
 			}
 			.d2l-add-activity-dialog-selection-count {
 				color: var(--d2l-color-ferrite);
@@ -605,7 +620,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 					<d2l-list-item-content>
 						${candidate.organization.name()}
 						<div slot="secondary" class="d2l-list-item-secondary">${candidate.alreadyAdded ? html`${this.localize('alreadyAdded')}` : null}</div>
-					<d2l-list-item-content>
+					</d2l-list-item-content>
 				</d2l-list-item>
 			`;
 		});
@@ -642,9 +657,21 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 
 	_renderCandidates() {
 		this.updateComplete.then(() => {
-			this._oldDom = this.shadowRoot.querySelector('.d2l-add-activity-dialog d2l-list');
+			this._currentCandidateElement = this.shadowRoot.querySelector('.d2l-add-activity-dialog d2l-list');
 		});
-		const candidates = this._handleFirstLoad(this._renderCandidateItems.bind(this), () => html`<d2l-loading-spinner></d2l-loading-spinner>${this._oldDom}`, this._candidateFirstLoad, this._candidateLoad);
+		const candidates = this._handleFirstLoad(this._renderCandidateItems.bind(this),
+			() => {
+				this._currentCandidateElement && this._currentCandidateElement.querySelectorAll('d2l-list-item').forEach(element => element.toggleAttribute('disabled', true));
+				return html`
+					<div class="d2l-add-activity-dialog-list-disabled">
+						${this._currentCandidateElement}
+					</div>
+					<d2l-loading-spinner size="100"></d2l-loading-spinner>
+				`
+			},
+			this._candidateFirstLoad,
+			this._candidateLoad
+		);
 
 
 		const spaceKeyDown = 32;
