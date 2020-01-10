@@ -3,7 +3,7 @@ import { ifDefined } from 'lit-html/directives/if-defined';
 import { repeat } from 'lit-html/directives/repeat';
 import { until } from 'lit-html/directives/until.js';
 import { guard } from 'lit-html/directives/guard';
-import {cache} from 'lit-html/directives/cache.js';
+import { cache } from 'lit-html/directives/cache.js';
 
 import { heading1Styles, heading4Styles, bodyCompactStyles, bodyStandardStyles, labelStyles} from '@brightspace-ui/core/components/typography/styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
@@ -43,6 +43,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		this._loadedImages = [];
 		this._mainPageLoad = new Promise(() => null);
 		this._candidateLoad = new Promise(() => null);
+		this._candidateFirstLoad = false;
 		this.ariaBusy = 'true';
 		this.ariaLive = 'polite';
 		this._dialogOpen = false;
@@ -129,7 +130,9 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	}
 
 	async getCandidates(action, fields = null, clearList = false) {
-		this._candidateLoad = new Promise(() => null);
+		if (clearList) {
+			this._candidateFirstLoad = false;
+		}
 		if (!this._collection) {
 			return;
 		}
@@ -149,13 +152,14 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 				});
 			});
 		});
-		await this._collection.subEntitiesLoaded()
+		await this._collection.subEntitiesLoaded();
 		if (clearList) {
 			this._candidateItems = candidateItems;
 		} else {
 			this._candidateItems = this._candidateItems.concat(candidateItems);
 		}
 		this._loadedImages[imageChunk].total = totalInLoadingChunk;
+		this._candidateFirstLoad = true;
 	}
 
 	async addActivities() {
@@ -166,6 +170,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	}
 
 	handleSearch(event) {
+		this._candidateLoad = new Promise(() => null);
 		const searchAction = this._actionCollectionEntity.getSearchAction();
 		const fields = [{ name: 'collectionSearch', value: event.detail.value }];
 		this._candidateLoad = this.getCandidates(searchAction, fields, true);
@@ -209,6 +214,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			_items: { type: Array },
 			_name: { type: String },
 			_selectionCount: { type: Number },
+			_candidateLoad: { type: Object },
 			ariaBusy: { type: String, reflect: true, attribute: 'aria-busy' },
 			ariaLive: { type: String, reflect: true, attribute: 'aria-live' }
 		};
@@ -334,13 +340,17 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			}
 
 			.d2l-activitiy-collection-list-item-illustration {
-				display: flex;
+				display: grid;
+				grid-template-columns: 100%;
+  				grid-template-rows: 100%;
+				grid-template-areas: only-one;
 				position: relative;
 			}
 
+			.d2l-activity-collection-image-skeleton,
 			.d2l-activitiy-collection-organization-image {
-				top: 0;
-				position: absolute;
+				grid-column: 1;
+  				grid-row: 1;
 			}
 
 			@keyframes loadingPulse {
@@ -540,8 +550,10 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		`;
 	}
 
-	_handleFirstLoad(whenLoaded, whileLoading = () => null) {
-		return this._loaded ? whenLoaded() : until(this._mainPageLoad.then(whenLoaded), whileLoading());
+	_handleFirstLoad(whenLoaded, whileLoading = () => null, firstLoad = null, promiseToWatch = null) {
+		firstLoad = firstLoad === null ? this._loaded : firstLoad;
+		promiseToWatch = promiseToWatch === null ? this._mainPageLoad : promiseToWatch;
+		return firstLoad ? whenLoaded() : until(promiseToWatch.then(whenLoaded), whileLoading());
 	}
 
 	_renderItemList() {
@@ -573,9 +585,36 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		return html`<d2l-list>${items}</d2l-list>`;
 	}
 
+	_renderCandidateItems() {
+		if (this._candidateItems.length <= 0) {
+			return html`<div class="d2l-activity-collection-no-activity d2l-body-standard">${this.localize('noActivitiesInLearningPath')}</div>`;
+		}
+
+		const items = repeat(this._candidateItems, (candidate) => candidate.itemSelf, candidate => {
+			return html`
+				<d2l-list-item selectable ?disabled=${candidate.alreadyAdded} ?selected=${candidate.alreadyAdded || this._currentSelection[candidate.item.getActionState()]} key=${candidate.alreadyAdded ? ifDefined(undefined) : candidate.item.getActionState()}>
+					<div slot="illustration" class="d2l-activitiy-collection-list-item-illustration">
+						${this._renderCourseImageSkeleton()}
+						<d2l-organization-image
+							class="d2l-activitiy-collection-organization-image"
+							href="${candidate.itemSelf}"
+							@d2l-organization-image-loaded="${() => this._onListImageLoaded(this._organizationImageChunk[candidate.itemSelf])}"
+							?hidden="${!this._loadedImages[this._organizationImageChunk[candidate.itemSelf]].allLoaded}">
+						</d2l-organization-image>
+					</div>
+					<d2l-list-item-content>
+						${candidate.organization.name()}
+						<div slot="secondary" class="d2l-list-item-secondary">${candidate.alreadyAdded ? html`${this.localize('alreadyAdded')}` : null}</div>
+					<d2l-list-item-content>
+				</d2l-list-item>
+			`;
+		});
+		return html`<d2l-list @d2l-list-selection-change=${this.handleSelectionChange}>${items}</d2l-list>`;
+	}
+
 	_renderCourseImageSkeleton() {
 		return html`
-			<svg viewBox="0 0 180 77" width="100%" slot="illustration">
+			<svg viewBox="0 0 180 77" width="100%" slot="illustration" class="d2l-activity-collection-image-skeleton">
 				<rect x="0" width="100%" y="0" height="100%" stroke="none" class="d2l-activity-collection-skeleton-rect"></rect>
 			</svg>
 		`;
@@ -602,32 +641,11 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	}
 
 	_renderCandidates() {
-		const candidates = this._candidateLoad.then(() => {
-			return this._candidateItems.length === 0
-				? html`<div class="d2l-activity-collection-no-activity d2l-body-standard">${this.localize('noActivitiesInLearningPath')}</div>`
-				: html`<d2l-list @d2l-list-selection-change=${this.handleSelectionChange}>
-					${this._candidateItems.map((candidate) => {
-						return html`
-							<d2l-list-item selectable ?disabled=${candidate.alreadyAdded} ?selected=${candidate.alreadyAdded || this._currentSelection[candidate.item.getActionState()]} key=${candidate.alreadyAdded ? ifDefined(undefined) : candidate.item.getActionState()}>
-								<div slot="illustration" class="d2l-activitiy-collection-list-item-illustration">
-									${this._renderCourseImageSkeleton()}
-									<d2l-organization-image
-										class="d2l-activitiy-collection-organization-image"
-										href="${candidate.organization.self()}"
-										@d2l-organization-image-loaded="${() => this._onListImageLoaded(this._organizationImageChunk[candidate.itemSelf])}"
-										?hidden="${!this._loadedImages[this._organizationImageChunk[candidate.itemSelf]].allLoaded}">
-									</d2l-organization-image>
-								</div>
-								<d2l-list-item-content>
-									${candidate.organization.name()}
-									<div slot="secondary" class="d2l-list-item-secondary">${candidate.alreadyAdded ? html`${this.localize('alreadyAdded')}` : null}</div>
-								<d2l-list-item-content>
-							</d2l-list-item>
-						`;
-					})}
-					</d2l-list>
-				`;
+		this.updateComplete.then(() => {
+			this._oldDom = this.shadowRoot.querySelector('.d2l-add-activity-dialog d2l-list');
 		});
+		const candidates = this._handleFirstLoad(this._renderCandidateItems.bind(this), () => html`<d2l-loading-spinner></d2l-loading-spinner>${this._oldDom}`, this._candidateFirstLoad, this._candidateLoad);
+
 
 		const spaceKeyDown = 32;
 		const spaceKeyEnter = 13;
@@ -654,7 +672,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 							</div>
 							<div class="d2l-add-activity-dialog-selection-count">${selectedNav}</div>
 						</div>
-						${until(candidates, html`<d2l-loading-spinner></d2l-loading-spinner>`)}
+						${candidates}
 						<div class="d2l-add-activity-dialog-load-more">
 							${this._actionCollectionEntity && this._actionCollectionEntity.getNextAction() ? html`<d2l-button @click=${this.loadMore}>${this.localize('loadMore')}</d2l-button>` :	null}
 						</div>
