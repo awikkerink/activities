@@ -67,23 +67,14 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			}
 			#score-info-container {
 				flex-wrap: wrap;
-				-webkit-box-align: center;
-				-moz-box-align: center;
-				-ms-flex-align: center;
 				-webkit-align-items: center;
 				align-items: center;
 			}
 			#score-out-of-container {
-				-webkit-box-align: baseline;
-				-moz-box-align: baseline;
-				-ms-flex-align: baseline;
 				-webkit-align-items: baseline;
 				align-items: baseline;
 			}
 			#grade-info-container {
-				-webkit-box-align: center;
-				-moz-box-align: center;
-				-ms-flex-align: center;
 				-webkit-align-items: center;
 				align-items: center;
 			}
