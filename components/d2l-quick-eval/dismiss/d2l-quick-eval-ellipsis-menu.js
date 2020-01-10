@@ -22,6 +22,10 @@ class D2LQuickEvalEllipsisMenu extends LitQuickEvalLocalize(LitElement) {
 			courseLevel: {
 				type: Boolean,
 				value: false
+			},
+			multiCourseQuickEvalHref: {
+				type: String,
+				value: ''
 			}
 		};
 	}
@@ -41,6 +45,12 @@ class D2LQuickEvalEllipsisMenu extends LitQuickEvalLocalize(LitElement) {
 					<d2l-menu-item
 					@d2l-menu-item-select="${this._open.bind(this)}"
 					text="${this.localize('dismissedActivities')}"></d2l-menu-item>
+					${(this.courseLevel && this.multiCourseQuickEvalHref) ? (
+						html`<d2l-menu-item
+								@d2l-menu-item-select="${this._goToMultiCourseQuickEval.bind(this)}"
+								text="${this.localize('multiCourseQuickEval')}"
+							></d2l-menu-item>`
+					) : (html``)}
 				</d2l-menu>
 			</d2l-dropdown-menu>
 		</d2l-dropdown-more>
@@ -73,6 +83,10 @@ class D2LQuickEvalEllipsisMenu extends LitQuickEvalLocalize(LitElement) {
 			return this.href;
 		}
 		return '';
+	}
+
+	_goToMultiCourseQuickEval() {
+		window.location.href = this.multiCourseQuickEvalHref;
 	}
 }
 
