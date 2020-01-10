@@ -37,6 +37,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		this._currentSelection = {};
 		this._specialization = {};
 		this._organizationImageChunk = {};
+		this._loaded = false;
 		this._loadedImages = [];
 		this._mainPageLoad = new Promise(() => null);
 		this._candidateLoad = new Promise(() => null);
