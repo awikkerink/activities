@@ -8,6 +8,7 @@ import 'd2l-tooltip/d2l-tooltip';
 import { bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
+import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { ErrorHandlingMixin } from './error-handling-mixin.js';
 import { getLocalizeResources } from './localization';
@@ -15,6 +16,7 @@ import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SaveStatusMixin } from './save-status-mixin';
+import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
 class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixinLit(LocalizeMixin(RtlMixin(LitElement))))) {
 
@@ -62,10 +64,16 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			#score-out-of-container,
 			#grade-info-container {
 				display: flex;
-				align-items: baseline;
 			}
 			#score-info-container {
 				flex-wrap: wrap;
+				align-items: center;
+			}
+			#score-out-of-container {
+				align-items: baseline;
+			}
+			#grade-info-container {
+				align-items: center;
 			}
 			.grade-type-text {
 				margin: 0 0.75rem 0 0.6rem;
@@ -74,8 +82,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 				margin: 0 0.6rem 0 0.75rem;
 			}
 			#divider {
-				height: 1.5rem;
-				align-self: center;
+				height: 30px;
 				border-left: solid 1px var(--d2l-color-galena);
 				margin-right: 0.3rem;
 			}
@@ -84,11 +91,12 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 				margin-left: 0.3rem;
 			}
 			.grade-info {
+				height: 42px;
 				border: 1px solid transparent;
 				background: none;
 				outline: none;
 				border-radius: 0.3rem;
-				padding: .5rem .6rem;
+				padding: .5rem .6rem .4rem;
 				cursor: pointer;
 				display: flex;
 				flex-wrap: nowrap;
@@ -148,6 +156,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 		this._canEditScoreOutOf = false;
 		this._canSeeGrades = false;
 		this._canEditGrades = false;
+		this._debounceJobs = {};
 
 		this._tooltipBoundary = {
 			left: 5,
@@ -162,7 +171,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 
 		if (entity) {
 			if (!this._isError()) {
-				this._scoreOutOf = entity.scoreOutOf();
+				this._scoreOutOf = entity.scoreOutOf().toString();
 			}
 			this._inGrades = entity.inGrades();
 			this._gradeType = (entity.gradeType() || 'Points').toLowerCase();
@@ -189,8 +198,6 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 	}
 
 	_onScoreOutOfChanged() {
-		this.clearError('_emptyScoreOutOfError');
-		this.clearError('_invalidScoreOutOfError');
 		const scoreOutOf = this.shadowRoot.querySelector('#score-out-of').value;
 		if (scoreOutOf === this._scoreOutOf) {
 			return;
@@ -200,30 +207,46 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			(isNaN(scoreOutOf) || scoreOutOf < 0.01 || scoreOutOf > 9999999999);
 
 		const scoreErrorLangterm = isScoreEmpty ? 'emptyScoreOutOfError' : 'invalidScoreOutOfError';
-		const errorProperty = isScoreEmpty ? '_emptyScoreOutOfError' : '_invalidScoreOutOfError';
+		const setErrorProperty = isScoreEmpty ? '_emptyScoreOutOfError' : '_invalidScoreOutOfError';
+		const clearErrorProperty = isScoreEmpty ? '_invalidScoreOutOfError' : '_emptyScoreOutOfError';
 		const tooltipId = 'score-tooltip';
 
 		if ((this._inGrades && isScoreEmpty) || isScoreInvalid) {
 			this._scoreOutOf = scoreOutOf;
-			this.setError(errorProperty, scoreErrorLangterm, tooltipId);
+			this.clearError(clearErrorProperty);
+			this.setError(setErrorProperty, scoreErrorLangterm, tooltipId);
+		} else if (!this.inGrades && isScoreEmpty) {
+			this._scoreOutOf = scoreOutOf;
 		} else {
-			this.clearError(errorProperty);
-			this.wrapSaveAction(super._entity.setScoreOutOf(scoreOutOf, this._inGrades));
+			this.clearError('_emptyScoreOutOfError');
+			this.clearError('_invalidScoreOutOfError');
+			this._debounceJobs.scoreOutOf = Debouncer.debounce(
+				this._debounceJobs.scoreOutOf,
+				timeOut.after(500),
+				() => this.wrapSaveAction(super._entity.setScoreOutOf(scoreOutOf, this._inGrades))
+			);
+
 		}
 	}
 
 	_addToGrades() {
 		if (!this._isError()) {
-			this.wrapSaveAction(super._entity.addToGrades());
+			if (!this._scoreOutOf) {
+				this._inGrades = true;
+			} else {
+				this.wrapSaveAction(super._entity.addToGrades());
+			}
 		}
 	}
 
 	_removeFromGrades() {
 		this.clearError('_emptyScoreOutOfError');
-		if (!this._scoreOutOf) {
-			this._inGrades = false;
-		} else {
-			this.wrapSaveAction(super._entity.removeFromGrades());
+		if (!this._isError()) {
+			if (!this._scoreOutOf) {
+				this._inGrades = false;
+			} else {
+				this.wrapSaveAction(super._entity.removeFromGrades());
+			}
 		}
 	}
 
@@ -262,6 +285,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 						value="${this._scoreOutOf}"
 						size=4
 						@change="${this._onScoreOutOfChanged}"
+						@blur="${this._onScoreOutOfChanged}"
 						aria-invalid="${this._isError() ? 'true' : ''}"
 						?disabled="${!this._canEditScoreOutOf}"
 					></d2l-input-text>

@@ -72,6 +72,7 @@ class D2LQuickEval extends
 				master-teacher="[[masterTeacher]]"
 				returning-to-quick-eval="[[returningToQuickEval]]"
 				course-level="[[courseLevel]]"
+				course-level-name="[[courseLevelName]]"
 				submission-filters="[[submissionFilters]]"></d2l-quick-eval-submissions>
 			<d2l-quick-eval-activities
 				href="[[_lazyActivitiesHref]]"
@@ -147,6 +148,10 @@ class D2LQuickEval extends
 			courseLevel: {
 				type: Boolean,
 				value: false
+			},
+			courseLevelName: {
+				type: String,
+				value: ''
 			},
 			submissionFilters: {
 				type: Array,

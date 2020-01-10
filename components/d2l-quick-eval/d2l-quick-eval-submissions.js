@@ -138,6 +138,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				show-no-submissions="[[_showNoSubmissions]]"
 				show-no-criteria="[[_showNoCriteria]]"
 				returning-to-quick-eval="[[returningToQuickEval]]"
+				course-level="[[courseLevel]]"
+				course-level-name="[[courseLevelName]]"
 				on-d2l-quick-eval-submissions-table-load-more="_loadMore"
 				on-d2l-quick-eval-submissions-table-sort-requested="_handleSortRequested">
 			</d2l-quick-eval-submissions-table>
@@ -262,6 +264,10 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				type: Boolean,
 				value: false
 			},
+			courseLevelName: {
+				type: String,
+				value: ''
+			},
 			submissionFilters: {
 				type: Array,
 				value: []
@@ -291,11 +297,11 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		this._loading = true;
 
 		if (this._initialLoad) {
+			this._initialLoad = false;
 			this.filterAppliedShortcut();
 			this.searchAppliedShortcut();
 
 			if (entity.hasClass('empty') && (this.searchApplied || this.filterApplied)) {
-				this._initialLoad = false;
 				this.addEventListener('d2l-hm-filter-filters-loaded', this._handleFilterLoadedNoResultsOnInitialLoad);
 				return;
 			}
@@ -319,7 +325,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			return Promise.reject(e);
 		} finally {
 			this._loading = false;
-			this._initialLoad = false;
 		}
 	}
 

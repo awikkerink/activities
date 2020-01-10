@@ -135,8 +135,20 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 				.d2l-body-standard {
 					@apply --d2l-body-compact-text;
 				}
+				.d2l-quick-eval-submissions-course-name-heading {
+					@apply --d2l-heading-3;
+					margin-top: 0.9rem;
+					margin-bottom: 0.6rem;
+					max-width: 24rem;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					overflow: hidden;
+				}
 			</style>
 			<d2l-offscreen id$="[[_tableDescriptionId]]">[[localize('tableTitle')]]</d2l-offscreen>
+			<template is="dom-if" if="[[courseLevel]]">
+				<h2 title="[[courseLevelName]]" class="d2l-quick-eval-submissions-course-name-heading">[[courseLevelName]]</h2>			
+			</template>
 			<d2l-table class="d2l-quick-eval-table" type="light" hidden$="[[showLoadingSkeleton]]" aria-describedby$="[[_tableDescriptionId]]" aria-colcount$="[[_headerColumns.length]]" aria-rowcount$="[[_data.length]]">
 				<d2l-thead>
 					<d2l-tr>
@@ -301,6 +313,14 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 			returningToQuickEval: {
 				type: Boolean,
 				value: false
+			},
+			courseLevel: {
+				type: Boolean,
+				value: false
+			},
+			courseLevelName: {
+				type: String,
+				value: ''
 			}
 		};
 	}
