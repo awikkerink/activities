@@ -65,8 +65,7 @@ class ActivityVisibilityEditor extends connect(ActivityEditorMixin(LocalizeMixin
 
 		const {
 			isDraft,
-			canEditDraft,
-			dueDate
+			canEditDraft
 		} = this._activity;
 
 		const switchVisibilityText = (isDraft ? this.localize('hidden') : this.localize('visible'));
@@ -80,14 +79,14 @@ class ActivityVisibilityEditor extends connect(ActivityEditorMixin(LocalizeMixin
 						@click="${this._updateVisibility}">
 							<div class="d2l-label-text">
 								<d2l-icon icon=${icon}></d2l-icon>
-								${switchVisibilityText}-${dueDate}
+								${switchVisibilityText}
 							</div>
 					</d2l-switch>
 				`
 			: html`
 					<div d2l-label-text>
 						<d2l-icon icon=${icon}></d2l-icon>
-						${switchVisibilityText}-${dueDate}
+						${switchVisibilityText}
 					</div>
 				`;
 
