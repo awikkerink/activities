@@ -673,6 +673,16 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			this._candidateLoad
 		);
 
+		const loadMore = this._handleFirstLoad(
+			() => this._actionCollectionEntity && this._actionCollectionEntity.getNextAction()
+				? html`<d2l-button @click=${this.loadMore}>${this.localize('loadMore')}</d2l-button>`
+				: null,
+
+			() => null,
+			this._candidateFirstLoad,
+			this._candidateLoad
+		);
+
 
 		const spaceKeyDown = 32;
 		const spaceKeyEnter = 13;
@@ -701,7 +711,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 						</div>
 						${candidates}
 						<div class="d2l-add-activity-dialog-load-more">
-							${this._actionCollectionEntity && this._actionCollectionEntity.getNextAction() ? html`<d2l-button @click=${this.loadMore}>${this.localize('loadMore')}</d2l-button>` :	null}
+							${loadMore}
 						</div>
 					</div>
 
