@@ -63,7 +63,7 @@
     },
     "source_match": "en\\.js$",
     "source_dir": "components/d2l-quick-eval/build/lang",
-    "output_file_path": "components/d2l-quick-eval/lang-experimental/%LANG%.js",
+    "output_file_path": "components/d2l-quick-eval/build/lang/%LANG%.js",
     "output_lang_rewrite": [
       "ar-sa ar",
       "de-de de",
