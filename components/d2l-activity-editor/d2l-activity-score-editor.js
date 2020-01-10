@@ -127,7 +127,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			.grade-info[active] {
 				border-color: var(--d2l-color-mica);
 				border-width: 1px;
-				padding: calc(.5rem + 1px) calc(.6rem + 1px);
+				padding: calc(.5rem + 1px) calc(.6rem + 1px); /* 1px is difference in border width */
 			}
 			.grade-info:focus {
 				border-color: var(--d2l-color-celestine);
