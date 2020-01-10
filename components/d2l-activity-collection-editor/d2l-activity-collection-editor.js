@@ -197,8 +197,11 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		this.clearAllSelected();
 	}
 
-	loadMore() {
-		this.getCandidates(this._actionCollectionEntity.getNextAction());
+	async loadMore() {
+		const lastItem = this.shadowRoot.querySelector('d2l-dialog d2l-list d2l-list-item:last-of-type');
+		await this.getCandidates(this._actionCollectionEntity.getNextAction());
+		await this.updateComplete;
+		lastItem.nextElementSibling.focus();
 	}
 
 	async open() {
