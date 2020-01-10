@@ -67,12 +67,15 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			}
 			#score-info-container {
 				flex-wrap: wrap;
+				-webkit-align-items: center;
 				align-items: center;
 			}
 			#score-out-of-container {
+				-webkit-align-items: baseline;
 				align-items: baseline;
 			}
 			#grade-info-container {
+				-webkit-align-items: center;
 				align-items: center;
 			}
 			.grade-type-text {
@@ -92,7 +95,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			}
 			.grade-info {
 				height: 42px;
-				border: 1px solid transparent;
+				border: 2px solid transparent;
 				background: none;
 				outline: none;
 				border-radius: 0.3rem;
@@ -123,11 +126,13 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			.grade-info:hover,
 			.grade-info[active] {
 				border-color: var(--d2l-color-mica);
+				border-width: 1px;
+				padding: calc(.5rem + 1px) calc(.6rem + 1px); /* 1px is difference in border width */
 			}
 			.grade-info:focus {
 				border-color: var(--d2l-color-celestine);
 				border-width: 2px;
-				padding: calc(.5rem - 1px) calc(.6rem - 1px);
+				padding: .5rem .6rem .4rem;
 			}
 			.grade-info:hover > *,
 			.grade-info:focus > * {
