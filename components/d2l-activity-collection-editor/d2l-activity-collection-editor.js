@@ -47,6 +47,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		this.ariaBusy = 'true';
 		this.ariaLive = 'polite';
 		this._dialogOpen = false;
+		this._candidateItemsLoading = false;
 		this._setEntityType(ActivityUsageEntity);
 	}
 
@@ -130,11 +131,12 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	}
 
 	async getCandidates(action, fields = null, clearList = false) {
-		if (clearList) {
-			this._candidateFirstLoad = false;
-		}
 		if (!this._collection) {
 			return;
+		}
+		this._candidateItemsLoading = true;
+		if (clearList) {
+			this._candidateFirstLoad = false;
 		}
 		const resp = await performSirenAction(this.token, action, fields, true);
 		this._actionCollectionEntity = new ActionCollectionEntity(this._collection, resp);
@@ -160,6 +162,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		}
 		this._loadedImages[imageChunk].total = totalInLoadingChunk;
 		this._candidateFirstLoad = true;
+		this._candidateItemsLoading = false;
 	}
 
 	async addActivities() {
@@ -215,6 +218,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			_name: { type: String },
 			_selectionCount: { type: Number },
 			_candidateLoad: { type: Object },
+			_candidateItemsLoading: {type: Boolean},
 			ariaBusy: { type: String, reflect: true, attribute: 'aria-busy' },
 			ariaLive: { type: String, reflect: true, attribute: 'aria-live' }
 		};
@@ -702,7 +706,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		return html`
 			<div class="dialog-div">
 				<d2l-dialog id="dialog" title-text="${this.localize('browseActivityLibrary')}" @d2l-dialog-close=${this.clearDialog}>
-					<div class="d2l-add-activity-dialog">
+					<div class="d2l-add-activity-dialog" aria-live="polite" aria-busy="${this._candidateItemsLoading}">
 						<div class="d2l-add-activity-dialog-header">
 							<div>
 								<d2l-input-search label="${this.localize('search')}" @d2l-input-search-searched=${this.handleSearch}></d2l-input-search>
