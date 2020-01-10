@@ -19,7 +19,7 @@ describe('d2l-quick-eval-submissions-table', function() {
 
 	it ('basic', async function() {
 		const rect = await visualDiff.getRect(page, '#basic');
-			await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
+		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
 
 	['with-data', 'master-teacher'].forEach((name) => {
@@ -31,9 +31,16 @@ describe('d2l-quick-eval-submissions-table', function() {
 	});
 
 	async function populate(page, name) {
-		await page.evaluate((n) => 
-		{ 
+		await page.evaluate((n) =>
+		{
 			const table = document.querySelector(`#${n} d2l-quick-eval-submissions-table`);
+			table.shadowRoot.querySelectorAll('d2l-profile-image').forEach((dpi) => {
+				dpi._loading = false;
+			});
+			table.shadowRoot.querySelectorAll('d2l-activity-name').forEach((dan, index) => {
+				dan._activityName = `Activity ${index + 1}`;
+				dan._activityIcon = 'd2l-tier1:quizzing';
+			});
 			// Boolean property that defaults to true cannot be set to false in the html.
 			table.showLoadingSkeleton = false;
 			// We could bind this in the html, but it's quite large and should be the same for all.
@@ -62,7 +69,7 @@ describe('d2l-quick-eval-submissions-table', function() {
 					key: 'masterTeacher',
 					headers: [{ key: 'masterTeacher', sortClass: 'primary-facilitator', canSort: false, sorted: false, desc: false }]
 				}
-			]
+			];
 		}, name);
 	}
 });
