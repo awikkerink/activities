@@ -2,6 +2,10 @@
 
 'use strict';
 
+require('babel-register')({
+	presets: ['env'],
+});
+
 const del = require('del');
 const gulp = require('gulp');
 const ejs = require('gulp-ejs');
@@ -9,18 +13,38 @@ const rename = require('gulp-rename');
 const mergeStream = require('merge-stream');
 const requireDir = require('require-dir');
 
-const buildDirectory = '/../build';
-const sergeDirectories = require('./activities.serge.json');
+const sergeDirectories = require('./activities.serge.json').filter((sgDir)=> sgDir.name === 'quickEval_EXPERIMENTAL');
 const template = './templates/lang-mixin.ejs';
 const buildSeries = ['clean'];
 const cleanSeries = [];
 
 sergeDirectories.forEach((sergeComponent) => {
-	const localeResources = requireDir(sergeComponent.source_dir);
+	const langFileNames = [];
+	let localeResources = requireDir(sergeComponent.source_dir, {
+		mapKey: (value, baseName)=> {
+			langFileNames.push(baseName);
+			return Object.keys(value)[0];
+		},
+		mapValue: (value)=> {
+			return value[Object.keys(value)[0]];
+		}});
+
+	localeResources = Object.keys(localeResources).reduce((acc, langFile)=> {
+		if (langFile === 'LangEn') {
+			acc.LangEn = localeResources.LangEn;
+		} else {
+			acc[langFile] = Object.keys(localeResources.LangEn).reduce((subAcc, key) => {
+				subAcc[key] = localeResources[langFile][key] || localeResources.LangEn[key];
+				return subAcc;
+			}, {});
+		}
+		return acc;
+	}, {});
+
 	const config = {
-		dest: sergeComponent.source_dir + buildDirectory,
-		localeFiles: Object.keys(localeResources).map((lang) => ({
-			filename: lang,
+		dest: sergeComponent.source_dir,
+		localeFiles: Object.keys(localeResources).map((lang, index) => ({
+			filename: langFileNames[index],
 			data: {
 				lang: lang.replace('-', ''),
 				name: sergeComponent.name,
@@ -34,7 +58,7 @@ sergeDirectories.forEach((sergeComponent) => {
 	const options = {
 		client: true,
 		strict: true,
-		root: sergeComponent.source_dir + buildDirectory + '/lang',
+		root: sergeComponent.source_dir,
 		localsName: 'data'
 	};
 
