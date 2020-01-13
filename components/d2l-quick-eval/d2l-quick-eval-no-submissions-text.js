@@ -40,9 +40,6 @@ class D2LQuickEvalNoSubmissionsText extends QuickEvalLogging(QuickEvalLocalize(P
 			}
 		};
 	}
-	static get observers() {
-		return [];
-	}
 }
 
 window.customElements.define('d2l-quick-eval-no-submissions-text', D2LQuickEvalNoSubmissionsText);
