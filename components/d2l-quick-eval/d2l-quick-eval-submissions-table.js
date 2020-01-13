@@ -137,7 +137,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 				}
 				.d2l-quick-eval-submissions-course-name-heading {
 					@apply --d2l-heading-3;
-					margin-top: 0.9rem;
+					margin-top: 0.8rem;
 					margin-bottom: 0.6rem;
 					max-width: 24rem;
 					text-overflow: ellipsis;
