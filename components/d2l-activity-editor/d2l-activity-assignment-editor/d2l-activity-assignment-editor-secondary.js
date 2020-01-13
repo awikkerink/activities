@@ -2,6 +2,7 @@ import './d2l-assignment-turnitin-editor';
 import '../d2l-activity-availability-dates-editor.js';
 import '../d2l-activity-release-conditions-editor.js';
 import 'd2l-inputs/d2l-input-checkbox.js';
+import 'd2l-inputs/d2l-input-checkbox-spacer.js';
 import { bodySmallStyles, heading4Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
@@ -24,7 +25,11 @@ class AssignmentEditorSecondary extends SaveStatusMixin(RtlMixin(EntityMixinLit(
 			_showCompletionType: { type: Boolean },
 			_canSeeAnnotations: {type: Boolean },
 			_annotationToolsAvailable: { type: Boolean },
-			_attachmentsHref: { type: String }
+			_attachmentsHref: { type: String },
+			_isAnonymousMarkingAvailable: { type: Boolean },
+			_isAnonymousMarkingEnabled: { type: Boolean },
+			_canEditAnonymousMarking: { type: Boolean },
+			_anonymousMarkingHelpText: { type: String }
 		};
 	}
 
@@ -67,6 +72,14 @@ class AssignmentEditorSecondary extends SaveStatusMixin(RtlMixin(EntityMixinLit(
 					padding-right: 0;
 					padding-left: 20px;
 				}
+
+				d2l-input-checkbox-spacer {
+					margin-top: -0.9rem;
+				}
+
+				d2l-input-checkbox-spacer[hidden] {
+					display: none;
+				}
 			`
 		];
 	}
@@ -104,6 +117,10 @@ class AssignmentEditorSecondary extends SaveStatusMixin(RtlMixin(EntityMixinLit(
 		this._canEditCompletionType = assignment.canEditCompletionType();
 		this._canSeeAnnotations = assignment.canSeeAnnotations();
 		this._annotationToolsAvailable = assignment.getAvailableAnnotationTools();
+		this._isAnonymousMarkingAvailable = assignment.isAnonymousMarkingAvailable();
+		this._isAnonymousMarkingEnabled = assignment.isAnonymousMarkingEnabled();
+		this._canEditAnonymousMarking = assignment.canEditAnonymousMarking();
+		this._anonymousMarkingHelpText = assignment.getAnonymousMarkingHelpText();
 	}
 
 	_saveSubmissionTypeOnChange() {
@@ -131,6 +148,10 @@ class AssignmentEditorSecondary extends SaveStatusMixin(RtlMixin(EntityMixinLit(
 	_toggleAnnotationToolsAvailability() {
 		this._annotationToolsAvailable = !this._annotationToolsAvailable;
 		this.wrapSaveAction(super._entity.setAnnotationToolsAvailability(this._annotationToolsAvailable));
+	}
+
+	_saveAnonymousMarking(event) {
+		this.wrapSaveAction(super._entity.setAnonymousMarking(event.target.checked));
 	}
 
 	render() {
@@ -185,7 +206,19 @@ class AssignmentEditorSecondary extends SaveStatusMixin(RtlMixin(EntityMixinLit(
 						${this.localize('annotationToolDescription')}
 					</d2l-input-checkbox>
 			</div>
-
+			<div id="assignment-anonymous-marking-editor-container" ?hidden="${!this._isAnonymousMarkingAvailable}">
+				<label class="d2l-label-text">${this.localize('lblAnonymousMarking')}</label>
+				<d2l-input-checkbox
+					@change="${this._saveAnonymousMarking}"
+					?checked="${this._isAnonymousMarkingEnabled}"
+					?disabled="${!this._canEditAnonymousMarking}"
+					ariaLabel="${this.localize('chkAnonymousMarking')}">
+					${this.localize('chkAnonymousMarking')}
+				</d2l-input-checkbox>
+				<d2l-input-checkbox-spacer ?hidden="${!this._anonymousMarkingHelpText}">
+					<span class="d2l-body-small">${this._anonymousMarkingHelpText}</span>
+				</d2l-input-checkbox-spacer>
+			</div>
 		`;
 	}
 }
