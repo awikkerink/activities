@@ -35,7 +35,7 @@ describe('d2l-quick-eval-activities-list', function() {
 			list.shadowRoot.querySelectorAll('d2l-quick-eval-activity-card').forEach((ac) => {
 				const dan = ac.shadowRoot.querySelector('d2l-activity-name');
 				dan._activityName = ac.activityName;
-				dan._activityIcon = `d2l-tier1:${ac.activityType == 'quiz' ? 'quizzing' : ac.activityType == 'discussion' ? 'discussions' : 'assignments'}`;
+				dan._activityIcon = `d2l-tier1:${ac.activityType === 'quiz' ? 'quizzing' : ac.activityType === 'discussion' ? 'discussions' : 'assignments'}`;
 			});
 		}, name);
 	}
