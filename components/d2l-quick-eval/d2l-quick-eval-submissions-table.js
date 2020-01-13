@@ -213,7 +213,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 								<d2l-td class="d2l-quick-eval-truncated-column d2l-activity-name-column">
 									<d2l-activity-name href="[[s.activityNameHref]]" token="[[token]]"></d2l-activity-name>
 								</d2l-td>
-								<template is="dom-if" if="[[!courseLevel]]">
+								<template is="dom-if" if="[[_shouldDisplayColumn('courseName')]]">
 									<d2l-td class="d2l-quick-eval-truncated-column d2l-course-name-column">
 										<span title="[[s.courseName]]">[[s.courseName]]</span>
 									</d2l-td>
@@ -438,6 +438,9 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 	_shouldDisplayColumn(columnKey) {
 		if (columnKey === 'masterTeacher') {
 			return this.masterTeacher;
+		}
+		if (columnKey === 'courseName') {
+			return !this.courseLevel;
 		}
 		return true;
 	}
