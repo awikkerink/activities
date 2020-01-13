@@ -73,7 +73,7 @@ class D2LQuickEval extends
 				returning-to-quick-eval="[[returningToQuickEval]]"
 				course-level="[[courseLevel]]"
 				course-level-name="[[courseLevelName]]"
-				submission-filters="[[submissionFilters]]"></d2l-quick-eval-submissions>
+				filter-ids="[[submissionFilters]]"></d2l-quick-eval-submissions>
 			<d2l-quick-eval-activities
 				href="[[_lazyActivitiesHref]]"
 				token="[[token]]"
@@ -81,7 +81,7 @@ class D2LQuickEval extends
 				hidden$="[[!_displayActivities(toggleState, activitiesViewEnabled)]]"
 				dismiss-enabled="[[dismissEnabled]]"
 				course-level="[[courseLevel]]"
-				activity-filters="[[activityFilters]]"></d2l-quick-eval-activities>
+				filter-ids="[[activityFilters]]"></d2l-quick-eval-activities>
 		`;
 	}
 
