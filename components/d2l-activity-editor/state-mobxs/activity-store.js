@@ -5,7 +5,7 @@ import { configure as configureMobx } from 'mobx'
 configureMobx({ enforceActions: 'observed' });
 
 export class ActivityStore {
-	@observable activities = observable.map();
+	activities = new Map();
 
 	fetchActivity(href, token, autoSave=false, shared=true) {
 
