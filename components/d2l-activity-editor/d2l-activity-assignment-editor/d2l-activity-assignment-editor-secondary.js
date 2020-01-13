@@ -11,7 +11,7 @@ import { getLocalizeResources } from '../localization.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SaveStatusMixin } from '../save-status-mixin.js';
-import { selectStyles } from '../select-styles.js';
+import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 
 class AssignmentEditorSecondary extends SaveStatusMixin(RtlMixin(EntityMixinLit(LocalizeMixin(LitElement)))) {
 
@@ -50,7 +50,7 @@ class AssignmentEditorSecondary extends SaveStatusMixin(RtlMixin(EntityMixinLit(
 					padding-bottom: 20px;
 				}
 
-				select {
+				.block-select {
 					width: 100%;
 					max-width: 300px;
 					display: block;
@@ -160,6 +160,7 @@ class AssignmentEditorSecondary extends SaveStatusMixin(RtlMixin(EntityMixinLit(
 				<label class="d2l-label-text" for="assignment-submission-type">${this.localize('submissionType')}</label>
 				<select
 					id="assignment-submission-type"
+					class="d2l-input-select block-select"
 					@change="${this._saveSubmissionTypeOnChange}"
 					?disabled="${!this._canEditSubmissionType}">
 
@@ -171,6 +172,7 @@ class AssignmentEditorSecondary extends SaveStatusMixin(RtlMixin(EntityMixinLit(
 				<label class="d2l-label-text" for="assignment-completion-type">${this.localize('completionType')}</label>
 				<select
 					id="assignment-completion-type"
+					class="d2l-input-select block-select"
 					@change="${this._saveCompletionTypeOnChange}"
 					?disabled="${!this._canEditCompletionType}">
 
