@@ -389,7 +389,10 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				};
 
 				const getUserName = this._getUserPromise(activity, item);
-				const getCourseName = this._getCoursePromise(activity, item);
+				const getCourseName = this.courseLevel
+					? Promise.resolve()
+					: this._getCoursePromise(activity, item);
+
 				const getMasterTeacherName =
 					this.masterTeacher
 						? this._getMasterTeacherPromise(activity, item)

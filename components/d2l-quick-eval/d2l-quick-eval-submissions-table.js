@@ -147,7 +147,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 			</style>
 			<d2l-offscreen id$="[[_tableDescriptionId]]">[[localize('tableTitle')]]</d2l-offscreen>
 			<template is="dom-if" if="[[courseLevel]]">
-				<h2 title="[[courseLevelName]]" class="d2l-quick-eval-submissions-course-name-heading">[[courseLevelName]]</h2>			
+				<h2 title="[[courseLevelName]]" class="d2l-quick-eval-submissions-course-name-heading">[[courseLevelName]]</h2>
 			</template>
 			<d2l-table class="d2l-quick-eval-table" type="light" hidden$="[[showLoadingSkeleton]]" aria-describedby$="[[_tableDescriptionId]]" aria-colcount$="[[_headerColumns.length]]" aria-rowcount$="[[_data.length]]">
 				<d2l-thead>
@@ -213,9 +213,11 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 								<d2l-td class="d2l-quick-eval-truncated-column d2l-activity-name-column">
 									<d2l-activity-name href="[[s.activityNameHref]]" token="[[token]]"></d2l-activity-name>
 								</d2l-td>
-								<d2l-td class="d2l-quick-eval-truncated-column d2l-course-name-column">
-									<span title="[[s.courseName]]">[[s.courseName]]</span>
-								</d2l-td>
+								<template is="dom-if" if="[[_shouldDisplayColumn('courseName')]]">
+									<d2l-td class="d2l-quick-eval-truncated-column d2l-course-name-column">
+										<span title="[[s.courseName]]">[[s.courseName]]</span>
+									</d2l-td>
+								</template>
 								<d2l-td>
 									<span>[[_localizeDateTimeFormat(s.submissionDate)]]</span>
 								</d2l-td>
@@ -436,6 +438,9 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 	_shouldDisplayColumn(columnKey) {
 		if (columnKey === 'masterTeacher') {
 			return this.masterTeacher;
+		}
+		if (columnKey === 'courseName') {
+			return !this.courseLevel;
 		}
 		return true;
 	}
