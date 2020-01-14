@@ -55,6 +55,7 @@ export const LangNl = {
 			'noResults': 'Geen resultaten hier.',
 			'noSubmissions': 'Er zijn geen indieningen die uw aandacht nodig hebben.',
 			'noSubmissionsCourseLevel': 'There are no submissions that need your attention in this course.',
+			'optionsForQuickEval' : 'Options for Quick Eval',
 			'publishAll': 'Alles publiceren',
 			'publishAllConfirmDialogMessage': '{evaluated} van de {assigned} gebruikers ontvangt feedback over publicatie. Wilt u doorgaan?',
 			'publishAllToastMessage': '{activityName} evaluaties zijn gepubliceerd.',

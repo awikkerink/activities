@@ -55,6 +55,7 @@ export const LangTr = {
 			'noResults': 'Sonuç yok.',
 			'noSubmissions': 'İlgilenmeniz gereken gönderi yok.',
 			'noSubmissionsCourseLevel': 'There are no submissions that need your attention in this course.',
+			'optionsForQuickEval' : 'Options for Quick Eval',
 			'publishAll': 'Tümünü Yayımla',
 			'publishAllConfirmDialogMessage': '{assigned} kullanıcıdan {evaluated} tanesi yayımlama konusunda geri bildirim alacak. Devam etmek istiyor musunuz?',
 			'publishAllToastMessage': '{activityName} değerlendirmeler başarılı bir şekilde yayınlandı.',

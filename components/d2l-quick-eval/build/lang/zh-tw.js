@@ -55,6 +55,7 @@ export const LangZhtw = {
 			'noResults': '這裡沒有任何結果。',
 			'noSubmissions': '沒有提交項目需要您注意。',
 			'noSubmissionsCourseLevel': 'There are no submissions that need your attention in this course.',
+			'optionsForQuickEval' : 'Options for Quick Eval',
 			'publishAll': '全部發佈',
 			'publishAllConfirmDialogMessage': '{assigned} 個使用者中有 {evaluated} 個使用者將在發佈時收到意見反應。是否要繼續？',
 			'publishAllToastMessage': '{activityName} 評估已成功發佈。',

@@ -55,6 +55,7 @@
    "noResults" : "Keine Ergebnisse hier.",
    "noSubmissions" : "Es gibt keine Abgaben, die Ihre Aufmerksamkeit erfordern.",
    "noSubmissionsCourseLevel": "There are no submissions that need your attention in this course.",
+   "optionsForQuickEval" : "Options for Quick Eval",
    "publishAll" : "Alle veröffentlichen",
    "publishAllConfirmDialogMessage" : "{evaluated} von {assigned} Benutzern erhalten Feedback zur Veröffentlichung. Möchten Sie den Vorgang fortsetzen?",
    "publishAllToastMessage" : "{activityName}-Bewertungen erfolgreich veröffentlicht.",

@@ -55,6 +55,7 @@ export const LangEs = {
 			'noResults': 'No hay resultados aquí.',
 			'noSubmissions': 'No hay envíos que requieran su atención.',
 			'noSubmissionsCourseLevel': 'There are no submissions that need your attention in this course.',
+			'optionsForQuickEval' : 'Options for Quick Eval',
 			'publishAll': 'Publicar todo',
 			'publishAllConfirmDialogMessage': '{evaluated} de {assigned} usuarios recibirán comentarios sobre la publicación. ¿Desea continuar?',
 			'publishAllToastMessage': 'Evaluaciones de {activityName} publicadas correctamente.',

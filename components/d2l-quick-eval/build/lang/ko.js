@@ -55,6 +55,7 @@ export const LangKo = {
 			'noResults': '여기에 결과가 없습니다.',
 			'noSubmissions': '주목할 제출 항목이 없습니다.',
 			'noSubmissionsCourseLevel': 'There are no submissions that need your attention in this course.',
+			'optionsForQuickEval' : 'Options for Quick Eval',
 			'publishAll': '모두 게시',
 			'publishAllConfirmDialogMessage': '{evaluated} / {assigned} 사용자가 게시에 대한 피드백을 수신합니다. 계속하시겠습니까?',
 			'publishAllToastMessage': '{activityName} 평가를 성공적으로 게시했습니다.',

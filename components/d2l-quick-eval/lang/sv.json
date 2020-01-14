@@ -55,6 +55,7 @@
    "noResults" : "Det finns inga resultat här.",
    "noSubmissions" : "Det finns inga inlämningar som du behöver utföra någon åtgärd på.",
    "noSubmissionsCourseLevel": "There are no submissions that need your attention in this course.",
+   "optionsForQuickEval" : "Options for Quick Eval",
    "publishAll" : "Publicera alla",
    "publishAllConfirmDialogMessage" : "{evaluated} av {assigned} användare får feedback vid publicering. Vill du fortsätta?",
    "publishAllToastMessage" : "{activityName} utvärderingar har publicerats.",

@@ -55,6 +55,7 @@
    "noResults" : "ここには結果がありません。",
    "noSubmissions" : "確認が必要な送信物はありません。",
    "noSubmissionsCourseLevel": "There are no submissions that need your attention in this course.",
+   "optionsForQuickEval" : "Options for Quick Eval",
    "publishAll" : "すべて公開",
    "publishAllConfirmDialogMessage" : "{assigned} 人中 {evaluated} 人のユーザーが、公開に関するフィードバックを受け取ります。続行しますか？",
    "publishAllToastMessage" : "{activityName} の評価が正常に発行されました。",
