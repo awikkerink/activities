@@ -1,44 +1,52 @@
-import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
-import {QuickEvalLocalize} from './QuickEvalLocalize.js';
-import {QuickEvalLogging} from './QuickEvalLogging.js';
-import 'd2l-typography/d2l-typography-shared-styles.js';
-import 'd2l-table/d2l-table.js';
+import {html, css, LitElement} from 'lit-element/lit-element.js';
+import {LitQuickEvalLocalize} from './LitQuickEvalLocalize.js';
+import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 
 /**
  * @customElement
  * @polymer
  */
 
-class D2LQuickEvalNoSubmissionsText extends QuickEvalLogging(QuickEvalLocalize(PolymerElement)) {
-	static get template() {
-		const quickEvalNoSubmissionsTextTemplate = html`
-			<style include="d2l-table-style">
+class D2LQuickEvalNoSubmissionsText extends LitQuickEvalLocalize(LitElement) {
+	static get styles() {
+		return css`
+			<style>
 				.d2l-quick-eval-no-submissions-heading {
 					@apply --d2l-heading-2;
 					margin: 0;
 				}
 			</style>
-			<h2 class="d2l-quick-eval-no-submissions-heading">[[localize('caughtUp')]]</h2>
-			<template is="dom-if" if="[[courseLevel]]">
-				<p class="d2l-body-standard">[[localize('noSubmissionsCourseLevel')]]</p>
-				<p class="d2l-body-standard">[[localize('checkBackOftenCourseLevel')]]</p>
-			</template>
-			<template is="dom-if" if="[[!courseLevel]]">
-				<p class="d2l-body-standard">[[localize('noSubmissions')]]</p>
-				<p class="d2l-body-standard">[[localize('checkBackOften')]]</p>
-			</template>
 		`;
-
-		quickEvalNoSubmissionsTextTemplate.setAttribute('strip-whitespace', 'strip-whitespace');
-		return quickEvalNoSubmissionsTextTemplate;
+	}
+	render() {
+		return html`
+			<h2 class="d2l-quick-eval-no-submissions-heading">${this.localize('caughtUp')}</h2>
+			<p class="d2l-body-standard">${this._computeNoSubmissionsText(this.courseLevel)}</p>
+			<p class="d2l-body-standard">${this._computeCheckBackOftenText(this.courseLevel)}</p>
+		`;
 	}
 	static get properties() {
 		return {
 			courseLevel: {
 				type: Boolean,
 				value: false
+			},
+			multiCourseHref: {
+				type: String
 			}
 		};
+	}
+	_computeNoSubmissionsText(courseLevel) {
+		if (courseLevel) {
+			return this.localize('noSubmissionsCourseLevel');
+		}
+		return this.localize('noSubmissions');
+	}
+	_computeCheckBackOftenText(courseLevel) {
+		if (courseLevel) {
+			return unsafeHTML(this.localize('checkBackOftenCourseLevel', {startTag: `<a href="${this.multiCourseHref}">`, endTag: '</a>'}));
+		}
+		return this.localize('checkBackOften');
 	}
 }
 

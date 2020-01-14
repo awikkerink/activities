@@ -73,7 +73,8 @@ class D2LQuickEval extends
 				returning-to-quick-eval="[[returningToQuickEval]]"
 				course-level="[[courseLevel]]"
 				course-level-name="[[courseLevelName]]"
-				submission-filters="[[submissionFilters]]"></d2l-quick-eval-submissions>
+				submission-filters="[[submissionFilters]]"
+				multi-course-href="[[multiCourseQuickEvalHref]]"></d2l-quick-eval-submissions>
 			<d2l-quick-eval-activities
 				href="[[_lazyActivitiesHref]]"
 				token="[[token]]"
@@ -160,6 +161,9 @@ class D2LQuickEval extends
 			activityFilters: {
 				type: Array,
 				value: []
+			},
+			multiCourseQuickEvalHref: {
+				type: String
 			}
 		};
 	}

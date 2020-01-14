@@ -7,7 +7,7 @@
    "cancel" : "Abbrechen",
    "caughtUp" : "Sie sind auf dem neuesten Stand!",
    "checkBackOften" : "Sehen Sie regelmäßig nach, ob neue Abgaben verfügbar sind.",
-   "checkBackOftenCourseLevel": "Check the Multi-Course Quick Eval to see if there are new submissions in your other courses.",
+   "checkBackOftenCourseLevel": "Check the {startTag}Multi-Course Quick Eval{endTag} to see if there are new submissions in your other courses.",
    "clearSearch" : "Suche löschen",
    "close" : "Schließen",
    "completed" : "Abgeschlossen",

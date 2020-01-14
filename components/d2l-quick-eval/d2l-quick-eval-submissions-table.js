@@ -244,7 +244,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 			<template is="dom-if" if="[[showNoSubmissions]]">
 				<div class="d2l-quick-eval-no-submissions">
 					<d2l-quick-eval-no-submissions-image></d2l-quick-eval-no-submissions-image>
-					<d2l-quick-eval-no-submissions-text course-level="[[courseLevel]]"></d2l-quick-eval-no-submissions-text>
+					<d2l-quick-eval-no-submissions-text course-level="[[courseLevel]]" multi-course-href="[[multiCourseHref]]"></d2l-quick-eval-no-submissions-text>
 				</div>
 			</template>
 			<template is="dom-if" if="[[showNoCriteria]]">
@@ -319,6 +319,9 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 			courseLevelName: {
 				type: String,
 				value: ''
+			},
+			multiCourseHref: {
+				type: String
 			}
 		};
 	}

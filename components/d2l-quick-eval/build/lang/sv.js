@@ -7,7 +7,7 @@ export const LangSv = {
 			'cancel': 'Avbryt',
 			'caughtUp': 'Du är ifatt!',
 			'checkBackOften': 'Du bör kontrollera om det finns nya inlämningar här med regelbundna intervall.',
-			'checkBackOftenCourseLevel': 'Check the Multi-Course Quick Eval to see if there are new submissions in your other courses.',
+			'checkBackOftenCourseLevel': 'Check the {startTag}Multi-Course Quick Eval{endTag} to see if there are new submissions in your other courses.',
 			'clearSearch': 'Rensa sökning',
 			'close': 'Stäng',
 			'completed': 'Slutförd',

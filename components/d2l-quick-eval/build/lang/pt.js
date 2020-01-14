@@ -7,7 +7,7 @@ export const LangPt = {
 			'cancel': 'Cancelar',
 			'caughtUp': 'Você está em dia!',
 			'checkBackOften': 'Verifique com frequência se há novos envios.',
-			'checkBackOftenCourseLevel': 'Check the Multi-Course Quick Eval to see if there are new submissions in your other courses.',
+			'checkBackOftenCourseLevel': 'Check the {startTag}Multi-Course Quick Eval{endTag} to see if there are new submissions in your other courses.',
 			'clearSearch': 'Limpar Pesquisa',
 			'close': 'Fechar',
 			'completed': 'Concluído',

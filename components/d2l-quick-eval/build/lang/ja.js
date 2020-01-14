@@ -7,7 +7,7 @@ export const LangJa = {
 			'cancel': 'キャンセル',
 			'caughtUp': '学習はすべて順調に進んでいます！',
 			'checkBackOften': '新規送信物を頻繁にチェックしてください。',
-			'checkBackOftenCourseLevel': 'Check the Multi-Course Quick Eval to see if there are new submissions in your other courses.',
+			'checkBackOftenCourseLevel': 'Check the {startTag}Multi-Course Quick Eval{endTag} to see if there are new submissions in your other courses.',
 			'clearSearch': '検索のクリア',
 			'close': '閉じる',
 			'completed': '完了',

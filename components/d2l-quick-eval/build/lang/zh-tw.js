@@ -7,7 +7,7 @@ export const LangZhtw = {
 			'cancel': '取消',
 			'caughtUp': '您已趕上最新進度！',
 			'checkBackOften': '請經常返回查看新的提交項目。',
-			'checkBackOftenCourseLevel': 'Check the Multi-Course Quick Eval to see if there are new submissions in your other courses.',
+			'checkBackOftenCourseLevel': 'Check the {startTag}Multi-Course Quick Eval{endTag} to see if there are new submissions in your other courses.',
 			'clearSearch': '清除搜尋',
 			'close': '關閉',
 			'completed': '已完成',

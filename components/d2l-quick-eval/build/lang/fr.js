@@ -7,7 +7,7 @@ export const LangFr = {
 			'cancel': 'Annuler',
 			'caughtUp': 'Vous avez terminé!',
 			'checkBackOften': 'Revenez régulièrement pour de nouvelles soumissions.',
-			'checkBackOftenCourseLevel': 'Check the Multi-Course Quick Eval to see if there are new submissions in your other courses.',
+			'checkBackOftenCourseLevel': 'Check the {startTag}Multi-Course Quick Eval{endTag} to see if there are new submissions in your other courses.',
 			'clearSearch': 'Effacer la recherche',
 			'close': 'Fermer',
 			'completed': 'Terminé(e)',

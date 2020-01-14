@@ -7,7 +7,7 @@ export const LangKo = {
 			'cancel': '취소',
 			'caughtUp': '거의 따라잡았습니다!',
 			'checkBackOften': '새로운 제출 항목이 있는지 자주 다시 확인하십시오.',
-			'checkBackOftenCourseLevel': 'Check the Multi-Course Quick Eval to see if there are new submissions in your other courses.',
+			'checkBackOftenCourseLevel': 'Check the {startTag}Multi-Course Quick Eval{endTag} to see if there are new submissions in your other courses.',
 			'clearSearch': '검색 지우기',
 			'close': '닫기',
 			'completed': '완료됨',

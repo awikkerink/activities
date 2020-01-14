@@ -7,7 +7,7 @@ export const LangTr = {
 			'cancel': 'İptal',
 			'caughtUp': 'Yetiştin!',
 			'checkBackOften': 'Yeni gönderiler için belirli aralıklarla tekrar kontrol edin.',
-			'checkBackOftenCourseLevel': 'Check the Multi-Course Quick Eval to see if there are new submissions in your other courses.',
+			'checkBackOftenCourseLevel': 'Check the {startTag}Multi-Course Quick Eval{endTag} to see if there are new submissions in your other courses.',
 			'clearSearch': 'Aramayı Temizle',
 			'close': 'Kapat',
 			'completed': 'Tamamlandı',

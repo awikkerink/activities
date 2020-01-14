@@ -7,7 +7,7 @@ export const LangAr = {
 			'cancel': 'إلغاء',
 			'caughtUp': 'لقد انتهيت من مهامك!',
 			'checkBackOften': 'تحقق باستمرار من احتمال توفر عمليات إرسال جديدة.',
-			'checkBackOftenCourseLevel': 'Check the Multi-Course Quick Eval to see if there are new submissions in your other courses.',
+			'checkBackOftenCourseLevel': 'Check the {startTag}Multi-Course Quick Eval{endTag} to see if there are new submissions in your other courses.',
 			'clearSearch': 'مسح البحث',
 			'close': 'إغلاق',
 			'completed': 'تم الإكمال',
