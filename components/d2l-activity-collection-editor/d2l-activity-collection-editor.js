@@ -46,6 +46,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		this.ariaBusy = 'true';
 		this.ariaLive = 'polite';
 		this._dialogOpen = false;
+		this._isLoadingMore = false;
 		this._candidateItemsLoading = false;
 		this._setEntityType(ActivityUsageEntity);
 	}
@@ -199,9 +200,11 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	}
 
 	async loadMore() {
+		this._isLoadingMore = true;
 		const lastItem = this.shadowRoot.querySelector('d2l-dialog d2l-list d2l-list-item:last-of-type');
 		await this.getCandidates(this._actionCollectionEntity.getNextAction());
 		await this.updateComplete;
+		this._isLoadingMore = false;
 		lastItem.nextElementSibling.focus();
 	}
 
@@ -221,6 +224,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			_selectionCount: { type: Number },
 			_candidateLoad: { type: Object },
 			_candidateItemsLoading: {type: Boolean},
+			_isLoadingMore: {type: Boolean},
 			ariaBusy: { type: String, reflect: true, attribute: 'aria-busy' },
 			ariaLive: { type: String, reflect: true, attribute: 'aria-live' }
 		};
@@ -683,14 +687,11 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			this._candidateLoad
 		);
 
-		const loadMore = this._handleFirstLoad(
-			() => this._actionCollectionEntity && this._actionCollectionEntity.getNextAction()
-				? html`<d2l-button @click=${this.loadMore}>${this.localize('loadMore')}</d2l-button>`
-				: null,
-			() => null,
-			this._candidateFirstLoad,
-			this._candidateLoad
-		);
+		const loadMore = this._actionCollectionEntity && this._actionCollectionEntity.getNextAction() && !this._isLoadingMore
+			? html`<d2l-button @click=${this.loadMore}>${this.localize('loadMore')}</d2l-button>`
+			: this._isLoadingMore
+			? html`<d2l-loading-spinner size="85"></d2l-loading-spinner>`
+			: null;
 
 		const spaceKeyDown = 32;
 		const spaceKeyEnter = 13;
