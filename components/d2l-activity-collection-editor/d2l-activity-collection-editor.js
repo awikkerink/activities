@@ -549,7 +549,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 							${until(learningPathTitle, learningPathTitleSketeton)}
 							${until(learningPathDescription, learningPathDescriptionSketeton)}
 						</div>
-							${learningPathVisibilityToggle}
+						${learningPathVisibilityToggle}
 					</div>
 				</div>
 			</div>
