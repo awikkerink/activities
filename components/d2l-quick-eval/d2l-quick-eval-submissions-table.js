@@ -146,10 +146,10 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 				}
 			</style>
 			<d2l-offscreen id$="[[_tableDescriptionId]]">[[localize('tableTitle')]]</d2l-offscreen>
-			<template is="dom-if" if="[[courseLevel]]">
+			<template is="dom-if" if="[[_showCourseName]]">
 				<h2 title="[[courseLevelName]]" class="d2l-quick-eval-submissions-course-name-heading">[[courseLevelName]]</h2>
 			</template>
-			<d2l-table class="d2l-quick-eval-table" type="light" hidden$="[[showLoadingSkeleton]]" aria-describedby$="[[_tableDescriptionId]]" aria-colcount$="[[_headerColumns.length]]" aria-rowcount$="[[_data.length]]">
+			<d2l-table class="d2l-quick-eval-table" type="light" hidden$="[[_isTableHeaderHidden]]" aria-describedby$="[[_tableDescriptionId]]" aria-colcount$="[[_headerColumns.length]]" aria-rowcount$="[[_data.length]]">
 				<d2l-thead>
 					<d2l-tr>
 						<dom-repeat items="[[_headerColumns]]" as="headerColumn">
@@ -310,6 +310,10 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 				type: String,
 				computed: '_computeTableDescriptionId()'
 			},
+			_showCourseName: {
+				type: Boolean,
+				computed: '_isCourseNameShown()'
+			},
 			returningToQuickEval: {
 				type: Boolean,
 				value: false
@@ -333,6 +337,14 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 			'_handleNameSwap(_headerColumns.0.headers.*)',
 			'_handleNameFocusOnPageForwardBack(showLoadingSkeleton, _data)'
 		];
+	}
+
+	_isTableHeaderHidden() {
+		return this.showLoadingSkeleton || this.showNoSubmissions || this.showNoCriteria
+	}
+
+	_isCourseNameShown() {
+		return this.courseLevel && !this._isTableHeaderHidden()
 	}
 
 	_computeIsLoading(showLoadingSpinner, showLoadingSkeleton) {
