@@ -1,6 +1,7 @@
 import {html, css, LitElement} from 'lit-element/lit-element.js';
 import {LitQuickEvalLocalize} from './LitQuickEvalLocalize.js';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
+import 'd2l-link/d2l-link.js';
 
 /**
  * @customElement
@@ -45,7 +46,7 @@ class D2LQuickEvalNoSubmissionsText extends LitQuickEvalLocalize(LitElement) {
 	}
 	_computeCheckBackOftenText(courseLevel) {
 		if (courseLevel) {
-			return unsafeHTML(this.localize('checkBackOftenCourseLevel', {startTag: `<a href="${this.multiCourseQuickEvalHref}">`, endTag: '</a>'}));
+			return unsafeHTML(this.localize('checkBackOftenCourseLevel', {startTag: `<d2l-link href="${this.multiCourseQuickEvalHref}">`, endTag: '</d2l-link>'}));
 		}
 		return this.localize('checkBackOften');
 	}
