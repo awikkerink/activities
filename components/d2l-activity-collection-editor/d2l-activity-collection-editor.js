@@ -229,6 +229,8 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		return [ heading1Styles, heading4Styles, bodyCompactStyles, bodyStandardStyles, labelStyles, css`
 			:host {
 				display: block;
+				position: relative;
+				z-index: 0;
 			}
 			:host([hidden]) {
 				display: none;
@@ -654,7 +656,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 						</svg>
 					</div>
 				</d2l-list-item-content>
-				<d2l-button-icon slot="actions" text="${this.localize('removeActivity', 'courseName', 'Title')}" icon="d2l-tier1:close-default" disabled>
+				<d2l-button-icon slot="actions" icon="d2l-tier1:close-default" disabled>
 			</d2l-list-item>
 		`;
 		return html`<d2l-list>${(new Array(numberOfItems)).fill(itemsSkeleton)}</d2l-list>`;
