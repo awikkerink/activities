@@ -2,7 +2,7 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { repeat } from 'lit-html/directives/repeat';
 import { until } from 'lit-html/directives/until.js';
-import { heading1Styles, heading4Styles, bodyCompactStyles, bodyStandardStyles, labelStyles} from '@brightspace-ui/core/components/typography/styles.js';
+import { heading1Styles, heading4Styles, bodyCompactStyles, bodyStandardStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
 import { classes as organizationClasses } from 'siren-sdk/src/organizations/OrganizationEntity.js';
@@ -219,14 +219,14 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			_name: { type: String },
 			_selectionCount: { type: Number },
 			_candidateLoad: { type: Object },
-			_candidateItemsLoading: {type: Boolean},
+			_candidateItemsLoading: { type: Boolean },
 			ariaBusy: { type: String, reflect: true, attribute: 'aria-busy' },
 			ariaLive: { type: String, reflect: true, attribute: 'aria-live' }
 		};
 	}
 
 	static get styles() {
-		return [ heading1Styles, heading4Styles, bodyCompactStyles, bodyStandardStyles, labelStyles, css`
+		return [heading1Styles, heading4Styles, bodyCompactStyles, bodyStandardStyles, labelStyles, css`
 			:host {
 				display: block;
 			}
@@ -407,7 +407,6 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 
 			@media only screen and (max-width: 615px) {
 				.d2l-activity-collection-toggle-container {
-					position: fixed;
 					right: 1.5rem;
 				}
 				.d2l-activity-collection-title-header {
@@ -442,7 +441,6 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 				.d2l-activity-collection-toggle-container-button {
 					display: block;
 					margin-top: 0.35rem;
-					position: fixed;
 					right: 1.5rem;
 				}
 				.d2l-activity-collection-toggle-container {
@@ -522,7 +520,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 
 		const addActivityButton = this._handleFirstLoad(() => {
 			return html`<d2l-button @click="${this.open}" primary>${this.localize('addActivity')}</d2l-button>`;
-		},	() => {
+		}, () => {
 			return html`
 				<svg viewBox="0 0 142 42" width="142" height="42" class="d2l-activity-collection-list-actions-skeleton">
 					<rect x="0" width="142" y="0" height="42" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
@@ -532,7 +530,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 
 		const activityCount = this._handleFirstLoad(() => {
 			return html`<div class="d2l-body-compact">${this.localize('numberOfActivities', 'count', this._items.length)}</div>`;
-		},	() => {
+		}, () => {
 			return html`
 				<svg width="90" class="d2l-activity-collection-body-compact-skeleton-svg d2l-activity-collection-list-actions-skeleton">
 					<rect x="0" width="100%" y="0" height="100%" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
@@ -551,7 +549,9 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 							${until(learningPathTitle, learningPathTitleSketeton)}
 							${until(learningPathDescription, learningPathDescriptionSketeton)}
 						</div>
-						${learningPathVisibilityToggle}
+						<div class="test">
+							${learningPathVisibilityToggle}
+						</div>
 					</div>
 				</div>
 			</div>
