@@ -6,15 +6,17 @@ import { AttachmentCollectionEntity } from 'siren-sdk/src/activities/AttachmentC
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { getLocalizeResources } from '../localization';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin';
+import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin';
 import { SaveStatusMixin } from '../save-status-mixin';
 
-class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
+class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(RtlMixin(LitElement)))) {
 	static get properties() {
 		return {
 			_canAddFile: { type: Boolean },
 			_canAddLink: { type: Boolean },
 			_canAddGoogleDriveLink: { type: Boolean },
-			_canAddOneDriveLink: { type: Boolean }
+			_canAddOneDriveLink: { type: Boolean },
+			_canRecordVideo: { type: Boolean }
 		};
 	}
 
@@ -37,7 +39,16 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 				width: 100%;
 			}
 
-			d2l-button-icon:not([hidden]) {
+			.button-container-right {
+				margin-left: auto;
+			}
+			:host([dir="rtl"]) .button-container-right {
+				margin-left: 0;
+				margin-right: auto;
+			}
+
+			d2l-button-icon:not([hidden]),
+			d2l-button-subtle:not([hidden]) {
 				display: inline-block;
 			}
 		`;
@@ -57,13 +68,17 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 		};
 
 		D2L.ActivityEditor = D2L.ActivityEditor || {};
-		// Required by the server-side ActivitiesView renderer
+		// Referenced by the server-side ActivitiesView renderer
 		D2L.ActivityEditor.FileUploadDialogCallback = files => {
 			for (const file of files) {
 				const fileSystemType = file.m_fileSystemType;
 				const fileId = file.m_id;
 				this.wrapSaveAction(super._entity.addFileAttachment(fileSystemType, fileId));
 			}
+		};
+		// Referenced by the server-side ActivitiesView renderer
+		D2L.ActivityEditor.RecordVideoDialogCallback = file => {
+			this.wrapSaveAction(super._entity.addVideoNoteAttachment(file.FileSystemType, file.FileId));
 		};
 	}
 
@@ -77,6 +92,7 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 			this._canAddLink = entity.canAddLinkAttachment();
 			this._canAddGoogleDriveLink = entity.canAddGoogleDriveLinkAttachment();
 			this._canAddOneDriveLink = entity.canAddOneDriveLinkAttachment();
+			this._canRecordVideo = entity.canAddVideoNoteAttachment();
 		}
 
 		super._entity = entity;
@@ -151,6 +167,13 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 		});
 	}
 
+	_launchRecordVideoDialog() {
+		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.RecordVideoDialogOpener');
+		if (opener) {
+			opener();
+		}
+	}
+
 	render() {
 		return html`
 			<div class="button-container">
@@ -213,6 +236,16 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 					.boundary="${this._tooltipBoundary}">
 					${this.localize('addOneDriveLink')}
 				</d2l-tooltip>
+
+				<div class="button-container-right">
+					<d2l-button-subtle
+						id="record-video-button"
+						icon="tier1:file-video"
+						?hidden="${!this._canRecordVideo}"
+						text="${this.localize('recordVideo')}"
+						@click="${this._launchRecordVideoDialog}">
+					</d2l-button-subtle>
+				</div>
 			</div>
 		`;
 	}
