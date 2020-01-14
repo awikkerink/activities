@@ -31,8 +31,9 @@ class D2LQuickEvalNoSubmissionsText extends LitQuickEvalLocalize(LitElement) {
 				type: Boolean,
 				value: false
 			},
-			multiCourseHref: {
-				type: String
+			multiCourseQuickEvalHref: {
+				type: String,
+				value: ''
 			}
 		};
 	}
@@ -44,7 +45,7 @@ class D2LQuickEvalNoSubmissionsText extends LitQuickEvalLocalize(LitElement) {
 	}
 	_computeCheckBackOftenText(courseLevel) {
 		if (courseLevel) {
-			return unsafeHTML(this.localize('checkBackOftenCourseLevel', {startTag: `<a href="${this.multiCourseHref}">`, endTag: '</a>'}));
+			return unsafeHTML(this.localize('checkBackOftenCourseLevel', {startTag: `<a href="${this.multiCourseQuickEvalHref}">`, endTag: '</a>'}));
 		}
 		return this.localize('checkBackOften');
 	}

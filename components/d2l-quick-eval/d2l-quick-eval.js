@@ -73,7 +73,7 @@ class D2LQuickEval extends
 				returning-to-quick-eval="[[returningToQuickEval]]"
 				course-level="[[courseLevel]]"
 				course-level-name="[[courseLevelName]]"
-				multi-course-href="[[multiCourseQuickEvalHref]]"
+				multi-course-quick-eval-href="[[multiCourseQuickEvalHref]]"
 				filter-ids="[[submissionFilters]]"></d2l-quick-eval-submissions>
 			<d2l-quick-eval-activities
 				href="[[_lazyActivitiesHref]]"
@@ -82,7 +82,8 @@ class D2LQuickEval extends
 				hidden$="[[!_displayActivities(toggleState, activitiesViewEnabled)]]"
 				dismiss-enabled="[[dismissEnabled]]"
 				course-level="[[courseLevel]]"
-				filter-ids="[[activityFilters]]"></d2l-quick-eval-activities>
+				filter-ids="[[activityFilters]]"
+				multi-course-quick-eval-href="[[multiCourseQuickEvalHref]]"></d2l-quick-eval-activities>
 		`;
 	}
 
@@ -165,9 +166,6 @@ class D2LQuickEval extends
 			activityFilters: {
 				type: Array,
 				value: []
-			},
-			multiCourseQuickEvalHref: {
-				type: String
 			}
 		};
 	}

@@ -157,7 +157,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			</d2l-quick-eval-search-results-summary-container>
 			<div class="d2l-quick-eval-no-submissions" hidden$="[[!_shouldShowNoSubmissions(_data, _loading, _isError, filterApplied, searchApplied)]]">
 				<d2l-quick-eval-no-submissions-image></d2l-quick-eval-no-submissions-image>
-				<d2l-quick-eval-no-submissions-text course-level="[[courseLevel]]"></d2l-quick-eval-no-submissions-text>
+				<d2l-quick-eval-no-submissions-text course-level="[[courseLevel]]" multi-course-quick-eval-href="[[multiCourseQuickEvalHref]]"></d2l-quick-eval-no-submissions-text>
 			</div>
 			<div class="d2l-quick-eval-no-criteria-results" hidden$="[[!_shouldShowNoCriteriaResults(_data, _loading, _isError, filterApplied, searchApplied)]]">
 				<d2l-quick-eval-no-criteria-results-image></d2l-quick-eval-no-criteria-results-image>
@@ -253,6 +253,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			courseLevel: {
 				type: Boolean,
 				value: false
+			},
+			multiCourseQuickEvalHref: {
+				type: String,
+				value: ''
 			}
 		};
 	}
