@@ -3,7 +3,7 @@ import { ifDefined } from 'lit-html/directives/if-defined';
 import { repeat } from 'lit-html/directives/repeat';
 import { until } from 'lit-html/directives/until.js';
 import { guard } from 'lit-html/directives/guard';
-import { heading1Styles, heading4Styles, bodyCompactStyles, bodyStandardStyles, labelStyles} from '@brightspace-ui/core/components/typography/styles.js';
+import { heading1Styles, heading4Styles, bodyCompactStyles, bodyStandardStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
 import { classes as organizationClasses } from 'siren-sdk/src/organizations/OrganizationEntity.js';
@@ -408,8 +408,8 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 
 			@media only screen and (max-width: 615px) {
 				.d2l-activity-collection-toggle-container {
-					right: 1.5rem;
 					position: absolute;
+					right: 0.7rem;
 				}
 				.d2l-activity-collection-title-header {
 					margin-bottom: 0;
@@ -441,10 +441,10 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			}
 			@media only screen and (max-width: 480px) {
 				.d2l-activity-collection-toggle-container-button {
-					position: absolute;
 					display: block;
 					margin-top: 0.35rem;
-					right: 1.5rem;
+					position: absolute;
+					right: 0.7rem;
 				}
 				.d2l-activity-collection-toggle-container {
 					display: none;
