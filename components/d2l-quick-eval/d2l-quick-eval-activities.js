@@ -184,11 +184,29 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				<d2l-button slot="footer" dialog-action="no">[[localize('no')]]</d2l-button>
 			</d2l-dialog-confirm>
 			<d2l-quick-eval-action-dismiss-dialog></d2l-quick-eval-action-dismiss-dialog>
-			<d2l-alert-toast id="toast-dismiss-success" type="success">[[localize('activityDismissed')]]</d2l-alert-toast>
-			<d2l-alert-toast id="toast-dismiss-critical" type="critical">[[localize('failedToDismissActivity')]]</d2l-alert-toast>
+			<d2l-alert-toast 
+				id="toast-dismiss-success"
+				type="success"
+				announce-text="[[localize('activityDismissed')]]"
+				>
+				[[localize('activityDismissed')]]
+			</d2l-alert-toast>
+			<d2l-alert-toast 
+				id="toast-dismiss-critical"
+				type="critical"
+				announce-text="[[localize('failedToDismissActivity')]]"
+				>
+				[[localize('failedToDismissActivity')]]
+			</d2l-alert-toast>
 			<dom-repeat items="[[_publishAllToasts]]" as="toast">
 				<template>
-					<d2l-alert-toast type="default" open>[[_publishAllToastMessage(toast)]]</d2l-alert-toast>
+					<d2l-alert-toast 
+						type="default" 
+						open 
+						announce-text="[[_publishAllToastMessage(toast)]]"
+						>
+						[[_publishAllToastMessage(toast)]]
+					</d2l-alert-toast>
 				</template>
 			</dom-repeat>
 		`;
