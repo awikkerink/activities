@@ -408,6 +408,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			@media only screen and (max-width: 615px) {
 				.d2l-activity-collection-toggle-container {
 					right: 1.5rem;
+					position: absolute;
 				}
 				.d2l-activity-collection-title-header {
 					margin-bottom: 0;
@@ -439,6 +440,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			}
 			@media only screen and (max-width: 480px) {
 				.d2l-activity-collection-toggle-container-button {
+					position: absolute;
 					display: block;
 					margin-top: 0.35rem;
 					right: 1.5rem;
