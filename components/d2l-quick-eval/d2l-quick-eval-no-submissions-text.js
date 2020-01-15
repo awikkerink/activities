@@ -1,6 +1,5 @@
 import {html, css, LitElement} from 'lit-element/lit-element.js';
 import {LitQuickEvalLocalize} from './LitQuickEvalLocalize.js';
-import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import 'd2l-link/d2l-link.js';
 
 class D2LQuickEvalNoSubmissionsText extends LitQuickEvalLocalize(LitElement) {
