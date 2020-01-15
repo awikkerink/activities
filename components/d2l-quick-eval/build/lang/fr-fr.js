@@ -2,7 +2,7 @@ export const LangFrfr = {
 			'activities': 'Activités',
 			'activityDismissed': 'Activity Dismissed',
 			'activityName': 'Nom de l’activité',
-			'activityRestored': '{count, plural, =1 {1 activity} other {{count} activities}} have been restored',
+			'activityRestored': '{count, plural, =1 {1 activity has} other {{count} activities have}} been restored',
 			'assignment': 'Devoirs',
 			'cancel': 'Cancel',
 			'caughtUp': 'Vous êtes à jour !',

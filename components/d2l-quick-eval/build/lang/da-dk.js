@@ -2,7 +2,7 @@ export const LangDadk = {
 			'activities': 'Aktiviteter',
 			'activityDismissed': 'Activity Dismissed',
 			'activityName': 'Aktivitetsnavn',
-			'activityRestored': '{count, plural, =1 {1 activity} other {{count} activities}} have been restored',
+			'activityRestored': '{count, plural, =1 {1 activity has} other {{count} activities have}} been restored',
 			'assignment': 'Assignment',
 			'cancel': 'Cancel',
 			'caughtUp': 'Du er helt med!',
