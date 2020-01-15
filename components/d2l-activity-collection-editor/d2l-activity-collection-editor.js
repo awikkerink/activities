@@ -690,8 +690,8 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		const loadMore = this._actionCollectionEntity && this._actionCollectionEntity.getNextAction() && !this._isLoadingMore
 			? html`<d2l-button @click=${this.loadMore}>${this.localize('loadMore')}</d2l-button>`
 			: this._isLoadingMore
-			? html`<d2l-loading-spinner size="85"></d2l-loading-spinner>`
-			: null;
+				? html`<d2l-loading-spinner size="85"></d2l-loading-spinner>`
+				: null;
 
 		const spaceKeyDown = 32;
 		const spaceKeyEnter = 13;
