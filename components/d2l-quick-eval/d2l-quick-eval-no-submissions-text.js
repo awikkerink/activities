@@ -1,5 +1,6 @@
 import {html, css, LitElement} from 'lit-element/lit-element.js';
 import {LitQuickEvalLocalize} from './LitQuickEvalLocalize.js';
+import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import 'd2l-link/d2l-link.js';
 
 class D2LQuickEvalNoSubmissionsText extends LitQuickEvalLocalize(LitElement) {
@@ -40,9 +41,7 @@ class D2LQuickEvalNoSubmissionsText extends LitQuickEvalLocalize(LitElement) {
 	}
 	_computeCheckBackOftenText(courseLevel) {
 		if (courseLevel) {
-			const localized = this.localize('checkBackOftenCourseLevel', {startTag: '|', endTag: '|'});
-			const sections = localized.split('|');
-			return html`${sections[0]}<d2l-link href="${this.multiCourseQuickEvalHref}">${sections[1]}</d2l-link>${sections[2]}`;
+			return unsafeHTML(this.localize('checkBackOftenCourseLevel', {startTag: `<d2l-link href="${this.multiCourseQuickEvalHref}">`, endTag: '</d2l-link>'}));
 		}
 		return this.localize('checkBackOften');
 	}
