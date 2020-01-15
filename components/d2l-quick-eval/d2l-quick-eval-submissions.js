@@ -141,7 +141,8 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				course-level="[[courseLevel]]"
 				course-level-name="[[courseLevelName]]"
 				on-d2l-quick-eval-submissions-table-load-more="_loadMore"
-				on-d2l-quick-eval-submissions-table-sort-requested="_handleSortRequested">
+				on-d2l-quick-eval-submissions-table-sort-requested="_handleSortRequested"
+				multi-course-quick-eval-href="[[multiCourseQuickEvalHref]]">
 			</d2l-quick-eval-submissions-table>
 		`;
 		template.setAttribute('strip-whitespace', 'strip-whitespace');
@@ -265,6 +266,10 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				value: false
 			},
 			courseLevelName: {
+				type: String,
+				value: ''
+			},
+			multiCourseQuickEvalHref: {
 				type: String,
 				value: ''
 			}

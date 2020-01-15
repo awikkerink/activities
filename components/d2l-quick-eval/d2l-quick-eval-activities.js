@@ -12,6 +12,7 @@ import './behaviors/d2l-quick-eval-siren-helper-behavior.js';
 import './behaviors/d2l-hm-filter-behavior.js';
 import './behaviors/d2l-hm-search-behavior.js';
 import './d2l-quick-eval-no-submissions-image.js';
+import './d2l-quick-eval-no-submissions-text.js';
 import './d2l-quick-eval-no-criteria-results-image.js';
 import './d2l-quick-eval-search-results-summary-container.js';
 import './activities-list/d2l-quick-eval-activities-list.js';
@@ -84,7 +85,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					height: 15%;
 					width: 15%;
 				}
-				.d2l-quick-eval-no-submissions-heading,
 				.d2l-quick-eval-no-criteria-results-heading {
 					@apply --d2l-heading-2;
 					margin: 0;
@@ -157,9 +157,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			</d2l-quick-eval-search-results-summary-container>
 			<div class="d2l-quick-eval-no-submissions" hidden$="[[!_shouldShowNoSubmissions(_data, _loading, _isError, filterApplied, searchApplied)]]">
 				<d2l-quick-eval-no-submissions-image></d2l-quick-eval-no-submissions-image>
-				<h2 class="d2l-quick-eval-no-submissions-heading">[[localize('caughtUp')]]</h2>
-				<p class="d2l-body-standard">[[localize('noSubmissions')]]</p>
-				<p class="d2l-body-standard">[[localize('checkBackOften')]]</p>
+				<d2l-quick-eval-no-submissions-text course-level="[[courseLevel]]" multi-course-quick-eval-href="[[multiCourseQuickEvalHref]]"></d2l-quick-eval-no-submissions-text>
 			</div>
 			<div class="d2l-quick-eval-no-criteria-results" hidden$="[[!_shouldShowNoCriteriaResults(_data, _loading, _isError, filterApplied, searchApplied)]]">
 				<d2l-quick-eval-no-criteria-results-image></d2l-quick-eval-no-criteria-results-image>
@@ -255,6 +253,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			courseLevel: {
 				type: Boolean,
 				value: false
+			},
+			multiCourseQuickEvalHref: {
+				type: String,
+				value: ''
 			}
 		};
 	}
