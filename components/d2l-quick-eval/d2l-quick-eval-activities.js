@@ -185,14 +185,14 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			</d2l-dialog-confirm>
 			<d2l-quick-eval-action-dismiss-dialog></d2l-quick-eval-action-dismiss-dialog>
 			<d2l-alert-toast 
-				id="toast-dismiss-success"
+				class="toast-dismiss-success"
 				type="success"
 				announce-text="[[localize('activityDismissed')]]"
 				>
 				[[localize('activityDismissed')]]
 			</d2l-alert-toast>
 			<d2l-alert-toast 
-				id="toast-dismiss-critical"
+				class="toast-dismiss-critical"
 				type="critical"
 				announce-text="[[localize('failedToDismissActivity')]]"
 				>
@@ -479,9 +479,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 			return dismissAction.then(() => {
 				window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh'));
-				this.shadowRoot.querySelector('#toast-dismiss-success').open = true;
+				this.shadowRoot.querySelector('.toast-dismiss-success').open = true;
 			}).catch((error) => {
-				this.shadowRoot.querySelector('#toast-dismiss-critical').open = true;
+				this.shadowRoot.querySelector('.toast-dismiss-critical').open = true;
 				this._logError(error, {developerMessage: `Error dismissing activity href ${evt.detail.dismissHref}`});
 			});
 		});
