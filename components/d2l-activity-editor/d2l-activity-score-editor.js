@@ -1,4 +1,4 @@
-import './d2l-activity-grades/d2l-activity-grade-candidate-list';
+import './d2l-activity-grades/d2l-activity-grade-candidates';
 import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
@@ -276,8 +276,8 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 		this.shadowRoot.querySelector('d2l-dialog').open()
 			.then((action) => {
 				if (action === "done") {
-					const gradeItem = this.shadowRoot.querySelector('select#grade-candidates').value;
-					this.wrapSaveAction(super._entity.setSubmissionType(submissionType));
+					const selectedGradeCandidate = this.shadowRoot.querySelector('d2l-activity-grade-candidates').selected;
+					this.wrapSaveAction(selectedGradeCandidate.associateGrade());
 				}
 			});
 	}
@@ -354,10 +354,10 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 						</d2l-dropdown-menu>
 					</d2l-dropdown>
 					<d2l-dialog title-text="Edit Grade Item Link">
-						<d2l-activity-grade-candidate-list
+						<d2l-activity-grade-candidates
 							href="${this._gradeCandidatesHref}"
 							.token="${this.token}">
-						</d2l-activity-grade-candidate-list>
+						</d2l-activity-grade-candidates>
 						<d2l-button slot="footer" primary dialog-action="done">Ok</d2l-button>
 						<d2l-button slot="footer" dialog-action="cancel">Cancel</d2l-button>
 					</d2l-dialog>
