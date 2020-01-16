@@ -253,7 +253,7 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 				<div class="button-container-right">
 					<d2l-button-subtle
 						id="record-audio-button"
-						icon="tier1:file-audio"
+						icon="tier1:mic"
 						?hidden="${!this._canRecordAudio}"
 						text="${this.localize('recordAudio')}"
 						@click="${this._launchRecordAudioDialog}">
