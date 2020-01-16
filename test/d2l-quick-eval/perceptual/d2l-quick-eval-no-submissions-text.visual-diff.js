@@ -17,7 +17,7 @@ describe('d2l-quick-eval-no-submissions-text', function() {
 
 	after(() => browser.close());
 
-	['courselevel', 'notcourselevel'].forEach((name) => {
+	['courselevel', 'notcourselevel', 'courselevelnolink'].forEach((name) => {
 		it(name, async function() {
 			const rect = await visualDiff.getRect(page, `#${name}`);
 			await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });

@@ -18,7 +18,7 @@ class D2LQuickEvalNoSubmissionsText extends LitQuickEvalLocalize(LitElement) {
 		return html`
 			<h2 class="d2l-quick-eval-no-submissions-heading">${this.localize('caughtUp')}</h2>
 			<p class="d2l-body-standard">${this._computeNoSubmissionsText(this.courseLevel)}</p>
-			<p class="d2l-body-standard">${this._computeCheckBackOftenText(this.courseLevel)}</p>
+			<p class="d2l-body-standard">${this._computeCheckBackOftenText(this.courseLevel, this.multiCourseQuickEvalHref)}</p>
 		`;
 	}
 	static get properties() {
@@ -39,8 +39,11 @@ class D2LQuickEvalNoSubmissionsText extends LitQuickEvalLocalize(LitElement) {
 		}
 		return this.localize('noSubmissions');
 	}
-	_computeCheckBackOftenText(courseLevel) {
-		if (courseLevel) {
+	_computeCheckBackOftenText(courseLevel, multiCourseQuickEvalHref) {
+		const isLinkPresent = (multiCourseQuickEvalHref && multiCourseQuickEvalHref.length !== 0) ? true : false;
+		if (courseLevel && !isLinkPresent) {
+			return this.localize('checkBackOftenCourseLevel', {startTag: '', endTag: ''});
+		} else if (courseLevel && isLinkPresent) {
 			return unsafeHTML(this.localize('checkBackOftenCourseLevel', {startTag: `<d2l-link href="${this.multiCourseQuickEvalHref}">`, endTag: '</d2l-link>'}));
 		}
 		return this.localize('checkBackOften');
