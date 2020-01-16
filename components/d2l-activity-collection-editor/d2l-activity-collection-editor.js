@@ -94,7 +94,16 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 				item.onActivityUsageChange((usage) => {
 					usage.onOrganizationChange((organization) => {
 						items[index] = organization;
-						items[index].removeItem = () => collection.removeItem(item.self());
+						items[index].removeItem = () => {
+							console.log();
+							this.shadowRoot.querySelectorAll(`d2l-dialog d2l-list d2l-list-item[organization="${organization.self()}"]`)
+								.forEach(element => {
+									element.querySelector('.d2l-list-item-secondary').innerHTML = null;
+									element.toggleAttribute('disabled', false);
+									element.setSelected(false, true);
+								});
+							collection.removeItem(item.self());
+						}
 						items[index].itemSelf = item.self();
 						if (typeof this._organizationImageChunk[item.self()] === 'undefined') {
 							this._organizationImageChunk[item.self()] = imageChunk;
@@ -170,6 +179,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		const keys = this._selectedActivities();
 		const fields = [{ name: 'actionStates', value: keys }];
 		await performSirenAction(this.token, addAction, fields, true);
+		this._candidateLoad = this.getCandidates(this._addExistingAction, null, true);
 	}
 
 	handleSearch(event) {
@@ -621,7 +631,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 
 		const items = repeat(this._candidateItems, (candidate) => candidate.itemSelf, candidate => {
 			return html`
-				<d2l-list-item selectable ?disabled=${candidate.alreadyAdded} ?selected=${candidate.alreadyAdded || this._currentSelection[candidate.item.getActionState()]} key=${candidate.alreadyAdded ? ifDefined(undefined) : candidate.item.getActionState()}>
+				<d2l-list-item selectable ?disabled=${candidate.alreadyAdded} ?selected=${candidate.alreadyAdded || this._currentSelection[candidate.item.getActionState()]} key=${candidate.alreadyAdded ? ifDefined(undefined) : candidate.item.getActionState()} organization="${candidate.itemSelf}">
 					<div slot="illustration" class="d2l-activitiy-collection-list-item-illustration">
 						${this._renderCourseImageSkeleton()}
 						<d2l-organization-image
