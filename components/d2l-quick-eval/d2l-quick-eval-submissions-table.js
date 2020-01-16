@@ -116,6 +116,9 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 				.d2l-quick-eval-no-criteria-results {
 					text-align: center;
 				}
+				.d2l-quick-eval-no-submissions {
+					padding-top: 47px;
+				}
 				d2l-quick-eval-no-submissions-image {
 					padding-top: 30px;
 					padding-bottom: 30px;
