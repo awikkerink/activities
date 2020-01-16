@@ -339,7 +339,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 								></d2l-menu-item>
 								<d2l-menu-item
 									text="${this.localize('removeFromGrades')}"
-									?hidden="${!this._inGrades || !this._canEditGrades}"
+									?hidden="${!this._inGrades}"
 									@d2l-menu-item-select="${this._removeFromGrades}"
 								></d2l-menu-item>
 								<d2l-menu-item
