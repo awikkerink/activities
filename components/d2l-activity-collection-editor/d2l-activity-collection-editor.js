@@ -95,7 +95,6 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 					usage.onOrganizationChange((organization) => {
 						items[index] = organization;
 						items[index].removeItem = () => {
-							console.log();
 							this.shadowRoot.querySelectorAll(`d2l-dialog d2l-list d2l-list-item[organization="${organization.self()}"]`)
 								.forEach(element => {
 									element.querySelector('.d2l-list-item-secondary').innerHTML = null;
