@@ -40,10 +40,7 @@ class D2LQuickEvalNoSubmissionsText extends LitQuickEvalLocalize(LitElement) {
 		return this.localize('noSubmissions');
 	}
 	_computeCheckBackOftenText(courseLevel, multiCourseQuickEvalHref) {
-		const isLinkPresent = (multiCourseQuickEvalHref && multiCourseQuickEvalHref.length !== 0) ? true : false;
-		if (courseLevel && !isLinkPresent) {
-			return this.localize('checkBackOftenCourseLevel', {startTag: '', endTag: ''});
-		} else if (courseLevel && isLinkPresent) {
+		if (courseLevel && multiCourseQuickEvalHref) {
 			return unsafeHTML(this.localize('checkBackOftenCourseLevel', {startTag: `<d2l-link href="${this.multiCourseQuickEvalHref}">`, endTag: '</d2l-link>'}));
 		}
 		return this.localize('checkBackOften');
