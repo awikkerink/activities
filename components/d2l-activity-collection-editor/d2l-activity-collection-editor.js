@@ -102,7 +102,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 									element.setSelected(false, true);
 								});
 							collection.removeItem(item.self());
-						}
+						};
 						items[index].itemSelf = item.self();
 						if (typeof this._organizationImageChunk[item.self()] === 'undefined') {
 							this._organizationImageChunk[item.self()] = imageChunk;
