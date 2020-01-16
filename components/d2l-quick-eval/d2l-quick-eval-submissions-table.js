@@ -13,6 +13,7 @@ import 'd2l-users/components/d2l-profile-image.js';
 import '../d2l-activity-name/d2l-activity-name.js';
 import '../d2l-activity-evaluation-icon/d2l-activity-evaluation-icon-base.js';
 import './d2l-quick-eval-no-submissions-image.js';
+import './d2l-quick-eval-no-submissions-text.js';
 import './d2l-quick-eval-no-criteria-results-image.js';
 import './d2l-quick-eval-submissions-skeleton.js';
 import 'd2l-loading-spinner/d2l-loading-spinner.js';
@@ -127,7 +128,6 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 					height: 15%;
 					width: 15%;
 				}
-				.d2l-quick-eval-no-submissions-heading,
 				.d2l-quick-eval-no-criteria-results-heading {
 					@apply --d2l-heading-2;
 					margin: 0;
@@ -246,9 +246,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 			<template is="dom-if" if="[[showNoSubmissions]]">
 				<div class="d2l-quick-eval-no-submissions">
 					<d2l-quick-eval-no-submissions-image></d2l-quick-eval-no-submissions-image>
-					<h2 class="d2l-quick-eval-no-submissions-heading">[[localize('caughtUp')]]</h2>
-					<p class="d2l-body-standard">[[localize('noSubmissions')]]</p>
-					<p class="d2l-body-standard">[[localize('checkBackOften')]]</p>
+					<d2l-quick-eval-no-submissions-text course-level="[[courseLevel]]" multi-course-quick-eval-href="[[multiCourseQuickEvalHref]]"></d2l-quick-eval-no-submissions-text>
 				</div>
 			</template>
 			<template is="dom-if" if="[[showNoCriteria]]">
@@ -321,6 +319,10 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 				value: false
 			},
 			courseLevelName: {
+				type: String,
+				value: ''
+			},
+			multiCourseQuickEvalHref: {
 				type: String,
 				value: ''
 			}
