@@ -94,7 +94,10 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 				item.onActivityUsageChange((usage) => {
 					usage.onOrganizationChange((organization) => {
 						items[index] = organization;
-						items[index].removeItem = () => collection.removeItem(item.self());
+						items[index].removeItem = () => {
+							this._reloadOnOpen = true;
+							collection.removeItem(item.self());
+						};
 						items[index].itemSelf = item.self();
 						if (typeof this._organizationImageChunk[item.self()] === 'undefined') {
 							this._organizationImageChunk[item.self()] = imageChunk;
@@ -166,6 +169,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	}
 
 	async addActivities() {
+		this._reloadOnOpen = true;
 		const addAction = this._actionCollectionEntity.getExecuteMultipleAction();
 		const keys = this._selectedActivities();
 		const fields = [{ name: 'actionStates', value: keys }];
@@ -209,6 +213,10 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	}
 
 	async open() {
+		if (this._reloadOnOpen) {
+			this._candidateLoad = this.getCandidates(this._addExistingAction, null, true);
+			this._reloadOnOpen = false;
+		}
 		await this.shadowRoot.querySelector('d2l-dialog').open();
 	}
 
