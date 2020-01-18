@@ -1,6 +1,6 @@
 import { css, html, LitElement } from 'lit-element/lit-element';
-import { GradeCandidateCollectionEntity } from 'siren-sdk/src/activities/GradeCandidateCollectionEntity';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
+import { GradeCandidateCollectionEntity } from 'siren-sdk/src/activities/GradeCandidateCollectionEntity';
 import { repeat } from 'lit-html/directives/repeat';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles';
 
@@ -41,7 +41,6 @@ class ActivityGradeCandidateSelector extends EntityMixinLit(LitElement) {
 	}
 
 	_setSelected(e) {
-		console.log('e.target.selectedIndex', e.target.selectedIndex);
 		this.selected = this._gradeCandidateEntities[e.target.selectedIndex];
 	}
 
