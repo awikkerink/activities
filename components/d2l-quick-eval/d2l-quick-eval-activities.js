@@ -12,6 +12,7 @@ import './behaviors/d2l-quick-eval-siren-helper-behavior.js';
 import './behaviors/d2l-hm-filter-behavior.js';
 import './behaviors/d2l-hm-search-behavior.js';
 import './d2l-quick-eval-no-submissions-image.js';
+import './d2l-quick-eval-no-submissions-text.js';
 import './d2l-quick-eval-no-criteria-results-image.js';
 import './d2l-quick-eval-search-results-summary-container.js';
 import './activities-list/d2l-quick-eval-activities-list.js';
@@ -84,7 +85,6 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 					height: 15%;
 					width: 15%;
 				}
-				.d2l-quick-eval-no-submissions-heading,
 				.d2l-quick-eval-no-criteria-results-heading {
 					@apply --d2l-heading-2;
 					margin: 0;
@@ -157,9 +157,7 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			</d2l-quick-eval-search-results-summary-container>
 			<div class="d2l-quick-eval-no-submissions" hidden$="[[!_shouldShowNoSubmissions(_data, _loading, _isError, filterApplied, searchApplied)]]">
 				<d2l-quick-eval-no-submissions-image></d2l-quick-eval-no-submissions-image>
-				<h2 class="d2l-quick-eval-no-submissions-heading">[[localize('caughtUp')]]</h2>
-				<p class="d2l-body-standard">[[localize('noSubmissions')]]</p>
-				<p class="d2l-body-standard">[[localize('checkBackOften')]]</p>
+				<d2l-quick-eval-no-submissions-text course-level="[[courseLevel]]" multi-course-quick-eval-href="[[multiCourseQuickEvalHref]]"></d2l-quick-eval-no-submissions-text>
 			</div>
 			<div class="d2l-quick-eval-no-criteria-results" hidden$="[[!_shouldShowNoCriteriaResults(_data, _loading, _isError, filterApplied, searchApplied)]]">
 				<d2l-quick-eval-no-criteria-results-image></d2l-quick-eval-no-criteria-results-image>
@@ -184,11 +182,29 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 				<d2l-button slot="footer" dialog-action="no">[[localize('no')]]</d2l-button>
 			</d2l-dialog-confirm>
 			<d2l-quick-eval-action-dismiss-dialog></d2l-quick-eval-action-dismiss-dialog>
-			<d2l-alert-toast id="toast-dismiss-success" type="success">[[localize('activityDismissed')]]</d2l-alert-toast>
-			<d2l-alert-toast id="toast-dismiss-critical" type="critical">[[localize('failedToDismissActivity')]]</d2l-alert-toast>
+			<d2l-alert-toast 
+				class="d2l-quick-eval-activities-toast-dismiss-success"
+				type="success"
+				announce-text="[[localize('activityDismissed')]]"
+				>
+				[[localize('activityDismissed')]]
+			</d2l-alert-toast>
+			<d2l-alert-toast 
+				class="d2l-quick-eval-activities-toast-dismiss-critical"
+				type="critical"
+				announce-text="[[localize('failedToDismissActivity')]]"
+				>
+				[[localize('failedToDismissActivity')]]
+			</d2l-alert-toast>
 			<dom-repeat items="[[_publishAllToasts]]" as="toast">
 				<template>
-					<d2l-alert-toast type="default" open>[[_publishAllToastMessage(toast)]]</d2l-alert-toast>
+					<d2l-alert-toast 
+						type="default" 
+						open 
+						announce-text="[[_publishAllToastMessage(toast)]]"
+						>
+						[[_publishAllToastMessage(toast)]]
+					</d2l-alert-toast>
 				</template>
 			</dom-repeat>
 		`;
@@ -255,6 +271,10 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 			courseLevel: {
 				type: Boolean,
 				value: false
+			},
+			multiCourseQuickEvalHref: {
+				type: String,
+				value: ''
 			}
 		};
 	}
@@ -457,9 +477,9 @@ class D2LQuickEvalActivities extends mixinBehaviors(
 
 			return dismissAction.then(() => {
 				window.dispatchEvent(new CustomEvent('d2l-quick-eval-refresh'));
-				this.shadowRoot.querySelector('#toast-dismiss-success').open = true;
+				this.shadowRoot.querySelector('.d2l-quick-eval-activities-toast-dismiss-success').open = true;
 			}).catch((error) => {
-				this.shadowRoot.querySelector('#toast-dismiss-critical').open = true;
+				this.shadowRoot.querySelector('.d2l-quick-eval-activities-toast-dismiss-critical').open = true;
 				this._logError(error, {developerMessage: `Error dismissing activity href ${evt.detail.dismissHref}`});
 			});
 		});

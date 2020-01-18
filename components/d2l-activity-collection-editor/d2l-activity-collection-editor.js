@@ -46,6 +46,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		this.ariaBusy = 'true';
 		this.ariaLive = 'polite';
 		this._dialogOpen = false;
+		this._isLoadingMore = false;
 		this._candidateItemsLoading = false;
 		this._setEntityType(ActivityUsageEntity);
 	}
@@ -93,7 +94,10 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 				item.onActivityUsageChange((usage) => {
 					usage.onOrganizationChange((organization) => {
 						items[index] = organization;
-						items[index].removeItem = () => collection.removeItem(item.self());
+						items[index].removeItem = () => {
+							this._reloadOnOpen = true;
+							collection.removeItem(item.self());
+						};
 						items[index].itemSelf = item.self();
 						if (typeof this._organizationImageChunk[item.self()] === 'undefined') {
 							this._organizationImageChunk[item.self()] = imageChunk;
@@ -165,6 +169,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	}
 
 	async addActivities() {
+		this._reloadOnOpen = true;
 		const addAction = this._actionCollectionEntity.getExecuteMultipleAction();
 		const keys = this._selectedActivities();
 		const fields = [{ name: 'actionStates', value: keys }];
@@ -199,13 +204,19 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	}
 
 	async loadMore() {
+		this._isLoadingMore = true;
 		const lastItem = this.shadowRoot.querySelector('d2l-dialog d2l-list d2l-list-item:last-of-type');
 		await this.getCandidates(this._actionCollectionEntity.getNextAction());
 		await this.updateComplete;
+		this._isLoadingMore = false;
 		lastItem.nextElementSibling.focus();
 	}
 
 	async open() {
+		if (this._reloadOnOpen) {
+			this._candidateLoad = this.getCandidates(this._addExistingAction, null, true);
+			this._reloadOnOpen = false;
+		}
 		await this.shadowRoot.querySelector('d2l-dialog').open();
 	}
 
@@ -221,6 +232,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			_selectionCount: { type: Number },
 			_candidateLoad: { type: Object },
 			_candidateItemsLoading: {type: Boolean},
+			_isLoadingMore: {type: Boolean},
 			ariaBusy: { type: String, reflect: true, attribute: 'aria-busy' },
 			ariaLive: { type: String, reflect: true, attribute: 'aria-live' }
 		};
@@ -410,8 +422,8 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 
 			@media only screen and (max-width: 615px) {
 				.d2l-activity-collection-toggle-container {
-					position: fixed;
-					right: 1.5rem;
+					position: absolute;
+					right: 0;
 				}
 				.d2l-activity-collection-title-header {
 					margin-bottom: 0;
@@ -445,8 +457,8 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 				.d2l-activity-collection-toggle-container-button {
 					display: block;
 					margin-top: 0.35rem;
-					position: fixed;
-					right: 1.5rem;
+					position: absolute;
+					right: 0;
 				}
 				.d2l-activity-collection-toggle-container {
 					display: none;
@@ -683,14 +695,11 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			this._candidateLoad
 		);
 
-		const loadMore = this._handleFirstLoad(
-			() => this._actionCollectionEntity && this._actionCollectionEntity.getNextAction()
-				? html`<d2l-button @click=${this.loadMore}>${this.localize('loadMore')}</d2l-button>`
-				: null,
-			() => null,
-			this._candidateFirstLoad,
-			this._candidateLoad
-		);
+		const loadMore = this._actionCollectionEntity && this._actionCollectionEntity.getNextAction() && !this._isLoadingMore
+			? html`<d2l-button @click=${this.loadMore}>${this.localize('loadMore')}</d2l-button>`
+			: this._isLoadingMore
+				? html`<d2l-loading-spinner size="85"></d2l-loading-spinner>`
+				: null;
 
 		const spaceKeyDown = 32;
 		const spaceKeyEnter = 13;
