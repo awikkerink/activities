@@ -1,4 +1,4 @@
-import './d2l-activity-grades/d2l-activity-grade-candidates';
+import './d2l-activity-grades/d2l-activity-grade-candidate-selector';
 import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
@@ -272,14 +272,15 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 		this.wrapSaveAction(super._entity.setUngraded());
 	}
 
-	_setGradeItem() {
-		this.shadowRoot.querySelector('d2l-dialog').open()
-			.then((action) => {
-				if (action === "done") {
-					const selectedGradeCandidate = this.shadowRoot.querySelector('d2l-activity-grade-candidates').selected;
-					this.wrapSaveAction(selectedGradeCandidate.associateGrade());
-				}
-			});
+	async _setGradeItem() {
+		const dialog = this.shadowRoot.querySelector('d2l-dialog');
+		const action = await dialog.open();
+		// TODO: add condition here if gradeItemId is same as current one to prevent unneeded api call?
+		if (action !== 'done') {
+			return;
+		}
+		const selectedGradeCandidate = dialog.querySelector('d2l-activity-grade-candidate-selector').selected;
+		this.wrapSaveAction(selectedGradeCandidate.associateGrade());
 	}
 
 	_isError() {
@@ -354,12 +355,12 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 						</d2l-dropdown-menu>
 					</d2l-dropdown>
 					<d2l-dialog title-text="Edit Grade Item Link">
-						<d2l-activity-grade-candidates
+						<d2l-activity-grade-candidate-selector
 							href="${this._gradeCandidatesHref}"
 							.token="${this.token}">
-						</d2l-activity-grade-candidates>
-						<d2l-button slot="footer" primary dialog-action="done">Ok</d2l-button>
-						<d2l-button slot="footer" dialog-action="cancel">Cancel</d2l-button>
+						</d2l-activity-grade-candidate-selector>
+						<d2l-button slot="footer" primary dialog-action="done">${this.localize('ok')}</d2l-button>
+						<d2l-button slot="footer" dialog-action="cancel">${this.localize('cancel')}</d2l-button>
 					</d2l-dialog>
 				</div>
 			</div>

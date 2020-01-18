@@ -1,11 +1,10 @@
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { GradeCandidateCollectionEntity } from 'siren-sdk/src/activities/GradeCandidateCollectionEntity';
-import { GradeCandidateEntity } from 'siren-sdk/src/activities/GradeCandidateEntity';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { repeat } from 'lit-html/directives/repeat';
-import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
+import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles';
 
-class ActivityGradeCandidates extends EntityMixinLit(LitElement) {
+class ActivityGradeCandidateSelector extends EntityMixinLit(LitElement) {
 	static get properties() {
 		return {
 			_gradeCandidateEntities: { type: Array },
@@ -42,7 +41,8 @@ class ActivityGradeCandidates extends EntityMixinLit(LitElement) {
 	}
 
 	_setSelected(e) {
-		this.selected = this._gradeCandidateEntities[this.shadowRoot.querySelector('select#grade-candidates').value];
+		console.log('e.target.selectedIndex', e.target.selectedIndex);
+		this.selected = this._gradeCandidateEntities[e.target.selectedIndex];
 	}
 
 	render() {
@@ -60,4 +60,4 @@ class ActivityGradeCandidates extends EntityMixinLit(LitElement) {
 	}
 }
 
-customElements.define('d2l-activity-grade-candidates', ActivityGradeCandidates);
+customElements.define('d2l-activity-grade-candidate-selector', ActivityGradeCandidateSelector);

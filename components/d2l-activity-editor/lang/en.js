@@ -23,4 +23,6 @@ export default {
 	"emptyScoreOutOfError": "A points value must be specified for activities in Grades", // Error message to inform user that the score out of value is a required field when a grade item is associated
 	"invalidScoreOutOfError": "Score Out Of must be greater than or equal to 0.01 and less than or equal to 9,999,999,999", // Error message when an invalid score out of value is entered
 	"loading": "Loading...", // Message displayed while page is loading
+	"ok": "Ok", // Text of dialog button to commit action
+	"cancel": "Cancel", // Text of dialog button to cancel action
 };
