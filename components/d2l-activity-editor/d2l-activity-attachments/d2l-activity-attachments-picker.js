@@ -193,11 +193,13 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 				<d2l-button-icon
 					id="add-file-button"
 					icon="d2l-tier1:upload"
+					text="${this.localize('addFile')}"
 					?hidden="${!this._canAddFile}"
 					@click="${this._launchAddFileDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip
 					for="add-file-button"
+					disable-focus-lock
 					.boundary="${this._tooltipBoundary}">
 					${this.localize('addFile')}
 				</d2l-tooltip>
@@ -205,11 +207,13 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 				<d2l-button-icon
 					id="add-quicklink-button"
 					icon="d2l-tier1:quicklink"
+					text="${this.localize('addQuicklink')}"
 					?hidden="${!this._canAddLink}"
 					@click="${this._launchAddQuicklinkDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip
 					for="add-quicklink-button"
+					disable-focus-lock
 					.boundary="${this._tooltipBoundary}">
 					${this.localize('addQuicklink')}
 				</d2l-tooltip>
@@ -217,11 +221,13 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 				<d2l-button-icon
 					id="add-link-button"
 					icon="d2l-tier1:link"
+					text="${this.localize('addLink')}"
 					?hidden="${!this._canAddLink}"
 					@click="${this._launchAddLinkDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip
 					for="add-link-button"
+					disable-focus-lock
 					.boundary="${this._tooltipBoundary}">
 					${this.localize('addLink')}
 				</d2l-tooltip>
@@ -229,11 +235,13 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 				<d2l-button-icon
 					id="add-google-drive-link-button"
 					icon="d2l-tier1:google-drive"
+					text="${this.localize('addGoogleDriveLink')}"
 					?hidden="${!this._canAddGoogleDriveLink}"
 					@click="${this._launchAddGoogleDriveLinkDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip
 					for="add-google-drive-link-button"
+					disable-focus-lock
 					.boundary="${this._tooltipBoundary}">
 					${this.localize('addGoogleDriveLink')}
 				</d2l-tooltip>
@@ -241,11 +249,13 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 				<d2l-button-icon
 					id="add-onedrive-link-button"
 					icon="d2l-tier1:one-drive"
+					text="${this.localize('addOneDriveLink')}"
 					?hidden="${!this._canAddOneDriveLink}"
 					@click="${this._launchAddOneDriveLinkDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip
 					for="add-onedrive-link-button"
+					disable-focus-lock
 					.boundary="${this._tooltipBoundary}">
 					${this.localize('addOneDriveLink')}
 				</d2l-tooltip>
