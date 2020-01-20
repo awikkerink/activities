@@ -343,11 +343,11 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 	}
 
 	_isTableHeaderHidden() {
-		return this.showLoadingSkeleton || this.showNoSubmissions || this.showNoCriteria
+		return this.showLoadingSkeleton || this.showNoSubmissions || this.showNoCriteria;
 	}
 
 	_isCourseNameShown() {
-		return this.courseLevel && !this._isTableHeaderHidden()
+		return this.courseLevel && !this._isTableHeaderHidden();
 	}
 
 	_computeIsLoading(showLoadingSpinner, showLoadingSkeleton) {
