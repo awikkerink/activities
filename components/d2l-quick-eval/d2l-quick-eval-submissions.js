@@ -269,10 +269,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				type: String,
 				value: ''
 			},
-			submissionFilters: {
-				type: Array,
-				value: []
-			},
 			multiCourseQuickEvalHref: {
 				type: String,
 				value: ''
