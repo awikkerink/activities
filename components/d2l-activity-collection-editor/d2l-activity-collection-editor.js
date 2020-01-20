@@ -295,7 +295,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 				align-self: flex-start;
 				display: flex;
 				flex-shrink: 0;
-				margin: 0.55rem 0 0.55rem 1.5rem;
+				margin: 0.55rem 0;
 			}
 
 			.d2l-activity-visbility-label {
@@ -421,15 +421,6 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			}
 
 			@media only screen and (max-width: 615px) {
-				.d2l-activity-collection-toggle-container {
-					position: absolute;
-					right: 0;
-				}
-				.d2l-activity-collection-title-header {
-					margin-bottom: 0;
-					margin-right: 7.5rem;
-					min-height: 2.3rem;
-				}
 				.d2l-activity-collection-header {
 					padding-left: 0.8rem;
 					padding-right: 0.8rem;
@@ -457,14 +448,9 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 				.d2l-activity-collection-toggle-container-button {
 					display: block;
 					margin-top: 0.35rem;
-					position: absolute;
-					right: 0;
 				}
 				.d2l-activity-collection-toggle-container {
 					display: none;
-				}
-				.d2l-activity-collection-title-header {
-					margin-right: 2.1rem;
 				}
 			}
 		` ];
@@ -624,7 +610,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 
 	_renderCandidateItems() {
 		if (this._candidateItems.length <= 0) {
-			return html`<div class="d2l-activity-collection-no-activity d2l-body-standard">${this.localize('noActivitiesInLearningPath')}</div>`;
+			return html`<div class="d2l-activity-collection-no-activity d2l-body-standard">${this.localize('noActivitiesFound')}</div>`;
 		}
 
 		const items = repeat(this._candidateItems, (candidate) => candidate.itemSelf, candidate => {
