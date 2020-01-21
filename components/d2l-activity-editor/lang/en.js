@@ -27,4 +27,5 @@ export default {
 	"loading": "Loading...", // Message displayed while page is loading
 	"ok": "Ok", // Text of dialog button to commit action
 	"cancel": "Cancel", // Text of dialog button to cancel action
+	"ariaToolbarShortcutInstructions": "Press ALT-F10 for toolbar, and press ESC to exit toolbar once inside." // Instructions for screenreader users on how to enter and exit the html editor toolbar
 };
