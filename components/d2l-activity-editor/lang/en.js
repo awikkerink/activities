@@ -9,10 +9,12 @@ export default {
 	"endTime": "End Time", // ARIA label for the due time field when creating/editing an activity
 	"startTime": "Start Time", // ARIA label for the due time field when creating/editing an activity
 	"hidden": "Hidden", // Label displayed with the visibility switch when hidden
+	"ariaHidden": "Hidden from students", // Aria Label for the visibility switch when hidden
 	"noDueDate": "No due date", // Placeholder text for due date field when no due date is set
 	"noEndDate": "No end date", // Placeholder text for due date field when no due date is set
 	"noStartDate": "No start date", // Placeholder text for due date field when no due date is set
 	"visible": "Visible", // Label displayed with the visibility switch when visible
+	"ariaVisible": "Visible to students", // Aria Label for the visibility switch when visible
 	"ungraded": "Ungraded", // State of score field when there is no score and no grade item, when creating/editing an activity
 	"inGrades": "In Grades", // State of the grades field when there is a score, and an associated grade item
 	"notInGrades": "Not in Grades", // State of the grades field when there is a score, but no associated grade item
