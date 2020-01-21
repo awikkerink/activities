@@ -1,5 +1,7 @@
+import './d2l-activity-grades/d2l-activity-grade-candidate-selector';
 import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/colors/colors.js';
+import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/inputs/input-text.js';
 import 'd2l-dropdown/d2l-dropdown.js';
@@ -30,7 +32,8 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			_gradeType: { type: String },
 			_isUngraded: { type: Boolean },
 			_canSeeGrades: { type: Boolean },
-			_canEditGrades: { type: Boolean }
+			_canEditGrades: { type: Boolean },
+			_gradeCandidatesHref: { type: String }
 		};
 	}
 
@@ -162,6 +165,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 		this._canSeeGrades = false;
 		this._canEditGrades = false;
 		this._debounceJobs = {};
+		this._gradeCandidatesHref = '';
 
 		this._tooltipBoundary = {
 			left: 5,
@@ -184,6 +188,7 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 			this._canEditScoreOutOf = entity.canEditScoreOutOf();
 			this._canSeeGrades = entity.canSeeGrades();
 			this._canEditGrades = entity.canEditGrades();
+			this._gradeCandidatesHref = entity.gradeCandidatesHref();
 		}
 
 		super._entity = entity;
@@ -267,21 +272,46 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 		this.wrapSaveAction(super._entity.setUngraded());
 	}
 
+	_addOrRemoveMenuItem() {
+		return this._inGrades ? html`
+			<d2l-menu-item
+				text="${this.localize('removeFromGrades')}"
+				@d2l-menu-item-select="${this._removeFromGrades}"
+			></d2l-menu-item>
+		` : this._canEditGrades ? html`
+			<d2l-menu-item
+				text="${this.localize('addToGrades')}"
+				@d2l-menu-item-select="${this._addToGrades}"
+			></d2l-menu-item>
+		` : null;
+	}
+
+	async _setGradeItem() {
+		const dialog = this.shadowRoot.querySelector('d2l-dialog');
+		const action = await dialog.open();
+		// TODO: add condition here if gradeItemId is same as current one to prevent unneeded api call?
+		if (action !== 'done') {
+			return;
+		}
+		const selectedGradeCandidate = dialog.querySelector('d2l-activity-grade-candidate-selector').selected;
+		this.wrapSaveAction(selectedGradeCandidate.associateGrade());
+	}
+
 	_isError() {
 		return this._emptyScoreOutOfError || this._invalidScoreOutOfError;
 	}
 
 	render() {
-		return html`
-			<div id="ungraded-button-container" ?hidden="${!this._isUngraded}">
+		return this._isUngraded ? html`
+			<div id="ungraded-button-container">
 				<button id="ungraded" class="d2l-input"
 					@click="${this._setGraded}"
 				>
 					${this.localize('ungraded')}
 				</button>
 			</div>
-
-			<div id="score-info-container" ?hidden="${this._isUngraded}">
+		` : html`
+			<div id="score-info-container">
 				<div id="score-out-of-container">
 					<d2l-input-text
 						id="score-out-of"
@@ -294,47 +324,53 @@ class ActivityScoreEditor extends ErrorHandlingMixin(SaveStatusMixin(EntityMixin
 						aria-invalid="${this._isError() ? 'true' : ''}"
 						?disabled="${!this._canEditScoreOutOf}"
 					></d2l-input-text>
-					<d2l-tooltip
-						?hidden="${!this._isError()}"
-						id="score-tooltip"
-						for="score-out-of"
-						position="bottom"
-						?showing="${this._isError()}"
-						.boundary="${this._tooltipBoundary}"
-					>
-						<span ?hidden="${!this._emptyScoreOutOfError}">${this._emptyScoreOutOfError}</span>
-						<span ?hidden="${!this._invalidScoreOutOfError}">${this._invalidScoreOutOfError}</span>
-					</d2l-tooltip>
+					${this._isError() ? html`
+						<d2l-tooltip
+							id="score-tooltip"
+							for="score-out-of"
+							position="bottom"
+							?showing="${this._isError()}"
+							.boundary="${this._tooltipBoundary}"
+						>
+							${this._emptyScoreOutOfError ? html`<span>${this._emptyScoreOutOfError}</span>` : null}
+							${this._invalidScoreOutOfError ? html`<span>${this._invalidScoreOutOfError}</span>` : null}
+						</d2l-tooltip>
+					` : null}
 					<div class="d2l-body-compact grade-type-text">${this._gradeType}</div>
 				</div>
-				<div id="grade-info-container" ?hidden="${!this._canSeeGrades}">
-					<div id="divider"></div>
-					<d2l-dropdown>
-						<button class="d2l-label-text grade-info d2l-dropdown-opener">
-							<d2l-icon icon="tier1:grade" ?hidden="${!this._inGrades}"></d2l-icon>
-							<div>${this._inGrades ? this.localize('inGrades') : this.localize('notInGrades')}</div>
-							<d2l-icon icon="tier1:chevron-down"></d2l-icon>
-						</button>
-						<d2l-dropdown-menu id="grade-dropdown" align="start" no-pointer vertical-offset="3px">
-							<d2l-menu label="${this._inGrades ? this.localize('inGrades') : this.localize('notInGrades')}">
-								<d2l-menu-item
-									text="${this.localize('addToGrades')}"
-									?hidden="${this._inGrades || !this._canEditGrades}"
-									@d2l-menu-item-select="${this._addToGrades}"
-								></d2l-menu-item>
-								<d2l-menu-item
-									text="${this.localize('removeFromGrades')}"
-									?hidden="${!this._inGrades || !this._canEditGrades}"
-									@d2l-menu-item-select="${this._removeFromGrades}"
-								></d2l-menu-item>
-								<d2l-menu-item
-									text="${this.localize('setUngraded')}"
-									@d2l-menu-item-select="${this._setUngraded}"
-								></d2l-menu-item>
-							</d2l-menu>
-						</d2l-dropdown-menu>
-					</d2l-dropdown>
-				</div>
+				${this._canSeeGrades ? html`
+					<div id="grade-info-container">
+						<div id="divider"></div>
+						<d2l-dropdown>
+							<button class="d2l-label-text grade-info d2l-dropdown-opener">
+								${this._inGrades ? html`<d2l-icon icon="tier1:grade"></d2l-icon>` : null}
+								<div>${this._inGrades ? this.localize('inGrades') : this.localize('notInGrades')}</div>
+								<d2l-icon icon="tier1:chevron-down"></d2l-icon>
+							</button>
+							<d2l-dropdown-menu id="grade-dropdown" align="start" no-pointer vertical-offset="3px">
+								<d2l-menu label="${this._inGrades ? this.localize('inGrades') : this.localize('notInGrades')}">
+									${this._addOrRemoveMenuItem()}
+									<d2l-menu-item
+										text="${this.localize('setUngraded')}"
+										@d2l-menu-item-select="${this._setUngraded}"
+									></d2l-menu-item>
+									<d2l-menu-item
+										text="Edit Grade Item Link"
+										@d2l-menu-item-select="${this._setGradeItem}"
+									></d2l-menu-item>
+								</d2l-menu>
+							</d2l-dropdown-menu>
+						</d2l-dropdown>
+						<d2l-dialog title-text="Edit Grade Item Link">
+							<d2l-activity-grade-candidate-selector
+								href="${this._gradeCandidatesHref}"
+								.token="${this.token}">
+							</d2l-activity-grade-candidate-selector>
+							<d2l-button slot="footer" primary dialog-action="done">${this.localize('ok')}</d2l-button>
+							<d2l-button slot="footer" dialog-action="cancel">${this.localize('cancel')}</d2l-button>
+						</d2l-dialog>
+					</div>
+				` : null}
 			</div>
 		`;
 	}
