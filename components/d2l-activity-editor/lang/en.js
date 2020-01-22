@@ -2,6 +2,8 @@
 
 export default {
 	"btnEditReleaseConditions": "Edit Release Conditions", // edit release conditions button
+	"btnCancel": "Cancel", // cancel button
+	"btnSave": "Save", // save button
 	"dueDate": "Due Date", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "End Date", // ARIA label for the due date field when creating/editing an activity
 	"startDate": "Start Date", // ARIA label for the due date field when creating/editing an activity
