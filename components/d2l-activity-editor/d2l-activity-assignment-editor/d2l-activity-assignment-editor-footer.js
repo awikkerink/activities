@@ -1,3 +1,4 @@
+import '../d2l-activity-editor-buttons.js';
 import '../d2l-activity-visibility-editor.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
@@ -22,13 +23,6 @@ class AssignmentEditorFooter extends SaveStatusMixin(EntityMixinLit(RtlMixin(Loc
 			}
 			:host([hidden]) {
 				display: none;
-			}
-			d2l-button {
-				margin-right: 0.75rem;
-			}
-			:host([dir="rtl"]) d2l-button {
-				margin-left: 0.75rem;
-				margin-right: 0;
 			}
 			d2l-activity-visibility-editor {
 				display: inline-block;
@@ -71,8 +65,7 @@ class AssignmentEditorFooter extends SaveStatusMixin(EntityMixinLit(RtlMixin(Loc
 	render() {
 		return html`
 			<div class="d2l-activity-assignment-editor-footer-left">
-				<d2l-button primary>${this.localize('btnSave')}</d2l-button>
-				<d2l-button>${this.localize('btnCancel')}</d2l-button>
+				<d2l-activity-editor-buttons></d2l-activity-editor-buttons>
 				<d2l-activity-visibility-editor
 					href="${this._activityUsageHref}"
 					.token="${this.token}">
