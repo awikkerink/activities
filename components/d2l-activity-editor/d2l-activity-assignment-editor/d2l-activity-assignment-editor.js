@@ -70,6 +70,8 @@ class AssignmentEditor extends EntityMixinLit(LitElement) {
 		this.addEventListener('d2l-siren-entity-save-error', () => {
 			this.shadowRoot.querySelector('#save-status').error();
 		});
+		const nav = this.shadowRoot.querySelector('#nav').assignedNodes()[0];
+		nav.removeAttribute('hidden');
 	}
 
 	_onAssignmentActivityUsageChange(assignmentActivityUsage) {
@@ -138,7 +140,7 @@ class AssignmentEditor extends EntityMixinLit(LitElement) {
 				@d2l-request-provider="${this._onRequestProvider}">
 
 				<d2l-template-primary-secondary slot="editor">
-					<slot name="editor-nav" slot="header"></slot>
+					<slot id="nav" name="editor-nav" slot="header"></slot>
 					<d2l-activity-assignment-editor-detail
 						href="${this._assignmentHref}"
 						.token="${this.token}"
