@@ -8,6 +8,7 @@ export default {
 	cancel: "Cancel", // When adding activities to the learning path, this will cancel the currently selected potential activities and close the dialog box.
 	clearSelected: "Clear Selection", // When adding activities (bulk add) to the learning path this allows you to clear the ones currently selected.
 	course: "Course", // A set of material or a plan of study on a particular subject, usually leading learning a new skill.
+	deleteSucceeded: "{activityName} was removed.", //alert popup for delete activitie
 	editLearningPath: "Edit Learning Path", // Title of the page where the page is to edit a list of related learnings. On the page you can edit the title, description and what learning activities are in the list.
 	enterADescription: "Write a description", // Shows where the user should write a description for the learning path.
 	loadMore: "Load More", // When adding activities to the learning path, this is on a button that will load more potential activities that can be added that match the current search.
