@@ -157,7 +157,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			_headerColumns: {
 				type: Array,
 				value: [],
-				computed: '_computeHeaders()'
+				computed: '_computeHeaders(masterTeacher, courseLevel)'
 			},
 			_numberOfActivitiesToShow: {
 				type: Number,
@@ -534,7 +534,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		return !_loading && !filtersLoading && !searchLoading && searchApplied;
 	}
 
-	_computeHeaders() {
+	_computeHeaders(masterTeacher, courseLevel) {
 
 		const result = [];
 		result.push({
@@ -545,14 +545,14 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 				{ key: 'lastName', sortClass: 'last-name', canSort: false, sorted: false, desc: false }
 			],
 			type: 'user',
-			widthOverride: this.masterTeacher ? 25 : 30
+			widthOverride: masterTeacher ? 25 : 30
 		});
 		result.push({
 			key: 'activityName',
 			headers: [{ key: 'activityName', sortClass: 'activity-name', canSort: false, sorted: false, desc: false }],
 			type: 'activity-name'
 		});
-		if (!this.courseLevel) {
+		if (!courseLevel) {
 			result.push({
 				key: 'courseName',
 				headers: [{ key: 'courseName', sortClass: 'course-name', canSort: false, sorted: false, desc: false }],
@@ -564,9 +564,9 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			key: 'localizedSubmissionDate',
 			headers: [{ key: 'submissionDate', sortClass: 'completion-date', canSort: false, sorted: false, desc: false }],
 			type: 'none',
-			widthOverride: this.masterTeacher ? 15 : 20
+			widthOverride: masterTeacher ? 15 : 20
 		});
-		if (this.masterTeacher) {
+		if (masterTeacher) {
 			result.push({
 				key: 'masterTeacher',
 				headers: [{ key: 'masterTeacher', sortClass: 'primary-facilitator', canSort: false, sorted: false, desc: false }],
