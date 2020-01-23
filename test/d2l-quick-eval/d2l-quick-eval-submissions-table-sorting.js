@@ -45,6 +45,7 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 			'submissionDate': 'completion-date',
 			'masterTeacher': 'primary-facilitator'
 		};
+		list.masterTeacher = true;
 		const listOfHeaders = list._headerColumns
 			.map(x=> x.headers)
 			.reduce((acc, val) => acc.concat(val), []);
@@ -53,6 +54,9 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 		listOfHeaders.forEach(header => {
 			keyToSortClassHeaderMappings[header.key] = header.sortClass;
 		});
+
+		console.log(JSON.stringify(keyToSortClassHeaderMappings));
+		console.log(JSON.stringify(expectedKeyToSortClassHeaderMappings));
 
 		expect(keyToSortClassHeaderMappings).to.deep.equal(expectedKeyToSortClassHeaderMappings);
 	});
