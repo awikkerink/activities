@@ -399,12 +399,12 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 				{ headers: [{ widthOverride: 30 }, {}, { widthOverride: 20 }, {}], output: 25 },
 				{ headers: [{ widthOverride: 25 }, {}, {}, {}, { widthOverride: 15 }], output: 20 }
 			].forEach(testCase => {
-				test(`_defaultColumnWidth is calculated correctly.`, () => {
+				test('_defaultColumnWidth is calculated correctly.', () => {
 					list.headerColumns = testCase.headers;
 					assert.equal(testCase.output, list._defaultColumnWidth);
 					assert.equal(`d2l-quick-eval-${testCase.output}-column`, list._getWidthCssClass());
-				})
-			})
+				});
+			});
 		});
 		test('_formatDisplayName return firstName when firstName defined and lastName undefined', () => {
 			const expectedDisplayName = 'firstName';

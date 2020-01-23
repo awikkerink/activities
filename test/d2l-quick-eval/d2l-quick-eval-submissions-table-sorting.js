@@ -55,9 +55,6 @@ suite('d2l-quick-eval-activities-list-sorting', () => {
 			keyToSortClassHeaderMappings[header.key] = header.sortClass;
 		});
 
-		console.log(JSON.stringify(keyToSortClassHeaderMappings));
-		console.log(JSON.stringify(expectedKeyToSortClassHeaderMappings));
-
 		expect(keyToSortClassHeaderMappings).to.deep.equal(expectedKeyToSortClassHeaderMappings);
 	});
 
