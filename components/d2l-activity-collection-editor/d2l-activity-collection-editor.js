@@ -144,6 +144,12 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		this._candidateItemsLoading = true;
 		if (clearList) {
 			this._candidateFirstLoad = false;
+		} else {
+			// wait for the spinner, then scroll to the bottom
+			await this.updateComplete;
+			const dialogScroll = this.shadowRoot.querySelector('#dialog').shadowRoot.querySelector('.d2l-dialog-content');
+			dialogScroll.scrollTo(0, dialogScroll.scrollHeight);
+		// }
 		}
 		const resp = await performSirenAction(this.token, action, fields, true);
 		this._actionCollectionEntity = new ActionCollectionEntity(this._collection, resp);
