@@ -427,7 +427,7 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 	}
 
 	_isColumn(column, type) {
-		return column.type === type;
+		return column.type === type || (!column.type && type === 'none');
 	}
 
 	_computeColumnText(row, column) {

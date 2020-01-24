@@ -406,6 +406,18 @@ import '@polymer/iron-test-helpers/mock-interactions.js';
 				});
 			});
 		});
+		suite('_isColumn', () => {
+			[ 
+				{ input: 'same', match: 'same', expected: true },
+				{ input: 'same', match: 'different', expected: false },
+				{ input: null, match: 'different', expected: false },
+				{ input: null, match: 'none', expected: true }
+			].forEach((testCase) => {
+				test(`Calling _isColumn with ${testCase.input} and ${testCase.match} should ${testCase.expected ? '' : 'not '} match.`, () => {
+					assert.equal(list._isColumn({type: testCase.input}, testCase.match), testCase.expected);
+				});
+			})
+		})
 		test('_formatDisplayName return firstName when firstName defined and lastName undefined', () => {
 			const expectedDisplayName = 'firstName';
 			const displayName = list._formatDisplayName(
