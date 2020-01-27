@@ -9,6 +9,18 @@ suite('d2l-quick-eval-submissions', function() {
 		submissions = fixture('basic');
 	});
 
+	function waitForHeader(callback, list, selector) {
+		const header = list.shadowRoot.querySelector(selector);
+
+		if (header) {
+			callback();
+		} else {
+			setTimeout(function() {
+				waitForHeader(callback, list, selector);
+			}, 30);
+		}
+	}
+
 	test('instantiating the element works', function() {
 		assert.equal(submissions.tagName.toLowerCase(), 'd2l-quick-eval-submissions');
 	});
@@ -38,7 +50,7 @@ suite('d2l-quick-eval-submissions', function() {
 
 		test('firstName begins before lastName, clicking lastName puts it before firstName and clicking firstName puts it before lastName', (done) => {
 
-			var nameHeaders = submissions._headerColumns[0].headers;
+			const nameHeaders = submissions._headerColumns[0].headers;
 			assert.equal('firstName', nameHeaders[0].key);
 
 			submissions._headerColumns[0].headers[0].canSort = true;
@@ -46,10 +58,10 @@ suite('d2l-quick-eval-submissions', function() {
 
 			const list = submissions.shadowRoot.querySelector('d2l-quick-eval-submissions-table');
 
-			flush(function() {
-				var lastNameHeader = list.shadowRoot.querySelector('#lastName');
+			const clickLastName = function() {
+				const lastNameHeader = list.shadowRoot.querySelector('#lastName');
 
-				var verifyFirstNameNameFirst = function() {
+				const verifyFirstNameNameFirst = function() {
 					assert.equal('firstName', nameHeaders[0].key);
 					assert.equal(',', nameHeaders[0].suffix);
 					assert.equal('', nameHeaders[1].suffix);
@@ -57,25 +69,26 @@ suite('d2l-quick-eval-submissions', function() {
 					done();
 				};
 
-				var verifyLastNameFirst = function() {
+				const verifyLastNameFirst = function() {
 					assert.equal('lastName', nameHeaders[0].key);
 					assert.equal(',', nameHeaders[0].suffix);
 					assert.equal('', nameHeaders[1].suffix);
 
 					lastNameHeader.removeEventListener('click', verifyLastNameFirst);
 
-					flush(function() {
+					const clickFirstName = function() {
 						var firstNameHeader = list.shadowRoot.querySelector('#firstName');
 						firstNameHeader.addEventListener('click', verifyFirstNameNameFirst);
 
 						MockInteractions.tap(firstNameHeader);
-					});
+					};
+					waitForHeader(clickFirstName, list, '#firstName');
 				};
 
 				lastNameHeader.addEventListener('click', verifyLastNameFirst);
 				MockInteractions.tap(lastNameHeader);
-
-			});
+			};
+			waitForHeader(clickLastName, list, '#lastName');
 		});
 	});
 
