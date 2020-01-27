@@ -402,10 +402,6 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 		return `${lastName}, ${firstName}`;
 	}
 
-	_localizeDateTimeFormat(localizedDate) {
-		return this.formatDateTime(new Date(localizedDate));
-	}
-
 	_getWidthCssClass(relativeWidth) {
 		return `d2l-quick-eval-${relativeWidth || this._defaultColumnWidth}-column`;
 	}
