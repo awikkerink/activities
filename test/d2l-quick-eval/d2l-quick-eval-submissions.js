@@ -63,11 +63,13 @@ suite('d2l-quick-eval-submissions', function() {
 					assert.equal('', nameHeaders[1].suffix);
 
 					lastNameHeader.removeEventListener('click', verifyLastNameFirst);
+					
+					flush(function() {
+						var firstNameHeader = list.shadowRoot.querySelector('#firstName');
+						firstNameHeader.addEventListener('click', verifyFirstNameNameFirst);
 
-					var firstNameHeader = list.shadowRoot.querySelector('#firstName');
-					firstNameHeader.addEventListener('click', verifyFirstNameNameFirst);
-
-					MockInteractions.tap(firstNameHeader);
+						MockInteractions.tap(firstNameHeader);
+					});
 				};
 
 				lastNameHeader.addEventListener('click', verifyLastNameFirst);
