@@ -2,6 +2,8 @@
 
 export default {
 	"btnEditReleaseConditions": "Edit Release Conditions", // edit release conditions button
+	"btnCancel": "Cancel", // cancel button
+	"btnSave": "Save", // save button
 	"dueDate": "Due Date", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "End Date", // ARIA label for the due date field when creating/editing an activity
 	"startDate": "Start Date", // ARIA label for the due date field when creating/editing an activity
@@ -9,10 +11,12 @@ export default {
 	"endTime": "End Time", // ARIA label for the due time field when creating/editing an activity
 	"startTime": "Start Time", // ARIA label for the due time field when creating/editing an activity
 	"hidden": "Hidden", // Label displayed with the visibility switch when hidden
+	"ariaHidden": "Hidden from students", // Aria Label for the visibility switch when hidden
 	"noDueDate": "No due date", // Placeholder text for due date field when no due date is set
 	"noEndDate": "No end date", // Placeholder text for due date field when no due date is set
 	"noStartDate": "No start date", // Placeholder text for due date field when no due date is set
 	"visible": "Visible", // Label displayed with the visibility switch when visible
+	"ariaVisible": "Visible to students", // Aria Label for the visibility switch when visible
 	"ungraded": "Ungraded", // State of score field when there is no score and no grade item, when creating/editing an activity
 	"inGrades": "In Grades", // State of the grades field when there is a score, and an associated grade item
 	"notInGrades": "Not in Grades", // State of the grades field when there is a score, but no associated grade item
@@ -25,4 +29,5 @@ export default {
 	"loading": "Loading...", // Message displayed while page is loading
 	"ok": "Ok", // Text of dialog button to commit action
 	"cancel": "Cancel", // Text of dialog button to cancel action
+	"ariaToolbarShortcutInstructions": "Press ALT-F10 for toolbar, and press ESC to exit toolbar once inside." // Instructions for screenreader users on how to enter and exit the html editor toolbar
 };

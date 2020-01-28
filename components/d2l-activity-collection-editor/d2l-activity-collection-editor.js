@@ -24,6 +24,7 @@ import '@brightspace-ui/core/components/list/list-item-content.js';
 import '@brightspace-ui/core/components/inputs/input-search.js';
 import '@brightspace-ui/core/components/loading-spinner/loading-spinner.js';
 import 'd2l-organizations/components/d2l-organization-image/d2l-organization-image.js';
+import 'd2l-alert/d2l-alert-toast.js';
 import '@brightspace-ui-labs/edit-in-place/d2l-labs-edit-in-place.js';
 import '../d2l-activity-editor/d2l-activity-visibility-editor.js';
 import { getLocalizeResources } from './localization.js';
@@ -45,6 +46,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		this._candidateFirstLoad = false;
 		this.ariaBusy = 'true';
 		this.ariaLive = 'polite';
+		this._currentDeleteItemName = '';
 		this._dialogOpen = false;
 		this._isLoadingMore = false;
 		this._candidateItemsLoading = false;
@@ -97,6 +99,8 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 						items[index].removeItem = () => {
 							this._reloadOnOpen = true;
 							collection.removeItem(item.self());
+							this._currentDeleteItemName = items[index].name();
+							this.shadowRoot.querySelector('#delete-succeeded-toast').open = true;
 						};
 						items[index].itemSelf = item.self();
 						if (typeof this._organizationImageChunk[item.self()] === 'undefined') {
@@ -331,6 +335,8 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			.d2l-add-activity-dialog-selection-count {
 				color: var(--d2l-color-ferrite);
 				font-size: 16px;
+				margin-left: 0.5rem;
+    			align-self: center;
 			}
 			.d2l-list-item-secondary {
 				color: var(--d2l-color-olivine-minus-1);
@@ -567,6 +573,9 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 					<div class="d2l-activity-collection-activities">
 						${items}
 					</div>
+					<d2l-alert-toast id="delete-succeeded-toast" type="default" announce-text=${this.localize('deleteSucceeded', 'activityName', this._currentDeleteItemName)}>
+							${this.localize('deleteSucceeded', 'activityName', this._currentDeleteItemName)}
+					</d2l-alert-toast>
 				</div>
 			</div>
 			${this._renderCandidates()}
@@ -734,6 +743,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	}
 
 	_titleChanged(e) {
+		e.target.value = e.target.value.trim() !== '' ? e.target.value : this.localize('untitledLearningPath');
 		this._specialization.setName && this._specialization.setName(e.target.value);
 	}
 
