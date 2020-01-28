@@ -101,6 +101,10 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 							collection.removeItem(item.self());
 							this._currentDeleteItemName = items[index].name();
 							this.shadowRoot.querySelector('#delete-succeeded-toast').open = true;
+							// if the result is an empty learning path, set to hidden
+							if (items.length - 1 === 0) {
+								this._setVisibility(true);
+							}
 						};
 						items[index].itemSelf = item.self();
 						if (typeof this._organizationImageChunk[item.self()] === 'undefined') {
