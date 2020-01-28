@@ -4,14 +4,14 @@ import './d2l-activity-assignment-editor-secondary.js';
 import './d2l-activity-assignment-editor-footer.js';
 import '@brightspace-ui/core/templates/primary-secondary/primary-secondary.js';
 import 'd2l-save-status/d2l-save-status.js';
-import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorContainerMixin } from '../mixins/d2l-activity-editor-container-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
-import { AssignmentActivityUsageEntity } from 'siren-sdk/src/activities/assignments/AssignmentActivityUsageEntity.js';
-import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
+import { AssignmentStore } from './state/assignment-store.js';
+import { MobxLitElement } from '@adobe/lit-mobx';
 import { PendingContainerMixin } from 'siren-sdk/src/mixin/pending-container-mixin.js';
 
-class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixin(ActivityEditorMixin(EntityMixinLit(LitElement)))) {
+class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixin(ActivityEditorMixin(MobxLitElement))) {
 
 	static get properties() {
 		return {
@@ -27,8 +27,9 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 			 * API endpoint for determining whether a domain is trusted
 			 */
 			trustedSitesEndpoint: { type: String },
-			_assignmentHref: { type: String },
-			_initialLoadComplete: { type: Boolean }
+			_initialLoadComplete: { type: Boolean },
+
+			_activity: { type: Object }
 		};
 	}
 
@@ -51,15 +52,7 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 
 	constructor() {
 		super();
-		this._setEntityType(AssignmentActivityUsageEntity);
-		this._assignmentHref = '';
-	}
-
-	set _entity(entity) {
-		if (this._entityHasChanged(entity)) {
-			this._onAssignmentActivityUsageChange(entity);
-			super._entity = entity;
-		}
+		this._store = new AssignmentStore();
 	}
 
 	firstUpdated(changedProperties) {
@@ -74,10 +67,6 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 		this.addEventListener('d2l-siren-entity-save-error', () => {
 			this.shadowRoot.querySelector('#save-status').error();
 		});
-	}
-
-	_onAssignmentActivityUsageChange(assignmentActivityUsage) {
-		this._assignmentHref = assignmentActivityUsage.assignmentHref();
 	}
 
 	_onRequestProvider(e) {
@@ -141,6 +130,10 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 	}
 
 	render() {
+		const {
+			assignmentHref
+		} = this._activity || {};
+
 		return html`
 			<d2l-activity-editor
 				?loading="${this._hasPendingChildren && !this._initialLoadComplete}"
@@ -152,19 +145,19 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 				<d2l-template-primary-secondary slot="editor">
 					<slot name="editor-nav" slot="header"></slot>
 					<d2l-activity-assignment-editor-detail
-						href="${this._assignmentHref}"
+						href="${assignmentHref}"
 						.token="${this.token}"
 						slot="primary"
 						class="d2l-activity-assignment-editor-detail-panel">
 					</d2l-activity-assignment-editor-detail>
 					<d2l-activity-assignment-editor-secondary
-						href="${this._assignmentHref}"
+						href="${assignmentHref}"
 						.token="${this.token}"
 						slot="secondary"
 						class="d2l-activity-assignment-editor-secondary-panel">
 					</d2l-activity-assignment-editor-secondary>
 					<d2l-activity-assignment-editor-footer
-						href="${this._assignmentHref}"
+						href="${assignmentHref}"
 						.token="${this.token}"
 						slot="footer"
 						class="d2l-activity-assignment-editor-footer">
@@ -177,6 +170,15 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 
 	save() {
 		alert('Save coming soon. We are still autosaving!');
+	}
+
+	updated(changedProperties) {
+		super.updated(changedProperties);
+
+		if ((changedProperties.has('href') || changedProperties.has('token')) &&
+			this.href && this.token) {
+			this._activity = this._store.fetchActivity(this.href, this.token);
+		}
 	}
 }
 customElements.define('d2l-activity-assignment-editor', AssignmentEditor);
