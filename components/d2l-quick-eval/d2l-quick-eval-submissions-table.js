@@ -317,6 +317,10 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 				type: Boolean,
 				computed: '_isCourseNameShown()'
 			},
+			_isTableHeaderHidden: {
+				type: Boolean,
+				computed: '_computeTableHeaderHidden(showNoSubmissions, showNoCriteria)'
+			},
 			returningToQuickEval: {
 				type: Boolean,
 				value: false
@@ -342,12 +346,12 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 		];
 	}
 
-	_isTableHeaderHidden() {
-		return this.showLoadingSkeleton || this.showNoSubmissions || this.showNoCriteria;
+	_computeTableHeaderHidden(showNoSubmissions, showNoCriteria) {
+		return showNoSubmissions || showNoCriteria;
 	}
 
 	_isCourseNameShown() {
-		return this.courseLevel && !this._isTableHeaderHidden();
+		return this.courseLevel;
 	}
 
 	_computeIsLoading(showLoadingSpinner, showLoadingSkeleton) {
