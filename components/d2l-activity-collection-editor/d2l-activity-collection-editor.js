@@ -748,6 +748,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	}
 
 	_titleChanged(e) {
+		e.target.value = e.target.value.trim() !== '' ? e.target.value : this.localize('untitledLearningPath');
 		this._specialization.setName && this._specialization.setName(e.target.value);
 	}
 
