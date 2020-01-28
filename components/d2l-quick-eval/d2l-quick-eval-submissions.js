@@ -359,7 +359,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 					userHref: this._getUserHref(activity),
 					courseName: '',
 					activityNameHref: this._getActivityNameHref(activity),
-					submissionDate: subDate,
 					localizedSubmissionDate: this.formatDateTime(new Date(subDate)),
 					activityLink: this._formBackToQuickEvalLink(activityLink),
 					masterTeacher: '',
