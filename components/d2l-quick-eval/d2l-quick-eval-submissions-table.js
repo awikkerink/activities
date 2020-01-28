@@ -410,7 +410,9 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 		let unDef = 0, totalDef = 0;
 		headers.forEach(h => {
 			totalDef += h.widthOverride || 0;
-			unDef += !h.widthOverride;
+			if (!h.widthOverride) {
+				unDef++;
+			}
 		});
 		if (unDef > 0) {
 			return (100 - totalDef) / unDef;
