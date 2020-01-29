@@ -39,10 +39,25 @@ export class Assignment {
 	async load(entity) {
 		this._entity = entity;
 		this.name = entity.name();
+		this.canEditName = entity.canEditName();
+		this.instructions = entity.instructionsEditorHtml();
+		this.canEditInstructions = entity.canEditInstructions();
+		this.instructionsRichTextEditorConfig = entity.instructionsRichTextEditorConfig();
+	}
+
+	setName(value) {
+		this.name = value;
+	}
+
+	setInstructions(value) {
+		this.instructions = value;
 	}
 
 	async save() {
-		// TODO - save props
+		await this._entity.save({
+			name: this.name,
+			instructions: this.instructions
+		});
 		this.fetch();
 	}
 }
@@ -50,7 +65,13 @@ export class Assignment {
 decorate(Assignment, {
 	// props
 	name: observable,
+	canEditName: observable,
+	instructions: observable,
+	canEditInstructions: observable,
+	instructionsRichTextEditorConfig: observable,
 	// actions
 	load: action,
+	setName: action,
+	setInstructions: action,
 	save: action
 });

@@ -29,3 +29,5 @@ export class AssignmentStore {
 		return activity;
 	}
 }
+
+export const shared = new AssignmentStore();

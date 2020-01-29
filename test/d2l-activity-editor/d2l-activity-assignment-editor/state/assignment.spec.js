@@ -4,8 +4,6 @@ import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/Assignmen
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-jest.mock('siren-sdk/src/es6/EntityFactory.js');
-
 describe('Assignment ', function() {
 
 	afterEach(() => {

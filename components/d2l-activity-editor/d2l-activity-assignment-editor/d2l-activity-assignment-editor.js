@@ -7,9 +7,9 @@ import 'd2l-save-status/d2l-save-status.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorContainerMixin } from '../mixins/d2l-activity-editor-container-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
-import { AssignmentStore } from './state/assignment-store.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { PendingContainerMixin } from 'siren-sdk/src/mixin/pending-container-mixin.js';
+import { shared as store } from './state/assignment-store.js';
 
 class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixin(ActivityEditorMixin(MobxLitElement))) {
 
@@ -48,11 +48,6 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 				display: inline-block;
 			}
 		`;
-	}
-
-	constructor() {
-		super();
-		this._store = new AssignmentStore();
 	}
 
 	firstUpdated(changedProperties) {
@@ -168,8 +163,9 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 		`;
 	}
 
-	save() {
-		alert('Save coming soon. We are still autosaving!');
+	async save() {
+		const assignment = store.fetchAssignment(this._activity.assignmentHref, this.token);
+		await assignment.save();
 	}
 
 	updated(changedProperties) {
@@ -177,7 +173,7 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
-			this._activity = this._store.fetchActivity(this.href, this.token);
+			this._activity = store.fetchActivity(this.href, this.token);
 		}
 	}
 }
