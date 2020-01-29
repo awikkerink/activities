@@ -12,7 +12,8 @@ describe('Assignment ', function() {
 
 	it('fetches', async() => {
 		const entity = sinon.createStubInstance(AssignmentEntity, {
-			name: 'Homework 101'
+			name: 'Homework 101',
+			instructionsEditorHtml: 'These are your instructions'
 		});
 
 		sinon.stub(EntityFactory, 'entityFactory').callsArgWith(3, entity);
@@ -21,5 +22,6 @@ describe('Assignment ', function() {
 		assignment.fetch();
 
 		expect(assignment.name).to.equal('Homework 101');
+		expect(assignment.instructions).to.equal('These are your instructions');
 	});
 });
