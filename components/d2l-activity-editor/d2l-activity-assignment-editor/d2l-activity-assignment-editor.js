@@ -5,10 +5,12 @@ import './d2l-activity-assignment-editor-footer.js';
 import '@brightspace-ui/core/templates/primary-secondary/primary-secondary.js';
 import 'd2l-save-status/d2l-save-status.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { ActivityEditorContainerMixin } from '../mixins/d2l-activity-editor-container-mixin.js';
+import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { AssignmentActivityUsageEntity } from 'siren-sdk/src/activities/assignments/AssignmentActivityUsageEntity.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 
-class AssignmentEditor extends EntityMixinLit(LitElement) {
+class AssignmentEditor extends ActivityEditorContainerMixin(ActivityEditorMixin(EntityMixinLit(LitElement))) {
 
 	static get properties() {
 		return {
@@ -161,6 +163,10 @@ class AssignmentEditor extends EntityMixinLit(LitElement) {
 				</d2l-template-primary-secondary>
 			</d2l-activity-editor>
 		`;
+	}
+
+	save() {
+		alert('Save coming soon. We are still autosaving!');
 	}
 }
 customElements.define('d2l-activity-assignment-editor', AssignmentEditor);
