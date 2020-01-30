@@ -150,6 +150,10 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 	}
 
 	render() {
+		if (!this._activityUsageHref) {
+			return html``;
+		}
+
 		return html`
 			<div id="assignment-name-container">
 				<label class="d2l-label-text" for="assignment-name">${this.localize('name')}*</label>
