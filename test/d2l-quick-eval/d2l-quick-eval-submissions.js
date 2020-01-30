@@ -7,18 +7,6 @@ suite('d2l-quick-eval-submissions', function() {
 		submissions = fixture('basic');
 	});
 
-	function waitForHeader(callback, list, selector) {
-		const header = list.shadowRoot.querySelector(selector);
-
-		if (header) {
-			callback();
-		} else {
-			setTimeout(function() {
-				waitForHeader(callback, list, selector);
-			}, 30);
-		}
-	}
-
 	test('instantiating the element works', function() {
 		assert.equal(submissions.tagName.toLowerCase(), 'd2l-quick-eval-submissions');
 	});

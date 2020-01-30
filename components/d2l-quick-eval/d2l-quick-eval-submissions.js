@@ -480,7 +480,6 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			this.set('_headerColumns.0.headers.0.suffix', ',');
 			this.set('_headerColumns.0.headers.1.suffix', '');
 			this.set('_headerColumns.0.meta.firstThenLast', id === 'firstName');
-			console.log(JSON.stringify(column), id);
 		}
 	}
 

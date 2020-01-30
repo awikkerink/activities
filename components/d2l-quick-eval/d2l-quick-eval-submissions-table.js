@@ -17,7 +17,6 @@ import './d2l-quick-eval-no-submissions-text.js';
 import './d2l-quick-eval-no-criteria-results-image.js';
 import './d2l-quick-eval-submissions-skeleton.js';
 import 'd2l-loading-spinner/d2l-loading-spinner.js';
-import {StringEndsWith} from './compatability/ie11shims.js';
 
 /**
  * @customElement
