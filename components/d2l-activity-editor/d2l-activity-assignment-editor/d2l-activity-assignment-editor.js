@@ -124,11 +124,42 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 		this._initialLoadComplete = true;
 	}
 
-	render() {
+	get _editorTemplate() {
+		if (!this._activity) {
+			return html``;
+		}
+
 		const {
 			assignmentHref
-		} = this._activity || {};
+		} = this._activity;
 
+		return html`
+			<d2l-template-primary-secondary slot="editor">
+				<slot name="editor-nav" slot="header"></slot>
+				<d2l-activity-assignment-editor-detail
+					href="${assignmentHref}"
+					.token="${this.token}"
+					slot="primary"
+					class="d2l-activity-assignment-editor-detail-panel">
+				</d2l-activity-assignment-editor-detail>
+				<d2l-activity-assignment-editor-secondary
+					href="${assignmentHref}"
+					.token="${this.token}"
+					slot="secondary"
+					class="d2l-activity-assignment-editor-secondary-panel">
+				</d2l-activity-assignment-editor-secondary>
+				<d2l-activity-assignment-editor-footer
+					href="${assignmentHref}"
+					.token="${this.token}"
+					slot="footer"
+					class="d2l-activity-assignment-editor-footer">
+					<d2l-save-status id="save-status" slot="save-status"></d2l-save-status>
+				</d2l-activity-assignment-editor-footer>
+			</d2l-template-primary-secondary>
+		`;
+	}
+
+	render() {
 		return html`
 			<d2l-activity-editor
 				?loading="${this._hasPendingChildren && !this._initialLoadComplete}"
@@ -137,28 +168,8 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 				@d2l-request-provider="${this._onRequestProvider}"
 				@d2l-pending-resolved="${this._onPendingResolved}">
 
-				<d2l-template-primary-secondary slot="editor">
-					<slot name="editor-nav" slot="header"></slot>
-					<d2l-activity-assignment-editor-detail
-						href="${assignmentHref}"
-						.token="${this.token}"
-						slot="primary"
-						class="d2l-activity-assignment-editor-detail-panel">
-					</d2l-activity-assignment-editor-detail>
-					<d2l-activity-assignment-editor-secondary
-						href="${assignmentHref}"
-						.token="${this.token}"
-						slot="secondary"
-						class="d2l-activity-assignment-editor-secondary-panel">
-					</d2l-activity-assignment-editor-secondary>
-					<d2l-activity-assignment-editor-footer
-						href="${assignmentHref}"
-						.token="${this.token}"
-						slot="footer"
-						class="d2l-activity-assignment-editor-footer">
-						<d2l-save-status id="save-status" slot="save-status"></d2l-save-status>
-					</d2l-activity-assignment-editor-footer>
-				</d2l-template-primary-secondary>
+				${this._editorTemplate}
+
 			</d2l-activity-editor>
 		`;
 	}

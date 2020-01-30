@@ -7,7 +7,7 @@ export class AssignmentStore {
 		this._activities = new Map();
 	}
 
-	async fetchAssignment(href, token) {
+	fetchAssignment(href, token) {
 
 		let promise = this._assignments.get(href);
 		if (!promise) {
@@ -21,7 +21,7 @@ export class AssignmentStore {
 		return promise;
 	}
 
-	async fetchActivity(href, token) {
+	fetchActivity(href, token) {
 
 		let promise = this._activities.get(href);
 		if (!promise) {

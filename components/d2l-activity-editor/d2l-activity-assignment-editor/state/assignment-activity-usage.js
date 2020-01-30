@@ -20,7 +20,7 @@ export class AssignmentActivityUsage {
 		}
 	}
 
-	async load(entity) {
+	load(entity) {
 		this._entity = entity;
 		this.assignmentHref = entity.assignmentHref();
 	}

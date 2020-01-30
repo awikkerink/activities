@@ -145,13 +145,17 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 	}
 
 	render() {
+		if (!this._assignment) {
+			return html``;
+		}
+
 		const {
 			name,
 			canEditName,
 			instructions,
 			canEditInstructions,
 			instructionsRichTextEditorConfig
-		} = this._assignment || {};
+		} = this._assignment;
 
 		return html`
 			<div id="assignment-name-container">
