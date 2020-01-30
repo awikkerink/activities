@@ -328,24 +328,12 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 	}
 	static get observers() {
 		return [
-			'_handleNameSwap(headerColumns.0.headers.*)',
 			'_handleNameFocusOnPageForwardBack(showLoadingSkeleton, _data)'
 		];
 	}
 
 	_computeIsLoading(showLoadingSpinner, showLoadingSkeleton) {
 		return showLoadingSpinner || showLoadingSkeleton;
-	}
-
-	_handleNameSwap(entry) {
-		if (entry && StringEndsWith(entry.path, '1.sorted')) {
-			const tmp = this.headerColumns[0].headers[0];
-			this.set('headerColumns.0.headers.0', this.headerColumns[0].headers[1]);
-			this.set('headerColumns.0.headers.1', tmp);
-			this.set('headerColumns.0.headers.0.suffix', ',');
-			this.set('headerColumns.0.headers.1.suffix', '');
-			this.set('headerColumns.0.meta.firstThenLast', this.headerColumns[0].headers[0].key === 'firstName');
-		}
 	}
 
 	_handleNameFocusOnPageForwardBack() {

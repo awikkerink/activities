@@ -434,6 +434,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 		telemetryData.columnName = headerId;
 
 		this._headerColumns.forEach((headerColumn, i) => {
+			this._handleNameSwap(headerColumn, headerId);
 			headerColumn.headers.forEach((header, j) => {
 				if ((header.key === headerId) && header.canSort) {
 					const descending = header.sorted && !header.desc;
@@ -458,6 +459,28 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 			});
 		} else {
 			return Promise.reject(new Error(`Could not find sortable header for ${headerId}`));
+		}
+	}
+
+	_shouldSwapNames(id) {
+		if (id === 'firstName') {
+			return this._headerColumns[0].headers[0].key !== 'firstName';
+		}
+		if (id === 'lastName') {
+			return this._headerColumns[0].headers[0].key !== 'lastName';
+		}
+		return false;
+	}
+
+	_handleNameSwap(column, id) {
+		if (column.key === 'displayName' && this._shouldSwapNames(id)) {
+			const tmp = column.headers[0];
+			this.set('_headerColumns.0.headers.0', column.headers[1]);
+			this.set('_headerColumns.0.headers.1', tmp);
+			this.set('_headerColumns.0.headers.0.suffix', ',');
+			this.set('_headerColumns.0.headers.1.suffix', '');
+			this.set('_headerColumns.0.meta.firstThenLast', id === 'firstName');
+			console.log(JSON.stringify(column), id);
 		}
 	}
 

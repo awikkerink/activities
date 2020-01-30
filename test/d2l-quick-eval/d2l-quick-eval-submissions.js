@@ -1,5 +1,3 @@
-import '@polymer/iron-test-helpers/mock-interactions.js';
-
 suite('d2l-quick-eval-submissions', function() {
 
 	let submissions;
@@ -48,47 +46,29 @@ suite('d2l-quick-eval-submissions', function() {
 			});
 		});
 
-		test('firstName begins before lastName, clicking lastName puts it before firstName and clicking firstName puts it before lastName', (done) => {
+		test('_handleNameSwap switches the firstName and lastName headers.', () => {
 
 			const nameHeaders = submissions._headerColumns[0].headers;
 			assert.equal('firstName', nameHeaders[0].key);
 
-			submissions._headerColumns[0].headers[0].canSort = true;
-			submissions._headerColumns[0].headers[1].canSort = true;
+			nameHeaders[0].canSort = true;
+			nameHeaders[1].canSort = true;
 
-			const list = submissions.shadowRoot.querySelector('d2l-quick-eval-submissions-table');
+			// clicking on the header that's already first shouldn't switch them.
+			submissions._handleNameSwap(submissions._headerColumns[0], 'firstName');
+			assert.equal('firstName', nameHeaders[0].key);
 
-			const clickLastName = function() {
-				const lastNameHeader = list.shadowRoot.querySelector('#lastName');
+			submissions._handleNameSwap(submissions._headerColumns[0], 'lastName');
 
-				const verifyFirstNameNameFirst = function() {
-					assert.equal('firstName', nameHeaders[0].key);
-					assert.equal(',', nameHeaders[0].suffix);
-					assert.equal('', nameHeaders[1].suffix);
+			assert.equal('lastName', nameHeaders[0].key);
+			assert.equal(',', nameHeaders[0].suffix);
+			assert.equal('', nameHeaders[1].suffix);
 
-					done();
-				};
+			submissions._handleNameSwap(submissions._headerColumns[0], 'firstName');
 
-				const verifyLastNameFirst = function() {
-					assert.equal('lastName', nameHeaders[0].key);
-					assert.equal(',', nameHeaders[0].suffix);
-					assert.equal('', nameHeaders[1].suffix);
-
-					lastNameHeader.removeEventListener('click', verifyLastNameFirst);
-
-					const clickFirstName = function() {
-						var firstNameHeader = list.shadowRoot.querySelector('#firstName');
-						firstNameHeader.addEventListener('click', verifyFirstNameNameFirst);
-
-						MockInteractions.tap(firstNameHeader);
-					};
-					waitForHeader(clickFirstName, list, '#firstName');
-				};
-
-				lastNameHeader.addEventListener('click', verifyLastNameFirst);
-				MockInteractions.tap(lastNameHeader);
-			};
-			waitForHeader(clickLastName, list, '#lastName');
+			assert.equal('firstName', nameHeaders[0].key);
+			assert.equal(',', nameHeaders[0].suffix);
+			assert.equal('', nameHeaders[1].suffix);
 		});
 	});
 
