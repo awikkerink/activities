@@ -3,30 +3,36 @@ import { AssignmentActivityUsage } from './assignment-activity-usage.js';
 
 export class AssignmentStore {
 	constructor() {
-		this.assignments = new Map();
-		this.activities = new Map();
+		this._assignments = new Map();
+		this._activities = new Map();
 	}
 
-	fetchAssignment(href, token, autoSave = false) {
+	async fetchAssignment(href, token) {
 
-		let assignment = this.assignments.get(href);
-		if (!assignment) {
-			assignment = new Assignment(href, token, autoSave);
-			assignment.fetch();
-			this.assignments.set(href, assignment);
+		let promise = this._assignments.get(href);
+		if (!promise) {
+			promise = new Promise(async(resolve) => {
+				const assignment = new Assignment(href, token);
+				await assignment.fetch();
+				resolve(assignment);
+			});
+			this._assignments.set(href, promise);
 		}
-		return assignment;
+		return promise;
 	}
 
-	fetchActivity(href, token, autoSave) {
+	async fetchActivity(href, token) {
 
-		let activity = this.activities.get(href);
-		if (!activity) {
-			activity = new AssignmentActivityUsage(href, token, autoSave);
-			activity.fetch();
-			this.activities.set(href, activity);
+		let promise = this._activities.get(href);
+		if (!promise) {
+			promise = new Promise(async(resolve) => {
+				const activity = new AssignmentActivityUsage(href, token);
+				await activity.fetch();
+				resolve(activity);
+			});
+			this._activities.set(href, promise);
 		}
-		return activity;
+		return promise;
 	}
 }
 

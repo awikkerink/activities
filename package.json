@@ -16,7 +16,7 @@
     "test:polymer:local": "polymer test --skip-plugin sauce",
     "test:polymer:sauce": "polymer test --skip-plugin local",
     "test:js": "jest",
-    "test": "npm run lint && npm run test:polymer:local",
+    "test": "npm run lint && npm run test:polymer:local && npm run test:js",
     "serve": "polymer serve"
   },
   "author": "D2L Corporation",

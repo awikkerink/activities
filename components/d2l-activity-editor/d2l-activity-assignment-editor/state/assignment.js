@@ -1,42 +1,25 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
-import { dispose, entityFactory } from 'siren-sdk/src/es6/EntityFactory.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
+import { fetchEntity } from '../../state/fetch-entity.js';
 
 configureMobx({ enforceActions: 'observed' });
 
 export class Assignment {
 
-	constructor(href, token, autoSave = false) {
+	constructor(href, token) {
 		this.href = href;
 		this.token = token;
-		this.autoSave = autoSave;
-		this.loading = Promise.resolve();
 	}
 
 	async fetch() {
-		dispose(this._entity);
-		this._entity = null;
-
-		let pendingResolve;
-		this.loading = new Promise(resolve => {
-			pendingResolve = resolve;
-		});
-
-		entityFactory(AssignmentEntity, this.href, this.token, (entity) => {
-			if (entity) {
-				const newEntity = this.autoSave || !this._entity ? entity : this._entity;
-				if (newEntity !== this._entity) {
-					this.load(newEntity);
-				}
-			} else {
-				// TODO handle error
-			}
-			pendingResolve && pendingResolve();
-			pendingResolve = null;
-		});
+		const sirenEntity = await fetchEntity(this.href, this.token);
+		if (sirenEntity) {
+			const entity = new AssignmentEntity(sirenEntity, this.token, { remove: () => { } });
+			this.load(entity);
+		}
 	}
 
-	async load(entity) {
+	load(entity) {
 		this._entity = entity;
 		this.name = entity.name();
 		this.canEditName = entity.canEditName();
@@ -54,11 +37,15 @@ export class Assignment {
 	}
 
 	async save() {
+		if (!this._entity) {
+			return;
+		}
+
 		await this._entity.save({
 			name: this.name,
 			instructions: this.instructions
 		});
-		this.fetch();
+		await this.fetch();
 	}
 }
 

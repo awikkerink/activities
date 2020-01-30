@@ -164,16 +164,16 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 	}
 
 	async save() {
-		const assignment = store.fetchAssignment(this._activity.assignmentHref, this.token);
+		const assignment = await store.fetchAssignment(this._activity.assignmentHref, this.token);
 		await assignment.save();
 	}
 
-	updated(changedProperties) {
+	async updated(changedProperties) {
 		super.updated(changedProperties);
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
-			this._activity = store.fetchActivity(this.href, this.token);
+			this._activity = await super._fetch(() => store.fetchActivity(this.href, this.token));
 		}
 	}
 }

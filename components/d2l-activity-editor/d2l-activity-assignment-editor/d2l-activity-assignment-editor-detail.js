@@ -5,6 +5,7 @@ import '../d2l-activity-score-editor.js';
 import '../d2l-activity-text-editor.js';
 import '../d2l-activity-attachments/d2l-activity-attachments-editor.js';
 import { css, html } from 'lit-element/lit-element.js';
+import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
@@ -19,7 +20,7 @@ import { shared as store } from './state/assignment-store.js';
 
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
-class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMixinLit(LocalizeMixin(RtlMixin(MobxLitElement))))) {
+class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMixinLit(LocalizeMixin(RtlMixin(ActivityEditorMixin(MobxLitElement)))))) {
 
 	static get properties() {
 		return {
@@ -206,12 +207,12 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		`;
 	}
 
-	updated(changedProperties) {
+	async updated(changedProperties) {
 		super.updated(changedProperties);
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
-			this._assignment = store.fetchAssignment(this.href, this.token);
+			this._assignment = await super._fetch(() => store.fetchAssignment(this.href, this.token));
 		}
 	}
 }
