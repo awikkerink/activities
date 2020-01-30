@@ -10,7 +10,7 @@ import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { AssignmentActivityUsageEntity } from 'siren-sdk/src/activities/assignments/AssignmentActivityUsageEntity.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 
-class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixin(ActivityEditorMixin(EntityMixinLit(LitElement)))) {
+class AssignmentEditor extends ActivityEditorContainerMixin(ActivityEditorMixin(EntityMixinLit(LitElement))) {
 
 	static get properties() {
 		return {
