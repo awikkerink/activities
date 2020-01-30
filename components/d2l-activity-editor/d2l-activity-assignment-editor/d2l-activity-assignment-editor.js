@@ -9,7 +9,6 @@ import { ActivityEditorContainerMixin } from '../mixins/d2l-activity-editor-cont
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { AssignmentActivityUsageEntity } from 'siren-sdk/src/activities/assignments/AssignmentActivityUsageEntity.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
-import { PendingContainerMixin } from 'siren-sdk/src/mixin/pending-container-mixin.js';
 
 class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixin(ActivityEditorMixin(EntityMixinLit(LitElement)))) {
 
@@ -27,8 +26,7 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 			 * API endpoint for determining whether a domain is trusted
 			 */
 			trustedSitesEndpoint: { type: String },
-			_assignmentHref: { type: String },
-			_initialLoadComplete: { type: Boolean }
+			_assignmentHref: { type: String }
 		};
 	}
 
@@ -134,20 +132,12 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 		}
 	}
 
-	_onPendingResolved() {
-		// Once we've loaded the page once, this prevents us from ever showing
-		// the "Loading..." div again, even if page components are (re)loading
-		this._initialLoadComplete = true;
-	}
-
 	render() {
 		return html`
 			<d2l-activity-editor
-				?loading="${this._hasPendingChildren && !this._initialLoadComplete}"
 				unfurlEndpoint="${this.unfurlEndpoint}"
 				trustedSitesEndpoint="${this.trustedSitesEndpoint}"
-				@d2l-request-provider="${this._onRequestProvider}"
-				@d2l-pending-resolved="${this._onPendingResolved}">
+				@d2l-request-provider="${this._onRequestProvider}">
 
 				<d2l-template-primary-secondary slot="editor">
 					<slot name="editor-nav" slot="header"></slot>
