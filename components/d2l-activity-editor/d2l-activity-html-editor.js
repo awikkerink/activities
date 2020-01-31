@@ -168,8 +168,8 @@ class ActivityHtmlEditor extends LocalizeMixin(LitElement) {
 			</d2l-html-editor>`;
 	}
 
-	firstUpdated(changedProperties) {
-		super.firstUpdated(changedProperties);
+	updated(changedProperties) {
+		super.updated(changedProperties);
 		// This is acknowledged to be non-idiomatic (manipulating DOM outside render), but this
 		// is unforunately a necessary evil of using the tinymce/HTML editor.
 		// NB: Using first updated relies on the properties being set on first render
@@ -181,7 +181,7 @@ class ActivityHtmlEditor extends LocalizeMixin(LitElement) {
 			}
 		}
 
-		if (changedProperties.has('value')) {
+		if (changedProperties.has('value') && typeof changedProperties.get('value') === 'undefined') {
 			const editorContainer = this.shadowRoot.querySelector('d2l-html-editor > .d2l-html-editor-container');
 			if (editorContainer) {
 				editorContainer.innerHTML = this.value;
