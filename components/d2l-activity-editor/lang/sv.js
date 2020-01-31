@@ -2,8 +2,6 @@
 
 export default {
 	"btnEditReleaseConditions": "Redigera publiceringsvillkor", // edit release conditions button
-	"btnCancel": "Avbryt", // cancel button
-	"btnSave": "Spara", // save button
 	"dueDate": "Förfallodatum", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "Slutdatum", // ARIA label for the due date field when creating/editing an activity
 	"startDate": "Startdatum", // ARIA label for the due date field when creating/editing an activity

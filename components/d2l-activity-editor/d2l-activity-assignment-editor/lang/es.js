@@ -13,6 +13,8 @@ export default {
 	"hlpTurnitin": "La integración de Turnitin® le permite utilizar Originality Check® para evaluar la integridad académica del trabajo de un estudiante y utilizar la herramienta de evaluación externa GradeMark® para las evaluaciones.", // turnitin help
 	"btnEditTurnitin": "Administrar la integración de Turnitin®", // edit turnitin button
 	"btnCloseDialog": "Cerrar este cuadro de diálogo", // close dialog button
+	"btnCancel": "Cancelar", // cancel button
+	"btnSave": "Guardar", // save button
 	"name": "Nombre", // Label for the name field when creating/editing an activity
 	"submissionType": "Tipo de material enviado", // Label for the submission type field when creating/editing an assignment
 	"annotationTools": "Herramientas de anotación", // Label for enabling/disabling Annotation Tools when creating/editing an assignment

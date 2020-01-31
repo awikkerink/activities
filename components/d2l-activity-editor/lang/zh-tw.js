@@ -2,8 +2,6 @@
 
 export default {
 	"btnEditReleaseConditions": "編輯發佈條件", // edit release conditions button
-	"btnCancel": "取消", // cancel button
-	"btnSave": "儲存", // save button
 	"dueDate": "截止日期", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "結束日期", // ARIA label for the due date field when creating/editing an activity
 	"startDate": "開始日期", // ARIA label for the due date field when creating/editing an activity

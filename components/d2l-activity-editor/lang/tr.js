@@ -2,8 +2,6 @@
 
 export default {
 	"btnEditReleaseConditions": "Sürüm Koşullarını Düzenle", // edit release conditions button
-	"btnCancel": "Cancel", // cancel button
-	"btnSave": "Kaydet", // save button
 	"dueDate": "Teslim Tarihi", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "Bitiş Tarihi", // ARIA label for the due date field when creating/editing an activity
 	"startDate": "Başlangıç Tarihi", // ARIA label for the due date field when creating/editing an activity

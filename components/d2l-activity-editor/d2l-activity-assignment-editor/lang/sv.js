@@ -13,6 +13,8 @@ export default {
 	"hlpTurnitin": "Med Turnitin®-integreringen kan du använda Originality Check® för att bedöma elevarbetets akademiska integritet och använda det externa bedömningsverktyget GradeMark® för bedömning.", // turnitin help
 	"btnEditTurnitin": "Hantera Turnitin®-integrering", // edit turnitin button
 	"btnCloseDialog": "Stäng den här dialogrutan", // close dialog button
+	"btnCancel": "Avbryt", // cancel button
+	"btnSave": "Spara", // save button
 	"name": "Namn", // Label for the name field when creating/editing an activity
 	"submissionType": "Inlämningstyp", // Label for the submission type field when creating/editing an assignment
 	"annotationTools": "Kommentarsverktyg", // Label for enabling/disabling Annotation Tools when creating/editing an assignment

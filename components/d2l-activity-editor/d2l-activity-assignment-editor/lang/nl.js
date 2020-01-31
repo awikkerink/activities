@@ -13,6 +13,8 @@ export default {
 	"hlpTurnitin": "Met Turnitin®-integratie kunt u Originality Check® gebruiken om het werk van studenten te beoordelen op academische integriteit, en het externe beoordelingsprogramma GradeMark® gebruiken voor beoordeling.", // turnitin help
 	"btnEditTurnitin": "Turnitin®-integratie beheren", // edit turnitin button
 	"btnCloseDialog": "Dit dialoogvenster sluiten", // close dialog button
+	"btnCancel": "Annuleren", // cancel button
+	"btnSave": "Opslaan", // save button
 	"name": "Naam", // Label for the name field when creating/editing an activity
 	"submissionType": "Type indiening", // Label for the submission type field when creating/editing an assignment
 	"annotationTools": "Annotatiehulpmiddelen", // Label for enabling/disabling Annotation Tools when creating/editing an assignment

@@ -13,6 +13,8 @@ export default {
 	"hlpTurnitin": "Turnitin® 整合可供您使用 Originality Check® 來評量學生課業的學術誠信，並使用 GradeMark® 外部評估工具進行評量。", // turnitin help
 	"btnEditTurnitin": "管理 Turnitin® 整合", // edit turnitin button
 	"btnCloseDialog": "關閉此對話方塊", // close dialog button
+	"btnCancel": "取消", // cancel button
+	"btnSave": "儲存", // save button
 	"name": "名稱", // Label for the name field when creating/editing an activity
 	"submissionType": "交件匣提交類型", // Label for the submission type field when creating/editing an assignment
 	"annotationTools": "註解工具", // Label for enabling/disabling Annotation Tools when creating/editing an assignment

@@ -13,6 +13,8 @@ export default {
 	"hlpTurnitin": "Turnitin® 集成允许您使用原创性检查® 针对学术完整性评估学生学业，并使用 GradeMark® 外部评估工具进行评估。", // turnitin help
 	"btnEditTurnitin": "管理 Turnitin® 集成", // edit turnitin button
 	"btnCloseDialog": "关闭此对话框", // close dialog button
+	"btnCancel": "取消", // cancel button
+	"btnSave": "保存", // save button
 	"name": "名称", // Label for the name field when creating/editing an activity
 	"submissionType": "提交类型", // Label for the submission type field when creating/editing an assignment
 	"annotationTools": "批注工具", // Label for enabling/disabling Annotation Tools when creating/editing an assignment

@@ -13,6 +13,8 @@ export default {
 	"hlpTurnitin": "Turnitin® 통합을 사용하면 Originality Check®를 사용하여 학생의 학업 성취도를 평가하고 GradeMark® 외부 평가 도구를 평가에 사용할 수 있습니다.", // turnitin help
 	"btnEditTurnitin": "Turnitin® 통합 관리", // edit turnitin button
 	"btnCloseDialog": "이 대화 상자 닫기", // close dialog button
+	"btnCancel": "취소", // cancel button
+	"btnSave": "저장", // save button
 	"name": "이름", // Label for the name field when creating/editing an activity
 	"submissionType": "제출 유형", // Label for the submission type field when creating/editing an assignment
 	"annotationTools": "주석 도구", // Label for enabling/disabling Annotation Tools when creating/editing an assignment

@@ -2,8 +2,6 @@
 
 export default {
 	"btnEditReleaseConditions": "Releasevoorwaarden bewerken", // edit release conditions button
-	"btnCancel": "Annuleren", // cancel button
-	"btnSave": "Opslaan", // save button
 	"dueDate": "Uiterste datum", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "Einddatum", // ARIA label for the due date field when creating/editing an activity
 	"startDate": "Startdatum", // ARIA label for the due date field when creating/editing an activity

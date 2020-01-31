@@ -13,6 +13,8 @@ export default {
 	"hlpTurnitin": "يسمح لك تكامل Turnitin®‎ باستخدام خيار Originality Check®‎ لتقييم عمل الطلاب في النزاهة الأكاديمية واستخدام أداة التقييم الخارجية GradeMark®‎ للتقييم.", // turnitin help
 	"btnEditTurnitin": "إدارة تكامل Turnitin®‎", // edit turnitin button
 	"btnCloseDialog": "إغلاق مربع الحوار هذا", // close dialog button
+	"btnCancel": "إلغاء", // cancel button
+	"btnSave": "حفظ", // save button
 	"name": "الاسم", // Label for the name field when creating/editing an activity
 	"submissionType": "نوع الإرسال", // Label for the submission type field when creating/editing an assignment
 	"annotationTools": "أدوات التعليق التوضيحي", // Label for enabling/disabling Annotation Tools when creating/editing an assignment

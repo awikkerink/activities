@@ -2,8 +2,6 @@
 
 export default {
 	"btnEditReleaseConditions": "Modifier les conditions de diffusion", // edit release conditions button
-	"btnCancel": "Cancel", // cancel button
-	"btnSave": "Enregistrer", // save button
 	"dueDate": "Date d’échéance", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "Date de fin", // ARIA label for the due date field when creating/editing an activity
 	"startDate": "Date de début", // ARIA label for the due date field when creating/editing an activity
