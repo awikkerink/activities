@@ -13,7 +13,7 @@ export default {
 	"hlpTurnitin": "Turnitin® Entegrasyonu, öğrencilerin çalışmalarını akademik dürüstlük kapsamında değerlendirmek için Originality Check®'i ve harici GradeMark® değerlendirme aracını kullanabilmenizi sağlar.", // turnitin help
 	"btnEditTurnitin": "Turnitin® Entegrasyonunu Yönet", // edit turnitin button
 	"btnCloseDialog": "Bu Diyaloğu Kapat", // close dialog button
-	"btnCancel": "Cancel", // cancel button
+	"btnCancel": "İptal", // cancel button
 	"btnSave": "Kaydet", // save button
 	"name": "Ad", // Label for the name field when creating/editing an activity
 	"submissionType": "Gönderim Türü", // Label for the submission type field when creating/editing an assignment
