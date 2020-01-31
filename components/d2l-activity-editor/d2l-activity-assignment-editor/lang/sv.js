@@ -4,6 +4,8 @@ export default {
 	"hdrReleaseConditions": "Publiceringsvillkor", // release conditions heading
 	"hlpReleaseConditions": "Användarna kan inte få åtkomst till eller visa tilldelningen om de inte uppfyller publiceringsvillkoren.", // release conditions help
 	"completionType": "Markerad som slutförd", // Label for the completion type field when creating/editing an assignment
+	"lblAnonymousMarking": "Anonym märkning", // Label for anonymous marking
+	"chkAnonymousMarking": "Dölj elevens namn vid bedömningen", // Checkbox for anonymous marking
 	"dueDate": "Förfallodatum", // ARIA label for the due date field when creating/editing an activity
 	"emptyNameError": "Namn krävs", // Error message to inform user that the assignment name is a required field
 	"instructions": "Instruktioner", // Label for the instruction field when creating/editing an assignment
@@ -16,5 +18,6 @@ export default {
 	"name": "Namn", // Label for the name field when creating/editing an activity
 	"submissionType": "Inlämningstyp", // Label for the submission type field when creating/editing an assignment
 	"annotationTools": "Kommentarsverktyg", // Label for enabling/disabling Annotation Tools when creating/editing an assignment
-	"annotationToolDescription": "Gör kommentarsverktygen tillgängliga för bedömning" //Description next to the checkbox for annotation tools when creating/editing an assignment
+	"annotationToolDescription": "Gör kommentarsverktygen tillgängliga för bedömning", //Description next to the checkbox for annotation tools when creating/editing an assignment
+	"scoreOutOf": "Resultat av totalt" // Label for the score-out-of field when creating/editing an activity
 };
