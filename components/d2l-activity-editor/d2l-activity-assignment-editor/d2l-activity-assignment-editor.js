@@ -162,6 +162,8 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 	render() {
 		return html`
 			<d2l-activity-editor
+				.href=${this.href}
+				.token=${this.token}
 				?loading="${this._hasPendingChildren && !this._initialLoadComplete}"
 				unfurlEndpoint="${this.unfurlEndpoint}"
 				trustedSitesEndpoint="${this.trustedSitesEndpoint}"

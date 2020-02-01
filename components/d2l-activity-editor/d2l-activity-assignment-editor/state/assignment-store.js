@@ -8,13 +8,13 @@ export class AssignmentStore {
 	}
 
 	fetchAssignment(href, token) {
-
 		let promise = this._assignments.get(href);
 		if (!promise) {
-			promise = new Promise(async(resolve) => {
+			promise = new Promise((resolve, reject) => {
 				const assignment = new Assignment(href, token);
-				await assignment.fetch();
-				resolve(assignment);
+				assignment.fetch().then(() => {
+					resolve(assignment);
+				}, reject);
 			});
 			this._assignments.set(href, promise);
 		}
@@ -22,13 +22,13 @@ export class AssignmentStore {
 	}
 
 	fetchActivity(href, token) {
-
 		let promise = this._activities.get(href);
 		if (!promise) {
-			promise = new Promise(async(resolve) => {
+			promise = new Promise((resolve, reject) => {
 				const activity = new AssignmentActivityUsage(href, token);
-				await activity.fetch();
-				resolve(activity);
+				activity.fetch().then(() => {
+					resolve(activity);
+				}, reject);
 			});
 			this._activities.set(href, promise);
 		}

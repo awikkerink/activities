@@ -1,8 +1,10 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
 import { getLocalizeResources } from './localization';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { shared as store } from './state/activity-store.js';
 
-class ActivityEditor extends LocalizeMixin(LitElement) {
+class ActivityEditor extends ActivityEditorMixin(LocalizeMixin(LitElement)) {
 
 	static get properties() {
 		return {
@@ -31,6 +33,13 @@ class ActivityEditor extends LocalizeMixin(LitElement) {
 
 	static async getLocalizeResources(langs) {
 		return getLocalizeResources(langs, import.meta.url);
+	}
+
+	async save() {
+		const activity = store.getActivity(this.href);
+		if (activity) {
+			await activity.save();
+		}
 	}
 
 	render() {
