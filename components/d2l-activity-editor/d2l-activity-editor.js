@@ -49,10 +49,9 @@ class ActivityEditor extends PendingContainerMixin(LocalizeMixin(LitElement)) {
 		this.loading = false;
 	}
 	render() {
-		return this.loading ? html`
-			<div class="d2l-activity-editor-loading">${this.localize('loading')}</div>
-		` : html`
-			<div>
+		return html`
+			<div ?hidden="${!this.loading}" class="d2l-activity-editor-loading">${this.localize('loading')}</div>
+			<div ?hidden="${this.loading}">
 				<slot name="editor"></slot>
 			</div>
 		`;
