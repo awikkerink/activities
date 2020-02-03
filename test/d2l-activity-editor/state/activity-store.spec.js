@@ -2,6 +2,7 @@ import chai, { expect } from 'chai';
 import { ActivityStore } from '../../../components/d2l-activity-editor/state/activity-store.js';
 import { ActivityUsage } from '../../../components/d2l-activity-editor/state/activity-usage.js';
 import chaiAsPromised from 'chai-as-promised';
+import { when } from 'mobx';
 
 chai.use(chaiAsPromised);
 
@@ -43,7 +44,19 @@ describe('Activity Store', function() {
 			expect(ActivityUsage.mock.calls[0][1]).to.equal('token');
 			expect(mockActivityFetch.mock.calls.length).to.equal(1);
 
-			expect(store.get('http://1')).to.equal(activity);
+			const activity3 = store.get('http://1');
+			expect(activity3).to.equal(activity);
+		});
+
+		it('reacts to activity get', async(done) => {
+			when(
+				() => !!store.get('http://1'),
+				() => {
+					done();
+				}
+			);
+
+			await store.fetch('http://1', 'token');
 		});
 	});
 

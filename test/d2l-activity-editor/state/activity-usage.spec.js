@@ -3,6 +3,7 @@ import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntit
 import { expect } from 'chai';
 import { fetchEntity } from '../../../components/d2l-activity-editor/state/fetch-entity.js';
 import sinon from 'sinon';
+import { when } from 'mobx';
 
 jest.mock('siren-sdk/src/activities/ActivityUsageEntity.js');
 jest.mock('../../../components/d2l-activity-editor/state/fetch-entity.js');
@@ -43,6 +44,32 @@ describe('Activity Usage', function() {
 			expect(fetchEntity.mock.calls.length).to.equal(1);
 			expect(ActivityUsageEntity.mock.calls[0][0]).to.equal(sirenEntity);
 			expect(ActivityUsageEntity.mock.calls[0][1]).to.equal('token');
+		});
+	});
+
+	describe('updating', () => {
+		beforeEach(() => {
+			sirenEntity = sinon.stub();
+
+			ActivityUsageEntity.mockImplementation(() => {
+				return defaultEntityMock;
+			});
+
+			fetchEntity.mockImplementation(() => sirenEntity);
+		});
+
+		it('reacts to due date', async(done) => {
+			const activity = new ActivityUsage('http://1', 'token');
+			await activity.fetch();
+
+			when(
+				() => activity.dueDate === '2020-02-23T04:59:00.000Z',
+				() => {
+					done();
+				}
+			);
+
+			activity.setDueDate('2020-02-23T04:59:00.000Z');
 		});
 	});
 

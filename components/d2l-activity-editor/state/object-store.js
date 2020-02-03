@@ -4,7 +4,7 @@ export class ObjectStore {
 	constructor(Type) {
 		this.Type = Type;
 		this._fetches = new Map();
-		this._objects = observable.map([], { deep: false });
+		this._objects = new Map();
 	}
 
 	fetch(href, token) {
@@ -30,7 +30,7 @@ export class ObjectStore {
 
 decorate(ObjectStore, {
 	// properties
-	_objects: observable,
+	_objects: observable.shallow,
 	// actions
 	fetch: action
 });
