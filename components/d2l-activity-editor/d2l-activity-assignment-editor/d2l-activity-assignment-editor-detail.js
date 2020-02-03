@@ -187,7 +187,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 			<div id="assignment-instructions-container">
 				<label class="d2l-label-text">${this.localize('instructions')}</label>
 				<d2l-activity-text-editor
-					value="${this._instructions}"
+					.value="${this._instructions}"
 					.richtextEditorConfig="${this._instructionsRichTextEditorConfig}"
 					@d2l-activity-text-editor-change="${this._saveInstructionsOnChange}"
 					ariaLabel="${this.localize('instructions')}"
