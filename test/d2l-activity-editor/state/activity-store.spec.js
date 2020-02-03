@@ -8,34 +8,42 @@ chai.use(chaiAsPromised);
 jest.mock('../../../components/d2l-activity-editor/state/activity-usage.js');
 
 describe('Activity Store', function() {
+
+	let store;
+
+	beforeEach(() => {
+		store = new ActivityStore();
+	});
+
 	afterEach(() => {
 		ActivityUsage.mockClear();
 	});
 
 	describe('when succeeds', () => {
-		const mockActivityFetch = jest.fn(() => Promise.resolve(this));
+		let mockActivityFetch;
 
 		beforeEach(() => {
 			ActivityUsage.mockImplementation(() => {
-				return {
-					fetch: mockActivityFetch
-				};
+				const object =  {};
+				mockActivityFetch = jest.fn(() => Promise.resolve(object));
+				object.fetch = mockActivityFetch;
+				return object;
 			});
 		});
 
 		it('fetches activity', async() => {
-			const store = new ActivityStore();
+			const activity = await store.fetch('http://1', 'token');
+			expect(store._objects.size).to.equal(1);
 
-			const activity = await store.fetchActivity('http://1', 'token');
-			expect(store._activities.size).to.equal(1);
-
-			const activity2 = await store.fetchActivity('http://1', 'token');
+			const activity2 = await store.fetch('http://1', 'token');
 			expect(activity2).to.equal(activity);
 
 			expect(ActivityUsage.mock.calls.length).to.equal(1);
 			expect(ActivityUsage.mock.calls[0][0]).to.equal('http://1');
 			expect(ActivityUsage.mock.calls[0][1]).to.equal('token');
 			expect(mockActivityFetch.mock.calls.length).to.equal(1);
+
+			expect(store.get('http://1')).to.equal(activity);
 		});
 	});
 
@@ -49,8 +57,9 @@ describe('Activity Store', function() {
 		});
 
 		it('propagates error', async() => {
-			const store = new ActivityStore();
-			return expect(store.fetchActivity('http://1', 'token')).to.be.rejected;
+			await expect(store.fetch('http://1', 'token')).to.be.rejected;
+			expect(store._fetches.size).to.equal(0);
+			expect(store._objects.size).to.equal(0);
 		});
 	});
 });

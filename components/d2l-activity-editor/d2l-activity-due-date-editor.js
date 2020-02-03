@@ -35,11 +35,11 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 	}
 
 	_onDatetimePickerDatetimeCleared() {
-		store.getActivity(this.href).setDueDate('');
+		store.get(this.href).setDueDate('');
 	}
 
 	_onDatetimePickerDatetimeChanged(e) {
-		store.getActivity(this.href).setDueDate(e.detail.toISOString());
+		store.get(this.href).setDueDate(e.detail.toISOString());
 	}
 
 	dateTemplate(date) {
@@ -62,7 +62,7 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 	}
 
 	render() {
-		const activity = store.getActivity(this.href);
+		const activity = store.get(this.href);
 		if (!activity) {
 			return html``;
 		}
@@ -89,7 +89,7 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
-			super._fetch(() => store.fetchActivity(this.href, this.token));
+			super._fetch(() => store.fetch(this.href, this.token));
 		}
 	}
 

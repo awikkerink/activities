@@ -36,7 +36,7 @@ class ActivityEditor extends ActivityEditorMixin(LocalizeMixin(LitElement)) {
 	}
 
 	async save() {
-		const activity = store.getActivity(this.href);
+		const activity = store.get(this.href);
 		if (activity) {
 			await activity.save();
 		}

@@ -8,4 +8,4 @@ export async function fetchEntity(href, token) {
 		entity = fetched.entity;
 	}
 	return entity;
-}
+};

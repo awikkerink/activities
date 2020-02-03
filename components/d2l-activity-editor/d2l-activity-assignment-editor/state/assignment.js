@@ -17,6 +17,7 @@ export class Assignment {
 			const entity = new AssignmentEntity(sirenEntity, this.token, { remove: () => { } });
 			this.load(entity);
 		}
+		return this;
 	}
 
 	load(entity) {

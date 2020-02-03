@@ -18,6 +18,7 @@ export class AssignmentActivityUsage {
 			const entity = new AssignmentActivityUsageEntity(sirenEntity, this.token, { remove: () => { } });
 			this.load(entity);
 		}
+		return this;
 	}
 
 	load(entity) {
