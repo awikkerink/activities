@@ -36,6 +36,9 @@ class ActivityAttachment extends EntityMixinLit(LitElement) {
 				url: entity.href(),
 				name: entity.name()
 			};
+			if (entity.hasClass('file')) {
+				this._attachment.type = 'Document';
+			}
 			this._editing = entity.canDeleteAttachment();
 			this.creating = entity.canDeleteAttachment();
 		}
