@@ -1,38 +1,27 @@
 import { Assignment } from './assignment.js';
 import { AssignmentActivityUsage } from './assignment-activity-usage.js';
+import { ObjectStore } from '../../state/object-store.js';
 
 export class AssignmentStore {
 	constructor() {
-		this._assignments = new Map();
-		this._activities = new Map();
+		this._assignments = new ObjectStore(Assignment);
+		this._activities = new ObjectStore(AssignmentActivityUsage);
 	}
 
 	fetchAssignment(href, token) {
-		let promise = this._assignments.get(href);
-		if (!promise) {
-			promise = new Promise((resolve, reject) => {
-				const assignment = new Assignment(href, token);
-				assignment.fetch().then(() => {
-					resolve(assignment);
-				}, reject);
-			});
-			this._assignments.set(href, promise);
-		}
-		return promise;
+		return this._assignments.fetch(href, token);
+	}
+
+	getAssignment(href) {
+		return this._assignments.get(href);
 	}
 
 	fetchActivity(href, token) {
-		let promise = this._activities.get(href);
-		if (!promise) {
-			promise = new Promise((resolve, reject) => {
-				const activity = new AssignmentActivityUsage(href, token);
-				activity.fetch().then(() => {
-					resolve(activity);
-				}, reject);
-			});
-			this._activities.set(href, promise);
-		}
-		return promise;
+		return this._activities.fetch(href, token);
+	}
+
+	getActivity(href) {
+		return this._activities.get(href);
 	}
 }
 

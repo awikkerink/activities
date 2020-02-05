@@ -15,7 +15,7 @@ export class ActivityUsage {
 		const sirenEntity = await fetchEntity(this.href, this.token);
 		if (sirenEntity) {
 			const entity = new ActivityUsageEntity(sirenEntity, this.token, { remove: () => { } });
-			this.load(entity);
+			await this.load(entity);
 		}
 		return this;
 	}
@@ -31,7 +31,7 @@ export class ActivityUsage {
 		});
 	}
 
-	async setDueDate(date) {
+	setDueDate(date) {
 		this.dueDate = date;
 	}
 

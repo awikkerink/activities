@@ -7,18 +7,20 @@ export class ObjectStore {
 		this._objects = new Map();
 	}
 
-	fetch(href, token) {
+	async fetch(href, token) {
 		let promise = this._fetches.get(href);
 		if (!promise) {
 			const object = new this.Type(href, token);
+
 			promise = object.fetch();
 			this._fetches.set(href, promise);
 
-			promise.then(action(() => {
+			try {
+				await promise;
 				this._objects.set(href, object);
-			}), () => {
-				this._fetches.delete(href, promise);
-			});
+			} catch (e) {
+				this._fetches.delete(href);
+			}
 		}
 		return promise;
 	}

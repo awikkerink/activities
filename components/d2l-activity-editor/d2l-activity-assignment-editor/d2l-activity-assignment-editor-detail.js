@@ -24,9 +24,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 
 	static get properties() {
 		return {
-			_assignment: { type: Object },
 			_nameError: { type: String },
-			_activityUsageHref: { type: String },
 			_attachmentsHref: { type: String }
 		};
 	}
@@ -68,7 +66,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		this._setEntityType(AssignmentEntity);
 		this._debounceJobs = {};
 
-		this._activityUsageHref = '';
 		this._attachmentsHref = '';
 	}
 
@@ -84,7 +81,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 			return;
 		}
 
-		this._activityUsageHref = assignment.activityUsageHref();
 		this._attachmentsHref = assignment.attachmentsCollectionHref();
 	}
 
@@ -93,11 +89,11 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 	}
 
 	_saveName(value) {
-		this._assignment.setName(value);
+		store.getAssignment(this.href).setName(value);
 	}
 
 	_saveInstructions(value) {
-		this._assignment.setInstructions(value);
+		store.getAssignment(this.href).setInstructions(value);
 	}
 
 	_saveNameOnInput(e) {
@@ -145,7 +141,8 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 	}
 
 	render() {
-		if (!this._assignment) {
+		const assignment = store.getAssignment(this.href);
+		if (!assignment) {
 			return html``;
 		}
 
@@ -154,8 +151,9 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 			canEditName,
 			instructions,
 			canEditInstructions,
-			instructionsRichTextEditorConfig
-		} = this._assignment;
+			instructionsRichTextEditorConfig,
+			activityUsageHref
+		} = assignment;
 
 		return html`
 			<div id="assignment-name-container">
@@ -177,7 +175,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				<div id="score-container">
 					<label class="d2l-label-text">${this.localize('scoreOutOf')}</label>
 					<d2l-activity-score-editor
-						href="${this._activityUsageHref}"
+						href="${activityUsageHref}"
 						.token="${this.token}">
 					</d2l-activity-score-editor>
 				</div>
@@ -185,7 +183,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				<div id="duedate-container">
 					<label class="d2l-label-text">${this.localize('dueDate')}</label>
 					<d2l-activity-due-date-editor
-						href="${this._activityUsageHref}"
+						href="${activityUsageHref}"
 						.token="${this.token}">
 					</d2l-activity-due-date-editor>
 				</div>
@@ -211,12 +209,12 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		`;
 	}
 
-	async updated(changedProperties) {
+	updated(changedProperties) {
 		super.updated(changedProperties);
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
-			this._assignment = await super._fetch(() => store.fetchAssignment(this.href, this.token));
+			super._fetch(() => store.fetchAssignment(this.href, this.token));
 		}
 	}
 }
