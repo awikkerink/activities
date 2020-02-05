@@ -189,7 +189,7 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 		await assignment.save();
 	}
 
-	async updated(changedProperties) {
+	updated(changedProperties) {
 		super.updated(changedProperties);
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&

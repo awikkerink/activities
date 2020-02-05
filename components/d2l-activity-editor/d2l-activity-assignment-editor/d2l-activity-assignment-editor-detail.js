@@ -209,12 +209,12 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		`;
 	}
 
-	async updated(changedProperties) {
+	updated(changedProperties) {
 		super.updated(changedProperties);
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
-			await super._fetch(() => store.fetchAssignment(this.href, this.token));
+			super._fetch(() => store.fetchAssignment(this.href, this.token));
 		}
 	}
 }
