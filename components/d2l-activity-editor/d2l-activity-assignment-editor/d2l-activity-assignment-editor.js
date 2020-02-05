@@ -181,7 +181,7 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 			return;
 		}
 
-		const assignment = store.getAssignment(activity.assignmentHref, this.token);
+		const assignment = store.getAssignment(activity.assignmentHref);
 		if (!assignment) {
 			return;
 		}
