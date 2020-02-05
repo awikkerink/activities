@@ -31,7 +31,7 @@ describe('Activity Usage', function() {
 				return defaultEntityMock;
 			});
 
-			fetchEntity.mockImplementation(() => sirenEntity);
+			fetchEntity.mockImplementation(() => Promise.resolve(sirenEntity));
 		});
 
 		it('fetches', async() => {

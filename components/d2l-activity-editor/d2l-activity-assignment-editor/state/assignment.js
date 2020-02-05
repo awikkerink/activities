@@ -27,6 +27,7 @@ export class Assignment {
 		this.instructions = entity.instructionsEditorHtml();
 		this.canEditInstructions = entity.canEditInstructions();
 		this.instructionsRichTextEditorConfig = entity.instructionsRichTextEditorConfig();
+		this.activityUsageHref = entity.activityUsageHref();
 	}
 
 	setName(value) {
@@ -57,6 +58,7 @@ decorate(Assignment, {
 	instructions: observable,
 	canEditInstructions: observable,
 	instructionsRichTextEditorConfig: observable,
+	activityUsageHref: observable,
 	// actions
 	load: action,
 	setName: action,

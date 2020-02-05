@@ -28,8 +28,6 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 			 */
 			trustedSitesEndpoint: { type: String },
 			_initialLoadComplete: { type: Boolean },
-
-			_activity: { type: Object }
 		};
 	}
 
@@ -125,13 +123,14 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 	}
 
 	get _editorTemplate() {
-		if (!this._activity) {
+		const activity = store.getActivity(this.href);
+		if (!activity) {
 			return html``;
 		}
 
 		const {
 			assignmentHref
-		} = this._activity;
+		} = activity;
 
 		return html`
 			<d2l-template-primary-secondary slot="editor">
@@ -177,16 +176,25 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 	}
 
 	async save() {
-		const assignment = await store.fetchAssignment(this._activity.assignmentHref, this.token);
+		const activity = store.getActivity(this.href);
+		if (!activity) {
+			return;
+		}
+
+		const assignment = store.getAssignment(activity.assignmentHref);
+		if (!assignment) {
+			return;
+		}
+
 		await assignment.save();
 	}
 
-	async updated(changedProperties) {
+	updated(changedProperties) {
 		super.updated(changedProperties);
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
-			this._activity = await super._fetch(() => store.fetchActivity(this.href, this.token));
+			super._fetch(() => store.fetchActivity(this.href, this.token));
 		}
 	}
 }
