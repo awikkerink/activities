@@ -12,16 +12,16 @@ export class AssignmentStore {
 		return this._assignments.fetch(href, token);
 	}
 
-	getAssignment(href, token) {
-		return this._assignments.get(href, token);
+	getAssignment(href) {
+		return this._assignments.get(href);
 	}
 
 	fetchActivity(href, token) {
 		return this._activities.fetch(href, token);
 	}
 
-	getActivity(href, token) {
-		return this._activities.get(href, token);
+	getActivity(href) {
+		return this._activities.get(href);
 	}
 }
 

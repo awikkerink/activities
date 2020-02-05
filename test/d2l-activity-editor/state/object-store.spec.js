@@ -8,7 +8,7 @@ chai.use(chaiAsPromised);
 
 jest.mock('./test-object.js');
 
-describe('Activity Store', function() {
+describe('Object Store', function() {
 
 	let store;
 
