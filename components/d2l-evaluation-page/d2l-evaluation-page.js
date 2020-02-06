@@ -17,9 +17,11 @@ class EvaluationPage extends LitElement {
 			:host([hidden]) {
 				display: none;
 			}
+            d2l-template-primary-secondary {
+                height: 60rem;
+            }
             iframe {
-                height: 100%;
-                overflow: hidden;
+                height: 60rem;
                 width: 100%;
             }
 		`;
