@@ -8,10 +8,9 @@ import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorContainerMixin } from '../mixins/d2l-activity-editor-container-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
-import { PendingContainerMixin } from 'siren-sdk/src/mixin/pending-container-mixin.js';
 import { shared as store } from './state/assignment-store.js';
 
-class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixin(ActivityEditorMixin(MobxLitElement))) {
+class AssignmentEditor extends ActivityEditorContainerMixin(ActivityEditorMixin(MobxLitElement)) {
 
 	static get properties() {
 		return {
@@ -26,8 +25,7 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 			/**
 			 * API endpoint for determining whether a domain is trusted
 			 */
-			trustedSitesEndpoint: { type: String },
-			_initialLoadComplete: { type: Boolean },
+			trustedSitesEndpoint: { type: String }
 		};
 	}
 
@@ -116,12 +114,6 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 		}
 	}
 
-	_onPendingResolved() {
-		// Once we've loaded the page once, this prevents us from ever showing
-		// the "Loading..." div again, even if page components are (re)loading
-		this._initialLoadComplete = true;
-	}
-
 	get _editorTemplate() {
 		const activity = store.getActivity(this.href);
 		if (!activity) {
@@ -163,11 +155,9 @@ class AssignmentEditor extends PendingContainerMixin(ActivityEditorContainerMixi
 			<d2l-activity-editor
 				.href=${this.href}
 				.token=${this.token}
-				?loading="${this._hasPendingChildren && !this._initialLoadComplete}"
 				unfurlEndpoint="${this.unfurlEndpoint}"
 				trustedSitesEndpoint="${this.trustedSitesEndpoint}"
-				@d2l-request-provider="${this._onRequestProvider}"
-				@d2l-pending-resolved="${this._onPendingResolved}">
+				@d2l-request-provider="${this._onRequestProvider}">
 
 				${this._editorTemplate}
 
