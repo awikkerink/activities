@@ -42,9 +42,9 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 		store.get(this.href).setDueDate(e.detail.toISOString());
 	}
 
-	dateTemplate(date) {
+	dateTemplate(date, canEdit) {
 		return html`
-			<div id="datetime-picker-container">
+			<div id="datetime-picker-container" ?hidden="${!canEdit}">
 				<d2l-datetime-picker
 					hide-label
 					name="date"
@@ -63,24 +63,26 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 
 	render() {
 		const activity = store.get(this.href);
+		let dueDate, canEditDueDate;
+
+		// We have to render with null values for dueDate initially due to issues with
+		// how the d2l-datetime-picker converts between the date & datetime attributes.
+		// If we delay rendering until we have a valid datetime, the d2l-datetime-picker
+		// overwrites the datetime attribute with an emptydate.
+		// Don't want to mess with the datetime picker...
+		// Tried passing an invalid date attribute to force it to use our datetime attribute
+		// but the 2-way data binding with the vaadin date picker always overrides it
+		// Will be able to fix when we have a new data time component.
 		if (!activity) {
-			return html``;
-		}
-
-		const {
-			dueDate,
-			canEditDueDate
-		} = activity;
-
-		if (!canEditDueDate) {
-			// TODO Should we be rendering a date value label if you cannot edit?
-			// The current data picker does not support disabled
-			// The availability dates have been coded to be hidden when cannot edit
-			return html``;
+			dueDate = null;
+			canEditDueDate = false;
+		} else {
+			dueDate = activity.dueDate;
+			canEditDueDate = activity.canEditDueDate;
 		}
 
 		return html`
-			${this.dateTemplate(dueDate)}
+			${this.dateTemplate(dueDate, canEditDueDate)}
 		`;
 	}
 
