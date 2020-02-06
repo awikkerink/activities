@@ -26,7 +26,8 @@ describe('Assignment ', function() {
 				canEditName: () => true,
 				instructionsEditorHtml: () => 'These are your instructions',
 				canEditInstructions: () => true,
-				instructionsRichTextEditorConfig: () => {}
+				instructionsRichTextEditorConfig: () => {},
+				activityUsageHref: () => 'http://activity/1'
 			};
 		});
 
@@ -39,6 +40,7 @@ describe('Assignment ', function() {
 
 		expect(assignment.name).to.equal('Homework 101');
 		expect(assignment.instructions).to.equal('These are your instructions');
+		expect(assignment.activityUsageHref).to.equal('http://activity/1');
 
 		expect(fetchEntity.mock.calls.length).to.equal(1);
 		expect(AssignmentEntity.mock.calls[0][0]).to.equal(sirenEntity);

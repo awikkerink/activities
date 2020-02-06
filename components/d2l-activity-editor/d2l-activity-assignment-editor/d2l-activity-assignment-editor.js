@@ -25,9 +25,7 @@ class AssignmentEditor extends ActivityEditorContainerMixin(ActivityEditorMixin(
 			/**
 			 * API endpoint for determining whether a domain is trusted
 			 */
-			trustedSitesEndpoint: { type: String },
-
-			_activity: { type: Object }
+			trustedSitesEndpoint: { type: String }
 		};
 	}
 
@@ -117,13 +115,14 @@ class AssignmentEditor extends ActivityEditorContainerMixin(ActivityEditorMixin(
 	}
 
 	get _editorTemplate() {
-		if (!this._activity) {
+		const activity = store.getActivity(this.href);
+		if (!activity) {
 			return html``;
 		}
 
 		const {
 			assignmentHref
-		} = this._activity;
+		} = activity;
 
 		return html`
 			<d2l-template-primary-secondary slot="editor">
@@ -154,6 +153,8 @@ class AssignmentEditor extends ActivityEditorContainerMixin(ActivityEditorMixin(
 	render() {
 		return html`
 			<d2l-activity-editor
+				.href=${this.href}
+				.token=${this.token}
 				unfurlEndpoint="${this.unfurlEndpoint}"
 				trustedSitesEndpoint="${this.trustedSitesEndpoint}"
 				@d2l-request-provider="${this._onRequestProvider}">
@@ -165,16 +166,25 @@ class AssignmentEditor extends ActivityEditorContainerMixin(ActivityEditorMixin(
 	}
 
 	async save() {
-		const assignment = await store.fetchAssignment(this._activity.assignmentHref, this.token);
+		const activity = store.getActivity(this.href);
+		if (!activity) {
+			return;
+		}
+
+		const assignment = store.getAssignment(activity.assignmentHref);
+		if (!assignment) {
+			return;
+		}
+
 		await assignment.save();
 	}
 
-	async updated(changedProperties) {
+	updated(changedProperties) {
 		super.updated(changedProperties);
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
-			this._activity = await super._fetch(() => store.fetchActivity(this.href, this.token));
+			super._fetch(() => store.fetchActivity(this.href, this.token));
 		}
 	}
 }
