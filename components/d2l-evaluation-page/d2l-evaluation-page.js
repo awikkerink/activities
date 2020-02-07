@@ -17,24 +17,24 @@ class EvaluationPage extends LitElement {
 			:host([hidden]) {
 				display: none;
 			}
-            d2l-template-primary-secondary {
-                height: 60rem;
-            }
-            iframe {
-                height: 60rem;
-                width: 100%;
-            }
+			d2l-template-primary-secondary {
+				height: 60rem;
+			}
+			iframe {
+				height: 60rem;
+				width: 100%;
+			}
 		`;
 	}
 
 	render() {
-        return html`
-            <d2l-template-primary-secondary>
-                <iframe
-                    slot="primary"
-                    src="${this.leftPanelUrl}">
-                </iframe>
-            </d2l-template-primary-secondary>
+		return html`
+			<d2l-template-primary-secondary>
+				<iframe
+					slot="primary"
+					src="${this.leftPanelUrl}">
+				</iframe>
+			</d2l-template-primary-secondary>
 		`;
 	}
 }
