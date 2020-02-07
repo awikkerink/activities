@@ -29,6 +29,7 @@ class EvaluationPage extends LitElement {
 
 	render() {
 		return html`
+			<button class="d2l-josh-button" onclick="SendMessage()">Josh Button</button>
 			<d2l-template-primary-secondary>
 				<iframe
 					slot="primary"
