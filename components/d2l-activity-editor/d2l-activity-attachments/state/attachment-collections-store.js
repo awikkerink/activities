@@ -8,20 +8,20 @@ export class AttachmentCollectionsStore {
 		this._attachments = new ObjectStore(Attachment);
 	}
 
-	fetchAttachment(href, token) {
-		return this._assignments.fetch(href, token);
-	}
-
-	getAttachment(href) {
-		return this._attachments.get(href);
-	}
-
 	fetchCollection(href, token) {
 		return this._collections.fetch(href, token);
 	}
 
 	getCollection(href) {
 		return this._collections.get(href);
+	}
+
+	fetchAttachment(href, token) {
+		return this._attachments.fetch(href, token);
+	}
+
+	getAttachment(href) {
+		return this._attachments.get(href);
 	}
 }
 
