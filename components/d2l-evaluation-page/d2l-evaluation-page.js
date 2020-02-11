@@ -29,13 +29,16 @@ class EvaluationPage extends LitElement {
 
 	render() {
 		return html`
-			<button class="d2l-josh-button" onclick="SendMessageFromParentToIframe()">Josh Button</button>
 			<d2l-template-primary-secondary>
 				<iframe
-					id="d2l-evaluation-page-iframe"
 					slot="primary"
+					id="d2l-evaluation-page-iframe"
 					src="${this.leftPanelUrl}">
 				</iframe>
+				<button
+					slot="secondary"
+					onclick="SendMessageFromParentToIframe()">Button in parent
+				</button>
 			</d2l-template-primary-secondary>
 		`;
 	}
