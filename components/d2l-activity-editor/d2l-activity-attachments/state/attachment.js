@@ -14,12 +14,12 @@ export class Attachment {
 		const sirenEntity = await fetchEntity(this.href, this.token);
 		if (sirenEntity) {
 			const entity = new AttachmentEntity(sirenEntity, this.token, { remove: () => { } });
-			await this.load(entity);
+			this.load(entity);
 		}
 		return this;
 	}
 
-	async load(entity) {
+	load(entity) {
 		this._entity = entity;
 
 		this.editing = entity.canDeleteAttachment();
