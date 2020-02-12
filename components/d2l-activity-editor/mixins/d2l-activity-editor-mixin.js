@@ -16,9 +16,10 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 		};
 	}
 
-	constructor() {
+	constructor(store) {
 		super();
 		this._container = null;
+		this.store = store;
 	}
 
 	async save() {}
@@ -66,6 +67,15 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 
 		if (super.disconnectedCallback) {
 			super.disconnectedCallback();
+		}
+	}
+
+	updated(changedProperties) {
+		super.updated(changedProperties);
+
+		if ((changedProperties.has('href') || changedProperties.has('token')) &&
+			this.href && this.token) {
+			this.store && this._fetch(() => this.store.fetch(this.href, this.token));
 		}
 	}
 };

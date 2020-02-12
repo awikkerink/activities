@@ -8,6 +8,7 @@ export class AttachmentCollection {
 	constructor(href, token) {
 		this.href = href;
 		this.token = token;
+		this.attachments = [];
 	}
 
 	async fetch() {
@@ -30,7 +31,39 @@ export class AttachmentCollection {
 		this.canRecordVideo = entity.canAddVideoNoteAttachment();
 		this.canRecordAudio = entity.canAddAudioNoteAttachment();
 
-		this.attachments = entity.getAttachmentEntityHrefs();
+		this.attachments = entity.getAttachmentEntityHrefs() || [];
+	}
+
+	setCanAddAttachments(value) {
+		this.canAddAttachments = value;
+	}
+
+	setCanAddFile(value) {
+		this.canAddFile = value;
+	}
+
+	setCanAddLink(value) {
+		this.canAddLink = value;
+	}
+
+	setCanAddGoogleDriveLink(value) {
+		this.canAddGoogleDriveLink = value;
+	}
+
+	setCanAddOneDriveLink(value) {
+		this.canAddOneDriveLink = value;
+	}
+
+	setCanRecordVideo(value) {
+		this.canAddRecordVideo = value;
+	}
+
+	setCanRecordAudio(value) {
+		this.canRecordAudio = value;
+	}
+
+	setAttachments(attachments) {
+		this.attachments = attachments;
 	}
 }
 
@@ -45,5 +78,13 @@ decorate(AttachmentCollection, {
 	canRecordAudio: observable,
 	attachments: observable,
 	// actions
-	load: action
+	load: action,
+	setCanAddAttachments: action,
+	setCanAddFile: action,
+	setCanAddLink: action,
+	setCanAddGoogleDriveLink: action,
+	setCanAddOneDriveLink: action,
+	setCanRecordVideo: action,
+	setCanRecordAudio: action,
+	setAttachments: action,
 });

@@ -1,25 +1,15 @@
 import '@brightspace-ui/core/components/button/button';
 import '@brightspace-ui/core/components/colors/colors';
 import 'd2l-tooltip/d2l-tooltip';
-import { css, html, LitElement } from 'lit-element/lit-element';
-import { AttachmentCollectionEntity } from 'siren-sdk/src/activities/AttachmentCollectionEntity';
-import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
+import { css, html } from 'lit-element/lit-element';
+import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { getLocalizeResources } from '../localization';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin';
+import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin';
-import { SaveStatusMixin } from '../save-status-mixin';
+import { shared as store } from './state/attachment-collections-store.js';
 
-class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeMixin(RtlMixin(LitElement)))) {
-	static get properties() {
-		return {
-			_canAddFile: { type: Boolean },
-			_canAddLink: { type: Boolean },
-			_canAddGoogleDriveLink: { type: Boolean },
-			_canAddOneDriveLink: { type: Boolean },
-			_canRecordVideo: { type: Boolean },
-			_canRecordAudio: { type: Boolean }
-		};
-	}
+class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeMixin(RtlMixin(MobxLitElement))) {
 
 	static get styles() {
 		return css`
@@ -60,8 +50,7 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 	}
 
 	constructor() {
-		super();
-		this._setEntityType(AttachmentCollectionEntity);
+		super(store);
 
 		this._tooltipBoundary = {
 			left: 20 + 12, // padding-left applied to d2l-activity-attachments-picker + padding-left of d2l-button-icon
@@ -87,22 +76,22 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 		};
 	}
 
-	set _entity(entity) {
-		if (!this._entityHasChanged(entity)) {
-			return;
-		}
+	// set _entity(entity) {
+	// 	if (!this._entityHasChanged(entity)) {
+	// 		return;
+	// 	}
 
-		if (entity) {
-			this._canAddFile = entity.canAddFileAttachment();
-			this._canAddLink = entity.canAddLinkAttachment();
-			this._canAddGoogleDriveLink = entity.canAddGoogleDriveLinkAttachment();
-			this._canAddOneDriveLink = entity.canAddOneDriveLinkAttachment();
-			this._canRecordVideo = entity.canAddVideoNoteAttachment();
-			this._canRecordAudio = entity.canAddAudioNoteAttachment();
-		}
+	// 	if (entity) {
+	// 		this._canAddFile = entity.canAddFileAttachment();
+	// 		this._canAddLink = entity.canAddLinkAttachment();
+	// 		this._canAddGoogleDriveLink = entity.canAddGoogleDriveLinkAttachment();
+	// 		this._canAddOneDriveLink = entity.canAddOneDriveLinkAttachment();
+	// 		this._canRecordVideo = entity.canAddVideoNoteAttachment();
+	// 		this._canRecordAudio = entity.canAddAudioNoteAttachment();
+	// 	}
 
-		super._entity = entity;
-	}
+	// 	super._entity = entity;
+	// }
 
 	get _orgUnitId() {
 		const match = this.href.match(/\.(com|d2l)\/(\d+)\//);
@@ -188,13 +177,27 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 	}
 
 	render() {
+		const collection = store.get(this.href);
+		if (!collection) {
+			return html``;
+		}
+
+		const {
+			canAddFile,
+			canAddLink,
+			canAddGoogleDriveLink,
+			canAddOneDriveLink,
+			canRecordVideo,
+			canRecordAudio
+		} = collection;
+
 		return html`
 			<div class="button-container">
 				<d2l-button-icon
 					id="add-file-button"
 					icon="d2l-tier1:upload"
 					text="${this.localize('addFile')}"
-					?hidden="${!this._canAddFile}"
+					?hidden="${!canAddFile}"
 					@click="${this._launchAddFileDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip
@@ -208,7 +211,7 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 					id="add-quicklink-button"
 					icon="d2l-tier1:quicklink"
 					text="${this.localize('addQuicklink')}"
-					?hidden="${!this._canAddLink}"
+					?hidden="${!canAddLink}"
 					@click="${this._launchAddQuicklinkDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip
@@ -222,7 +225,7 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 					id="add-link-button"
 					icon="d2l-tier1:link"
 					text="${this.localize('addLink')}"
-					?hidden="${!this._canAddLink}"
+					?hidden="${!canAddLink}"
 					@click="${this._launchAddLinkDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip
@@ -236,7 +239,7 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 					id="add-google-drive-link-button"
 					icon="d2l-tier1:google-drive"
 					text="${this.localize('addGoogleDriveLink')}"
-					?hidden="${!this._canAddGoogleDriveLink}"
+					?hidden="${!canAddGoogleDriveLink}"
 					@click="${this._launchAddGoogleDriveLinkDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip
@@ -250,7 +253,7 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 					id="add-onedrive-link-button"
 					icon="d2l-tier1:one-drive"
 					text="${this.localize('addOneDriveLink')}"
-					?hidden="${!this._canAddOneDriveLink}"
+					?hidden="${!canAddOneDriveLink}"
 					@click="${this._launchAddOneDriveLinkDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip
@@ -264,14 +267,14 @@ class ActivityAttachmentsPicker extends SaveStatusMixin(EntityMixinLit(LocalizeM
 					<d2l-button-subtle
 						id="record-audio-button"
 						icon="tier1:mic"
-						?hidden="${!this._canRecordAudio}"
+						?hidden="${!canRecordAudio}"
 						text="${this.localize('recordAudio')}"
 						@click="${this._launchRecordAudioDialog}">
 					</d2l-button-subtle>
 					<d2l-button-subtle
 						id="record-video-button"
 						icon="tier1:file-video"
-						?hidden="${!this._canRecordVideo}"
+						?hidden="${!canRecordVideo}"
 						text="${this.localize('recordVideo')}"
 						@click="${this._launchRecordVideoDialog}">
 					</d2l-button-subtle>

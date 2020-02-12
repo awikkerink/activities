@@ -1,16 +1,10 @@
 import '@d2l/d2l-attachment/components/attachment';
-import { css, html, LitElement } from 'lit-element/lit-element';
-import { AttachmentEntity } from 'siren-sdk/src/activities/AttachmentEntity';
-import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
+import { css, html } from 'lit-element/lit-element';
+import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
+import { MobxLitElement } from '@adobe/lit-mobx';
+import { shared as store } from './state/attachment-store.js';
 
-class ActivityAttachment extends EntityMixinLit(LitElement) {
-	static get properties() {
-		return {
-			creating: { type: Boolean },
-			_attachment: { type: Object },
-			_editing: { type: Boolean }
-		};
-	}
+class ActivityAttachment extends ActivityEditorMixin(MobxLitElement) {
 
 	static get styles() {
 		return css`
@@ -20,43 +14,32 @@ class ActivityAttachment extends EntityMixinLit(LitElement) {
 		`;
 	}
 
-	constructor() {
-		super();
-		this._setEntityType(AttachmentEntity);
-	}
-
-	set _entity(entity) {
-		if (!this._entityHasChanged(entity)) {
-			return;
-		}
-
-		if (entity) {
-			this._attachment = {
-				id: entity.href(),
-				url: entity.href(),
-				name: entity.name()
-			};
-			this._editing = entity.canDeleteAttachment();
-			this.creating = entity.canDeleteAttachment();
-		}
-
-		super._entity = entity;
-	}
-
 	_onAttachmentRemoved() {
-		super._entity.deleteAttachment();
+		// super._entity.deleteAttachment();
+	}
+
+	constructor() {
+		super(store);
 	}
 
 	render() {
-		if (!this._attachment) {
+		const item = store.get(this.href);
+
+		if (!item) {
 			return html``;
 		}
 
+		const {
+			id,
+			attachment,
+			editing,
+		} = item;
+
 		return html`
 			<d2l-labs-attachment
-				attachmentId="${this._attachment.id}"
-				.attachment="${this._attachment}"
-				?editing="${this._editing}"
+				attachmentId="${id}"
+				.attachment="${attachment}"
+				?editing="${editing}"
 				@d2l-attachment-removed="${this._onAttachmentRemoved}">
 			</d2l-labs-attachment>
 		`;
