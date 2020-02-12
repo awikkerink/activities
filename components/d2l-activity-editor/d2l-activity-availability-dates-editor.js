@@ -1,9 +1,9 @@
 import 'd2l-datetime-picker/d2l-datetime-picker';
+import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
 import { css, html } from 'lit-element/lit-element';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { getLocalizeResources } from './localization';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
-import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { shared as store } from './state/activity-store.js';
 
