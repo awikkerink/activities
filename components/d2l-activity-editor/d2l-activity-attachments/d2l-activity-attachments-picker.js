@@ -76,23 +76,6 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeMixin(RtlMix
 		};
 	}
 
-	// set _entity(entity) {
-	// 	if (!this._entityHasChanged(entity)) {
-	// 		return;
-	// 	}
-
-	// 	if (entity) {
-	// 		this._canAddFile = entity.canAddFileAttachment();
-	// 		this._canAddLink = entity.canAddLinkAttachment();
-	// 		this._canAddGoogleDriveLink = entity.canAddGoogleDriveLinkAttachment();
-	// 		this._canAddOneDriveLink = entity.canAddOneDriveLinkAttachment();
-	// 		this._canRecordVideo = entity.canAddVideoNoteAttachment();
-	// 		this._canRecordAudio = entity.canAddAudioNoteAttachment();
-	// 	}
-
-	// 	super._entity = entity;
-	// }
-
 	get _orgUnitId() {
 		const match = this.href.match(/\.(com|d2l)\/(\d+)\//);
 		if (!match || match.length < 3) {
