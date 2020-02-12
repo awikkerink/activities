@@ -14,12 +14,12 @@ class ActivityAttachment extends ActivityEditorMixin(MobxLitElement) {
 		`;
 	}
 
-	_onAttachmentRemoved() {
-		// super._entity.deleteAttachment();
-	}
-
 	constructor() {
 		super(store);
+	}
+
+	_onAttachmentRemoved() {
+		// super._entity.deleteAttachment();
 	}
 
 	render() {

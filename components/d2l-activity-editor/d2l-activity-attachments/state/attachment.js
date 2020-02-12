@@ -31,6 +31,10 @@ export class Attachment {
 			name: entity.name(),
 			url: entity.href()
 		};
+
+		if (entity.hasClass('file')) {
+			this.attachment.type = 'Document';
+		}
 	}
 }
 
