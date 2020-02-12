@@ -59,6 +59,14 @@ export class ActivityUsage {
 		this.canEditDraft = value;
 	}
 
+	setCanEditStartDate(value) {
+		this.canEditStartDate = value;
+	}
+
+	setCanEditEndDate(value) {
+		this.canEditEndDate = value;
+	}
+
 	async save() {
 		if (!this._entity) {
 			return;
@@ -92,5 +100,7 @@ decorate(ActivityUsage, {
 	setEndDate: action,
 	setDraftStatus: action,
 	setCanEditDraft: action,
+	setCanEditStartDate: action,
+	setCanEditEndDate: action,
 	save: action
 });
