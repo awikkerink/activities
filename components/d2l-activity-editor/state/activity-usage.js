@@ -1,4 +1,4 @@
-import { action, configure as configureMobx, decorate, observable, runInAction } from 'mobx';
+import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
 import { fetchEntity } from '../state/fetch-entity.js';
 
@@ -22,21 +22,12 @@ export class ActivityUsage {
 
 	async load(entity) {
 		this._entity = entity;
-
-		const canEditDueDate = await entity.canEditDueDate();
-		const canEditStartDate = await entity.canEditStartDate();
-		const canEditEndDate = await entity.canEditEndDate();
-
-		runInAction(() => {
-			this.dueDate = entity.dueDate();
-			this.canEditDueDate = canEditDueDate;
-			this.startDate = entity.startDate();
-			this.canEditStartDate = canEditStartDate;
-			this.endDate = entity.endDate();
-			this.canEditEndDate = canEditEndDate;
-			this.isDraft = entity.isDraft();
-			this.canEditDraft = entity.canEditDraft();
-		});
+		this.dueDate = entity.dueDate();
+		this.startDate = entity.startDate();
+		this.endDate = entity.endDate();
+		this.canEditDates = entity.canEditDates();
+		this.isDraft = entity.isDraft();
+		this.canEditDraft = entity.canEditDraft();
 	}
 
 	setDueDate(date) {
@@ -59,12 +50,8 @@ export class ActivityUsage {
 		this.canEditDraft = value;
 	}
 
-	setCanEditStartDate(value) {
-		this.canEditStartDate = value;
-	}
-
-	setCanEditEndDate(value) {
-		this.canEditEndDate = value;
+	setCanEditDates(value) {
+		this.canEditDates = value;
 	}
 
 	async save() {
@@ -86,11 +73,9 @@ export class ActivityUsage {
 decorate(ActivityUsage, {
 	// props
 	dueDate: observable,
-	canEditDueDate: observable,
 	startDate: observable,
-	canEditStartDate: observable,
 	endDate: observable,
-	canEditEndDate: observable,
+	canEditDates: observable,
 	isDraft: observable,
 	canEditDraft: observable,
 	// actions
@@ -100,7 +85,6 @@ decorate(ActivityUsage, {
 	setEndDate: action,
 	setDraftStatus: action,
 	setCanEditDraft: action,
-	setCanEditStartDate: action,
-	setCanEditEndDate: action,
+	setCanEditDates: action,
 	save: action
 });
