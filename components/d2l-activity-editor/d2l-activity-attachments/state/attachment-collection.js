@@ -65,6 +65,10 @@ export class AttachmentCollection {
 	setAttachments(attachments) {
 		this.attachments = attachments;
 	}
+
+	addAttachment(attachment) {
+		this.attachments.push(attachment.href);
+	}
 }
 
 decorate(AttachmentCollection, {
@@ -87,4 +91,5 @@ decorate(AttachmentCollection, {
 	setCanRecordVideo: action,
 	setCanRecordAudio: action,
 	setAttachments: action,
+	addAttachment: action
 });

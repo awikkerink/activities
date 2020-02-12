@@ -3,6 +3,7 @@ import '@brightspace-ui/core/components/colors/colors';
 import 'd2l-tooltip/d2l-tooltip';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
+import { shared as attachmentStore } from './state/attachment-store.js';
 import { getLocalizeResources } from '../localization';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -63,16 +64,16 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeMixin(RtlMix
 			for (const file of files) {
 				const fileSystemType = file.m_fileSystemType;
 				const fileId = file.m_id;
-				this.wrapSaveAction(super._entity.addFileAttachment(fileSystemType, fileId));
+				this._addToCollection(attachmentStore.createFile(file.m_name, fileSystemType, fileId));
 			}
 		};
 		// Referenced by the server-side ActivitiesView renderer
 		D2L.ActivityEditor.RecordVideoDialogCallback = file => {
-			this.wrapSaveAction(super._entity.addVideoNoteAttachment(file.FileSystemType, file.FileId));
+			this._addToCollection(attachmentStore.createVideo(file.m_name, file.FileSystemType, file.FileId));
 		};
 		// Referenced by the server-side ActivitiesView renderer
 		D2L.ActivityEditor.RecordAudioDialogCallback = file => {
-			this.wrapSaveAction(super._entity.addAudioNoteAttachment(file.FileSystemType, file.FileId));
+			this._addToCollection(attachmentStore.createAudio(file.m_name, file.FileSystemType, file.FileId));
 		};
 	}
 
@@ -99,14 +100,18 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeMixin(RtlMix
 		}
 
 		// Required for the async handler below to work in Edge
-		const superEntity = super._entity;
 		const event = opener();
 		event.AddListener(async event => {
 			const quicklinkUrl = `/d2l/api/lp/unstable/${this._orgUnitId}/quickLinks/${event.m_typeKey}/${event.m_id}`;
 			const response = await fetch(quicklinkUrl);
 			const json = await response.json();
-			this.wrapSaveAction(superEntity.addLinkAttachment(event.m_title, json.QuickLinkTemplate));
+			this._addToCollection(attachmentStore.createLink(event.m_title, json.QuickLinkTemplate));
 		});
+	}
+
+	_addToCollection(attachment) {
+		const collection = store.get(this.href);
+		collection.addAttachment(attachment);
 	}
 
 	_launchAddLinkDialog() {
@@ -117,7 +122,7 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeMixin(RtlMix
 
 		const event = opener();
 		event.AddListener(event => {
-			this.wrapSaveAction(super._entity.addLinkAttachment(event.m_title, event.m_url));
+			this._addToCollection(attachmentStore.createLink(event.m_title, event.m_url));
 		});
 	}
 
@@ -129,7 +134,7 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeMixin(RtlMix
 
 		const event = opener();
 		event.AddListener(event => {
-			this.wrapSaveAction(super._entity.addGoogleDriveLinkAttachment(event.m_title, event.m_url));
+			this._addToCollection(attachmentStore.createGoogleDriveLink(event.m_title, event.m_url));
 		});
 	}
 
@@ -141,7 +146,7 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeMixin(RtlMix
 
 		const event = opener();
 		event.AddListener(event => {
-			this.wrapSaveAction(super._entity.addOneDriveLinkAttachment(event.m_title, event.m_url));
+			this._addToCollection(attachmentStore.createOneDriveLink(event.m_title, event.m_url));
 		});
 	}
 

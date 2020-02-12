@@ -1,8 +1,10 @@
+import { Attachment } from '../../../../components/d2l-activity-editor/d2l-activity-attachments/state/attachment.js';
 import { AttachmentCollection } from '../../../../components/d2l-activity-editor/d2l-activity-attachments/state/attachment-collection.js';
 import { AttachmentCollectionEntity } from 'siren-sdk/src/activities/AttachmentCollectionEntity.js';
 import { expect } from 'chai';
 import { fetchEntity } from '../../../../components/d2l-activity-editor/state/fetch-entity.js';
 import sinon from 'sinon';
+import { when } from 'mobx';
 
 jest.mock('siren-sdk/src/activities/AttachmentCollectionEntity.js');
 jest.mock('../../../../components/d2l-activity-editor/state/fetch-entity.js');
@@ -58,6 +60,22 @@ describe('Attachment Collection', function() {
 			expect(fetchEntity.mock.calls.length).to.equal(1);
 			expect(AttachmentCollectionEntity.mock.calls[0][0]).to.equal(sirenEntity);
 			expect(AttachmentCollectionEntity.mock.calls[0][1]).to.equal('token');
+		});
+	});
+
+	describe('updating', () => {
+		it('reacts to new attachment', async(done) => {
+			const attachment = new Attachment('http://attachment/1', 'token');
+			const collection = new AttachmentCollection('http://collection/1', 'token');
+
+			when(
+				() => collection.attachments.length === 1 && collection.attachments[0] === 'http://attachment/1',
+				() => {
+					done();
+				}
+			);
+
+			collection.addAttachment(attachment);
 		});
 	});
 });

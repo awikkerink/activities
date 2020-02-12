@@ -45,5 +45,52 @@ decorate(Attachment, {
 	deleted: observable,
 	attachment: observable,
 	// actions
-	load: action
+	load: action,
+	initNew: action
 });
+
+export class LinkAttachment extends Attachment {
+	initLink(name, url) {
+		this.editing = true;
+		this.creating = true;
+		this.deleted = false;
+
+		this.attachment = {
+			id: this.href,
+			name: name,
+			url: url
+		};
+	}
+}
+
+export class GoogleDriveAttachment extends LinkAttachment {
+}
+
+export class OneDriveAttachment extends LinkAttachment {
+}
+
+export class FileAttachment extends Attachment {
+	initFile(name, fileSystemType, fileId) {
+		this.editing = true;
+		this.creating = true;
+		this.deleted = false;
+
+		this.fileSystemType = fileSystemType;
+		this.fileId = fileId;
+
+		this.attachment = {
+			id: this.href,
+			name: name,
+			// TODO - Need to find a way to get access to temp file URL
+			url: name,
+			type: 'Document'
+		};
+	}
+}
+
+export class VideoAttachment extends FileAttachment {
+}
+
+export class AudioAttachment extends FileAttachment {
+}
+
