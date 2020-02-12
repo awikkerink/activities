@@ -24,10 +24,16 @@ export class ActivityUsage {
 		this._entity = entity;
 
 		const canEditDueDate = await entity.canEditDueDate();
+		const canEditStartDate = await entity.canEditStartDate();
+		const canEditEndDate = await entity.canEditEndDate();
 
 		runInAction(() => {
 			this.dueDate = entity.dueDate();
 			this.canEditDueDate = canEditDueDate;
+			this.startDate = entity.startDate();
+			this.canEditStartDate = canEditStartDate;
+			this.endDate = entity.endDate();
+			this.canEditEndDate = canEditEndDate;
 			this.isDraft = entity.isDraft();
 			this.canEditDraft = entity.canEditDraft();
 		});
@@ -35,6 +41,14 @@ export class ActivityUsage {
 
 	setDueDate(date) {
 		this.dueDate = date;
+	}
+
+	setStartDate(date) {
+		this.startDate = date;
+	}
+
+	setEndDate(date) {
+		this.endDate = date;
 	}
 
 	setDraftStatus(isDraft) {
@@ -45,6 +59,14 @@ export class ActivityUsage {
 		this.canEditDraft = value;
 	}
 
+	setCanEditStartDate(value) {
+		this.canEditStartDate = value;
+	}
+
+	setCanEditEndDate(value) {
+		this.canEditEndDate = value;
+	}
+
 	async save() {
 		if (!this._entity) {
 			return;
@@ -52,6 +74,8 @@ export class ActivityUsage {
 
 		await this._entity.save({
 			dueDate: this.dueDate,
+			startDate: this.startDate,
+			endDate: this.endDate,
 			isDraft: this.isDraft
 		});
 
@@ -63,12 +87,20 @@ decorate(ActivityUsage, {
 	// props
 	dueDate: observable,
 	canEditDueDate: observable,
+	startDate: observable,
+	canEditStartDate: observable,
+	endDate: observable,
+	canEditEndDate: observable,
 	isDraft: observable,
 	canEditDraft: observable,
 	// actions
 	load: action,
 	setDueDate: action,
+	setStartDate: action,
+	setEndDate: action,
 	setDraftStatus: action,
 	setCanEditDraft: action,
+	setCanEditStartDate: action,
+	setCanEditEndDate: action,
 	save: action
 });
