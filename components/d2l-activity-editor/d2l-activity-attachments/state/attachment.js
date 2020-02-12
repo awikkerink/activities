@@ -8,6 +8,10 @@ export class Attachment {
 	constructor(href, token) {
 		this.href = href;
 		this.token = token;
+		this.editing = false;
+		this.creating = false;
+		this.deleted = false;
+		this.attachment = null;
 	}
 
 	async fetch() {
@@ -36,6 +40,10 @@ export class Attachment {
 			this.attachment.type = 'Document';
 		}
 	}
+
+	markDeleted(deleted) {
+		this.deleted = deleted;
+	}
 }
 
 decorate(Attachment, {
@@ -46,7 +54,7 @@ decorate(Attachment, {
 	attachment: observable,
 	// actions
 	load: action,
-	initNew: action
+	markDeleted: action
 });
 
 export class LinkAttachment extends Attachment {
@@ -62,6 +70,11 @@ export class LinkAttachment extends Attachment {
 		};
 	}
 }
+
+decorate(LinkAttachment, {
+	// actions
+	initLink: action
+});
 
 export class GoogleDriveAttachment extends LinkAttachment {
 }
@@ -87,6 +100,11 @@ export class FileAttachment extends Attachment {
 		};
 	}
 }
+
+decorate(FileAttachment, {
+	// actions
+	initFile: action
+});
 
 export class VideoAttachment extends FileAttachment {
 }

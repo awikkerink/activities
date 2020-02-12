@@ -19,7 +19,8 @@ class ActivityAttachment extends ActivityEditorMixin(MobxLitElement) {
 	}
 
 	_onAttachmentRemoved() {
-		// super._entity.deleteAttachment();
+		const attachment = store.get(this.href);
+		attachment.markDeleted(!attachment.deleted);
 	}
 
 	render() {
@@ -33,14 +34,20 @@ class ActivityAttachment extends ActivityEditorMixin(MobxLitElement) {
 			id,
 			attachment,
 			editing,
+			creating,
+			deleted
 		} = item;
 
 		return html`
 			<d2l-labs-attachment
 				attachmentId="${id}"
 				.attachment="${attachment}"
+				?deleted="${deleted}"
+				?creating="${creating}"
 				?editing="${editing}"
-				@d2l-attachment-removed="${this._onAttachmentRemoved}">
+				@d2l-attachment-removed="${this._onAttachmentRemoved}"
+				@d2l-attachment-restored="${this._onAttachmentRemoved}"
+			>
 			</d2l-labs-attachment>
 		`;
 	}

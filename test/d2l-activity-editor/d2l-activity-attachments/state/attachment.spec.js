@@ -3,6 +3,7 @@ import { AttachmentEntity } from 'siren-sdk/src/activities/AttachmentEntity.js';
 import { expect } from 'chai';
 import { fetchEntity } from '../../../../components/d2l-activity-editor/state/fetch-entity.js';
 import sinon from 'sinon';
+import { when } from 'mobx';
 
 jest.mock('siren-sdk/src/activities/AttachmentEntity.js');
 jest.mock('../../../../components/d2l-activity-editor/state/fetch-entity.js');
@@ -49,6 +50,19 @@ describe('Attachment', function() {
 			expect(fetchEntity.mock.calls.length).to.equal(1);
 			expect(AttachmentEntity.mock.calls[0][0]).to.equal(sirenEntity);
 			expect(AttachmentEntity.mock.calls[0][1]).to.equal('token');
+		});
+
+		it('reacts to deleted status', async(done) => {
+			const attachment = new Attachment('http://attachment/1', 'token');
+
+			when(
+				() => attachment.deleted,
+				() => {
+					done();
+				}
+			);
+
+			attachment.markDeleted(true);
 		});
 	});
 
