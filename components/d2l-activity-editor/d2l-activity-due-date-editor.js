@@ -89,6 +89,7 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 	}
 
 	firstUpdated() {
+		super.firstUpdated();
 		this._isFirstLoad = false;
 	}
 
