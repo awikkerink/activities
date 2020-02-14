@@ -3,6 +3,7 @@ import './d2l-activity-assignment-type-editor.js';
 import './d2l-assignment-turnitin-editor';
 import 'd2l-inputs/d2l-input-checkbox.js';
 import 'd2l-inputs/d2l-input-checkbox-spacer.js';
+import '../d2l-activity-rubrics-list-container.js';
 import '@brightspace-ui-labs/accordion/accordion-collapse.js';
 import { bodySmallStyles, heading4Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
@@ -219,6 +220,27 @@ class AssignmentEditorSecondary extends SaveStatusMixin(RtlMixin(EntityMixinLit(
 
 					${this._getCompletionTypeOptions()}
 				</select>
+			</div>
+
+			<div id="availability-dates-container">
+				<d2l-activity-availability-dates-editor
+					href="${this._activityUsageHref}"
+					.token="${this.token}">
+				</d2l-activity-availability-dates-editor>
+			</div>
+
+			<d2l-activity-rubrics-list-container
+				href="${this._activityUsageHref}"
+				.token="${this.token}">
+			</d2l-activity-rubrics-list-container>
+
+			<div id="assignment-release-conditions-container">
+				<h3 class="d2l-heading-4">${this.localize('hdrReleaseConditions')}</h3>
+				<p class="d2l-body-small">${this.localize('hlpReleaseConditions')}</p>
+				<d2l-activity-release-conditions-editor
+					href="${this._activityUsageHref}"
+					.token="${this.token}">
+				</d2l-activity-release-conditions-editor>
 			</div>
 
 			<d2l-labs-accordion-collapse class="accordion" flex header-border>
