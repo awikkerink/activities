@@ -1,4 +1,4 @@
-import { action, configure as configureMobx, decorate, observable, runInAction } from 'mobx';
+import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
 import { fetchEntity } from '../state/fetch-entity.js';
 
@@ -15,26 +15,31 @@ export class ActivityUsage {
 		const sirenEntity = await fetchEntity(this.href, this.token);
 		if (sirenEntity) {
 			const entity = new ActivityUsageEntity(sirenEntity, this.token, { remove: () => { } });
-			await this.load(entity);
+			this.load(entity);
 		}
 		return this;
 	}
 
-	async load(entity) {
+	load(entity) {
 		this._entity = entity;
-
-		const canEditDueDate = await entity.canEditDueDate();
-
-		runInAction(() => {
-			this.dueDate = entity.dueDate();
-			this.canEditDueDate = canEditDueDate;
-			this.isDraft = entity.isDraft();
-			this.canEditDraft = entity.canEditDraft();
-		});
+		this.dueDate = entity.dueDate();
+		this.startDate = entity.startDate();
+		this.endDate = entity.endDate();
+		this.canEditDates = entity.canEditDates();
+		this.isDraft = entity.isDraft();
+		this.canEditDraft = entity.canEditDraft();
 	}
 
 	setDueDate(date) {
 		this.dueDate = date;
+	}
+
+	setStartDate(date) {
+		this.startDate = date;
+	}
+
+	setEndDate(date) {
+		this.endDate = date;
 	}
 
 	setDraftStatus(isDraft) {
@@ -45,6 +50,10 @@ export class ActivityUsage {
 		this.canEditDraft = value;
 	}
 
+	setCanEditDates(value) {
+		this.canEditDates = value;
+	}
+
 	async save() {
 		if (!this._entity) {
 			return;
@@ -52,6 +61,8 @@ export class ActivityUsage {
 
 		await this._entity.save({
 			dueDate: this.dueDate,
+			startDate: this.startDate,
+			endDate: this.endDate,
 			isDraft: this.isDraft
 		});
 
@@ -62,13 +73,18 @@ export class ActivityUsage {
 decorate(ActivityUsage, {
 	// props
 	dueDate: observable,
-	canEditDueDate: observable,
+	startDate: observable,
+	endDate: observable,
+	canEditDates: observable,
 	isDraft: observable,
 	canEditDraft: observable,
 	// actions
 	load: action,
 	setDueDate: action,
+	setStartDate: action,
+	setEndDate: action,
 	setDraftStatus: action,
 	setCanEditDraft: action,
+	setCanEditDates: action,
 	save: action
 });
