@@ -32,9 +32,8 @@
             "disableOptimisticBPs": true,
             "args": [
                 "--runInBand",
-                "${relativeFile}",
+                "${fileBasename}",
                 "--env=jsdom",
-                "--watch"
             ],
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen",
@@ -43,22 +42,49 @@
             },
             "cwd": "${workspaceRoot}/"
         },
+        // {
+        //     "type": "node",
+        //     "request": "launch",
+        //     "name": "Jest Current File",
+        //     "program": "${workspaceRoot}/node_modules/.bin/jest",
+        //     "disableOptimisticBPs": true,
+        //     "args": [
+        //         "--runInBand",
+        //         "${input:testName}", // Doesn't resolve input
+        //         "${relativeFile}", // Doesn't work on windows as uses back slash path separators which jest doesn't like
+        //         "--env=jsdom",
+        //     ],
+        //     "console": "integratedTerminal",
+        //     "internalConsoleOptions": "neverOpen",
+        //     "windows": {
+        //         "program": "${workspaceRoot}/node_modules/jest/bin/jest"
+        //     },
+        //     "cwd": "${workspaceRoot}/"
+        // },
+        // {
+        //     "type": "node",
+        //     "request": "launch",
+        //     "name": "Jest Workspace File",
+        //     "program": "${workspaceRoot}/node_modules/.bin/jest",
+        //     "disableOptimisticBPs": true,
+        //     "args": [
+        //         "--runInBand",
+        //          "--env=jsdom"
+        //     ],
+        //     "console": "integratedTerminal",
+        //     "internalConsoleOptions": "neverOpen",
+        //     "windows": {
+        //         "program": "${workspaceRoot}/node_modules/jest/bin/jest"
+        //     },
+        //     "cwd": "${workspaceRoot}/"
+        // }
+    ],
+    "inputs": [
         {
-            "type": "node",
-            "request": "launch",
-            "name": "Jest Workspace File",
-            "program": "${workspaceRoot}/node_modules/.bin/jest",
-            "disableOptimisticBPs": true,
-            "args": [
-                "--runInBand",
-                 "--env=jsdom"
-            ],
-            "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen",
-            "windows": {
-                "program": "${workspaceRoot}/node_modules/jest/bin/jest"
-            },
-            "cwd": "${workspaceRoot}/"
+            "type": "promptString",
+            "id": "testName",
+            "description": "The file or name you want to test",
+            "default": "echo ${fileBasename}"
         }
     ]
 }

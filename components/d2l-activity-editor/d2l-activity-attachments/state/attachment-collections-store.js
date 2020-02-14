@@ -1,28 +1,21 @@
-import { Attachment } from './attachment.js';
 import { AttachmentCollection } from './attachment-collection.js';
+import { shared as attachmentStore } from './attachment-store.js';
 import { ObjectStore } from '../../state/object-store.js';
 
-export class AttachmentCollectionsStore {
+export class AttachmentCollectionsStore extends ObjectStore {
 	constructor() {
-		this._collections = new ObjectStore(AttachmentCollection);
-		this._attachments = new ObjectStore(Attachment);
+		super(AttachmentCollection);
 	}
 
-	fetchCollection(href, token) {
-		return this._collections.fetch(href, token);
+	getAttachmentStore() {
+		return this._attachmentStore;
+	}
+	setAttachmentStore(attachmentStore) {
+		this._attachmentStore = attachmentStore;
 	}
 
-	getCollection(href) {
-		return this._collections.get(href);
-	}
-
-	fetchAttachment(href, token) {
-		return this._attachments.fetch(href, token);
-	}
-
-	getAttachment(href) {
-		return this._attachments.get(href);
-	}
 }
 
 export const shared = new AttachmentCollectionsStore();
+
+shared.setAttachmentStore(attachmentStore);

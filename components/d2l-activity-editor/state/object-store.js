@@ -10,7 +10,7 @@ export class ObjectStore {
 	async fetch(href, token) {
 		let promise = this._fetches.get(href);
 		if (!promise) {
-			const object = new this.Type(href, token);
+			const object = new this.Type(href, token, this);
 
 			promise = object.fetch();
 			this._fetches.set(href, promise);
@@ -34,6 +34,11 @@ export class ObjectStore {
 		this._fetches.set(href, Promise.resolve(object));
 	}
 
+	remove(href) {
+		this._objects.delete(href);
+		this._fetches.delete(href);
+	}
+
 	clear() {
 		this._objects.clear();
 		this._fetches.clear();
@@ -46,6 +51,7 @@ decorate(ObjectStore, {
 	// actions
 	fetch: action,
 	put: action,
-	clear: action
+	clear: action,
+	remove: action
 });
 
