@@ -8,6 +8,10 @@ export class Attachment {
 	constructor(href, token) {
 		this.href = href;
 		this.token = token;
+		this.editing = false;
+		this.creating = false;
+		this.deleted = false;
+		this.attachment = null;
 	}
 
 	async fetch() {
@@ -23,8 +27,6 @@ export class Attachment {
 		this._entity = entity;
 
 		this.editing = entity.canDeleteAttachment();
-		this.creating = false;
-		this.deleted = false;
 
 		this.attachment = {
 			id: entity.self(),
@@ -36,6 +38,16 @@ export class Attachment {
 			this.attachment.type = 'Document';
 		}
 	}
+
+	markDeleted(deleted) {
+		this.deleted = deleted;
+	}
+
+	async delete() {
+		if (this._entity) {
+			await this._entity.deleteAttachment();
+		}
+	}
 }
 
 decorate(Attachment, {
@@ -45,5 +57,80 @@ decorate(Attachment, {
 	deleted: observable,
 	attachment: observable,
 	// actions
-	load: action
+	load: action,
+	markDeleted: action
 });
+
+export class LinkAttachment extends Attachment {
+	initLink(name, url) {
+		this.editing = true;
+		this.creating = true;
+
+		this.attachment = {
+			id: this.href,
+			name: name,
+			url: url
+		};
+	}
+
+	async save(entity) {
+		await entity.addLinkAttachment(this.attachment.name, this.attachment.url);
+	}
+}
+
+decorate(LinkAttachment, {
+	// actions
+	initLink: action
+});
+
+export class GoogleDriveAttachment extends LinkAttachment {
+	async save(entity) {
+		await entity.addGoogleDriveLinkAttachment(this.attachment.name, this.attachment.url);
+	}
+}
+
+export class OneDriveAttachment extends LinkAttachment {
+	async save(entity) {
+		await entity.addOneDriveLinkAttachment(this.attachment.name, this.attachment.url);
+	}
+}
+
+export class FileAttachment extends Attachment {
+	initFile(name, fileSystemType, fileId) {
+		this.editing = true;
+		this.creating = true;
+
+		this.fileSystemType = fileSystemType;
+		this.fileId = fileId;
+
+		this.attachment = {
+			id: this.href,
+			name: name,
+			// TODO - Need to find a way to get access to temp file URL
+			url: name,
+			type: 'Document'
+		};
+	}
+
+	async save(entity) {
+		await entity.addFileAttachment(this.fileSystemType, this.fileId);
+	}
+}
+
+decorate(FileAttachment, {
+	// actions
+	initFile: action
+});
+
+export class VideoAttachment extends FileAttachment {
+	async save(entity) {
+		await entity.addVideoNoteAttachment(this.fileSystemType, this.fileId);
+	}
+}
+
+export class AudioAttachment extends FileAttachment {
+	async save(entity) {
+		await entity.addAudioNoteAttachment(this.fileSystemType, this.fileId);
+	}
+}
+
