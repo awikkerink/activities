@@ -135,5 +135,6 @@ decorate(AttachmentCollection, {
 	setCanRecordVideo: action,
 	setCanRecordAudio: action,
 	setAttachments: action,
-	addAttachment: action
+	addAttachment: action,
+	save: action
 });
