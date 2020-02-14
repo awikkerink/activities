@@ -51,6 +51,7 @@ decorate(ObjectStore, {
 	// actions
 	fetch: action,
 	put: action,
-	clear: action
+	clear: action,
+	remove: action
 });
 
