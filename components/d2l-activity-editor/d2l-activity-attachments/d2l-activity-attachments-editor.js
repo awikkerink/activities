@@ -52,5 +52,12 @@ class ActivityAttachmentsEditor extends ActivityEditorMixin(MobxLitElement) {
 			` :	html``}
 		`;
 	}
+
+	async save() {
+		const collection = store.get(this.href);
+		if (collection) {
+			await collection.save();
+		}
+	}
 }
 customElements.define('d2l-activity-attachments-editor', ActivityAttachmentsEditor);
