@@ -27,8 +27,6 @@ export class Attachment {
 		this._entity = entity;
 
 		this.editing = entity.canDeleteAttachment();
-		this.creating = false;
-		this.deleted = false;
 
 		this.attachment = {
 			id: entity.self(),
@@ -43,6 +41,12 @@ export class Attachment {
 
 	markDeleted(deleted) {
 		this.deleted = deleted;
+	}
+
+	async delete() {
+		if (this._entity) {
+			await this._entity.deleteAttachment();
+		}
 	}
 }
 
@@ -61,13 +65,16 @@ export class LinkAttachment extends Attachment {
 	initLink(name, url) {
 		this.editing = true;
 		this.creating = true;
-		this.deleted = false;
 
 		this.attachment = {
 			id: this.href,
 			name: name,
 			url: url
 		};
+	}
+
+	async save(entity) {
+		await entity.addLinkAttachment(this.attachment.name, this.attachment.url);
 	}
 }
 
@@ -77,16 +84,21 @@ decorate(LinkAttachment, {
 });
 
 export class GoogleDriveAttachment extends LinkAttachment {
+	async save(entity) {
+		await entity.addGoogleDriveLinkAttachment(this.attachment.name, this.attachment.url);
+	}
 }
 
 export class OneDriveAttachment extends LinkAttachment {
+	async save(entity) {
+		await entity.addOneDriveLinkAttachment(this.attachment.name, this.attachment.url);
+	}
 }
 
 export class FileAttachment extends Attachment {
 	initFile(name, fileSystemType, fileId) {
 		this.editing = true;
 		this.creating = true;
-		this.deleted = false;
 
 		this.fileSystemType = fileSystemType;
 		this.fileId = fileId;
@@ -99,6 +111,10 @@ export class FileAttachment extends Attachment {
 			type: 'Document'
 		};
 	}
+
+	async save(entity) {
+		await entity.addFileAttachment(this.fileSystemType, this.fileId);
+	}
 }
 
 decorate(FileAttachment, {
@@ -107,8 +123,14 @@ decorate(FileAttachment, {
 });
 
 export class VideoAttachment extends FileAttachment {
+	async save(entity) {
+		await entity.addVideoNoteAttachment(this.fileSystemType, this.fileId);
+	}
 }
 
 export class AudioAttachment extends FileAttachment {
+	async save(entity) {
+		await entity.addAudioNoteAttachment(this.fileSystemType, this.fileId);
+	}
 }
 
