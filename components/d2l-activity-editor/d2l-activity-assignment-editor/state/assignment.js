@@ -28,6 +28,10 @@ export class Assignment {
 		this.canEditInstructions = entity.canEditInstructions();
 		this.instructionsRichTextEditorConfig = entity.instructionsRichTextEditorConfig();
 		this.activityUsageHref = entity.activityUsageHref();
+		this.submissionTypeOptions = entity.submissionTypeOptions();
+		this.completionTypeOptions = entity.completionTypeOptions();
+		this.canEditSubmissionType = entity.canEditSubmissionType();
+		this.canEditCompletionType = entity.canEditCompletionType();
 	}
 
 	setName(value) {
@@ -59,6 +63,12 @@ decorate(Assignment, {
 	canEditInstructions: observable,
 	instructionsRichTextEditorConfig: observable,
 	activityUsageHref: observable,
+	submissionTypeOptions: observable,
+	completionTypeOptions: observable,
+	submissionTypeOptions: observable,
+	completionTypeOptions: observable,
+	canEditSubmissionType: observable,
+	canEditCompletionType: observable,
 	// actions
 	load: action,
 	setName: action,
