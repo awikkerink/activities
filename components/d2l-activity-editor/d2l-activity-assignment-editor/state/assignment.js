@@ -32,6 +32,16 @@ export class Assignment {
 		this.completionTypeOptions = entity.completionTypeOptions();
 		this.canEditSubmissionType = entity.canEditSubmissionType();
 		this.canEditCompletionType = entity.canEditCompletionType();
+		this.submissionType = entity.submissionType();
+		this.completionType = entity.completionType();
+	}
+
+	setSubmissionType(value) {
+		this.submissionType = value;
+	}
+
+	setCompletionType(value) {
+		this.completionType = value;
 	}
 
 	setName(value) {
@@ -65,13 +75,13 @@ decorate(Assignment, {
 	activityUsageHref: observable,
 	submissionTypeOptions: observable,
 	completionTypeOptions: observable,
-	submissionTypeOptions: observable,
-	completionTypeOptions: observable,
 	canEditSubmissionType: observable,
 	canEditCompletionType: observable,
 	// actions
 	load: action,
 	setName: action,
 	setInstructions: action,
+	setSubmissionType: action,
+	setCompletionType: action,
 	save: action
 });
