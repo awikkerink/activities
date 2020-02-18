@@ -7,12 +7,14 @@ export default {
 	"lblAnonymousMarking": "Anonymous Marking", // Label for anonymous marking
 	"chkAnonymousMarking": "Hide student names during assessment", // Checkbox for anonymous marking
 	"dueDate": "Due Date", // ARIA label for the due date field when creating/editing an activity
+	"txtAnnotationsOff": "Annotations off", // annotations off text
 	"emptyNameError": "Name is required", // Error message to inform user that the assignment name is a required field
 	"instructions": "Instructions", // Label for the instruction field when creating/editing an assignment
 	"hdrTurnitin": "Turnitin® Integration", // turnitin heading
 	"hlpTurnitin": "The Turnitin® Integration allows you to use Originality Check® to assess student work for academic integrity and to use the GradeMark® external evaluation tool for assessment.", // turnitin help
 	"btnEditTurnitin": "Manage Turnitin® Integration", // edit turnitin button
 	"btnCloseDialog": "Close this Dialog", // close dialog button
+	"hdrAvailability": "Availability Dates & Conditions", // availability header
 	"name": "Name", // Label for the name field when creating/editing an activity
 	"submissionType": "Submission Type", // Label for the submission type field when creating/editing an assignment
 	"annotationTools": "Annotation Tools", // Label for enabling/disabling Annotation Tools when creating/editing an assignment
@@ -24,5 +26,6 @@ export default {
 	"txtIndividual": "Individual Assignment", // Label for individual assignment type
 	"txtGroup": "Group Assignment", // Label for group assignment type,
 	"txtGroupCategoryWithName": "Group Category: {groupCategory}", //Label for the group category {groupCategory} is the name of the group category
-	"txtGroupCategory": "Group Category" // Label for group category
+	"txtGroupCategory": "Group Category", // Label for group category
+	"submissionCompletionAndCategorization": "Submission, Completion & Categorization" // Label for the availability and dates summarizer
 };

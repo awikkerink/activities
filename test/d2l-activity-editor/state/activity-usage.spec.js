@@ -14,7 +14,7 @@ describe('Activity Usage', function() {
 		startDate: () => '2020-01-22T04:59:00.000Z',
 		dueDate: () => '2020-01-23T04:59:00.000Z',
 		endDate: () => '2020-01-24T04:59:00.000Z',
-		canEditDates: () => Promise.resolve(true),
+		canEditDates: () => true,
 		isDraft: () => true,
 		canEditDraft: () => true
 	};
@@ -72,7 +72,7 @@ describe('Activity Usage', function() {
 			await activity.fetch();
 
 			when(
-				() => activity.start === '2020-02-21T04:59:00.000Z',
+				() => activity.startDate === '2020-02-21T04:59:00.000Z',
 				() => {
 					done();
 				}
@@ -100,7 +100,7 @@ describe('Activity Usage', function() {
 			await activity.fetch();
 
 			when(
-				() => activity.end === '2020-02-25T04:59:00.000Z',
+				() => activity.endDate === '2020-02-25T04:59:00.000Z',
 				() => {
 					done();
 				}
