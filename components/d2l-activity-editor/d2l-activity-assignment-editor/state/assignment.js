@@ -64,6 +64,15 @@ export class Assignment {
 		this.canEditCompletionType = entity.canEditCompletionType();
 		this.submissionType = String(entity.submissionType().value);
 		this.completionType = String(entity.completionType().value);
+		this.submissionType = entity.submissionType();
+		this.completionType = entity.completionType();
+		this.isGroupAssignmentTypeDisabled = entity.isGroupAssignmentTypeDisabled();
+		this.isIndividualType = entity.isIndividualAssignmentType();
+		this.groupCategories = entity.getAssignmentTypeGroupCategoryOptions();
+		this.infoText = entity.getAssignmentTypeInformationText();
+		this.isReadOnly = entity.isAssignmentTypeReadOnly();
+		this.groupTypeDisabled = entity.isGroupAssignmentTypeDisabled();
+		debugger;
 	}
 
 	setSubmissionType(value) {
@@ -109,6 +118,12 @@ decorate(Assignment, {
 	canEditCompletionType: observable,
 	submissionType: observable,
 	completionType: observable,
+	isGroupAssignmentTypeDisabled: observable,
+	isIndividualType: observable,
+	groupCategories: observable,
+	infoText: observable,
+	isReadOnly: observable,
+	isGroupAssignmentTypeDisabled: observable,
 	// actions
 	load: action,
 	setName: action,

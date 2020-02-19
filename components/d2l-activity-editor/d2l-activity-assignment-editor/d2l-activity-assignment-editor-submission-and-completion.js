@@ -1,5 +1,6 @@
 import '@brightspace-ui-labs/accordion/accordion-collapse.js';
 import './d2l-activity-assignment-type-editor.js';
+import './d2l-activity-assignment-type-summary-editor.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { heading4Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
@@ -9,7 +10,7 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 import { shared as store } from './state/assignment-store.js';
 
-class AssignmentEditorSubmissionAndCompletion extends ActivityEditorMixin(LocalizeMixin(MobxLitElement)) {
+class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitElement)) {
 	static get styles() {
 		return [
 			heading4Styles,
@@ -85,7 +86,12 @@ class AssignmentEditorSubmissionAndCompletion extends ActivityEditorMixin(Locali
 	}
 
 	_renderAssignmentTypeSummary() {
-		return html``;
+		return html`
+			<d2l-activity-assignment-type-summary-editor
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-assignment-type-summary-editor>
+		`;
 	}
 
 	_renderAssignmentSubmissionType(assignment) {
@@ -131,12 +137,7 @@ class AssignmentEditorSubmissionAndCompletion extends ActivityEditorMixin(Locali
 	}
 
 	_renderAssignmentCompletionTypeSummary() {
-		return html`
-			<d2l-activity-assignment-completion-type-summary
-				href="${this.href}"
-				.token="${this.token}">
-			</d2l-activity-assignment-completion-type-summary>
-		`;
+		return html``;
 	}
 
 	render() {
@@ -147,9 +148,9 @@ class AssignmentEditorSubmissionAndCompletion extends ActivityEditorMixin(Locali
 					${this.localize('submissionCompletionAndCategorization')}
 				</h4>
 				<ul class="summary" slot="summary">
-					${this._renderAssignmentTypeSummary()}
-					${this._renderAssignmentSubmissionTypeSummary()}
-					${this._renderAssignmentCompletionTypeSummary()}
+					<li>${this._renderAssignmentTypeSummary()}</li>
+					<li>${this._renderAssignmentSubmissionTypeSummary()}</li>
+					<li>${this._renderAssignmentCompletionTypeSummary()}</li>
 				</ul>
 				${this._renderAssignmentType()}
 				${this._renderAssignmentSubmissionType(assignment)}
@@ -158,4 +159,4 @@ class AssignmentEditorSubmissionAndCompletion extends ActivityEditorMixin(Locali
 		`;
 	}
 }
-customElements.define('d2l-activity-assignment-editor-submission-and-completion', AssignmentEditorSubmissionAndCompletion);
+customElements.define('d2l-activity-assignment-editor-submission-and-completion-editor', ActivityAssignmentSubmissionAndCompletionEditor);

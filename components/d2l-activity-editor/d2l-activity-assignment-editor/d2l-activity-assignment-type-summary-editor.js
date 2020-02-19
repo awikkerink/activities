@@ -1,17 +1,11 @@
 import { css, html } from 'lit-element/lit-element.js';
-import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { getLocalizeResources } from '../localization.js';
+import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
+import { shared as store } from './state/assignment-store.js';
 
-class ActivityCompletionTypeSummary extends LocalizeMixin(MobxLitElement) {
-	static get properties() {
-
-		return {
-			_completionType: { type: String }
-		};
-	}
-
+class ActivityTypeSummaryEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitElement)) {
 	static get styles() {
 		return css`
 			:host {
@@ -28,10 +22,16 @@ class ActivityCompletionTypeSummary extends LocalizeMixin(MobxLitElement) {
 	}
 
 	render() {
-		return html`${this.localize('anonymousGradingEnabled')}`;
+		const assignment = store.getAssignment(this.href);
+		if (assignment && assignment.isGroupAssignmentTypeDisabled) {
+			return html`<b>asdas</b>`;
+		}
+
+		return html``;
 	}
 }
+
 customElements.define(
-	'd2l-activity-assignment-completion-type-summary',
-	ActivityCompletionTypeSummary
+	'd2l-activity-assignment-type-summary-editor',
+	ActivityTypeSummaryEditor
 );

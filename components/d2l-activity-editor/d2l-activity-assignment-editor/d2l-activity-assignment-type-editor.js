@@ -1,25 +1,19 @@
 import { bodyCompactStyles, bodySmallStyles, bodyStandardStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
-import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
-import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
+import { css, html } from 'lit-element/lit-element.js';
+import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { getLocalizeResources } from '../localization.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
-import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
-import { SaveStatusMixin } from '../save-status-mixin.js';
+import { MobxLitElement } from '@adobe/lit-mobx';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
+import { shared as store } from './state/assignment-store.js';
 
-class AssignmentTypeEditor extends SaveStatusMixin(RtlMixin(EntityMixinLit(LocalizeMixin(LitElement)))) {
+class AssignmentTypeEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitElement)) {
 
 	static get properties() {
 		return {
 			_folderTypeText: { type: String },
-			_groupCategories: { type: Array },
-			_groupTypeDisabled: { type: Boolean },
-			_groupTypeText: { type: String },
-			_infoText: { type: String },
-			_isIndividualType: { type: Boolean },
-			_isReadOnly: { type: String }
+			_groupTypeText: { type: String }
 		};
 	}
 
@@ -75,32 +69,12 @@ class AssignmentTypeEditor extends SaveStatusMixin(RtlMixin(EntityMixinLit(Local
 
 	constructor() {
 		super();
-		this._setEntityType(AssignmentEntity);
-		this._folderTypeText = '';
-		this._groupCategories = [];
-		this._groupTypeDisabled = false;
-		this._groupTypeText = '';
-		this._infoText = '';
-		this._isIndividualType = false;
-		this._isReadOnly = true;
-	}
-
-	set _entity(entity) {
-		if (this._entityHasChanged(entity)) {
-			this._onAssignmentChange(entity);
-			super._entity = entity;
-		}
 	}
 
 	_onAssignmentChange(assignment) {
 		if (!assignment) {
 			return;
 		}
-		this._isIndividualType = assignment.isIndividualAssignmentType();
-		this._infoText = assignment.getAssignmentTypeInformationText();
-		this._isReadOnly = assignment.isAssignmentTypeReadOnly();
-		this._groupTypeDisabled = assignment.isGroupAssignmentTypeDisabled();
-		this._groupCategories = assignment.getAssignmentTypeGroupCategoryOptions();
 		this._folderTypeText =
 			this._isIndividualType
 				? this.localize('txtIndividual')
@@ -112,15 +86,18 @@ class AssignmentTypeEditor extends SaveStatusMixin(RtlMixin(EntityMixinLit(Local
 		}
 	}
 
-	_getGroupCategoryOptions() {
-		const options = this._groupCategories.map(
-			option => html`
-				<option value=${option.value} ?selected=${option.selected}>
-					${option.title}
-				</option>
-				`
-		);
-		return html`${options}`;
+	_getGroupCategoryOptions(assignment) {
+		debugger;
+		if(assignment){
+			return html`${assignment.groupCategories.map(
+				option => html`
+					<option value=${option.value} ?selected=${option.selected}>
+						${option.title}
+					</option>
+					`
+			)}`;
+		}
+		return html``;
 	}
 
 	_setIndividualAssignmentType() {
@@ -136,14 +113,20 @@ class AssignmentTypeEditor extends SaveStatusMixin(RtlMixin(EntityMixinLit(Local
 	}
 
 	render() {
+		const assignment = store.getAssignment(this.href);
+		const isIndividualType = assignment ? assignment.isIndividualAssignmentType : true;
+		const infoText = assignment ? assignment.infoText : '';
+		const isReadOnly = assignment ? assignment.isReadOnly : true;
+		const groupTypeDisabled = assignment ? assignment.isGroupAssignmentTypeDisabled : true;
+
 		return html`
-			<div ?hidden=${!this._isReadOnly} id="read-only-assignment-type-container">
+			<div ?hidden=${!isReadOnly} id="read-only-assignment-type-container">
 				<div class="d2l-body-standard">${this._folderTypeText}</div>
 				<div class="d2l-body-compact">${this._groupTypeText}</div>
-				<p class="d2l-body-small">${this._infoText}</p>
+				<p class="d2l-body-small">${infoText}</p>
 			</div>
 			
-			<div ?hidden=${this._isReadOnly} id="editable-assignment-type-container">
+			<div ?hidden=${isReadOnly} id="editable-assignment-type-container">
 				<label class="individual-type d2l-input-radio-label">
 					<input
 						id="assignment-type-individual"
@@ -151,33 +134,33 @@ class AssignmentTypeEditor extends SaveStatusMixin(RtlMixin(EntityMixinLit(Local
 						name="assignment-type"
 						value="1"
 						@change="${this._setIndividualAssignmentType}"
-						?checked="${this._isIndividualType}"
+						?checked="${isIndividualType}"
 					>
 					${this.localize('txtIndividual')}
 				</label>
-				<label class="d2l-input-radio-label ${this._groupTypeDisabled ? 'd2l-input-radio-label-disabled' : ''}">
+				<label class="d2l-input-radio-label ${groupTypeDisabled ? 'd2l-input-radio-label-disabled' : ''}">
 					<input
 						id="assignment-type-group"
 						type="radio"
 						name="assignment-type"
 						value="2"
 						@change="${this._setGroupAssignmentType}"
-						?checked="${!this._isIndividualType}"
-						?disabled="${this._groupTypeDisabled}"
+						?checked="${!isIndividualType}"
+						?disabled="${groupTypeDisabled}"
 					>
 					${this.localize('txtGroup')}
 				</label>
-				<div class="select-list group-info" ?hidden="${this._isIndividualType}">
+				<div class="select-list group-info" ?hidden="${isIndividualType}">
 					<label class="d2l-label-text">${this.localize('txtGroupCategory')}</label>
 					<select
 						class="d2l-input-select block-select"
 						id="assignemnt-group-categories"
 						@change="${this._changeGroupCategory}"
 						>
-						${this._getGroupCategoryOptions()}
+						${this._getGroupCategoryOptions(assignment)}
 					</select>
 				</div>
-				<p class="info-text d2l-body-small">${this._infoText}</p>
+				<p class="info-text d2l-body-small">${infoText}</p>
 			</div>
 		`;
 	}

@@ -72,10 +72,10 @@ class AssignmentEditorSecondary extends SaveStatusMixin(RtlMixin(EntityMixinLit(
 				.token="${this.token}">
 			</d2l-activity-assignment-availability-editor>
 
-			<d2l-activity-assignment-editor-submission-and-completion
+			<d2l-activity-assignment-editor-submission-and-completion-editor
 				href="${this.href}"
 				.token="${this.token}">
-			</d2l-activity-assignment-editor-submission-and-completion>
+			</d2l-activity-assignment-editor-submission-and-completion-editor>
 
 			<d2l-activity-assignment-evaluation-editor
 				href="${this.href}"
