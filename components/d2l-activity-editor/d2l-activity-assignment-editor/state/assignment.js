@@ -37,11 +37,19 @@ export class Assignment {
 	}
 
 	setSubmissionType(value) {
-		this.submissionType = value;
+		const type = this.submissionTypeOptions[value];
+		this.submissionType = {
+			title: type.title,
+			value: type.value
+		}
 	}
 
 	setCompletionType(value) {
-		this.completionType = value;
+		const type = this.completionTypeOptions[value];
+		this.completionType = {
+			title: type.title,
+			value: type.value
+		}
 	}
 
 	setName(value) {

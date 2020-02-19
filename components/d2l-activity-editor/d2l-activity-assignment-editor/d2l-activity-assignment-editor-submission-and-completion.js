@@ -1,5 +1,6 @@
 import '@brightspace-ui-labs/accordion/accordion-collapse.js';
 import './d2l-activity-assignment-type-editor.js';
+import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { heading4Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { getLocalizeResources } from '../localization.js';
@@ -8,14 +9,7 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 import { shared as store } from './state/assignment-store.js';
 
-class AssignmentEditorSubmissionAndCompletion extends LocalizeMixin(MobxLitElement) {
-	static get properties() {
-		return {
-			href: { type: String },
-			token: { type: String }
-		};
-	}
-
+class AssignmentEditorSubmissionAndCompletion extends ActivityEditorMixin(LocalizeMixin(MobxLitElement)) {
 	static get styles() {
 		return [
 			heading4Styles,
@@ -49,21 +43,22 @@ class AssignmentEditorSubmissionAndCompletion extends LocalizeMixin(MobxLitEleme
 		return getLocalizeResources(langs, import.meta.url);
 	}
 
-	_saveCompletionTypeOnChange() {
-		const completionType = this.shadowRoot.querySelector('select#assignment-completion-type').value;
-		store.getAssignment(this.href).setCompletionType(completionType);
+	_saveCompletionTypeOnChange(event) {
+		store.getAssignment(this.href).setCompletionType(event.target.value);
 	}
 
-	_getSubmissionTypeOptions(assignment) {
-		const submissionTypes = assignment ? assignment.submissionTypeOptions : [];
+	_getSubmissionTypeOptions(assignment) {	
+		if(!assignment){
+			return html``;
+		}
+			
 		return html`
-			${submissionTypes.map(option => html`<option value=${option.value} ?selected=${option.selected}>${option.title}</option>`)}
+			${assignment.submissionTypeOptions.map(option => html`<option value=${option.value} ?selected=${option.selected}>${option.title}</option>`)}
 		`;
 	}
 
-	_saveSubmissionTypeOnChange() {
-		const submissionType = this.shadowRoot.querySelector('select#assignment-submission-type').value;
-		store.getAssignment(this.href).setSubmissionType(submissionType);
+	_saveSubmissionTypeOnChange(event) {
+		store.getAssignment(this.href).setSubmissionType(event.target.value);
 	}
 
 	_getCompletionTypeOptions(assignment) {
@@ -101,7 +96,7 @@ class AssignmentEditorSubmissionAndCompletion extends LocalizeMixin(MobxLitEleme
 				<select
 					id="assignment-submission-type"
 					class="d2l-input-select block-select"
-					@change="${this._saveSubmissionTypeOnChange}}"
+					@change="${this._saveSubmissionTypeOnChange}"
 					?disabled="${!canEditSubmissionType}">
 						${this._getSubmissionTypeOptions(assignment)}
 				</select>
@@ -114,10 +109,11 @@ class AssignmentEditorSubmissionAndCompletion extends LocalizeMixin(MobxLitEleme
 	}
 
 	_renderAssignmentCompletionType(assignment) {
-		const completionTypeOptions = assignment ? assignment.completionTypeOptions : [];
 		const canEditCompletionType = assignment ? assignment.canEditCompletionType : false;
+		const completionVisisble = assignment ? assignment.completionTypeOptions.length <= 0 : true;
+
 		return html `
-			<div id="assignment-completion-type-container" ?hidden="${!completionTypeOptions.length > 0}">
+			<div id="assignment-completion-type-container" ?hidden="${!completionVisisble}">
 				<label class="d2l-label-text" for="assignment-completion-type">
 					${this.localize('completionType')}
 				</label>
