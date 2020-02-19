@@ -32,8 +32,8 @@ describe('Assignment ', function() {
 				completionTypeOptions: () => [],
 				canEditSubmissionType: () => true,
 				canEditCompletionType: () => false,
-				submissionType: () => 'Option 1',
-				completionType: () => ''
+				submissionType: () => { return {title: 'Option 1', value: 0}; },
+				completionType: () => { return {title: 'Automatically on submission', value: 0}; }
 			};
 		});
 
@@ -51,8 +51,8 @@ describe('Assignment ', function() {
 		expect(assignment.completionTypeOptions).to.include.ordered.members([]);
 		expect(assignment.canEditSubmissionType).to.equal(true);
 		expect(assignment.canEditCompletionType).to.equal(false);
-		expect(assignment.submissionType).to.equal('Option 1');
-		expect(assignment.completionType).to.equal('');
+		expect(assignment.submissionType).to.deep.equal({title: 'Option 1', value: 0});
+		expect(assignment.completionType).to.deep.equal({title: 'Automatically on submission', value: 0});
 
 		expect(fetchEntity.mock.calls.length).to.equal(1);
 		expect(AssignmentEntity.mock.calls[0][0]).to.equal(sirenEntity);

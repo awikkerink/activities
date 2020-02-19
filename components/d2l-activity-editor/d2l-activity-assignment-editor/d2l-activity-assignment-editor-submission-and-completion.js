@@ -1,8 +1,8 @@
 import '@brightspace-ui-labs/accordion/accordion-collapse.js';
 import './d2l-activity-assignment-type-editor.js';
-import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { heading4Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
+import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { getLocalizeResources } from '../localization.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -47,11 +47,11 @@ class AssignmentEditorSubmissionAndCompletion extends ActivityEditorMixin(Locali
 		store.getAssignment(this.href).setCompletionType(event.target.value);
 	}
 
-	_getSubmissionTypeOptions(assignment) {	
-		if(!assignment){
+	_getSubmissionTypeOptions(assignment) {
+		if (!assignment) {
 			return html``;
 		}
-			
+
 		return html`
 			${assignment.submissionTypeOptions.map(option => html`<option value=${option.value} ?selected=${option.selected}>${option.title}</option>`)}
 		`;
@@ -111,7 +111,6 @@ class AssignmentEditorSubmissionAndCompletion extends ActivityEditorMixin(Locali
 	_renderAssignmentCompletionType(assignment) {
 		const canEditCompletionType = assignment ? assignment.canEditCompletionType : false;
 		const completionHidden = assignment ? assignment.completionTypeOptions.length <= 0 : false;
-		debugger;
 
 		return html `
 			<div id="assignment-completion-type-container" ?hidden="${completionHidden}">

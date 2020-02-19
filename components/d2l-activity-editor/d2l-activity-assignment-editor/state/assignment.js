@@ -41,7 +41,7 @@ export class Assignment {
 		this.submissionType = {
 			title: type.title,
 			value: type.value
-		}
+		};
 	}
 
 	setCompletionType(value) {
@@ -49,7 +49,7 @@ export class Assignment {
 		this.completionType = {
 			title: type.title,
 			value: type.value
-		}
+		};
 	}
 
 	setName(value) {
