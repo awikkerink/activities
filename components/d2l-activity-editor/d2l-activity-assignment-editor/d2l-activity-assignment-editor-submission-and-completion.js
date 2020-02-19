@@ -110,10 +110,11 @@ class AssignmentEditorSubmissionAndCompletion extends ActivityEditorMixin(Locali
 
 	_renderAssignmentCompletionType(assignment) {
 		const canEditCompletionType = assignment ? assignment.canEditCompletionType : false;
-		const completionVisisble = assignment ? assignment.completionTypeOptions.length <= 0 : true;
+		const completionHidden = assignment ? assignment.completionTypeOptions.length <= 0 : false;
+		debugger;
 
 		return html `
-			<div id="assignment-completion-type-container" ?hidden="${!completionVisisble}">
+			<div id="assignment-completion-type-container" ?hidden="${completionHidden}">
 				<label class="d2l-label-text" for="assignment-completion-type">
 					${this.localize('completionType')}
 				</label>
