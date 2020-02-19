@@ -10,7 +10,8 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 
 	static get properties() {
 		return {
-			_overrides: { type: Object }
+			_overrides: { type: Object },
+			_isFirstLoad: { type: Boolean }
 		};
 	}
 
@@ -32,6 +33,7 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 	constructor() {
 		super();
 		this._overrides = document.documentElement.dataset.intlOverrides || '{}';
+		this._isFirstLoad = true;
 	}
 
 	_onDatetimePickerDatetimeCleared() {
@@ -63,7 +65,7 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 
 	render() {
 		const activity = store.get(this.href);
-		let dueDate, canEditDueDate;
+		let dueDate, canEditDates;
 
 		// We have to render with null values for dueDate initially due to issues with
 		// how the d2l-datetime-picker converts between the date & datetime attributes.
@@ -73,17 +75,22 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 		// Tried passing an invalid date attribute to force it to use our datetime attribute
 		// but the 2-way data binding with the vaadin date picker always overrides it
 		// Will be able to fix when we have a new data time component.
-		if (!activity) {
+		if (!activity || this._isFirstLoad) {
 			dueDate = null;
-			canEditDueDate = false;
+			canEditDates = false;
 		} else {
 			dueDate = activity.dueDate;
-			canEditDueDate = activity.canEditDueDate;
+			canEditDates = activity.canEditDates;
 		}
 
 		return html`
-			${this.dateTemplate(dueDate, canEditDueDate)}
+			${this.dateTemplate(dueDate, canEditDates)}
 		`;
+	}
+
+	firstUpdated() {
+		super.firstUpdated();
+		this._isFirstLoad = false;
 	}
 
 	updated(changedProperties) {
