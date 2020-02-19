@@ -131,7 +131,12 @@ class AssignmentEditorSubmissionAndCompletion extends ActivityEditorMixin(Locali
 	}
 
 	_renderAssignmentCompletionTypeSummary() {
-		return html``;
+		return html`
+			<d2l-activity-assignment-completion-type-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-assignment-completion-type-summary>
+		`;
 	}
 
 	render() {
