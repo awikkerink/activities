@@ -23,8 +23,8 @@ class ActivityTypeSummaryEditor extends ActivityEditorMixin(LocalizeMixin(MobxLi
 
 	render() {
 		const assignment = store.getAssignment(this.href);
-		if (assignment && assignment.isGroupAssignmentTypeDisabled) {
-			return html`<b>asdas</b>`;
+		if (assignment && !assignment.isIndividualAssignmentType) {
+			return html`${this.localize('txtGroupAssignmentSummary')}`;
 		}
 
 		return html``;

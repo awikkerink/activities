@@ -26,6 +26,7 @@ export default {
 	"txtIndividual": "Individual Assignment", // Label for individual assignment type
 	"txtGroup": "Group Assignment", // Label for group assignment type,
 	"txtGroupCategoryWithName": "Group Category: {groupCategory}", //Label for the group category {groupCategory} is the name of the group category
-	"txtGroupCategory": "Group Category", // Label for group category
+	"txtGroupCategory": "Group Category", // Label for group category,
+	"txtGroupAssignmentSummary": "Group assignment", // Summary message for accordion when assignment type is set to group
 	"submissionCompletionAndCategorization": "Submission, Completion & Categorization" // Label for the availability and dates summarizer
 };

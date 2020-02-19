@@ -67,12 +67,11 @@ export class Assignment {
 		this.submissionType = entity.submissionType();
 		this.completionType = entity.completionType();
 		this.isGroupAssignmentTypeDisabled = entity.isGroupAssignmentTypeDisabled();
-		this.isIndividualType = entity.isIndividualAssignmentType();
+		this.isIndividualAssignmentType = entity.isIndividualAssignmentType();
 		this.groupCategories = entity.getAssignmentTypeGroupCategoryOptions();
 		this.infoText = entity.getAssignmentTypeInformationText();
 		this.isReadOnly = entity.isAssignmentTypeReadOnly();
 		this.groupTypeDisabled = entity.isGroupAssignmentTypeDisabled();
-		debugger;
 	}
 
 	setSubmissionType(value) {
@@ -82,6 +81,22 @@ export class Assignment {
 
 	setCompletionType(value) {
 		this.completionType = value;
+	}
+
+	setToIndividualAssignmentType() {
+		this.isIndividualAssignmentType = true;
+	}
+
+	setToGroupAssignmentType() {
+		this.isIndividualType = false;
+	}
+
+	setAssignmentTypeGroupCategory(value) {
+		const type = this.submissionTypeOptions[value];
+		this.submissionType = {
+			title: type.title,
+			value: type.value
+		};
 	}
 
 	setName(value) {
@@ -119,7 +134,7 @@ decorate(Assignment, {
 	submissionType: observable,
 	completionType: observable,
 	isGroupAssignmentTypeDisabled: observable,
-	isIndividualType: observable,
+	isIndividualAssignmentType: observable,
 	groupCategories: observable,
 	infoText: observable,
 	isReadOnly: observable,
@@ -130,5 +145,7 @@ decorate(Assignment, {
 	setInstructions: action,
 	setSubmissionType: action,
 	setCompletionType: action,
-	save: action
+	save: action,
+	setToIndividualAssignmentType: action,
+	setToGroupAssignmentType: action
 });

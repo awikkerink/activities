@@ -87,7 +87,6 @@ class AssignmentTypeEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitElem
 	}
 
 	_getGroupCategoryOptions(assignment) {
-		debugger;
 		if(assignment){
 			return html`${assignment.groupCategories.map(
 				option => html`
@@ -101,15 +100,18 @@ class AssignmentTypeEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitElem
 	}
 
 	_setIndividualAssignmentType() {
-		this.wrapSaveAction(super._entity.setToIndividualAssignmentType());
+		const assignment = store.getAssignment(this.href);
+		assignment.setToIndividualAssignmentType();
 	}
 
 	_setGroupAssignmentType() {
-		this.wrapSaveAction(super._entity.setToGroupAssignmentType());
+		const assignment = store.getAssignment(this.href);
+		assignment.setToGroupAssignmentType();
 	}
 
 	_changeGroupCategory(event) {
-		this.wrapSaveAction(super._entity.setAssignmentTypeGroupCategory(event.target.value));
+		const assignment = store.getAssignment(this.href);
+		assignment.setAssignmentTypeGroupCategory(event.target.value);
 	}
 
 	render() {
