@@ -55,7 +55,7 @@ class AssignmentEditorSubmissionAndCompletion extends LocalizeMixin(MobxLitEleme
 	}
 
 	_getSubmissionTypeOptions(assignment) {
-		const submissionTypes = assignment.submissionTypeOptions;
+		const submissionTypes = assignment ? assignment.submissionTypeOptions : [];
 		return html`
 			${submissionTypes.map(option => html`<option value=${option.value} ?selected=${option.selected}>${option.title}</option>`)}
 		`;
@@ -67,7 +67,7 @@ class AssignmentEditorSubmissionAndCompletion extends LocalizeMixin(MobxLitEleme
 	}
 
 	_getCompletionTypeOptions(assignment) {
-		const completionTypeOptions = assignment.completionTypeOptions;
+		const completionTypeOptions = assignment ? assignment.completionTypeOptions : [];
 		return html`
 			${completionTypeOptions.map(option => html`<option value=${option.value} ?selected=${option.selected}>${option.title}</option>`)}
 		`;
