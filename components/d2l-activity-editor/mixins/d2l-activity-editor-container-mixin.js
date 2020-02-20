@@ -19,7 +19,7 @@ export const ActivityEditorContainerMixin = superclass => class extends supercla
 
 	async _save() {
 		try {
-			let validations = [];
+			const validations = [];
 			for (const editor of this._editors) {
 				validations.push(editor.validate());
 			}
@@ -31,7 +31,9 @@ export const ActivityEditorContainerMixin = superclass => class extends supercla
 				// to the save
 				await editor.save();
 			}
-		} catch (e) {}
+		} catch (e) {
+			return;
+		}
 	}
 
 };

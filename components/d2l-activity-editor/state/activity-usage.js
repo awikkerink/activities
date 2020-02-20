@@ -66,13 +66,12 @@ export class ActivityUsage {
 			startDate: this.startDate,
 			endDate: this.endDate
 		}).catch(e => runInAction(() => {
-				this.isError = true;
-				if (e.json && e.json.properties && e.json.properties.type) {
-					this.errorType = e.json.properties.type;
-				}
-				throw e;
-			})
-		);
+			this.isError = true;
+			if (e.json && e.json.properties && e.json.properties.type) {
+				this.errorType = e.json.properties.type;
+			}
+			throw e;
+		}));
 
 		runInAction(() => {
 			this.isError = false;

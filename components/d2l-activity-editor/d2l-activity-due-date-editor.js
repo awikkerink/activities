@@ -110,7 +110,7 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 		if (!activity || this._isFirstLoad) {
 			dueDate = null;
 			canEditDates = false;
-			errorTerm = null
+			errorTerm = null;
 		} else {
 			dueDate = activity.dueDate;
 			canEditDates = activity.canEditDates;
