@@ -35,10 +35,6 @@ class EvaluationPage extends LitElement {
 					id="d2l-evaluation-page-iframe"
 					src="${this.leftPanelUrl}">
 				</iframe>
-				<button
-					slot="secondary"
-					onclick="SendMessageFromParentToIframe()">Button in parent
-				</button>
 			</d2l-template-primary-secondary>
 		`;
 	}
