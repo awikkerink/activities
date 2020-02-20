@@ -44,20 +44,65 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeMixin
 		store.get(this.href).setEndDate(e.detail.toISOString());
 	}
 
+	_getStartDateErrorLangterm(errorType) {
+		if (!errorType) {
+			return null;
+		}
+
+		if (errorType.includes('end-due-start-date-error')) {
+			return this.localize('dueBetweenStartEndDate');
+		}
+
+		if (errorType.includes('start-after-end-date-error') || errorType.includes('start-after-due-date-error')) {
+			return this.localize('dueAfterStartDate');
+		}
+
+		if (errorType.includes('end-before-start-date-error')) {
+			return this.localize('startBeforeEndDate');
+		}
+
+		return null;
+	}
+
+	_getEndDateErrorLangterm(errorType) {
+		if (!errorType) {
+			return null;
+		}
+
+		if (errorType.includes('end-due-start-date-error')) {
+			return this.localize('dueBetweenStartEndDate');
+		}
+
+		if (errorType.includes('start-after-end-date-error')) {
+			return this.localize('startBeforeEndDate');
+		}
+
+		if (errorType.includes('end-before-start-date-error') || errorType.includes('end-before-due-date-error')) {
+			return this.localize('dueBeforeEndDate');
+		}
+
+		return null;
+	}
+
 	render() {
 		const activity = store.get(this.href);
-		let canEditDates, startDate, endDate;
+		let canEditDates, startDate, endDate, startDateErrorTerm, endDateErrorTerm;
 
 		if (!activity) {
 			canEditDates = false;
 			startDate = null;
 			endDate = null;
+			startDateErrorTerm = null;
+			endDateErrorTerm = null;
 		} else {
 			canEditDates = activity.canEditDates;
 			startDate = activity.startDate;
 			endDate = activity.endDate;
+			startDateErrorTerm = this._getStartDateErrorLangterm(activity.errorType);
+			endDateErrorTerm = this._getEndDateErrorLangterm(activity.errorType);
 		}
 
+		//TODO: Ugly hacked-in error tooltips can probably be removed when we have date pickers with proper error styling
 		return html`
 			<label class="d2l-label-text" ?hidden=${!canEditDates}>${this.localize('startDate')}</label>
 			<div id="startdate-container" ?hidden=${!canEditDates}>
@@ -70,9 +115,19 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeMixin
 					datetime="${startDate}"
 					overrides="${this._overrides}"
 					placeholder="${this.localize('noStartDate')}"
+					aria-invalid="${startDateErrorTerm ? 'true' : 'false'}"
 					@d2l-datetime-picker-datetime-changed="${this._onStartDatetimePickerDatetimeChanged}"
 					@d2l-datetime-picker-datetime-cleared="${this._onStartDatetimePickerDatetimeCleared}">
 				</d2l-datetime-picker>
+				${startDateErrorTerm ? html`
+					<d2l-tooltip
+						id="score-tooltip"
+						for="startDate"
+						position="bottom"
+					>
+						${startDateErrorTerm}
+					</d2l-tooltip>
+				` : null}
 			</div>
 			<label class="d2l-label-text" ?hidden=${!canEditDates}>${this.localize('endDate')}</label>
 			<div id="enddate-container" ?hidden=${!canEditDates}>
@@ -85,9 +140,19 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeMixin
 					datetime="${endDate}"
 					overrides="${this._overrides}"
 					placeholder="${this.localize('noEndDate')}"
+					aria-invalid="${endDateErrorTerm ? 'true' : 'false'}"
 					@d2l-datetime-picker-datetime-changed="${this._onEndDatetimePickerDatetimeChanged}"
 					@d2l-datetime-picker-datetime-cleared="${this._onEndDatetimePickerDatetimeCleared}">
 				</d2l-datetime-picker>
+				${endDateErrorTerm ? html`
+					<d2l-tooltip
+						id="score-tooltip"
+						for="endDate"
+						position="bottom"
+					>
+						${endDateErrorTerm}
+					</d2l-tooltip>
+				` : null}
 			</div>
 		`;
 	}

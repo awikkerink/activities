@@ -51,6 +51,13 @@ class ActivityEditor extends PendingContainerMixin(ActivityEditorMixin(LocalizeM
 		this.loading = false;
 	}
 
+	async validate() {
+		const activity = store.get(this.href);
+		if (activity) {
+			await activity.validate();
+		}
+	}
+
 	async save() {
 		const activity = store.get(this.href);
 		if (activity) {

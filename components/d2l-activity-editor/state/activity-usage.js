@@ -1,4 +1,4 @@
-import { action, configure as configureMobx, decorate, observable } from 'mobx';
+import { action, configure as configureMobx, decorate, observable, runInAction } from 'mobx';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
 import { fetchEntity } from '../state/fetch-entity.js';
 
@@ -28,6 +28,8 @@ export class ActivityUsage {
 		this.canEditDates = entity.canEditDates();
 		this.isDraft = entity.isDraft();
 		this.canEditDraft = entity.canEditDraft();
+		this.isError = false;
+		this.errorType = null;
 	}
 
 	setDueDate(date) {
@@ -54,6 +56,30 @@ export class ActivityUsage {
 		this.canEditDates = value;
 	}
 
+	async validate() {
+		if (!this._entity) {
+			return;
+		}
+
+		await this._entity.validate({
+			dueDate: this.dueDate,
+			startDate: this.startDate,
+			endDate: this.endDate
+		}).catch(e => runInAction(() => {
+				this.isError = true;
+				if (e.json && e.json.properties && e.json.properties.type) {
+					this.errorType = e.json.properties.type;
+				}
+				throw e;
+			})
+		);
+
+		runInAction(() => {
+			this.isError = false;
+			this.errorType = null;
+		});
+	}
+
 	async save() {
 		if (!this._entity) {
 			return;
@@ -78,6 +104,8 @@ decorate(ActivityUsage, {
 	canEditDates: observable,
 	isDraft: observable,
 	canEditDraft: observable,
+	isError: observable,
+	errorType: observable,
 	// actions
 	load: action,
 	setDueDate: action,
@@ -86,5 +114,6 @@ decorate(ActivityUsage, {
 	setDraftStatus: action,
 	setCanEditDraft: action,
 	setCanEditDates: action,
-	save: action
+	save: action,
+	validate: action
 });
