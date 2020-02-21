@@ -27,6 +27,7 @@ import 'd2l-organizations/components/d2l-organization-image/d2l-organization-ima
 import 'd2l-alert/d2l-alert-toast.js';
 import '@brightspace-ui-labs/edit-in-place/d2l-labs-edit-in-place.js';
 import '../d2l-activity-editor/d2l-activity-visibility-auto-editor.js';
+import './d2l-activity-collection-list-item.js';
 import { getLocalizeResources } from './localization.js';
 
 const baseUrl = import.meta.url;
@@ -194,6 +195,11 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	handleSelectionChange(e) {
 		this._currentSelection[e.detail.key] = e.detail.selected;
 		this._selectionCount = this._selectedActivities().length;
+	}
+
+	_keyboardDragging(e) {
+		const items = this.shadowRoot.querySelectorAll('d2l-list d2l-activity-collection-list-item:not([keyboard-active])');
+		items.forEach(item => item.toggleAttribute('hide-dragger', e.detail.keyboardActive));
 	}
 
 	_selectedActivities() {
@@ -601,7 +607,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 
 		const items = repeat(this._items, (item) => item.self(), item => {
 			return html`
-				<d2l-list-item>
+				<d2l-activity-collection-list-item @d2l-activity-collection-list-item="${this._keyboardDragging}">
 					<div slot="illustration" class="d2l-activitiy-collection-list-item-illustration">
 						${this._renderCourseImageSkeleton()}
 						<d2l-organization-image
@@ -611,12 +617,10 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 							?hidden="${!this._loadedImages[this._organizationImageChunk[item.itemSelf]].allLoaded}">
 						</d2l-organization-image>
 					</div>
-					<d2l-list-item-content>
-						${item.name()}
-						<div slot="secondary">${item.hasClass(organizationClasses.courseOffering) ? this.localize('course') : null}</div>
-					</d2l-list-item-content>
+					${item.name()}
+					<div slot="secondary">${item.hasClass(organizationClasses.courseOffering) ? this.localize('course') : null}</div>
 					<d2l-button-icon slot="actions" text="${this.localize('removeActivity', 'courseName', item.name())}" icon="d2l-tier1:close-default" @click=${item.removeItem}>
-				</d2l-list-item>
+				</d2l-activity-collection-list-item>
 			`;
 		});
 
@@ -660,20 +664,18 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 
 	_renderItemListSkeleton(numberOfItems) {
 		const itemsSkeleton = html`
-			<d2l-list-item>
+			<d2l-activity-collection-list-item>
 				${this._renderCourseImageSkeleton()}
-				<d2l-list-item-content>
-					<svg width="100%" class="d2l-activity-collection-body-compact-skeleton-svg">
-						<rect x="0" width="40%" y="0" height="100%" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
+				<svg width="100%" class="d2l-activity-collection-body-compact-skeleton-svg">
+					<rect x="0" width="40%" y="0" height="100%" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
+				</svg>
+				<div slot="secondary">
+					<svg width="100%" class="d2l-activity-collection-body-small-skeleton-svg">
+						<rect x="0" width="30%" y="0" height="100%" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
 					</svg>
-					<div slot="secondary">
-						<svg width="100%" class="d2l-activity-collection-body-small-skeleton-svg">
-							<rect x="0" width="30%" y="0" height="100%" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
-						</svg>
-					</div>
-				</d2l-list-item-content>
+				</div>
 				<d2l-button-icon slot="actions" icon="d2l-tier1:close-default" disabled>
-			</d2l-list-item>
+			</d2l-activity-collection-list-item>
 		`;
 		return html`<d2l-list>${(new Array(numberOfItems)).fill(itemsSkeleton)}</d2l-list>`;
 	}
