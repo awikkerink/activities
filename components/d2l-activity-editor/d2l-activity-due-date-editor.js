@@ -75,26 +75,6 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 		`;
 	}
 
-	_getErrorLangterm(errorType) {
-		if (!errorType) {
-			return null;
-		}
-
-		if (errorType.includes('end-due-start-date-error')) {
-			return this.localize('dueBetweenStartEndDate');
-		}
-
-		if (errorType.includes('start-after-end-date-error') || errorType.includes('start-after-due-date-error')) {
-			return this.localize('dueAfterStartDate');
-		}
-
-		if (errorType.includes('end-before-start-date-error') || errorType.includes('end-before-due-date-error')) {
-			return this.localize('dueBeforeEndDate');
-		}
-
-		return null;
-	}
-
 	render() {
 		const activity = store.get(this.href);
 		let dueDate, canEditDates, errorTerm;
@@ -114,7 +94,7 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 		} else {
 			dueDate = activity.dueDate;
 			canEditDates = activity.canEditDates;
-			errorTerm = this._getErrorLangterm(activity.errorType);
+			errorTerm = this.localize(activity.dueDateErrorTerm);
 		}
 
 		return html`

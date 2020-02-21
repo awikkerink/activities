@@ -30,6 +30,9 @@ export class ActivityUsage {
 		this.canEditDraft = entity.canEditDraft();
 		this.isError = false;
 		this.errorType = null;
+		this.dueDateErrorTerm = null;
+		this.startDateErrorTerm = null;
+		this.endDateErrorTerm = null;
 	}
 
 	setDueDate(date) {
@@ -56,6 +59,47 @@ export class ActivityUsage {
 		this.canEditDates = value;
 	}
 
+	setErrorLangTerms(errorType) {
+		if (errorType && errorType.includes('end-due-start-date-error')) {
+			this.dueDateErrorTerm = 'dueBetweenStartEndDate';
+			this.startDateErrorTerm = 'dueBetweenStartEndDate';
+			this.endDateErrorTerm = 'dueBetweenStartEndDate';
+			return;
+		}
+
+		if (errorType && errorType.includes('start-after-end-date-error')) {
+			this.dueDateErrorTerm = 'dueAfterStartDate';
+			this.startDateErrorTerm = 'dueAfterStartDate';
+			this.endDateErrorTerm = 'startBeforeEndDate';
+			return;
+		}
+
+		if (errorType && errorType.includes('start-after-due-date-error')) {
+			this.dueDateErrorTerm = 'dueAfterStartDate';
+			this.startDateErrorTerm = 'dueAfterStartDate';
+			this.endDateErrorTerm = null;
+			return;
+		}
+
+		if (errorType && errorType.includes('end-before-start-date-error')) {
+			this.dueDateErrorTerm = 'dueBeforeEndDate';
+			this.startDateErrorTerm = 'startBeforeEndDate';
+			this.endDateErrorTerm = 'dueBeforeEndDate';
+			return;
+		}
+
+		if (errorType && errorType.includes('end-before-due-date-error')) {
+			this.dueDateErrorTerm = 'dueBeforeEndDate';
+			this.startDateErrorTerm = null;
+			this.endDateErrorTerm = 'dueBeforeEndDate';
+			return;
+		}
+
+		this.dueDateErrorTerm = null;
+		this.startDateErrorTerm = null;
+		this.endDateErrorTerm = null;
+	}
+
 	async validate() {
 		if (!this._entity) {
 			return;
@@ -63,6 +107,7 @@ export class ActivityUsage {
 
 		this.isError = false;
 		this.errorType = null;
+		this.setErrorLangTerms();
 
 		await this._entity.validate({
 			dueDate: this.dueDate,
@@ -72,6 +117,7 @@ export class ActivityUsage {
 			this.isError = true;
 			if (e.json && e.json.properties && e.json.properties.type) {
 				this.errorType = e.json.properties.type;
+				this.setErrorLangTerms(this.errorType);
 			}
 			throw e;
 		}));
@@ -103,6 +149,9 @@ decorate(ActivityUsage, {
 	canEditDraft: observable,
 	isError: observable,
 	errorType: observable,
+	dueDateErrorTerm: observable,
+	startDateErrorTerm: observable,
+	endDateErrorTerm: observable,
 	// actions
 	load: action,
 	setDueDate: action,
@@ -112,5 +161,6 @@ decorate(ActivityUsage, {
 	setCanEditDraft: action,
 	setCanEditDates: action,
 	save: action,
-	validate: action
+	validate: action,
+	setErrorLangTerms: action
 });

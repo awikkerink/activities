@@ -44,46 +44,6 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeMixin
 		store.get(this.href).setEndDate(e.detail.toISOString());
 	}
 
-	_getStartDateErrorLangterm(errorType) {
-		if (!errorType) {
-			return null;
-		}
-
-		if (errorType.includes('end-due-start-date-error')) {
-			return this.localize('dueBetweenStartEndDate');
-		}
-
-		if (errorType.includes('start-after-end-date-error') || errorType.includes('start-after-due-date-error')) {
-			return this.localize('dueAfterStartDate');
-		}
-
-		if (errorType.includes('end-before-start-date-error')) {
-			return this.localize('startBeforeEndDate');
-		}
-
-		return null;
-	}
-
-	_getEndDateErrorLangterm(errorType) {
-		if (!errorType) {
-			return null;
-		}
-
-		if (errorType.includes('end-due-start-date-error')) {
-			return this.localize('dueBetweenStartEndDate');
-		}
-
-		if (errorType.includes('start-after-end-date-error')) {
-			return this.localize('startBeforeEndDate');
-		}
-
-		if (errorType.includes('end-before-start-date-error') || errorType.includes('end-before-due-date-error')) {
-			return this.localize('dueBeforeEndDate');
-		}
-
-		return null;
-	}
-
 	render() {
 		const activity = store.get(this.href);
 		let canEditDates, startDate, endDate, startDateErrorTerm, endDateErrorTerm;
@@ -98,8 +58,8 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeMixin
 			canEditDates = activity.canEditDates;
 			startDate = activity.startDate;
 			endDate = activity.endDate;
-			startDateErrorTerm = this._getStartDateErrorLangterm(activity.errorType);
-			endDateErrorTerm = this._getEndDateErrorLangterm(activity.errorType);
+			startDateErrorTerm = this.localize(activity.startDateErrorTerm);
+			endDateErrorTerm = this.localize(activity.endDateErrorTerm);
 		}
 
 		//TODO: Ugly hacked-in error tooltips can probably be removed when we have date pickers with proper error styling
