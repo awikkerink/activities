@@ -25,7 +25,11 @@ class AssignmentEditor extends ActivityEditorContainerMixin(ActivityEditorMixin(
 			/**
 			 * API endpoint for determining whether a domain is trusted
 			 */
-			trustedSitesEndpoint: { type: String }
+			trustedSitesEndpoint: { type: String },
+			/**
+			 * URL for returning to previous page
+			 */
+			returnUrl: { type: String }
 		};
 	}
 
