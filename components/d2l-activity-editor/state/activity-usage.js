@@ -61,6 +61,9 @@ export class ActivityUsage {
 			return;
 		}
 
+		this.isError = false;
+		this.errorType = null;
+
 		await this._entity.validate({
 			dueDate: this.dueDate,
 			startDate: this.startDate,
@@ -72,11 +75,6 @@ export class ActivityUsage {
 			}
 			throw e;
 		}));
-
-		runInAction(() => {
-			this.isError = false;
-			this.errorType = null;
-		});
 	}
 
 	async save() {

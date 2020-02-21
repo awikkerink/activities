@@ -23,13 +23,18 @@ export const ActivityEditorContainerMixin = superclass => class extends supercla
 			validations.push(editor.validate());
 		}
 
-		await Promise.all(validations).then(async() => {
-			for (const editor of this._editors) {
-				// TODO - Once we decide how we want to handle errors we may want to add error handling logic
-				// to the save
-				await editor.save();
-			}
-		});
+		try {
+			await Promise.all(validations);
+		} catch (e) {
+			// Skip save on vaidation error
+			return;
+		}
+
+		for (const editor of this._editors) {
+			// TODO - Once we decide how we want to handle errors we may want to add error handling logic
+			// to the save
+			await editor.save();
+		}
 	}
 
 };
