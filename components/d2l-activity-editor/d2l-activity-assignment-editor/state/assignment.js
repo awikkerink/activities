@@ -20,6 +20,14 @@ export class Assignment {
 		return this;
 	}
 
+	_getValidCompletionTypes(){
+		return this.completionTypeOptions;
+	}
+
+	_isCurrentCompletionTypeValid(validCompletionTypes) {
+		return validCompletionTypes.find(completionType => completionType.value === this.completionTypeOptions);
+	}
+
 	load(entity) {
 		this._entity = entity;
 		this.name = entity.name();
@@ -32,24 +40,31 @@ export class Assignment {
 		this.completionTypeOptions = entity.completionTypeOptions();
 		this.canEditSubmissionType = entity.canEditSubmissionType();
 		this.canEditCompletionType = entity.canEditCompletionType();
-		this.submissionType = entity.submissionType();
-		this.completionType = entity.completionType();
+		this.submissionType = entity.submissionType().value;
+		this.completionType = entity.completionType().value;
 	}
 
 	setSubmissionType(value) {
-		const type = this.submissionTypeOptions[value];
-		this.submissionType = {
-			title: type.title,
-			value: type.value
-		};
+		this.submissionType = value;
+
+		debugger;
+		const validCompletionTypes = this._getValidCompletionTypes();
+
+		if (validCompletionTypes.length > 0) {
+			this.canEditCompletionType = true;
+			if(!this._isCurrentCompletionTypeValid(validCompletionTypes)){
+				this.completionType = validCompletionTypes[0].value;
+			}
+		}else{
+			this.canEditCompletionType = true;
+		}
 	}
 
 	setCompletionType(value) {
-		const type = this.completionTypeOptions[value];
-		this.completionType = {
-			title: type.title,
-			value: type.value
-		};
+		const newSelection = parseInt(value);
+		if (!isNaN(newSelection)) {
+			this.completionType = value;
+		}
 	}
 
 	setName(value) {
