@@ -72,6 +72,9 @@ export class Assignment {
 		this.infoText = entity.getAssignmentTypeInformationText();
 		this.isReadOnly = entity.isAssignmentTypeReadOnly();
 		this.groupTypeDisabled = entity.isGroupAssignmentTypeDisabled();
+		
+		this.assignmentTypeSelectedGroupCategoryId = this.groupCategories.find(category => category.selected === true).value
+		debugger;
 	}
 
 	setSubmissionType(value) {
@@ -88,15 +91,12 @@ export class Assignment {
 	}
 
 	setToGroupAssignmentType() {
-		this.isIndividualType = false;
+		this.isIndividualAssignmentType = false;
 	}
 
 	setAssignmentTypeGroupCategory(value) {
-		const type = this.submissionTypeOptions[value];
-		this.submissionType = {
-			title: type.title,
-			value: type.value
-		};
+		this.assignmentTypeSelectedGroupCategoryId = value;
+		debugger;
 	}
 
 	setName(value) {
@@ -139,6 +139,7 @@ decorate(Assignment, {
 	infoText: observable,
 	isReadOnly: observable,
 	isGroupAssignmentTypeDisabled: observable,
+	assignmentTypeSelectedGroupCategoryId: observable,
 	// actions
 	load: action,
 	setName: action,

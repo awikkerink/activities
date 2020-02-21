@@ -87,7 +87,7 @@ class AssignmentTypeEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitElem
 	}
 
 	_getGroupCategoryOptions(assignment) {
-		if(assignment){
+		if (assignment) {
 			return html`${assignment.groupCategories.map(
 				option => html`
 					<option value=${option.value} ?selected=${option.selected}>
