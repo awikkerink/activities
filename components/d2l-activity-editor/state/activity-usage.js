@@ -1,5 +1,6 @@
 import { action, configure as configureMobx, decorate, observable, runInAction } from 'mobx';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
+import { ActivityScoreGrade } from './activity-score-grade.js';
 import { fetchEntity } from '../state/fetch-entity.js';
 
 configureMobx({ enforceActions: 'observed' });
@@ -33,6 +34,7 @@ export class ActivityUsage {
 		this.dueDateErrorTerm = null;
 		this.startDateErrorTerm = null;
 		this.endDateErrorTerm = null;
+		this.scoreAndGrade = new ActivityScoreGrade(entity);
 	}
 
 	setDueDate(date) {
@@ -152,6 +154,7 @@ decorate(ActivityUsage, {
 	dueDateErrorTerm: observable,
 	startDateErrorTerm: observable,
 	endDateErrorTerm: observable,
+	scoreAndGrade: observable,
 	// actions
 	load: action,
 	setDueDate: action,
