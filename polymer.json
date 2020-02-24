@@ -1,6 +1,6 @@
 {
   "npm": true,
-    "extraDependencies": [
+  "extraDependencies": [
     "node_modules/@brightspace-ui-labs/edit-in-place/lang/*.js"
   ],
   "lint": {
