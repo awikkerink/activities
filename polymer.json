@@ -1,8 +1,5 @@
 {
   "npm": true,
-  "extraDependencies": [
-    "node_modules/@brightspace-ui-labs/edit-in-place/lang/*.js"
-  ],
   "lint": {
     "rules": ["polymer-3"],
     "ignoreWarnings": [
