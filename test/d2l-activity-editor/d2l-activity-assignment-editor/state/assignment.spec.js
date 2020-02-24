@@ -29,16 +29,20 @@ describe('Assignment ', function() {
 				instructionsRichTextEditorConfig: () => {},
 				activityUsageHref: () => 'http://activity/1',
 				submissionTypeOptions: () => [
-					{title: 'Option 1', value: 0, completionTypes: null, selected: false},
-					{title: 'Option 2', value: 1, completionTypes: null, selected: false},
-					{title: 'Option 3', value: 2, completionTypes: [1,2,3], selected: false},
-					{title: 'Option 4', value: 3, completionTypes: [1,2,3], selected: false}
+					{title: 'File submission', value: 0, completionTypes: null, selected: false},
+					{title: 'Text submission', value: 1, completionTypes: null, selected: false},
+					{title: 'On paper submission', value: 2, completionTypes: [2, 3, 4], selected: true},
+					{title: 'Observed in person', value: 3, completionTypes: [1, 3, 4], selected: false}
 				],
-				completionTypeOptions: () => [],
+				completionTypeOptions: () => [
+					{title: 'Manually by learners', value: 2},
+					{title: 'Automatically on evaluation', value: 3},
+					{title: 'Automatically on due date', value: 4}
+				],
 				canEditSubmissionType: () => true,
 				canEditCompletionType: () => false,
-				submissionType: () => { return {title: 'Option 1', value: 0}; },
-				completionType: () => { return {title: 'Automatically on submission', value: 0}; }
+				submissionType: () => { return {title: 'On paper submission', value: 2}; },
+				completionType: () => { return {title: 'Manually by learners', value: 2}; }
 			};
 		});
 
@@ -52,17 +56,21 @@ describe('Assignment ', function() {
 		expect(assignment.name).to.equal('Homework 101');
 		expect(assignment.instructions).to.equal('These are your instructions');
 		expect(assignment.activityUsageHref).to.equal('http://activity/1');
-		expect(assignment.submissionTypeOptions).to.be.ordered.members([
-			{title: 'Option 1', value: 0, completionTypes: null, selected: false},
-			{title: 'Option 2', value: 1, completionTypes: null, selected: false},
-			{title: 'Option 3', value: 2, completionTypes: [1,2,3], selected: false},
-			{title: 'Option 4', value: 3, completionTypes: [1,2,3], selected: false}
+		expect(assignment.submissionTypeOptions).to.eql([
+			{title: 'File submission', value: 0, completionTypes: null, selected: false},
+			{title: 'Text submission', value: 1, completionTypes: null, selected: false},
+			{title: 'On paper submission', value: 2, completionTypes: [2, 3, 4], selected: true},
+			{title: 'Observed in person', value: 3, completionTypes: [1, 3, 4], selected: false}
 		]);
-		expect(assignment.completionTypeOptions).to.include.ordered.members([]);
+		expect(assignment.completionTypeOptions).to.eql([
+			{title: 'Manually by learners', value: 2},
+			{title: 'Automatically on evaluation', value: 3},
+			{title: 'Automatically on due date', value: 4}
+		]);
 		expect(assignment.canEditSubmissionType).to.equal(true);
 		expect(assignment.canEditCompletionType).to.equal(false);
-		expect(assignment.submissionType).to.deep.equal(0);
-		expect(assignment.completionType).to.deep.equal({title: 'Automatically on submission', value: 0});
+		expect(assignment.submissionType).to.equal(2);
+		expect(assignment.completionType).to.equal(2);
 
 		expect(fetchEntity.mock.calls.length).to.equal(1);
 		expect(AssignmentEntity.mock.calls[0][0]).to.equal(sirenEntity);
@@ -72,8 +80,10 @@ describe('Assignment ', function() {
 	it('setSubmissionType', async() => {
 		const assignment = new Assignment('http://assignment/1', 'token');
 		await assignment.fetch();
-		assignment.setSubmissionType(1);
+		assignment.setSubmissionType(3);
 
-		expect(assignment.submissionType).to.equal(1)
+		expect(assignment.submissionType).to.equal(3);
+		expect(assignment.completionType).to.equal(2);
+		expect(assignment.canEditCompletionType).to.equal(true);
 	});
 });

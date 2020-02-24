@@ -53,7 +53,7 @@ describe('d2l-activity-visibility-editor', function() {
 		href = 'http://activity/1';
 		activity = new ActivityUsage(href, 'token');
 		activity.setDraftStatus(true);
-		activity.setCanEditDraft(true);
+		activity.setCanEditDraft(true)
 		store.put(href, activity);
 
 		el = await fixture(html`

@@ -20,12 +20,12 @@ export class Assignment {
 		return this;
 	}
 
-	_getValidCompletionTypes(){
+	_getValidCompletionTypes() {
 		return this.completionTypeOptions;
 	}
 
 	_isCurrentCompletionTypeValid(validCompletionTypes) {
-		return validCompletionTypes.find(completionType => completionType.value === this.completionTypeOptions);
+		return validCompletionTypes.find(completionType => completionType.value === this.completionType);
 	}
 
 	load(entity) {
@@ -47,16 +47,15 @@ export class Assignment {
 	setSubmissionType(value) {
 		this.submissionType = value;
 
-		debugger;
 		const validCompletionTypes = this._getValidCompletionTypes();
 
 		if (validCompletionTypes.length > 0) {
 			this.canEditCompletionType = true;
-			if(!this._isCurrentCompletionTypeValid(validCompletionTypes)){
+			if (!this._isCurrentCompletionTypeValid(validCompletionTypes)) {
 				this.completionType = validCompletionTypes[0].value;
 			}
-		}else{
-			this.canEditCompletionType = true;
+		} else {
+			this.canEditCompletionType = false;
 		}
 	}
 
