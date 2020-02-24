@@ -607,6 +607,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 						<d2l-organization-image
 							class="d2l-activitiy-collection-organization-image"
 							href=${item.self()}
+							.token=${this.token}
 							@d2l-organization-image-loaded="${() => this._onListImageLoaded(this._organizationImageChunk[item.itemSelf])}"
 							?hidden="${!this._loadedImages[this._organizationImageChunk[item.itemSelf]].allLoaded}">
 						</d2l-organization-image>
@@ -636,6 +637,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 						<d2l-organization-image
 							class="d2l-activitiy-collection-organization-image"
 							href="${candidate.itemSelf}"
+							.token=${this.token}
 							@d2l-organization-image-loaded="${() => this._onListImageLoaded(this._organizationImageChunk[candidate.itemSelf])}"
 							?hidden="${!this._loadedImages[this._organizationImageChunk[candidate.itemSelf]].allLoaded}">
 						</d2l-organization-image>
