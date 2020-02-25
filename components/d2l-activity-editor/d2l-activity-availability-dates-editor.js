@@ -46,18 +46,23 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeMixin
 
 	render() {
 		const activity = store.get(this.href);
-		let canEditDates, startDate, endDate;
+		let canEditDates, startDate, endDate, startDateErrorTerm, endDateErrorTerm;
 
 		if (!activity) {
 			canEditDates = false;
 			startDate = null;
 			endDate = null;
+			startDateErrorTerm = null;
+			endDateErrorTerm = null;
 		} else {
 			canEditDates = activity.canEditDates;
 			startDate = activity.startDate;
 			endDate = activity.endDate;
+			startDateErrorTerm = this.localize(activity.startDateErrorTerm);
+			endDateErrorTerm = this.localize(activity.endDateErrorTerm);
 		}
 
+		//TODO: Ugly hacked-in error tooltips can probably be removed when we have date pickers with proper error styling
 		return html`
 			<label class="d2l-label-text" ?hidden=${!canEditDates}>${this.localize('startDate')}</label>
 			<div id="startdate-container" ?hidden=${!canEditDates}>
@@ -70,9 +75,19 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeMixin
 					datetime="${startDate}"
 					overrides="${this._overrides}"
 					placeholder="${this.localize('noStartDate')}"
+					aria-invalid="${startDateErrorTerm ? 'true' : 'false'}"
 					@d2l-datetime-picker-datetime-changed="${this._onStartDatetimePickerDatetimeChanged}"
 					@d2l-datetime-picker-datetime-cleared="${this._onStartDatetimePickerDatetimeCleared}">
 				</d2l-datetime-picker>
+				${startDateErrorTerm ? html`
+					<d2l-tooltip
+						id="score-tooltip"
+						for="startDate"
+						position="bottom"
+					>
+						${startDateErrorTerm}
+					</d2l-tooltip>
+				` : null}
 			</div>
 			<label class="d2l-label-text" ?hidden=${!canEditDates}>${this.localize('endDate')}</label>
 			<div id="enddate-container" ?hidden=${!canEditDates}>
@@ -85,9 +100,19 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeMixin
 					datetime="${endDate}"
 					overrides="${this._overrides}"
 					placeholder="${this.localize('noEndDate')}"
+					aria-invalid="${endDateErrorTerm ? 'true' : 'false'}"
 					@d2l-datetime-picker-datetime-changed="${this._onEndDatetimePickerDatetimeChanged}"
 					@d2l-datetime-picker-datetime-cleared="${this._onEndDatetimePickerDatetimeCleared}">
 				</d2l-datetime-picker>
+				${endDateErrorTerm ? html`
+					<d2l-tooltip
+						id="score-tooltip"
+						for="endDate"
+						position="bottom"
+					>
+						${endDateErrorTerm}
+					</d2l-tooltip>
+				` : null}
 			</div>
 		`;
 	}
