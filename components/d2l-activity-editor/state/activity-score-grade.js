@@ -1,5 +1,4 @@
 import {  action, configure as configureMobx, decorate, observable } from 'mobx';
-// import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
 
 configureMobx({ enforceActions: 'observed' });
 

@@ -16,7 +16,13 @@ describe('Activity Usage', function() {
 		endDate: () => '2020-01-24T04:59:00.000Z',
 		canEditDates: () => true,
 		isDraft: () => true,
-		canEditDraft: () => true
+		canEditDraft: () => true,
+		scoreOutOf: () => 10,
+		inGrades: () => true,
+		gradeType: () => 'Points',
+		canEditScoreOutOf: () => true,
+		canSeeGrades: () => true,
+		canEditGrades: () => true
 	};
 
 	afterEach(() => {
