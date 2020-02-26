@@ -36,24 +36,24 @@ describe('Assignment ', function() {
 				],
 				allCompletionTypeOptions: () => [
 					{
-						"title": "Automatically on submission",
-						"value": 0,
-						"selected": true
+						'title': 'Automatically on submission',
+						'value': 0,
+						'selected': true
 					},
 					{
-						"title": "Manually by learners",
-						"value": 2,
-						"selected": false
+						'title': 'Manually by learners',
+						'value': 2,
+						'selected': false
 					},
 					{
-						"title": "Automatically on evaluation",
-						"value": 3,
-						"selected": false
+						'title': 'Automatically on evaluation',
+						'value': 3,
+						'selected': false
 					},
 					{
-						"title": "Automatically on due date",
-						"value": 1,
-						"selected": false
+						'title': 'Automatically on due date',
+						'value': 1,
+						'selected': false
 					}
 				],
 				completionTypeOptions: () => [
