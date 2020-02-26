@@ -1,13 +1,13 @@
 import '../d2l-activity-availability-dates-summary.js';
 import '../d2l-activity-availability-dates-editor.js';
-import '../d2l-activity-release-conditions-editor.js';
+import '../d2l-activity-usage-conditions-editor.js';
 import '@brightspace-ui-labs/accordion/accordion-collapse.js';
-import { bodySmallStyles, heading4Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { summarizerHeaderStyles, summarizerSummaryStyles } from './activity-summarizer-styles.js';
 
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { getLocalizeResources } from '../localization.js';
+import { heading4Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { shared as store } from '../state/activity-store.js';
@@ -26,7 +26,6 @@ class ActivityAssignmentAvailabilityEditor extends LocalizeMixin(ActivityEditorM
 	static get styles() {
 
 		return [
-			bodySmallStyles,
 			heading4Styles,
 			css`
 				:host {
@@ -43,10 +42,6 @@ class ActivityAssignmentAvailabilityEditor extends LocalizeMixin(ActivityEditorM
 
 				.d2l-heading-4 {
 					margin: 0 0 0.6rem 0;
-				}
-
-				.d2l-body-small {
-					margin: 0 0 0.3rem 0;
 				}
 			`,
 			summarizerHeaderStyles,
@@ -101,13 +96,11 @@ class ActivityAssignmentAvailabilityEditor extends LocalizeMixin(ActivityEditorM
 				<h3 class="d2l-heading-4">
 					${this.localize('hdrReleaseConditions')}
 				</h3>
-				<p class="d2l-body-small">
-					${this.localize('hlpReleaseConditions')}
-				</p>
-				<d2l-activity-release-conditions-editor
+				<d2l-activity-usage-conditions-editor
+					description="${this.localize('hlpReleaseConditions')}"
 					href="${this.href}"
 					.token="${this.token}">
-				</d2l-activity-release-conditions-editor>
+				</d2l-activity-usage-conditions-editor>
 			</div>
 		`;
 	}

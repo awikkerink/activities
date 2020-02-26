@@ -1,21 +1,53 @@
 import 'd2l-dropdown/d2l-dropdown-button-subtle.js';
 import 'd2l-dropdown/d2l-dropdown-menu.js';
+import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
 import { getLocalizeResources } from './localization';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
+import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
+import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 import store from './state/conditions-store.js';
 
-class ActivityConditionsEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitElement)) {
+class ActivityConditionsEditor
+	extends ActivityEditorMixin(RtlMixin(LocalizeMixin(MobxLitElement))) {
+
+	static get properties() {
+
+		return {
+			description: { type: String }
+		};
+	}
 
 	static get styles() {
 
-		return css`
+		return [
+			bodySmallStyles,
+			labelStyles,
+			selectStyles,
+			css`
+			.d2l-body-small, .d2l-label-text {
+				margin: 0 0 0.3rem 0;
+			}
+
+			.d2l-input-select {
+				width: 100%;
+				max-width: 300px;
+				display: block;
+			}
+
 			d2l-dropdown-button-subtle {
 				margin-left: -0.6rem;
 			}
-		`;
+
+			.conditions {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			`
+		];
 	}
 
 	static async getLocalizeResources(langs) {
@@ -34,6 +66,70 @@ class ActivityConditionsEditor extends ActivityEditorMixin(LocalizeMixin(MobxLit
 		}
 
 		await entity.save();
+	}
+
+	_renderDescription({ conditions }) {
+
+		if (conditions.length <= 0) {
+
+			return html`
+				<p class="d2l-body-small">
+					${this.description}
+				</p>
+			`;
+		}
+
+		if (conditions.length === 1) {
+
+			return html`
+				<p class="d2l-label-text">
+					${this.localize('lblConditionsOperator')}
+				</p>
+			`;
+		}
+
+		// label rendered by operator select list for a11y
+		return html``;
+	}
+
+	_renderOperator({ value, selected, title }) {
+
+		return html`
+			<option value="${value}" ?selected="${selected}">
+				${title}
+			</option>
+		`;
+	}
+
+	_setOperator(event) {
+
+		const entity = store.get(this.href);
+		if (!entity) {
+			return;
+		}
+
+		entity.setOperator(event.target.value);
+	}
+
+	_renderOperators({ conditions, operators }) {
+
+		if( conditions.length <= 1 ) {
+			return html``;
+		}
+
+		return html`
+			<div>
+				<label class="d2l-label-text" for="operator">
+					${this.localize('lblConditionsOperator')}
+				</label>
+				<select
+					class="d2l-input-select"
+					id="operator"
+					@change="${this._setOperator}">
+					${operators.map(this._renderOperator, this)}
+				</select>
+			</div>
+		`;
 	}
 
 	_removeCondition(event) {
@@ -58,6 +154,15 @@ class ActivityConditionsEditor extends ActivityEditorMixin(LocalizeMixin(MobxLit
 					@click="${this._removeCondition}">
 				</d2l-button-icon>
 			</li>
+		`;
+	}
+
+	_renderConditions({ conditions }) {
+
+		return html`
+			<ul class="conditions">
+				${conditions.map(this._renderCondition, this)}
+			</ul>
 		`;
 	}
 
@@ -212,9 +317,9 @@ class ActivityConditionsEditor extends ActivityEditorMixin(LocalizeMixin(MobxLit
 		}
 
 		return html`
-			<ul>
-				${entity.conditions.map(this._renderCondition, this)}
-			</ul>
+			${this._renderDescription(entity)}
+			${this._renderOperators(entity)}
+			${this._renderConditions(entity)}
 			${this._renderAddCondition(entity)}
 		`;
 	}

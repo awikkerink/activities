@@ -6,6 +6,7 @@ export default {
 	"btnCreateNew": "Create New", // create new button
 	"btnAddExisting": "Add Existing", // add existing button
 	"btnRemoveCondition": "Remove Condition", // remove condition button
+	"lblConditionsOperator": "To view this item, users must satisfy", // conditions operator label
 	"btnCancel": "Cancel", // cancel button
 	"btnSave": "Save", // save button
 	"dueDate": "Due Date", // ARIA label for the due date field when creating/editing an activity
