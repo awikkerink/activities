@@ -34,10 +34,27 @@ describe('Assignment ', function() {
 					{title: 'On paper submission', value: 2, completionTypes: [2, 3, 4], selected: true},
 					{title: 'Observed in person', value: 3, completionTypes: [1, 3, 4], selected: false}
 				],
-				completionTypeOptions: () => [
-					{title: 'Manually by learners', value: 2},
-					{title: 'Automatically on evaluation', value: 3},
-					{title: 'Automatically on due date', value: 4}
+				allCompletionTypeOptions: () => [
+					{
+						"title": "Automatically on submission",
+						"value": 0,
+						"selected": true
+					},
+					{
+						"title": "Manually by learners",
+						"value": 2,
+						"selected": false
+					},
+					{
+						"title": "Automatically on evaluation",
+						"value": 3,
+						"selected": false
+					},
+					{
+						"title": "Automatically on due date",
+						"value": 1,
+						"selected": false
+					}
 				],
 				canEditSubmissionType: () => true,
 				canEditCompletionType: () => false,
@@ -77,13 +94,35 @@ describe('Assignment ', function() {
 		expect(AssignmentEntity.mock.calls[0][1]).to.equal('token');
 	});
 
-	it('setSubmissionType', async() => {
+	it('setSubmissionType when new submission type has completion types', async() => {
+		const assignment = new Assignment('http://assignment/1', 'token');
+		await assignment.fetch();
+		assignment.submissionTypeOptions[3].completionTypes = [2, 3, 4];
+		assignment.setSubmissionType(3);
+
+		expect(assignment.submissionType).to.equal(3);
+		expect(assignment.completionType).to.equal(2);
+		expect(assignment.canEditCompletionType).to.equal(true);
+	});
+
+	it('setSubmissionType when current completion type is valid', async() => {
+		const assignment = new Assignment('http://assignment/1', 'token');
+		await assignment.fetch();
+		assignment.submissionTypeOptions[3].completionTypes = [2, 3, 4];
+		assignment.setSubmissionType(3);
+
+		expect(assignment.submissionType).to.equal(3);
+		expect(assignment.completionType).to.equal(2);
+		expect(assignment.canEditCompletionType).to.equal(true);
+	});
+
+	it('setSubmissionType when current completion type is no longer valid', async() => {
 		const assignment = new Assignment('http://assignment/1', 'token');
 		await assignment.fetch();
 		assignment.setSubmissionType(3);
 
 		expect(assignment.submissionType).to.equal(3);
-		expect(assignment.completionType).to.equal(2);
+		expect(assignment.completionType).to.equal(1);
 		expect(assignment.canEditCompletionType).to.equal(true);
 	});
 });
