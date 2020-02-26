@@ -1,6 +1,6 @@
 import { action, configure as configureMobx, decorate, observable, runInAction } from 'mobx';
-import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
 import { ActivityScoreGrade } from './activity-score-grade.js';
+import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
 import { fetchEntity } from '../state/fetch-entity.js';
 
 configureMobx({ enforceActions: 'observed' });
@@ -102,6 +102,10 @@ export class ActivityUsage {
 		this.endDateErrorTerm = null;
 	}
 
+	setScoreAndGrade(val) {
+		this.scoreAndGrade = val;
+	}
+
 	async validate() {
 		if (!this._entity) {
 			return;
@@ -165,5 +169,6 @@ decorate(ActivityUsage, {
 	setCanEditDates: action,
 	save: action,
 	validate: action,
-	setErrorLangTerms: action
+	setErrorLangTerms: action,
+	setScoreAndGrade: action
 });

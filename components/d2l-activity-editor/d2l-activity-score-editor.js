@@ -167,7 +167,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(ErrorHandlingMixin(Localiz
 					this.shadowRoot.querySelector('#score-out-of');
 				toFocus.focus();
 			}
-	});
+		});
 	}
 
 	_onScoreOutOfChanged() {
