@@ -102,8 +102,7 @@ describe('Assignment ', function() {
 	it('setSubmissionType when new submission type has completion types', async() => {
 		const assignment = new Assignment('http://assignment/1', 'token');
 		await assignment.fetch();
-		AssignmentEntity.mock.instances[0].submissionType = 1
-		// assignment.submissionType = 1;
+		assignment.submissionType = 1;
 		assignment.completionType = null;
 		assignment.setSubmissionType(3);
 
