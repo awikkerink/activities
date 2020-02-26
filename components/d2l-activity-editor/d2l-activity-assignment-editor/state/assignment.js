@@ -22,29 +22,30 @@ export class Assignment {
 
 	_getValidCompletionTypes(currentSubmissionType) {
 		return this.submissionTypeOptions.find(
-			submissionType => submissionType.value.toString() === currentSubmissionType
-		).completionTypes
+			submissionType => submissionType.value.toString() === currentSubmissionType.toString()
+		).completionTypes;
 	}
 
 	_isCompletionTypeValid(completionType, validCompletionTypes) {
 		return validCompletionTypes.some(validCompletionType => completionType.toString() === validCompletionType.toString());
 	}
 
-	_setValidCompletionTypeForSubmissionType(){
+	_setValidCompletionTypeForSubmissionType() {
 		const validCompletionTypes = this._getValidCompletionTypes(this.submissionType);
-		
+
 		if (validCompletionTypes !== null && validCompletionTypes.length > 0) {
 			this.canEditCompletionType = true;
 			this.completionTypeOptions = this.allCompletionTypeOptions.filter(
 				completionType => this._isCompletionTypeValid(completionType.value, validCompletionTypes)
 			);
-			
-			if (!this._isCompletionTypeValid(this.completionType, validCompletionTypes)) {
+
+			if (this.completionType === null || !this._isCompletionTypeValid(this.completionType, validCompletionTypes)) {
 				this.completionType = validCompletionTypes[0];
 			}
 		} else {
 			this.canEditCompletionType = false;
 			this.completionTypeOptions = [];
+			this.completionType = null;
 		}
 	}
 
