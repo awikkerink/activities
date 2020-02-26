@@ -1,6 +1,5 @@
 import { ActivityScoreGrade} from '../../../components/d2l-activity-editor/state/activity-score-grade.js';
 import { expect } from 'chai';
-import sinon from 'sinon';
 import { when } from 'mobx';
 
 describe('Activity Score Grade', function() {
