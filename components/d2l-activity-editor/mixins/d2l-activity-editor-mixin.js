@@ -22,6 +22,8 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 		this.store = store;
 	}
 
+	async validate() {}
+
 	async save() {}
 
 	_dispatchActivityEditorEvent() {

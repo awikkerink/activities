@@ -1,4 +1,4 @@
-import { action, configure as configureMobx, decorate, observable } from 'mobx';
+import { action, configure as configureMobx, decorate, observable, runInAction } from 'mobx';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
 import { fetchEntity } from '../state/fetch-entity.js';
 
@@ -28,6 +28,11 @@ export class ActivityUsage {
 		this.canEditDates = entity.canEditDates();
 		this.isDraft = entity.isDraft();
 		this.canEditDraft = entity.canEditDraft();
+		this.isError = false;
+		this.errorType = null;
+		this.dueDateErrorTerm = null;
+		this.startDateErrorTerm = null;
+		this.endDateErrorTerm = null;
 	}
 
 	setDueDate(date) {
@@ -54,6 +59,70 @@ export class ActivityUsage {
 		this.canEditDates = value;
 	}
 
+	setErrorLangTerms(errorType) {
+		if (errorType && errorType.includes('end-due-start-date-error')) {
+			this.dueDateErrorTerm = 'dueBetweenStartEndDate';
+			this.startDateErrorTerm = 'dueBetweenStartEndDate';
+			this.endDateErrorTerm = 'dueBetweenStartEndDate';
+			return;
+		}
+
+		if (errorType && errorType.includes('start-after-end-date-error')) {
+			this.dueDateErrorTerm = 'dueAfterStartDate';
+			this.startDateErrorTerm = 'dueAfterStartDate';
+			this.endDateErrorTerm = 'startBeforeEndDate';
+			return;
+		}
+
+		if (errorType && errorType.includes('start-after-due-date-error')) {
+			this.dueDateErrorTerm = 'dueAfterStartDate';
+			this.startDateErrorTerm = 'dueAfterStartDate';
+			this.endDateErrorTerm = null;
+			return;
+		}
+
+		if (errorType && errorType.includes('end-before-start-date-error')) {
+			this.dueDateErrorTerm = 'dueBeforeEndDate';
+			this.startDateErrorTerm = 'startBeforeEndDate';
+			this.endDateErrorTerm = 'dueBeforeEndDate';
+			return;
+		}
+
+		if (errorType && errorType.includes('end-before-due-date-error')) {
+			this.dueDateErrorTerm = 'dueBeforeEndDate';
+			this.startDateErrorTerm = null;
+			this.endDateErrorTerm = 'dueBeforeEndDate';
+			return;
+		}
+
+		this.dueDateErrorTerm = null;
+		this.startDateErrorTerm = null;
+		this.endDateErrorTerm = null;
+	}
+
+	async validate() {
+		if (!this._entity) {
+			return;
+		}
+
+		this.isError = false;
+		this.errorType = null;
+		this.setErrorLangTerms();
+
+		await this._entity.validate({
+			dueDate: this.dueDate,
+			startDate: this.startDate,
+			endDate: this.endDate
+		}).catch(e => runInAction(() => {
+			this.isError = true;
+			if (e.json && e.json.properties && e.json.properties.type) {
+				this.errorType = e.json.properties.type;
+				this.setErrorLangTerms(this.errorType);
+			}
+			throw e;
+		}));
+	}
+
 	async save() {
 		if (!this._entity) {
 			return;
@@ -78,6 +147,11 @@ decorate(ActivityUsage, {
 	canEditDates: observable,
 	isDraft: observable,
 	canEditDraft: observable,
+	isError: observable,
+	errorType: observable,
+	dueDateErrorTerm: observable,
+	startDateErrorTerm: observable,
+	endDateErrorTerm: observable,
 	// actions
 	load: action,
 	setDueDate: action,
@@ -86,5 +160,7 @@ decorate(ActivityUsage, {
 	setDraftStatus: action,
 	setCanEditDraft: action,
 	setCanEditDates: action,
-	save: action
+	save: action,
+	validate: action,
+	setErrorLangTerms: action
 });

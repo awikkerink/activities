@@ -1,7 +1,6 @@
 import './d2l-activity-assignment-availability-editor.js';
 import './d2l-activity-assignment-evaluation-editor.js';
 import './d2l-activity-assignment-editor-submission-and-completion.js';
-import '../d2l-activity-rubrics-list-container.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
@@ -78,14 +77,10 @@ class AssignmentEditorSecondary extends SaveStatusMixin(RtlMixin(EntityMixinLit(
 				.token="${this.token}">
 			</d2l-activity-assignment-editor-submission-and-completion>
 
-			<d2l-activity-rubrics-list-container
-				href="${this._activityUsageHref}"
-				.token="${this.token}">
-			</d2l-activity-rubrics-list-container>
-
 			<d2l-activity-assignment-evaluation-editor
 				href="${this.href}"
-				.token="${this.token}">
+				.token="${this.token}"
+				activityUsageHref=${this._activityUsageHref}>
 			</d2l-activity-assignment-evaluation-editor>
 		`;
 	}
