@@ -77,7 +77,7 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeMixin
 					aria-invalid="${startDateErrorTerm ? 'true' : 'false'}"
 					invalid="${startDateErrorTerm}"
 					tooltip-red
-					boundary='{"below":240}'
+					boundary="{&quot;below&quot;:240}"
 					@d2l-datetime-picker-datetime-changed="${this._onStartDatetimePickerDatetimeChanged}"
 					@d2l-datetime-picker-datetime-cleared="${this._onStartDatetimePickerDatetimeCleared}">
 				</d2l-datetime-picker>
@@ -96,7 +96,7 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeMixin
 					aria-invalid="${endDateErrorTerm ? 'true' : 'false'}"
 					invalid="${endDateErrorTerm}"
 					tooltip-red
-					boundary='{"below":240}'
+					boundary="{&quot;below&quot;:240}"
 					@d2l-datetime-picker-datetime-changed="${this._onEndDatetimePickerDatetimeChanged}"
 					@d2l-datetime-picker-datetime-cleared="${this._onEndDatetimePickerDatetimeCleared}">
 				</d2l-datetime-picker>

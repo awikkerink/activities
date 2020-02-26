@@ -59,7 +59,7 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 					aria-invalid="${errorTerm ? 'true' : 'false'}"
 					invalid="${errorTerm}"
 					tooltip-red
-					boundary="{'left':240}"
+					boundary="{&quot;below&quot;:240}"
 					@d2l-datetime-picker-datetime-changed="${this._onDatetimePickerDatetimeChanged}"
 					@d2l-datetime-picker-datetime-cleared="${this._onDatetimePickerDatetimeCleared}">
 				</d2l-datetime-picker>
