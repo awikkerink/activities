@@ -20,12 +20,32 @@ export class Assignment {
 		return this;
 	}
 
-	_getValidCompletionTypes() {
-		return this.completionTypeOptions;
+	_getValidCompletionTypes(currentSubmissionType) {
+		return this.submissionTypeOptions.find(
+			submissionType => submissionType.value.toString() === currentSubmissionType
+		).completionTypes
 	}
 
-	_isCurrentCompletionTypeValid(validCompletionTypes) {
-		return validCompletionTypes.find(completionType => completionType.value === this.completionType);
+	_isCompletionTypeValid(completionType, validCompletionTypes) {
+		return validCompletionTypes.some(validCompletionType => completionType.toString() === validCompletionType.toString());
+	}
+
+	_setValidCompletionTypeForSubmissionType(){
+		const validCompletionTypes = this._getValidCompletionTypes(this.submissionType);
+		
+		if (validCompletionTypes !== null && validCompletionTypes.length > 0) {
+			this.canEditCompletionType = true;
+			this.completionTypeOptions = this.allCompletionTypeOptions.filter(
+				completionType => this._isCompletionTypeValid(completionType.value, validCompletionTypes)
+			);
+			
+			if (!this._isCompletionTypeValid(this.completionType, validCompletionTypes)) {
+				this.completionType = validCompletionTypes[0];
+			}
+		} else {
+			this.canEditCompletionType = false;
+			this.completionTypeOptions = [];
+		}
 	}
 
 	load(entity) {
@@ -38,6 +58,7 @@ export class Assignment {
 		this.activityUsageHref = entity.activityUsageHref();
 		this.submissionTypeOptions = entity.submissionTypeOptions();
 		this.completionTypeOptions = entity.completionTypeOptions();
+		this.allCompletionTypeOptions = entity.allCompletionTypeOptions();
 		this.canEditSubmissionType = entity.canEditSubmissionType();
 		this.canEditCompletionType = entity.canEditCompletionType();
 		this.submissionType = entity.submissionType().value;
@@ -46,24 +67,11 @@ export class Assignment {
 
 	setSubmissionType(value) {
 		this.submissionType = value;
-
-		const validCompletionTypes = this._getValidCompletionTypes();
-
-		if (validCompletionTypes.length > 0) {
-			this.canEditCompletionType = true;
-			if (!this._isCurrentCompletionTypeValid(validCompletionTypes)) {
-				this.completionType = validCompletionTypes[0].value;
-			}
-		} else {
-			this.canEditCompletionType = false;
-		}
+		this._setValidCompletionTypeForSubmissionType();
 	}
 
 	setCompletionType(value) {
-		const newSelection = parseInt(value);
-		if (!isNaN(newSelection)) {
-			this.completionType = value;
-		}
+		this.completionType = value;
 	}
 
 	setName(value) {
@@ -95,7 +103,6 @@ decorate(Assignment, {
 	canEditInstructions: observable,
 	instructionsRichTextEditorConfig: observable,
 	activityUsageHref: observable,
-	submissionTypeOptions: observable,
 	completionTypeOptions: observable,
 	canEditSubmissionType: observable,
 	canEditCompletionType: observable,

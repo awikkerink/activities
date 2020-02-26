@@ -64,7 +64,7 @@ class AssignmentEditorSubmissionAndCompletion extends ActivityEditorMixin(Locali
 	_getCompletionTypeOptions(assignment) {
 		const completionTypeOptions = assignment ? assignment.completionTypeOptions : [];
 		return html`
-			${completionTypeOptions.map(option => html`<option value=${option.value} ?selected=${option.value === assignment.completionType}>${option.title}</option>`)}
+			${completionTypeOptions.map(option => html`<option value=${option.value} ?selected=${option.value.toString() === assignment.completionType.toString()}>${option.title}</option>`)}
 		`;
 	}
 
@@ -113,7 +113,7 @@ class AssignmentEditorSubmissionAndCompletion extends ActivityEditorMixin(Locali
 		const completionHidden = assignment ? assignment.completionTypeOptions.length <= 0 : true;
 
 		return html `
-			<div id="assignment-completion-type-container" ?hidden="${false}">
+			<div id="assignment-completion-type-container" ?hidden="${completionHidden}">
 				<label class="d2l-label-text" for="assignment-completion-type">
 					${this.localize('completionType')}
 				</label>
