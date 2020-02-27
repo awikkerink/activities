@@ -115,7 +115,7 @@ class ActivityAssignmentAvailabilityEditor extends LocalizeMixin(ActivityEditorM
 	}
 
 	// Returns true if any error states relevant to this accordion are set
-	get _openOnError() {
+	get _errorInAccordion() {
 		const activity = store.get(this.href);
 		if (!activity) {
 			return false;
