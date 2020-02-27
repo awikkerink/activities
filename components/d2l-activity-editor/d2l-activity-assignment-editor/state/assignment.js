@@ -21,31 +21,34 @@ export class Assignment {
 	}
 
 	_getValidCompletionTypes(currentSubmissionType) {
+		const selectedSubmissionType = String(currentSubmissionType);
+		
 		return this.submissionTypeOptions.find(
-			submissionType => submissionType.value.toString() === currentSubmissionType.toString()
+			submissionType => submissionType.value.toString() === selectedSubmissionType
 		).completionTypes;
 	}
 
-	_isCompletionTypeValid(completionType, validCompletionTypes) {
-		return validCompletionTypes.some(validCompletionType => completionType.toString() === validCompletionType.toString());
+	_isCompletionTypeValid(completionTypeId, validCompletionTypes) {
+		const completionType = String(completionTypeId);
+		return validCompletionTypes.some(validCompletionType => validCompletionType.toString() === completionType);
 	}
 
 	_setValidCompletionTypeForSubmissionType() {
 		const validCompletionTypes = this._getValidCompletionTypes(this.submissionType);
 
-		if (validCompletionTypes !== null && validCompletionTypes.length > 0) {
+		if (validCompletionTypes && validCompletionTypes.length > 0) {
+			// we allow editing completion types only if the submission type has more than one valid completion type
 			this.canEditCompletionType = true;
 			this.completionTypeOptions = this.allCompletionTypeOptions.filter(
 				completionType => this._isCompletionTypeValid(completionType.value, validCompletionTypes)
 			);
 
 			if (this.completionType === null || !this._isCompletionTypeValid(this.completionType, validCompletionTypes)) {
-				this.completionType = validCompletionTypes[0];
+				this.completionType = String(validCompletionTypes[0]);
 			}
 		} else {
 			this.canEditCompletionType = false;
 			this.completionTypeOptions = [];
-			this.completionType = null;
 		}
 	}
 
@@ -62,8 +65,8 @@ export class Assignment {
 		this.allCompletionTypeOptions = entity.allCompletionTypeOptions();
 		this.canEditSubmissionType = entity.canEditSubmissionType();
 		this.canEditCompletionType = entity.canEditCompletionType();
-		this.submissionType = entity.submissionType().value;
-		this.completionType = entity.completionType().value;
+		this.submissionType = String(entity.submissionType().value);
+		this.completionType = String(entity.completionType().value);
 	}
 
 	setSubmissionType(value) {
