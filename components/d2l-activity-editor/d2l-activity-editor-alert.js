@@ -25,11 +25,8 @@ class ActivityEditorAlert extends ActivityEditorMixin(MobxLitElement) {
 
 	render() {
 		const activity = store.get(this.href);
-		if (!activity || !this.text) {
-			return html``;
-		}
-
-		if (!activity.isError) {
+		const showAlert = this.text && activity && activity.isError;
+		if (!showAlert) {
 			return html``;
 		}
 
