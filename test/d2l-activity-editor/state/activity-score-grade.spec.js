@@ -4,21 +4,42 @@ import { when } from 'mobx';
 
 describe('Activity Score Grade', function() {
 
-	const defaultEntityMock = {
-		scoreOutOf: () => 10,
-		inGrades: () => true,
-		gradeType: () => 'Points',
-		canEditScoreOutOf: () => true,
-		canSeeGrades: () => true,
-		canEditGrades: () => true
-	};
+	let defaultEntityMock;
+
+	beforeEach(() => {
+		defaultEntityMock = {
+			scoreOutOf: () => 10,
+			inGrades: () => true,
+			gradeType: () => 'Points',
+			canEditScoreOutOf: () => true,
+			canSeeGrades: () => true,
+			canEditGrades: () => true
+		};
+	});
 
 	describe('fetching', () => {
 
-		it('initializes', async() => {
+		it('initializes with score and in grades', async() => {
 			const activity = new ActivityScoreGrade(defaultEntityMock);
 
 			expect(activity.isUngraded).to.be.false;
+		});
+
+		it('initializes with score only', async() => {
+			defaultEntityMock.inGrades = () => false;
+
+			const activity = new ActivityScoreGrade(defaultEntityMock);
+
+			expect(activity.isUngraded).to.be.false;
+		});
+
+		it('initializes with ungraded', async() => {
+			defaultEntityMock.scoreOutOf = () => '';
+			defaultEntityMock.inGrades = () => false;
+
+			const activity = new ActivityScoreGrade(defaultEntityMock);
+
+			expect(activity.isUngraded).to.be.true;
 		});
 	});
 
@@ -35,11 +56,6 @@ describe('Activity Score Grade', function() {
 			);
 
 			activity.setUngraded();
-		});
-	});
-
-	describe('saving', () => {
-		it.skip('saves', () => {
 		});
 	});
 });

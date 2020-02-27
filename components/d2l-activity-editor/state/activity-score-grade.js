@@ -8,7 +8,7 @@ export class ActivityScoreGrade {
 		this.scoreOutOf = entity.scoreOutOf().toString();
 		this.inGrades = entity.inGrades();
 		this.gradeType = (entity.gradeType() || 'Points').toLowerCase();
-		this.isUngraded = !this.inGrades && !this._scoreOutOf;
+		this.isUngraded = !this.inGrades && !this.scoreOutOf;
 		this.canEditScoreOutOf = entity.canEditScoreOutOf();
 		this.canSeeGrades = entity.canSeeGrades();
 		this.canEditGrades = entity.canEditGrades();
@@ -35,12 +35,6 @@ export class ActivityScoreGrade {
 
 	addToGrades() {
 		this.inGrades = true;
-	}
-
-	async validate() {
-	}
-
-	async save() {
 	}
 }
 

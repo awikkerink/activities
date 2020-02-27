@@ -159,7 +159,11 @@ describe('Activity Usage', function() {
 				startDate: '2020-02-22T04:59:00.000Z',
 				dueDate: '2020-02-23T04:59:00.000Z',
 				endDate: '2020-02-24T04:59:00.000Z',
-				isDraft: false
+				isDraft: false,
+				scoreAndGrade: {
+					scoreOutOf: '10',
+					inGrades: true
+				}
 			});
 		});
 	});

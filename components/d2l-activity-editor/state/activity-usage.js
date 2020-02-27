@@ -138,7 +138,11 @@ export class ActivityUsage {
 			dueDate: this.dueDate,
 			startDate: this.startDate,
 			endDate: this.endDate,
-			isDraft: this.isDraft
+			isDraft: this.isDraft,
+			scoreAndGrade: {
+				scoreOutOf: this.scoreAndGrade.scoreOutOf,
+				inGrades: this.scoreAndGrade.inGrades
+			}
 		});
 
 		await this.fetch();
