@@ -22,7 +22,7 @@ export class Assignment {
 
 	_getValidCompletionTypes(currentSubmissionType) {
 		const selectedSubmissionType = String(currentSubmissionType);
-		
+
 		return this.submissionTypeOptions.find(
 			submissionType => submissionType.value.toString() === selectedSubmissionType
 		).completionTypes;

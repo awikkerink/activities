@@ -63,7 +63,7 @@ class AssignmentEditorSubmissionAndCompletion extends ActivityEditorMixin(Locali
 
 	_getCompletionTypeOptions(assignment) {
 		const completionTypeOptions = assignment ? assignment.completionTypeOptions : [];
-		const completionType = assignment ? assignment.completionType : "0";
+		const completionType = assignment ? assignment.completionType : '0';
 
 		return html`
 			${completionTypeOptions.map(option => html`<option value=${option.value} ?selected=${option.value === completionType}>${option.title}</option>`)}
