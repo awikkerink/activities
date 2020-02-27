@@ -91,8 +91,8 @@ describe('Assignment ', function() {
 		]);
 		expect(assignment.canEditSubmissionType).to.equal(true);
 		expect(assignment.canEditCompletionType).to.equal(false);
-		expect(assignment.submissionType).to.equal(2);
-		expect(assignment.completionType).to.equal(2);
+		expect(assignment.submissionType).to.equal('2');
+		expect(assignment.completionType).to.equal('2');
 
 		expect(fetchEntity.mock.calls.length).to.equal(1);
 		expect(AssignmentEntity.mock.calls[0][0]).to.equal(sirenEntity);
@@ -102,24 +102,24 @@ describe('Assignment ', function() {
 	it('setSubmissionType when new submission type has completion types', async() => {
 		const assignment = new Assignment('http://assignment/1', 'token');
 		await assignment.fetch();
-		assignment.submissionType = 1;
+		assignment.submissionType = '1';
 		assignment.completionType = null;
-		assignment.setSubmissionType(3);
+		assignment.setSubmissionType('3');
 
-		expect(assignment.submissionType).to.equal(3);
-		expect(assignment.completionType).to.equal(1);
+		expect(assignment.submissionType).to.equal('3');
+		expect(assignment.completionType).to.equal('1');
 		expect(assignment.canEditCompletionType).to.equal(true);
 	});
 
 	it('setSubmissionType when new submission type does not have completion types', async() => {
 		const assignment = new Assignment('http://assignment/1', 'token');
 		await assignment.fetch();
-		assignment.submissionType = 3;
-		assignment.completionType = 3;
-		assignment.setSubmissionType(1);
+		assignment.submissionType = '3';
+		assignment.completionType = '3';
+		assignment.setSubmissionType('1');
 
-		expect(assignment.submissionType).to.equal(1);
-		expect(assignment.completionType).to.equal(null);
+		expect(assignment.submissionType).to.equal('1');
+		expect(assignment.completionType).to.equal('3');
 		expect(assignment.canEditCompletionType).to.equal(false);
 	});
 
@@ -127,20 +127,20 @@ describe('Assignment ', function() {
 		const assignment = new Assignment('http://assignment/1', 'token');
 		await assignment.fetch();
 		assignment.submissionTypeOptions[3].completionTypes = [2, 3, 4];
-		assignment.setSubmissionType(3);
+		assignment.setSubmissionType('3');
 
-		expect(assignment.submissionType).to.equal(3);
-		expect(assignment.completionType).to.equal(2);
+		expect(assignment.submissionType).to.equal('3');
+		expect(assignment.completionType).to.equal('2');
 		expect(assignment.canEditCompletionType).to.equal(true);
 	});
 
 	it('setSubmissionType when current completion type is no longer valid', async() => {
 		const assignment = new Assignment('http://assignment/1', 'token');
 		await assignment.fetch();
-		assignment.setSubmissionType(3);
+		assignment.setSubmissionType('3');
 
-		expect(assignment.submissionType).to.equal(3);
-		expect(assignment.completionType).to.equal(1);
+		expect(assignment.submissionType).to.equal('3');
+		expect(assignment.completionType).to.equal('1');
 		expect(assignment.canEditCompletionType).to.equal(true);
 	});
 });
