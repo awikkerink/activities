@@ -37,8 +37,6 @@ export class Assignment {
 		const validCompletionTypes = this._getValidCompletionTypes(this.submissionType);
 
 		if (validCompletionTypes && validCompletionTypes.length > 0) {
-			// we allow editing completion types only if the submission type has more than one valid completion type
-			this.canEditCompletionType = true;
 			this.completionTypeOptions = this.allCompletionTypeOptions.filter(
 				completionType => this._isCompletionTypeValid(completionType.value, validCompletionTypes)
 			);
@@ -47,7 +45,6 @@ export class Assignment {
 				this.completionType = String(validCompletionTypes[0]);
 			}
 		} else {
-			this.canEditCompletionType = false;
 			this.completionTypeOptions = [];
 		}
 	}
@@ -110,6 +107,8 @@ decorate(Assignment, {
 	completionTypeOptions: observable,
 	canEditSubmissionType: observable,
 	canEditCompletionType: observable,
+	submissionType: observable,
+	completionType: observable,
 	// actions
 	load: action,
 	setName: action,

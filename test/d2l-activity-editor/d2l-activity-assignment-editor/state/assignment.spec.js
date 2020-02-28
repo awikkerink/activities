@@ -62,7 +62,7 @@ describe('Assignment ', function() {
 					{title: 'Automatically on due date', value: 4}
 				],
 				canEditSubmissionType: () => true,
-				canEditCompletionType: () => false,
+				canEditCompletionType: () => true,
 				submissionType: () => { return {title: 'On paper submission', value: 2}; },
 				completionType: () => { return {title: 'Manually by learners', value: 2}; }
 			};
@@ -90,7 +90,7 @@ describe('Assignment ', function() {
 			{title: 'Automatically on due date', value: 4}
 		]);
 		expect(assignment.canEditSubmissionType).to.equal(true);
-		expect(assignment.canEditCompletionType).to.equal(false);
+		expect(assignment.canEditCompletionType).to.equal(true);
 		expect(assignment.submissionType).to.equal('2');
 		expect(assignment.completionType).to.equal('2');
 
@@ -120,7 +120,7 @@ describe('Assignment ', function() {
 
 		expect(assignment.submissionType).to.equal('1');
 		expect(assignment.completionType).to.equal('3');
-		expect(assignment.canEditCompletionType).to.equal(false);
+		expect(assignment.canEditCompletionType).to.equal(true);
 	});
 
 	it('setSubmissionType when current completion type is valid', async() => {
