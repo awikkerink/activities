@@ -119,6 +119,10 @@ export class ActivityUsage {
 		this.errorType = null;
 		this.setErrorLangTerms();
 
+		if (!this.scoreAndGrade.validate()) {
+			this.isError = true;
+		}
+
 		await this._entity.validate({
 			dueDate: this.dueDate,
 			startDate: this.startDate,
@@ -129,8 +133,11 @@ export class ActivityUsage {
 				this.errorType = e.json.properties.type;
 				this.setErrorLangTerms(this.errorType);
 			}
-			throw e;
 		}));
+
+		if (this.isError) {
+			throw new Error('Activity Usage validation failed');
+		}
 	}
 
 	async save() {

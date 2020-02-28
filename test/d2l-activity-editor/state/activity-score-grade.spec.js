@@ -2,6 +2,17 @@ import { ActivityScoreGrade} from '../../../components/d2l-activity-editor/state
 import { expect } from 'chai';
 import { when } from 'mobx';
 
+function catchErrors(done, callback) {
+	return function() {
+		try {
+			callback(...arguments);
+			done();
+		} catch (e) {
+			done.fail(e);
+		}
+	};
+}
+
 describe('Activity Score Grade', function() {
 
 	let defaultEntityMock;
@@ -50,12 +61,118 @@ describe('Activity Score Grade', function() {
 
 			when(
 				() => activity.isUngraded,
-				() => {
-					done();
-				}
+				catchErrors(done, () => {
+					expect(activity.scoreOutOf).to.be.empty;
+					expect(activity.inGrades).to.be.false;
+				})
 			);
 
 			activity.setUngraded();
+		});
+
+		it('reacts to graded', async(done) => {
+			const activity = new ActivityScoreGrade(defaultEntityMock);
+			activity.setUngraded();
+
+			when(
+				() => activity.inGrades,
+				catchErrors(done, () => {
+					expect(activity.isUngraded).to.be.false;
+				})
+			);
+
+			activity.setGraded();
+		});
+
+		it('reacts to remove from grades', async(done) => {
+			const activity = new ActivityScoreGrade(defaultEntityMock);
+
+			when(
+				() => !activity.inGrades,
+				done
+			);
+
+			activity.removeFromGrades();
+		});
+
+		it('reacts to set score', async(done) => {
+			const activity = new ActivityScoreGrade(defaultEntityMock);
+
+			when(
+				() => activity.scoreOutOf === '99',
+				done
+			);
+
+			activity.setScoreOutOf('99');
+		});
+	});
+
+	describe('validating', () => {
+		it('validates empty score when graded', () => {
+			defaultEntityMock.scoreOutOf = () => '';
+			defaultEntityMock.inGrades = () => false;
+
+			const activity = new ActivityScoreGrade(defaultEntityMock);
+			activity.setGraded();
+
+			expect(activity.validate()).to.be.false;
+			expect(activity.scoreOutOfError).to.equal('emptyScoreOutOfError');
+		});
+
+		it('validates invalid score', () => {
+			const activity = new ActivityScoreGrade(defaultEntityMock);
+			activity.setScoreOutOf('abc');
+			expect(activity.scoreOutOfError).to.equal('invalidScoreOutOfError');
+		});
+
+		it('resets empty score error when remove from grades', () => {
+			const activity = new ActivityScoreGrade(defaultEntityMock);
+			activity.setScoreOutOf('');
+			expect(activity.scoreOutOfError).to.equal('emptyScoreOutOfError');
+
+			activity.removeFromGrades();
+			expect(activity.scoreOutOfError).to.be.null;
+		});
+
+		it('does not reset invalid score error when remove from grades', () => {
+			const activity = new ActivityScoreGrade(defaultEntityMock);
+			activity.setScoreOutOf('abc');
+			expect(activity.scoreOutOfError).to.equal('invalidScoreOutOfError');
+
+			activity.removeFromGrades();
+			expect(activity.scoreOutOfError).to.equal('invalidScoreOutOfError');
+		});
+
+		it('resets score and invalid error when set ungraded', () => {
+			const activity = new ActivityScoreGrade(defaultEntityMock);
+			activity.setScoreOutOf('abc');
+			expect(activity.scoreOutOfError).to.equal('invalidScoreOutOfError');
+
+			activity.setUngraded();
+
+			expect(activity.scoreOutOf).to.equal('');
+			expect(activity.scoreOutOfError).to.be.null;
+		});
+
+		it('resets score and empty error when set ungraded', () => {
+			const activity = new ActivityScoreGrade(defaultEntityMock);
+			activity.setScoreOutOf('');
+			expect(activity.scoreOutOfError).to.equal('emptyScoreOutOfError');
+
+			activity.setUngraded();
+
+			expect(activity.scoreOutOf).to.equal('');
+			expect(activity.scoreOutOfError).to.be.null;
+		});
+
+		it('reacts to score error', async(done) => {
+			const activity = new ActivityScoreGrade(defaultEntityMock);
+			when(
+				() => !activity.scoreOutOfError,
+				done
+			);
+
+			activity.setScoreOutOf('abc');
 		});
 	});
 });
