@@ -17,12 +17,13 @@ class EvaluationPage extends LitElement {
 			:host([hidden]) {
 				display: none;
 			}
-			d2l-template-primary-secondary {
-				height: 60rem;
+			#evidence {
+				height: 100%;
+				display: flex;
+				flex-grow: 1;
 			}
-			iframe {
-				height: 60rem;
-				width: 100%;
+			#d2l-evaluation-page-iframe {
+				width: 100%
 			}
 		`;
 	}
@@ -30,11 +31,17 @@ class EvaluationPage extends LitElement {
 	render() {
 		return html`
 			<d2l-template-primary-secondary>
-				<iframe
-					slot="primary"
-					id="d2l-evaluation-page-iframe"
-					src="${this.leftPanelUrl}">
-				</iframe>
+				<div slot="primary" id="evidence">
+					<iframe
+						slot="primary"
+						id="d2l-evaluation-page-iframe"
+						frameBorder="0"
+						src="${this.leftPanelUrl}">
+					</iframe>
+				</div>
+				<div slot="secondary">
+					<p>right panel</p>
+				</div>
 			</d2l-template-primary-secondary>
 		`;
 	}
