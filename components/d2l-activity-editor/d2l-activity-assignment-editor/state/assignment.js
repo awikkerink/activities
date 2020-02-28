@@ -64,6 +64,15 @@ export class Assignment {
 		this.canEditCompletionType = entity.canEditCompletionType();
 		this.submissionType = String(entity.submissionType().value);
 		this.completionType = String(entity.completionType().value);
+		this.isGroupAssignmentTypeDisabled = entity.isGroupAssignmentTypeDisabled();
+		this.isIndividualAssignmentType = entity.isIndividualAssignmentType();
+		this.groupCategories = entity.getAssignmentTypeGroupCategoryOptions();
+		this.infoText = entity.getAssignmentTypeInformationText();
+		this.isReadOnly = entity.isAssignmentTypeReadOnly();
+		this.groupTypeDisabled = entity.isGroupAssignmentTypeDisabled();
+		
+		this.assignmentTypeSelectedGroupCategoryId = this.groupCategories.find(category => category.selected === true).value
+		debugger;
 	}
 
 	setSubmissionType(value) {
@@ -73,6 +82,19 @@ export class Assignment {
 
 	setCompletionType(value) {
 		this.completionType = value;
+	}
+
+	setToIndividualAssignmentType() {
+		this.isIndividualAssignmentType = true;
+	}
+
+	setToGroupAssignmentType() {
+		this.isIndividualAssignmentType = false;
+	}
+
+	setAssignmentTypeGroupCategory(value) {
+		this.assignmentTypeSelectedGroupCategoryId = value;
+		debugger;
 	}
 
 	setName(value) {
@@ -109,11 +131,19 @@ decorate(Assignment, {
 	canEditCompletionType: observable,
 	submissionType: observable,
 	completionType: observable,
+	isGroupAssignmentTypeDisabled: observable,
+	isIndividualAssignmentType: observable,
+	groupCategories: observable,
+	infoText: observable,
+	isReadOnly: observable,
+	assignmentTypeSelectedGroupCategoryId: observable,
 	// actions
 	load: action,
 	setName: action,
 	setInstructions: action,
 	setSubmissionType: action,
 	setCompletionType: action,
-	save: action
+	save: action,
+	setToIndividualAssignmentType: action,
+	setToGroupAssignmentType: action
 });
