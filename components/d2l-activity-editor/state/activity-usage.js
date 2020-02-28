@@ -61,6 +61,10 @@ export class ActivityUsage {
 		this.canEditDates = value;
 	}
 
+	setIsError(value) {
+		this.isError = value;
+	}
+
 	setErrorLangTerms(errorType) {
 		if (errorType && errorType.includes('end-due-start-date-error')) {
 			this.dueDateErrorTerm = 'dueBetweenStartEndDate';
@@ -174,5 +178,6 @@ decorate(ActivityUsage, {
 	save: action,
 	validate: action,
 	setErrorLangTerms: action,
-	setScoreAndGrade: action
+	setScoreAndGrade: action,
+	setIsError: action
 });
