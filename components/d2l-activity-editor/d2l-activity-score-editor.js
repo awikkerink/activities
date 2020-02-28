@@ -10,7 +10,6 @@ import 'd2l-tooltip/d2l-tooltip';
 import { bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
-import { ErrorHandlingMixin } from './error-handling-mixin.js';
 import { getLocalizeResources } from './localization';
 import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
@@ -18,13 +17,11 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { shared as store } from './state/activity-store.js';
 
-class ActivityScoreEditor extends ActivityEditorMixin(ErrorHandlingMixin(LocalizeMixin(RtlMixin(MobxLitElement)))) {
+class ActivityScoreEditor extends ActivityEditorMixin(LocalizeMixin(RtlMixin(MobxLitElement))) {
 
 	static get properties() {
 		return {
 			_focusUngraded: { type: Boolean },
-			_emptyScoreOutOfError: { type: String },
-			_invalidScoreOutOfError: { type: String },
 			_gradeCandidatesHref: { type: String }
 		};
 	}
@@ -148,7 +145,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(ErrorHandlingMixin(Localiz
 
 	constructor() {
 		super(store);
-		this._debounceJobs = {};
 		this._gradeCandidatesHref = '';
 
 		this._tooltipBoundary = {
@@ -177,37 +173,15 @@ class ActivityScoreEditor extends ActivityEditorMixin(ErrorHandlingMixin(Localiz
 			return;
 		}
 
-		const isScoreEmpty = (scoreOutOf || '').trim().length === 0;
-		const isScoreInvalid = scoreOutOf && scoreOutOf.length !== 0 &&
-			(isNaN(scoreOutOf) || scoreOutOf < 0.01 || scoreOutOf > 9999999999);
-
-		const scoreErrorLangterm = isScoreEmpty ? 'emptyScoreOutOfError' : 'invalidScoreOutOfError';
-		const setErrorProperty = isScoreEmpty ? '_emptyScoreOutOfError' : '_invalidScoreOutOfError';
-		const clearErrorProperty = isScoreEmpty ? '_invalidScoreOutOfError' : '_emptyScoreOutOfError';
-		const tooltipId = 'score-tooltip';
-
-		if ((scoreAndGrade.inGrades && isScoreEmpty) || isScoreInvalid) {
-			this.clearError(clearErrorProperty);
-			this.setError(setErrorProperty, scoreErrorLangterm, tooltipId);
-		} else {
-			this.clearError('_emptyScoreOutOfError');
-			this.clearError('_invalidScoreOutOfError');
-		}
 		scoreAndGrade.setScoreOutOf(scoreOutOf);
 	}
 
 	_addToGrades() {
-		if (!this._isError()) {
-			const scoreAndGrade = store.get(this.href).scoreAndGrade;
-			scoreAndGrade.addToGrades();
-		}
+		store.get(this.href).scoreAndGrade.addToGrades();
 	}
 
 	_removeFromGrades() {
-		this.clearError('_emptyScoreOutOfError');
-		if (!this._isError()) {
-			store.get(this.href).scoreAndGrade.removeFromGrades();
-		}
+		store.get(this.href).scoreAndGrade.removeFromGrades();
 	}
 
 	_setGraded() {
@@ -216,9 +190,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(ErrorHandlingMixin(Localiz
 	}
 
 	_setUngraded() {
-		this.clearError('_emptyScoreOutOfError');
-		this.clearError('_invalidScoreOutOfError');
-
 		store.get(this.href).scoreAndGrade.setUngraded();
 	}
 
@@ -248,10 +219,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(ErrorHandlingMixin(Localiz
 		this.wrapSaveAction(selectedGradeCandidate.associateGrade());
 	}
 
-	_isError() {
-		return this._emptyScoreOutOfError || this._invalidScoreOutOfError;
-	}
-
 	render() {
 		const activity = store.get(this.href);
 		if (!activity) {
@@ -260,6 +227,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(ErrorHandlingMixin(Localiz
 
 		const {
 			scoreOutOf,
+			scoreOutOfError,
 			canEditScoreOutOf,
 			gradeType,
 			inGrades,
@@ -288,19 +256,18 @@ class ActivityScoreEditor extends ActivityEditorMixin(ErrorHandlingMixin(Localiz
 						size=4
 						@change="${this._onScoreOutOfChanged}"
 						@blur="${this._onScoreOutOfChanged}"
-						aria-invalid="${this._isError() ? 'true' : ''}"
+						aria-invalid="${scoreOutOfError ? 'true' : ''}"
 						?disabled="${!canEditScoreOutOf}"
 					></d2l-input-text>
-					${this._isError() ? html`
+					${scoreOutOfError ? html`
 						<d2l-tooltip
 							id="score-tooltip"
 							for="score-out-of"
 							position="bottom"
-							?showing="${this._isError()}"
+							showing
 							.boundary="${this._tooltipBoundary}"
 						>
-							${this._emptyScoreOutOfError ? html`<span>${this._emptyScoreOutOfError}</span>` : null}
-							${this._invalidScoreOutOfError ? html`<span>${this._invalidScoreOutOfError}</span>` : null}
+							${scoreOutOfError ? html`<span>${this.localize(scoreOutOfError)}</span>` : null}
 						</d2l-tooltip>
 					` : null}
 					<div class="d2l-body-compact grade-type-text">${gradeType}</div>
