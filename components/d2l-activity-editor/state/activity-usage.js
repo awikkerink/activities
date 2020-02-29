@@ -1,4 +1,5 @@
 import { action, configure as configureMobx, decorate, observable, runInAction } from 'mobx';
+import { ActivityScoreGrade } from './activity-score-grade.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
 import { fetchEntity } from '../state/fetch-entity.js';
 
@@ -33,6 +34,7 @@ export class ActivityUsage {
 		this.dueDateErrorTerm = null;
 		this.startDateErrorTerm = null;
 		this.endDateErrorTerm = null;
+		this.scoreAndGrade = new ActivityScoreGrade(entity);
 	}
 
 	setDueDate(date) {
@@ -104,6 +106,10 @@ export class ActivityUsage {
 		this.endDateErrorTerm = null;
 	}
 
+	setScoreAndGrade(val) {
+		this.scoreAndGrade = val;
+	}
+
 	async validate() {
 		if (!this._entity) {
 			return;
@@ -112,6 +118,10 @@ export class ActivityUsage {
 		this.isError = false;
 		this.errorType = null;
 		this.setErrorLangTerms();
+
+		if (!this.scoreAndGrade.validate()) {
+			this.isError = true;
+		}
 
 		await this._entity.validate({
 			dueDate: this.dueDate,
@@ -123,8 +133,11 @@ export class ActivityUsage {
 				this.errorType = e.json.properties.type;
 				this.setErrorLangTerms(this.errorType);
 			}
-			throw e;
 		}));
+
+		if (this.isError) {
+			throw new Error('Activity Usage validation failed');
+		}
 	}
 
 	async save() {
@@ -136,7 +149,11 @@ export class ActivityUsage {
 			dueDate: this.dueDate,
 			startDate: this.startDate,
 			endDate: this.endDate,
-			isDraft: this.isDraft
+			isDraft: this.isDraft,
+			scoreAndGrade: {
+				scoreOutOf: this.scoreAndGrade.scoreOutOf,
+				inGrades: this.scoreAndGrade.inGrades
+			}
 		});
 
 		await this.fetch();
@@ -156,6 +173,7 @@ decorate(ActivityUsage, {
 	dueDateErrorTerm: observable,
 	startDateErrorTerm: observable,
 	endDateErrorTerm: observable,
+	scoreAndGrade: observable,
 	// actions
 	load: action,
 	setDueDate: action,
@@ -167,5 +185,6 @@ decorate(ActivityUsage, {
 	save: action,
 	validate: action,
 	setErrorLangTerms: action,
+	setScoreAndGrade: action,
 	setIsError: action
 });
