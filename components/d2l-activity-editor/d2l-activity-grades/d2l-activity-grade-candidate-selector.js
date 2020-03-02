@@ -1,13 +1,13 @@
-import { css, html, LitElement } from 'lit-element/lit-element';
-import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
-import { GradeCandidateCollectionEntity } from 'siren-sdk/src/activities/GradeCandidateCollectionEntity';
-import { repeat } from 'lit-html/directives/repeat';
+import './d2l-activity-grade-candidate';
+import { css, html } from 'lit-element/lit-element';
+import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
+import { MobxLitElement } from '@adobe/lit-mobx';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles';
+import { shared as store } from './state/grade-candidate-collection-store.js';
 
-class ActivityGradeCandidateSelector extends EntityMixinLit(LitElement) {
+class ActivityGradeCandidateSelector extends (ActivityEditorMixin(MobxLitElement)) {
 	static get properties() {
 		return {
-			_gradeCandidateEntities: { type: Array },
 			selected: { type: Object }
 		};
 	}
@@ -24,36 +24,53 @@ class ActivityGradeCandidateSelector extends EntityMixinLit(LitElement) {
 	}
 
 	constructor() {
-		super();
-		this._setEntityType(GradeCandidateCollectionEntity);
-	}
-
-	set _entity(entity) {
-		if (!this._entityHasChanged(entity)) {
-			return;
-		}
-
-		if (entity) {
-			this._gradeCandidateEntities = entity.getGradeCandidateEntities();
-		}
-
-		super._entity = entity;
+		super(store);
 	}
 
 	_setSelected(e) {
-		this.selected = this._gradeCandidateEntities[e.target.selectedIndex];
+		//this.selected = this._gradeCandidateHrefs[e.target.selectedIndex];
+	}
+
+	_renderGradeCandidateTemplates(gradeCandidates) {
+		return gradeCandidates.map(gc => {
+			if (gc.isCategory) {
+				return this._renderGradeCategory(gc);
+			} else {
+				return this._renderGradeCandidate(gc);
+			}
+		});
+	}
+
+	_renderGradeCandidate(gc) {
+		return html`<option>${gc.name}</option>`;
+	}
+
+	_renderGradeCategory(gradeCategory) {
+		return html`
+			<optgroup label="${gradeCategory.name}">
+				${gradeCategory.gradeCandidates.map(gc => this._renderGradeCandidate(gc))}
+			</optgroup>
+		`;
 	}
 
 	render() {
+		const collection = store.get(this.href);
+
+		if (!collection) {
+			return html``;
+		}
+
+		const {
+			gradeCandidates
+		} = collection;
+
 		return html`
 			<select
 				id="grade-candidates"
 				class="d2l-input-select"
 				@change="${this._setSelected}"
 			>
-				${repeat(this._gradeCandidateEntities, entity => entity, (entity, index) => html`
-					<option value="${index}">${entity.name()}</option>
-				`)}
+				${this._renderGradeCandidateTemplates(gradeCandidates)}
 			</select>
 		`;
 	}
