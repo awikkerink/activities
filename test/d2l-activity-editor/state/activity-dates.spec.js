@@ -1,5 +1,4 @@
 import { ActivityDates } from '../../../components/d2l-activity-editor/state/activity-dates.js';
-import { ActivityUsage} from '../../../components/d2l-activity-editor/state/activity-usage.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
 import { expect } from 'chai';
 import { fetchEntity } from '../../../components/d2l-activity-editor/state/fetch-entity.js';
@@ -12,12 +11,10 @@ jest.mock('../../../components/d2l-activity-editor/state/fetch-entity.js');
 describe('Activity Usage', function() {
 
 	const defaultEntityMock = {
-		dates: {
-			startDate: () => '2020-01-22T04:59:00.000Z',
-			dueDate: () => '2020-01-23T04:59:00.000Z',
-			endDate: () => '2020-01-24T04:59:00.000Z',
-			canEditDates: () => true
-		}
+		startDate: () => '2020-01-22T04:59:00.000Z',
+		dueDate: () => '2020-01-23T04:59:00.000Z',
+		endDate: () => '2020-01-24T04:59:00.000Z',
+		canEditDates: () => true
 	};
 
 	afterEach(() => {
@@ -51,36 +48,33 @@ describe('Activity Usage', function() {
 		});
 
 		it('reacts to start date', async(done) => {
-			const activity = new ActivityUsage('http://1', 'token');
-			await activity.fetch();
+			const activity = new ActivityDates(defaultEntityMock);
 
 			when(
-				() => activity.dates.startDate === '2020-02-21T04:59:00.000Z',
+				() => activity.startDate === '2020-02-21T04:59:00.000Z',
 				() => {
 					done();
 				}
 			);
 
-			activity.dates.setStartDate('2020-02-21T04:59:00.000Z');
+			activity.setStartDate('2020-02-21T04:59:00.000Z');
 		});
 
 		it('reacts to due date', async(done) => {
-			const activity = new ActivityUsage('http://1', 'token');
-			await activity.fetch();
+			const activity = new ActivityDates(defaultEntityMock);
 
 			when(
-				() => activity.dates.dueDate === '2020-02-23T04:59:00.000Z',
+				() => activity.dueDate === '2020-02-23T04:59:00.000Z',
 				() => {
 					done();
 				}
 			);
 
-			activity.dates.setDueDate('2020-02-23T04:59:00.000Z');
+			activity.setDueDate('2020-02-23T04:59:00.000Z');
 		});
 
 		it('reacts to end date', async(done) => {
-			const activity = new ActivityUsage('http://1', 'token');
-			await activity.fetch();
+			const activity = new ActivityDates(defaultEntityMock);
 
 			when(
 				() => activity.endDate === '2020-02-25T04:59:00.000Z',
@@ -89,7 +83,7 @@ describe('Activity Usage', function() {
 				}
 			);
 
-			activity.dates.setEndDate('2020-02-25T04:59:00.000Z');
+			activity.setEndDate('2020-02-25T04:59:00.000Z');
 		});
 	});
 });
