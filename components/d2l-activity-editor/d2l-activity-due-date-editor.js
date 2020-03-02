@@ -44,7 +44,7 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 		store.get(this.href).setDueDate(e.detail.toISOString());
 	}
 
-	dateTemplate(date, canEdit) {
+	dateTemplate(date, canEdit, errorTerm) {
 		return html`
 			<div id="datetime-picker-container" ?hidden="${!canEdit}">
 				<d2l-datetime-picker
@@ -56,6 +56,10 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 					datetime="${date}"
 					overrides="${this._overrides}"
 					placeholder="${this.localize('noDueDate')}"
+					aria-invalid="${errorTerm ? 'true' : 'false'}"
+					invalid="${errorTerm}"
+					tooltip-red
+					boundary="{&quot;below&quot;:240}"
 					@d2l-datetime-picker-datetime-changed="${this._onDatetimePickerDatetimeChanged}"
 					@d2l-datetime-picker-datetime-cleared="${this._onDatetimePickerDatetimeCleared}">
 				</d2l-datetime-picker>
@@ -65,7 +69,7 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 
 	render() {
 		const activity = store.get(this.href);
-		let dueDate, canEditDates;
+		let dueDate, canEditDates, errorTerm;
 
 		// We have to render with null values for dueDate initially due to issues with
 		// how the d2l-datetime-picker converts between the date & datetime attributes.
@@ -78,13 +82,15 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 		if (!activity || this._isFirstLoad) {
 			dueDate = null;
 			canEditDates = false;
+			errorTerm = null;
 		} else {
 			dueDate = activity.dueDate;
 			canEditDates = activity.canEditDates;
+			errorTerm = this.localize(activity.dueDateErrorTerm);
 		}
 
 		return html`
-			${this.dateTemplate(dueDate, canEditDates)}
+			${this.dateTemplate(dueDate, canEditDates, errorTerm)}
 		`;
 	}
 

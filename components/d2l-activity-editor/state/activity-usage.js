@@ -1,4 +1,5 @@
-import { action, configure as configureMobx, decorate, observable } from 'mobx';
+import { action, configure as configureMobx, decorate, observable, runInAction } from 'mobx';
+import { ActivityScoreGrade } from './activity-score-grade.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
 import { fetchEntity } from '../state/fetch-entity.js';
 
@@ -28,6 +29,12 @@ export class ActivityUsage {
 		this.canEditDates = entity.canEditDates();
 		this.isDraft = entity.isDraft();
 		this.canEditDraft = entity.canEditDraft();
+		this.isError = false;
+		this.errorType = null;
+		this.dueDateErrorTerm = null;
+		this.startDateErrorTerm = null;
+		this.endDateErrorTerm = null;
+		this.scoreAndGrade = new ActivityScoreGrade(entity);
 	}
 
 	setDueDate(date) {
@@ -54,6 +61,85 @@ export class ActivityUsage {
 		this.canEditDates = value;
 	}
 
+	setIsError(value) {
+		this.isError = value;
+	}
+
+	setErrorLangTerms(errorType) {
+		if (errorType && errorType.includes('end-due-start-date-error')) {
+			this.dueDateErrorTerm = 'dueBetweenStartEndDate';
+			this.startDateErrorTerm = 'dueBetweenStartEndDate';
+			this.endDateErrorTerm = 'dueBetweenStartEndDate';
+			return;
+		}
+
+		if (errorType && errorType.includes('start-after-end-date-error')) {
+			this.dueDateErrorTerm = 'dueAfterStartDate';
+			this.startDateErrorTerm = 'dueAfterStartDate';
+			this.endDateErrorTerm = 'startBeforeEndDate';
+			return;
+		}
+
+		if (errorType && errorType.includes('start-after-due-date-error')) {
+			this.dueDateErrorTerm = 'dueAfterStartDate';
+			this.startDateErrorTerm = 'dueAfterStartDate';
+			this.endDateErrorTerm = null;
+			return;
+		}
+
+		if (errorType && errorType.includes('end-before-start-date-error')) {
+			this.dueDateErrorTerm = 'dueBeforeEndDate';
+			this.startDateErrorTerm = 'startBeforeEndDate';
+			this.endDateErrorTerm = 'dueBeforeEndDate';
+			return;
+		}
+
+		if (errorType && errorType.includes('end-before-due-date-error')) {
+			this.dueDateErrorTerm = 'dueBeforeEndDate';
+			this.startDateErrorTerm = null;
+			this.endDateErrorTerm = 'dueBeforeEndDate';
+			return;
+		}
+
+		this.dueDateErrorTerm = null;
+		this.startDateErrorTerm = null;
+		this.endDateErrorTerm = null;
+	}
+
+	setScoreAndGrade(val) {
+		this.scoreAndGrade = val;
+	}
+
+	async validate() {
+		if (!this._entity) {
+			return;
+		}
+
+		this.isError = false;
+		this.errorType = null;
+		this.setErrorLangTerms();
+
+		if (!this.scoreAndGrade.validate()) {
+			this.isError = true;
+		}
+
+		await this._entity.validate({
+			dueDate: this.dueDate,
+			startDate: this.startDate,
+			endDate: this.endDate
+		}).catch(e => runInAction(() => {
+			this.isError = true;
+			if (e.json && e.json.properties && e.json.properties.type) {
+				this.errorType = e.json.properties.type;
+				this.setErrorLangTerms(this.errorType);
+			}
+		}));
+
+		if (this.isError) {
+			throw new Error('Activity Usage validation failed');
+		}
+	}
+
 	async save() {
 		if (!this._entity) {
 			return;
@@ -63,7 +149,11 @@ export class ActivityUsage {
 			dueDate: this.dueDate,
 			startDate: this.startDate,
 			endDate: this.endDate,
-			isDraft: this.isDraft
+			isDraft: this.isDraft,
+			scoreAndGrade: {
+				scoreOutOf: this.scoreAndGrade.scoreOutOf,
+				inGrades: this.scoreAndGrade.inGrades
+			}
 		});
 
 		await this.fetch();
@@ -78,6 +168,12 @@ decorate(ActivityUsage, {
 	canEditDates: observable,
 	isDraft: observable,
 	canEditDraft: observable,
+	isError: observable,
+	errorType: observable,
+	dueDateErrorTerm: observable,
+	startDateErrorTerm: observable,
+	endDateErrorTerm: observable,
+	scoreAndGrade: observable,
 	// actions
 	load: action,
 	setDueDate: action,
@@ -86,5 +182,9 @@ decorate(ActivityUsage, {
 	setDraftStatus: action,
 	setCanEditDraft: action,
 	setCanEditDates: action,
-	save: action
+	save: action,
+	validate: action,
+	setErrorLangTerms: action,
+	setScoreAndGrade: action,
+	setIsError: action
 });

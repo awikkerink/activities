@@ -46,16 +46,20 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeMixin
 
 	render() {
 		const activity = store.get(this.href);
-		let canEditDates, startDate, endDate;
+		let canEditDates, startDate, endDate, startDateErrorTerm, endDateErrorTerm;
 
 		if (!activity) {
 			canEditDates = false;
 			startDate = null;
 			endDate = null;
+			startDateErrorTerm = null;
+			endDateErrorTerm = null;
 		} else {
 			canEditDates = activity.canEditDates;
 			startDate = activity.startDate;
 			endDate = activity.endDate;
+			startDateErrorTerm = this.localize(activity.startDateErrorTerm);
+			endDateErrorTerm = this.localize(activity.endDateErrorTerm);
 		}
 
 		return html`
@@ -70,6 +74,10 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeMixin
 					datetime="${startDate}"
 					overrides="${this._overrides}"
 					placeholder="${this.localize('noStartDate')}"
+					aria-invalid="${startDateErrorTerm ? 'true' : 'false'}"
+					invalid="${startDateErrorTerm}"
+					tooltip-red
+					boundary="{&quot;below&quot;:240}"
 					@d2l-datetime-picker-datetime-changed="${this._onStartDatetimePickerDatetimeChanged}"
 					@d2l-datetime-picker-datetime-cleared="${this._onStartDatetimePickerDatetimeCleared}">
 				</d2l-datetime-picker>
@@ -85,6 +93,10 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeMixin
 					datetime="${endDate}"
 					overrides="${this._overrides}"
 					placeholder="${this.localize('noEndDate')}"
+					aria-invalid="${endDateErrorTerm ? 'true' : 'false'}"
+					invalid="${endDateErrorTerm}"
+					tooltip-red
+					boundary="{&quot;below&quot;:240}"
 					@d2l-datetime-picker-datetime-changed="${this._onEndDatetimePickerDatetimeChanged}"
 					@d2l-datetime-picker-datetime-cleared="${this._onEndDatetimePickerDatetimeCleared}">
 				</d2l-datetime-picker>
