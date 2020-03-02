@@ -121,7 +121,7 @@ class ActivityAssignmentAvailabilityEditor extends LocalizeMixin(ActivityEditorM
 			return false;
 		}
 
-		return activity.endDateErrorTerm || activity.startDateErrorTerm;
+		return activity.dates.endDateErrorTerm || activity.dates.startDateErrorTerm;
 	}
 
 	render() {
