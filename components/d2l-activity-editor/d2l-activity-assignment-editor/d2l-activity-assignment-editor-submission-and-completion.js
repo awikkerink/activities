@@ -54,7 +54,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 		}
 
 		return html`
-			${assignment.submissionTypeOptions.map(option => html`<option value=${option.value} ?selected=${option.value === assignment.submissionType}>${option.title}</option>`)}
+			${assignment.submissionTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.submissionType}>${option.title}</option>`)}
 		`;
 	}
 
@@ -67,7 +67,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 		const completionType = assignment ? assignment.completionType : '0';
 
 		return html`
-			${completionTypeOptions.map(option => html`<option value=${option.value} ?selected=${option.value === completionType}>${option.title}</option>`)}
+			${completionTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === completionType}>${option.title}</option>`)}
 		`;
 	}
 

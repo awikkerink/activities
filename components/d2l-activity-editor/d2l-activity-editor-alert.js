@@ -17,8 +17,9 @@ class ActivityEditorAlert extends ActivityEditorMixin(MobxLitElement) {
 
 	static get styles() {
 		return css`
-			.alert-container {
-				padding-bottom: 10px;
+			d2l-alert {
+				margin-bottom: 10px;
+				max-width: 100%;
 			}
 		`;
 	}
@@ -31,9 +32,7 @@ class ActivityEditorAlert extends ActivityEditorMixin(MobxLitElement) {
 		}
 
 		return html`
-			<div class="alert-container">
-				<d2l-alert type="error">${this.text}</d2l-alert>
-			</div>
+			<d2l-alert type="error">${this.text}</d2l-alert>
 		`;
 	}
 }
