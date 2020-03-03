@@ -31,7 +31,8 @@ export class GradeCandidate {
         this._entity = entity;
         this.name = entity.name();
         this.isCategory = entity.isCategory();
-		this.weight = entity.weight();
+		this.baseWeight = entity.baseWeight();
+		this.maxPoints = entity.maxPoints();
 		const gradeCandidatePromises = (this.gradeCandidateChildrenHrefs || []).map(href => this.fetchGradeCandidate(href));
         this.gradeCandidates = await Promise.all(gradeCandidatePromises);
 	}
@@ -39,8 +40,10 @@ export class GradeCandidate {
 
 decorate(GradeCandidate, {
 	// props
-    name: observable,
-    weight: observable,
+	name: observable,
+	isCategory: observable,
+	baseWeight: observable,
+	maxPoints: observable,
     gradeCandidates: observable,
 	// actions
 	load: action
