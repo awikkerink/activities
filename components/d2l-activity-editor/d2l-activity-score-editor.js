@@ -22,7 +22,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mob
 	static get properties() {
 		return {
 			_focusUngraded: { type: Boolean },
-			_gradeCandidatesHref: { type: String }
 		};
 	}
 
@@ -145,7 +144,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mob
 
 	constructor() {
 		super(store);
-		this._gradeCandidatesHref = '';
 
 		this._tooltipBoundary = {
 			left: 5,
@@ -232,7 +230,8 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mob
 			gradeType,
 			inGrades,
 			isUngraded,
-			canSeeGrades
+			canSeeGrades,
+			gradeCandidatesHref
 		} = activity.scoreAndGrade;
 
 		this._focusUngraded = isUngraded;
@@ -297,7 +296,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mob
 						</d2l-dropdown>
 						<d2l-dialog title-text="${this.localize('editGradesLink')}">
 							<d2l-activity-grade-candidate-selector
-								href="${this._gradeCandidatesHref}"
+								href="${gradeCandidatesHref}"
 								.token="${this.token}">
 							</d2l-activity-grade-candidate-selector>
 							<d2l-button slot="footer" primary dialog-action="done">${this.localize('ok')}</d2l-button>
