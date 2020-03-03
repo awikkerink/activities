@@ -1,4 +1,3 @@
-import './d2l-activity-grade-candidate';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
