@@ -68,7 +68,8 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 	}
 
 	render() {
-		const dates = store.get(this.href) ? store.get(this.href).dates : null;
+		const entity = store.get(this.href);
+		const dates = entity ? entity.dates : null;
 		let dueDate, canEditDates, errorTerm;
 
 		// We have to render with null values for dueDate initially due to issues with

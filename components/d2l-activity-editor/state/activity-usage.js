@@ -27,7 +27,6 @@ export class ActivityUsage {
 		this.isDraft = entity.isDraft();
 		this.canEditDraft = entity.canEditDraft();
 		this.isError = false;
-		this.errorType = null;
 		this.dates = new ActivityDates(entity);
 		this.scoreAndGrade = new ActivityScoreGrade(entity);
 	}
@@ -62,7 +61,6 @@ export class ActivityUsage {
 		}
 
 		this.isError = false;
-		this.errorType = null;
 		this.setErrorLangTerms();
 
 		if (!this.scoreAndGrade.validate()) {
@@ -78,8 +76,7 @@ export class ActivityUsage {
 		}).catch(e => runInAction(() => {
 			this.isError = true;
 			if (e.json && e.json.properties && e.json.properties.type) {
-				this.errorType = e.json.properties.type;
-				this.setErrorLangTerms(this.errorType);
+				this.setErrorLangTerms(e.json.properties.type);
 			}
 		}));
 
@@ -116,7 +113,6 @@ decorate(ActivityUsage, {
 	isDraft: observable,
 	canEditDraft: observable,
 	isError: observable,
-	errorType: observable,
 	scoreAndGrade: observable,
 	dates: observable,
 	// actions

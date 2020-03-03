@@ -45,7 +45,8 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeMixin
 	}
 
 	render() {
-		const dates = store.get(this.href) ? store.get(this.href).dates : null;
+		const entity = store.get(this.href);
+		const dates = entity ? entity.dates : null;
 		let canEditDates, startDate, endDate, startDateErrorTerm, endDateErrorTerm;
 
 		if (!dates) {
