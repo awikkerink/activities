@@ -27,7 +27,7 @@ class ActivityGradeCandidateSelector extends (ActivityEditorMixin(MobxLitElement
 	}
 
 	_setSelected(e) {
-		//this.selected = this._gradeCandidateHrefs[e.target.selectedIndex];
+		this.selected = this._gradeCandidateHrefs[e.target.selectedIndex];
 	}
 
 	_renderGradeCandidateTemplates(gradeCandidates) {

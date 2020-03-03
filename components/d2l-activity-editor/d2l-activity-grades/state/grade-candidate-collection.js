@@ -1,7 +1,7 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
+import { fetchEntity } from '../../state/fetch-entity.js';
 import { GradeCandidate } from './grade-candidate.js';
 import { GradeCandidateCollectionEntity } from 'siren-sdk/src/activities/GradeCandidateCollectionEntity.js';
-import { fetchEntity } from '../../state/fetch-entity.js';
 
 configureMobx({ enforceActions: 'observed' });
 
