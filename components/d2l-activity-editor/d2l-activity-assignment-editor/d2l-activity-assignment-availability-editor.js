@@ -63,16 +63,6 @@ class ActivityAssignmentAvailabilityEditor extends LocalizeMixin(ActivityEditorM
 		this._opened = false;
 	}
 
-	connectedCallback() {
-		super.connectedCallback();
-		this.addEventListener('d2l-labs-accordion-collapse-state-changed', this._onAccordionStateChange);
-	}
-
-	disconnectedCallback() {
-		super.disconnectedCallback();
-		this.removeEventListener('d2l-labs-accordion-collapse-state-changed', this._onAccordionStateChange);
-	}
-
 	_onAccordionStateChange(e) {
 		this._opened = e.detail.opened;
 	}
@@ -148,7 +138,11 @@ class ActivityAssignmentAvailabilityEditor extends LocalizeMixin(ActivityEditorM
 
 	render() {
 		return html`
-			<d2l-labs-accordion-collapse flex header-border ?opened=${this._isOpened()}>
+			<d2l-labs-accordion-collapse
+				flex
+				header-border
+				?opened=${this._isOpened()}
+				@d2l-labs-accordion-collapse-state-changed=${this._onAccordionStateChange}>
 				<h4 class="d2l-heading-4 activity-summarizer-header" slot="header">
 					${this.localize('hdrAvailability')}
 				</h4>
