@@ -18,7 +18,8 @@ class ActivityAssignmentAvailabilityEditor extends LocalizeMixin(ActivityEditorM
 
 		return {
 			href: { type: String },
-			token: { type: Object }
+			token: { type: Object },
+			_opened: { type: Boolean }
 		};
 	}
 
@@ -55,6 +56,25 @@ class ActivityAssignmentAvailabilityEditor extends LocalizeMixin(ActivityEditorM
 
 	static async getLocalizeResources(langs) {
 		return getLocalizeResources(langs, import.meta.url);
+	}
+
+	constructor() {
+		super();
+		this._opened = false;
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+		this.addEventListener('d2l-labs-accordion-collapse-state-changed', this._onAccordionStateChange);
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		this.removeEventListener('d2l-labs-accordion-collapse-state-changed', this._onAccordionStateChange);
+	}
+
+	_onAccordionStateChange(e) {
+		this._opened = e.detail.opened;
 	}
 
 	_renderAvailabilityDatesSummary() {
@@ -113,18 +133,22 @@ class ActivityAssignmentAvailabilityEditor extends LocalizeMixin(ActivityEditorM
 	}
 
 	// Returns true if any error states relevant to this accordion are set
-	get _errorInAccordion() {
+	_errorInAccordion() {
 		const activity = store.get(this.href);
-		if (!activity) {
+		if (!activity || !activity.dates) {
 			return false;
 		}
 
-		return activity.dates.endDateErrorTerm || activity.dates.startDateErrorTerm;
+		return !!(activity.dates.endDateErrorTerm || activity.dates.startDateErrorTerm);
+	}
+
+	_isOpened() {
+		return this._opened || this._errorInAccordion();
 	}
 
 	render() {
 		return html`
-			<d2l-labs-accordion-collapse flex header-border ?opened=${this._errorInAccordion}>
+			<d2l-labs-accordion-collapse flex header-border ?opened=${this._isOpened()}>
 				<h4 class="d2l-heading-4 activity-summarizer-header" slot="header">
 					${this.localize('hdrAvailability')}
 				</h4>
