@@ -35,7 +35,11 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 			selected: { type: Boolean, reflect: true },
 			keyboardActive: { type: Boolean, reflect: true, attribute: 'keyboard-active' },
 			hideDragger: { type: Boolean, reflect: true, attribute: 'hide-dragger' },
-			_breakpoint: { type: Number }
+			draggable: { type: String, reflect: true },
+			greyOut: { type: Boolean, reflect: true, attribute: 'grey-out' },
+			_breakpoint: { type: Number },
+			_showUpperDrag: { type: Boolean },
+			_showLowerDrag: { type: Boolean }
 		};
 	}
 
@@ -46,6 +50,10 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 			:host {
 				display: block;
 				position: relative;
+
+			}
+
+			.wrapper {
 				padding: 6px 0;
 			}
 
@@ -53,7 +61,7 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 				display: none;
 			}
 
-			:host([keyboard-active]) .d2l-list-item-drag-shadow {
+			.d2l-list-item-drag-shadow {
 				position: absolute;
 				width: calc(100% + 36px);
 				height: 100%;
@@ -61,11 +69,16 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 				left: -27px;
 				border-radius: 6px;
 				box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+				display: none;
 			}
 
-			:host([hide-dragger]) {
-				filter: grayscale(50%);
-				opacity: 0.6;
+			:host([keyboard-active]) .d2l-list-item-drag-shadow {
+				display: block;
+			}
+
+			:host([grey-out]) {
+				filter: grayscale(75%);
+				opacity: 0.4;
 			}
 
 			.d2l-list-item-container {
@@ -239,6 +252,73 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 				margin-right: 0;
 			}
 
+			.d2l-list-item-drag-spots {
+				position: absolute;
+				height: 100%;
+				min-height: calc(100% + 12px);
+				width: calc(100% + 30px);
+				display: flex;
+				flex-direction: column;
+				align-items: stretch;
+				z-index: 100;
+				pointer-events: none;
+				top: -6px;
+				left: -25px
+			}
+
+			.d2l-list-item-drag-spots div {
+				min-height: 50%;
+				width: 100%;
+				pointer-events: none;
+			}
+
+			:host([drag-target]) .d2l-list-item-drag-spots,
+			:host([drag-target]) .d2l-list-item-drag-spots div {
+				pointer-events: all;
+			}
+
+			.d2l-list-upper-drag-indicator,
+			.d2l-list-lower-drag-indicator {
+				position: absolute;
+				max-height: 12px;
+				width: calc(100% + 30px);
+				display: flex;
+			}
+
+			.d2l-list-upper-drag-indicator {
+				top: -6px;
+				left: -20px;
+			}
+
+			.d2l-list-lower-drag-indicator {
+				bottom: -6px;
+				left: -20px;
+			}
+
+			.d2l-list-drag-indicator {
+				height: 12px;
+				width: 100%;
+			}
+			.d2l-list-drag-indicator line{
+				stroke: var(--d2l-color-celestine);
+				stroke-width: 3px;
+				stroke-linecap: round;
+			}
+			.d2l-list-drag-indicator-linecap {
+				height: 12px;
+				width: 5px;
+			}
+			.d2l-list-drag-indicator-circle {
+				height: 12px;
+				width: 12px;
+				margin-right: -1px;
+			}
+			.d2l-list-drag-indicator-linecap line,
+			.d2l-list-drag-indicator-circle circle{
+				stroke: var(--d2l-color-celestine);
+				stroke-width: 3px;
+				stroke-linecap: round;
+			}
 		`];
 	}
 
@@ -252,6 +332,7 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 		this._contentId = getUniqueId();
 		this._checkBoxId = getUniqueId();
 		this.hideDragger = false;
+		this.draggable = "true";
 	}
 
 	get breakpoints() {
@@ -263,6 +344,12 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 		if (value !== defaultBreakpoints) this._breakpoints = value.sort((a, b) => b - a).slice(0, 4);
 		else this._breakpoints = defaultBreakpoints;
 		this.requestUpdate('breakpoints', oldValue);
+	}
+
+	firstUpdated() {
+		this.addEventListener('dragstart', this._dragStartHandler.bind(this));
+		this.addEventListener('dragend', this._dragStopHandler.bind(this));
+		this.addEventListener('dragleave', this._dragExit.bind(this));
 	}
 
 	connectedCallback() {
@@ -300,26 +387,34 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 		};
 
 		return html`
-			<div class="d2l-list-item-drag-shadow"></div>
-			<div class="${classMap(classes)}" breakpoint="${this._breakpoint}">
-				${ this.hideDragger ? null : html`<d2l-activity-collection-editor-drag class="d2l-list-item-draggable" @d2l-activity-collection-editor-drag-action="${this._dragAction}"></d2l-activity-collection-editor-drag>`}
-				${label}
-				${this.illustrationOutside ? beforeContent : null}
-				${link}
-				<div id="${this._contentId}"
-					class="d2l-list-item-content"
-					?extend-separators="${this._extendSeparators}"
-					separators="${ifDefined(this._separators)}">
-					<div class="d2l-list-item-content-flex">
-						${!this.illustrationOutside ? beforeContent : null}
-						<div class="d2l-list-item-main d2l-body-standard">
-							<div class="d2l-list-item-main-title"><slot></slot></div>
-							<div class="d2l-list-item-main-secondary d2l-body-compact"><slot name="secondary"></slot></div>
-							<slot name="actions"></slot>
+			${this._renderDivider(this._showUpperDrag, 'd2l-list-upper-drag-indicator')}
+			<div class="wrapper">
+				<div class="d2l-list-item-drag-shadow"></div>
+				<div class="d2l-list-item-drag-spots">
+					<div @drop="${this._dropHandler.bind(this)}" @dragover="${this._dragOverHandler.bind(this)}" @dragenter="${this._dragUpperEnter.bind(this)}" @dragleave="${this._dragUpperExit.bind(this)}"></div>
+					<div @drop="${this._dropHandler.bind(this)}" @dragover="${this._dragOverHandler.bind(this)}" @dragenter="${this._dragLowerEnter.bind(this)}" @dragleave="${this._dragLowerExit.bind(this)}"></div>
+				</div>
+				<div class="${classMap(classes)}" breakpoint="${this._breakpoint}">
+					${ this.hideDragger ? null : html`<d2l-activity-collection-editor-drag class="d2l-list-item-draggable" @d2l-activity-collection-editor-drag-action="${this._dragAction}"></d2l-activity-collection-editor-drag>`}
+					${label}
+					${this.illustrationOutside ? beforeContent : null}
+					${link}
+					<div id="${this._contentId}"
+						class="d2l-list-item-content"
+						?extend-separators="${this._extendSeparators}"
+						separators="${ifDefined(this._separators)}">
+						<div class="d2l-list-item-content-flex">
+							${!this.illustrationOutside ? beforeContent : null}
+							<div class="d2l-list-item-main d2l-body-standard">
+								<div class="d2l-list-item-main-title"><slot></slot></div>
+								<div class="d2l-list-item-main-secondary d2l-body-compact"><slot name="secondary"></slot></div>
+								<slot name="actions"></slot>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+		</div>
+			${this._renderDivider(this._showLowerDrag, 'd2l-list-lower-drag-indicator')}
 		`;
 
 	}
@@ -366,13 +461,58 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 		console.log(action);
 		if (action === actions.active) {
 			this.keyboardActive = true;
+			this._nextElement = this.nextElementSibling;
 			await this.updateComplete;
-			this._dispatchDragKeyboard(this.keyboardActive)
-		} else if (action === actions.save || action === actions.cancel) {
+			this._dispatchDragKeyboard(this.keyboardActive);
+
+		} else if (action === actions.cancel) {
+			this.parentNode.insertBefore(this, this._nextElement);
 			this.keyboardActive = false;
 			await this.updateComplete;
-			this._dispatchDragKeyboard(this.keyboardActive)
+			this._dispatchDragKeyboard(this.keyboardActive);
+
+		} else if (action === actions.save) {
+			this.keyboardActive = false;
+			this._dispatchDragMove(this.previousElementSibling && this.previousElementSibling.key);
+			await this.updateComplete;
+			this._dispatchDragKeyboard(this.keyboardActive);
+			await this.updateComplete;
+			this.shadowRoot.querySelector('d2l-activity-collection-editor-drag').focus();
+
+		} else if (action === actions.up) {
+			this.previousElementSibling && this._insertDiv(this, this.previousElementSibling);
+			this.enterKeyboardMode();
+
+		} else if (action === actions.down) {
+			this.nextElementSibling && this.nextElementSibling && this._insertDiv(this, this.nextElementSibling.nextElementSibling);
+			this.enterKeyboardMode();
+
 		}
+	}
+
+	_renderDivider(show, htmlClass) {
+		return show ? html`
+			<div class="${htmlClass}">
+				<svg viewBox="0 0 12 12" class="d2l-list-drag-indicator-circle">
+					<circle cx="6" cy="6" r="4" fill="none"/>
+				</svg>
+				<svg class="d2l-list-drag-indicator">
+					<line x1="0" y1="50%" x2="100%" y2="50%" />
+				</svg>
+				<svg viewBox="0 0 5 12" class="d2l-list-drag-indicator-linecap">
+					<line x1="-5" y1="50%" x2="0" y2="50%" />
+				</svg>
+			</div>
+		` : null;
+	}
+
+	enterKeyboardMode() {
+		this.shadowRoot.querySelector('d2l-activity-collection-editor-drag')._setKeyboardDragging(true);
+		this.keyboardActive = true;
+	}
+
+	_insertDiv(elm, target) {
+		this.parentNode.insertBefore(elm, target);
 	}
 
 	_dispatchDragKeyboard(keyboardActive) {
@@ -380,6 +520,108 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 			detail: { keyboardActive },
 			bubbles: false
 		}));
+	}
+
+	_dispatchDragMove(targetKey, key) {
+		this.dispatchEvent(new CustomEvent('d2l-activity-collection-list-item-move', {
+			detail: { item: (key ? key : this.key), target: targetKey },
+			bubbles: false
+		}));
+	}
+
+	_dragStartHandler(e) {
+		this.greyOut = true;
+		e.dataTransfer.setData("text/plain", `${this.key}`);
+		this.dispatchEvent(new CustomEvent('d2l-activity-collection-list-item-dragging', {
+			detail: { dragging: true, key: this.key },
+			bubbles: false
+		}));
+		const node = this.parentNode.nextElementSibling.querySelector(`d2l-activity-collection-list-item[key="${this.key}"]`);
+		console.log(node.shadowRoot.firstElementChild.firstElementChildf);
+		node.toggleAttribute('hidden', false);
+		node.shadowRoot.firstElementChild.style.transform = 'rotate(1deg)';
+		node.shadowRoot.firstElementChild.firstElementChild.style.background = '#f9fbff';
+		node.shadowRoot.firstElementChild.firstElementChild.style.display = 'block';
+		node.shadowRoot.firstElementChild.style.opacity = '1';
+		e.dataTransfer.setDragImage(node, 100, 75);
+	}
+
+	_dragStopHandler() {
+		this.greyOut = false;
+		this.dispatchEvent(new CustomEvent('d2l-activity-collection-list-item-dragging', {
+			detail: { dragging: false, key: this.key },
+			bubbles: false
+		}));
+	}
+
+	_dropUpperHandler(e) {
+		e.preventDefault();
+		this._showUpperDrag = false;
+		const data = e.dataTransfer.getData("text/plain");
+		this._dispatchDragMove(this.previousElementSibling && this.previousElementSibling.key, data);
+		const node = this.parentNode.querySelector(`d2l-activity-collection-list-item[key="${data}"]`);
+		this._insertDiv(node, this);
+	}
+
+	_dropLowerHandler(e) {
+		e.preventDefault();
+		this._showLowerDrag = false;
+		const data = e.dataTransfer.getData("text/plain");
+		this._dispatchDragMove(this.key, data);
+		const node =  this.parentNode.querySelector(`d2l-activity-collection-list-item[key="${data}"]`);
+		this._insertDiv(node, this.nextElementSibling);
+	}
+
+	_dropHandler(e) {
+		if (this._targetForDrop === undefined) {
+			return;
+		}
+		e.preventDefault();
+		this._showUpperDrag = false;
+		this._showLowerDrag = false;
+		const data = e.dataTransfer.getData("text/plain");
+		this._dispatchDragMove(this.key, data);
+		const node =  this.parentNode.querySelector(`d2l-activity-collection-list-item[key="${data}"]`);
+		this._insertDiv(node, this._targetForDrop);
+	}
+
+	_dragUpperEnter() {
+		this._showLowerDrag = !this._showUpperDrag && true;
+		if (!this._showUpperDrag) {
+			this._targetForDrop = this.nextElementSibling;
+		}
+	}
+
+	_dragLowerEnter() {
+		this._showUpperDrag = !this._showLowerDrag && true;;
+		if (!this._showLowerDrag) {
+			this._targetForDrop = this;
+		}
+	}
+
+	_dragUpperExit() {
+		if (!this._showLowerDrag) {
+			this._targetForDrop = undefined;
+		}
+		this._showUpperDrag = false;
+	}
+
+	_dragLowerExit() {
+		if (!this._showUpperDrag) {
+			this._targetForDrop = undefined;
+		}
+		this._showLowerDrag = false;
+	}
+
+	_dragExit() {
+		this._showLowerDrag = false;
+		this._showUpperDrag = false;
+		this._targetForDrop = null;
+	}
+
+	_dragOverHandler(e) {
+		e.preventDefault();
+ 		e.dataTransfer.dropEffect = "move";
 	}
 }
 
