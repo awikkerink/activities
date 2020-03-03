@@ -74,6 +74,7 @@ export class Assignment {
 		if (!this.isIndividualAssignmentType) {
 			this.assignmentTypeSelectedGroupCategoryId = this.groupCategories.find(category => category.selected === true).value
 		}
+		debugger;
 	}
 
 	setSubmissionType(value) {
