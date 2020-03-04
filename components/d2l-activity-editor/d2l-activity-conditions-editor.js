@@ -44,7 +44,7 @@ class ActivityConditionsEditor
 			}
 
 			.conditions {
-				margin: 0.5rem 0 0.5rem 0;
+				margin: 0;
 				padding: 0;
 				list-style: none;
 			}
@@ -155,10 +155,7 @@ class ActivityConditionsEditor
 				border: 1px solid var(--d2l-color-gypsum);
 				border-radius: 6px;
 				margin-top: 0.5rem;
-			}
-
-			.d2l-list-item:first-child {
-				margin-top: 0;
+				margin-bottom: 0.5rem;
 			}
 
 			.d2l-list-item-decoration {
