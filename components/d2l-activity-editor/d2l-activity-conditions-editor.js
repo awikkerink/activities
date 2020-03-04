@@ -1,6 +1,8 @@
+import '@brightspace-ui/core/components/colors/colors.js';
+import '@brightspace-ui/core/components/icons/icon.js';
 import 'd2l-dropdown/d2l-dropdown-button-subtle.js';
 import 'd2l-dropdown/d2l-dropdown-menu.js';
-import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
+import { bodyCompactStyles, bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
 import { getLocalizeResources } from './localization';
@@ -42,11 +44,12 @@ class ActivityConditionsEditor
 			}
 
 			.conditions {
-				margin: 0;
+				margin: 0.5rem 0 0.5rem 0;
 				padding: 0;
 				list-style: none;
 			}
-			`
+			`,
+			...this.listItemStyles
 		];
 	}
 
@@ -142,17 +145,68 @@ class ActivityConditionsEditor
 		entity.remove(event.target.dataset.key);
 	}
 
+	static get listItemStyles() {
+
+		return [
+			bodyCompactStyles ,
+			css`
+			.d2l-list-item {
+				display: flex;
+				border: 1px solid var(--d2l-color-gypsum);
+				border-radius: 6px;
+				margin-top: 0.5rem;
+			}
+
+			.d2l-list-item:first-child {
+				margin-top: 0;
+			}
+
+			.d2l-list-item-decoration {
+				flex: 0 0 auto;
+				padding-top: 18px;
+				padding-left: 15px;
+				padding-right: 18px;
+				padding-bottom: 18px;
+			}
+
+			.d2l-list-item-content {
+				flex: 1 1 auto;
+				padding-top: 17px;
+				padding-bottom: 17px;
+				align-self: center;
+			}
+
+			.d2l-list-item-deleter {
+				flex: 0 0 auto;
+				padding-top: 6px;
+				padding-left: 6px;
+				padding-right: 6px;
+			}
+			`
+		];
+	}
+
 	_renderCondition({ key, title }) {
 
 		return html`
-			<li>
-				${title}
-				<d2l-button-icon
-					text="${this.localize('btnRemoveCondition')}"
-					icon="tier1:delete"
-					data-key="${key}"
-					@click="${this._removeCondition}">
-				</d2l-button-icon>
+			<li class="d2l-list-item">
+				<span class="d2l-list-item-decoration">
+					<d2l-icon
+						icon="tier2:release-conditions"
+						style="width:30px;height:30px;">
+					</d2l-icon>
+				</span>
+				<span class="d2l-list-item-content d2l-body-compact">
+					${title}
+				</span>
+				<span class="d2l-list-item-deleter">
+					<d2l-button-icon
+						text="${this.localize('btnRemoveCondition')}"
+						icon="tier1:close-large"
+						data-key="${key}"
+						@click="${this._removeCondition}">
+					</d2l-button-icon>
+				</span>
 			</li>
 		`;
 	}
