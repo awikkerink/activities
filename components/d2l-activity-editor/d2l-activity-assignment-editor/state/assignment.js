@@ -69,12 +69,12 @@ export class Assignment {
 		this.groupCategories = entity.getAssignmentTypeGroupCategoryOptions();
 		this.infoText = entity.getAssignmentTypeInformationText();
 		this.isReadOnly = entity.isAssignmentTypeReadOnly();
-		this.groupTypeDisabled = entity.isGroupAssignmentTypeDisabled();
-		
+
 		if (!this.isIndividualAssignmentType) {
-			this.assignmentTypeSelectedGroupCategoryId = String(this.groupCategories.find(category => category.selected === true).value);
+			this.assignmentTypeSelectedGroupCategoryId = String(
+				this.groupCategories.find(category => category.selected === true).value
+			);
 		}
-		debugger;
 	}
 
 	setSubmissionType(value) {
@@ -92,8 +92,8 @@ export class Assignment {
 
 	setToGroupAssignmentType() {
 		this.isIndividualAssignmentType = false;
-		this.assignmentTypeSelectedGroupCategoryId = 
-			this.assignmentTypeSelectedGroupCategoryId ? 
+		this.assignmentTypeSelectedGroupCategoryId =
+			this.assignmentTypeSelectedGroupCategoryId ?
 				String(this.assignmentTypeSelectedGroupCategoryId) : String(this.groupCategories[0].value);
 	}
 

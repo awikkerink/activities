@@ -3,8 +3,8 @@ import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { getLocalizeResources } from '../localization.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
-import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
+import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 import { shared as store } from './state/assignment-store.js';
 
@@ -65,10 +65,6 @@ class AssignmentTypeEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitElem
 
 	static async getLocalizeResources(langs) {
 		return getLocalizeResources(langs, import.meta.url);
-	}
-
-	constructor() {
-		super();
 	}
 
 	_onAssignmentChange(assignment) {

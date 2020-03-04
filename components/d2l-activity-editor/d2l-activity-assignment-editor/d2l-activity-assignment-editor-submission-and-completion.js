@@ -19,8 +19,8 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 			labelStyles,
 			selectStyles,
 			css`
-				:host {	
-					display: block;	
+				:host {
+					display: block;
 				}
 
 				.block-select {
@@ -33,17 +33,11 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 					margin: 0 0 0.6rem 0;
 				}
 
-				.summary {
-					list-style: none;
-					padding-left: 0.2rem;
-					color: var(--d2l-color-galena);
-				}
-
 				.assignment-type-heading {
 					margin: 0 0 0.5rem 0;
 				}
 			`,
-			summarizerHeaderStyles,	
+			summarizerHeaderStyles,
 			summarizerSummaryStyles
 		];
 	}
