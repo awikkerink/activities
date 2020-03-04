@@ -35,9 +35,13 @@ export class GradeCandidate {
 	}
 
 	async load(entity) {
+		this.href = this.gradeCandidateEntity.href();
+		this.canAssociateGrade = this.gradeCandidateEntity.canAssociateGrade();
+		this.isCategory = this.gradeCandidateEntity.isCategory();
+		this.isCurrentAssociation = this.gradeCandidateEntity.isCurrentAssociation();
+
 		this._entity = entity;
 		this.name = entity.name();
-		this.isCategory = this.gradeCandidateEntity.isCategory();
 		if (!this.isCategory) {
 			this.baseWeight = entity.baseWeight();
 			this.maxPoints = entity.maxPoints();
@@ -52,11 +56,13 @@ export class GradeCandidate {
 
 decorate(GradeCandidate, {
 	// props
-	name: observable,
-	isCategory: observable,
 	baseWeight: observable,
-	maxPoints: observable,
+	canAssociateGrade: observable,
 	gradeCandidates: observable,
+	isCategory: observable,
+	isCurrentAssociation: observable,
+	maxPoints: observable,
+	name: observable,
 	// actions
 	load: action
 });
