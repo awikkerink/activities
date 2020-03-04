@@ -1,10 +1,14 @@
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
+import { bodySmallStyles } from '@brightspace-ui/core/components/typography/styles.js';
+import { formatPercent } from '@brightspace-ui/intl/lib/number.js';
+import { getLocalizeResources } from '../localization.js';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles';
 import { shared as store } from './state/grade-candidate-collection-store.js';
 
-class ActivityGradeCandidateSelector extends (ActivityEditorMixin(MobxLitElement)) {
+class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeMixin(MobxLitElement)) {
 	static get properties() {
 		return {
 			selected: { type: Object }
@@ -13,6 +17,7 @@ class ActivityGradeCandidateSelector extends (ActivityEditorMixin(MobxLitElement
 
 	static get styles() {
 		return [
+			bodySmallStyles,
 			selectStyles,
 			css`
 			:host {
@@ -20,6 +25,10 @@ class ActivityGradeCandidateSelector extends (ActivityEditorMixin(MobxLitElement
 			}
 			`
 		];
+	}
+
+	static async getLocalizeResources(langs) {
+		return getLocalizeResources(langs, import.meta.url);
 	}
 
 	constructor() {
@@ -69,6 +78,8 @@ class ActivityGradeCandidateSelector extends (ActivityEditorMixin(MobxLitElement
 			selected
 		} = collection;
 
+		const percentWeight = selected.baseWeight !== undefined ? formatPercent(selected.baseWeight / 100, { maximumFractionDigits: 10 }) : '';
+
 		return html`
 			<select
 				id="grade-candidates"
@@ -77,6 +88,9 @@ class ActivityGradeCandidateSelector extends (ActivityEditorMixin(MobxLitElement
 			>
 				${this._renderGradeCandidateTemplates(gradeCandidates, selected)}
 			</select>
+			<div class="d2l-body-small">
+				${this.localize('points', {points: selected.maxPoints})} ${selected.baseWeight !== undefined && html`• ${this.localize('weight', { weight: percentWeight })}`}
+			</div>
 		`;
 	}
 }
