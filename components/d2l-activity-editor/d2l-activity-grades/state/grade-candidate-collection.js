@@ -2,6 +2,7 @@ import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { fetchEntity } from '../../state/fetch-entity.js';
 import { GradeCandidate } from './grade-candidate.js';
 import { GradeCandidateCollectionEntity } from 'siren-sdk/src/activities/GradeCandidateCollectionEntity.js';
+import { GradeCandidateEntity } from 'siren-sdk/src/activities/GradeCandidateEntity.js';
 
 configureMobx({ enforceActions: 'observed' });
 
@@ -21,18 +22,17 @@ export class GradeCandidateCollection {
 		return this;
 	}
 
-	async fetchGradeCandidate(href, gradeCandidateChildrenHrefs) {
-		const gradeCandidate = new GradeCandidate(href, this.token, gradeCandidateChildrenHrefs);
+	async fetchGradeCandidate(gradeCandidateEntity) {
+		const gradeCandidate = new GradeCandidate(gradeCandidateEntity, this.token);
 		await gradeCandidate.fetch();
 		return gradeCandidate;
 	}
 
 	async load(entity) {
 		this._entity = entity;
-		const gradeCandidateHrefs = entity.getGradeCandidateHrefs();
-		const gradeCandidatePromises = gradeCandidateHrefs.map(href => {
-			const gradeCandidateChildrenHrefs = entity.getGradeCandidatesForCategory(href);
-			return this.fetchGradeCandidate(href, gradeCandidateChildrenHrefs);
+		const gradeCandidatePromises = entity.getGradeCandidates().map(gc => {
+			const gradeCandidateEntity = new GradeCandidateEntity(gc, this.token, { remove: () => { }});
+			return this.fetchGradeCandidate(gradeCandidateEntity);
 		});
 		this.gradeCandidates = await Promise.all(gradeCandidatePromises);
 	}
