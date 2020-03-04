@@ -9,9 +9,8 @@ import { getLocalizeResources } from '../localization.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
-import { SaveStatusMixin } from '../save-status-mixin.js';
 
-class AssignmentEditorSecondary extends SaveStatusMixin(RtlMixin(EntityMixinLit(LocalizeMixin(LitElement)))) {
+class AssignmentEditorSecondary extends RtlMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
 
 	static get properties() {
 		return {
@@ -75,10 +74,10 @@ class AssignmentEditorSecondary extends SaveStatusMixin(RtlMixin(EntityMixinLit(
 				.token="${this.token}">
 			</d2l-activity-assignment-availability-editor>
 
-			<d2l-activity-assignment-editor-submission-and-completion
+			<d2l-activity-assignment-editor-submission-and-completion-editor
 				href="${this.href}"
 				.token="${this.token}">
-			</d2l-activity-assignment-editor-submission-and-completion>
+			</d2l-activity-assignment-editor-submission-and-completion-editor>
 
 			<d2l-activity-assignment-evaluation-editor
 				href="${this.href}"
