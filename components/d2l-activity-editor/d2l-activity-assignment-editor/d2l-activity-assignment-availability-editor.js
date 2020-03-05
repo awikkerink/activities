@@ -18,7 +18,8 @@ class ActivityAssignmentAvailabilityEditor extends LocalizeMixin(ActivityEditorM
 
 		return {
 			href: { type: String },
-			token: { type: Object }
+			token: { type: Object },
+			_opened: { type: Boolean }
 		};
 	}
 
@@ -55,6 +56,15 @@ class ActivityAssignmentAvailabilityEditor extends LocalizeMixin(ActivityEditorM
 
 	static async getLocalizeResources(langs) {
 		return getLocalizeResources(langs, import.meta.url);
+	}
+
+	constructor() {
+		super();
+		this._opened = false;
+	}
+
+	_onAccordionStateChange(e) {
+		this._opened = e.detail.opened;
 	}
 
 	_renderAvailabilityDatesSummary() {
@@ -113,18 +123,26 @@ class ActivityAssignmentAvailabilityEditor extends LocalizeMixin(ActivityEditorM
 	}
 
 	// Returns true if any error states relevant to this accordion are set
-	get _errorInAccordion() {
+	_errorInAccordion() {
 		const activity = store.get(this.href);
-		if (!activity) {
+		if (!activity || !activity.dates) {
 			return false;
 		}
 
-		return activity.endDateErrorTerm || activity.startDateErrorTerm;
+		return !!(activity.dates.endDateErrorTerm || activity.dates.startDateErrorTerm);
+	}
+
+	_isOpened() {
+		return this._opened || this._errorInAccordion();
 	}
 
 	render() {
 		return html`
-			<d2l-labs-accordion-collapse flex header-border ?opened=${this._errorInAccordion}>
+			<d2l-labs-accordion-collapse
+				flex
+				header-border
+				?opened=${this._isOpened()}
+				@d2l-labs-accordion-collapse-state-changed=${this._onAccordionStateChange}>
 				<h4 class="d2l-heading-4 activity-summarizer-header" slot="header">
 					${this.localize('hdrAvailability')}
 				</h4>
