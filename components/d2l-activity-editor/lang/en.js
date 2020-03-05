@@ -38,7 +38,7 @@ export default {
 	"ok": "Ok", // Text of dialog button to commit action
 	"cancel": "Cancel", // Text of dialog button to cancel action
 	"ariaToolbarShortcutInstructions": "Press ALT-F10 for toolbar, and press ESC to exit toolbar once inside.", // Instructions for screenreader users on how to enter and exit the html editor toolbar
-	"editGradesLink": "Edit Grades Link", // Link text and dialog title for the edit grades dialog,
+	"chooseFromGrades": "Choose From Grades", // Link text and dialog title for the edit grades dialog,
 	"hdrRubrics": "Rubrics", //Header for the rubrics section
 	"startBeforeEndDate": "Start Date must be before End Date",
 	"dueBetweenStartEndDate": "Due Date must be after Start Date and before or equal to End Date",

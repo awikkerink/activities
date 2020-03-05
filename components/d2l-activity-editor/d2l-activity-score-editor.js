@@ -288,13 +288,13 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mob
 										@d2l-menu-item-select="${this._setUngraded}"
 									></d2l-menu-item>
 									<d2l-menu-item
-										text="${this.localize('editGradesLink')}"
+										text="${this.localize('chooseFromGrades')}"
 										@d2l-menu-item-select="${this._setGradeItem}"
 									></d2l-menu-item>
 								</d2l-menu>
 							</d2l-dropdown-menu>
 						</d2l-dropdown>
-						<d2l-dialog title-text="${this.localize('editGradesLink')}">
+						<d2l-dialog title-text="${this.localize('chooseFromGrades')}">
 							<d2l-activity-grade-candidate-selector
 								href="${gradeCandidatesHref}"
 								.token="${this.token}">
