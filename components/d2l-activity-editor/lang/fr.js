@@ -2,14 +2,18 @@
 
 export default {
 	"btnEditReleaseConditions": "Modifier les conditions de diffusion", // edit release conditions button
+	"btnAddReleaseCondition": "Add Release Condition", // add release condition button
+	"btnCreateNew": "Créer", // create new button
+	"btnAddExisting": "Add Existing", // add existing button
+	"btnRemoveCondition": "Remove Condition", // remove condition button
 	"btnCancel": "Cancel", // cancel button
 	"btnSave": "Enregistrer", // save button
 	"dueDate": "Date d’échéance", // ARIA label for the due date field when creating/editing an activity
-	"endDate": "Date de fin", // ARIA label for the due date field when creating/editing an activity
-	"startDate": "Date de début", // ARIA label for the due date field when creating/editing an activity
+	"endDate": "Date de fin", // ARIA label for the end date field when creating/editing an activity
+	"startDate": "Date de début", // ARIA label for the start date field when creating/editing an activity
 	"dueTime": "Heure d’échéance", // ARIA label for the due time field when creating/editing an activity
-	"endTime": "Heure de fin", // ARIA label for the due time field when creating/editing an activity
-	"startTime": "Heure de début", // ARIA label for the due time field when creating/editing an activity
+	"endTime": "Heure de fin", // ARIA label for the end time field when creating/editing an activity
+	"startTime": "Heure de début", // ARIA label for the start time field when creating/editing an activity
 	"hidden": "Masqué", // Label displayed with the visibility switch when hidden
 	"ariaHidden": "Masqué pour les étudiants", // Aria Label for the visibility switch when hidden
 	"noDueDate": "Aucune date d’échéance", // Placeholder text for due date field when no due date is set
@@ -17,6 +21,10 @@ export default {
 	"noStartDate": "Pas de date de début", // Placeholder text for due date field when no due date is set
 	"visible": "Visible", // Label displayed with the visibility switch when visible
 	"ariaVisible": "Visible to students", // Aria Label for the visibility switch when visible
+	"txtAvailabilityStartAndEnd": "La disponibilité commence le {startDate} et se termine le {endDate}", // start/end text
+	"txtAvailabilityStartOnly": "La disponibilité commence le {startDate}", // start only text
+	"txtAvailabilityEndOnly": "La disponibilité se termine le {endDate}", // end only text
+	"txtAvailabilityNeither": "Toujours disponible", // always available text
 	"ungraded": "Non noté", // State of score field when there is no score and no grade item, when creating/editing an activity
 	"inGrades": "Dans Notes", // State of the grades field when there is a score, and an associated grade item
 	"notInGrades": "Pas dans Notes d’appréciation", // State of the grades field when there is a score, but no associated grade item
@@ -29,5 +37,11 @@ export default {
 	"loading": "Chargement…", // Message displayed while page is loading
 	"ok": "Ok", // Text of dialog button to commit action
 	"cancel": "Cancel", // Text of dialog button to cancel action
-	"ariaToolbarShortcutInstructions": "Cliquez sur Alt + F10 pour afficher la barre d’outils et sur Échap pour la faire disparaître." // Instructions for screenreader users on how to enter and exit the html editor toolbar
+	"ariaToolbarShortcutInstructions": "Cliquez sur Alt + F10 pour afficher la barre d’outils et sur Échap pour la faire disparaître.", // Instructions for screenreader users on how to enter and exit the html editor toolbar
+	"editGradesLink": "Modifier le lien des notes d\'appréciation", // Link text and dialog title for the edit grades dialog,
+	"hdrRubrics": "Grilles d\'évaluation", //Header for the rubrics section
+	"startBeforeEndDate": "Start Date must be before End Date",
+	"dueBetweenStartEndDate": "Due Date must be after Start Date and before or equal to End Date",
+	"dueAfterStartDate": "Due Date must be after Start Date",
+	"dueBeforeEndDate": "Due Date must be before or equal to End Date",
 };
