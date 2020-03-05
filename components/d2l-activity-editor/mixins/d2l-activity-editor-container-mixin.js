@@ -1,3 +1,5 @@
+import { getFirstFocusableDescendant } from '@brightspace-ui/core/helpers/focus.js';
+
 export const ActivityEditorContainerMixin = superclass => class extends superclass {
 
 	constructor() {
@@ -25,6 +27,18 @@ export const ActivityEditorContainerMixin = superclass => class extends supercla
 		});
 	}
 
+	_focusOnInvalid() {
+		const isAriaInvalid = node => node.getAttribute('aria-invalid') === 'true';
+		for (const editor of this._editors) {
+			const el = getFirstFocusableDescendant(editor, true, isAriaInvalid);
+			if (el) {
+				el.focus();
+				return true;
+			}
+		}
+		return false;
+	}
+
 	async _save() {
 		const validations = [];
 		for (const editor of this._editors) {
@@ -34,7 +48,11 @@ export const ActivityEditorContainerMixin = superclass => class extends supercla
 		try {
 			await Promise.all(validations);
 		} catch (e) {
-			// Skip save on vaidation error
+			// Server-side validation error
+		}
+
+		// Catch both client- and server-side validation errors
+		if (this._focusOnInvalid()) {
 			return;
 		}
 
