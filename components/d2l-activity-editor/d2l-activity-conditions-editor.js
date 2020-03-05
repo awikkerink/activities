@@ -53,6 +53,44 @@ class ActivityConditionsEditor
 		];
 	}
 
+	static get listItemStyles() {
+
+		return [
+			bodyCompactStyles,
+			css`
+			.d2l-list-item {
+				display: flex;
+				border: 1px solid var(--d2l-color-gypsum);
+				border-radius: 6px;
+				margin-top: 0.5rem;
+				margin-bottom: 0.5rem;
+			}
+
+			.d2l-list-item-decoration {
+				flex: 0 0 auto;
+				padding-top: 18px;
+				padding-left: 15px;
+				padding-right: 18px;
+				padding-bottom: 18px;
+			}
+
+			.d2l-list-item-content {
+				flex: 1 1 auto;
+				padding-top: 17px;
+				padding-bottom: 17px;
+				align-self: center;
+			}
+
+			.d2l-list-item-deleter {
+				flex: 0 0 auto;
+				padding-top: 6px;
+				padding-left: 6px;
+				padding-right: 6px;
+			}
+			`
+		];
+	}
+
 	static async getLocalizeResources(langs) {
 		return getLocalizeResources(langs, import.meta.url);
 	}
@@ -116,7 +154,7 @@ class ActivityConditionsEditor
 
 	_renderOperators({ conditions, operators }) {
 
-		if( conditions.length <= 1 ) {
+		if (conditions.length <= 1) {
 			return html``;
 		}
 
@@ -143,44 +181,6 @@ class ActivityConditionsEditor
 		}
 
 		entity.remove(event.target.dataset.key);
-	}
-
-	static get listItemStyles() {
-
-		return [
-			bodyCompactStyles ,
-			css`
-			.d2l-list-item {
-				display: flex;
-				border: 1px solid var(--d2l-color-gypsum);
-				border-radius: 6px;
-				margin-top: 0.5rem;
-				margin-bottom: 0.5rem;
-			}
-
-			.d2l-list-item-decoration {
-				flex: 0 0 auto;
-				padding-top: 18px;
-				padding-left: 15px;
-				padding-right: 18px;
-				padding-bottom: 18px;
-			}
-
-			.d2l-list-item-content {
-				flex: 1 1 auto;
-				padding-top: 17px;
-				padding-bottom: 17px;
-				align-self: center;
-			}
-
-			.d2l-list-item-deleter {
-				flex: 0 0 auto;
-				padding-top: 6px;
-				padding-left: 6px;
-				padding-right: 6px;
-			}
-			`
-		];
 	}
 
 	_renderCondition({ key, title }) {

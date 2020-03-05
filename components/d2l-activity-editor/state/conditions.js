@@ -148,8 +148,8 @@ export class Conditions {
 
 	_asPlainText(legacyHtml) {
 
-		const doc = this._parser.parseFromString(legacyHtml, "text/html");
-		return doc.body.textContent || "";
+		const doc = this._parser.parseFromString(legacyHtml, 'text/html');
+		return doc.body.textContent || '';
 	}
 
 	setOperator(value) {
