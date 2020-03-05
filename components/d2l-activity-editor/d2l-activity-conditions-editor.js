@@ -53,6 +53,10 @@ class ActivityConditionsEditor
 		];
 	}
 
+	static async getLocalizeResources(langs) {
+		return getLocalizeResources(langs, import.meta.url);
+	}
+
 	static get listItemStyles() {
 
 		return [
@@ -89,10 +93,6 @@ class ActivityConditionsEditor
 			}
 			`
 		];
-	}
-
-	static async getLocalizeResources(langs) {
-		return getLocalizeResources(langs, import.meta.url);
 	}
 
 	constructor() {

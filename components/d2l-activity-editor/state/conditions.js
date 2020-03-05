@@ -127,7 +127,7 @@ export class Conditions {
 
 	_getSelectedOperator(operators) {
 
-		const item = this._operators.find(x => x.selected);
+		const item = _operators.find(x => x.selected);
 		return item ? item.value : DefaultOperator;
 	}
 
