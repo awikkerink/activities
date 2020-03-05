@@ -157,12 +157,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		} = assignment;
 
 		return html`
-			<d2l-activity-editor-alert
-				href="${activityUsageHref}"
-				.token="${this.token}"
-				text="${this.localize('assignmentSaveError')}">
-			</d2l-activity-editor-alert>
-
 			<div id="assignment-name-container">
 				<label class="d2l-label-text" for="assignment-name">${this.localize('name')}*</label>
 				<d2l-input-text
