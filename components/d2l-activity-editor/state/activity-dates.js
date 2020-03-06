@@ -38,7 +38,7 @@ export class ActivityDates {
 			return;
 		}
 
-		if (errorType && errorType.includes('start-after-end-date-error')) {
+		if (errorType && errorType.includes('start-after-due-end-date-error')) {
 			this.dueDateErrorTerm = 'dueAfterStartDate';
 			this.startDateErrorTerm = 'dueAfterStartDate';
 			this.endDateErrorTerm = 'startBeforeEndDate';
@@ -52,7 +52,7 @@ export class ActivityDates {
 			return;
 		}
 
-		if (errorType && errorType.includes('end-before-start-date-error')) {
+		if (errorType && errorType.includes('end-before-start-due-date-error')) {
 			this.dueDateErrorTerm = 'dueBeforeEndDate';
 			this.startDateErrorTerm = 'startBeforeEndDate';
 			this.endDateErrorTerm = 'dueBeforeEndDate';
@@ -63,6 +63,13 @@ export class ActivityDates {
 			this.dueDateErrorTerm = 'dueBeforeEndDate';
 			this.startDateErrorTerm = null;
 			this.endDateErrorTerm = 'dueBeforeEndDate';
+			return;
+		}
+
+		if (errorType && errorType.includes('end-before-start-date-error')) {
+			this.dueDateErrorTerm = null;
+			this.startDateErrorTerm = 'startBeforeEndDate';
+			this.endDateErrorTerm = 'startBeforeEndDate';
 			return;
 		}
 
