@@ -1,7 +1,7 @@
 import { css, html } from 'lit-element/lit-element';
+import { formatNumber, formatPercent } from '@brightspace-ui/intl/lib/number.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { bodySmallStyles } from '@brightspace-ui/core/components/typography/styles.js';
-import { formatPercent } from '@brightspace-ui/intl/lib/number.js';
 import { getLocalizeResources } from '../localization.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -22,6 +22,10 @@ class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeMixin(M
 			css`
 			:host {
 				display: block;
+			}
+
+			.d2l-activity-grade-candidate-selector-points-and-weight {
+				padding-top: 7px;
 			}
 			`
 		];
@@ -78,7 +82,9 @@ class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeMixin(M
 			selected
 		} = collection;
 
-		const percentWeight = selected.baseWeight !== undefined ? formatPercent(selected.baseWeight / 100, { maximumFractionDigits: 10 }) : '';
+		const formatNumberOptions = { maximumFractionDigits: 2 };
+		const formattedPoints = selected.maxPoints !== undefined ? formatNumber(selected.maxPoints, formatNumberOptions) : '';
+		const formattedWeight = selected.baseWeight !== undefined ? formatPercent(selected.baseWeight / 100, formatNumberOptions) : '';
 
 		return html`
 			<select
@@ -88,8 +94,9 @@ class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeMixin(M
 			>
 				${this._renderGradeCandidateTemplates(gradeCandidates, selected)}
 			</select>
-			<div class="d2l-body-small">
-				${this.localize('points', {points: selected.maxPoints})} ${selected.baseWeight !== undefined && html`• ${this.localize('weight', { weight: percentWeight })}`}
+			<div class="d2l-body-small d2l-activity-grade-candidate-selector-points-and-weight">
+				${selected.maxPoints !== undefined ? html`${this.localize('points', { points: formattedPoints })}` : ''}
+				${selected.baseWeight !== undefined ? html`• ${this.localize('weight', { weight: formattedWeight })}` : ''}
 			</div>
 		`;
 	}
