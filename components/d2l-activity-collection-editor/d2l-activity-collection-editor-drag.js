@@ -108,7 +108,7 @@ class ActivityCollectionEditorDrag extends LitElement {
 
 	renderKeyboardDragging() {
 		return html`
-			<button class="keyboard-button" @blur="${() => { this.keyboardActive = false; this._dispatchAction(actions.save);}}" @keydown="${this._handleActiveKeyboard}">
+			<button class="keyboard-button" @blur="${this._onBlur}" @keydown="${this._handleActiveKeyboard}">
 				<d2l-icon class="sub-icon" icon="tier1:arrow-toggle-up" @click="${() => this._dispatchAction(actions.up)}"></d2l-icon>
 				<d2l-icon class="sub-icon" icon="tier1:arrow-toggle-down" @click="${() => this._dispatchAction(actions.down)}"></d2l-icon>
 			</button>
@@ -119,6 +119,14 @@ class ActivityCollectionEditorDrag extends LitElement {
 		this.keyboardActive = isActive;
 		await this.updateComplete;
 		this.focus();
+	}
+
+	_onBlur() {
+		if (!this._tabbing) {
+			this.keyboardActive = false;
+			this._dispatchAction(actions.save);
+		}
+		this._tabbing = false;
 	}
 
 	_handleActiveKeyboard(e) {
@@ -140,6 +148,7 @@ class ActivityCollectionEditorDrag extends LitElement {
 				action = actions.last;
 				break;
 			case keyCodes.TAB:
+				this._tabbing = true;
 				action = e.shiftKey ? actions.previousElement : actions.nextElement;
 				break;
 			case keyCodes.ESC:
@@ -166,6 +175,11 @@ class ActivityCollectionEditorDrag extends LitElement {
 			this._setKeyboardDragging(true);
 			e.preventDefault();
 		}
+	}
+
+	enterKeyboardMode() {
+		this._dispatchAction(actions.active);
+		this._setKeyboardDragging(true);
 	}
 
 	_dispatchAction(action) {

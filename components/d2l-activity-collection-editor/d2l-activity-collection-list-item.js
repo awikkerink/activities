@@ -72,6 +72,7 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 				display: none;
 			}
 
+			:host(:hover:not([hide-dragger])) .d2l-list-item-drag-shadow,
 			:host([keyboard-active]) .d2l-list-item-drag-shadow {
 				display: block;
 			}
@@ -90,8 +91,13 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 				align-self: center;
 				left: -23px;
 				top: calc(50% - 18px);
+				display: none;
 			}
 
+			:host([keyboard-active]) .d2l-list-item-draggable,
+			:host(:hover) .d2l-list-item-draggable {
+				display: block;
+			}
 			.d2l-list-item-content {
 				border-radius: 6px;
 				overflow: hidden;
@@ -484,9 +490,29 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 			this.enterKeyboardMode();
 
 		} else if (action === actions.down) {
-			this.nextElementSibling && this.nextElementSibling && this._insertDiv(this, this.nextElementSibling.nextElementSibling);
+			this.nextElementSibling && this._insertDiv(this, this.nextElementSibling.nextElementSibling);
 			this.enterKeyboardMode();
 
+		} else if (action === actions.nextElement && this.nextElementSibling) {
+			this.keyboardActive = false;
+			this._dispatchDragMove(this.previousElementSibling && this.previousElementSibling.key);
+			await this.updateComplete;
+			this._dispatchDragKeyboard(this.keyboardActive);
+			await this.updateComplete;
+			this.nextElementSibling.hideDragger = false;
+			await this.nextElementSibling.updateComplete;
+			const dragger =  this.nextElementSibling.shadowRoot.querySelector('d2l-activity-collection-editor-drag');
+			dragger.enterKeyboardMode();
+		} else if (action === actions.previousElement && this.previousElementSibling) {
+			this.keyboardActive = false;
+			this._dispatchDragMove(this.previousElementSibling && this.previousElementSibling.key);
+			await this.updateComplete;
+			this._dispatchDragKeyboard(this.keyboardActive);
+			await this.updateComplete;
+			this.previousElementSibling.hideDragger = false;
+			await this.previousElementSibling.updateComplete;
+			const dragger =  this.previousElementSibling.shadowRoot.querySelector('d2l-activity-collection-editor-drag');
+			dragger.enterKeyboardMode();
 		}
 	}
 
