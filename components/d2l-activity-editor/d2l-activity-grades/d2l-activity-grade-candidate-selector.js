@@ -26,30 +26,35 @@ class ActivityGradeCandidateSelector extends (ActivityEditorMixin(MobxLitElement
 		super(store);
 	}
 
-	_setSelected(e) {
-		this.selected = this._gradeCandidateHrefs[e.target.selectedIndex];
-	}
-
-	_renderGradeCandidateTemplates(gradeCandidates) {
+	_renderGradeCandidateTemplates(gradeCandidates, selected) {
 		return gradeCandidates.map(gc => {
 			if (gc.isCategory) {
-				return this._renderGradeCategory(gc);
+				return this._renderGradeCategory(gc, selected);
 			} else {
-				return this._renderGradeCandidate(gc);
+				return this._renderGradeCandidate(gc, selected);
 			}
 		});
 	}
 
-	_renderGradeCandidate(gc) {
-		return html`<option>${gc.name}</option>`;
+	_renderGradeCandidate(gc, selected) {
+		return html`<option value="${gc.href}" ?selected="${gc.href === selected.href}">${gc.name}</option>`;
 	}
 
-	_renderGradeCategory(gradeCategory) {
+	_renderGradeCategory(gradeCategory, selected) {
 		return html`
 			<optgroup label="${gradeCategory.name}">
-				${gradeCategory.gradeCandidates.map(gc => this._renderGradeCandidate(gc))}
+				${gradeCategory.gradeCandidates.map(gc => this._renderGradeCandidate(gc, selected))}
 			</optgroup>
 		`;
+	}
+
+	_setSelected(event) {
+		if (event && event.target && event.target.value) {
+			const collection = store.get(this.href);
+			if (collection) {
+				collection.setSelected(event.target.value);
+			}
+		}
 	}
 
 	render() {
@@ -60,7 +65,8 @@ class ActivityGradeCandidateSelector extends (ActivityEditorMixin(MobxLitElement
 		}
 
 		const {
-			gradeCandidates
+			gradeCandidates,
+			selected
 		} = collection;
 
 		return html`
@@ -69,7 +75,7 @@ class ActivityGradeCandidateSelector extends (ActivityEditorMixin(MobxLitElement
 				class="d2l-input-select"
 				@change="${this._setSelected}"
 			>
-				${this._renderGradeCandidateTemplates(gradeCandidates)}
+				${this._renderGradeCandidateTemplates(gradeCandidates, selected)}
 			</select>
 		`;
 	}

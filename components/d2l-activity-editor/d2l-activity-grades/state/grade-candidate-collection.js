@@ -35,12 +35,52 @@ export class GradeCandidateCollection {
 			return this.fetchGradeCandidate(gradeCandidateEntity);
 		});
 		this.gradeCandidates = await Promise.all(gradeCandidatePromises);
+		this.selected = this._findCurrentAssociation(this.gradeCandidates) || this._findFirstGradeItemFromCandidates(this.gradeCandidates);
+	}
+
+	setSelected(href) {
+		this.selected = this._findGradeCandidate(href, this.gradeCandidates);
+	}
+
+	_findGradeCandidate(href, gradeCandidates) {
+		for (const gc of gradeCandidates) {
+			if (href === gc.href) {
+				return gc;
+			}
+			const findGradeCandidate = this._findGradeCandidate(href, gc.gradeCandidates);
+			if (findGradeCandidate) {
+				return findGradeCandidate;
+			}
+		}
+	}
+
+	_findCurrentAssociation(gradeCandidates) {
+		for (const gc of gradeCandidates) {
+			if (gc.isCurrentAssociation) {
+				return gc;
+			}
+			const currentAssociation = this._findCurrentAssociation(gc.gradeCandidates);
+			if (currentAssociation) {
+				return currentAssociation;
+			}
+		}
+	}
+
+	_findFirstGradeItemFromCandidates(gradeCandidates) {
+		for (const gc of gradeCandidates) {
+			if (!gc.isCategory) {
+				return gc;
+			}
+			return this._findFirstGradeItemFromCandidates(gc.gradeCandidates);
+		}
 	}
 }
 
 decorate(GradeCandidateCollection, {
 	// props
 	gradeCandidates: observable,
+	selected: observable,
 	// actions
-	load: action
+	load: action,
+	setSelected: action
 });
