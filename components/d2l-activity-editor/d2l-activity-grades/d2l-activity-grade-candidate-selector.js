@@ -10,9 +10,7 @@ import { shared as store } from './state/grade-candidate-collection-store.js';
 
 class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeMixin(MobxLitElement)) {
 	static get properties() {
-		return {
-			selected: { type: Object }
-		};
+		return {};
 	}
 
 	static get styles() {
