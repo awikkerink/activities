@@ -29,7 +29,7 @@ export const ActivityEditorContainerMixin = superclass => class extends supercla
 	}
 
 	_focusOnInvalid() {
-		const isAriaInvalid = node => node.getAttribute('aria-invalid') === 'true';
+		const isAriaInvalid = node => node.getAttribute('aria-invalid') === 'true' && node.getClientRects().length > 0;
 		for (const editor of this._editors) {
 			const el = getFirstFocusableDescendant(editor, true, isAriaInvalid);
 			if (el) {
