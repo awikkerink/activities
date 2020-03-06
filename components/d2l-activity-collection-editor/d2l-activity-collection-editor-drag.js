@@ -167,6 +167,7 @@ class ActivityCollectionEditorDrag extends LitElement {
 
 		this._dispatchAction(action);
 		e.preventDefault();
+		e.stopPropagation();
 	}
 
 	_handleDeactiveKeyboard(e) {

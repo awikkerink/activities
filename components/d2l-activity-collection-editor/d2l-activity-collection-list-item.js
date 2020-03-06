@@ -3,7 +3,8 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { heading1Styles, heading4Styles, bodyCompactStyles, bodyStandardStyles, labelStyles} from '@brightspace-ui/core/components/typography/styles.js';
 import { checkboxStyles } from '@brightspace-ui/core/components/inputs/input-checkbox-styles.js';
 import { classMap } from 'lit-html/directives/class-map.js';
-import { getFirstFocusableDescendant } from '@brightspace-ui/core/helpers/focus.js';
+import { getFirstFocusableDescendant, getPreviousFocusable, getLastFocusableDescendant, getNextFocusable, getComposedActiveElement, isFocusable} from '@brightspace-ui/core/helpers/focus.js';
+import { getComposedParent} from '@brightspace-ui/core/helpers/dom.js';
 import { getUniqueId } from '@brightspace-ui/core/helpers/uniqueId.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import ResizeObserver from 'resize-observer-polyfill';
@@ -20,7 +21,20 @@ const ro = new ResizeObserver(entries => {
 });
 
 const defaultBreakpoints = [842, 636, 580, 0];
+const keyCodes = Object.freeze({
+	END: 35,
+	HOME: 36,
+	UP: 38,
+	DOWN: 40,
+	SPACE: 32,
+	ENTER: 13,
+	ESC: 27,
+	TAB: 9,
+	LEFT: 37,
+	RIGHT: 39,
+	SHIFT: 16,
 
+});
 class ActivityCollectionListItem extends RtlMixin(LitElement) {
 
 	static get properties() {
@@ -37,6 +51,7 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 			hideDragger: { type: Boolean, reflect: true, attribute: 'hide-dragger' },
 			draggable: { type: String, reflect: true },
 			greyOut: { type: Boolean, reflect: true, attribute: 'grey-out' },
+			active: { type: Boolean, reflect: true },
 			_breakpoint: { type: Number },
 			_showUpperDrag: { type: Boolean },
 			_showLowerDrag: { type: Boolean }
@@ -50,7 +65,7 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 			:host {
 				display: block;
 				position: relative;
-
+				pointer-events:all;
 			}
 
 			.wrapper {
@@ -63,17 +78,36 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 
 			.d2l-list-item-drag-shadow {
 				position: absolute;
-				width: calc(100% + 36px);
+				width: calc(100% + 38px);
 				height: 100%;
 				top: -1px;
-				left: -27px;
+				left: -29px;
 				border-radius: 6px;
-				box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 				display: none;
+				pointer-events: none;
+				z-index: -1;
 			}
 
-			:host(:hover:not([hide-dragger])) .d2l-list-item-drag-shadow,
 			:host([keyboard-active]) .d2l-list-item-drag-shadow {
+				box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+				display: block;
+			}
+
+			:host(:hover:not([hide-dragger])) .d2l-list-item-drag-shadow {
+				display: block;
+				animation-duration: 2s;
+  				animation-name: showBoxShadowDelay;
+				box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			}
+
+			@keyframes showBoxShadowDelay {
+				0%, 95% { border: solid 1px var(--d2l-color-mica); box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 0 0 0 rgba(0, 0, 0, 0.19); }
+				100% { border: solid 0px var(--d2l-color-mica); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
+			}
+
+			:host([active]:not([keyboard-active])) .d2l-list-item-drag-shadow {
+				border-color: transparent;
+				box-shadow: 0 0 0 2px var(--d2l-color-celestine);
 				display: block;
 			}
 
@@ -94,6 +128,7 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 				display: none;
 			}
 
+			:host([active]) .d2l-list-item-draggable,
 			:host([keyboard-active]) .d2l-list-item-draggable,
 			:host(:hover) .d2l-list-item-draggable {
 				display: block;
@@ -356,6 +391,7 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 		this.addEventListener('dragstart', this._dragStartHandler.bind(this));
 		this.addEventListener('dragend', this._dragStopHandler.bind(this));
 		this.addEventListener('dragleave', this._dragExit.bind(this));
+		this.addEventListener('keydown', this._onKeyDown.bind(this));
 	}
 
 	connectedCallback() {
@@ -373,9 +409,68 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 		ro.unobserve(this);
 	}
 
-	focus() {
+	async focus() {
+		this.active = true;
+		await this.updateComplete;
 		const node = getFirstFocusableDescendant(this);
 		if (node) node.focus();
+	}
+
+	blur() {
+		this.active = false;
+	}
+
+	_hasThisParentNode(node) {
+		for(let parentNode = node; parentNode; parentNode = getComposedParent(parentNode)) {
+			if (parentNode.isSameNode(this)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	_onKeyDown(e) {
+		if (this.keyboardActive || this._stopKeyDown) return;
+		let node = null;
+		switch (e.keyCode) {
+			case keyCodes.UP:
+				node = this.previousElementSibling;
+				if (node) this.blur();
+				break;
+			case keyCodes.DOWN:
+				node = this.nextElementSibling;
+				if (node) this.blur();
+				break;
+			case keyCodes.RIGHT:
+				node = getComposedActiveElement();
+				while(node = getNextFocusable(node)) {
+					if (node.focus && node.tagName !== 'IMG') {
+						break;
+					}
+				}
+				if (!this._hasThisParentNode(node)) node = null;
+				break;
+			case keyCodes.LEFT:
+				node = getComposedActiveElement();
+				while(node = getPreviousFocusable(node)) {
+					if (node.focus && node.tagName !== 'IMG') {
+						break;
+					}
+				}
+
+				if (!this._hasThisParentNode(node)) node = null;
+				break;
+			case keyCodes.HOME:
+				node = getFirstFocusableDescendant(this.parentNode);
+				break;
+			case keyCodes.END:
+				node = getLastFocusableDescendant(this.parentNode);
+				break;
+			default:
+				return;
+		}
+		if (node) node.focus();
+		e.preventDefault();
 	}
 
 	render() {
@@ -464,8 +559,8 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 	}
 	async _dragAction(e) {
 		const action = e.detail.action;
-		console.log(action);
 		if (action === actions.active) {
+			this._stopKeyDown = true;
 			this.keyboardActive = true;
 			this._nextElement = this.nextElementSibling;
 			await this.updateComplete;
@@ -474,16 +569,22 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 		} else if (action === actions.cancel) {
 			this.parentNode.insertBefore(this, this._nextElement);
 			this.keyboardActive = false;
+			this.active = true;
 			await this.updateComplete;
+			this.focus();
 			this._dispatchDragKeyboard(this.keyboardActive);
+			this._stopKeyDown = false;
 
 		} else if (action === actions.save) {
 			this.keyboardActive = false;
+			this.active = true;
 			this._dispatchDragMove(this.previousElementSibling && this.previousElementSibling.key);
 			await this.updateComplete;
+			this.focus();
 			this._dispatchDragKeyboard(this.keyboardActive);
 			await this.updateComplete;
 			this.shadowRoot.querySelector('d2l-activity-collection-editor-drag').focus();
+			this._stopKeyDown = false;
 
 		} else if (action === actions.up) {
 			this.previousElementSibling && this._insertDiv(this, this.previousElementSibling);
@@ -503,6 +604,8 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 			await this.nextElementSibling.updateComplete;
 			const dragger =  this.nextElementSibling.shadowRoot.querySelector('d2l-activity-collection-editor-drag');
 			dragger.enterKeyboardMode();
+			this._stopKeyDown = false;
+
 		} else if (action === actions.previousElement && this.previousElementSibling) {
 			this.keyboardActive = false;
 			this._dispatchDragMove(this.previousElementSibling && this.previousElementSibling.key);
@@ -513,6 +616,8 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 			await this.previousElementSibling.updateComplete;
 			const dragger =  this.previousElementSibling.shadowRoot.querySelector('d2l-activity-collection-editor-drag');
 			dragger.enterKeyboardMode();
+			this._stopKeyDown = false;
+
 		}
 	}
 
@@ -563,7 +668,6 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 			bubbles: false
 		}));
 		const node = this.parentNode.nextElementSibling.querySelector(`d2l-activity-collection-list-item[key="${this.key}"]`);
-		console.log(node.shadowRoot.firstElementChild.firstElementChildf);
 		node.toggleAttribute('hidden', false);
 		node.shadowRoot.firstElementChild.style.transform = 'rotate(1deg)';
 		node.shadowRoot.firstElementChild.firstElementChild.style.background = '#f9fbff';
