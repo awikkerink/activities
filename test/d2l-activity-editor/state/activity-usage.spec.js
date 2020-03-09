@@ -23,7 +23,8 @@ describe('Activity Usage', function() {
 		canEditScoreOutOf: () => true,
 		canSeeGrades: () => true,
 		canEditGrades: () => true,
-		gradeCandidatesHref: () => ''
+		gradeCandidatesHref: () => '',
+		conditionsHref: () => undefined
 	};
 
 	afterEach(() => {
