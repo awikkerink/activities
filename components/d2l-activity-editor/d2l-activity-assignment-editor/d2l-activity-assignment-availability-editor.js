@@ -2,8 +2,8 @@ import '../d2l-activity-availability-dates-summary.js';
 import '../d2l-activity-availability-dates-editor.js';
 import '../d2l-activity-usage-conditions-editor.js';
 import '@brightspace-ui-labs/accordion/accordion-collapse.js';
-import { heading3Styles, heading4Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
+import { heading3Styles, heading4Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { summarizerHeaderStyles, summarizerSummaryStyles } from './activity-summarizer-styles.js';
 
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
