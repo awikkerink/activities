@@ -4,6 +4,8 @@ import { LegacyConditions } from 'siren-sdk/src/activities/conditions/LegacyCond
 
 configureMobx({ enforceActions: 'observed' });
 
+const DefaultOperator = 'All';
+
 export class Conditions {
 
 	constructor(href, token) {
@@ -11,9 +13,12 @@ export class Conditions {
 		this.href = href;
 		this.token = token;
 
+		this._operators = [];
+		this._operator = DefaultOperator;
 		this._conditions = new Map(); // Id -> { id, text }
 		this._conditionsToCreate = new Map(); // Key -> LegacyDTO
 		this._conditionsToRemove = new Set(); // Id
+		this._parser = new DOMParser();
 	}
 
 	async fetch() {
@@ -108,9 +113,29 @@ export class Conditions {
 		return results;
 	}
 
+	get operators() {
+
+		const results = [];
+
+		for (const { value, title } of this._operators) {
+
+			results.push({ value, title, selected: value === this._operator });
+		}
+
+		return results;
+	}
+
+	_getSelectedOperator(operators) {
+
+		const item = operators.find(x => x.selected);
+		return item ? item.value : DefaultOperator;
+	}
+
 	load(entity) {
 
 		this._entity = entity;
+		this._operators = entity.operatorOptions();
+		this._operator = this._getSelectedOperator(this._operators);
 		this._conditions = new Map(entity.conditions().map(x => [x.id, x]));
 		this._conditionsToCreate = new Map();
 		this._conditionsToRemove = new Set();
@@ -119,6 +144,20 @@ export class Conditions {
 	_constructKey(dto) {
 
 		return `${dto.ConditionTypeId},${dto.Id1},${dto.Id2},${dto.Id2},${dto.Percentage1},${dto.Percentage2},${dto.Int1}`;
+	}
+
+	_asPlainText(legacyHtml) {
+
+		const doc = this._parser.parseFromString(legacyHtml, 'text/html');
+		return doc.body.textContent || '';
+	}
+
+	setOperator(value) {
+
+		const item = this._operators.find(x => x.value === value);
+		if (item) {
+			this._operator = item.value;
+		}
 	}
 
 	add(dto) {
@@ -131,6 +170,9 @@ export class Conditions {
 			dto.forEach(this.add, this);
 			return;
 		}
+
+		// Legacy gives us HTML, which we can't render quite yet.
+		dto.Text = this._asPlainText(dto.Text);
 
 		const isExistingCondition = this._conditions.has(dto.Id);
 		if (isExistingCondition) {
@@ -170,9 +212,31 @@ export class Conditions {
 		};
 	}
 
+	get _shouldSave() {
+
+		if (this._conditionsToCreate.size > 0) {
+			return true;
+		}
+
+		if (this._conditionsToRemove.size > 0) {
+			return true;
+		}
+
+		const operator = this._getSelectedOperator(this._operators);
+		if (operator !== this._operator) {
+			return true;
+		}
+
+		return false;
+	}
+
 	async save() {
 
 		if (!this.canSave) {
+			return;
+		}
+
+		if (!this._shouldSave) {
 			return;
 		}
 
@@ -182,14 +246,8 @@ export class Conditions {
 		const removeConditions = Array
 			.from(this._conditionsToRemove);
 
-		const shouldSave =
-			newConditions.length > 0 ||
-			removeConditions.length > 0;
-		if (!shouldSave) {
-			return;
-		}
-
 		await this._entity.save({
+			Operator: this._operator,
 			RemoveConditions: removeConditions,
 			NewConditions: newConditions
 		});
@@ -199,11 +257,14 @@ export class Conditions {
 
 decorate(Conditions, {
 	// props
+	_operator: observable,
+	_operators: observable,
 	_conditions: observable,
 	_conditionsToCreate: observable,
 	_conditionsToRemove: observable,
 	// actions
 	load: action,
+	setOperator: action,
 	add: action,
 	remove: action,
 	save: action

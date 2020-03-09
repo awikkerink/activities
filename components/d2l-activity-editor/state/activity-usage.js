@@ -24,6 +24,7 @@ export class ActivityUsage {
 
 	load(entity) {
 		this._entity = entity;
+		this.conditionsHref = entity.conditionsHref();
 		this.isDraft = entity.isDraft();
 		this.canEditDraft = entity.canEditDraft();
 		this.isError = false;
@@ -110,6 +111,7 @@ export class ActivityUsage {
 decorate(ActivityUsage, {
 	// props
 	dueDate: observable,
+	conditionsHref: observable,
 	isDraft: observable,
 	canEditDraft: observable,
 	isError: observable,
