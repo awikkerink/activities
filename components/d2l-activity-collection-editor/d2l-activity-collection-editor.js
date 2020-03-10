@@ -28,6 +28,7 @@ import 'd2l-organizations/components/d2l-organization-image/d2l-organization-ima
 import 'd2l-alert/d2l-alert-toast.js';
 import '@brightspace-ui-labs/edit-in-place/d2l-labs-edit-in-place.js';
 import '../d2l-activity-editor/d2l-activity-visibility-auto-editor.js';
+import './d2l-activity-collection-list.js';
 import './d2l-activity-collection-list-item.js';
 import { getLocalizeResources } from './localization.js';
 import { orderListRender } from './orderedListRender.js'
@@ -615,16 +616,19 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		if (this._items.length <= 0) {
 			return html`<div class="d2l-activity-collection-no-activity d2l-body-standard">${this.localize('noActivitiesInLearningPath')}</div>`;
 		}
-
-		const items = orderListRender(this._items, (item) => item.id, item => {
+		let itemCount = 0;
+		const items = orderListRender(this._items, (item) => item.id, (item) => {
+			itemCount++;
 			return html`
 				<d2l-activity-collection-list-item
 					@d2l-activity-collection-list-item="${this._keyboardDragging}"
 					@d2l-activity-collection-list-item-move="${this._draggingMove}"
 					@d2l-activity-collection-list-item-dragging="${this._dragging}"
 					key="${item.id}"
-					role="grid"
-					@blur="${this._listItemBlurred}" >
+					@blur="${this._listItemBlurred}"
+					title="${item.name()}"
+					position="${itemCount}"
+					total="${this._items.length}">
 					<div slot="illustration" class="d2l-activitiy-collection-list-item-illustration">
 						${this._renderCourseImageSkeleton()}
 						<d2l-organization-image
@@ -657,7 +661,11 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			`;
 		});
 
-		return html`<div id="mainActivityList" tabindex="0" @focus="${this._listItemFocused}"></div><d2l-list @blur="${this._listItemBlurred}">${items}</d2l-list><d2l-list class="d2l-offscreen" tabindex="-1" hidden>${offscreenItems}</d2l-list>`;
+		return html`
+			<div id="mainActivityList" tabindex="0" @focus="${this._listItemFocused}"></div>
+			<d2l-activity-collection-list @blur="${this._listItemBlurred}">${items}</d2l-activity-collection-list>
+			<d2l-list class="d2l-offscreen" tabindex="-1" hidden>${offscreenItems}</d2l-list>
+		`;
 	}
 
 	_listItemFocused(e) {
@@ -671,7 +679,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		if (e.relatedTarget && e.relatedTarget.tagName !== 'D2L-BUTTON')  return;
 		const list = this.shadowRoot.querySelector(`#mainActivityList`);
 		list.setAttribute('tabindex', 0);
-		const items = this.shadowRoot.querySelectorAll(`d2l-list d2l-activity-collection-list-item`);
+		const items = this.shadowRoot.querySelectorAll(`d2l-activity-collection-list d2l-activity-collection-list-item`);
 		items.forEach(element => {
 			element.blur();
 		});
@@ -810,7 +818,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	}
 
 	_keyboardDragging(e) {
-		const items = this.shadowRoot.querySelectorAll('d2l-list d2l-activity-collection-list-item:not([keyboard-active])');
+		const items = this.shadowRoot.querySelectorAll('d2l-activity-collection-list d2l-activity-collection-list-item:not([keyboard-active])');
 		items.forEach(item => item.toggleAttribute('hide-dragger', e.detail.keyboardActive));
 	}
 	async _draggingMove(e) {
@@ -821,7 +829,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	}
 
 	_dragging(e) {
-		const items = this.shadowRoot.querySelectorAll(`d2l-list d2l-activity-collection-list-item:not([key=${e.detail.key}]`);
+		const items = this.shadowRoot.querySelectorAll(`d2l-activity-collection-list d2l-activity-collection-list-item:not([key=${e.detail.key}]`);
 		items.forEach(item => {
 			item.toggleAttribute('drag-target', e.detail.dragging);
 			item.toggleAttribute('hide-dragger', e.detail.keyboardActive);

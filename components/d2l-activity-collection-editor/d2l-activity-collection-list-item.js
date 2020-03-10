@@ -10,6 +10,7 @@ import { ifDefined } from 'lit-html/directives/if-defined.js';
 import ResizeObserver from 'resize-observer-polyfill';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { actions } from './d2l-activity-collection-editor-drag.js';
+import { offscreenStyles } from '@brightspace-ui/core/components/offscreen/offscreen-styles.js';
 
 const ro = new ResizeObserver(entries => {
 	entries.forEach(entry => {
@@ -52,6 +53,10 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 			draggable: { type: String, reflect: true },
 			greyOut: { type: Boolean, reflect: true, attribute: 'grey-out' },
 			active: { type: Boolean, reflect: true },
+			activeHref: { type: Boolean, reflect: true, attribute: 'active-href'  },
+			title: { type: String },
+			position: { type: Number },
+			total: { type: Number },
 			_breakpoint: { type: Number },
 			_showUpperDrag: { type: Boolean },
 			_showLowerDrag: { type: Boolean }
@@ -105,9 +110,15 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 				100% { border: solid 0px var(--d2l-color-mica); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
 			}
 
-			:host([active]:not([keyboard-active])) .d2l-list-item-drag-shadow {
+			:host([active][active-href]:not([keyboard-active])) .d2l-list-item-drag-shadow {
 				border-color: transparent;
 				box-shadow: 0 0 0 2px var(--d2l-color-celestine);
+				display: block;
+			}
+
+
+			:host([active]:not([keyboard-active])) .d2l-list-item-drag-shadow {
+				border: solid 1px var(--d2l-color-mica);
 				display: block;
 			}
 
@@ -125,9 +136,11 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 				align-self: center;
 				left: -23px;
 				top: calc(50% - 18px);
-				display: none;
+				display: block;
 			}
-
+			:host([hide-dragger]) .d2l-list-item-draggable {
+				display: none;
+			};
 			:host([active]) .d2l-list-item-draggable,
 			:host([keyboard-active]) .d2l-list-item-draggable,
 			:host(:hover) .d2l-list-item-draggable {
@@ -211,6 +224,8 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 				grid-area: title;
 				width: 100%;
 				align-self: center;
+				color: var(--d2l-list-item-content-text-color);
+				text-decoration: var(--d2l-list-item-content-text-decoration);
 			}
 			.d2l-list-item-main-secondary {
 				color: #6e7376;
@@ -476,7 +491,7 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 	render() {
 
 		const label = this.selectable ? html`<label class="d2l-list-item-label" for="${this._checkBoxId}" aria-labelledby="${this._contentId}"></label>` : null;
-		const link = this.href ? html`<a class="d2l-list-item-link" href="${ifDefined(this.href)}" aria-labelledby="${this._contentId}"></a>` : null;
+		const link = this.href ? html`<a class="d2l-list-item-link" href="${ifDefined(this.href)}" aria-labelledby="${this._contentId}" @focus=${() => this.activeHref = true} @blur=${() => this.activeHref = false}></a>` : null;
 		const beforeContent = this.selectable
 			? html`<input id="${this._checkBoxId}" class="d2l-input-checkbox" @change="${this._handleCheckboxChange}" type="checkbox" .checked="${this.selected}" ?disabled="${this.disabled}"><slot name="illustration"></slot>`
 			: html`<slot name="illustration"></slot>`;
@@ -496,7 +511,16 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 					<div @drop="${this._dropHandler.bind(this)}" @dragover="${this._dragOverHandler.bind(this)}" @dragenter="${this._dragLowerEnter.bind(this)}" @dragleave="${this._dragLowerExit.bind(this)}"></div>
 				</div>
 				<div class="${classMap(classes)}" breakpoint="${this._breakpoint}">
-					${ this.hideDragger ? null : html`<d2l-activity-collection-editor-drag class="d2l-list-item-draggable" @d2l-activity-collection-editor-drag-action="${this._dragAction}"></d2l-activity-collection-editor-drag>`}
+					${ this.hideDragger && false ? null : html`
+						<d2l-activity-collection-editor-drag
+							class="d2l-list-item-draggable"
+							@d2l-activity-collection-editor-drag-action="${this._dragAction}"
+							text="Activate to drag activity, ${this.title}"
+							title="${this.title}"
+							tabindex="-1"
+							position="${this.position}"
+							total="${this.total}">
+						</d2l-activity-collection-editor-drag>`}
 					${label}
 					${this.illustrationOutside ? beforeContent : null}
 					${link}
@@ -509,12 +533,12 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 							<div class="d2l-list-item-main d2l-body-standard">
 								<div class="d2l-list-item-main-title"><slot></slot></div>
 								<div class="d2l-list-item-main-secondary d2l-body-compact"><slot name="secondary"></slot></div>
-								<slot name="actions"></slot>
+								<slot name="actions" ></slot>
 							</div>
 						</div>
 					</div>
 				</div>
-		</div>
+			</div>
 			${this._renderDivider(this._showLowerDrag, 'd2l-list-lower-drag-indicator')}
 		`;
 
@@ -603,6 +627,7 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 			this.nextElementSibling.hideDragger = false;
 			await this.nextElementSibling.updateComplete;
 			const dragger =  this.nextElementSibling.shadowRoot.querySelector('d2l-activity-collection-editor-drag');
+			dragger.firstActive = true;
 			dragger.enterKeyboardMode();
 			this._stopKeyDown = false;
 
@@ -615,6 +640,7 @@ class ActivityCollectionListItem extends RtlMixin(LitElement) {
 			this.previousElementSibling.hideDragger = false;
 			await this.previousElementSibling.updateComplete;
 			const dragger =  this.previousElementSibling.shadowRoot.querySelector('d2l-activity-collection-editor-drag');
+			dragger.firstActive = true;
 			dragger.enterKeyboardMode();
 			this._stopKeyDown = false;
 
