@@ -15,6 +15,7 @@ export class ActivityScoreGrade {
 		this.canSeeGrades = entity.canSeeGrades();
 		this.canEditGrades = entity.canEditGrades();
 		this.associatedGrade = null;
+		this.gradeHref = entity.gradeHref();
 		this.gradeCandidatesHref = entity.gradeCandidatesHref();
 	}
 
@@ -28,6 +29,7 @@ export class ActivityScoreGrade {
 		this.inGrades = false;
 		this.isUngraded = true;
 		this.associatedGrade = null;
+		this.gradeHref = '';
 		this.setScoreOutOf('');
 	}
 
@@ -39,6 +41,7 @@ export class ActivityScoreGrade {
 	removeFromGrades() {
 		this.inGrades = false;
 		this.associatedGrade = null;
+		this.gradeHref = '';
 		if (this.scoreOutOfError === 'emptyScoreOutOfError') {
 			this.scoreOutOfError = null;
 		}
@@ -65,6 +68,7 @@ export class ActivityScoreGrade {
 
 	setAssociatedGrade(gradeCandidate) {
 		this.associatedGrade = gradeCandidate;
+		this.gradeHref = gradeCandidate.href;
 		this.setGraded();
 		if (gradeCandidate.maxPoints !== undefined) {
 			this.setScoreOutOf(gradeCandidate.maxPoints.toString());
@@ -83,6 +87,7 @@ decorate(ActivityScoreGrade, {
 	canSeeGrades: observable,
 	canEditGrades: observable,
 	gradeCandidatesHref: observable,
+	gradeHref: observable,
 	associatedGrade: observable,
 	// actions
 	setScoreOutOf: action,

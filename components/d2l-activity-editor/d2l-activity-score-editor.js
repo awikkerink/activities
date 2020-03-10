@@ -211,7 +211,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mob
 		const scoreAndGrade = store.get(this.href).scoreAndGrade;
 		const gradeCandidatesHref = scoreAndGrade.gradeCandidatesHref;
 		const gradeCandidateCollection = gradeCandidateCollectionStore.get(gradeCandidatesHref);
-		const oldSelected = gradeCandidateCollection.selected;
+		const oldGradeHref = scoreAndGrade.gradeHref;
 
 		const dialog = this.shadowRoot.querySelector('d2l-dialog');
 		const action = await dialog.open();
@@ -220,7 +220,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mob
 		}
 
 		const selected = gradeCandidateCollection.selected;
-		if (oldSelected.href === selected.href) {
+		if (oldGradeHref && oldGradeHref === selected.href) {
 			return;
 		}
 
