@@ -96,5 +96,5 @@ decorate(ActivityScoreGrade, {
 	removeFromGrades: action,
 	addToGrades: action,
 	validate: action,
-	setSelectedGrade: action
+	setAssociatedGrade: action
 });
