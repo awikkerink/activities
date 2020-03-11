@@ -60,7 +60,7 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeMixin(RtlMix
 
 		D2L.ActivityEditor = D2L.ActivityEditor || {};
 		// Referenced by the server-side ActivitiesView renderer
-		D2L.ActivityEditor.FileUploadDialogCallback = async(files) => {
+		D2L.ActivityEditor.FileUploadDialogCallback = (files) => {
 			for (const file of files) {
 				const fileSystemType = file.m_fileSystemType;
 				const fileId = file.m_id;
