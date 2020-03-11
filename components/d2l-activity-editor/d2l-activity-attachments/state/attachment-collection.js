@@ -1,8 +1,8 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { AttachmentCollectionEntity } from 'siren-sdk/src/activities/AttachmentCollectionEntity.js';
 import { fetchEntity } from '../../state/fetch-entity.js';
-import { FilesHomeEntity } from 'siren-sdk/src/files/FilesHomeEntity.js';
 import { FilePreviewLocationEntity } from 'siren-sdk/src/files/FilePreviewLocationEntity.js';
+import { FilesHomeEntity } from 'siren-sdk/src/files/FilesHomeEntity.js';
 
 configureMobx({ enforceActions: 'observed' });
 
