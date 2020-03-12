@@ -102,9 +102,6 @@ export class AttachmentCollection {
 			throw new Error('No attachment store configured. Cannot save');
 		}
 
-		const discarded = [];
-		let hasChanged = false;
-
 		for (const href of this.attachments) {
 			// TODO - Should we run these concurrently using an array of promises?
 			// Siren action helper will still serialize them but we could setup the
@@ -112,29 +109,9 @@ export class AttachmentCollection {
 			const attachment = attachmentStore.get(href);
 			if (attachment.deleted && !attachment.creating) {
 				await attachment.delete();
-				hasChanged = true;
 			}
 			if (attachment.creating && !attachment.deleted) {
 				await attachment.save(this._entity);
-				hasChanged = true;
-			}
-
-			if (attachment.creating && attachment.deleted) {
-				discarded.push(href);
-			}
-
-			// Clean up store reference to temporary or deleted attachments
-			if (attachment.creating || attachment.deleted) {
-				attachmentStore.remove(href);
-			}
-		}
-
-		if (hasChanged) {
-			await this.fetch();
-		} else if (discarded.length > 0) {
-			// Clean up new attachments that were removed before save
-			for (const href of discarded) {
-				this.attachments.remove(href);
 			}
 		}
 	}
