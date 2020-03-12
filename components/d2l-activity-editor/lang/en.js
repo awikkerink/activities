@@ -45,4 +45,7 @@ export default {
 	"dueBetweenStartEndDate": "Due Date must be after Start Date and before or equal to End Date",
 	"dueAfterStartDate": "Due Date must be after Start Date",
 	"dueBeforeEndDate": "Due Date must be before or equal to End Date",
+	"createAndLinkToNewGradeItem": "Create and link to New Grade Item", //Radio button text
+	"linkToExistingGradeItem": "Link to Existing Grade Item", //Radio button text
+	"points": "Points: {points}", // Text label for displaying points of a grade
 };

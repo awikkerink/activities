@@ -3,18 +3,21 @@ import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@brightspace-ui/core/components/icons/icon.js';
+import '@brightspace-ui/core/components/inputs/input-radio-spacer.js';
 import '@brightspace-ui/core/components/inputs/input-text.js';
 import 'd2l-dropdown/d2l-dropdown.js';
 import 'd2l-dropdown/d2l-dropdown-menu.js';
 import 'd2l-tooltip/d2l-tooltip';
-import { bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
+import { bodyCompactStyles, bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
+import { formatNumber } from '@brightspace-ui/intl/lib/number.js';
 import { getLocalizeResources } from './localization';
 import { shared as gradeCandidateCollectionStore } from './d2l-activity-grades/state/grade-candidate-collection-store.js';
 import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
+import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { shared as store } from './state/activity-store.js';
 
@@ -22,15 +25,18 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mob
 
 	static get properties() {
 		return {
-			_focusUngraded: { type: Boolean },
+			activityName: { type: String },
+			_focusUngraded: { type: Boolean }
 		};
 	}
 
 	static get styles() {
 		return [
 			bodyCompactStyles,
+			bodySmallStyles,
 			labelStyles,
 			inputStyles,
+			radioStyles,
 			css`
 			:host {
 				display: block;
@@ -135,6 +141,20 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mob
 				font-family: inherit;
 				color: inherit;
 			}
+			.grade-dialog-create-new-container {
+				display: flex;
+			}
+			.grade-dialog-create-new-activity-name {
+				word-break: break-word;
+				overflow-wrap: anywhere; /* not supported by safari */
+			}
+			.grade-dialog-create-new-icon {
+				padding-right: 10px;
+			}
+			:host([dir="rtl"]) .grade-dialog-create-new-icon {
+				padding-right: 0;
+				padding-left: 10px;
+			}
 			`
 		];
 	}
@@ -207,24 +227,27 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mob
 		` : null;
 	}
 
-	async _setGradeItem() {
+	async _chooseFromGrades() {
 		const scoreAndGrade = store.get(this.href).scoreAndGrade;
-		const gradeCandidatesHref = scoreAndGrade.gradeCandidatesHref;
-		const gradeCandidateCollection = gradeCandidateCollectionStore.get(gradeCandidatesHref);
-		const oldGradeHref = scoreAndGrade.gradeHref;
-
+		const existingAssociatedGradeHref = scoreAndGrade.gradeHref;
 		const dialog = this.shadowRoot.querySelector('d2l-dialog');
+
 		const action = await dialog.open();
 		if (action !== 'done') {
 			return;
 		}
 
-		const selected = gradeCandidateCollection.selected;
-		if (oldGradeHref && oldGradeHref === selected.href) {
+		this._associateToExistingGrade(scoreAndGrade, existingAssociatedGradeHref);
+	}
+
+	_associateToExistingGrade(scoreAndGrade, existingAssociatedGradeHref) {
+		const gradeCandidateCollection = gradeCandidateCollectionStore.get(scoreAndGrade.gradeCandidatesHref);
+		const newGradeCandidateSelected = gradeCandidateCollection.selected;
+		if (existingAssociatedGradeHref && existingAssociatedGradeHref === newGradeCandidateSelected.href) {
 			return;
 		}
 
-		scoreAndGrade.setAssociatedGrade(selected);
+		scoreAndGrade.setAssociatedGrade(newGradeCandidateSelected);
 	}
 
 	render() {
@@ -299,16 +322,42 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mob
 									></d2l-menu-item>
 									<d2l-menu-item
 										text="${this.localize('chooseFromGrades')}"
-										@d2l-menu-item-select="${this._setGradeItem}"
+										@d2l-menu-item-select="${this._chooseFromGrades}"
 									></d2l-menu-item>
 								</d2l-menu>
 							</d2l-dropdown-menu>
 						</d2l-dropdown>
 						<d2l-dialog title-text="${this.localize('chooseFromGrades')}">
-							<d2l-activity-grade-candidate-selector
-								href="${gradeCandidatesHref}"
-								.token="${this.token}">
-							</d2l-activity-grade-candidate-selector>
+							<label class="d2l-input-radio-label">
+								<input
+									type="radio"
+									name="chooseFromGrades">
+								${this.localize('createAndLinkToNewGradeItem')}
+							</label>
+							<d2l-input-radio-spacer>
+								<div class="grade-dialog-create-new-container">
+									<div class="grade-dialog-create-new-icon"><d2l-icon icon="tier1:grade"></d2l-icon></div>
+									<div>
+										<div class="grade-dialog-create-new-activity-name">${this.activityName}</div>
+										<div class="d2l-body-small">${scoreOutOf && !scoreOutOfError ? html`
+											${this.localize('points', { points: formatNumber(scoreOutOf, { maximumFractionDigits: 2 })})}
+										` : null }
+										</div>
+									</div>
+								</div>
+							</d2l-input-radio-spacer>
+							<label class="d2l-input-radio-label">
+								<input
+									type="radio"
+									name="chooseFromGrades">
+								${this.localize('linkToExistingGradeItem')}
+							</label>
+							<d2l-input-radio-spacer>
+								<d2l-activity-grade-candidate-selector
+									href="${gradeCandidatesHref}"
+									.token="${this.token}">
+								</d2l-activity-grade-candidate-selector>
+							</d2l-input-radio-spacer>
 							<d2l-button slot="footer" primary dialog-action="done">${this.localize('ok')}</d2l-button>
 							<d2l-button slot="footer" dialog-action="cancel">${this.localize('cancel')}</d2l-button>
 						</d2l-dialog>
