@@ -180,8 +180,7 @@ describe('Attachment Collection', function() {
 				await collection.save();
 
 				expect(mockDelete).to.have.been.calledOnce;
-				expect(fetchEntity.mock.calls.length).to.equal(2);
-				expect(attachmentStore.get('http://attachment/1')).to.be.undefined;
+				expect(fetchEntity.mock.calls.length).to.equal(1);
 			});
 
 			it('ignores new attachments that were immediately removed', async() => {
@@ -197,8 +196,6 @@ describe('Attachment Collection', function() {
 				await collection.save();
 
 				expect(mockDelete.callCount).to.equal(0);
-				expect(attachmentStore.get('http://attachment/1')).to.be.undefined;
-				expect(collection.attachments).to.be.empty;
 			});
 
 			it('saves new attachments', async() => {
@@ -214,8 +211,7 @@ describe('Attachment Collection', function() {
 				await collection.save();
 
 				expect(mockSave).to.have.been.calledWithExactly(AttachmentCollectionEntity.mock.results[0].value);
-				expect(fetchEntity.mock.calls.length).to.equal(2);
-				expect(attachmentStore.get('http://attachment/1')).to.be.undefined;
+				expect(fetchEntity.mock.calls.length).to.equal(1);
 			});
 		});
 	});
