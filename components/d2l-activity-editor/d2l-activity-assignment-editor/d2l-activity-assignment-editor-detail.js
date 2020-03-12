@@ -176,7 +176,8 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 					<label class="d2l-label-text">${this.localize('scoreOutOf')}</label>
 					<d2l-activity-score-editor
 						href="${activityUsageHref}"
-						.token="${this.token}">
+						.token="${this.token}"
+						.activityName="${name}">
 					</d2l-activity-score-editor>
 				</div>
 
