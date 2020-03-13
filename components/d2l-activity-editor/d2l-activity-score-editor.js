@@ -209,10 +209,10 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mob
 		` : null;
 	}
 
-	async _chooseFromGrades() {
+	_chooseFromGrades() {
 		const activityGradesElement = this.shadowRoot.querySelector('d2l-activity-grades-dialog');
 		if (activityGradesElement) {
-			await activityGradesElement.open();
+			activityGradesElement.open();
 		}
 	}
 

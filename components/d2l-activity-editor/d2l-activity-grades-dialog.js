@@ -64,35 +64,20 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 
 	async open() {
 		const scoreAndGrade = store.get(this.href).scoreAndGrade;
-		const existingAssociatedGradeHref = scoreAndGrade.gradeHref;
+		this._createNewRadioChecked = !scoreAndGrade.gradeHref;
+
 		const dialog = this.shadowRoot.querySelector('d2l-dialog');
-
-		this._createNewRadioChecked = !existingAssociatedGradeHref;
-
 		const action = await dialog.open();
 		if (action !== 'done') {
 			return;
 		}
 
 		if (this._createNewRadioChecked) {
-			this._associateToNewGrade();
+			// Not yet implemented
 		} else {
-			this._associateToExistingGrade(scoreAndGrade, existingAssociatedGradeHref);
+			const gradeCandidateCollection = gradeCandidateCollectionStore.get(scoreAndGrade.gradeCandidatesHref);
+			scoreAndGrade.setAssociatedGrade(gradeCandidateCollection.selected);
 		}
-	}
-
-	_associateToExistingGrade(scoreAndGrade, existingAssociatedGradeHref) {
-		const gradeCandidateCollection = gradeCandidateCollectionStore.get(scoreAndGrade.gradeCandidatesHref);
-		const newGradeCandidateSelected = gradeCandidateCollection.selected;
-		if (existingAssociatedGradeHref && existingAssociatedGradeHref === newGradeCandidateSelected.href) {
-			return;
-		}
-
-		scoreAndGrade.setAssociatedGrade(newGradeCandidateSelected);
-	}
-
-	_associateToNewGrade() {
-
 	}
 
 	_dialogRadioChanged(e) {
