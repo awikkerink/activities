@@ -70,7 +70,13 @@ describe('Assignment ', function() {
 				canEditSubmissionType: () => true,
 				canEditCompletionType: () => true,
 				submissionType: () => { return {title: 'On paper submission', value: 2}; },
-				completionType: () => { return {title: 'Manually by learners', value: 2}; }
+				completionType: () => { return {title: 'Manually by learners', value: 2}; },
+				isGroupAssignmentTypeDisabled: () => false,
+				isIndividualAssignmentType: () => true,
+				getAssignmentTypeGroupCategoryOptions: () => [],
+				getAssignmentTypeInformationText: () => '',
+				isAssignmentTypeReadOnly: () => false,
+				getAssignmentTypeSelectedGroupCategoryName: () => null
 			};
 		});
 
