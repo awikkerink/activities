@@ -68,7 +68,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 		if (action !== 'done') {
 			return;
 		}
-		
+
 		const scoreAndGrade = store.get(this.href).scoreAndGrade;
 		const gradeCandidateCollection = gradeCandidateCollectionStore.get(scoreAndGrade.gradeCandidatesHref);
 		scoreAndGrade.setAssociatedGrade(gradeCandidateCollection.selected);
