@@ -67,6 +67,9 @@ export class ActivityScoreGrade {
 	}
 
 	setAssociatedGrade(gradeCandidate) {
+		if (this.gradeHref && this.gradeHref === gradeCandidate.href) {
+			return;
+		}
 		this.associatedGrade = gradeCandidate;
 		this.gradeHref = gradeCandidate.href;
 		this.setGraded();

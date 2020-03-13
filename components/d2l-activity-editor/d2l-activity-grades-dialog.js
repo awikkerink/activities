@@ -62,26 +62,16 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 	}
 
 	async open() {
-		const scoreAndGrade = store.get(this.href).scoreAndGrade;
-		const existingAssociatedGradeHref = scoreAndGrade.gradeHref;
 		const dialog = this.shadowRoot.querySelector('d2l-dialog');
 
 		const action = await dialog.open();
 		if (action !== 'done') {
 			return;
 		}
-
-		this._associateToExistingGrade(scoreAndGrade, existingAssociatedGradeHref);
-	}
-
-	_associateToExistingGrade(scoreAndGrade, existingAssociatedGradeHref) {
+		
+		const scoreAndGrade = store.get(this.href).scoreAndGrade;
 		const gradeCandidateCollection = gradeCandidateCollectionStore.get(scoreAndGrade.gradeCandidatesHref);
-		const newGradeCandidateSelected = gradeCandidateCollection.selected;
-		if (existingAssociatedGradeHref && existingAssociatedGradeHref === newGradeCandidateSelected.href) {
-			return;
-		}
-
-		scoreAndGrade.setAssociatedGrade(newGradeCandidateSelected);
+		scoreAndGrade.setAssociatedGrade(gradeCandidateCollection.selected);
 	}
 
 	render() {
