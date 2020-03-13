@@ -70,6 +70,20 @@ export class Assignment {
 		this.canEditCompletionType = entity.canEditCompletionType();
 		this.submissionType = String(entity.submissionType().value);
 		this.completionType = String(entity.completionType().value);
+		this.isGroupAssignmentTypeDisabled = entity.isGroupAssignmentTypeDisabled();
+		this.isIndividualAssignmentType = entity.isIndividualAssignmentType();
+		this.groupCategories = entity.getAssignmentTypeGroupCategoryOptions();
+		this.isReadOnly = entity.isAssignmentTypeReadOnly();
+		this.selectedGroupCategoryName = entity.getAssignmentTypeSelectedGroupCategoryName();
+
+		if (!this.isIndividualAssignmentType && this.groupCategories.length > 0) {
+			this.selectedGroupCategoryId = String(this.groupCategories[0].value);
+			const category = this.groupCategories.find(category => category.selected === true);
+
+			if (category) {
+				this.selectedGroupCategoryId = String(category.value);
+			}
+		}
 	}
 
 	setSubmissionType(value) {
@@ -79,6 +93,22 @@ export class Assignment {
 
 	setCompletionType(value) {
 		this.completionType = value;
+	}
+
+	setToIndividualAssignmentType() {
+		this.isIndividualAssignmentType = true;
+	}
+
+	setToGroupAssignmentType() {
+		this.isIndividualAssignmentType = false;
+		this.selectedGroupCategoryId =
+			this.selectedGroupCategoryId
+				? String(this.selectedGroupCategoryId)
+				: String(this.groupCategories[0].value);
+	}
+
+	setAssignmentTypeGroupCategory(value) {
+		this.selectedGroupCategoryId = value;
 	}
 
 	setAnonymousMarking(value) {
@@ -104,7 +134,9 @@ export class Assignment {
 			isAnonymous: this.isAnonymousMarkingEnabled,
 			annotationToolsAvailable: this.annotationToolsAvailable,
 			submissionType: this.submissionType,
-			completionType: this.completionTypeOptions.length === 0 ? 0 : this.completionType
+			completionType: this.completionTypeOptions.length === 0 ? String(0) : this.completionType,
+			isIndividualAssignmentType: this.isIndividualAssignmentType,
+			groupTypeId: this.selectedGroupCategoryId
 		};
 	}
 	async save() {
@@ -143,6 +175,12 @@ decorate(Assignment, {
 	canEditCompletionType: observable,
 	submissionType: observable,
 	completionType: observable,
+	isIndividualAssignmentType: observable,
+	groupCategories: observable,
+	selectedGroupCategoryId: observable,
+	isGroupAssignmentTypeDisabled: observable,
+	isReadOnly: observable,
+	selectedGroupCategoryName: observable,
 	// actions
 	load: action,
 	setName: action,
@@ -151,5 +189,8 @@ decorate(Assignment, {
 	setAnnotationToolsAvailable: action,
 	setSubmissionType: action,
 	setCompletionType: action,
-	save: action
+	save: action,
+	setToIndividualAssignmentType: action,
+	setToGroupAssignmentType: action,
+	setAssignmentTypeGroupCategory: action
 });

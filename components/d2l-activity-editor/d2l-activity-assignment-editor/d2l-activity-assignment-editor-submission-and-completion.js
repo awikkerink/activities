@@ -1,5 +1,6 @@
 import '@brightspace-ui-labs/accordion/accordion-collapse.js';
 import './d2l-activity-assignment-type-editor.js';
+import './d2l-activity-assignment-type-summary.js';
 import { bodySmallStyles, heading3Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { summarizerHeaderStyles, summarizerSummaryStyles } from './activity-summarizer-styles.js';
@@ -10,7 +11,8 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 import { shared as store } from './state/assignment-store.js';
 
-class AssignmentEditorSubmissionAndCompletion extends ActivityEditorMixin(LocalizeMixin(MobxLitElement)) {
+class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitElement)) {
+
 	static get styles() {
 		return [
 			bodySmallStyles,
@@ -31,6 +33,7 @@ class AssignmentEditorSubmissionAndCompletion extends ActivityEditorMixin(Locali
 				.d2l-heading-4 {
 					margin: 0 0 0.6rem 0;
 				}
+
 				.assignment-type-heading {
 					margin: 0 0 0.5rem 0;
 				}
@@ -86,7 +89,12 @@ class AssignmentEditorSubmissionAndCompletion extends ActivityEditorMixin(Locali
 	}
 
 	_renderAssignmentTypeSummary() {
-		return html``;
+		return html`
+			<d2l-activity-assignment-type-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-assignment-type-summary>
+		`;
 	}
 
 	_renderAssignmentSubmissionType(assignment) {
@@ -154,4 +162,4 @@ class AssignmentEditorSubmissionAndCompletion extends ActivityEditorMixin(Locali
 		`;
 	}
 }
-customElements.define('d2l-activity-assignment-editor-submission-and-completion', AssignmentEditorSubmissionAndCompletion);
+customElements.define('d2l-activity-assignment-editor-submission-and-completion-editor', ActivityAssignmentSubmissionAndCompletionEditor);
