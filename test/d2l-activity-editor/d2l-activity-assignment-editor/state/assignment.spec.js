@@ -26,6 +26,10 @@ describe('Assignment ', function() {
 				canEditName: () => true,
 				instructionsEditorHtml: () => 'These are your instructions',
 				canEditInstructions: () => true,
+				canEditTurnitin: () => undefined,
+				editTurnitinUrl: () => undefined,
+				isOriginalityCheckEnabled: () => undefined,
+				isGradeMarkEnabled: () => undefined,
 				instructionsRichTextEditorConfig: () => {},
 				isAnonymousMarkingAvailable: () => undefined,
 				isAnonymousMarkingEnabled: () => undefined,
@@ -154,5 +158,14 @@ describe('Assignment ', function() {
 		expect(assignment.submissionType).to.equal('3');
 		expect(assignment.completionType).to.equal('1');
 		expect(assignment.canEditCompletionType).to.equal(true);
+	});
+
+	it('setTurnitin', async() => {
+		const assignment = new Assignment('http://assignment/1', 'token');
+		await assignment.fetch();
+		assignment.setTurnitin(true, true);
+
+		expect(assignment.isOriginalityCheckEnabled).to.equal(true);
+		expect(assignment.isGradeMarkEnabled).to.equal(true);
 	});
 });
