@@ -160,6 +160,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				<label class="d2l-label-text" for="assignment-name">${this.localize('name')}*</label>
 				<d2l-input-text
 					id="assignment-name"
+					maxlength=128
 					value="${name}"
 					@change="${this._saveOnChange('name')}"
 					@input="${this._saveNameOnInput}"
