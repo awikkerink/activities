@@ -48,7 +48,7 @@ class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeMixin(M
 	}
 
 	_renderGradeCandidate(gc, selected) {
-		return html`<option value="${gc.href}" ?selected="${gc.href === selected.href}">${gc.name}</option>`;
+		return html`<option value="${gc.href}" ?selected="${selected && gc.href === selected.href}">${gc.name}</option>`;
 	}
 
 	_renderGradeCategory(gradeCategory, selected) {
@@ -81,8 +81,8 @@ class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeMixin(M
 		} = collection;
 
 		const formatNumberOptions = { maximumFractionDigits: 2 };
-		const formattedPoints = selected.maxPoints !== undefined ? formatNumber(selected.maxPoints, formatNumberOptions) : '';
-		const formattedWeight = selected.baseWeight !== undefined ? formatPercent(selected.baseWeight / 100, formatNumberOptions) : '';
+		const formattedPoints = selected && selected.maxPoints !== undefined ? formatNumber(selected.maxPoints, formatNumberOptions) : '';
+		const formattedWeight = selected && selected.baseWeight !== undefined ? formatPercent(selected.baseWeight / 100, formatNumberOptions) : '';
 
 		return html`
 			<select
@@ -93,8 +93,8 @@ class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeMixin(M
 				${this._renderGradeCandidateTemplates(gradeCandidates, selected)}
 			</select>
 			<div class="d2l-body-small d2l-activity-grade-candidate-selector-points-and-weight">
-				${selected.maxPoints !== undefined ? html`${this.localize('points', { points: formattedPoints })}` : ''}
-				${selected.baseWeight !== undefined ? html`• ${this.localize('weight', { weight: formattedWeight })}` : ''}
+				${formattedPoints ? html`${this.localize('points', { points: formattedPoints })}` : ''}
+				${formattedWeight ? html`• ${this.localize('weight', { weight: formattedWeight })}` : ''}
 			</div>
 		`;
 	}
