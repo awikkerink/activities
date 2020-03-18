@@ -8,7 +8,7 @@ export default {
 	"btnRemoveCondition": "Remove Condition", // remove condition button
 	"lblConditionsOperator": "To view this item, users must satisfy", // conditions operator label
 	"btnCancel": "Cancel", // cancel button
-	"btnSave": "Save", // save button
+	"btnSave": "Save and Close", // save button
 	"dueDate": "Due Date", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "End Date", // ARIA label for the end date field when creating/editing an activity
 	"startDate": "Start Date", // ARIA label for the start date field when creating/editing an activity
