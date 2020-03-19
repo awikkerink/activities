@@ -193,8 +193,9 @@ class ActivityConditionsEditor
 						style="width:30px;height:30px;">
 					</d2l-icon>
 				</span>
-				<span class="d2l-list-item-content d2l-body-compact">
-					${title}
+				<span
+					class="d2l-list-item-content d2l-body-compact"
+					.innerHTML="${title}">
 				</span>
 				<span class="d2l-list-item-deleter">
 					<d2l-button-icon
@@ -306,7 +307,7 @@ class ActivityConditionsEditor
 			/*       resizeCallback: */ '',
 			/*      responseDataKey: */ 'condition',
 			/*                width: */ 638,
-			/*               height: */ 588,
+			/*               height: */ 683,
 			/*            closeText: */ createNewCloseText,
 			/*              buttons: */ buttons,
 			/* forceTriggerOnCancel: */ false
