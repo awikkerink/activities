@@ -1,4 +1,6 @@
-import {  action, configure as configureMobx, decorate, observable } from 'mobx';
+import { action, configure as configureMobx, decorate, observable } from 'mobx';
+import { GradeCandidateCollectionEntity } from 'siren-sdk/src/activities/GradeCandidateCollectionEntity.js';
+import { fetchEntity } from '../state/fetch-entity.js';
 
 configureMobx({ enforceActions: 'observed' });
 
@@ -17,6 +19,23 @@ export class ActivityScoreGrade {
 		this.associatedGrade = null;
 		this.gradeHref = entity.gradeHref();
 		this.gradeCandidatesHref = entity.gradeCandidatesHref();
+		this.hasGradeCandidates = false;
+	}
+
+	async fetchGradeCandidates(token) {
+		const sirenEntity = await fetchEntity(this.gradeCandidatesHref, token);
+		if (sirenEntity) {
+			const entity = new GradeCandidateCollectionEntity(sirenEntity, token);
+
+			this.loadGradeCandidates(entity);
+		}
+		return this;
+	}
+
+	loadGradeCandidates(entity) {
+		const candidates = entity.getGradeCandidates();
+
+		this.hasGradeCandidates = candidates && candidates.length > 0;
 	}
 
 	setScoreOutOf(value) {
@@ -92,6 +111,7 @@ decorate(ActivityScoreGrade, {
 	gradeCandidatesHref: observable,
 	gradeHref: observable,
 	associatedGrade: observable,
+	hasGradeCandidates: observable,
 	// actions
 	setScoreOutOf: action,
 	setUngraded: action,

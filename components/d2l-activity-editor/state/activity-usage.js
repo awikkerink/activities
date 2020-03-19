@@ -17,12 +17,12 @@ export class ActivityUsage {
 		const sirenEntity = await fetchEntity(this.href, this.token);
 		if (sirenEntity) {
 			const entity = new ActivityUsageEntity(sirenEntity, this.token, { remove: () => { } });
-			this.load(entity);
+			await this.load(entity);
 		}
 		return this;
 	}
 
-	load(entity) {
+	async load(entity) {
 		this._entity = entity;
 		this.conditionsHref = entity.conditionsHref();
 		this.isDraft = entity.isDraft();
@@ -30,6 +30,7 @@ export class ActivityUsage {
 		this.isError = false;
 		this.dates = new ActivityDates(entity);
 		this.scoreAndGrade = new ActivityScoreGrade(entity);
+		await this.scoreAndGrade.fetchGradeCandidates(this.token);
 	}
 
 	setDraftStatus(isDraft) {

@@ -101,7 +101,8 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 		const {
 			scoreOutOf,
 			scoreOutOfError,
-			gradeCandidatesHref
+			gradeCandidatesHref,
+			hasGradeCandidates
 		} = activity.scoreAndGrade;
 
 		return html`
@@ -127,20 +128,26 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 						</div>
 					</div>
 				</d2l-input-radio-spacer>
-				<label class="d2l-input-radio-label">
+				<label class="d2l-input-radio-label ${!hasGradeCandidates ? 'd2l-input-radio-label-disabled' : ''}">
 					<input
 						type="radio"
 						name="chooseFromGrades"
 						value="linkExisting"
+						?disabled="${!hasGradeCandidates}"
 						.checked="${!this._createNewRadioChecked}"
 						@change="${this._dialogRadioChanged}">
 					${this.localize('linkToExistingGradeItem')}
 				</label>
-				<d2l-input-radio-spacer ?hidden="${this._createNewRadioChecked}">
-					<d2l-activity-grade-candidate-selector
-						href="${gradeCandidatesHref}"
-						.token="${this.token}">
-					</d2l-activity-grade-candidate-selector>
+				<d2l-input-radio-spacer ?hidden="${this._createNewRadioChecked && hasGradeCandidates}" ?disabled="${!hasGradeCandidates}">
+					${hasGradeCandidates ?
+						html`<d2l-activity-grade-candidate-selector
+							href="${gradeCandidatesHref}"
+							.token="${this.token}">
+						</d2l-activity-grade-candidate-selector>` :
+						html`<div class="d2l-body-small">
+							${this.localize('noGradeItems')}
+						</div>`
+					}
 				</d2l-input-radio-spacer>
 				<d2l-button slot="footer" primary dialog-action="done">${this.localize('ok')}</d2l-button>
 				<d2l-button slot="footer" dialog-action="cancel">${this.localize('cancel')}</d2l-button>
