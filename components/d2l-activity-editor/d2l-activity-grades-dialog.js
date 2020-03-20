@@ -8,7 +8,6 @@ import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
 import { bodySmallStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { formatNumber } from '@brightspace-ui/intl/lib/number.js';
 import { getLocalizeResources } from './localization';
-import { shared as gradeCandidateCollectionStore } from './d2l-activity-grades/state/grade-candidate-collection-store.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
@@ -64,19 +63,22 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 
 	async open() {
 		const scoreAndGrade = store.get(this.href).scoreAndGrade;
-		this._createNewRadioChecked = !scoreAndGrade.gradeHref;
+		this._createNewRadioChecked = scoreAndGrade.createNewGrade;
 
+		await scoreAndGrade.fetchGradeCandidates();
+
+		const prevSelectedHref = scoreAndGrade.gradeCandidateCollection.selected.href;
 		const dialog = this.shadowRoot.querySelector('d2l-dialog');
 		const action = await dialog.open();
 		if (action !== 'done') {
+			scoreAndGrade.gradeCandidateCollection.setSelected(prevSelectedHref);
 			return;
 		}
 
 		if (this._createNewRadioChecked) {
 			// Not yet implemented
 		} else {
-			const gradeCandidateCollection = gradeCandidateCollectionStore.get(scoreAndGrade.gradeCandidatesHref);
-			scoreAndGrade.setAssociatedGrade(gradeCandidateCollection.selected);
+			scoreAndGrade.linkToExistingGrade(prevSelectedHref);
 		}
 	}
 
@@ -101,9 +103,10 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 		const {
 			scoreOutOf,
 			scoreOutOfError,
-			gradeCandidatesHref,
-			hasGradeCandidates
+			gradeCandidateCollection
 		} = activity.scoreAndGrade;
+
+		const hasGradeCandidates = gradeCandidateCollection && gradeCandidateCollection.gradeCandidates.length > 0;
 
 		return html`
 			<d2l-dialog title-text="${this.localize('chooseFromGrades')}">
@@ -141,7 +144,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 				<d2l-input-radio-spacer ?hidden="${this._createNewRadioChecked && hasGradeCandidates}" ?disabled="${!hasGradeCandidates}">
 					${hasGradeCandidates ?
 						html`<d2l-activity-grade-candidate-selector
-							href="${gradeCandidatesHref}"
+							href="${this.href}"
 							.token="${this.token}">
 						</d2l-activity-grade-candidate-selector>` :
 						html`<div class="d2l-body-small">

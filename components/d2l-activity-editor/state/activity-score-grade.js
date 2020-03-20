@@ -1,41 +1,32 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
-import { GradeCandidateCollectionEntity } from 'siren-sdk/src/activities/GradeCandidateCollectionEntity.js';
-import { fetchEntity } from '../state/fetch-entity.js';
+import { GradeCandidateCollection } from '../d2l-activity-grades/state/grade-candidate-collection.js';
 
 configureMobx({ enforceActions: 'observed' });
 
 export class ActivityScoreGrade {
 
-	constructor(entity) {
+	constructor(entity, token) {
 		this.scoreOutOf = entity.scoreOutOf().toString();
 		this.scoreOutOfError = null;
-
+		this.token = token;
 		this.inGrades = entity.inGrades();
 		this.gradeType = (entity.gradeType() || 'Points').toLowerCase();
 		this.isUngraded = !this.inGrades && !this.scoreOutOf;
 		this.canEditScoreOutOf = entity.canEditScoreOutOf();
 		this.canSeeGrades = entity.canSeeGrades();
 		this.canEditGrades = entity.canEditGrades();
-		this.associatedGrade = null;
-		this.gradeHref = entity.gradeHref();
 		this.gradeCandidatesHref = entity.gradeCandidatesHref();
-		this.hasGradeCandidates = false;
+		this.gradeCandidateCollection = null;
+		this.createNewGrade = !entity.gradeHref();
 	}
 
-	async fetchGradeCandidates(token) {
-		const sirenEntity = await fetchEntity(this.gradeCandidatesHref, token);
-		if (sirenEntity) {
-			const entity = new GradeCandidateCollectionEntity(sirenEntity, token);
-
-			this.loadGradeCandidates(entity);
+	async fetchGradeCandidates() {
+		if (this.gradeCandidateCollection) {
+			return;
 		}
-		return this;
-	}
 
-	loadGradeCandidates(entity) {
-		const candidates = entity.getGradeCandidates();
-
-		this.hasGradeCandidates = candidates && candidates.length > 0;
+		this.gradeCandidateCollection = new GradeCandidateCollection(this.gradeCandidatesHref, this.token);
+		await this.gradeCandidateCollection.fetch();
 	}
 
 	setScoreOutOf(value) {
@@ -47,8 +38,6 @@ export class ActivityScoreGrade {
 	setUngraded() {
 		this.inGrades = false;
 		this.isUngraded = true;
-		this.associatedGrade = null;
-		this.gradeHref = '';
 		this.setScoreOutOf('');
 	}
 
@@ -59,8 +48,6 @@ export class ActivityScoreGrade {
 
 	removeFromGrades() {
 		this.inGrades = false;
-		this.associatedGrade = null;
-		this.gradeHref = '';
 		if (this.scoreOutOfError === 'emptyScoreOutOfError') {
 			this.scoreOutOfError = null;
 		}
@@ -68,6 +55,12 @@ export class ActivityScoreGrade {
 
 	addToGrades() {
 		this.inGrades = true;
+	}
+
+	getAssociatedGrade() {
+		if (this.gradeCandidateCollection && this.gradeCandidateCollection.selected) {
+			return this.gradeCandidateCollection.selected.gradeCandidateEntity;
+		}
 	}
 
 	validate() {
@@ -85,12 +78,17 @@ export class ActivityScoreGrade {
 		return !this.scoreOutOfError;
 	}
 
-	setAssociatedGrade(gradeCandidate) {
-		if (this.gradeHref && this.gradeHref === gradeCandidate.href) {
+	linkToExistingGrade(prevHref) {
+		if (!this.gradeCandidateCollection) {
 			return;
 		}
-		this.associatedGrade = gradeCandidate;
-		this.gradeHref = gradeCandidate.href;
+
+		const gradeCandidate = this.gradeCandidateCollection.selected;
+		if (this.scoreOutOf && prevHref === gradeCandidate.href) {
+			return;
+		}
+
+		this.createNewGrade = false;
 		this.setGraded();
 		if (gradeCandidate.maxPoints !== undefined) {
 			this.setScoreOutOf(gradeCandidate.maxPoints.toString());
@@ -109,9 +107,7 @@ decorate(ActivityScoreGrade, {
 	canSeeGrades: observable,
 	canEditGrades: observable,
 	gradeCandidatesHref: observable,
-	gradeHref: observable,
-	associatedGrade: observable,
-	hasGradeCandidates: observable,
+	gradeCandidateCollection: observable,
 	// actions
 	setScoreOutOf: action,
 	setUngraded: action,
@@ -119,5 +115,6 @@ decorate(ActivityScoreGrade, {
 	removeFromGrades: action,
 	addToGrades: action,
 	validate: action,
-	setAssociatedGrade: action
+	linkToExistingGrade: action,
+	fetchGradeCandidates: action
 });

@@ -29,8 +29,7 @@ export class ActivityUsage {
 		this.canEditDraft = entity.canEditDraft();
 		this.isError = false;
 		this.dates = new ActivityDates(entity);
-		this.scoreAndGrade = new ActivityScoreGrade(entity);
-		await this.scoreAndGrade.fetchGradeCandidates(this.token);
+		this.scoreAndGrade = new ActivityScoreGrade(entity, this.token);
 	}
 
 	setDraftStatus(isDraft) {
@@ -98,7 +97,7 @@ export class ActivityUsage {
 			scoreAndGrade: {
 				scoreOutOf: this.scoreAndGrade.scoreOutOf,
 				inGrades: this.scoreAndGrade.inGrades,
-				associatedGrade: (this.scoreAndGrade.associatedGrade || {}).gradeCandidateEntity
+				associatedGrade: this.scoreAndGrade.getAssociatedGrade()
 			}
 		};
 	}
