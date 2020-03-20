@@ -42,7 +42,7 @@ export class GradeCandidateCollection {
 		runInAction(() => {
 			this.gradeCandidates = tempGradeCandidates;
 			this.selected = this._findCurrentAssociation(this.gradeCandidates) || this._findFirstGradeItemFromCandidates(this.gradeCandidates);
-		})
+		});
 	}
 
 	setSelected(href) {

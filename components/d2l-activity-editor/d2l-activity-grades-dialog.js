@@ -142,15 +142,12 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 					${this.localize('linkToExistingGradeItem')}
 				</label>
 				<d2l-input-radio-spacer ?hidden="${this._createNewRadioChecked && hasGradeCandidates}" ?disabled="${!hasGradeCandidates}">
-					${hasGradeCandidates ?
-						html`<d2l-activity-grade-candidate-selector
-							href="${this.href}"
-							.token="${this.token}">
-						</d2l-activity-grade-candidate-selector>` :
-						html`<div class="d2l-body-small">
-							${this.localize('noGradeItems')}
-						</div>`
-					}
+					${hasGradeCandidates ? html`<d2l-activity-grade-candidate-selector
+						href="${this.href}"
+						.token="${this.token}">
+					</d2l-activity-grade-candidate-selector>` : html`<div class="d2l-body-small">
+						${this.localize('noGradeItems')}
+					</div>`}
 				</d2l-input-radio-spacer>
 				<d2l-button slot="footer" primary dialog-action="done">${this.localize('ok')}</d2l-button>
 				<d2l-button slot="footer" dialog-action="cancel">${this.localize('cancel')}</d2l-button>
