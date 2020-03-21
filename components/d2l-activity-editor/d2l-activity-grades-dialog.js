@@ -18,7 +18,6 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 
 	static get properties() {
 		return {
-			activityName: { type: String },
 			_createNewRadioChecked: { type: Boolean }
 		};
 	}
@@ -76,7 +75,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 		}
 
 		if (this._createNewRadioChecked) {
-			// Not yet implemented
+			scoreAndGrade.linkToNewGrade();
 		} else {
 			scoreAndGrade.linkToExistingGrade(prevSelectedHref);
 		}
@@ -103,18 +102,21 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 		const {
 			scoreOutOf,
 			scoreOutOfError,
-			gradeCandidateCollection
+			gradeCandidateCollection,
+			newGradeName
 		} = activity.scoreAndGrade;
 
 		const hasGradeCandidates = gradeCandidateCollection && gradeCandidateCollection.gradeCandidates.length > 0;
+		const canLinkNewGrade = gradeCandidateCollection && !!gradeCandidateCollection.associateNewGradeAction;
 
 		return html`
 			<d2l-dialog title-text="${this.localize('chooseFromGrades')}">
-				<label class="d2l-input-radio-label">
+				<label class="d2l-input-radio-label ${!canLinkNewGrade ? 'd2l-input-radio-label-disabled' : ''}">
 					<input
 						type="radio"
 						name="chooseFromGrades"
 						value="createNew"
+						?disabled="${!canLinkNewGrade}"
 						.checked="${this._createNewRadioChecked}"
 						@change="${this._dialogRadioChanged}">
 					${this.localize('createAndLinkToNewGradeItem')}
@@ -123,7 +125,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 					<div class="d2l-activity-grades-dialog-create-new-container">
 						<div class="d2l-activity-grades-dialog-create-new-icon"><d2l-icon icon="tier1:grade"></d2l-icon></div>
 						<div>
-							<div class="d2l-activity-grades-dialog-create-new-activity-name">${this.activityName}</div>
+							<div class="d2l-activity-grades-dialog-create-new-activity-name">${newGradeName}</div>
 							<div class="d2l-body-small">${scoreOutOf && !scoreOutOfError ? html`
 								${this.localize('points', { points: formatNumber(scoreOutOf, { maximumFractionDigits: 2 })})}
 							` : null }

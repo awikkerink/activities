@@ -94,6 +94,15 @@ export class ActivityScoreGrade {
 			this.setScoreOutOf(gradeCandidate.maxPoints.toString());
 		}
 	}
+
+	linkToNewGrade() {
+		this.createNewGrade = true;
+		this.setGraded();
+	}
+
+	setNewGradeName(name) {
+		this.newGradeName = name;
+	}
 }
 
 decorate(ActivityScoreGrade, {
@@ -108,6 +117,7 @@ decorate(ActivityScoreGrade, {
 	canEditGrades: observable,
 	gradeCandidatesHref: observable,
 	gradeCandidateCollection: observable,
+	newGradeName: observable,
 	// actions
 	setScoreOutOf: action,
 	setUngraded: action,
@@ -116,5 +126,7 @@ decorate(ActivityScoreGrade, {
 	addToGrades: action,
 	validate: action,
 	linkToExistingGrade: action,
-	fetchGradeCandidates: action
+	fetchGradeCandidates: action,
+	linkToNewGrade: action,
+	setNewGradeName: action
 });
