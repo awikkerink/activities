@@ -87,7 +87,7 @@ export class ActivityScoreGrade {
 		this.setGraded();
 
 		const gradeCandidate = this.gradeCandidateCollection.selected;
-		const setScoreOutOf = !this.scoreOutOf || (gradeCandidate.href && prevHref !== gradeCandidate.href);
+		const setScoreOutOf = !this.scoreOutOf || (gradeCandidate && prevHref !== gradeCandidate.href);
 		if (setScoreOutOf && gradeCandidate.maxPoints !== undefined) {
 			this.setScoreOutOf(gradeCandidate.maxPoints.toString());
 		}
