@@ -68,24 +68,49 @@ class AssignmentEditorSecondary extends RtlMixin(EntityMixinLit(LocalizeMixin(Li
 	}
 
 	render() {
-		return html`
+		let availabilityAccordian = html`
 
 			<d2l-activity-assignment-availability-editor
 				href="${this._activityUsageHref}"
 				.token="${this.token}">
 			</d2l-activity-assignment-availability-editor>
 
+		`;
+
+		const event = new CustomEvent('d2l-request-provider', {
+			detail: { key: 'd2l-milestone-2' },
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+		this.dispatchEvent(event);
+		const milestone2Enabled = event.detail.provider;
+
+		if(!milestone2Enabled){
+			return availabilityAccordian;
+		}
+
+		let submissionCompletionCategorizationAccordian = html`
 			<d2l-activity-assignment-editor-submission-and-completion-editor
 				href="${this.href}"
 				.token="${this.token}">
 			</d2l-activity-assignment-editor-submission-and-completion-editor>
+		`;
 
+		let evaluationAccordian = html`
 			<d2l-activity-assignment-evaluation-editor
 				href="${this.href}"
 				.token="${this.token}"
 				activityUsageHref=${this._activityUsageHref}>
 			</d2l-activity-assignment-evaluation-editor>
 		`;
+
+		return html`
+			${availabilityAccordian}
+			${submissionCompletionCategorizationAccordian}
+			${evaluationAccordian}
+		`;
+
 	}
 }
 customElements.define('d2l-activity-assignment-editor-secondary', AssignmentEditorSecondary);

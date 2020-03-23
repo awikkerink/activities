@@ -87,7 +87,18 @@ class ActivityAssignmentAvailabilityEditor extends LocalizeMixin(ActivityEditorM
 	}
 
 	_renderReleaseConditionSummary() {
+		const event = new CustomEvent('d2l-request-provider', {
+			detail: { key: 'd2l-milestone-2' },
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+		this.dispatchEvent(event);
+		const milestone2Enabled = event.detail.provider;
 
+		if(!milestone2Enabled){
+			return html``;
+		}
 		return html`
 			<d2l-activity-usage-conditions-summary
 				href="${this.href}"
@@ -97,6 +108,18 @@ class ActivityAssignmentAvailabilityEditor extends LocalizeMixin(ActivityEditorM
 	}
 
 	_renderReleaseConditionEditor() {
+		const event = new CustomEvent('d2l-request-provider', {
+			detail: { key: 'd2l-milestone-2' },
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+		this.dispatchEvent(event);
+		const milestone2Enabled = event.detail.provider;
+
+		if(!milestone2Enabled){
+			return html``;
+		}
 
 		return html`
 			<div class="editor">
