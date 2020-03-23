@@ -67,11 +67,13 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 
 		await scoreAndGrade.fetchGradeCandidates();
 
-		const prevSelectedHref = scoreAndGrade.gradeCandidateCollection.selected.href;
+		const prevSelectedHref = scoreAndGrade.gradeCandidateCollection.selected ? scoreAndGrade.gradeCandidateCollection.selected.href : null;
 		const dialog = this.shadowRoot.querySelector('d2l-dialog');
 		const action = await dialog.open();
 		if (action !== 'done') {
-			scoreAndGrade.gradeCandidateCollection.setSelected(prevSelectedHref);
+			if (prevSelectedHref) {
+				scoreAndGrade.gradeCandidateCollection.setSelected(prevSelectedHref);
+			}
 			return;
 		}
 

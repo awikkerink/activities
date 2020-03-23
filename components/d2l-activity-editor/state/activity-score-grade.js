@@ -83,14 +83,12 @@ export class ActivityScoreGrade {
 			return;
 		}
 
-		const gradeCandidate = this.gradeCandidateCollection.selected;
-		if (this.scoreOutOf && prevHref === gradeCandidate.href) {
-			return;
-		}
-
 		this.createNewGrade = false;
 		this.setGraded();
-		if (gradeCandidate.maxPoints !== undefined) {
+
+		const gradeCandidate = this.gradeCandidateCollection.selected;
+		const setScoreOutOf = !this.scoreOutOf || (gradeCandidate.href && prevHref !== gradeCandidate.href);
+		if (setScoreOutOf && gradeCandidate.maxPoints !== undefined) {
 			this.setScoreOutOf(gradeCandidate.maxPoints.toString());
 		}
 	}
