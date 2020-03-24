@@ -48,6 +48,9 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 				padding-right: 0;
 				padding-left: 10px;
 			}
+			.d2l-input-radio-label-disabled{
+				margin-bottom: 0;
+			}
 			`
 		];
 	}
@@ -119,21 +122,27 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 						name="chooseFromGrades"
 						value="createNew"
 						?disabled="${!canLinkNewGrade}"
-						.checked="${this._createNewRadioChecked}"
+						.checked="${this._createNewRadioChecked && canLinkNewGrade}"
 						@change="${this._dialogRadioChanged}">
 					${this.localize('createAndLinkToNewGradeItem')}
 				</label>
 				<d2l-input-radio-spacer ?hidden="${!this._createNewRadioChecked}">
-					<div class="d2l-activity-grades-dialog-create-new-container">
-						<div class="d2l-activity-grades-dialog-create-new-icon"><d2l-icon icon="tier1:grade"></d2l-icon></div>
-						<div>
-							<div class="d2l-activity-grades-dialog-create-new-activity-name">${newGradeName}</div>
-							<div class="d2l-body-small">${scoreOutOf && !scoreOutOfError ? html`
-								${this.localize('points', { points: formatNumber(scoreOutOf, { maximumFractionDigits: 2 })})}
-							` : null }
+					${canLinkNewGrade ? html`
+						<div class="d2l-activity-grades-dialog-create-new-container">
+							<div class="d2l-activity-grades-dialog-create-new-icon"><d2l-icon icon="tier1:grade"></d2l-icon></div>
+							<div>
+								<div class="d2l-activity-grades-dialog-create-new-activity-name">${newGradeName}</div>
+								<div class="d2l-body-small">${scoreOutOf && !scoreOutOfError ? html`
+									${this.localize('points', { points: formatNumber(scoreOutOf, { maximumFractionDigits: 2 })})}
+								` : null }
+								</div>
 							</div>
 						</div>
-					</div>
+					` : html`
+						<div class="d2l-body-small">
+							${this.localize('noGradeCreatePermission')}
+						</div>
+					`}
 				</d2l-input-radio-spacer>
 				<label class="d2l-input-radio-label ${!hasGradeCandidates ? 'd2l-input-radio-label-disabled' : ''}">
 					<input
@@ -141,7 +150,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 						name="chooseFromGrades"
 						value="linkExisting"
 						?disabled="${!hasGradeCandidates}"
-						.checked="${!this._createNewRadioChecked}"
+						.checked="${!(this._createNewRadioChecked && canLinkNewGrade) && hasGradeCandidates}"
 						@change="${this._dialogRadioChanged}">
 					${this.localize('linkToExistingGradeItem')}
 				</label>
