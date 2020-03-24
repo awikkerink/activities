@@ -108,7 +108,7 @@ describe('Activity Usage', function() {
 			activity.dates.setDueDate('2020-02-23T04:59:00.000Z');
 			activity.dates.setEndDate('2020-02-24T04:59:00.000Z');
 			activity.setDraftStatus(false);
-
+			activity.scoreAndGrade.setNewGradeName('a new grade');
 			await activity.save();
 
 			expect(save.mock.calls.length).to.equal(1);
@@ -120,9 +120,11 @@ describe('Activity Usage', function() {
 					endDate: '2020-02-24T04:59:00.000Z'
 				},
 				scoreAndGrade: {
-					associatedGrade: undefined,
+					associateNewGradeAction: undefined,
+					associatedGrade: null,
 					scoreOutOf: '10',
-					inGrades: true
+					inGrades: true,
+					newGradeName: 'a new grade'
 				}
 			});
 		});

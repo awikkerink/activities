@@ -143,7 +143,8 @@ describe('Activity Score Grade', function() {
 			const gradeCandidateCollectionEntityMock = {
 				href: () => 'http://grade-candidate-collection-href',
 				getGradeCandidates: () => [gradeCandidate],
-				selected: () => gradeCandidate
+				selected: () => gradeCandidate,
+				getAssociateNewGradeAction: () => {}
 			};
 			GradeCandidateCollectionEntity.mockImplementation(() => gradeCandidateCollectionEntityMock);
 			GradeCandidateEntity.mockImplementation(() => gradeCandidateEntityMock);
