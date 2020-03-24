@@ -57,7 +57,7 @@ export class ActivityScoreGrade {
 		this.inGrades = true;
 	}
 
-	getAssociatedGrade() {
+	getAssociatedGradeEntity() {
 		if (this.gradeCandidateCollection && this.gradeCandidateCollection.selected) {
 			return this.gradeCandidateCollection.selected.gradeCandidateEntity;
 		}
@@ -116,6 +116,7 @@ decorate(ActivityScoreGrade, {
 	gradeCandidatesHref: observable,
 	gradeCandidateCollection: observable,
 	newGradeName: observable,
+	createNewGrade: observable,
 	// actions
 	setScoreOutOf: action,
 	setUngraded: action,
