@@ -2,11 +2,14 @@ import { ActivityScoreGrade} from '../../../components/d2l-activity-editor/state
 import { expect } from 'chai';
 import { fetchEntity } from '../../../components/d2l-activity-editor/state/fetch-entity.js';
 import { GradeCandidate } from '../../../components/d2l-activity-editor/d2l-activity-grades/state/grade-candidate.js';
+import { GradeCandidateCollectionEntity } from 'siren-sdk/src/activities/GradeCandidateCollectionEntity';
+import { GradeCandidateEntity } from 'siren-sdk/src/activities/GradeCandidateEntity';
 import { GradeEntity } from 'siren-sdk/src/activities/GradeEntity.js';
-import sinon from 'sinon';
 import { when } from 'mobx';
 
 jest.mock('siren-sdk/src/activities/GradeEntity.js');
+jest.mock('siren-sdk/src/activities/GradeCandidateEntity.js');
+jest.mock('siren-sdk/src/activities/GradeCandidateCollectionEntity.js');
 jest.mock('../../../components/d2l-activity-editor/state/fetch-entity.js');
 
 function catchErrors(done, callback) {
@@ -34,7 +37,7 @@ describe('Activity Score Grade', function() {
 			canEditGrades: () => true,
 			associatedGrade: () => null,
 			gradeHref: () => 'http://test-grade-href',
-			gradeCandidatesHref: () => ''
+			gradeCandidatesHref: () => 'http://grade-candidate-collection-href'
 		};
 	});
 
@@ -74,8 +77,7 @@ describe('Activity Score Grade', function() {
 				catchErrors(done, () => {
 					expect(activity.scoreOutOf).to.be.empty;
 					expect(activity.inGrades).to.be.false;
-					expect(activity.associatedGrade).to.be.null;
-					expect(activity.gradeHref).to.be.empty;
+					expect(activity.createNewGrade).to.be.false;
 				})
 			);
 
@@ -102,8 +104,7 @@ describe('Activity Score Grade', function() {
 			when(
 				() => !activity.inGrades,
 				catchErrors(done, () => {
-					expect(activity.associatedGrade).to.be.null;
-					expect(activity.gradeHref).to.be.empty;
+					expect(activity.createNewGrade).to.be.false;
 				})
 			);
 
@@ -121,56 +122,46 @@ describe('Activity Score Grade', function() {
 			activity.setScoreOutOf('99');
 		});
 
-		describe('associated grade', () => {
-			let sirenEntity;
-
+		it('reacts to link to existing grade', async(done) => {
 			const gradeEntityMock = {
 				name: () => '',
 				baseWeight: () => '',
 				maxPoints: () => 50
 			};
+			GradeEntity.mockImplementation(() => gradeEntityMock);
 
-			beforeEach(() => {
-				sirenEntity = sinon.stub();
+			const gradeCandidateEntityMock = {
+				isCategory: () => false,
+				isCurrentAssociation: () => false,
+				href: () => 'http://grade-candidate-href',
+				getGradeCandidates: () => []
+			};
 
-				GradeEntity.mockImplementation(() => {
-					return gradeEntityMock;
-				});
+			const gradeCandidate = new GradeCandidate(gradeCandidateEntityMock, 'token');
+			await gradeCandidate.fetch();
 
-				fetchEntity.mockImplementation(() => Promise.resolve(sirenEntity));
-			});
+			const gradeCandidateCollectionEntityMock = {
+				href: () => 'http://grade-candidate-collection-href',
+				getGradeCandidates: () => [gradeCandidate],
+				selected: () => gradeCandidate
+			};
+			GradeCandidateCollectionEntity.mockImplementation(() => gradeCandidateCollectionEntityMock);
+			GradeCandidateEntity.mockImplementation(() => gradeCandidateEntityMock);
+			fetchEntity.mockImplementation(() => Promise.resolve({}));
 
-			afterEach(() => {
-				sinon.restore();
-				GradeEntity.mockClear();
-				fetchEntity.mockClear();
-			});
+			const activity = new ActivityScoreGrade(defaultEntityMock, 'token');
 
-			it('reacts to set associated grade', async(done) => {
-				const activity = new ActivityScoreGrade(defaultEntityMock);
+			await activity.fetchGradeCandidates();
+			activity.linkToExistingGrade(gradeCandidate.href);
 
-				when(
-					() => activity.associatedGrade,
-					catchErrors(done, () => {
-						expect(activity.gradeHref).to.equal('http://grade-candidate-href');
-						expect(activity.inGrades).to.be.true;
-						expect(activity.isUngraded).to.be.false;
-						expect(activity.scoreOutOf).to.equal('50');
-					})
-				);
-
-				const gradeCandidateEntityMock = {
-					isCategory: () => false,
-					isCurrentAssociation: () => false,
-					href: () => 'http://grade-candidate-href',
-					getGradeCandidates: () => []
-				};
-
-				const gradeCandidate = new GradeCandidate(gradeCandidateEntityMock, 'token');
-				await gradeCandidate.fetch();
-
-				activity.setAssociatedGrade(gradeCandidate);
-			});
+			when(
+				() => !activity.createNewGrade,
+				catchErrors(done, () => {
+					expect(activity.inGrades).to.be.true;
+					expect(activity.isUngraded).to.be.false;
+					expect(activity.scoreOutOf).to.equal('50');
+				})
+			);
 		});
 	});
 
