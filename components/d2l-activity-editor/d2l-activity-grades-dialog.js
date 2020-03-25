@@ -18,7 +18,9 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 
 	static get properties() {
 		return {
-			_createNewRadioChecked: { type: Boolean }
+			_createNewRadioChecked: { type: Boolean },
+			_canLinkNewGrade: { type: Boolean },
+			_hasGradeCandidates: { type: Boolean }
 		};
 	}
 
@@ -48,6 +50,9 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 				padding-right: 0;
 				padding-left: 10px;
 			}
+			.d2l-input-radio-label-disabled{
+				margin-bottom: 0;
+			}
 			`
 		];
 	}
@@ -62,23 +67,30 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 
 	async open() {
 		const scoreAndGrade = store.get(this.href).scoreAndGrade;
-		this._createNewRadioChecked = scoreAndGrade.createNewGrade;
-
 		await scoreAndGrade.fetchGradeCandidates();
 
-		const prevSelectedHref = scoreAndGrade.gradeCandidateCollection.selected ? scoreAndGrade.gradeCandidateCollection.selected.href : null;
+		const {
+			gradeCandidateCollection,
+			createNewGrade
+		} = scoreAndGrade;
+
+		this._canLinkNewGrade = gradeCandidateCollection && !!gradeCandidateCollection.associateNewGradeAction;
+		this._createNewRadioChecked = createNewGrade && this._canLinkNewGrade;
+		this._hasGradeCandidates = gradeCandidateCollection && gradeCandidateCollection.gradeCandidates.length > 0;
+		const prevSelectedHref = gradeCandidateCollection && gradeCandidateCollection.selected ? gradeCandidateCollection.selected.href : null;
+
 		const dialog = this.shadowRoot.querySelector('d2l-dialog');
 		const action = await dialog.open();
 		if (action !== 'done') {
 			if (prevSelectedHref) {
-				scoreAndGrade.gradeCandidateCollection.setSelected(prevSelectedHref);
+				gradeCandidateCollection.setSelected(prevSelectedHref);
 			}
 			return;
 		}
 
 		if (this._createNewRadioChecked) {
 			scoreAndGrade.linkToNewGrade();
-		} else {
+		} else if (!this._createNewRadioChecked && this._hasGradeCandidates) {
 			scoreAndGrade.linkToExistingGrade(prevSelectedHref);
 		}
 	}
@@ -95,6 +107,10 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 		dialog.resize();
 	}
 
+	_onDialogOpen(e) {
+		e.target.resize();
+	}
+
 	render() {
 		const activity = store.get(this.href);
 		if (!activity) {
@@ -104,49 +120,51 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 		const {
 			scoreOutOf,
 			scoreOutOfError,
-			gradeCandidateCollection,
 			newGradeName
 		} = activity.scoreAndGrade;
 
-		const hasGradeCandidates = gradeCandidateCollection && gradeCandidateCollection.gradeCandidates.length > 0;
-		const canLinkNewGrade = gradeCandidateCollection && !!gradeCandidateCollection.associateNewGradeAction;
-
 		return html`
-			<d2l-dialog title-text="${this.localize('chooseFromGrades')}">
-				<label class="d2l-input-radio-label ${!canLinkNewGrade ? 'd2l-input-radio-label-disabled' : ''}">
+			<d2l-dialog title-text="${this.localize('chooseFromGrades')}" @d2l-dialog-open="${this._onDialogOpen}">
+				<label class="d2l-input-radio-label ${!this._canLinkNewGrade ? 'd2l-input-radio-label-disabled' : ''}">
 					<input
 						type="radio"
 						name="chooseFromGrades"
 						value="createNew"
-						?disabled="${!canLinkNewGrade}"
+						?disabled="${!this._canLinkNewGrade}"
 						.checked="${this._createNewRadioChecked}"
 						@change="${this._dialogRadioChanged}">
 					${this.localize('createAndLinkToNewGradeItem')}
 				</label>
-				<d2l-input-radio-spacer ?hidden="${!this._createNewRadioChecked}">
-					<div class="d2l-activity-grades-dialog-create-new-container">
-						<div class="d2l-activity-grades-dialog-create-new-icon"><d2l-icon icon="tier1:grade"></d2l-icon></div>
-						<div>
-							<div class="d2l-activity-grades-dialog-create-new-activity-name">${newGradeName}</div>
-							<div class="d2l-body-small">${scoreOutOf && !scoreOutOfError ? html`
-								${this.localize('points', { points: formatNumber(scoreOutOf, { maximumFractionDigits: 2 })})}
-							` : null }
+				<d2l-input-radio-spacer ?hidden="${!this._createNewRadioChecked && this._canLinkNewGrade}">
+					${this._canLinkNewGrade ? html`
+						<div class="d2l-activity-grades-dialog-create-new-container">
+							<div class="d2l-activity-grades-dialog-create-new-icon"><d2l-icon icon="tier1:grade"></d2l-icon></div>
+							<div>
+								<div class="d2l-activity-grades-dialog-create-new-activity-name">${newGradeName}</div>
+								<div class="d2l-body-small">${scoreOutOf && !scoreOutOfError ? html`
+									${this.localize('points', { points: formatNumber(scoreOutOf, { maximumFractionDigits: 2 })})}
+								` : null }
+								</div>
 							</div>
 						</div>
-					</div>
+					` : html`
+						<div class="d2l-body-small">
+							${this.localize('noGradeCreatePermission')}
+						</div>
+					`}
 				</d2l-input-radio-spacer>
-				<label class="d2l-input-radio-label ${!hasGradeCandidates ? 'd2l-input-radio-label-disabled' : ''}">
+				<label class="d2l-input-radio-label ${!this._hasGradeCandidates ? 'd2l-input-radio-label-disabled' : ''}">
 					<input
 						type="radio"
 						name="chooseFromGrades"
 						value="linkExisting"
-						?disabled="${!hasGradeCandidates}"
-						.checked="${!this._createNewRadioChecked}"
+						?disabled="${!this._hasGradeCandidates}"
+						.checked="${!this._createNewRadioChecked && this._hasGradeCandidates}"
 						@change="${this._dialogRadioChanged}">
 					${this.localize('linkToExistingGradeItem')}
 				</label>
-				<d2l-input-radio-spacer ?hidden="${this._createNewRadioChecked && hasGradeCandidates}" ?disabled="${!hasGradeCandidates}">
-					${hasGradeCandidates ? html`<d2l-activity-grade-candidate-selector
+				<d2l-input-radio-spacer ?hidden="${this._createNewRadioChecked && this._hasGradeCandidates}" ?disabled="${!this._hasGradeCandidates}">
+					${this._hasGradeCandidates ? html`<d2l-activity-grade-candidate-selector
 						href="${this.href}"
 						.token="${this.token}">
 					</d2l-activity-grade-candidate-selector>` : html`<div class="d2l-body-small">
