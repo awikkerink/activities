@@ -9,8 +9,9 @@ import { getLocalizeResources } from '../localization.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
+import { ActivityEditorFeaturesMixin, Milestones } from '../mixins/d2l-activity-editor-features-mixin.js';
 
-class AssignmentEditorSecondary extends RtlMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
+class AssignmentEditorSecondary extends ActivityEditorFeaturesMixin(RtlMixin(EntityMixinLit(LocalizeMixin(LitElement)))) {
 
 	static get properties() {
 		return {
@@ -69,35 +70,26 @@ class AssignmentEditorSecondary extends RtlMixin(EntityMixinLit(LocalizeMixin(Li
 
 	render() {
 		let availabilityAccordian = html`
-
 			<d2l-activity-assignment-availability-editor
 				href="${this._activityUsageHref}"
 				.token="${this.token}">
 			</d2l-activity-assignment-availability-editor>
-
 		`;
 
-		const event = new CustomEvent('d2l-request-provider', {
-			detail: { key: 'd2l-milestone-2' },
-			bubbles: true,
-			composed: true,
-			cancelable: true
-		});
-		this.dispatchEvent(event);
-		const milestone2Enabled = event.detail.provider;
+		const shouldRenderCompletionEvaluation = this._isMilestoneEnabled(Milestones.M2);
 
-		if(!milestone2Enabled){
+		if (!shouldRenderCompletionEvaluation) {
 			return availabilityAccordian;
 		}
 
-		let submissionCompletionCategorizationAccordian = html`
+		const submissionCompletionCategorizationAccordian = html`
 			<d2l-activity-assignment-editor-submission-and-completion-editor
 				href="${this.href}"
 				.token="${this.token}">
 			</d2l-activity-assignment-editor-submission-and-completion-editor>
 		`;
 
-		let evaluationAccordian = html`
+		const evaluationAccordian = html`
 			<d2l-activity-assignment-evaluation-editor
 				href="${this.href}"
 				.token="${this.token}"

@@ -11,8 +11,9 @@ import { getLocalizeResources } from '../localization.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { shared as store } from '../state/activity-store.js';
+import { ActivityEditorFeaturesMixin, Milestones } from '../mixins/d2l-activity-editor-features-mixin.js';
 
-class ActivityAssignmentAvailabilityEditor extends LocalizeMixin(ActivityEditorMixin(MobxLitElement)) {
+class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(LocalizeMixin(ActivityEditorMixin(MobxLitElement))) {
 
 	static get properties() {
 
@@ -87,18 +88,13 @@ class ActivityAssignmentAvailabilityEditor extends LocalizeMixin(ActivityEditorM
 	}
 
 	_renderReleaseConditionSummary() {
-		const event = new CustomEvent('d2l-request-provider', {
-			detail: { key: 'd2l-milestone-2' },
-			bubbles: true,
-			composed: true,
-			cancelable: true
-		});
-		this.dispatchEvent(event);
-		const milestone2Enabled = event.detail.provider;
 
-		if(!milestone2Enabled){
+		const shouldRenderConditionSummary = this._isMilestoneEnabled(Milestones.M3);
+
+		if (!shouldRenderConditionSummary) {
 			return html``;
 		}
+
 		return html`
 			<d2l-activity-usage-conditions-summary
 				href="${this.href}"
@@ -108,16 +104,10 @@ class ActivityAssignmentAvailabilityEditor extends LocalizeMixin(ActivityEditorM
 	}
 
 	_renderReleaseConditionEditor() {
-		const event = new CustomEvent('d2l-request-provider', {
-			detail: { key: 'd2l-milestone-2' },
-			bubbles: true,
-			composed: true,
-			cancelable: true
-		});
-		this.dispatchEvent(event);
-		const milestone2Enabled = event.detail.provider;
 
-		if(!milestone2Enabled){
+		const shouldRenderConditionEditor = this._isMilestoneEnabled(Milestones.M3);
+
+		if (!shouldRenderConditionEditor) {
 			return html``;
 		}
 

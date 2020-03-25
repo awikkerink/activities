@@ -101,8 +101,18 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 			e.stopPropagation();
 		}
 
-		if (e.detail.key === 'd2l-milestone-2') {
+		if (e.detail.key === 'd2l-milestone-two') {
 			e.detail.provider = this.milestoneTwoEnabled;
+			e.stopPropagation();
+		}
+
+		if (e.detail.key === 'd2l-milestone-three') {
+			e.detail.provider = this.milestoneThreeEnabled;
+			e.stopPropagation();
+		}
+
+		if (e.detail.key === 'd2l-milestone-four') {
+			e.detail.provider = this.milestoneFourEnabled;
 			e.stopPropagation();
 		}
 
