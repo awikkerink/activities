@@ -1,26 +1,34 @@
 import { resolveUrl } from '@polymer/polymer/lib/utils/resolve-url.js';
+import { getLocalizeResources as getLocalizeResourcesHelper } from '@brightspace-ui/core/helpers/getLocalizeResources.js';
 
-export async function getLocalizeResources(langs, importMetaUrl) {
-	const imports = [];
-	let supportedLanguage;
-	for (const language of langs.reverse()) {
-		if (['en', 'ar', 'de', 'es', 'fr', 'ja', 'ko', 'nl', 'pt', 'sv', 'tr', 'zh', 'zh-tw'].includes(language)) {
-			supportedLanguage = language;
-			const filePath = `./lang/${language}.js`;
-			imports.push(import(resolveUrl(filePath, importMetaUrl)));
-		}
+const SupportedLanguages = new Set([
+	'en', 'ar', 'de', 'es', 'fr', 'ja', 'ko', 'nl', 'pt', 'sv', 'tr', 'zh',
+	'zh-tw'
+]);
+
+export function getLocalizeResources(possibleLanguages, importMetaUrl) {
+
+	function filterFunc(language) {
+		return SupportedLanguages.has(language);
 	}
 
-	const translationFiles = await Promise.all(imports);
-	const langterms = {};
-	for (const translationFile of translationFiles) {
-		for (const langterm in translationFile.default) {
-			langterms[langterm] = translationFile.default[langterm];
-		}
+	function resolveFunc(language) {
+		return resolveUrl(`./lang/${language}.js`, importMetaUrl);
 	}
 
-	return {
-		language: supportedLanguage,
-		resources: langterms
-	};
+	async function importFunc(url) {
+		try {
+			const module = await import(url);
+			return module.default;
+		} catch (err) {
+			return null;
+		};
+	}
+
+	return getLocalizeResourcesHelper(
+		possibleLanguages,
+		filterFunc,
+		resolveFunc,
+		importFunc
+	);
 }
