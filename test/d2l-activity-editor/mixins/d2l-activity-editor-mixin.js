@@ -27,6 +27,6 @@ describe('d2l-activity-editor-mixin', function() {
 
 		setTimeout(() => el._fetch(() => Promise.resolve()));
 
-		await oneEvent(el, 'd2l-pending-state');
+		await oneEvent(el, 'pending-state');
 	});
 });

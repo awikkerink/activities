@@ -50,7 +50,7 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 	}
 
 	_sendPendingEvent(promise) {
-		const pendingEvent = new CustomEvent('d2l-pending-state', {
+		const pendingEvent = new CustomEvent('pending-state', {
 			composed: true,
 			bubbles: true,
 			detail: { promise }
