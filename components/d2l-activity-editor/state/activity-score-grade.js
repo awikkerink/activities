@@ -78,7 +78,7 @@ export class ActivityScoreGrade {
 		return !this.scoreOutOfError;
 	}
 
-	linkToExistingGrade(prevHref) {
+	linkToExistingGrade() {
 		if (!this.gradeCandidateCollection) {
 			return;
 		}
@@ -87,8 +87,7 @@ export class ActivityScoreGrade {
 		this.setGraded();
 
 		const gradeCandidate = this.gradeCandidateCollection.selected;
-		const setScoreOutOf = !this.scoreOutOf || (gradeCandidate && prevHref !== gradeCandidate.href);
-		if (setScoreOutOf && gradeCandidate.maxPoints !== undefined) {
+		if (gradeCandidate.maxPoints !== undefined) {
 			this.setScoreOutOf(gradeCandidate.maxPoints.toString());
 		}
 	}
