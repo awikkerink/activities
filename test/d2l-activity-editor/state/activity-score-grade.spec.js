@@ -185,7 +185,7 @@ describe('Activity Score Grade', function() {
 				fetchEntity.mockImplementation(() => Promise.resolve({}));
 			});
 
-			it('sets scoreOutOf because it is empty (but linked grade has not changed)', async(done) => {
+			it('sets scoreOutOf when scoreOutOf is empty', async(done) => {
 				defaultEntityMock.scoreOutOf = () => '';
 				const activity = new ActivityScoreGrade(defaultEntityMock, 'token');
 				await activity.fetchGradeCandidates();
@@ -195,7 +195,7 @@ describe('Activity Score Grade', function() {
 					done
 				);
 
-				activity.linkToExistingGrade(gradeCandidate.href);
+				activity.linkToExistingGrade();
 			});
 
 			it('links and sets scoreOutOf when coming from ungraded with create new and link selected', async(done) => {
@@ -215,7 +215,7 @@ describe('Activity Score Grade', function() {
 					})
 				);
 
-				activity.linkToExistingGrade('');
+				activity.linkToExistingGrade();
 			});
 
 			it('links and sets scoreOutOf', async(done) => {
@@ -232,7 +232,7 @@ describe('Activity Score Grade', function() {
 					})
 				);
 
-				activity.linkToExistingGrade('http://test');
+				activity.linkToExistingGrade();
 			});
 		});
 	});

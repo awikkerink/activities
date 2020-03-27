@@ -91,7 +91,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 		if (this._createNewRadioChecked) {
 			scoreAndGrade.linkToNewGrade();
 		} else if (!this._createNewRadioChecked && this._hasGradeCandidates) {
-			scoreAndGrade.linkToExistingGrade(prevSelectedHref);
+			scoreAndGrade.linkToExistingGrade();
 		}
 	}
 
