@@ -46,9 +46,9 @@ export default {
 	"dueBetweenStartEndDate": "Due Date must be after Start Date and before or equal to End Date",
 	"dueAfterStartDate": "Due Date must be after Start Date",
 	"dueBeforeEndDate": "Due Date must be before or equal to End Date",
-	"createAndLinkToNewGradeItem": "Create and link to New Grade Item", //Radio button text
-	"linkToExistingGradeItem": "Link to Existing Grade Item", //Radio button text
+	"createAndLinkToNewGradeItem": "Create and link to a new grade item", //Radio button text
+	"linkToExistingGradeItem": "Link to an existing grade item", //Radio button text
 	"points": "Points: {points}", // Text label for displaying points of a grade
-	"noGradeItems": "No existing Grade Items exist to be linked", // Reason why existing grade items cannot be linked in the choose grades dialog
+	"noGradeItems": "No existing grade items", // Reason why existing grade items cannot be linked in the choose grades dialog
 	"noGradeCreatePermission": "You do not have permission to create a new grade item" // Reason why a new grade items cannot be created in the choose grades dialog
 };
