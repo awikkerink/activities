@@ -37,7 +37,7 @@ export default {
 	"emptyScoreOutOfError": "A points value must be specified for activities in Grades", // Error message to inform user that the score out of value is a required field when a grade item is associated
 	"invalidScoreOutOfError": "Score Out Of must be greater than or equal to 0.01 and less than or equal to 9,999,999,999", // Error message when an invalid score out of value is entered
 	"loading": "Loading...", // Message displayed while page is loading
-	"ok": "Ok", // Text of dialog button to commit action
+	"ok": "OK", // Text of dialog button to commit action
 	"cancel": "Cancel", // Text of dialog button to cancel action
 	"ariaToolbarShortcutInstructions": "Press ALT-F10 for toolbar, and press ESC to exit toolbar once inside.", // Instructions for screenreader users on how to enter and exit the html editor toolbar
 	"chooseFromGrades": "Choose from Grades", // Link text and dialog title for the edit grades dialog,
