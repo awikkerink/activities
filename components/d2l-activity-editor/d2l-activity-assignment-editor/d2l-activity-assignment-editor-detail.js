@@ -12,6 +12,8 @@ import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/Assignmen
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ErrorHandlingMixin } from '../error-handling-mixin.js';
+import { getLocalizeResources } from '../localization.js';
+import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LinksInMessageProcessor } from '@d2l/d2l-attachment/helpers/links-in-message-processor.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -19,8 +21,6 @@ import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SaveStatusMixin } from '../save-status-mixin.js';
 import { shared as attachmentCollectionStore } from '../d2l-activity-attachments/state/attachment-collections-store.js';
 import { shared as attachmentStore } from '../d2l-activity-attachments/state/attachment-store.js';
-import { getLocalizeResources } from '../localization.js';
-import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { shared as store } from './state/assignment-store.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
