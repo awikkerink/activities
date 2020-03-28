@@ -1,4 +1,5 @@
 import './d2l-activity-grades/d2l-activity-grade-candidate-selector';
+import './d2l-activity-grades/d2l-activity-grade-category-selector';
 import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@brightspace-ui/core/components/icons/icon.js';
@@ -147,6 +148,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 								</div>
 							</div>
 						</div>
+						<d2l-activity-grade-category-selector href="${this.href}" .token="${this.token}"></d2l-activity-grade-category-selector>
 					` : html`
 						<div class="d2l-body-small">
 							${this.localize('noGradeCreatePermission')}
