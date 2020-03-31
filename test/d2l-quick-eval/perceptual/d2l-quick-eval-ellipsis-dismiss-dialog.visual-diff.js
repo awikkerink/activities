@@ -35,6 +35,7 @@ describe('d2l-quick-eval-ellipsis-dialog', function() {
 				el.opened = true;
 			});
 		}, element);
+		await new Promise(resolve => setTimeout(resolve, 100));
 	}
 
 	async function waitForClose(element) {
@@ -77,6 +78,7 @@ describe('d2l-quick-eval-ellipsis-dialog', function() {
 			const item = list.shadowRoot.querySelectorAll('d2l-list-item')[1];
 			item.shadowRoot.querySelector('label').click();
 		});
+		await new Promise(resolve => setTimeout(resolve, 100));
 		const rect = await visualDiff.getRect(page, '#default');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 		await waitForClose('#default d2l-quick-eval-ellipsis-dialog');
