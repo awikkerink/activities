@@ -82,15 +82,11 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		}
 	}
 
-	_addToCollection(attachment) {
-		const collection = attachmentCollectionStore.get(this._attachmentsHref);
-		collection.addAttachment(attachment);
-	}
-
 	addLinks(links) {
+		const collection = attachmentCollectionStore.get(this._attachmentsHref);
 		links = links || [];
 		links.forEach(element => {
-			this._addToCollection(attachmentStore.createLink(element.name, element.url));
+			collection.addAttachment(attachmentStore.createLink(element.name, element.url));
 		});
 	}
 
