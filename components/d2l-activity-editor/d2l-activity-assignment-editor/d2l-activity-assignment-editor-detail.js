@@ -92,7 +92,11 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 
 	_saveInstructions(value) {
 		store.getAssignment(this.href).setInstructions(value);
-		this._linksProcessor.process(value, linkAttachments => this.addLinks(linkAttachments));
+		this._debounceJobs.value = Debouncer.debounce(
+			this._debounceJobs.value,
+			timeOut.after(2000),
+			() => this._linksProcessor.process(value, linkAttachments => this.addLinks(linkAttachments)
+		));
 	}
 
 	_onAssignmentChange(assignment) {
