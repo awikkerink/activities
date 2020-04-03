@@ -11,6 +11,10 @@ export class GradeCandidate {
 	constructor(gradeCandidateEntity, token) {
 		this.gradeCandidateEntity = gradeCandidateEntity;
 		this.token = token;
+		this.isCategory = false;
+		this.isNewGradeCandidate = false;
+		this.isCurrentAssociation = false;
+		this.gradeCandidates = [];
 	}
 
 	async fetch() {
@@ -21,7 +25,7 @@ export class GradeCandidate {
 		}
 		if (sirenEntity) {
 			let entity;
-			if (this.gradeCandidateEntity.isCategory()) {
+			if (this.gradeCandidateEntity.isCategory() || this.gradeCandidateEntity.isNewGradeCandidate()) {
 				entity = new GradeCategoryEntity(sirenEntity, this.token, { remove: () => { } });
 			} else {
 				entity = new GradeEntity(sirenEntity, this.token, { remove: () => { } });
