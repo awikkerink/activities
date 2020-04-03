@@ -96,7 +96,7 @@ class AssignmentTypeEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitElem
 
 		const isIndividualAssignmentType = assignment.isIndividualAssignmentType;
 
-		if (assignment.isReadOnly) {
+		if (assignment.assignmentHasSubmissions) {
 			return this.localize('folderTypeCannotChange');
 		}
 
