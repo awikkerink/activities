@@ -43,14 +43,18 @@ describe('Grade Candidate Collection', function() {
 				isCategory: () => false,
 				isCurrentAssociation: () => false,
 				href: () => 'http://grade-candidate-href-grade/1',
-				getGradeCandidates: () => []
+				getGradeCandidates: () => [],
+				newGradeCandidatesHref: () => undefined,
+				isNewGradeCandidate: () => false
 			};
 
 			const gradeCandidateEntityMock2 = {
 				isCategory: () => false,
 				isCurrentAssociation: () => true,
 				href: () => 'http://grade-candidate-href-grade/2',
-				getGradeCandidates: () => []
+				getGradeCandidates: () => [],
+				newGradeCandidatesHref: () => undefined,
+				isNewGradeCandidate: () => false
 			};
 
 			GradeCandidateEntity
@@ -79,14 +83,18 @@ describe('Grade Candidate Collection', function() {
 				isCategory: () => false,
 				isCurrentAssociation: () => false,
 				href: () => 'http://grade-candidate-href-grade/1',
-				getGradeCandidates: () => []
+				getGradeCandidates: () => [],
+				newGradeCandidatesHref: () => undefined,
+				isNewGradeCandidate: () => false
 			};
 
 			const gradeCandidateEntityMock2 = {
 				isCategory: () => false,
 				isCurrentAssociation: () => false,
 				href: () => 'http://grade-candidate-href-grade/2',
-				getGradeCandidates: () => []
+				getGradeCandidates: () => [],
+				newGradeCandidatesHref: () => undefined,
+				isNewGradeCandidate: () => false
 			};
 
 			GradeCandidateEntity

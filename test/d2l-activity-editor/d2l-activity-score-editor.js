@@ -25,7 +25,9 @@ describe('d2l-activity-score-editor', function() {
 			canSeeGrades: () => true,
 			canEditGrades: () => true,
 			gradeHref: () => '',
-			gradeCandidatesHref: () => ''
+			gradeCandidatesHref: () => '',
+			newGradeCandidatesHref: () => undefined,
+			isNewGradeCandidate: () => false
 		});
 		href = 'http://activity/1';
 

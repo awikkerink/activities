@@ -27,7 +27,9 @@ describe('Activity Usage', function() {
 		associatedGrade: () => undefined,
 		gradeCandidatesHref: () => '',
 		conditionsHref: () => undefined,
-		getRubricAssociationsHref: () => undefined
+		getRubricAssociationsHref: () => undefined,
+		newGradeCandidatesHref: () => undefined,
+		isNewGradeCandidate: () => false
 	};
 
 	afterEach(() => {
@@ -125,7 +127,8 @@ describe('Activity Usage', function() {
 					associatedGrade: null,
 					scoreOutOf: '10',
 					inGrades: true,
-					newGradeName: 'a new grade'
+					newGradeName: 'a new grade',
+					newGradeCategory: undefined
 				}
 			});
 		});

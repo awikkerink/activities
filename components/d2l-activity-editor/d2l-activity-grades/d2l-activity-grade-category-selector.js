@@ -42,11 +42,27 @@ class ActivityGradeCategorySelector extends ActivityEditorMixin(LocalizeMixin(Mo
 		super(store);
 	}
 
-	_setSelected() {
+	_setSelected(e) {
+		if (e.target && e.target.value) {
+			this.newGradeCandidatesCollection.setSelected(e.target.value);
+		} else {
+			this.newGradeCandidatesCollection.setSelected();
+		}
 	}
 
 	render() {
-		const gradeCategories = [{name: 'test category', value: 123}] //temporary.
+		const activity = store.get(this.href);
+
+		if (!activity || !activity.scoreAndGrade.newGradeCandidatesCollection || !activity.scoreAndGrade.newGradeCandidatesCollection.hasNewGradeCandidateWithCategory()) {
+			return html``;
+		}
+
+		this.newGradeCandidatesCollection = activity.scoreAndGrade.newGradeCandidatesCollection;
+
+		const {
+			gradeCandidates,
+			selected
+		} = this.newGradeCandidatesCollection;
 
 		return html`
 			<div id="d2l-activity-grade-category-selector">
@@ -56,18 +72,15 @@ class ActivityGradeCategorySelector extends ActivityEditorMixin(LocalizeMixin(Mo
 					class="d2l-input-select"
 					@change="${this._setSelected}"
 					>
-					${gradeCategories.map(gc => html`
-						<option value="${gc.value}">
-							${gc.name}
-						</option>`)};
+					${gradeCandidates.map(gc => html`
+						<option value="${gc.href}" .selected="${selected && gc.href === selected.href}">
+							${gc.name ? gc.name : this.localize('noGradeItemCategory')}
+						</option>
+					`)};
 				</select>
-			<div>
+			</div>
 		`;
 	}
 }
 
 customElements.define('d2l-activity-grade-category-selector', ActivityGradeCategorySelector);
-
-						
-						
-	

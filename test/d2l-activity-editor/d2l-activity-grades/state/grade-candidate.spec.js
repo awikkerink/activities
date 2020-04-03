@@ -32,7 +32,9 @@ describe('Grade Candidate', function() {
 				isCategory: () => false,
 				isCurrentAssociation: () => false,
 				href: () => 'http://grade-candidate-href-grade',
-				getGradeCandidates: () => []
+				getGradeCandidates: () => [],
+				newGradeCandidatesHref: () => undefined,
+				isNewGradeCandidate: () => false
 			};
 
 			const gradeEntityMock = {
@@ -79,7 +81,9 @@ describe('Grade Candidate', function() {
 				href: () => 'http://grade-candidate-href-category',
 				getGradeCandidates: () => [
 					{'testgrade' : 1}
-				]
+				],
+				newGradeCandidatesHref: () => undefined,
+				isNewGradeCandidate: () => false
 			};
 
 			const gradeCategoryEntityMock = {
@@ -94,7 +98,9 @@ describe('Grade Candidate', function() {
 				isCategory: () => false,
 				isCurrentAssociation: () => false,
 				href: () => 'http://grade-candidate-href-grade',
-				getGradeCandidates: () => []
+				getGradeCandidates: () => [],
+				newGradeCandidatesHref: () => undefined,
+				isNewGradeCandidate: () => false
 			};
 
 			GradeCandidateEntity.mockImplementation(() => {

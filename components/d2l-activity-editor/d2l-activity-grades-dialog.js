@@ -68,17 +68,22 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 
 	async open() {
 		const scoreAndGrade = store.get(this.href).scoreAndGrade;
-		await scoreAndGrade.fetchGradeCandidates();
+		await Promise.all([
+			scoreAndGrade.fetchGradeCandidates(),
+			scoreAndGrade.fetchGradeCategories()
+		]);
 
 		const {
 			gradeCandidateCollection,
-			createNewGrade
+			createNewGrade,
+			newGradeCandidatesCollection
 		} = scoreAndGrade;
 
 		this._canLinkNewGrade = gradeCandidateCollection && !!gradeCandidateCollection.associateNewGradeAction;
 		this._createNewRadioChecked = createNewGrade && this._canLinkNewGrade;
 		this._hasGradeCandidates = gradeCandidateCollection && gradeCandidateCollection.gradeCandidates.length > 0;
 		const prevSelectedHref = gradeCandidateCollection && gradeCandidateCollection.selected ? gradeCandidateCollection.selected.href : null;
+		const prevSelectedCategoryHref = newGradeCandidatesCollection.selected.href;
 
 		const dialog = this.shadowRoot.querySelector('d2l-dialog');
 		const action = await dialog.open();
@@ -86,6 +91,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 			if (prevSelectedHref) {
 				gradeCandidateCollection.setSelected(prevSelectedHref);
 			}
+			newGradeCandidatesCollection.setSelected(prevSelectedCategoryHref);
 			return;
 		}
 
