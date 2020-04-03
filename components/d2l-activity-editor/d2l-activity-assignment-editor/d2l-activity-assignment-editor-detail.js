@@ -82,21 +82,21 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		}
 	}
 
-	_addToCollection(attachment) {
-		const collection = attachmentCollectionStore.get(this._attachmentsHref);
-		collection.addAttachment(attachment);
-	}
-
 	addLinks(links) {
+		const collection = attachmentCollectionStore.get(this._attachmentsHref);
 		links = links || [];
 		links.forEach(element => {
-			this._addToCollection(attachmentStore.createLink(element.name, element.url));
+			collection.addAttachment(attachmentStore.createLink(element.name, element.url));
 		});
 	}
 
 	_saveInstructions(value) {
 		store.getAssignment(this.href).setInstructions(value);
-		this._linksProcessor.process(value, linkAttachments => this.addLinks(linkAttachments));
+		this._debounceJobs.value = Debouncer.debounce(
+			this._debounceJobs.value,
+			timeOut.after(2000),
+			() => this._linksProcessor.process(value, linkAttachments => this.addLinks(linkAttachments))
+		);
 	}
 
 	_onAssignmentChange(assignment) {
