@@ -68,6 +68,8 @@ describe('Assignment ', function() {
 				],
 				canEditSubmissionType: () => true,
 				canEditCompletionType: () => true,
+				canEditFilesSubmissionLimit: () => true,
+				filesSubmissionLimit: () => 'unlimited',
 				submissionType: () => { return {title: 'On paper submission', value: 2}; },
 				completionType: () => { return {title: 'Manually by learners', value: 2}; },
 				isGroupAssignmentTypeDisabled: () => false,
@@ -75,6 +77,7 @@ describe('Assignment ', function() {
 				getAssignmentTypeGroupCategoryOptions: () => [],
 				getAssignmentTypeInformationText: () => '',
 				isAssignmentTypeReadOnly: () => false,
+				assignmentHasSubmissions: () => false,
 				getAssignmentTypeSelectedGroupCategoryName: () => null
 			};
 		});
