@@ -74,12 +74,6 @@ export class ActivityScoreGrade {
 		}
 	}
 
-	getNewGradeCandidateCategory() {
-		if (this.newGradeCandidatesCollection && this.newGradeCandidatesCollection.selected) {
-			return this.newGradeCandidatesCollection.selected.gradeCandidateEntity;
-		}
-	}
-
 	validate() {
 		// This validation was hardcoded in the original UI implementation.
 		// It might have been better to come up with a way to represent this in the Siren representation

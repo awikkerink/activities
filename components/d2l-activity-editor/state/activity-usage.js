@@ -100,8 +100,7 @@ export class ActivityUsage {
 				inGrades: this.scoreAndGrade.inGrades,
 				associatedGrade: this.scoreAndGrade.createNewGrade ? null : this.scoreAndGrade.getAssociatedGradeEntity(),
 				associateNewGradeAction: (this.scoreAndGrade.gradeCandidateCollection || {}).associateNewGradeAction,
-				newGradeName: this.scoreAndGrade.newGradeName,
-				newGradeCategory: this.scoreAndGrade.getNewGradeCandidateCategory()
+				newGradeName: this.scoreAndGrade.newGradeName
 			}
 		};
 	}
