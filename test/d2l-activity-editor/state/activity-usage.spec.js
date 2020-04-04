@@ -127,8 +127,7 @@ describe('Activity Usage', function() {
 					associatedGrade: null,
 					scoreOutOf: '10',
 					inGrades: true,
-					newGradeName: 'a new grade',
-					newGradeCategory: undefined
+					newGradeName: 'a new grade'
 				}
 			});
 		});
