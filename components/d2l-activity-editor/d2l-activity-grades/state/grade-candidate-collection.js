@@ -63,7 +63,7 @@ export class GradeCandidateCollection {
 			return;
 		}
 		for (const gc of gradeCandidates) {
-			if (href === gc.href || (typeof gc.href === 'undefined' && href === 'undefined')) {
+			if (href === gc.href || (!gc.href && href === 'undefined')) {
 				return gc;
 			}
 			const findGradeCandidate = this._findGradeCandidate(href, gc.gradeCandidates);

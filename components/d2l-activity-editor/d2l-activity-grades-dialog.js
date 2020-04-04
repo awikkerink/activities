@@ -70,7 +70,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 		const scoreAndGrade = store.get(this.href).scoreAndGrade;
 		await Promise.all([
 			scoreAndGrade.fetchGradeCandidates(),
-			scoreAndGrade.fetchGradeCategories()
+			scoreAndGrade.fetchNewGradeCategories()
 		]);
 
 		const {
