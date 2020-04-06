@@ -18,6 +18,8 @@ export class ActivityScoreGrade {
 		this.gradeCandidatesHref = entity.gradeCandidatesHref();
 		this.gradeCandidateCollection = null;
 		this.createNewGrade = !entity.gradeHref();
+		this.newGradeCandidatesHref = entity.newGradeCandidatesHref();
+		this.newGradeCandidatesCollection = null;
 	}
 
 	async fetchGradeCandidates() {
@@ -27,6 +29,15 @@ export class ActivityScoreGrade {
 
 		this.gradeCandidateCollection = new GradeCandidateCollection(this.gradeCandidatesHref, this.token);
 		await this.gradeCandidateCollection.fetch();
+	}
+
+	async fetchNewGradeCandidates() {
+		if (this.newGradeCandidatesCollection) {
+			return;
+		}
+
+		this.newGradeCandidatesCollection = new GradeCandidateCollection(this.newGradeCandidatesHref, this.token);
+		await this.newGradeCandidatesCollection.fetch();
 	}
 
 	setScoreOutOf(value) {
@@ -116,6 +127,8 @@ decorate(ActivityScoreGrade, {
 	gradeCandidateCollection: observable,
 	newGradeName: observable,
 	createNewGrade: observable,
+	gradeCategoriesHref: observable,
+	gradeCategoryCollection: observable,
 	// actions
 	setScoreOutOf: action,
 	setUngraded: action,
@@ -125,6 +138,7 @@ decorate(ActivityScoreGrade, {
 	validate: action,
 	linkToExistingGrade: action,
 	fetchGradeCandidates: action,
+	fetchNewGradeCandidates: action,
 	linkToNewGrade: action,
 	setNewGradeName: action
 });

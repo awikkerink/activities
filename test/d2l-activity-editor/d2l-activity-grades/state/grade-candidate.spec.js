@@ -32,7 +32,9 @@ describe('Grade Candidate', function() {
 				isCategory: () => false,
 				isCurrentAssociation: () => false,
 				href: () => 'http://grade-candidate-href-grade',
-				getGradeCandidates: () => []
+				getGradeCandidates: () => [],
+				newGradeCandidatesHref: () => undefined,
+				isNewGradeCandidate: () => false
 			};
 
 			const gradeEntityMock = {
@@ -79,7 +81,9 @@ describe('Grade Candidate', function() {
 				href: () => 'http://grade-candidate-href-category',
 				getGradeCandidates: () => [
 					{'testgrade' : 1}
-				]
+				],
+				newGradeCandidatesHref: () => undefined,
+				isNewGradeCandidate: () => false
 			};
 
 			const gradeCategoryEntityMock = {
@@ -94,7 +98,9 @@ describe('Grade Candidate', function() {
 				isCategory: () => false,
 				isCurrentAssociation: () => false,
 				href: () => 'http://grade-candidate-href-grade',
-				getGradeCandidates: () => []
+				getGradeCandidates: () => [],
+				newGradeCandidatesHref: () => undefined,
+				isNewGradeCandidate: () => false
 			};
 
 			GradeCandidateEntity.mockImplementation(() => {
@@ -124,6 +130,73 @@ describe('Grade Candidate', function() {
 				expect(GradeCategoryEntity.mock.calls[0][1]).to.equal('token');
 
 				expect(GradeCandidateEntity.mock.calls.length).to.equal(1);
+			});
+		});
+	});
+
+	describe('new grade', () => {
+		let newGradeCandidateEntityMock1, newGradeCandidateEntityMock2;
+
+		beforeEach(() => {
+			sirenEntity = sinon.stub();
+
+			newGradeCandidateEntityMock1 = {
+				isCategory: () => false,
+				isCurrentAssociation: () => false,
+				href: () => 'http://new-grade-candidate-category-href',
+				getGradeCandidates: () => [],
+				newGradeCandidatesHref: () => 'http://new-grade-candidates-href',
+				isNewGradeCandidate: () => true
+			};
+
+			const gradeCategoryEntityMock = {
+				name: () => 'Grade Candidate Category 1'
+			};
+
+			GradeCategoryEntity.mockImplementation(() => {
+				return gradeCategoryEntityMock;
+			});
+
+			newGradeCandidateEntityMock2 = {
+				isCategory: () => false,
+				isCurrentAssociation: () => false,
+				href: () => undefined,
+				getGradeCandidates: () => [],
+				newGradeCandidatesHref: () => 'http://new-grade-candidates-href',
+				isNewGradeCandidate: () => true
+			};
+
+			fetchEntity.mockImplementation(() => Promise.resolve(sirenEntity));
+		});
+
+		describe('fetching', () => {
+			it('fetches with category', async() => {
+				const gc = new GradeCandidate(newGradeCandidateEntityMock1, 'token');
+				await gc.fetch();
+
+				expect(gc.name).to.equal('Grade Candidate Category 1');
+				expect(gc.isCategory).to.be.false;
+				expect(gc.isCurrentAssociation).to.be.false;
+				expect(gc.baseWeight).to.be.undefined;
+				expect(gc.maxPoints).to.be.undefined;
+				expect(gc.gradeCandidates).to.be.empty;
+
+				expect(fetchEntity.mock.calls.length).to.equal(1);
+				expect(GradeCategoryEntity.mock.calls[0][0]).to.equal(sirenEntity);
+			});
+
+			it('skips fetch without category', async() => {
+				const gc = new GradeCandidate(newGradeCandidateEntityMock2, 'token');
+				await gc.fetch();
+
+				expect(gc.isCategory).to.be.false;
+				expect(gc.isCurrentAssociation).to.be.false;
+				expect(gc.gradeCandidates).to.be.empty;
+				expect(gc.name).to.be.undefined;
+				expect(gc.baseWeight).to.be.undefined;
+				expect(gc.maxPoints).to.be.undefined;
+
+				expect(fetchEntity.mock.calls.length).to.equal(0);
 			});
 		});
 	});

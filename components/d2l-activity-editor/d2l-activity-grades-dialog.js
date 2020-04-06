@@ -1,4 +1,5 @@
 import './d2l-activity-grades/d2l-activity-grade-candidate-selector';
+import './d2l-activity-grades/d2l-activity-grade-category-selector';
 import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@brightspace-ui/core/components/icons/icon.js';
@@ -67,17 +68,22 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 
 	async open() {
 		const scoreAndGrade = store.get(this.href).scoreAndGrade;
-		await scoreAndGrade.fetchGradeCandidates();
+		await Promise.all([
+			scoreAndGrade.fetchGradeCandidates(),
+			scoreAndGrade.fetchNewGradeCandidates()
+		]);
 
 		const {
 			gradeCandidateCollection,
-			createNewGrade
+			createNewGrade,
+			newGradeCandidatesCollection
 		} = scoreAndGrade;
 
 		this._canLinkNewGrade = gradeCandidateCollection && !!gradeCandidateCollection.associateNewGradeAction;
 		this._createNewRadioChecked = createNewGrade && this._canLinkNewGrade;
 		this._hasGradeCandidates = gradeCandidateCollection && gradeCandidateCollection.gradeCandidates.length > 0;
 		const prevSelectedHref = gradeCandidateCollection && gradeCandidateCollection.selected ? gradeCandidateCollection.selected.href : null;
+		const prevSelectedCategoryHref = newGradeCandidatesCollection.selected.href;
 
 		const dialog = this.shadowRoot.querySelector('d2l-dialog');
 		const action = await dialog.open();
@@ -85,6 +91,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 			if (prevSelectedHref) {
 				gradeCandidateCollection.setSelected(prevSelectedHref);
 			}
+			newGradeCandidatesCollection.setSelected(prevSelectedCategoryHref);
 			return;
 		}
 
@@ -147,6 +154,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mo
 								</div>
 							</div>
 						</div>
+						<d2l-activity-grade-category-selector href="${this.href}" .token="${this.token}"></d2l-activity-grade-category-selector>
 					` : html`
 						<div class="d2l-body-small">
 							${this.localize('noGradeCreatePermission')}

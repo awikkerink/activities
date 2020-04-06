@@ -50,9 +50,20 @@ export class GradeCandidateCollection {
 		this.selected = this._findGradeCandidate(href, this.gradeCandidates);
 	}
 
+	hasNewGradeCandidateWithCategory() {
+		if (!this.gradeCandidates) {
+			return false;
+		}
+
+		return this.gradeCandidates.some(gc => gc.isNewGradeCandidateWithCategory());
+	}
+
 	_findGradeCandidate(href, gradeCandidates) {
+		if (!gradeCandidates) {
+			return;
+		}
 		for (const gc of gradeCandidates) {
-			if (href === gc.href) {
+			if (href === gc.href || (!gc.href && href === 'undefined')) {
 				return gc;
 			}
 			const findGradeCandidate = this._findGradeCandidate(href, gc.gradeCandidates);
@@ -63,6 +74,9 @@ export class GradeCandidateCollection {
 	}
 
 	_findCurrentAssociation(gradeCandidates) {
+		if (!gradeCandidates) {
+			return;
+		}
 		for (const gc of gradeCandidates) {
 			if (gc.isCurrentAssociation) {
 				return gc;
@@ -75,6 +89,9 @@ export class GradeCandidateCollection {
 	}
 
 	_findFirstGradeItemFromCandidates(gradeCandidates) {
+		if (!gradeCandidates) {
+			return;
+		}
 		for (const gc of gradeCandidates) {
 			if (!gc.isCategory) {
 				return gc;

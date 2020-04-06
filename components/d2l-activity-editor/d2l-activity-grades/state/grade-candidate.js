@@ -11,14 +11,21 @@ export class GradeCandidate {
 	constructor(gradeCandidateEntity, token) {
 		this.gradeCandidateEntity = gradeCandidateEntity;
 		this.token = token;
+		this.isCategory = false;
+		this.isNewGradeCandidate = false;
+		this.isCurrentAssociation = false;
+		this.gradeCandidates = [];
 	}
 
 	async fetch() {
 		const href = this.gradeCandidateEntity.href();
-		const sirenEntity = await fetchEntity(href, this.token);
+		let sirenEntity;
+		if (href) {
+			sirenEntity = await fetchEntity(href, this.token);
+		}
 		if (sirenEntity) {
 			let entity;
-			if (this.gradeCandidateEntity.isCategory()) {
+			if (this.gradeCandidateEntity.isCategory() || this.gradeCandidateEntity.isNewGradeCandidate()) {
 				entity = new GradeCategoryEntity(sirenEntity, this.token, { remove: () => { } });
 			} else {
 				entity = new GradeEntity(sirenEntity, this.token, { remove: () => { } });
@@ -36,12 +43,13 @@ export class GradeCandidate {
 
 	async load(entity) {
 		this.href = this.gradeCandidateEntity.href();
+		this.isNewGradeCandidate = this.gradeCandidateEntity.isNewGradeCandidate();
 		this.isCategory = this.gradeCandidateEntity.isCategory();
 		this.isCurrentAssociation = this.gradeCandidateEntity.isCurrentAssociation();
 
 		this._entity = entity;
 		this.name = entity.name();
-		if (!this.isCategory) {
+		if (!this.isCategory && !this.isNewGradeCandidate) {
 			this.baseWeight = entity.baseWeight();
 			this.maxPoints = entity.maxPoints();
 		}
@@ -51,6 +59,10 @@ export class GradeCandidate {
 		});
 		this.gradeCandidates = await Promise.all(gradeCandidatePromises);
 	}
+
+	isNewGradeCandidateWithCategory() {
+		return this.isNewGradeCandidate && this.href;
+	}
 }
 
 decorate(GradeCandidate, {
@@ -58,6 +70,7 @@ decorate(GradeCandidate, {
 	baseWeight: observable,
 	gradeCandidates: observable,
 	isCategory: observable,
+	isNewGradeCandidate: observable,
 	isCurrentAssociation: observable,
 	maxPoints: observable,
 	name: observable,

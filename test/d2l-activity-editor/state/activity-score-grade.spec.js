@@ -37,7 +37,9 @@ describe('Activity Score Grade', function() {
 			canEditGrades: () => true,
 			associatedGrade: () => null,
 			gradeHref: () => 'http://test-grade-href',
-			gradeCandidatesHref: () => 'http://grade-candidate-collection-href'
+			gradeCandidatesHref: () => 'http://grade-candidate-collection-href',
+			newGradeCandidatesHref: () => undefined,
+			isNewGradeCandidate: () => false
 		};
 	});
 
@@ -168,7 +170,9 @@ describe('Activity Score Grade', function() {
 					isCategory: () => false,
 					isCurrentAssociation: () => false,
 					href: () => 'http://grade-candidate-href',
-					getGradeCandidates: () => []
+					getGradeCandidates: () => [],
+					newGradeCandidatesHref: () => undefined,
+					isNewGradeCandidate: () => false
 				};
 
 				gradeCandidate = new GradeCandidate(gradeCandidateEntityMock, 'token');
