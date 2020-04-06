@@ -31,7 +31,7 @@ export class ActivityScoreGrade {
 		await this.gradeCandidateCollection.fetch();
 	}
 
-	async fetchNewGradeCategories() {
+	async fetchNewGradeCandidates() {
 		if (this.newGradeCandidatesCollection) {
 			return;
 		}
@@ -138,7 +138,7 @@ decorate(ActivityScoreGrade, {
 	validate: action,
 	linkToExistingGrade: action,
 	fetchGradeCandidates: action,
-	fetchNewGradeCategories: action,
+	fetchNewGradeCandidates: action,
 	linkToNewGrade: action,
 	setNewGradeName: action
 });
