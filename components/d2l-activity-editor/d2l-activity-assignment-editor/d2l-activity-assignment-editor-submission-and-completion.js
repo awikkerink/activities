@@ -183,7 +183,17 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 		`;
 	}
 
-	_renderAssignmentSubmissionTypeSummary() {
+	_renderAssignmentSubmissionTypeSummary(assignment) {
+		if (!assignment) {
+			return html``;
+		}
+
+		const submissionType = assignment.submissionTypeOptions.find(opt => String(opt.value) === assignment.submissionType);
+
+		if (submissionType) {
+			return html `${submissionType.title}`;
+		}
+
 		return html``;
 	}
 
@@ -214,13 +224,13 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 	render() {
 		const assignment = store.getAssignment(this.href);
 		return html`
-            <d2l-labs-accordion-collapse class="accordion" flex header-border>
+			<d2l-labs-accordion-collapse class="accordion" flex header-border>
 				<h3 class="d2l-heading-3 activity-summarizer-header" slot="header">
 					${this.localize('submissionCompletionAndCategorization')}
 				</h3>
 				<ul class="d2l-body-small activity-summarizer-summary" slot="summary">
 					<li>${this._renderAssignmentTypeSummary()}</li>
-					<li>${this._renderAssignmentSubmissionTypeSummary()}</li>
+					<li>${this._renderAssignmentSubmissionTypeSummary(assignment)}</li>
 					<li>${this._renderAssignmentCompletionTypeSummary()}</li>
 				</ul>
 				${this._renderAssignmentType()}
