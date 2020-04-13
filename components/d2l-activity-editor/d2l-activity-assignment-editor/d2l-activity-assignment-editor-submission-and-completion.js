@@ -93,9 +93,9 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 	_renderAssignmentType() {
 		return html `
 			<div id="assignment-type-container">
-				<h3 class="assignment-type-heading d2l-heading-4">
+				<label class="d2l-label-text">
 					${this.localize('txtAssignmentType')}
-				</h3>
+				</label>
 				<d2l-activity-assignment-type-editor
 					href="${this.href}"
 					.token="${this.token}">

@@ -129,11 +129,11 @@ class AssignmentTypeEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitElem
 
 		return html`
 			<div ?hidden=${!isReadOnly} id="read-only-assignment-type-container">
-				<div class="d2l-body-standard">${folderTypeText}</div>
+				<div class="d2l-body-compact">${folderTypeText}</div>
 				<div class="d2l-body-compact">${groupTypeText}</div>
 				<p class="d2l-body-small">${infoText}</p>
 			</div>
-			
+
 			<div ?hidden=${isReadOnly} id="editable-assignment-type-container">
 				<label class="individual-type d2l-input-radio-label">
 					<input
