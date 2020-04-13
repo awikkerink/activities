@@ -2,6 +2,7 @@ import { action, configure as configureMobx, decorate, observable, runInAction }
 import { ActivityDates } from './activity-dates.js';
 import { ActivityScoreGrade } from './activity-score-grade.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
+import { AlignmentsCollectionEntity } from 'siren-sdk/src/alignments/AlignmentsCollectionEntity.js';
 import { fetchEntity } from '../state/fetch-entity.js';
 
 configureMobx({ enforceActions: 'observed' });
@@ -31,6 +32,17 @@ export class ActivityUsage {
 		this.dates = new ActivityDates(entity);
 		this.scoreAndGrade = new ActivityScoreGrade(entity, this.token);
 		this.associationsHref = entity.getRubricAssociationsHref();
+		this.alignmentsHref = entity.alignmentsHref();
+		this.canUpdateAlignments = false;
+		this.hasAlignments = false;
+
+		if (this.alignmentsHref) {
+			const alignmentsEntity = await fetchEntity(this.alignmentsHref, this.token);
+			const alignmentsCollection = new AlignmentsCollectionEntity(alignmentsEntity);
+
+			this.canUpdateAlignments = alignmentsCollection.canUpdateAlignments();
+			this.hasAlignments = alignmentsCollection.getAlignments().length > 0;
+		}
 	}
 
 	setDraftStatus(isDraft) {
@@ -130,6 +142,9 @@ decorate(ActivityUsage, {
 	scoreAndGrade: observable,
 	dates: observable,
 	associationsHref: observable,
+	alignmentsHref: observable,
+	canUpdateAlignments: observable,
+	hasAlignments: observable,
 	// actions
 	load: action,
 	setDraftStatus: action,

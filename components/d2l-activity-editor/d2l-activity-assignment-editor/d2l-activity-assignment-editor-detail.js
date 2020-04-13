@@ -1,6 +1,7 @@
 import 'd2l-inputs/d2l-input-text.js';
 import 'd2l-tooltip/d2l-tooltip';
 import '../d2l-activity-due-date-editor.js';
+import '../d2l-activity-outcomes.js';
 import '../d2l-activity-score-editor.js';
 import '../d2l-activity-text-editor.js';
 import '../d2l-activity-attachments/d2l-activity-attachments-editor.js';
@@ -191,6 +192,13 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 					prevent-submit>
 				</d2l-input-text>
 				${this._getNameTooltip()}
+			</div>
+
+			<div id="outcomes-container">
+				<d2l-activity-outcomes
+					href="${activityUsageHref}"
+					.token="${this.token}">
+				</d2l-activity-outcomes>
 			</div>
 
 			<div id="score-and-duedate-container">
