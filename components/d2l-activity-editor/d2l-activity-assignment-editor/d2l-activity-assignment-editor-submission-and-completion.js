@@ -33,10 +33,6 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 					display: block;
 				}
 
-				.assignment-type-heading {
-					margin: 0 0 0.5rem 0;
-				}
-
 				div[id*="container"] {
 					margin-top: 20px;
 				}
