@@ -1,9 +1,9 @@
-import 'd2l-activity-alignments/d2l-select-outcomes.js';
 import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
-import { html } from 'lit-element/lit-element';
+import 'd2l-activity-alignments/d2l-select-outcomes.js';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
 import { getLocalizeResources } from './localization';
+import { html } from 'lit-element/lit-element';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -37,14 +37,18 @@ class ActivityOutcomes extends ActivityEditorMixin(LocalizeMixin(RtlMixin(MobxLi
 
 	_onDialogAdd() {
 		this._opened = false;
+
+		// react to outcomes being added/removed via selector dialog
 	}
 
 	_onDialogCancel() {
 		this._opened = false;
+
+		// react to outcomes selector dialog being closed via cancel
 	}
 
 	_onOutcomeTagDeleted() {
-		// react to a tag being deleted
+		// react to an outcomes tag being deleted
 	}
 
 	async _open() {

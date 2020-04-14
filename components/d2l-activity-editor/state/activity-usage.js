@@ -38,11 +38,25 @@ export class ActivityUsage {
 
 		if (this.alignmentsHref) {
 			const alignmentsEntity = await fetchEntity(this.alignmentsHref, this.token);
-			const alignmentsCollection = new AlignmentsCollectionEntity(alignmentsEntity);
 
-			this.canUpdateAlignments = alignmentsCollection.canUpdateAlignments();
-			this.hasAlignments = alignmentsCollection.getAlignments().length > 0;
+			runInAction(() => {
+				const alignmentsCollection = new AlignmentsCollectionEntity(alignmentsEntity);
+				this.canUpdateAlignments = alignmentsCollection.canUpdateAlignments();
+				this.hasAlignments = alignmentsCollection.getAlignments().length > 0;
+			});
 		}
+	}
+
+	setAlignmentsHref(value) {
+		this.alignmentsHref = value;
+	}
+
+	setCanUpdateAlignments(value) {
+		this.canUpdateAlignments = value;
+	}
+
+	setHasAlignments(value) {
+		this.hasAlignments = value;
 	}
 
 	setDraftStatus(isDraft) {
@@ -154,5 +168,8 @@ decorate(ActivityUsage, {
 	setErrorLangTerms: action,
 	setScoreAndGrade: action,
 	setIsError: action,
-	setDates: action
+	setDates: action,
+	setAlignmentsHref: action,
+	setCanUpdateAlignments: action,
+	setHasAlignments: action
 });
