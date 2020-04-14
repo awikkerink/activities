@@ -3,10 +3,25 @@ import { fixture, html } from '@open-wc/testing';
 import { ActivityUsage } from '../../components/d2l-activity-editor/state/activity-usage.js';
 import { shared as store } from '../../components/d2l-activity-editor/state/activity-store.js';
 
+function _requestProviderMock(e) {
+	if (e.detail.key === 'd2l-milestone-three') {
+		e.detail.provider = true;
+		e.stopPropagation();
+	}
+}
+
 describe('d2l-activity-outcomes', function() {
 	let href, activity, el, opener;
 
-	beforeEach(async() => {
+	before(() => {
+		window.addEventListener('d2l-request-provider', _requestProviderMock);
+	});
+
+	after(() => {
+		window.removeEventListener('d2l-request-provider', _requestProviderMock);
+	});
+
+	beforeEach(() => {
 		href = 'http://activity/1';
 		activity = new ActivityUsage(href, 'token');
 	});

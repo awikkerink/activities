@@ -61,6 +61,10 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 					margin-right: 0;
 					margin-left: 40px;
 				}
+				d2l-activity-outcomes:not([hidden]) {
+					display: block;
+					padding-bottom: 20px;
+				}
 			`
 		];
 	}
@@ -194,12 +198,10 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				${this._getNameTooltip()}
 			</div>
 
-			<div id="outcomes-container">
-				<d2l-activity-outcomes
-					href="${activityUsageHref}"
-					.token="${this.token}">
-				</d2l-activity-outcomes>
-			</div>
+			<d2l-activity-outcomes
+				href="${activityUsageHref}"
+				.token="${this.token}">
+			</d2l-activity-outcomes>
 
 			<div id="score-and-duedate-container">
 				<div id="score-container">
