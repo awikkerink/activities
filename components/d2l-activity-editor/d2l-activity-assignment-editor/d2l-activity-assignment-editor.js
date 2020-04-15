@@ -47,6 +47,10 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 			*/
 			milestoneFourEnabled: { type: Boolean },
 			/**
+			* based on the config variable d2l.Languages.Terminology.LearningOutcomes
+			*/
+			outcomesTerm: { type: String },
+			/**
 			* Set the WidthType on the template to constrain page width if necessary
 			*/
 			widthType: { type: String, attribute: 'width-type' }
@@ -124,6 +128,12 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 		// https://github.com/Brightspace/attachment/blob/e44cab1f0cecc55dd93acf59212fabc6872c0bd3/components/attachment.js#L110
 		if (e.detail.key === 'd2l-provider-unfurl-api-endpoint') {
 			e.detail.provider = () => this.unfurlEndpoint;
+			e.stopPropagation();
+			return;
+		}
+
+		if (e.detail.key === 'd2l-provider-outcomes-term') {
+			e.detail.provider = this.outcomesTerm;
 			e.stopPropagation();
 			return;
 		}
