@@ -45,7 +45,8 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				:host([hidden]) {
 					display: none;
 				}
-				:host > div {
+				:host > div,
+				d2l-activity-outcomes {
 					padding-bottom: 20px;
 				}
 				#score-and-duedate-container {
@@ -60,10 +61,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				:host([dir="rtl"]) #score-container {
 					margin-right: 0;
 					margin-left: 40px;
-				}
-				d2l-activity-outcomes:not([hidden]) {
-					display: block;
-					padding-bottom: 20px;
 				}
 			`
 		];
