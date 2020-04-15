@@ -2,9 +2,9 @@ import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
 import 'd2l-activity-alignments/d2l-select-outcomes.js';
 import { ActivityEditorFeaturesMixin, Milestones } from './mixins/d2l-activity-editor-features-mixin.js';
+import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
 import { getLocalizeResources } from './localization';
-import { html } from 'lit-element/lit-element';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -18,12 +18,20 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(L
 			hidden: { type: Boolean, reflect: true },
 			_featureEnabled: { type: Boolean },
 			_opened: { type: Boolean },
-			_outcomesTerm: { type: String }
+			_outcomesTerm: { type: String },
+			_browseOutcomesText: { type: String }
 		};
 	}
 
 	static get styles() {
-		return [labelStyles];
+		return [labelStyles, css`
+			:host {
+				display: block;
+			}
+			:host([hidden]) {
+				display: none;
+			}
+		`];
 	}
 
 	static async getLocalizeResources(langs) {
@@ -38,18 +46,19 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(L
 		super.connectedCallback();
 
 		this._featureEnabled = this._isMilestoneEnabled(Milestones.M3);
-
-		this.addEventListener('d2l-alignment-list-added', this._onDialogAdd);
-		this.addEventListener('d2l-activity-alignment-outcomes-updated', this._onOutcomeTagDeleted);
-		this.addEventListener('d2l-alignment-list-cancelled', this._onDialogCancel);
+		this._browseOutcomesText = this._dispatchRequestProvider('d2l-provider-browse-outcomes-text');
+		this._outcomesTerm = this._dispatchRequestProvider('d2l-provider-outcomes-term');
 	}
 
-	disconnectedCallback() {
-		super.disconnectedCallback();
-
-		this.removeEventListener('d2l-alignment-list-added', this._onDialogAdd);
-		this.removeEventListener('d2l-activity-alignment-outcomes-updated', this._onOutcomeTagDeleted);
-		this.removeEventListener('d2l-alignment-list-cancelled', this._onDialogCancel);
+	_dispatchRequestProvider(key) {
+		const event = new CustomEvent('d2l-request-provider', {
+			detail: { key: key },
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+		this.dispatchEvent(event);
+		return event.detail.provider;
 	}
 
 	_onDialogAdd() {
@@ -76,36 +85,23 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(L
 		this._opened = false;
 	}
 
-	_renderDialogOpener(outcomesTerm) {
+	_renderDialogOpener() {
 		return html`<d2l-button-subtle
-			text="${outcomesTerm}"
+			text="${this._outcomesTerm}"
 			@click="${this._openDialog}"
 			h-align="text">
 		</d2l-button-subtle>`;
 	}
 
-	_renderTags(outcomesTerm) {
-		return html`<label class="d2l-label-text">${outcomesTerm}</label>
+	_renderTags() {
+		return html`<label class="d2l-label-text">${this._outcomesTerm}</label>
 			<d2l-activity-alignment-tags
 				href="${this.href}"
-				.token="${this.token}">
+				.token="${this.token}"
+				browse-outcomes-text="${this._browseOutcomesText}"
+				@d2l-activity-alignment-outcomes-updated="${this._onOutcomeTagDeleted}"
+				@d2l-activity-alignment-tags-update="${this._openDialog}">
 			</d2l-activity-alignment-tags>`;
-	}
-
-	_getOutcomesTerm() {
-		if (!this._outcomesTerm) {
-			const event = new CustomEvent('d2l-request-provider', {
-				detail: { key: 'd2l-provider-outcomes-term' },
-				bubbles: true,
-				composed: true,
-				cancelable: true
-			});
-			this.dispatchEvent(event);
-
-			this._outcomesTerm = event.detail.provider;
-		}
-
-		return this._outcomesTerm;
 	}
 
 	render() {
@@ -125,15 +121,16 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(L
 			return html``;
 		}
 
-		const outcomesTerm = this._getOutcomesTerm();
 		this.hidden = false;
 
 		return html`
-			${hasAlignments ? this._renderTags(outcomesTerm) : this._renderDialogOpener(outcomesTerm)}
+			${hasAlignments ? this._renderTags() : this._renderDialogOpener()}
 			<d2l-dialog ?opened="${this._opened}">
 				<d2l-select-outcomes
 					href="${this.href}"
-					.token="${this.token}">
+					.token="${this.token}"
+					@d2l-alignment-list-added="${this._onDialogAdd}"
+					@d2l-alignment-list-cancelled="${this._onDialogCancel}">
 				</d2l-select-outcomes>
 			</d2l-dialog>
 		`;

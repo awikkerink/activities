@@ -51,6 +51,10 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 			*/
 			outcomesTerm: { type: String },
 			/**
+			* based on the config variable d2l.Languages.Terminology.LearningOutcomes
+			*/
+			browseOutcomesText: { type: String },
+			/**
 			* Set the WidthType on the template to constrain page width if necessary
 			*/
 			widthType: { type: String, attribute: 'width-type' }
@@ -134,6 +138,12 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 
 		if (e.detail.key === 'd2l-provider-outcomes-term') {
 			e.detail.provider = this.outcomesTerm;
+			e.stopPropagation();
+			return;
+		}
+
+		if (e.detail.key === 'd2l-provider-browse-outcomes-text') {
+			e.detail.provider = this.browseOutcomesText;
 			e.stopPropagation();
 			return;
 		}
