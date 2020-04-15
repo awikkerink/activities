@@ -19,7 +19,7 @@ describe('d2l-quick-eval-activity-card-action-button-more', function() {
 
 	describe('basic', () => {
 		const name = 'basic';
-		[ 'normal', 'hover', 'focus'/*, 'click'*/ ].forEach((state) => {
+		[ 'normal', 'hover', 'focus', 'click' ].forEach((state) => {
 			it(state, async function() {
 				switch (state) {
 					case 'hover':

@@ -22,7 +22,7 @@ describe('d2l-quick-eval-submissions-table', function() {
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
 
-	[/*'with-data', */'master-teacher', 'course-level', 'course-master'].forEach((name) => {
+	['with-data', 'master-teacher', 'course-level', 'course-master'].forEach((name) => {
 		it(name, async function() {
 			await populate(page, name, name.includes('master'), name.includes('course'));
 			const rect = await visualDiff.getRect(page, `#${name}`);
