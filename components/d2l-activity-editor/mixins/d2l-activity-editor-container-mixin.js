@@ -62,7 +62,7 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 
 	async delete() {}
 
-	async _save(e) {
+	async _save() {
 		this.markSaveStart(this.type, this.telemetryId);
 
 		const validations = [];
