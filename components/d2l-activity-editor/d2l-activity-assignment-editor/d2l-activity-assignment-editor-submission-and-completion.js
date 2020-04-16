@@ -33,14 +33,6 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 					display: block;
 				}
 
-				.d2l-heading-4 {
-					margin: 0 0 0.6rem 0;
-				}
-
-				.assignment-type-heading {
-					margin: 0 0 0.5rem 0;
-				}
-
 				div[id*="container"] {
 					margin-top: 20px;
 				}
@@ -93,9 +85,9 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 	_renderAssignmentType() {
 		return html `
 			<div id="assignment-type-container">
-				<h3 class="assignment-type-heading d2l-heading-4">
+				<label class="d2l-label-text">
 					${this.localize('txtAssignmentType')}
-				</h3>
+				</label>
 				<d2l-activity-assignment-type-editor
 					href="${this.href}"
 					.token="${this.token}">
