@@ -63,9 +63,7 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 	async delete() {}
 
 	async _save(e) {
-		if (e.detail && e.detail.type && e.detail.telemetryId) {
-			this.markSaveStart(e.detail.type, e.detail.telemetryId);
-		}
+		this.markSaveStart(this.type, this.telemetryId);
 
 		const validations = [];
 		for (const editor of this._editors) {
@@ -93,9 +91,7 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 		this.isError = false;
 		this.dispatchEvent(this.saveCompleteEvent);
 
-		if (e.detail && e.detail.href && e.detail.type && e.detail.telemetryId) {
-			this.logSaveEvent(e.detail.href, e.detail.type, e.detail.telemetryId);
-		}
+		this.logSaveEvent(this.href, this.type, this.telemetryId);
 	}
 
 	async _cancel() {

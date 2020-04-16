@@ -5,14 +5,6 @@ import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 
 class ActivityEditorButtons extends RtlMixin(LocalizeMixin(LitElement)) {
 
-	static get properties() {
-		return {
-			href: { type: String},
-			type: { type: String },
-			telemetryId: { type: String }
-		};
-	}
-
 	static get styles() {
 		return css`
 			:host {
@@ -37,11 +29,6 @@ class ActivityEditorButtons extends RtlMixin(LocalizeMixin(LitElement)) {
 
 	_save() {
 		const event = new CustomEvent('d2l-activity-editor-save', {
-			detail: {
-				href: this.href,
-				type: this.type,
-				telemetryId: this.telemetryId
-			},
 			bubbles: true,
 			composed: true,
 			cancelable: true

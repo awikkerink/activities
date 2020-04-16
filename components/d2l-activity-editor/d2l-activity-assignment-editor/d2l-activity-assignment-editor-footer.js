@@ -12,8 +12,6 @@ class AssignmentEditorFooter extends SaveStatusMixin(EntityMixinLit(RtlMixin(Loc
 
 	static get properties() {
 		return {
-			type: { type: String },
-			telemetryId: { type: String },
 			_activityUsageHref: { type: String }
 		};
 	}
@@ -74,11 +72,7 @@ class AssignmentEditorFooter extends SaveStatusMixin(EntityMixinLit(RtlMixin(Loc
 					href="${this._activityUsageHref}"
 					.token="${this.token}">
 				</d2l-activity-visibility-editor>
-				<d2l-activity-editor-buttons
-					.href="${this._activityUsageHref}"
-					.type="${this.type}"
-					.telemetryId="${this.telemetryId}"
-				></d2l-activity-editor-buttons>
+				<d2l-activity-editor-buttons></d2l-activity-editor-buttons>
 			</div>
 			<div class="d2l-activity-assignment-editor-footer-right">
 				<slot name="save-status"></slot>
