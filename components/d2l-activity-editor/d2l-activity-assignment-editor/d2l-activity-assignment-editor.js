@@ -49,7 +49,9 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 			/**
 			* Set the WidthType on the template to constrain page width if necessary
 			*/
-			widthType: { type: String, attribute: 'width-type' }
+			widthType: { type: String, attribute: 'width-type' },
+			_type: { type: String },
+			_telemetryId: { type: String }
 		};
 	}
 
@@ -83,6 +85,13 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 
 	static async getLocalizeResources(langs) {
 		return getLocalizeResources(langs, import.meta.url);
+	}
+
+	constructor() {
+		super(store);
+
+		this._type = "assignment";
+		this._telemetryId = "assignments";
 	}
 
 	firstUpdated(changedProperties) {
@@ -199,7 +208,9 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 					href="${assignmentHref}"
 					.token="${this.token}"
 					slot="footer"
-					class="d2l-activity-assignment-editor-footer">
+					class="d2l-activity-assignment-editor-footer"
+					.type="${this._type}"
+					.telemetryId="${this._telemetryId}">
 					<d2l-save-status id="save-status" slot="save-status"></d2l-save-status>
 				</d2l-activity-assignment-editor-footer>
 			</d2l-template-primary-secondary>
@@ -209,8 +220,8 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 	render() {
 		return html`
 			<d2l-activity-editor
-				type="assignment"
-				telemetryId="assignments"
+				type="${this._type}"
+				telemetryId="${this._telemetryId}"
 				.href=${this.href}
 				.token=${this.token}
 				unfurlEndpoint="${this.unfurlEndpoint}"
