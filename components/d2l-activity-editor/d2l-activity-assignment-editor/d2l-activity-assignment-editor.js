@@ -98,8 +98,8 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 	constructor() {
 		super(store);
 
-		this._type = "assignment";
-		this._telemetryId = "assignments";
+		this._type = 'assignment';
+		this._telemetryId = 'assignments';
 	}
 
 	firstUpdated(changedProperties) {
