@@ -125,7 +125,7 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(L
 
 		return html`
 			${hasAlignments ? this._renderTags() : this._renderDialogOpener()}
-			<d2l-dialog ?opened="${this._opened}">
+			<d2l-dialog title-text="${this._browseOutcomesText}" ?opened="${this._opened}">
 				<d2l-select-outcomes
 					href="${this.href}"
 					.token="${this.token}"
