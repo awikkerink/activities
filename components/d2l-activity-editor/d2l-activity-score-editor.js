@@ -238,6 +238,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mob
 			<div id="ungraded-button-container">
 				<button id="ungraded" class="d2l-input"
 					@click="${this._setGraded}"
+					aria-label="${this.localize('addAGrade')}"
 				>
 					${this.localize('ungraded')}
 				</button>
