@@ -93,6 +93,13 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 		return getLocalizeResources(langs, import.meta.url);
 	}
 
+	constructor() {
+		super(store);
+
+		this.type = 'assignment';
+		this.telemetryId = 'assignments';
+	}
+
 	firstUpdated(changedProperties) {
 		super.firstUpdated(changedProperties);
 
@@ -229,8 +236,8 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 	render() {
 		return html`
 			<d2l-activity-editor
-				type="assignment"
-				telemetryId="assignments"
+				type="${this.type}"
+				telemetryId="${this.telemetryId}"
 				.href=${this.href}
 				.token=${this.token}
 				unfurlEndpoint="${this.unfurlEndpoint}"

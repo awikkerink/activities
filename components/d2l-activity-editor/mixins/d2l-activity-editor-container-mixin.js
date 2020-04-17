@@ -1,6 +1,7 @@
+import { ActivityEditorTelemetryMixin } from './d2l-activity-editor-telemetry-mixin';
 import { getFirstFocusableDescendant } from '@brightspace-ui/core/helpers/focus.js';
 
-export const ActivityEditorContainerMixin = superclass => class extends superclass {
+export const ActivityEditorContainerMixin = superclass => class extends ActivityEditorTelemetryMixin(superclass) {
 
 	static get properties() {
 		return {
@@ -62,6 +63,8 @@ export const ActivityEditorContainerMixin = superclass => class extends supercla
 	async delete() {}
 
 	async _save() {
+		this.markSaveStart(this.type, this.telemetryId);
+
 		const validations = [];
 		for (const editor of this._editors) {
 			validations.push(editor.validate());
@@ -87,6 +90,8 @@ export const ActivityEditorContainerMixin = superclass => class extends supercla
 
 		this.isError = false;
 		this.dispatchEvent(this.saveCompleteEvent);
+
+		this.logSaveEvent(this.href, this.type, this.telemetryId);
 	}
 
 	async _cancel() {
