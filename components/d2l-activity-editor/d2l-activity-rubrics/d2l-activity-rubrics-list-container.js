@@ -211,7 +211,10 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 				</d2l-dropdown-menu>
 			</d2l-dropdown-button-subtle>
 
-			<d2l-simple-overlay id="create-new-association-dialog">
+			<d2l-simple-overlay
+				id="create-new-association-dialog"
+				no-cancel-on-outside-click
+			>
 				<d2l-rubric-editor
 					href="${this._newlyCreatedPotentialAssociationHref}"
 					.token="${this.token}">
