@@ -1,5 +1,4 @@
 import 'd2l-datetime-picker/d2l-datetime-picker';
-import 'd2l-tooltip/d2l-tooltip';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
 import { getLocalizeResources } from './localization';
@@ -38,15 +37,14 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 	}
 
 	_onDatetimePickerDatetimeCleared() {
-		store.get(this.href).setDueDate('');
+		store.get(this.href).dates.setDueDate('');
 	}
 
 	_onDatetimePickerDatetimeChanged(e) {
-		store.get(this.href).setDueDate(e.detail.toISOString());
+		store.get(this.href).dates.setDueDate(e.detail.toISOString());
 	}
 
 	dateTemplate(date, canEdit, errorTerm) {
-		//TODO: Ugly hacked-in error tooltips can probably be removed when we have date pickers with proper error styling
 		return html`
 			<div id="datetime-picker-container" ?hidden="${!canEdit}">
 				<d2l-datetime-picker
@@ -59,24 +57,19 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 					overrides="${this._overrides}"
 					placeholder="${this.localize('noDueDate')}"
 					aria-invalid="${errorTerm ? 'true' : 'false'}"
+					invalid="${errorTerm}"
+					tooltip-red
+					boundary="{&quot;below&quot;:240}"
 					@d2l-datetime-picker-datetime-changed="${this._onDatetimePickerDatetimeChanged}"
 					@d2l-datetime-picker-datetime-cleared="${this._onDatetimePickerDatetimeCleared}">
 				</d2l-datetime-picker>
-				${errorTerm ? html`
-					<d2l-tooltip
-						id="score-tooltip"
-						for="date"
-						position="bottom"
-					>
-						${errorTerm}
-					</d2l-tooltip>
-				` : null}
 			</div>
 		`;
 	}
 
 	render() {
-		const activity = store.get(this.href);
+		const entity = store.get(this.href);
+		const dates = entity ? entity.dates : null;
 		let dueDate, canEditDates, errorTerm;
 
 		// We have to render with null values for dueDate initially due to issues with
@@ -87,14 +80,14 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 		// Tried passing an invalid date attribute to force it to use our datetime attribute
 		// but the 2-way data binding with the vaadin date picker always overrides it
 		// Will be able to fix when we have a new data time component.
-		if (!activity || this._isFirstLoad) {
+		if (!dates || this._isFirstLoad) {
 			dueDate = null;
 			canEditDates = false;
 			errorTerm = null;
 		} else {
-			dueDate = activity.dueDate;
-			canEditDates = activity.canEditDates;
-			errorTerm = this.localize(activity.dueDateErrorTerm);
+			dueDate = dates.dueDate;
+			canEditDates = dates.canEditDates;
+			errorTerm = this.localize(dates.dueDateErrorTerm);
 		}
 
 		return html`

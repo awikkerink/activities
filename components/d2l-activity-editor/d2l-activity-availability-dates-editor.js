@@ -16,6 +16,10 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeMixin
 			:host([hidden]) {
 				display: none;
 			}
+			#startdate-container,
+			#enddate-container {
+				min-height: 62px; /* Hack to force a consistent the height for the old datetime picker. Can hopefully be removed when the new picker is used. */
+			}
 		`];
 	}
 
@@ -29,40 +33,40 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeMixin
 	}
 
 	_onStartDatetimePickerDatetimeCleared() {
-		store.get(this.href).setStartDate('');
+		store.get(this.href).dates.setStartDate('');
 	}
 
 	_onStartDatetimePickerDatetimeChanged(e) {
-		store.get(this.href).setStartDate(e.detail.toISOString());
+		store.get(this.href).dates.setStartDate(e.detail.toISOString());
 	}
 
 	_onEndDatetimePickerDatetimeCleared() {
-		store.get(this.href).setEndDate('');
+		store.get(this.href).dates.setEndDate('');
 	}
 
 	_onEndDatetimePickerDatetimeChanged(e) {
-		store.get(this.href).setEndDate(e.detail.toISOString());
+		store.get(this.href).dates.setEndDate(e.detail.toISOString());
 	}
 
 	render() {
-		const activity = store.get(this.href);
+		const entity = store.get(this.href);
+		const dates = entity ? entity.dates : null;
 		let canEditDates, startDate, endDate, startDateErrorTerm, endDateErrorTerm;
 
-		if (!activity) {
+		if (!dates) {
 			canEditDates = false;
 			startDate = null;
 			endDate = null;
 			startDateErrorTerm = null;
 			endDateErrorTerm = null;
 		} else {
-			canEditDates = activity.canEditDates;
-			startDate = activity.startDate;
-			endDate = activity.endDate;
-			startDateErrorTerm = this.localize(activity.startDateErrorTerm);
-			endDateErrorTerm = this.localize(activity.endDateErrorTerm);
+			canEditDates = dates.canEditDates;
+			startDate = dates.startDate;
+			endDate = dates.endDate;
+			startDateErrorTerm = this.localize(dates.startDateErrorTerm);
+			endDateErrorTerm = this.localize(dates.endDateErrorTerm);
 		}
 
-		//TODO: Ugly hacked-in error tooltips can probably be removed when we have date pickers with proper error styling
 		return html`
 			<label class="d2l-label-text" ?hidden=${!canEditDates}>${this.localize('startDate')}</label>
 			<div id="startdate-container" ?hidden=${!canEditDates}>
@@ -76,18 +80,12 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeMixin
 					overrides="${this._overrides}"
 					placeholder="${this.localize('noStartDate')}"
 					aria-invalid="${startDateErrorTerm ? 'true' : 'false'}"
+					invalid="${startDateErrorTerm}"
+					tooltip-red
+					boundary="{&quot;below&quot;:240}"
 					@d2l-datetime-picker-datetime-changed="${this._onStartDatetimePickerDatetimeChanged}"
 					@d2l-datetime-picker-datetime-cleared="${this._onStartDatetimePickerDatetimeCleared}">
 				</d2l-datetime-picker>
-				${startDateErrorTerm ? html`
-					<d2l-tooltip
-						id="score-tooltip"
-						for="startDate"
-						position="bottom"
-					>
-						${startDateErrorTerm}
-					</d2l-tooltip>
-				` : null}
 			</div>
 			<label class="d2l-label-text" ?hidden=${!canEditDates}>${this.localize('endDate')}</label>
 			<div id="enddate-container" ?hidden=${!canEditDates}>
@@ -101,18 +99,12 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeMixin
 					overrides="${this._overrides}"
 					placeholder="${this.localize('noEndDate')}"
 					aria-invalid="${endDateErrorTerm ? 'true' : 'false'}"
+					invalid="${endDateErrorTerm}"
+					tooltip-red
+					boundary="{&quot;below&quot;:240}"
 					@d2l-datetime-picker-datetime-changed="${this._onEndDatetimePickerDatetimeChanged}"
 					@d2l-datetime-picker-datetime-cleared="${this._onEndDatetimePickerDatetimeCleared}">
 				</d2l-datetime-picker>
-				${endDateErrorTerm ? html`
-					<d2l-tooltip
-						id="score-tooltip"
-						for="endDate"
-						position="bottom"
-					>
-						${endDateErrorTerm}
-					</d2l-tooltip>
-				` : null}
 			</div>
 		`;
 	}

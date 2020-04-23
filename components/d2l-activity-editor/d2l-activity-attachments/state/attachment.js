@@ -43,6 +43,10 @@ export class Attachment {
 		this.deleted = deleted;
 	}
 
+	setName(name) {
+		this.attachment.name = name;
+	}
+
 	async delete() {
 		if (this._entity) {
 			await this._entity.deleteAttachment();
@@ -58,7 +62,8 @@ decorate(Attachment, {
 	attachment: observable,
 	// actions
 	load: action,
-	markDeleted: action
+	markDeleted: action,
+	setName: action
 });
 
 export class LinkAttachment extends Attachment {

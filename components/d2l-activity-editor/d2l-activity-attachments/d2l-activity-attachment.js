@@ -18,6 +18,13 @@ class ActivityAttachment extends ActivityEditorMixin(MobxLitElement) {
 		super(store);
 	}
 
+	_onAttachmentUnfurled(e) {
+		const attachment = store.get(this.href);
+		if (!attachment.attachment.name) {
+			attachment.setName(e.detail.title);
+		}
+	}
+
 	_onToggleRemoved() {
 		const attachment = store.get(this.href);
 		attachment.markDeleted(!attachment.deleted);
@@ -40,6 +47,7 @@ class ActivityAttachment extends ActivityEditorMixin(MobxLitElement) {
 
 		return html`
 			<d2l-labs-attachment
+			  baseHref=""
 				attachmentId="${id}"
 				.attachment="${attachment}"
 				?deleted="${deleted}"
@@ -47,6 +55,7 @@ class ActivityAttachment extends ActivityEditorMixin(MobxLitElement) {
 				?editing="${editing}"
 				@d2l-attachment-removed="${this._onToggleRemoved}"
 				@d2l-attachment-restored="${this._onToggleRemoved}"
+				@d2l-attachment-unfurled="${this._onAttachmentUnfurled}"
 			>
 			</d2l-labs-attachment>
 		`;

@@ -1,5 +1,8 @@
 import { action, configure as configureMobx, decorate, observable, runInAction } from 'mobx';
+import { ActivityDates } from './activity-dates.js';
+import { ActivityScoreGrade } from './activity-score-grade.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
+import { AlignmentsCollectionEntity } from 'siren-sdk/src/alignments/AlignmentsCollectionEntity.js';
 import { fetchEntity } from '../state/fetch-entity.js';
 
 configureMobx({ enforceActions: 'observed' });
@@ -15,36 +18,45 @@ export class ActivityUsage {
 		const sirenEntity = await fetchEntity(this.href, this.token);
 		if (sirenEntity) {
 			const entity = new ActivityUsageEntity(sirenEntity, this.token, { remove: () => { } });
-			this.load(entity);
+			await this.load(entity);
 		}
 		return this;
 	}
 
-	load(entity) {
+	async load(entity) {
 		this._entity = entity;
-		this.dueDate = entity.dueDate();
-		this.startDate = entity.startDate();
-		this.endDate = entity.endDate();
-		this.canEditDates = entity.canEditDates();
+		this.conditionsHref = entity.conditionsHref();
 		this.isDraft = entity.isDraft();
 		this.canEditDraft = entity.canEditDraft();
 		this.isError = false;
-		this.errorType = null;
-		this.dueDateErrorTerm = null;
-		this.startDateErrorTerm = null;
-		this.endDateErrorTerm = null;
+		this.dates = new ActivityDates(entity);
+		this.scoreAndGrade = new ActivityScoreGrade(entity, this.token);
+		this.associationsHref = entity.getRubricAssociationsHref();
+		this.alignmentsHref = entity.alignmentsHref();
+		this.canUpdateAlignments = false;
+		this.hasAlignments = false;
+
+		if (this.alignmentsHref) {
+			const alignmentsEntity = await fetchEntity(this.alignmentsHref, this.token);
+
+			runInAction(() => {
+				const alignmentsCollection = new AlignmentsCollectionEntity(alignmentsEntity);
+				this.canUpdateAlignments = alignmentsCollection.canUpdateAlignments();
+				this.hasAlignments = alignmentsCollection.getAlignments().length > 0;
+			});
+		}
 	}
 
-	setDueDate(date) {
-		this.dueDate = date;
+	setAlignmentsHref(value) {
+		this.alignmentsHref = value;
 	}
 
-	setStartDate(date) {
-		this.startDate = date;
+	setCanUpdateAlignments(value) {
+		this.canUpdateAlignments = value;
 	}
 
-	setEndDate(date) {
-		this.endDate = date;
+	setHasAlignments(value) {
+		this.hasAlignments = value;
 	}
 
 	setDraftStatus(isDraft) {
@@ -55,49 +67,20 @@ export class ActivityUsage {
 		this.canEditDraft = value;
 	}
 
-	setCanEditDates(value) {
-		this.canEditDates = value;
+	setIsError(value) {
+		this.isError = value;
 	}
 
 	setErrorLangTerms(errorType) {
-		if (errorType && errorType.includes('end-due-start-date-error')) {
-			this.dueDateErrorTerm = 'dueBetweenStartEndDate';
-			this.startDateErrorTerm = 'dueBetweenStartEndDate';
-			this.endDateErrorTerm = 'dueBetweenStartEndDate';
-			return;
-		}
+		this.dates.setErrorLangTerms(errorType);
+	}
 
-		if (errorType && errorType.includes('start-after-end-date-error')) {
-			this.dueDateErrorTerm = 'dueAfterStartDate';
-			this.startDateErrorTerm = 'dueAfterStartDate';
-			this.endDateErrorTerm = 'startBeforeEndDate';
-			return;
-		}
+	setScoreAndGrade(val) {
+		this.scoreAndGrade = val;
+	}
 
-		if (errorType && errorType.includes('start-after-due-date-error')) {
-			this.dueDateErrorTerm = 'dueAfterStartDate';
-			this.startDateErrorTerm = 'dueAfterStartDate';
-			this.endDateErrorTerm = null;
-			return;
-		}
-
-		if (errorType && errorType.includes('end-before-start-date-error')) {
-			this.dueDateErrorTerm = 'dueBeforeEndDate';
-			this.startDateErrorTerm = 'startBeforeEndDate';
-			this.endDateErrorTerm = 'dueBeforeEndDate';
-			return;
-		}
-
-		if (errorType && errorType.includes('end-before-due-date-error')) {
-			this.dueDateErrorTerm = 'dueBeforeEndDate';
-			this.startDateErrorTerm = null;
-			this.endDateErrorTerm = 'dueBeforeEndDate';
-			return;
-		}
-
-		this.dueDateErrorTerm = null;
-		this.startDateErrorTerm = null;
-		this.endDateErrorTerm = null;
+	setDates(val) {
+		this.dates = val;
 	}
 
 	async validate() {
@@ -106,21 +89,46 @@ export class ActivityUsage {
 		}
 
 		this.isError = false;
-		this.errorType = null;
 		this.setErrorLangTerms();
 
+		if (!this.scoreAndGrade.validate()) {
+			this.isError = true;
+		}
+
 		await this._entity.validate({
-			dueDate: this.dueDate,
-			startDate: this.startDate,
-			endDate: this.endDate
+			dates: {
+				dueDate: this.dates.dueDate,
+				startDate: this.dates.startDate,
+				endDate: this.dates.endDate
+			}
 		}).catch(e => runInAction(() => {
 			this.isError = true;
 			if (e.json && e.json.properties && e.json.properties.type) {
-				this.errorType = e.json.properties.type;
-				this.setErrorLangTerms(this.errorType);
+				this.setErrorLangTerms(e.json.properties.type);
 			}
-			throw e;
 		}));
+
+		if (this.isError) {
+			throw new Error('Activity Usage validation failed');
+		}
+	}
+
+	_makeUsageData() {
+		return {
+			isDraft: this.isDraft,
+			dates: {
+				dueDate: this.dates.dueDate,
+				startDate: this.dates.startDate,
+				endDate: this.dates.endDate
+			},
+			scoreAndGrade: {
+				scoreOutOf: this.scoreAndGrade.scoreOutOf,
+				inGrades: this.scoreAndGrade.inGrades,
+				associatedGrade: this.scoreAndGrade.createNewGrade ? null : this.scoreAndGrade.getAssociatedGradeEntity(),
+				associateNewGradeAction: this.scoreAndGrade.getAssociateNewGradeAction(),
+				newGradeName: this.scoreAndGrade.newGradeName
+			}
+		};
 	}
 
 	async save() {
@@ -128,39 +136,40 @@ export class ActivityUsage {
 			return;
 		}
 
-		await this._entity.save({
-			dueDate: this.dueDate,
-			startDate: this.startDate,
-			endDate: this.endDate,
-			isDraft: this.isDraft
-		});
+		await this._entity.save(this._makeUsageData());
 
 		await this.fetch();
+	}
+
+	get dirty() {
+		return !this._entity.equals(this._makeUsageData());
 	}
 }
 
 decorate(ActivityUsage, {
 	// props
 	dueDate: observable,
-	startDate: observable,
-	endDate: observable,
-	canEditDates: observable,
+	conditionsHref: observable,
 	isDraft: observable,
 	canEditDraft: observable,
 	isError: observable,
-	errorType: observable,
-	dueDateErrorTerm: observable,
-	startDateErrorTerm: observable,
-	endDateErrorTerm: observable,
+	scoreAndGrade: observable,
+	dates: observable,
+	associationsHref: observable,
+	alignmentsHref: observable,
+	canUpdateAlignments: observable,
+	hasAlignments: observable,
 	// actions
 	load: action,
-	setDueDate: action,
-	setStartDate: action,
-	setEndDate: action,
 	setDraftStatus: action,
 	setCanEditDraft: action,
-	setCanEditDates: action,
 	save: action,
 	validate: action,
-	setErrorLangTerms: action
+	setErrorLangTerms: action,
+	setScoreAndGrade: action,
+	setIsError: action,
+	setDates: action,
+	setAlignmentsHref: action,
+	setCanUpdateAlignments: action,
+	setHasAlignments: action
 });

@@ -4,8 +4,8 @@ export default {
 	"hdrReleaseConditions": "شروط الإصدار", // release conditions heading
 	"hlpReleaseConditions": "لا يمكن للمستخدمين الوصول إلى الفرض أو عرضه إلا إذا كانوا يستوفون شروط الإصدار.", // release conditions help
 	"completionType": "وضع علامة كمكتمل", // Label for the completion type field when creating/editing an assignment
-	"lblAnonymousMarking": "Anonymous Marking", // Label for anonymous marking
-	"chkAnonymousMarking": "Hide student names during assessment", // Checkbox for anonymous marking
+	"lblAnonymousMarking": "وضع علامة كمجهول", // Label for anonymous marking
+	"chkAnonymousMarking": "إخفاء أسماء التلاميذ أثناء التقييم", // Checkbox for anonymous marking
 	"dueDate": "تاريخ الاستحقاق", // ARIA label for the due date field when creating/editing an activity
 	"txtAnnotationsOff": "إيقاف تشغيل التعليقات التوضيحية", // annotations off text
 	"emptyNameError": "الاسم مطلوب", // Error message to inform user that the assignment name is a required field
@@ -19,7 +19,7 @@ export default {
 	"submissionType": "نوع الإرسال", // Label for the submission type field when creating/editing an assignment
 	"annotationTools": "أدوات التعليق التوضيحي", // Label for enabling/disabling Annotation Tools when creating/editing an assignment
 	"annotationToolDescription": "توفير أدوات التعليق التوضيحي للتقييم", //Description next to the checkbox for annotation tools when creating/editing an assignment
-	"scoreOutOf": "Score Out Of", // Label for the score-out-of field when creating/editing an activity
+	"scoreOutOf": "مجموع الدرجات من أصل", // Label for the score-out-of field when creating/editing an activity
 	"anonymousGradingEnabled": "وضع علامة كمجهول", // Summary message for accordion when anonymous grading is enabled
 	"evaluationAndFeedback": "التقييم والملاحظات", // Header text for the evaluation and feedback summarizer
 	"txtAssignmentType": "نوع الفرض", // Label for assignment type
