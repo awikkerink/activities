@@ -14,6 +14,13 @@ export default {
 	"hlpTurnitin": "Med Turnitin®-integreringen kan du använda Originality Check® för att bedöma elevarbetets akademiska integritet och använda det externa bedömningsverktyget GradeMark® för bedömning.", // turnitin help
 	"btnEditTurnitin": "Hantera Turnitin®-integrering", // edit turnitin button
 	"btnCloseDialog": "Stäng den här dialogrutan", // close dialog button
+	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
+	"txtGradeMarkOn": "GradeMark On", // grade mark on text
+	"txtTurnitinOn1": "Originality Check and GradeMark On", // turnitin on text, variant 1
+	"txtTurnitinOn2": "Originality Check On", // turnitin on text, variant 2
+	"txtTurnitinOn3": "GradeMark On", // turnitin on text, variant 3
+	"btnCancel": "Avbryt", // cancel button
+	"btnSave": "Spara", // save button
 	"hdrAvailability": "Tillgängliga datum och villkor", // availability header
 	"name": "Namn", // Label for the name field when creating/editing an activity
 	"submissionType": "Inlämningstyp", // Label for the submission type field when creating/editing an assignment
@@ -26,7 +33,15 @@ export default {
 	"txtIndividual": "Individuell uppgift", // Label for individual assignment type
 	"txtGroup": "Gruppuppgift", // Label for group assignment type,
 	"txtGroupCategoryWithName": "Gruppkategori: {groupCategory}", //Label for the group category {groupCategory} is the name of the group category
-	"txtGroupCategory": "Gruppkategori", // Label for group category
-	"submissionCompletionAndCategorization": "Submission, Completion & Categorization", // Label for the availability and dates summarizer
-	"assignmentSaveError": "Your assignment wasn\'t saved. Please correct the field(s) outlined in red." // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
+	"txtGroupCategory": "Gruppkategori", // Label for group category,
+	"txtGroupAssignmentSummary": "Gruppuppgift", // Summary message for accordion when assignment type is set to group
+	"submissionCompletionAndCategorization": "Inlämning, slutförande och kategorisering", // Label for the availability and dates summarizer
+	"assignmentSaveError": "Ditt uppdrag sparades inte. Korrigera de fält som är markerade med rött.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
+	"folderTypeCannotChange": "Uppgiftstyp kan inte ändras när det finns inlämningsuppgifter", // Folder type cannot change
+	"folderTypeNoGroups": "Det finns inga grupper. Skapa nya grupper i gruppverktyget.", // Folder type no groups
+	"folderTypeCreateGroups": "Skapa nya grupper i gruppverktyget.", // Folder type create groups
+	"discardChangesTitle": "Vill du ignorera ändringarna?", // Discard Changes User Prompt
+	"discardChangesQuestion": "Är du säker på att du vill ignorera dina ändringar?", // Discard Changes User Prompt
+	"yesLabel": "Ja",
+	"noLabel": "Nej"
 };

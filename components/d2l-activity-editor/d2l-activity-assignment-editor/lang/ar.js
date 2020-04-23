@@ -14,6 +14,13 @@ export default {
 	"hlpTurnitin": "يسمح لك تكامل Turnitin®‎ باستخدام خيار Originality Check®‎ لتقييم عمل الطلاب في النزاهة الأكاديمية واستخدام أداة التقييم الخارجية GradeMark®‎ للتقييم.", // turnitin help
 	"btnEditTurnitin": "إدارة تكامل Turnitin®‎", // edit turnitin button
 	"btnCloseDialog": "إغلاق مربع الحوار هذا", // close dialog button
+	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
+	"txtGradeMarkOn": "GradeMark On", // grade mark on text
+	"txtTurnitinOn1": "Originality Check and GradeMark On", // turnitin on text, variant 1
+	"txtTurnitinOn2": "Originality Check On", // turnitin on text, variant 2
+	"txtTurnitinOn3": "GradeMark On", // turnitin on text, variant 3
+	"btnCancel": "إلغاء", // cancel button
+	"btnSave": "حفظ", // save button
 	"hdrAvailability": "تواريخ التوفر وشروطه", // availability header
 	"name": "الاسم", // Label for the name field when creating/editing an activity
 	"submissionType": "نوع الإرسال", // Label for the submission type field when creating/editing an assignment
@@ -26,7 +33,15 @@ export default {
 	"txtIndividual": "فرض فردي", // Label for individual assignment type
 	"txtGroup": "فرض المجموعات", // Label for group assignment type,
 	"txtGroupCategoryWithName": "فئة المجموعة: {groupCategory}", //Label for the group category {groupCategory} is the name of the group category
-	"txtGroupCategory": "فئة المجموعة", // Label for group category
-	"submissionCompletionAndCategorization": "Submission, Completion & Categorization", // Label for the availability and dates summarizer
-	"assignmentSaveError": "Your assignment wasn\'t saved. Please correct the field(s) outlined in red." // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
+	"txtGroupCategory": "فئة المجموعة", // Label for group category,
+	"txtGroupAssignmentSummary": "فرض المجموعات", // Summary message for accordion when assignment type is set to group
+	"submissionCompletionAndCategorization": "الإرسال والإكمال والتصنيف", // Label for the availability and dates summarizer
+	"assignmentSaveError": "لم يتم حفظ الفرض. يُرجى تصحيح الحقول الموضّحة باللون الأحمر.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
+	"folderTypeCannotChange": "يتعذر تغيير نوع الفرض بعد إرساله", // Folder type cannot change
+	"folderTypeNoGroups": "لا تتوفر أي مجموعة. أنشئ مجموعات جديدة باستخدام أداة المجموعات.", // Folder type no groups
+	"folderTypeCreateGroups": "أنشئ مجموعات جديدة باستخدام أداة المجموعات.", // Folder type create groups
+	"discardChangesTitle": "هل تريد تجاهل التغييرات؟", // Discard Changes User Prompt
+	"discardChangesQuestion": "هل تريد بالتأكيد تجاهل التغييرات التي أجريتها؟", // Discard Changes User Prompt
+	"yesLabel": "نعم",
+	"noLabel": "لا"
 };

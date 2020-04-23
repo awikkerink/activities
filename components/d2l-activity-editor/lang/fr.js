@@ -2,12 +2,14 @@
 
 export default {
 	"btnEditReleaseConditions": "Modifier les conditions de diffusion", // edit release conditions button
-	"btnAddReleaseCondition": "Add Release Condition", // add release condition button
+	"btnAddReleaseCondition": "Ajouter une condition de diffusion", // add release condition button
 	"btnCreateNew": "Créer", // create new button
-	"btnAddExisting": "Add Existing", // add existing button
-	"btnRemoveCondition": "Remove Condition", // remove condition button
+	"btnAddExisting": "Ajouter existant", // add existing button
+	"btnRemoveCondition": "Supprimer la condition", // remove condition button
+	"lblConditionsOperator": "Pour consulter cet article, les utilisateurs doivent respecter", // conditions operator label
+	"txtNumReleaseConditions": "{count, plural, =1 {{count} Release Condition} other {{count} Release Conditions}}", // num release condition text
 	"btnCancel": "Annuler", // cancel button
-	"btnSave": "Enregistrer", // save button
+	"btnSave": "Enregistrer", // save and close button
 	"dueDate": "Date d’échéance", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "Date de fin", // ARIA label for the end date field when creating/editing an activity
 	"startDate": "Date de début", // ARIA label for the start date field when creating/editing an activity
@@ -30,18 +32,23 @@ export default {
 	"notInGrades": "Pas dans Notes d’appréciation", // State of the grades field when there is a score, but no associated grade item
 	"addToGrades": "Ajouter à Notes", // Menu item for adding grade association
 	"removeFromGrades": "Retirer des Notes d’appréciation", // Menu item for removing grade association
-	"setUngraded": "Définir comme non noté", // Menu item for setting the activity to ungraded
+	"setUngraded": "Réinitialisation au statut non noté", // Menu item for setting the activity to ungraded
 	"scoreOutOf": "Note sur", // ARIA label for the score out of field, when creating/editing an activity
 	"emptyScoreOutOfError": "Une valeur en points doit être précisée pour les activités dans l’outil Notes d’appréciation", // Error message to inform user that the score out of value is a required field when a grade item is associated
 	"invalidScoreOutOfError": "La note sur doit être égale ou supérieure à 0,01 et égale ou inférieure à 9 999 999 999.", // Error message when an invalid score out of value is entered
 	"loading": "Chargement…", // Message displayed while page is loading
-	"ok": "OK", // Text of dialog button to commit action
+	"ok": "Ok", // Text of dialog button to commit action
 	"cancel": "Annuler", // Text of dialog button to cancel action
 	"ariaToolbarShortcutInstructions": "Cliquez sur Alt + F10 pour afficher la barre d’outils et sur Échap pour la faire disparaître.", // Instructions for screenreader users on how to enter and exit the html editor toolbar
-	"editGradesLink": "Modifier le lien des notes d\'appréciation", // Link text and dialog title for the edit grades dialog,
-	"hdrRubrics": "Grilles d\'évaluation", //Header for the rubrics section
-	"startBeforeEndDate": "Start Date must be before End Date",
-	"dueBetweenStartEndDate": "Due Date must be after Start Date and before or equal to End Date",
-	"dueAfterStartDate": "Due Date must be after Start Date",
-	"dueBeforeEndDate": "Due Date must be before or equal to End Date",
+	"chooseFromGrades": "Faire un choix dans les Notes d\'appréciation", // Link text and dialog title for the edit grades dialog,
+	"hdrRubrics": "Rubriques", //Header for the rubrics section
+	"startBeforeEndDate": "La date du début doit être antérieure à la date de fin.",
+	"dueBetweenStartEndDate": "La date d\'échéance doit être postérieure à la date du début et antérieure ou correspondre à la date de fin.",
+	"dueAfterStartDate": "La date d\'échéance doit être postérieure à la date du début.",
+	"dueBeforeEndDate": "La date d\'échéance doit être antérieure ou correspondre à la date de fin.",
+	"createAndLinkToNewGradeItem": "Créer et lier un élément de note", //Radio button text
+	"linkToExistingGradeItem": "Lien vers un élément de note existant", //Radio button text
+	"points": "Points : {points}", // Text label for displaying points of a grade
+	"noGradeItems": "No existing Grade Items exist to be linked", // Reason why existing grade items cannot be linked in the choose grades dialog
+	"noGradeCreatePermission": "You do not have permission to create a new grade item" // Reason why a new grade items cannot be created in the choose grades dialog
 };

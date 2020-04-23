@@ -2,12 +2,14 @@
 
 export default {
 	"btnEditReleaseConditions": "リリース条件の編集", // edit release conditions button
-	"btnAddReleaseCondition": "Add Release Condition", // add release condition button
+	"btnAddReleaseCondition": "リリース条件の追加", // add release condition button
 	"btnCreateNew": "新規作成", // create new button
-	"btnAddExisting": "Add Existing", // add existing button
-	"btnRemoveCondition": "Remove Condition", // remove condition button
+	"btnAddExisting": "既存の追加", // add existing button
+	"btnRemoveCondition": "条件の削除", // remove condition button
+	"lblConditionsOperator": "この項目を見るには、次の条件を満たしている必要があります", // conditions operator label
+	"txtNumReleaseConditions": "{count, plural, =1 {{count} Release Condition} other {{count} Release Conditions}}", // num release condition text
 	"btnCancel": "キャンセル", // cancel button
-	"btnSave": "保存", // save button
+	"btnSave": "保存", // save and close button
 	"dueDate": "期限", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "終了日", // ARIA label for the end date field when creating/editing an activity
 	"startDate": "開始日", // ARIA label for the start date field when creating/editing an activity
@@ -30,7 +32,7 @@ export default {
 	"notInGrades": "成績になし", // State of the grades field when there is a score, but no associated grade item
 	"addToGrades": "成績に追加", // Menu item for adding grade association
 	"removeFromGrades": "成績から削除", // Menu item for removing grade association
-	"setUngraded": "成績評価なしに設定", // Menu item for setting the activity to ungraded
+	"setUngraded": "成績評価なしにリセット", // Menu item for setting the activity to ungraded
 	"scoreOutOf": "満点スコア", // ARIA label for the score out of field, when creating/editing an activity
 	"emptyScoreOutOfError": "成績にあるアクティビティについてポイント値を指定する必要があります", // Error message to inform user that the score out of value is a required field when a grade item is associated
 	"invalidScoreOutOfError": "満点スコアは 0.01 以上 9,999,999,999 以下の数値にする必要があります。", // Error message when an invalid score out of value is entered
@@ -38,10 +40,15 @@ export default {
 	"ok": "OK", // Text of dialog button to commit action
 	"cancel": "キャンセル", // Text of dialog button to cancel action
 	"ariaToolbarShortcutInstructions": "ツールバーを表示するには ALT-F10 キーを、ツールバーを終了するにはツールバーにカーソルを置いた状態で ESC キーを押します。", // Instructions for screenreader users on how to enter and exit the html editor toolbar
-	"editGradesLink": "［成績］リンクの編集", // Link text and dialog title for the edit grades dialog,
+	"chooseFromGrades": "成績から選択", // Link text and dialog title for the edit grades dialog,
 	"hdrRubrics": "注釈", //Header for the rubrics section
-	"startBeforeEndDate": "Start Date must be before End Date",
-	"dueBetweenStartEndDate": "Due Date must be after Start Date and before or equal to End Date",
-	"dueAfterStartDate": "Due Date must be after Start Date",
-	"dueBeforeEndDate": "Due Date must be before or equal to End Date",
+	"startBeforeEndDate": "開始日は終了日の前である必要があります",
+	"dueBetweenStartEndDate": "期限は開始日の後および終了日以前である必要があります",
+	"dueAfterStartDate": "期限は開始日の後である必要があります",
+	"dueBeforeEndDate": "期限は終了日以前である必要があります",
+	"createAndLinkToNewGradeItem": "新規成績項目の作成および新規成績項目へのリンク", //Radio button text
+	"linkToExistingGradeItem": "既存の成績項目へのリンク", //Radio button text
+	"points": "ポイント: {points}", // Text label for displaying points of a grade
+	"noGradeItems": "No existing Grade Items exist to be linked", // Reason why existing grade items cannot be linked in the choose grades dialog
+	"noGradeCreatePermission": "You do not have permission to create a new grade item" // Reason why a new grade items cannot be created in the choose grades dialog
 };

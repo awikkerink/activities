@@ -14,6 +14,13 @@ export default {
 	"hlpTurnitin": "Turnitin® Entegrasyonu, öğrencilerin çalışmalarını akademik dürüstlük kapsamında değerlendirmek için Originality Check®\'i ve harici GradeMark® değerlendirme aracını kullanabilmenizi sağlar.", // turnitin help
 	"btnEditTurnitin": "Turnitin® Entegrasyonunu Yönet", // edit turnitin button
 	"btnCloseDialog": "Bu Diyaloğu Kapat", // close dialog button
+	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
+	"txtGradeMarkOn": "GradeMark On", // grade mark on text
+	"txtTurnitinOn1": "Originality Check and GradeMark On", // turnitin on text, variant 1
+	"txtTurnitinOn2": "Originality Check On", // turnitin on text, variant 2
+	"txtTurnitinOn3": "GradeMark On", // turnitin on text, variant 3
+	"btnCancel": "İptal", // cancel button
+	"btnSave": "Kaydet", // save button
 	"hdrAvailability": "Uygunluk Tarihleri ve Koşulları", // availability header
 	"name": "Ad", // Label for the name field when creating/editing an activity
 	"submissionType": "Gönderim Türü", // Label for the submission type field when creating/editing an assignment
@@ -26,7 +33,15 @@ export default {
 	"txtIndividual": "Bireysel Ödev", // Label for individual assignment type
 	"txtGroup": "Grup Ödevi", // Label for group assignment type,
 	"txtGroupCategoryWithName": "Grup Kategorisi: {groupCategory}", //Label for the group category {groupCategory} is the name of the group category
-	"txtGroupCategory": "Grup Kategorisi", // Label for group category
-	"submissionCompletionAndCategorization": "Submission, Completion & Categorization", // Label for the availability and dates summarizer
-	"assignmentSaveError": "Your assignment wasn\'t saved. Please correct the field(s) outlined in red." // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
+	"txtGroupCategory": "Grup Kategorisi", // Label for group category,
+	"txtGroupAssignmentSummary": "Grup ödevi", // Summary message for accordion when assignment type is set to group
+	"submissionCompletionAndCategorization": "Gönderme, Tamamlama ve Kategorilere Ayırma", // Label for the availability and dates summarizer
+	"assignmentSaveError": "Ödeviniz kaydedilmedi. Lütfen kırmızı ile gösterilen alanları düzeltin.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
+	"folderTypeCannotChange": "Gönderimler mevcut olduğunda ödev türü değiştirilemez", // Folder type cannot change
+	"folderTypeNoGroups": "Hiç grup yok. Gruplar aracında yeni gruplar oluşturun.", // Folder type no groups
+	"folderTypeCreateGroups": "Gruplar aracında yeni gruplar oluşturun.", // Folder type create groups
+	"discardChangesTitle": "Değişiklikler atılsın mı?", // Discard Changes User Prompt
+	"discardChangesQuestion": "Değişiklerinizi atmak istediğinizden emin misiniz?", // Discard Changes User Prompt
+	"yesLabel": "Evet",
+	"noLabel": "Hayır"
 };

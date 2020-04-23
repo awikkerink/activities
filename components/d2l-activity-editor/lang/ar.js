@@ -2,12 +2,14 @@
 
 export default {
 	"btnEditReleaseConditions": "تحرير شروط الإصدار", // edit release conditions button
-	"btnAddReleaseCondition": "Add Release Condition", // add release condition button
+	"btnAddReleaseCondition": "إضافة شروط الإصدار", // add release condition button
 	"btnCreateNew": "إنشاء جديد", // create new button
-	"btnAddExisting": "Add Existing", // add existing button
-	"btnRemoveCondition": "Remove Condition", // remove condition button
+	"btnAddExisting": "إضافة موجود", // add existing button
+	"btnRemoveCondition": "إزالة شرط", // remove condition button
+	"lblConditionsOperator": "لعرض هذه المادة، يجب على المستخدمين استيفاء", // conditions operator label
+	"txtNumReleaseConditions": "{count, plural, =1 {{count} Release Condition} other {{count} Release Conditions}}", // num release condition text
 	"btnCancel": "إلغاء", // cancel button
-	"btnSave": "حفظ", // save button
+	"btnSave": "حفظ", // save and close button
 	"dueDate": "تاريخ الاستحقاق", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "تاريخ الانتهاء", // ARIA label for the end date field when creating/editing an activity
 	"startDate": "تاريخ البدء", // ARIA label for the start date field when creating/editing an activity
@@ -30,7 +32,7 @@ export default {
 	"notInGrades": "ليس في حقل العلامات", // State of the grades field when there is a score, but no associated grade item
 	"addToGrades": "إضافة إلى العلامات", // Menu item for adding grade association
 	"removeFromGrades": "الإزالة من حقل العلامات", // Menu item for removing grade association
-	"setUngraded": "التعيين كـ \"لم توضَع علامة عليها\"", // Menu item for setting the activity to ungraded
+	"setUngraded": "إعادة التعيين إلى لم توضَع علامة عليها", // Menu item for setting the activity to ungraded
 	"scoreOutOf": "مجموع الدرجات من أصل", // ARIA label for the score out of field, when creating/editing an activity
 	"emptyScoreOutOfError": "يجب تحديد قيمة نقاط الأنشطة في حقل العلامات", // Error message to inform user that the score out of value is a required field when a grade item is associated
 	"invalidScoreOutOfError": "يجب أن يكون \"مجموع الدرجات من أصل\" أكبر من 0,01 أو مساويًا له وأقل من 9999999999 أو مساويًا له.", // Error message when an invalid score out of value is entered
@@ -38,10 +40,15 @@ export default {
 	"ok": "موافق", // Text of dialog button to commit action
 	"cancel": "إلغاء", // Text of dialog button to cancel action
 	"ariaToolbarShortcutInstructions": "اضغط على ALT-F10 لفتح شريط الأدوات، واضغط على ESC للخروج من شريط الأدوات عندما يكون مفتوحًا.", // Instructions for screenreader users on how to enter and exit the html editor toolbar
-	"editGradesLink": "تحرير ارتباط العلامات", // Link text and dialog title for the edit grades dialog,
+	"chooseFromGrades": "اختيار من العلامات", // Link text and dialog title for the edit grades dialog,
 	"hdrRubrics": "آليات التقييم", //Header for the rubrics section
-	"startBeforeEndDate": "Start Date must be before End Date",
-	"dueBetweenStartEndDate": "Due Date must be after Start Date and before or equal to End Date",
-	"dueAfterStartDate": "Due Date must be after Start Date",
-	"dueBeforeEndDate": "Due Date must be before or equal to End Date",
+	"startBeforeEndDate": "يجب أن يقع تاريخ البدء قبل تاريخ النهاية",
+	"dueBetweenStartEndDate": "يجب أن يقع تاريخ الاستحقاق بعد تاريخ البدء ويوم تاريخ النهاية أو قبله",
+	"dueAfterStartDate": "يجب أن يقع تاريخ الاستحقاق بعد تاريخ البدء",
+	"dueBeforeEndDate": "يجب أن يقع تاريخ الاستحقاق يوم تاريخ النهاية أو قبله",
+	"createAndLinkToNewGradeItem": "إنشاء مادة جديدة سيتم وضع علامة عليها والربط إليها", //Radio button text
+	"linkToExistingGradeItem": "ارتباط إلى مادة موجودة سيتم وضع علامة عليها", //Radio button text
+	"points": "النقاط: {points}", // Text label for displaying points of a grade
+	"noGradeItems": "No existing Grade Items exist to be linked", // Reason why existing grade items cannot be linked in the choose grades dialog
+	"noGradeCreatePermission": "You do not have permission to create a new grade item" // Reason why a new grade items cannot be created in the choose grades dialog
 };

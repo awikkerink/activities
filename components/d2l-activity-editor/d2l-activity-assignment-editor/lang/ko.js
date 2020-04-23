@@ -14,6 +14,13 @@ export default {
 	"hlpTurnitin": "Turnitin® 통합을 사용하면 Originality Check®를 사용하여 학생의 학업 성취도를 평가하고 GradeMark® 외부 평가 도구를 평가에 사용할 수 있습니다.", // turnitin help
 	"btnEditTurnitin": "Turnitin® 통합 관리", // edit turnitin button
 	"btnCloseDialog": "이 대화 상자 닫기", // close dialog button
+	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
+	"txtGradeMarkOn": "GradeMark On", // grade mark on text
+	"txtTurnitinOn1": "Originality Check and GradeMark On", // turnitin on text, variant 1
+	"txtTurnitinOn2": "Originality Check On", // turnitin on text, variant 2
+	"txtTurnitinOn3": "GradeMark On", // turnitin on text, variant 3
+	"btnCancel": "취소", // cancel button
+	"btnSave": "저장", // save button
 	"hdrAvailability": "사용 가능 날짜 및 조건", // availability header
 	"name": "이름", // Label for the name field when creating/editing an activity
 	"submissionType": "제출 유형", // Label for the submission type field when creating/editing an assignment
@@ -26,7 +33,15 @@ export default {
 	"txtIndividual": "개별 과제", // Label for individual assignment type
 	"txtGroup": "그룹 과제", // Label for group assignment type,
 	"txtGroupCategoryWithName": "그룹 범주: {groupCategory}", //Label for the group category {groupCategory} is the name of the group category
-	"txtGroupCategory": "그룹 범주", // Label for group category
-	"submissionCompletionAndCategorization": "Submission, Completion & Categorization", // Label for the availability and dates summarizer
-	"assignmentSaveError": "Your assignment wasn\'t saved. Please correct the field(s) outlined in red." // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
+	"txtGroupCategory": "그룹 범주", // Label for group category,
+	"txtGroupAssignmentSummary": "그룹 과제", // Summary message for accordion when assignment type is set to group
+	"submissionCompletionAndCategorization": "제출, 완료 및 분류", // Label for the availability and dates summarizer
+	"assignmentSaveError": "과제가 저장되지 않았습니다. 빨간색으로 표시된 필드를 수정하십시오.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
+	"folderTypeCannotChange": "제출 항목이 있으면 배정 유형을 변경할 수 없습니다.", // Folder type cannot change
+	"folderTypeNoGroups": "그룹이 없습니다. 그룹 도구에서 새 그룹을 만듭니다.", // Folder type no groups
+	"folderTypeCreateGroups": "그룹 도구에서 새 그룹을 만듭니다.", // Folder type create groups
+	"discardChangesTitle": "변경 사항을 제거하시겠습니까?", // Discard Changes User Prompt
+	"discardChangesQuestion": "이 변경 사항을 제거하시겠습니까?", // Discard Changes User Prompt
+	"yesLabel": "예",
+	"noLabel": "아니요"
 };

@@ -14,6 +14,13 @@ export default {
 	"hlpTurnitin": "La integración de Turnitin® le permite utilizar Originality Check® para evaluar la integridad académica del trabajo de un estudiante y utilizar la herramienta de evaluación externa GradeMark® para las evaluaciones.", // turnitin help
 	"btnEditTurnitin": "Administrar la integración de Turnitin®", // edit turnitin button
 	"btnCloseDialog": "Cerrar este cuadro de diálogo", // close dialog button
+	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
+	"txtGradeMarkOn": "GradeMark On", // grade mark on text
+	"txtTurnitinOn1": "Originality Check and GradeMark On", // turnitin on text, variant 1
+	"txtTurnitinOn2": "Originality Check On", // turnitin on text, variant 2
+	"txtTurnitinOn3": "GradeMark On", // turnitin on text, variant 3
+	"btnCancel": "Cancelar", // cancel button
+	"btnSave": "Guardar", // save button
 	"hdrAvailability": "Fechas y condiciones de disponibilidad", // availability header
 	"name": "Nombre", // Label for the name field when creating/editing an activity
 	"submissionType": "Tipo de material enviado", // Label for the submission type field when creating/editing an assignment
@@ -26,7 +33,15 @@ export default {
 	"txtIndividual": "Asignación individual", // Label for individual assignment type
 	"txtGroup": "Asignación grupal", // Label for group assignment type,
 	"txtGroupCategoryWithName": "Categoría de grupo: {groupCategory}", //Label for the group category {groupCategory} is the name of the group category
-	"txtGroupCategory": "Categoría de grupo", // Label for group category
-	"submissionCompletionAndCategorization": "Submission, Completion & Categorization", // Label for the availability and dates summarizer
-	"assignmentSaveError": "Your assignment wasn\'t saved. Please correct the field(s) outlined in red." // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
+	"txtGroupCategory": "Categoría de grupo", // Label for group category,
+	"txtGroupAssignmentSummary": "Asignación grupal", // Summary message for accordion when assignment type is set to group
+	"submissionCompletionAndCategorization": "Envío, finalización y categorización", // Label for the availability and dates summarizer
+	"assignmentSaveError": "No se guardó la asignación. Corrija los campos marcados en color rojo.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
+	"folderTypeCannotChange": "El tipo de asignación no se puede cambiar una vez que hay envíos presentes", // Folder type cannot change
+	"folderTypeNoGroups": "No existen grupos. Cree nuevos grupos en la herramienta Grupos.", // Folder type no groups
+	"folderTypeCreateGroups": "Cree nuevos grupos en la herramienta Grupos.", // Folder type create groups
+	"discardChangesTitle": "¿Desea descartar los cambios?", // Discard Changes User Prompt
+	"discardChangesQuestion": "¿Está seguro de que desea descartar los cambios?", // Discard Changes User Prompt
+	"yesLabel": "Sí",
+	"noLabel": "No"
 };

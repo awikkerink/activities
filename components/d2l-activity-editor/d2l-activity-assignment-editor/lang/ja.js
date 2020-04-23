@@ -14,6 +14,13 @@ export default {
 	"hlpTurnitin": "Turnitin® の統合により、Originality Check® を使用して受講生の学習を評価して学習の整合性を確保したり、外部評価ツール GradeMark® を使用して評価したりできます。", // turnitin help
 	"btnEditTurnitin": "Turnitin® 統合の管理", // edit turnitin button
 	"btnCloseDialog": "このダイアログを閉じる", // close dialog button
+	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
+	"txtGradeMarkOn": "GradeMark On", // grade mark on text
+	"txtTurnitinOn1": "Originality Check and GradeMark On", // turnitin on text, variant 1
+	"txtTurnitinOn2": "Originality Check On", // turnitin on text, variant 2
+	"txtTurnitinOn3": "GradeMark On", // turnitin on text, variant 3
+	"btnCancel": "キャンセル", // cancel button
+	"btnSave": "保存", // save button
 	"hdrAvailability": "可能な日と条件", // availability header
 	"name": "名前", // Label for the name field when creating/editing an activity
 	"submissionType": "ドロップボックス送信のタイプ", // Label for the submission type field when creating/editing an assignment
@@ -26,7 +33,15 @@ export default {
 	"txtIndividual": "個人での課題", // Label for individual assignment type
 	"txtGroup": "グループでの課題", // Label for group assignment type,
 	"txtGroupCategoryWithName": "グループカテゴリ: {groupCategory}", //Label for the group category {groupCategory} is the name of the group category
-	"txtGroupCategory": "グループカテゴリ", // Label for group category
-	"submissionCompletionAndCategorization": "Submission, Completion & Categorization", // Label for the availability and dates summarizer
-	"assignmentSaveError": "Your assignment wasn\'t saved. Please correct the field(s) outlined in red." // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
+	"txtGroupCategory": "グループカテゴリ", // Label for group category,
+	"txtGroupAssignmentSummary": "グループでの課題", // Summary message for accordion when assignment type is set to group
+	"submissionCompletionAndCategorization": "送信、完了、分類", // Label for the availability and dates summarizer
+	"assignmentSaveError": "課題は保存されませんでした。赤で囲まれたフィールドを修正してください。", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
+	"folderTypeCannotChange": "送信物が存在する場合は、課題タイプを変更できません", // Folder type cannot change
+	"folderTypeNoGroups": "グループが存在しません。グループツールで新規グループを作成します。", // Folder type no groups
+	"folderTypeCreateGroups": "グループツールで新規グループを作成します。", // Folder type create groups
+	"discardChangesTitle": "変更を破棄しますか？", // Discard Changes User Prompt
+	"discardChangesQuestion": "この変更を破棄してもよろしいですか？", // Discard Changes User Prompt
+	"yesLabel": "はい",
+	"noLabel": "いいえ"
 };

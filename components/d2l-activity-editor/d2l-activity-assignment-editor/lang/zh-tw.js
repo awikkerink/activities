@@ -14,6 +14,13 @@ export default {
 	"hlpTurnitin": "Turnitin® 整合可供您使用 Originality Check® 來評量學生課業的學術誠信，並使用 GradeMark® 外部評估工具進行評量。", // turnitin help
 	"btnEditTurnitin": "管理 Turnitin® 整合", // edit turnitin button
 	"btnCloseDialog": "關閉此對話方塊", // close dialog button
+	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
+	"txtGradeMarkOn": "GradeMark On", // grade mark on text
+	"txtTurnitinOn1": "Originality Check and GradeMark On", // turnitin on text, variant 1
+	"txtTurnitinOn2": "Originality Check On", // turnitin on text, variant 2
+	"txtTurnitinOn3": "GradeMark On", // turnitin on text, variant 3
+	"btnCancel": "取消", // cancel button
+	"btnSave": "儲存", // save button
 	"hdrAvailability": "可用情況日期與條件", // availability header
 	"name": "名稱", // Label for the name field when creating/editing an activity
 	"submissionType": "交件匣提交類型", // Label for the submission type field when creating/editing an assignment
@@ -26,7 +33,15 @@ export default {
 	"txtIndividual": "個別作業", // Label for individual assignment type
 	"txtGroup": "群組作業", // Label for group assignment type,
 	"txtGroupCategoryWithName": "群組類別：{groupCategory}", //Label for the group category {groupCategory} is the name of the group category
-	"txtGroupCategory": "群組類別", // Label for group category
-	"submissionCompletionAndCategorization": "Submission, Completion & Categorization", // Label for the availability and dates summarizer
-	"assignmentSaveError": "Your assignment wasn\'t saved. Please correct the field(s) outlined in red." // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
+	"txtGroupCategory": "群組類別", // Label for group category,
+	"txtGroupAssignmentSummary": "群組作業", // Summary message for accordion when assignment type is set to group
+	"submissionCompletionAndCategorization": "提交、完成與分類", // Label for the availability and dates summarizer
+	"assignmentSaveError": "您的作業未儲存。請修正以紅色顯示的欄位。", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
+	"folderTypeCannotChange": "一旦提交，便無法變更作業類型", // Folder type cannot change
+	"folderTypeNoGroups": "尚無群組。在「群組」工具中建立新群組。", // Folder type no groups
+	"folderTypeCreateGroups": "在「群組」工具中建立新群組。", // Folder type create groups
+	"discardChangesTitle": "捨棄變更？", // Discard Changes User Prompt
+	"discardChangesQuestion": "確定要捨棄您的變更？", // Discard Changes User Prompt
+	"yesLabel": "是",
+	"noLabel": "否"
 };

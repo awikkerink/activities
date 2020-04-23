@@ -2,12 +2,14 @@
 
 export default {
 	"btnEditReleaseConditions": "Releasevoorwaarden bewerken", // edit release conditions button
-	"btnAddReleaseCondition": "Add Release Condition", // add release condition button
+	"btnAddReleaseCondition": "Releasevoorwaarde toevoegen", // add release condition button
 	"btnCreateNew": "Nieuwe maken", // create new button
-	"btnAddExisting": "Add Existing", // add existing button
-	"btnRemoveCondition": "Remove Condition", // remove condition button
+	"btnAddExisting": "Bestaand toevoegen", // add existing button
+	"btnRemoveCondition": "Voorwaarde verwijderen", // remove condition button
+	"lblConditionsOperator": "Om dit item te bekijken, moeten gebruikers voldoen aan", // conditions operator label
+	"txtNumReleaseConditions": "{count, plural, =1 {{count} Release Condition} other {{count} Release Conditions}}", // num release condition text
 	"btnCancel": "Annuleren", // cancel button
-	"btnSave": "Opslaan", // save button
+	"btnSave": "Opslaan", // save and close button
 	"dueDate": "Uiterste datum", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "Einddatum", // ARIA label for the end date field when creating/editing an activity
 	"startDate": "Startdatum", // ARIA label for the start date field when creating/editing an activity
@@ -30,7 +32,7 @@ export default {
 	"notInGrades": "Niet in Scores", // State of the grades field when there is a score, but no associated grade item
 	"addToGrades": "Toevoegen aan Scores", // Menu item for adding grade association
 	"removeFromGrades": "Verwijderen uit Scores", // Menu item for removing grade association
-	"setUngraded": "Set zonder score", // Menu item for setting the activity to ungraded
+	"setUngraded": "Terugzetten naar Onbeoordeeld", // Menu item for setting the activity to ungraded
 	"scoreOutOf": "Score uit", // ARIA label for the score out of field, when creating/editing an activity
 	"emptyScoreOutOfError": "Er moet een puntenwaarde zijn opgegeven in Scores", // Error message to inform user that the score out of value is a required field when a grade item is associated
 	"invalidScoreOutOfError": "Score uit moet groter zijn dan of gelijk aan 0,01 en kleiner dan of gelijk aan 9.999.999.999", // Error message when an invalid score out of value is entered
@@ -38,10 +40,15 @@ export default {
 	"ok": "OK", // Text of dialog button to commit action
 	"cancel": "Annuleren", // Text of dialog button to cancel action
 	"ariaToolbarShortcutInstructions": "Druk op ALT+F10 om de taakbalk te tonen en druk op Esc om de taakbalk vervolgens te sluiten.", // Instructions for screenreader users on how to enter and exit the html editor toolbar
-	"editGradesLink": "Koppeling voor scores bewerken", // Link text and dialog title for the edit grades dialog,
+	"chooseFromGrades": "Uit scores kiezen", // Link text and dialog title for the edit grades dialog,
 	"hdrRubrics": "Rubrics", //Header for the rubrics section
-	"startBeforeEndDate": "Start Date must be before End Date",
-	"dueBetweenStartEndDate": "Due Date must be after Start Date and before or equal to End Date",
-	"dueAfterStartDate": "Due Date must be after Start Date",
-	"dueBeforeEndDate": "Due Date must be before or equal to End Date",
+	"startBeforeEndDate": "Startdatum moet eerder zijn dan einddatum",
+	"dueBetweenStartEndDate": "Uiterste datum moet later zijn dan startdatum en eerder of tegelijk zijn met einddatum",
+	"dueAfterStartDate": "Uiterste datum moet later zijn dan startdatum",
+	"dueBeforeEndDate": "Uiterste datum moet eerder of tegelijk zijn met einddatum",
+	"createAndLinkToNewGradeItem": "Maak een nieuw score-onderdeel en link ernaar", //Radio button text
+	"linkToExistingGradeItem": "Koppeling naar bestaand score-onderdeel", //Radio button text
+	"points": "Punten: {points}", // Text label for displaying points of a grade
+	"noGradeItems": "No existing Grade Items exist to be linked", // Reason why existing grade items cannot be linked in the choose grades dialog
+	"noGradeCreatePermission": "You do not have permission to create a new grade item" // Reason why a new grade items cannot be created in the choose grades dialog
 };

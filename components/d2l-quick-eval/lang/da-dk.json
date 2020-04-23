@@ -22,7 +22,7 @@
    "dismissingAnActivityHides" : "Dismissing an activity hides it from Quick Eval, but won't affect the activity",
    "displayName" : "Fornavn, Efternavn",
    "due" : "Due: {date}",
-   "editActivity" : "Edit Activity",
+   "editActivity" : "Rediger aktivitet",
    "evaluate" : "Evaluer {displayName}",
    "evaluateAll" : "Evaluate All",
    "evaluated" : "Evaluated",

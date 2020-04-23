@@ -14,6 +14,13 @@ export default {
 	"hlpTurnitin": "Met Turnitin®-integratie kunt u Originality Check® gebruiken om het werk van studenten te beoordelen op academische integriteit, en het externe beoordelingsprogramma GradeMark® gebruiken voor beoordeling.", // turnitin help
 	"btnEditTurnitin": "Turnitin®-integratie beheren", // edit turnitin button
 	"btnCloseDialog": "Dit dialoogvenster sluiten", // close dialog button
+	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
+	"txtGradeMarkOn": "GradeMark On", // grade mark on text
+	"txtTurnitinOn1": "Originality Check and GradeMark On", // turnitin on text, variant 1
+	"txtTurnitinOn2": "Originality Check On", // turnitin on text, variant 2
+	"txtTurnitinOn3": "GradeMark On", // turnitin on text, variant 3
+	"btnCancel": "Annuleren", // cancel button
+	"btnSave": "Opslaan", // save button
 	"hdrAvailability": "Data en voorwaarden beschikbaarheid", // availability header
 	"name": "Naam", // Label for the name field when creating/editing an activity
 	"submissionType": "Type indiening", // Label for the submission type field when creating/editing an assignment
@@ -26,7 +33,15 @@ export default {
 	"txtIndividual": "Individuele opdracht", // Label for individual assignment type
 	"txtGroup": "Groepsopdracht", // Label for group assignment type,
 	"txtGroupCategoryWithName": "Groepscategorie: {groupCategory}", //Label for the group category {groupCategory} is the name of the group category
-	"txtGroupCategory": "Groepscategorie", // Label for group category
-	"submissionCompletionAndCategorization": "Submission, Completion & Categorization", // Label for the availability and dates summarizer
-	"assignmentSaveError": "Your assignment wasn\'t saved. Please correct the field(s) outlined in red." // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
+	"txtGroupCategory": "Groepscategorie", // Label for group category,
+	"txtGroupAssignmentSummary": "Groepsopdracht", // Summary message for accordion when assignment type is set to group
+	"submissionCompletionAndCategorization": "Indiening, voltooiing en categorisatie", // Label for the availability and dates summarizer
+	"assignmentSaveError": "Uw opdracht is niet opgeslagen. Corrigeer de rood omlijnde velden.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
+	"folderTypeCannotChange": "Type opdracht kan niet worden gewijzigd zodra er indieningen aanwezig zijn", // Folder type cannot change
+	"folderTypeNoGroups": "Er bestaan geen groepen. Maak nieuwe groepen aan in de Groepen-tool.", // Folder type no groups
+	"folderTypeCreateGroups": "Maak nieuwe groepen aan in de Groepen-tool.", // Folder type create groups
+	"discardChangesTitle": "Wijzigingen verwijderen?", // Discard Changes User Prompt
+	"discardChangesQuestion": "Weet u zeker dat u uw wijzigingen wilt verwijderen?", // Discard Changes User Prompt
+	"yesLabel": "Ja",
+	"noLabel": "Nee"
 };

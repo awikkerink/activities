@@ -2,12 +2,14 @@
 
 export default {
 	"btnEditReleaseConditions": "編輯發佈條件", // edit release conditions button
-	"btnAddReleaseCondition": "Add Release Condition", // add release condition button
-	"btnCreateNew": "新建", // create new button
-	"btnAddExisting": "Add Existing", // add existing button
-	"btnRemoveCondition": "Remove Condition", // remove condition button
+	"btnAddReleaseCondition": "新增發佈條件", // add release condition button
+	"btnCreateNew": "建立新的", // create new button
+	"btnAddExisting": "新增現有的", // add existing button
+	"btnRemoveCondition": "移除條件", // remove condition button
+	"lblConditionsOperator": "如果要檢視此項目，使用者必須符合", // conditions operator label
+	"txtNumReleaseConditions": "{count, plural, =1 {{count} Release Condition} other {{count} Release Conditions}}", // num release condition text
 	"btnCancel": "取消", // cancel button
-	"btnSave": "儲存", // save button
+	"btnSave": "儲存", // save and close button
 	"dueDate": "截止日期", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "結束日期", // ARIA label for the end date field when creating/editing an activity
 	"startDate": "開始日期", // ARIA label for the start date field when creating/editing an activity
@@ -30,7 +32,7 @@ export default {
 	"notInGrades": "未在「成績」中", // State of the grades field when there is a score, but no associated grade item
 	"addToGrades": "新增至「成績」", // Menu item for adding grade association
 	"removeFromGrades": "自「成績」中移除", // Menu item for removing grade association
-	"setUngraded": "設定未評分", // Menu item for setting the activity to ungraded
+	"setUngraded": "重設為未評分", // Menu item for setting the activity to ungraded
 	"scoreOutOf": "總分", // ARIA label for the score out of field, when creating/editing an activity
 	"emptyScoreOutOfError": "「成績」中的活動必須指定分數值", // Error message to inform user that the score out of value is a required field when a grade item is associated
 	"invalidScoreOutOfError": "「總分」必須大於或等於 0.01，並小於或等於 9,999,999,999", // Error message when an invalid score out of value is entered
@@ -38,10 +40,15 @@ export default {
 	"ok": "確定", // Text of dialog button to commit action
 	"cancel": "取消", // Text of dialog button to cancel action
 	"ariaToolbarShortcutInstructions": "按下 ALT-F10 可存取工具列，按下 ESC 可退出工具列。", // Instructions for screenreader users on how to enter and exit the html editor toolbar
-	"editGradesLink": "編輯成績連結", // Link text and dialog title for the edit grades dialog,
+	"chooseFromGrades": "從「成績」中選擇", // Link text and dialog title for the edit grades dialog,
 	"hdrRubrics": "量規", //Header for the rubrics section
-	"startBeforeEndDate": "Start Date must be before End Date",
-	"dueBetweenStartEndDate": "Due Date must be after Start Date and before or equal to End Date",
-	"dueAfterStartDate": "Due Date must be after Start Date",
-	"dueBeforeEndDate": "Due Date must be before or equal to End Date",
+	"startBeforeEndDate": "開始日期必須在結束日期之前",
+	"dueBetweenStartEndDate": "截止日期必須在開始日期之後，並在結束日期當日或之前",
+	"dueAfterStartDate": "截止日期必須在開始日期之後",
+	"dueBeforeEndDate": "截止日期必須在結束日期當日或之前",
+	"createAndLinkToNewGradeItem": "建立並連結至新的成績項目", //Radio button text
+	"linkToExistingGradeItem": "連結至現有成績項目", //Radio button text
+	"points": "分數：{points}", // Text label for displaying points of a grade
+	"noGradeItems": "No existing Grade Items exist to be linked", // Reason why existing grade items cannot be linked in the choose grades dialog
+	"noGradeCreatePermission": "You do not have permission to create a new grade item" // Reason why a new grade items cannot be created in the choose grades dialog
 };

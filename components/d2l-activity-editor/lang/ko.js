@@ -2,12 +2,14 @@
 
 export default {
 	"btnEditReleaseConditions": "릴리스 조건 편집", // edit release conditions button
-	"btnAddReleaseCondition": "Add Release Condition", // add release condition button
+	"btnAddReleaseCondition": "릴리스 조건 추가", // add release condition button
 	"btnCreateNew": "새로 만들기", // create new button
-	"btnAddExisting": "Add Existing", // add existing button
-	"btnRemoveCondition": "Remove Condition", // remove condition button
+	"btnAddExisting": "기존 항목 추가", // add existing button
+	"btnRemoveCondition": "조건 제거", // remove condition button
+	"lblConditionsOperator": "이 항목을 보려면 사용자가 다음을 충족해야 합니다.", // conditions operator label
+	"txtNumReleaseConditions": "{count, plural, =1 {{count} Release Condition} other {{count} Release Conditions}}", // num release condition text
 	"btnCancel": "취소", // cancel button
-	"btnSave": "저장", // save button
+	"btnSave": "저장", // save and close button
 	"dueDate": "기한", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "종료일", // ARIA label for the end date field when creating/editing an activity
 	"startDate": "시작일", // ARIA label for the start date field when creating/editing an activity
@@ -30,7 +32,7 @@ export default {
 	"notInGrades": "평점에 없음", // State of the grades field when there is a score, but no associated grade item
 	"addToGrades": "평점에 추가", // Menu item for adding grade association
 	"removeFromGrades": "평점에서 삭제됩니다.", // Menu item for removing grade association
-	"setUngraded": "평점 미산정으로 설정합니다.", // Menu item for setting the activity to ungraded
+	"setUngraded": "평점 없음으로 재설정", // Menu item for setting the activity to ungraded
 	"scoreOutOf": "기준 만점 점수", // ARIA label for the score out of field, when creating/editing an activity
 	"emptyScoreOutOfError": "평점 내 활동에 대한 포인트 값을 지정해야 합니다.", // Error message to inform user that the score out of value is a required field when a grade item is associated
 	"invalidScoreOutOfError": "기준 만점 점수는 0.01 이상 9,999,999,999 이하여야 합니다.", // Error message when an invalid score out of value is entered
@@ -38,10 +40,15 @@ export default {
 	"ok": "확인", // Text of dialog button to commit action
 	"cancel": "취소", // Text of dialog button to cancel action
 	"ariaToolbarShortcutInstructions": "도구 모음을 불러오려면 ALT-F10을 누르고, 도구 모음을 끝내려면 도구 모음 내에서 ESC를 누르십시오.", // Instructions for screenreader users on how to enter and exit the html editor toolbar
-	"editGradesLink": "평점 링크 편집", // Link text and dialog title for the edit grades dialog,
+	"chooseFromGrades": "평점 중에서 선택하십시오.", // Link text and dialog title for the edit grades dialog,
 	"hdrRubrics": "루브릭", //Header for the rubrics section
-	"startBeforeEndDate": "Start Date must be before End Date",
-	"dueBetweenStartEndDate": "Due Date must be after Start Date and before or equal to End Date",
-	"dueAfterStartDate": "Due Date must be after Start Date",
-	"dueBeforeEndDate": "Due Date must be before or equal to End Date",
+	"startBeforeEndDate": "시작일은 종료일 이전이어야 합니다.",
+	"dueBetweenStartEndDate": "기한은 시작 날짜 이후여야 하며 종료 날짜 이전이거나 종료일과 같아야 합니다.",
+	"dueAfterStartDate": "기한은 시작일 이후여야 합니다.",
+	"dueBeforeEndDate": "기한은 종료일 이전이거나 종료일과 같아야 합니다.",
+	"createAndLinkToNewGradeItem": "새 평점 항목을 생성하고 연결합니다.", //Radio button text
+	"linkToExistingGradeItem": "기존 평점 항목에 연결", //Radio button text
+	"points": "점수: {points}", // Text label for displaying points of a grade
+	"noGradeItems": "No existing Grade Items exist to be linked", // Reason why existing grade items cannot be linked in the choose grades dialog
+	"noGradeCreatePermission": "You do not have permission to create a new grade item" // Reason why a new grade items cannot be created in the choose grades dialog
 };

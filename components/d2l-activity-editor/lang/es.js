@@ -2,12 +2,14 @@
 
 export default {
 	"btnEditReleaseConditions": "Editar condiciones de publicación", // edit release conditions button
-	"btnAddReleaseCondition": "Add Release Condition", // add release condition button
+	"btnAddReleaseCondition": "Agregar condición de publicación", // add release condition button
 	"btnCreateNew": "Crear nuevo", // create new button
-	"btnAddExisting": "Add Existing", // add existing button
-	"btnRemoveCondition": "Remove Condition", // remove condition button
+	"btnAddExisting": "Agregar existente", // add existing button
+	"btnRemoveCondition": "Quitar condición", // remove condition button
+	"lblConditionsOperator": "Para ver este elemento, los usuarios deben cumplir con los siguientes requisitos:", // conditions operator label
+	"txtNumReleaseConditions": "{count, plural, =1 {{count} Release Condition} other {{count} Release Conditions}}", // num release condition text
 	"btnCancel": "Cancelar", // cancel button
-	"btnSave": "Guardar", // save button
+	"btnSave": "Guardar", // save and close button
 	"dueDate": "Fecha de vencimiento", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "Fecha final", // ARIA label for the end date field when creating/editing an activity
 	"startDate": "Fecha de inicio", // ARIA label for the start date field when creating/editing an activity
@@ -30,7 +32,7 @@ export default {
 	"notInGrades": "No está en Calificaciones", // State of the grades field when there is a score, but no associated grade item
 	"addToGrades": "Agregar a las calificaciones", // Menu item for adding grade association
 	"removeFromGrades": "Eliminar de Calificaciones", // Menu item for removing grade association
-	"setUngraded": "Establecer Sin calificación", // Menu item for setting the activity to ungraded
+	"setUngraded": "Restablecer a Sin calificación", // Menu item for setting the activity to ungraded
 	"scoreOutOf": "Puntuación sobre", // ARIA label for the score out of field, when creating/editing an activity
 	"emptyScoreOutOfError": "Se debe especificar un valor en puntos para las actividades en Calificaciones", // Error message to inform user that the score out of value is a required field when a grade item is associated
 	"invalidScoreOutOfError": "Puntuación sobre debe ser mayor o igual que 0.01 y menor o igual que 9,999,999,999", // Error message when an invalid score out of value is entered
@@ -38,10 +40,15 @@ export default {
 	"ok": "Aceptar", // Text of dialog button to commit action
 	"cancel": "Cancelar", // Text of dialog button to cancel action
 	"ariaToolbarShortcutInstructions": "Presione ALT-F10 para ver la barra de herramientas y presione ESC para salir de la barra de herramientas.", // Instructions for screenreader users on how to enter and exit the html editor toolbar
-	"editGradesLink": "Editar enlace de calificaciones", // Link text and dialog title for the edit grades dialog,
+	"chooseFromGrades": "Elegir desde Calificaciones", // Link text and dialog title for the edit grades dialog,
 	"hdrRubrics": "Rúbricas", //Header for the rubrics section
-	"startBeforeEndDate": "Start Date must be before End Date",
-	"dueBetweenStartEndDate": "Due Date must be after Start Date and before or equal to End Date",
-	"dueAfterStartDate": "Due Date must be after Start Date",
-	"dueBeforeEndDate": "Due Date must be before or equal to End Date",
+	"startBeforeEndDate": "La fecha de inicio debe ser una fecha anterior a la fecha final",
+	"dueBetweenStartEndDate": "La fecha de vencimiento debe ser una fecha posterior a la fecha de inicio y una fecha anterior o igual a la fecha final.",
+	"dueAfterStartDate": "La fecha de vencimiento debe ser una fecha posterior a la fecha de inicio.",
+	"dueBeforeEndDate": "La fecha de vencimiento debe ser una fecha anterior o igual a la fecha final.",
+	"createAndLinkToNewGradeItem": "Crear y vincular a Nuevo elemento de calificación", //Radio button text
+	"linkToExistingGradeItem": "Enlace a Elemento de calificación existente", //Radio button text
+	"points": "Puntos: {points}", // Text label for displaying points of a grade
+	"noGradeItems": "No existing Grade Items exist to be linked", // Reason why existing grade items cannot be linked in the choose grades dialog
+	"noGradeCreatePermission": "You do not have permission to create a new grade item" // Reason why a new grade items cannot be created in the choose grades dialog
 };

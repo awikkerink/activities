@@ -2,12 +2,14 @@
 
 export default {
 	"btnEditReleaseConditions": "编辑发布条件", // edit release conditions button
-	"btnAddReleaseCondition": "Add Release Condition", // add release condition button
+	"btnAddReleaseCondition": "添加发布条件", // add release condition button
 	"btnCreateNew": "新建", // create new button
-	"btnAddExisting": "Add Existing", // add existing button
-	"btnRemoveCondition": "Remove Condition", // remove condition button
+	"btnAddExisting": "添加现有", // add existing button
+	"btnRemoveCondition": "删除条件", // remove condition button
+	"lblConditionsOperator": "若要访问此项目，用户必须满足以下条件", // conditions operator label
+	"txtNumReleaseConditions": "{count, plural, =1 {{count} Release Condition} other {{count} Release Conditions}}", // num release condition text
 	"btnCancel": "取消", // cancel button
-	"btnSave": "保存", // save button
+	"btnSave": "保存", // save and close button
 	"dueDate": "截止日期", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "结束日期", // ARIA label for the end date field when creating/editing an activity
 	"startDate": "开始日期", // ARIA label for the start date field when creating/editing an activity
@@ -30,7 +32,7 @@ export default {
 	"notInGrades": "不在成绩中", // State of the grades field when there is a score, but no associated grade item
 	"addToGrades": "添加至成绩", // Menu item for adding grade association
 	"removeFromGrades": "从成绩中删除", // Menu item for removing grade association
-	"setUngraded": "设置无成绩", // Menu item for setting the activity to ungraded
+	"setUngraded": "重置为无成绩", // Menu item for setting the activity to ungraded
 	"scoreOutOf": "总分", // ARIA label for the score out of field, when creating/editing an activity
 	"emptyScoreOutOfError": "必须为“成绩”中的活动指定分数值", // Error message to inform user that the score out of value is a required field when a grade item is associated
 	"invalidScoreOutOfError": "总分必须大于或等于 0.01，同时小于或等于 9,999,999,999", // Error message when an invalid score out of value is entered
@@ -38,10 +40,15 @@ export default {
 	"ok": "确定", // Text of dialog button to commit action
 	"cancel": "取消", // Text of dialog button to cancel action
 	"ariaToolbarShortcutInstructions": "按 ALT-F10 可调用工具栏；按 ESC 可退出正在使用的工具栏。", // Instructions for screenreader users on how to enter and exit the html editor toolbar
-	"editGradesLink": "编辑成绩链接", // Link text and dialog title for the edit grades dialog,
+	"chooseFromGrades": "从成绩中选择", // Link text and dialog title for the edit grades dialog,
 	"hdrRubrics": "量规", //Header for the rubrics section
-	"startBeforeEndDate": "Start Date must be before End Date",
-	"dueBetweenStartEndDate": "Due Date must be after Start Date and before or equal to End Date",
-	"dueAfterStartDate": "Due Date must be after Start Date",
-	"dueBeforeEndDate": "Due Date must be before or equal to End Date",
+	"startBeforeEndDate": "开始日期必须早于结束日期",
+	"dueBetweenStartEndDate": "截止日期必须晚于开始日期且早于或等于结束日期",
+	"dueAfterStartDate": "截止日期必须晚于开始日期",
+	"dueBeforeEndDate": "截止日期不能晚于结束日期",
+	"createAndLinkToNewGradeItem": "创建和链接到新成绩项目", //Radio button text
+	"linkToExistingGradeItem": "链接到现有成绩项目", //Radio button text
+	"points": "分数：{points}", // Text label for displaying points of a grade
+	"noGradeItems": "No existing Grade Items exist to be linked", // Reason why existing grade items cannot be linked in the choose grades dialog
+	"noGradeCreatePermission": "You do not have permission to create a new grade item" // Reason why a new grade items cannot be created in the choose grades dialog
 };
