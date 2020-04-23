@@ -1,0 +1,14 @@
+/* eslint quotes: 0 */
+
+export default {
+	"addGoogleDriveLink": "Attach from Google Drive", // Tooltip for a button that adds a link to a Google Drive file
+	"addFile": "File Upload", // Tooltip for a button that opens a file upload dialog
+	"addLink": "Attach Weblink", // Tooltip for a button that adds a link to a URL
+	"addOneDriveLink": "Attach from OneDrive", // Tooltip for a button that adds a link to a OneDrive file
+	"addQuicklink": "Attach Link to Existing Activity", // Tooltip for a button that adds a link to an existing activity
+	"back": "Back", // Text for a back button
+	"closeDialog": "Luk dialogboks", // ARIA text for button to close dialog
+	"recordAudio": "Record Audio", // Text for a button that opens a dialog to record audio
+	"recordVideo": "Record Video", // Text for a button that opens a dialog to record video
+	"save": "Gem", // Text for a save button
+};

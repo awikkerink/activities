@@ -2,6 +2,10 @@
 
 export default {
 	"btnEditReleaseConditions": "編輯發佈條件", // edit release conditions button
+	"btnAddReleaseCondition": "Add Release Condition", // add release condition button
+	"btnCreateNew": "新建", // create new button
+	"btnAddExisting": "Add Existing", // add existing button
+	"btnRemoveCondition": "Remove Condition", // remove condition button
 	"btnCancel": "取消", // cancel button
 	"btnSave": "儲存", // save button
 	"dueDate": "截止日期", // ARIA label for the due date field when creating/editing an activity
@@ -33,7 +37,7 @@ export default {
 	"loading": "正在載入...", // Message displayed while page is loading
 	"ok": "確定", // Text of dialog button to commit action
 	"cancel": "取消", // Text of dialog button to cancel action
-	"ariaToolbarShortcutInstructions": "按下 ALT-F10 可存取工具列，按下 ESC 可退出工具列 (若已進入)。", // Instructions for screenreader users on how to enter and exit the html editor toolbar
+	"ariaToolbarShortcutInstructions": "按下 ALT-F10 可存取工具列，按下 ESC 可退出工具列。", // Instructions for screenreader users on how to enter and exit the html editor toolbar
 	"editGradesLink": "編輯成績連結", // Link text and dialog title for the edit grades dialog,
 	"hdrRubrics": "量規", //Header for the rubrics section
 	"startBeforeEndDate": "Start Date must be before End Date",

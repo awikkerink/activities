@@ -2,6 +2,10 @@
 
 export default {
 	"btnEditReleaseConditions": "تحرير شروط الإصدار", // edit release conditions button
+	"btnAddReleaseCondition": "Add Release Condition", // add release condition button
+	"btnCreateNew": "إنشاء جديد", // create new button
+	"btnAddExisting": "Add Existing", // add existing button
+	"btnRemoveCondition": "Remove Condition", // remove condition button
 	"btnCancel": "إلغاء", // cancel button
 	"btnSave": "حفظ", // save button
 	"dueDate": "تاريخ الاستحقاق", // ARIA label for the due date field when creating/editing an activity

@@ -2,6 +2,10 @@
 
 export default {
 	"btnEditReleaseConditions": "リリース条件の編集", // edit release conditions button
+	"btnAddReleaseCondition": "Add Release Condition", // add release condition button
+	"btnCreateNew": "新規作成", // create new button
+	"btnAddExisting": "Add Existing", // add existing button
+	"btnRemoveCondition": "Remove Condition", // remove condition button
 	"btnCancel": "キャンセル", // cancel button
 	"btnSave": "保存", // save button
 	"dueDate": "期限", // ARIA label for the due date field when creating/editing an activity

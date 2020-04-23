@@ -2,6 +2,10 @@
 
 export default {
 	"btnEditReleaseConditions": "编辑发布条件", // edit release conditions button
+	"btnAddReleaseCondition": "Add Release Condition", // add release condition button
+	"btnCreateNew": "新建", // create new button
+	"btnAddExisting": "Add Existing", // add existing button
+	"btnRemoveCondition": "Remove Condition", // remove condition button
 	"btnCancel": "取消", // cancel button
 	"btnSave": "保存", // save button
 	"dueDate": "截止日期", // ARIA label for the due date field when creating/editing an activity
@@ -16,7 +20,7 @@ export default {
 	"noEndDate": "无结束日期", // Placeholder text for due date field when no due date is set
 	"noStartDate": "无开始日期", // Placeholder text for due date field when no due date is set
 	"visible": "可见", // Label displayed with the visibility switch when visible
-	"ariaVisible": "对学生可见", // Aria Label for the visibility switch when visible
+	"ariaVisible": "Visible to students", // Aria Label for the visibility switch when visible
 	"txtAvailabilityStartAndEnd": "可用开始日期 {startDate} 和结束日期 {endDate}", // start/end text
 	"txtAvailabilityStartOnly": "可用开始日期 {startDate}", // start only text
 	"txtAvailabilityEndOnly": "可用结束日期 {endDate}", // end only text

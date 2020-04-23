@@ -2,6 +2,10 @@
 
 export default {
 	"btnEditReleaseConditions": "릴리스 조건 편집", // edit release conditions button
+	"btnAddReleaseCondition": "Add Release Condition", // add release condition button
+	"btnCreateNew": "새로 만들기", // create new button
+	"btnAddExisting": "Add Existing", // add existing button
+	"btnRemoveCondition": "Remove Condition", // remove condition button
 	"btnCancel": "취소", // cancel button
 	"btnSave": "저장", // save button
 	"dueDate": "기한", // ARIA label for the due date field when creating/editing an activity

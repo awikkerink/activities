@@ -27,5 +27,6 @@ export default {
 	"txtGroup": "그룹 과제", // Label for group assignment type,
 	"txtGroupCategoryWithName": "그룹 범주: {groupCategory}", //Label for the group category {groupCategory} is the name of the group category
 	"txtGroupCategory": "그룹 범주", // Label for group category
-	"submissionCompletionAndCategorization": "Submission, Completion & Categorization" // Label for the availability and dates summarizer
+	"submissionCompletionAndCategorization": "Submission, Completion & Categorization", // Label for the availability and dates summarizer
+	"assignmentSaveError": "Your assignment wasn\'t saved. Please correct the field(s) outlined in red." // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
 };

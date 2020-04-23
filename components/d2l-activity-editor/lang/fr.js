@@ -2,6 +2,10 @@
 
 export default {
 	"btnEditReleaseConditions": "Modifier les conditions de diffusion", // edit release conditions button
+	"btnAddReleaseCondition": "Add Release Condition", // add release condition button
+	"btnCreateNew": "Créer", // create new button
+	"btnAddExisting": "Add Existing", // add existing button
+	"btnRemoveCondition": "Remove Condition", // remove condition button
 	"btnCancel": "Annuler", // cancel button
 	"btnSave": "Enregistrer", // save button
 	"dueDate": "Date d’échéance", // ARIA label for the due date field when creating/editing an activity
@@ -33,7 +37,7 @@ export default {
 	"loading": "Chargement…", // Message displayed while page is loading
 	"ok": "OK", // Text of dialog button to commit action
 	"cancel": "Annuler", // Text of dialog button to cancel action
-	"ariaToolbarShortcutInstructions": "Cliquez sur Alt + F10 pour afficher la barre d\'outils et sur Échap pour la faire disparaître.", // Instructions for screenreader users on how to enter and exit the html editor toolbar
+	"ariaToolbarShortcutInstructions": "Cliquez sur Alt + F10 pour afficher la barre d’outils et sur Échap pour la faire disparaître.", // Instructions for screenreader users on how to enter and exit the html editor toolbar
 	"editGradesLink": "Modifier le lien des notes d\'appréciation", // Link text and dialog title for the edit grades dialog,
 	"hdrRubrics": "Grilles d\'évaluation", //Header for the rubrics section
 	"startBeforeEndDate": "Start Date must be before End Date",

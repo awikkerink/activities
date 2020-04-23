@@ -2,6 +2,10 @@
 
 export default {
 	"btnEditReleaseConditions": "Editar condiciones de publicación", // edit release conditions button
+	"btnAddReleaseCondition": "Add Release Condition", // add release condition button
+	"btnCreateNew": "Crear nuevo", // create new button
+	"btnAddExisting": "Add Existing", // add existing button
+	"btnRemoveCondition": "Remove Condition", // remove condition button
 	"btnCancel": "Cancelar", // cancel button
 	"btnSave": "Guardar", // save button
 	"dueDate": "Fecha de vencimiento", // ARIA label for the due date field when creating/editing an activity

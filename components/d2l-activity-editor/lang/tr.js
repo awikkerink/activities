@@ -2,6 +2,10 @@
 
 export default {
 	"btnEditReleaseConditions": "Sürüm Koşullarını Düzenle", // edit release conditions button
+	"btnAddReleaseCondition": "Add Release Condition", // add release condition button
+	"btnCreateNew": "Yeni Oluştur", // create new button
+	"btnAddExisting": "Add Existing", // add existing button
+	"btnRemoveCondition": "Remove Condition", // remove condition button
 	"btnCancel": "İptal", // cancel button
 	"btnSave": "Kaydet", // save button
 	"dueDate": "Teslim Tarihi", // ARIA label for the due date field when creating/editing an activity

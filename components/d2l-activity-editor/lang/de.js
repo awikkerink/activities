@@ -2,6 +2,10 @@
 
 export default {
 	"btnEditReleaseConditions": "Freigabebedingungen bearbeiten", // edit release conditions button
+	"btnAddReleaseCondition": "Add Release Condition", // add release condition button
+	"btnCreateNew": "Neu erstellen", // create new button
+	"btnAddExisting": "Add Existing", // add existing button
+	"btnRemoveCondition": "Remove Condition", // remove condition button
 	"btnCancel": "Abbrechen", // cancel button
 	"btnSave": "Speichern", // save button
 	"dueDate": "Abgabetermin", // ARIA label for the due date field when creating/editing an activity
@@ -33,7 +37,7 @@ export default {
 	"loading": "Laden...", // Message displayed while page is loading
 	"ok": "OK", // Text of dialog button to commit action
 	"cancel": "Abbrechen", // Text of dialog button to cancel action
-	"ariaToolbarShortcutInstructions": "Drücken Sie Alt+F10, um die Toolbar zu öffnen und Escape, um Sie wieder zu schließen", // Instructions for screenreader users on how to enter and exit the html editor toolbar
+	"ariaToolbarShortcutInstructions": "Drücken Sie ALT-F10, um die Symbolleiste zu öffnen, und drücken Sie die ESC-Taste, um die Symbolleiste wieder zu schließen.", // Instructions for screenreader users on how to enter and exit the html editor toolbar
 	"editGradesLink": "Notenverknüpfung bearbeiten", // Link text and dialog title for the edit grades dialog,
 	"hdrRubrics": "Bewertungsschemas", //Header for the rubrics section
 	"startBeforeEndDate": "Start Date must be before End Date",
