@@ -1,0 +1,24 @@
+{
+  "links": [
+    {
+      "rel": [
+        "self"
+      ],
+      "href": "data/activity-collection.json"
+    },
+    {
+      "rel": [
+        "https://activities.api.brightspace.com/rels/activity-usage",
+        "up"
+      ],
+      "href": "data/activity-usage-lp.json"
+    }
+  ],
+  "actions": [
+    {
+      "href": "http://127.0.0.1:8081/components/d2l-activities/test/d2l-activity-collection-editor/data/add-existing-activity.json",
+      "name": "start-add-existing-activity",
+      "method": "GET"
+    }
+  ]
+}
