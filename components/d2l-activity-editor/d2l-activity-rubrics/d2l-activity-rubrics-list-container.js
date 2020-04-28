@@ -90,8 +90,10 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 	}
 
 	_closeEditNewAssociationOverlay() {
-		const editNewAssociationOverlay = this.shadowRoot.querySelector('#create-new-association-dialog');
+		const editNewAssociationOverlay =
+			this.shadowRoot.querySelector('#create-new-association-dialog');
 		if (editNewAssociationOverlay) {
+			this._clearNewRubricHref();
 			editNewAssociationOverlay.close();
 		}
 	}
@@ -169,6 +171,22 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 		}
 	}
 
+	_renderRubricEditor() {
+		if (this._newlyCreatedPotentialAssociationHref !== '') {
+			return html`
+				<d2l-rubric-editor
+					href="${this._newlyCreatedPotentialAssociationHref}"
+					.token="${this.token}">
+				</d2l-rubric-editor>`;
+		} else {
+			return html``;
+		}
+	}
+
+	_clearNewRubricHref() {
+		this._newlyCreatedPotentialAssociationHref = '';
+	}
+
 	render() {
 
 		const entity = store.get(this.href);
@@ -214,11 +232,9 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 			<d2l-simple-overlay
 				id="create-new-association-dialog"
 				no-cancel-on-outside-click
+				@d2l-simple-overlay-close-button-clicked="${this._clearNewRubricHref}"
 			>
-				<d2l-rubric-editor
-					href="${this._newlyCreatedPotentialAssociationHref}"
-					.token="${this.token}">
-				</d2l-rubric-editor>
+				${this._renderRubricEditor()}
 				<d2l-floating-buttons always-float>
 					<d2l-button primary @click="${this._attachRubric}">
 						${this.localize('btnAttachRubric')}
