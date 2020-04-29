@@ -10,15 +10,15 @@ export default {
 	"txtAnnotationsOff": "注釈オフ", // annotations off text
 	"emptyNameError": "名前は必須です", // Error message to inform user that the assignment name is a required field
 	"instructions": "手順", // Label for the instruction field when creating/editing an assignment
-	"hdrTurnitin": "Turnitin® の統合", // turnitin heading
-	"hlpTurnitin": "Turnitin® の統合により、Originality Check® を使用して受講生の学習を評価して学習の整合性を確保したり、外部評価ツール GradeMark® を使用して評価したりできます。", // turnitin help
-	"btnEditTurnitin": "Turnitin® 統合の管理", // edit turnitin button
+	"hdrTurnitin": "Turnitin 統合", // turnitin heading
+	"hlpTurnitin": "Turnitin® は評価に追加の機能を追加します。", // turnitin help
+	"btnEditTurnitin": "Turnitin の管理", // edit turnitin button
 	"btnCloseDialog": "このダイアログを閉じる", // close dialog button
-	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
-	"txtGradeMarkOn": "GradeMark On", // grade mark on text
-	"txtTurnitinOn1": "Originality Check and GradeMark On", // turnitin on text, variant 1
-	"txtTurnitinOn2": "Originality Check On", // turnitin on text, variant 2
-	"txtTurnitinOn3": "GradeMark On", // turnitin on text, variant 3
+	"txtOriginalityCheckOn": "Originality Check のオン", // originality check on text
+	"txtGradeMarkOn": "GradeMark のオン", // grade mark on text
+	"txtTurnitinOn1": "Originality Check と GradeMark のオン", // turnitin on text, variant 1
+	"txtTurnitinOn2": "Originality Check のオン", // turnitin on text, variant 2
+	"txtTurnitinOn3": "GradeMark のオン", // turnitin on text, variant 3
 	"btnCancel": "キャンセル", // cancel button
 	"btnSave": "保存", // save button
 	"hdrAvailability": "可能な日と条件", // availability header
@@ -43,5 +43,9 @@ export default {
 	"discardChangesTitle": "変更を破棄しますか？", // Discard Changes User Prompt
 	"discardChangesQuestion": "この変更を破棄してもよろしいですか？", // Discard Changes User Prompt
 	"yesLabel": "はい",
-	"noLabel": "いいえ"
+	"noLabel": "いいえ",
+	"filesSubmissionLimit": "送信 1 回あたりの許容ファイル数",
+	"UnlimitedFilesPerSubmission": "無制限",
+	"OneFilePerSubmission": "1 つのファイル",
+	"submissionsRule": "送信物"
 };

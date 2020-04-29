@@ -7,9 +7,9 @@ export default {
 	"btnAddExisting": "إضافة موجود", // add existing button
 	"btnRemoveCondition": "إزالة شرط", // remove condition button
 	"lblConditionsOperator": "لعرض هذه المادة، يجب على المستخدمين استيفاء", // conditions operator label
-	"txtNumReleaseConditions": "{count, plural, =1 {{count} Release Condition} other {{count} Release Conditions}}", // num release condition text
+	"txtNumReleaseConditions": "{count, plural, =1 {{count} شرط إصدار} other {{count} من شروط الإصدار}}", // num release condition text
 	"btnCancel": "إلغاء", // cancel button
-	"btnSave": "حفظ", // save and close button
+	"btnSave": "حفظ وإغلاق", // save and close button
 	"dueDate": "تاريخ الاستحقاق", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "تاريخ الانتهاء", // ARIA label for the end date field when creating/editing an activity
 	"startDate": "تاريخ البدء", // ARIA label for the start date field when creating/editing an activity
@@ -17,12 +17,12 @@ export default {
 	"endTime": "وقت الانتهاء", // ARIA label for the end time field when creating/editing an activity
 	"startTime": "وقت البدء", // ARIA label for the start time field when creating/editing an activity
 	"hidden": "مخفي", // Label displayed with the visibility switch when hidden
-	"ariaHidden": "تم الإخفاء عن التلاميذ", // Aria Label for the visibility switch when hidden
+	"ariaHidden": "مخفي عن المتعلّمين", // Aria Label for the visibility switch when hidden
 	"noDueDate": "ما من تاريخ استحقاق", // Placeholder text for due date field when no due date is set
 	"noEndDate": "ما من تاريخ انتهاء", // Placeholder text for due date field when no due date is set
 	"noStartDate": "ما من تاريخ بدء", // Placeholder text for due date field when no due date is set
 	"visible": "مرئي", // Label displayed with the visibility switch when visible
-	"ariaVisible": "ظاهر للطلاب", // Aria Label for the visibility switch when visible
+	"ariaVisible": "ظاهر للمتعلّمين", // Aria Label for the visibility switch when visible
 	"txtAvailabilityStartAndEnd": "يبدأ التوفر بتاريخ {startDate} وينتهي بتاريخ {endDate}", // start/end text
 	"txtAvailabilityStartOnly": "يبدأ التوفر بتاريخ {startDate}", // start only text
 	"txtAvailabilityEndOnly": "تاريخ انتهاء التوفر {endDate}", // end only text
@@ -31,6 +31,7 @@ export default {
 	"inGrades": "في حقل العلامات", // State of the grades field when there is a score, and an associated grade item
 	"notInGrades": "ليس في حقل العلامات", // State of the grades field when there is a score, but no associated grade item
 	"addToGrades": "إضافة إلى العلامات", // Menu item for adding grade association
+	"addAGrade": "إضافة علامة", //ARIA label to add a grade to the activity
 	"removeFromGrades": "الإزالة من حقل العلامات", // Menu item for removing grade association
 	"setUngraded": "إعادة التعيين إلى لم توضَع علامة عليها", // Menu item for setting the activity to ungraded
 	"scoreOutOf": "مجموع الدرجات من أصل", // ARIA label for the score out of field, when creating/editing an activity
@@ -46,9 +47,9 @@ export default {
 	"dueBetweenStartEndDate": "يجب أن يقع تاريخ الاستحقاق بعد تاريخ البدء ويوم تاريخ النهاية أو قبله",
 	"dueAfterStartDate": "يجب أن يقع تاريخ الاستحقاق بعد تاريخ البدء",
 	"dueBeforeEndDate": "يجب أن يقع تاريخ الاستحقاق يوم تاريخ النهاية أو قبله",
-	"createAndLinkToNewGradeItem": "إنشاء مادة جديدة سيتم وضع علامة عليها والربط إليها", //Radio button text
-	"linkToExistingGradeItem": "ارتباط إلى مادة موجودة سيتم وضع علامة عليها", //Radio button text
+	"createAndLinkToNewGradeItem": "إنشاء مادة جديدة سيتم وضع علامة عليها والربط بها", //Radio button text
+	"linkToExistingGradeItem": "ربط بمادة حالية سيتم وضع علامة عليها", //Radio button text
 	"points": "النقاط: {points}", // Text label for displaying points of a grade
-	"noGradeItems": "No existing Grade Items exist to be linked", // Reason why existing grade items cannot be linked in the choose grades dialog
-	"noGradeCreatePermission": "You do not have permission to create a new grade item" // Reason why a new grade items cannot be created in the choose grades dialog
+	"noGradeItems": "ما من مواد حالية سيتم وضع علامة عليها", // Reason why existing grade items cannot be linked in the choose grades dialog
+	"noGradeCreatePermission": "ليس لديك الإذن لإنشاء مادة جديدة سيتم وضع علامة عليها" // Reason why a new grade items cannot be created in the choose grades dialog
 };

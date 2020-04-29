@@ -10,15 +10,15 @@ export default {
 	"txtAnnotationsOff": "註解關閉", // annotations off text
 	"emptyNameError": "名稱為必填", // Error message to inform user that the assignment name is a required field
 	"instructions": "指示", // Label for the instruction field when creating/editing an assignment
-	"hdrTurnitin": "Turnitin® 整合", // turnitin heading
-	"hlpTurnitin": "Turnitin® 整合可供您使用 Originality Check® 來評量學生課業的學術誠信，並使用 GradeMark® 外部評估工具進行評量。", // turnitin help
-	"btnEditTurnitin": "管理 Turnitin® 整合", // edit turnitin button
+	"hdrTurnitin": "Turnitin 整合", // turnitin heading
+	"hlpTurnitin": "Turnitin® 新增額外功能至評估。", // turnitin help
+	"btnEditTurnitin": "管理 Turnitin", // edit turnitin button
 	"btnCloseDialog": "關閉此對話方塊", // close dialog button
-	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
-	"txtGradeMarkOn": "GradeMark On", // grade mark on text
-	"txtTurnitinOn1": "Originality Check and GradeMark On", // turnitin on text, variant 1
-	"txtTurnitinOn2": "Originality Check On", // turnitin on text, variant 2
-	"txtTurnitinOn3": "GradeMark On", // turnitin on text, variant 3
+	"txtOriginalityCheckOn": "原創性檢查開啟", // originality check on text
+	"txtGradeMarkOn": "GradeMark 開啟", // grade mark on text
+	"txtTurnitinOn1": "原創性檢查與 GradeMark  開啟", // turnitin on text, variant 1
+	"txtTurnitinOn2": "原創性檢查開啟", // turnitin on text, variant 2
+	"txtTurnitinOn3": "GradeMark 開啟", // turnitin on text, variant 3
 	"btnCancel": "取消", // cancel button
 	"btnSave": "儲存", // save button
 	"hdrAvailability": "可用情況日期與條件", // availability header
@@ -43,5 +43,9 @@ export default {
 	"discardChangesTitle": "捨棄變更？", // Discard Changes User Prompt
 	"discardChangesQuestion": "確定要捨棄您的變更？", // Discard Changes User Prompt
 	"yesLabel": "是",
-	"noLabel": "否"
+	"noLabel": "否",
+	"filesSubmissionLimit": "每個交件匣提交允許的檔案數",
+	"UnlimitedFilesPerSubmission": "無限制",
+	"OneFilePerSubmission": "一個檔案",
+	"submissionsRule": "交件匣提交"
 };

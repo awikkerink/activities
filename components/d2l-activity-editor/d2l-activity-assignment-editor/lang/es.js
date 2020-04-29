@@ -10,15 +10,15 @@ export default {
 	"txtAnnotationsOff": "Anotaciones desactivadas", // annotations off text
 	"emptyNameError": "El nombre es obligatorio", // Error message to inform user that the assignment name is a required field
 	"instructions": "Instrucciones", // Label for the instruction field when creating/editing an assignment
-	"hdrTurnitin": "Integración de Turnitin®", // turnitin heading
-	"hlpTurnitin": "La integración de Turnitin® le permite utilizar Originality Check® para evaluar la integridad académica del trabajo de un estudiante y utilizar la herramienta de evaluación externa GradeMark® para las evaluaciones.", // turnitin help
-	"btnEditTurnitin": "Administrar la integración de Turnitin®", // edit turnitin button
+	"hdrTurnitin": "Integración de Turnitin", // turnitin heading
+	"hlpTurnitin": "Turnitin® agrega funciones adicionales a la evaluación.", // turnitin help
+	"btnEditTurnitin": "Administrar Turnitin", // edit turnitin button
 	"btnCloseDialog": "Cerrar este cuadro de diálogo", // close dialog button
-	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
-	"txtGradeMarkOn": "GradeMark On", // grade mark on text
-	"txtTurnitinOn1": "Originality Check and GradeMark On", // turnitin on text, variant 1
-	"txtTurnitinOn2": "Originality Check On", // turnitin on text, variant 2
-	"txtTurnitinOn3": "GradeMark On", // turnitin on text, variant 3
+	"txtOriginalityCheckOn": "Verificación de originalidad activada", // originality check on text
+	"txtGradeMarkOn": "GradeMark activado", // grade mark on text
+	"txtTurnitinOn1": "Verificación de originalidad y GradeMark activados", // turnitin on text, variant 1
+	"txtTurnitinOn2": "Verificación de originalidad activada", // turnitin on text, variant 2
+	"txtTurnitinOn3": "GradeMark activado", // turnitin on text, variant 3
 	"btnCancel": "Cancelar", // cancel button
 	"btnSave": "Guardar", // save button
 	"hdrAvailability": "Fechas y condiciones de disponibilidad", // availability header
@@ -43,5 +43,9 @@ export default {
 	"discardChangesTitle": "¿Desea descartar los cambios?", // Discard Changes User Prompt
 	"discardChangesQuestion": "¿Está seguro de que desea descartar los cambios?", // Discard Changes User Prompt
 	"yesLabel": "Sí",
-	"noLabel": "No"
+	"noLabel": "No",
+	"filesSubmissionLimit": "Archivos permitidos por envío",
+	"UnlimitedFilesPerSubmission": "Ilimitado",
+	"OneFilePerSubmission": "Un archivo",
+	"submissionsRule": "Materiales enviados"
 };

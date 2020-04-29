@@ -10,15 +10,15 @@ export default {
 	"txtAnnotationsOff": "إيقاف تشغيل التعليقات التوضيحية", // annotations off text
 	"emptyNameError": "الاسم مطلوب", // Error message to inform user that the assignment name is a required field
 	"instructions": "الإرشادات", // Label for the instruction field when creating/editing an assignment
-	"hdrTurnitin": "تكامل Turnitin®‎", // turnitin heading
-	"hlpTurnitin": "يسمح لك تكامل Turnitin®‎ باستخدام خيار Originality Check®‎ لتقييم عمل الطلاب في النزاهة الأكاديمية واستخدام أداة التقييم الخارجية GradeMark®‎ للتقييم.", // turnitin help
-	"btnEditTurnitin": "إدارة تكامل Turnitin®‎", // edit turnitin button
+	"hdrTurnitin": "تكامل Turnitin", // turnitin heading
+	"hlpTurnitin": "يضيف Turnitin®‎ وظائف إضافية إلى التقييم.", // turnitin help
+	"btnEditTurnitin": "إدارة Turnitin", // edit turnitin button
 	"btnCloseDialog": "إغلاق مربع الحوار هذا", // close dialog button
-	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
-	"txtGradeMarkOn": "GradeMark On", // grade mark on text
-	"txtTurnitinOn1": "Originality Check and GradeMark On", // turnitin on text, variant 1
-	"txtTurnitinOn2": "Originality Check On", // turnitin on text, variant 2
-	"txtTurnitinOn3": "GradeMark On", // turnitin on text, variant 3
+	"txtOriginalityCheckOn": "كشف التميز على", // originality check on text
+	"txtGradeMarkOn": "GradeMark على", // grade mark on text
+	"txtTurnitinOn1": "كشف التميز وGradeMark على", // turnitin on text, variant 1
+	"txtTurnitinOn2": "كشف التميز على", // turnitin on text, variant 2
+	"txtTurnitinOn3": "GradeMark على", // turnitin on text, variant 3
 	"btnCancel": "إلغاء", // cancel button
 	"btnSave": "حفظ", // save button
 	"hdrAvailability": "تواريخ التوفر وشروطه", // availability header
@@ -43,5 +43,9 @@ export default {
 	"discardChangesTitle": "هل تريد تجاهل التغييرات؟", // Discard Changes User Prompt
 	"discardChangesQuestion": "هل تريد بالتأكيد تجاهل التغييرات التي أجريتها؟", // Discard Changes User Prompt
 	"yesLabel": "نعم",
-	"noLabel": "لا"
+	"noLabel": "لا",
+	"filesSubmissionLimit": "الملفات المسموح بها لكل إرسال",
+	"UnlimitedFilesPerSubmission": "غير محدودة",
+	"OneFilePerSubmission": "ملف واحد",
+	"submissionsRule": "الإرسالات"
 };

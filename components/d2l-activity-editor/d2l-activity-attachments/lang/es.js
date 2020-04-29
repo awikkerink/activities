@@ -12,7 +12,7 @@ export default {
 	"recordVideo": "Grabar video", // Text for a button that opens a dialog to record video
 	"save": "Guardar", // Text for a save button,
 	"attach": "Adjuntar", // Text for Attach button to open attachment row
-	"addGoogleDriveLinkMenu": "Google Drive", // Attach menu item text
+	"addGoogleDriveLinkMenu": "Google Drive", // Attach menu item text
 	"addFileMenu": "Carga de archivos", // Attach menu item text
 	"addLinkMenu": "Enlace web", // Attach menu item text
 	"addOneDriveLinkMenu": "OneDrive", // Attach menu item text
