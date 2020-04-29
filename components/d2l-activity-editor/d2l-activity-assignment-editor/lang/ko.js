@@ -16,9 +16,6 @@ export default {
 	"btnCloseDialog": "이 대화 상자 닫기", // close dialog button
 	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
 	"txtGradeMarkOn": "GradeMark On", // grade mark on text
-	"txtTurnitinOn1": "Originality Check and GradeMark On", // turnitin on text, variant 1
-	"txtTurnitinOn2": "Originality Check On", // turnitin on text, variant 2
-	"txtTurnitinOn3": "GradeMark On", // turnitin on text, variant 3
 	"btnCancel": "취소", // cancel button
 	"btnSave": "저장", // save button
 	"hdrAvailability": "사용 가능 날짜 및 조건", // availability header

@@ -16,9 +16,6 @@ export default {
 	"btnCloseDialog": "Close this Dialog", // close dialog button
 	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
 	"txtGradeMarkOn": "GradeMark On", // grade mark on text
-	"txtTurnitinOn1": "Originality Check and GradeMark On", // turnitin on text, variant 1
-	"txtTurnitinOn2": "Originality Check On", // turnitin on text, variant 2
-	"txtTurnitinOn3": "GradeMark On", // turnitin on text, variant 3
 	"txtTurnitinOn": "Turnitin enabled", // turnitin on text
 	"btnCancel": "Cancel", // cancel button
 	"btnSave": "Save", // save button
