@@ -10,15 +10,15 @@ export default {
 	"txtAnnotationsOff": "Annotations désactivées", // annotations off text
 	"emptyNameError": "Le nom est obligatoire", // Error message to inform user that the assignment name is a required field
 	"instructions": "Instructions", // Label for the instruction field when creating/editing an assignment
-	"hdrTurnitin": "Intégration Turnitin®", // turnitin heading
-	"hlpTurnitin": "L’intégration Turnitin® vous permet d’utiliser Originality Check® pour évaluer le travail des élèves en termes d’intégrité scolaire et d’utiliser l’outil d’évaluation externe GradeMark® pour l’évaluation.", // turnitin help
-	"btnEditTurnitin": "Maîtriser Intégration Turnitin®", // edit turnitin button
+	"hdrTurnitin": "Intégration de Turnitin", // turnitin heading
+	"hlpTurnitin": "Turnitin® ajoute d\'autres fonctionnalités d\'évaluation.", // turnitin help
+	"btnEditTurnitin": "Gérer Turnitin", // edit turnitin button
 	"btnCloseDialog": "Fermer ce dialogue", // close dialog button
-	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
-	"txtGradeMarkOn": "GradeMark On", // grade mark on text
-	"txtTurnitinOn1": "Originality Check and GradeMark On", // turnitin on text, variant 1
-	"txtTurnitinOn2": "Originality Check On", // turnitin on text, variant 2
-	"txtTurnitinOn3": "GradeMark On", // turnitin on text, variant 3
+	"txtOriginalityCheckOn": "Vérification d\'authenticité activée", // originality check on text
+	"txtGradeMarkOn": "Outil GradeMark activé", // grade mark on text
+	"txtTurnitinOn1": "Vérification d\'authenticité et outil GradeMark activés", // turnitin on text, variant 1
+	"txtTurnitinOn2": "Vérification d\'authenticité activée", // turnitin on text, variant 2
+	"txtTurnitinOn3": "Outil GradeMark activé", // turnitin on text, variant 3
 	"btnCancel": "Annuler", // cancel button
 	"btnSave": "Enregistrer", // save button
 	"hdrAvailability": "Dates et conditions de disponibilité", // availability header
@@ -43,5 +43,9 @@ export default {
 	"discardChangesTitle": "Abandonner les modifications?", // Discard Changes User Prompt
 	"discardChangesQuestion": "Êtes-vous certain de vouloir abandonner vos modifications?", // Discard Changes User Prompt
 	"yesLabel": "Oui",
-	"noLabel": "Non"
+	"noLabel": "Non",
+	"filesSubmissionLimit": "Fichiers autorisés par soumission",
+	"UnlimitedFilesPerSubmission": "Illimité",
+	"OneFilePerSubmission": "Un seul fichier",
+	"submissionsRule": "Soumissions"
 };

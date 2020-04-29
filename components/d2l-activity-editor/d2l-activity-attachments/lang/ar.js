@@ -14,7 +14,7 @@ export default {
 	"attach": "إرفاق", // Text for Attach button to open attachment row
 	"addGoogleDriveLinkMenu": "Google Drive", // Attach menu item text
 	"addFileMenu": "تحميل ملف", // Attach menu item text
-	"addLinkMenu": "ارتباط الويب", // Attach menu item text
+	"addLinkMenu": "ارتباط ويب", // Attach menu item text
 	"addOneDriveLinkMenu": "OneDrive", // Attach menu item text
-	"addQuicklinkMenu": "النشاط الموجود" // Attach menu item text
+	"addQuicklinkMenu": "النشاط الحالي" // Attach menu item text
 };

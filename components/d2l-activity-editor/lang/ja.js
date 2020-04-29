@@ -7,9 +7,9 @@ export default {
 	"btnAddExisting": "既存の追加", // add existing button
 	"btnRemoveCondition": "条件の削除", // remove condition button
 	"lblConditionsOperator": "この項目を見るには、次の条件を満たしている必要があります", // conditions operator label
-	"txtNumReleaseConditions": "{count, plural, =1 {{count} Release Condition} other {{count} Release Conditions}}", // num release condition text
+	"txtNumReleaseConditions": "{count, plural, =1 {{count} 個のリリース条件} other {{count} 個のリリース条件}}", // num release condition text
 	"btnCancel": "キャンセル", // cancel button
-	"btnSave": "保存", // save and close button
+	"btnSave": "保存して閉じる", // save and close button
 	"dueDate": "期限", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "終了日", // ARIA label for the end date field when creating/editing an activity
 	"startDate": "開始日", // ARIA label for the start date field when creating/editing an activity
@@ -17,7 +17,7 @@ export default {
 	"endTime": "終了時刻", // ARIA label for the end time field when creating/editing an activity
 	"startTime": "開始時刻", // ARIA label for the start time field when creating/editing an activity
 	"hidden": "非表示", // Label displayed with the visibility switch when hidden
-	"ariaHidden": "受講者に非表示", // Aria Label for the visibility switch when hidden
+	"ariaHidden": "受講者に対して非表示", // Aria Label for the visibility switch when hidden
 	"noDueDate": "期限がありません", // Placeholder text for due date field when no due date is set
 	"noEndDate": "終了日がありません", // Placeholder text for due date field when no due date is set
 	"noStartDate": "開始日がありません", // Placeholder text for due date field when no due date is set
@@ -31,6 +31,7 @@ export default {
 	"inGrades": "成績にあり", // State of the grades field when there is a score, and an associated grade item
 	"notInGrades": "成績になし", // State of the grades field when there is a score, but no associated grade item
 	"addToGrades": "成績に追加", // Menu item for adding grade association
+	"addAGrade": "成績の追加", //ARIA label to add a grade to the activity
 	"removeFromGrades": "成績から削除", // Menu item for removing grade association
 	"setUngraded": "成績評価なしにリセット", // Menu item for setting the activity to ungraded
 	"scoreOutOf": "満点スコア", // ARIA label for the score out of field, when creating/editing an activity
@@ -49,6 +50,6 @@ export default {
 	"createAndLinkToNewGradeItem": "新規成績項目の作成および新規成績項目へのリンク", //Radio button text
 	"linkToExistingGradeItem": "既存の成績項目へのリンク", //Radio button text
 	"points": "ポイント: {points}", // Text label for displaying points of a grade
-	"noGradeItems": "No existing Grade Items exist to be linked", // Reason why existing grade items cannot be linked in the choose grades dialog
-	"noGradeCreatePermission": "You do not have permission to create a new grade item" // Reason why a new grade items cannot be created in the choose grades dialog
+	"noGradeItems": "既存の成績項目がありません", // Reason why existing grade items cannot be linked in the choose grades dialog
+	"noGradeCreatePermission": "新規成績項目を作成する権限がありません" // Reason why a new grade items cannot be created in the choose grades dialog
 };

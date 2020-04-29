@@ -10,15 +10,15 @@ export default {
 	"txtAnnotationsOff": "Açıklamalar kapalı", // annotations off text
 	"emptyNameError": "Ad gerekli", // Error message to inform user that the assignment name is a required field
 	"instructions": "Talimatlar", // Label for the instruction field when creating/editing an assignment
-	"hdrTurnitin": "Turnitin® Entegrasyonu", // turnitin heading
-	"hlpTurnitin": "Turnitin® Entegrasyonu, öğrencilerin çalışmalarını akademik dürüstlük kapsamında değerlendirmek için Originality Check®\'i ve harici GradeMark® değerlendirme aracını kullanabilmenizi sağlar.", // turnitin help
-	"btnEditTurnitin": "Turnitin® Entegrasyonunu Yönet", // edit turnitin button
+	"hdrTurnitin": "Turnitin Entegrasyonu", // turnitin heading
+	"hlpTurnitin": "Turnitin® değerlendirmeye ek işlevler ekler.", // turnitin help
+	"btnEditTurnitin": "Turnitin\'i Yönet", // edit turnitin button
 	"btnCloseDialog": "Bu Diyaloğu Kapat", // close dialog button
-	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
-	"txtGradeMarkOn": "GradeMark On", // grade mark on text
-	"txtTurnitinOn1": "Originality Check and GradeMark On", // turnitin on text, variant 1
-	"txtTurnitinOn2": "Originality Check On", // turnitin on text, variant 2
-	"txtTurnitinOn3": "GradeMark On", // turnitin on text, variant 3
+	"txtOriginalityCheckOn": "Originality Check Açık", // originality check on text
+	"txtGradeMarkOn": "GradeMark Açık", // grade mark on text
+	"txtTurnitinOn1": "Originality Check ve GradeMark Açık", // turnitin on text, variant 1
+	"txtTurnitinOn2": "Originality Check Açık", // turnitin on text, variant 2
+	"txtTurnitinOn3": "GradeMark Açık", // turnitin on text, variant 3
 	"btnCancel": "İptal", // cancel button
 	"btnSave": "Kaydet", // save button
 	"hdrAvailability": "Uygunluk Tarihleri ve Koşulları", // availability header
@@ -43,5 +43,9 @@ export default {
 	"discardChangesTitle": "Değişiklikler atılsın mı?", // Discard Changes User Prompt
 	"discardChangesQuestion": "Değişiklerinizi atmak istediğinizden emin misiniz?", // Discard Changes User Prompt
 	"yesLabel": "Evet",
-	"noLabel": "Hayır"
+	"noLabel": "Hayır",
+	"filesSubmissionLimit": "Gönderim Başına İzin Verilen Dosya Sayısı",
+	"UnlimitedFilesPerSubmission": "Sınırsız",
+	"OneFilePerSubmission": "Tek Dosya",
+	"submissionsRule": "Gönderim"
 };

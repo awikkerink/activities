@@ -12,7 +12,7 @@ export default {
 	"recordVideo": "Record Video", // Text for a button that opens a dialog to record video
 	"save": "Gem", // Text for a save button,
 	"attach": "Vedhæft", // Text for Attach button to open attachment row
-	"addGoogleDriveLinkMenu": "Google Drive", // Attach menu item text
+	"addGoogleDriveLinkMenu": "Google Drev", // Attach menu item text
 	"addFileMenu": "Upload af fil", // Attach menu item text
 	"addLinkMenu": "Weblink", // Attach menu item text
 	"addOneDriveLinkMenu": "OneDrive", // Attach menu item text

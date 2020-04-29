@@ -7,9 +7,9 @@ export default {
 	"btnAddExisting": "Adicionar Existente", // add existing button
 	"btnRemoveCondition": "Remover Condição", // remove condition button
 	"lblConditionsOperator": "Para visualizar o item, os usuários precisam atender a", // conditions operator label
-	"txtNumReleaseConditions": "{count, plural, =1 {{count} Release Condition} other {{count} Release Conditions}}", // num release condition text
+	"txtNumReleaseConditions": "{count, plural, =1 {{count} Condição de Liberação} other {{count} Condições de Liberação}}", // num release condition text
 	"btnCancel": "Cancelar", // cancel button
-	"btnSave": "Salvar", // save and close button
+	"btnSave": "Salvar e Fechar", // save and close button
 	"dueDate": "Prazo", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "Data Final", // ARIA label for the end date field when creating/editing an activity
 	"startDate": "Data de Início", // ARIA label for the start date field when creating/editing an activity
@@ -17,12 +17,12 @@ export default {
 	"endTime": "Hora Final", // ARIA label for the end time field when creating/editing an activity
 	"startTime": "Hora de Início", // ARIA label for the start time field when creating/editing an activity
 	"hidden": "Oculto", // Label displayed with the visibility switch when hidden
-	"ariaHidden": "Ocultas aos alunos", // Aria Label for the visibility switch when hidden
+	"ariaHidden": "Oculto para os alunos", // Aria Label for the visibility switch when hidden
 	"noDueDate": "Sem prazo", // Placeholder text for due date field when no due date is set
 	"noEndDate": "Sem data final", // Placeholder text for due date field when no due date is set
 	"noStartDate": "Sem data de início", // Placeholder text for due date field when no due date is set
 	"visible": "Visível", // Label displayed with the visibility switch when visible
-	"ariaVisible": "Visíveis aos alunos", // Aria Label for the visibility switch when visible
+	"ariaVisible": "Visível para os alunos", // Aria Label for the visibility switch when visible
 	"txtAvailabilityStartAndEnd": "A disponibilidade começa em {startDate} e termina em {endDate}", // start/end text
 	"txtAvailabilityStartOnly": "Início da disponibilidade: {startDate}", // start only text
 	"txtAvailabilityEndOnly": "Término da disponibilidade: {endDate}", // end only text
@@ -31,6 +31,7 @@ export default {
 	"inGrades": "Presente em Notas", // State of the grades field when there is a score, and an associated grade item
 	"notInGrades": "Ausente em Notas", // State of the grades field when there is a score, but no associated grade item
 	"addToGrades": "Adicionar a Notas", // Menu item for adding grade association
+	"addAGrade": "Adicionar uma Nota", //ARIA label to add a grade to the activity
 	"removeFromGrades": "Remover de Notas", // Menu item for removing grade association
 	"setUngraded": "Redefinir como Não Avaliado", // Menu item for setting the activity to ungraded
 	"scoreOutOf": "Pontuação de", // ARIA label for the score out of field, when creating/editing an activity
@@ -46,9 +47,9 @@ export default {
 	"dueBetweenStartEndDate": "O prazo precisa ser posterior à data de início e anterior ou igual à data final",
 	"dueAfterStartDate": "O prazo precisa ser posterior à data de início",
 	"dueBeforeEndDate": "O prazo precisa ser anterior ou igual à data final",
-	"createAndLinkToNewGradeItem": "Criar e Vincular Item de Nota", //Radio button text
-	"linkToExistingGradeItem": "Link para Item de Nota Existente", //Radio button text
+	"createAndLinkToNewGradeItem": "Criar e vincular a um novo item de nota", //Radio button text
+	"linkToExistingGradeItem": "Vincular a um item de nota existente", //Radio button text
 	"points": "Pontos: {points}", // Text label for displaying points of a grade
-	"noGradeItems": "No existing Grade Items exist to be linked", // Reason why existing grade items cannot be linked in the choose grades dialog
-	"noGradeCreatePermission": "You do not have permission to create a new grade item" // Reason why a new grade items cannot be created in the choose grades dialog
+	"noGradeItems": "Não há itens de nota existentes", // Reason why existing grade items cannot be linked in the choose grades dialog
+	"noGradeCreatePermission": "Você não tem permissão para criar um novo item de nota" // Reason why a new grade items cannot be created in the choose grades dialog
 };
