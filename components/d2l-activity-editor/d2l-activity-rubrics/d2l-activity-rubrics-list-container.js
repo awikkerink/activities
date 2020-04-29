@@ -233,7 +233,7 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 				id="create-new-association-dialog"
 				no-cancel-on-outside-click
 				@d2l-simple-overlay-close-button-clicked="${this._clearNewRubricHref}"
-				@iron-overlay-canceled="${this._clearNewRubricHref}"
+				@d2l-simple-overlay-canceled="${this._clearNewRubricHref}"
 			>
 				${this._renderRubricEditor()}
 				<d2l-floating-buttons always-float>
