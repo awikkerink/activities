@@ -10,13 +10,12 @@ export default {
 	"txtAnnotationsOff": "주석 끄기", // annotations off text
 	"emptyNameError": "이름이 필요함", // Error message to inform user that the assignment name is a required field
 	"instructions": "지시사항", // Label for the instruction field when creating/editing an assignment
-	"hdrTurnitin": "Turnitin® 통합", // turnitin heading
-	"hlpTurnitin": "Turnitin® 통합을 사용하면 Originality Check®를 사용하여 학생의 학업 성취도를 평가하고 GradeMark® 외부 평가 도구를 평가에 사용할 수 있습니다.", // turnitin help
-	"btnEditTurnitin": "Turnitin® 통합 관리", // edit turnitin button
+	"hdrTurnitin": "Turnitin 통합", // turnitin heading
+	"hlpTurnitin": "Turnitin®이 평가에 기능을 추가했습니다.", // turnitin help
+	"btnEditTurnitin": "Turnitin 관리", // edit turnitin button
 	"btnCloseDialog": "이 대화 상자 닫기", // close dialog button
-	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
-	"txtGradeMarkOn": "GradeMark On", // grade mark on text
-	"btnCancel": "취소", // cancel button
+	"txtOriginalityCheckOn": "독창성 확인 표시", // originality check on text
+	"txtGradeMarkOn": "GradeMark 표시", // grade mark on text	"btnCancel": "취소", // cancel button
 	"btnSave": "저장", // save button
 	"hdrAvailability": "사용 가능 날짜 및 조건", // availability header
 	"name": "이름", // Label for the name field when creating/editing an activity
@@ -40,5 +39,9 @@ export default {
 	"discardChangesTitle": "변경 사항을 제거하시겠습니까?", // Discard Changes User Prompt
 	"discardChangesQuestion": "이 변경 사항을 제거하시겠습니까?", // Discard Changes User Prompt
 	"yesLabel": "예",
-	"noLabel": "아니요"
+	"noLabel": "아니요",
+	"filesSubmissionLimit": "제출당 허용되는 파일 수",
+	"UnlimitedFilesPerSubmission": "제한 없음",
+	"OneFilePerSubmission": "파일 1개",
+	"submissionsRule": "개 제출 항목"
 };

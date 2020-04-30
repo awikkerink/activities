@@ -17,7 +17,7 @@ export default {
 	numberOfActivities: "{count, plural, =1 {1 aktivitet} other {{count} aktiviteter}}", // The number of learning tasks currently in the list.
 	removeActivity: "Fjern aktiviteten {coursename} fra undervisningsstien.", // An action to remove a learning task from a list of tasks that are related
 	search: "Søg", // When adding activities to the learning path, this is where you can search for potential activities to add.
-	searchPlaceholder: "Search...", // Placeholder text for the search input to search the list of potential activities.
+	searchPlaceholder: "Søg ...", // Placeholder text for the search input to search the list of potential activities.
 	selected: "{count} valgt.", // When adding activities (bulk add) to a learning path this is the number of activities that will be added to the list.
 	untitledLearningPath: "Unavngivet undervisningssti", // Default name of a learning path before the user has changed it.
 };

@@ -7,9 +7,9 @@ export default {
 	"btnAddExisting": "Mevcut Olanı Ekle", // add existing button
 	"btnRemoveCondition": "Koşul Kaldır", // remove condition button
 	"lblConditionsOperator": "Bu öğeyi görüntüleyebilmek için kullanıcı şunları karşılamalıdır", // conditions operator label
-	"txtNumReleaseConditions": "{count, plural, =1 {{count} Release Condition} other {{count} Release Conditions}}", // num release condition text
+	"txtNumReleaseConditions": "{count, plural, =1 {{count} Sürüm Koşulu} other {{count} Sürüm Koşulu}}", // num release condition text
 	"btnCancel": "İptal", // cancel button
-	"btnSave": "Kaydet", // save and close button
+	"btnSave": "Kaydet ve Kapat", // save and close button
 	"dueDate": "Teslim Tarihi", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "Bitiş Tarihi", // ARIA label for the end date field when creating/editing an activity
 	"startDate": "Başlangıç Tarihi", // ARIA label for the start date field when creating/editing an activity
@@ -22,7 +22,7 @@ export default {
 	"noEndDate": "Bitiş tarihi yok", // Placeholder text for due date field when no due date is set
 	"noStartDate": "Başlangıç tarihi yok", // Placeholder text for due date field when no due date is set
 	"visible": "Görünür", // Label displayed with the visibility switch when visible
-	"ariaVisible": "Öğrencilere görünür", // Aria Label for the visibility switch when visible
+	"ariaVisible": "Öğrenciler tarafından görülebilir", // Aria Label for the visibility switch when visible
 	"txtAvailabilityStartAndEnd": "Uygunluk, {startDate} tarihinde başlar ve {endDate} tarihinde sona erer", // start/end text
 	"txtAvailabilityStartOnly": "Uygunluk, {startDate} tarihinde başlar", // start only text
 	"txtAvailabilityEndOnly": "Uygunluk, {endDate} tarihinde sona erer", // end only text
@@ -31,6 +31,7 @@ export default {
 	"inGrades": "Notlarda", // State of the grades field when there is a score, and an associated grade item
 	"notInGrades": "Notlarda Yok", // State of the grades field when there is a score, but no associated grade item
 	"addToGrades": "Notlara Ekle", // Menu item for adding grade association
+	"addAGrade": "Not Ekle", //ARIA label to add a grade to the activity
 	"removeFromGrades": "Notlardan Kaldır", // Menu item for removing grade association
 	"setUngraded": "Notlandırılmamış Durumuna Sıfırla", // Menu item for setting the activity to ungraded
 	"scoreOutOf": "Maksimum Puan", // ARIA label for the score out of field, when creating/editing an activity
@@ -46,9 +47,9 @@ export default {
 	"dueBetweenStartEndDate": "Sona Erme Tarihi, Başlangıç Tarihinden sonra ve Bitiş Tarihinden önce veya bu tarihle aynı olmalıdır",
 	"dueAfterStartDate": "Sona Erme Tarihi, Başlangıç Tarihinden sonra olmalıdır",
 	"dueBeforeEndDate": "Sona Erme Tarihi, Bitiş Tarihiyle aynı veya önce olmalıdır",
-	"createAndLinkToNewGradeItem": "Oluştur ve Yeni Not Öğesine bağlantı oluştur", //Radio button text
-	"linkToExistingGradeItem": "Mevcut Not Öğesine Bağlantı Oluştur", //Radio button text
+	"createAndLinkToNewGradeItem": "Oluştur ve yeni not öğesine bağlantı oluştur", //Radio button text
+	"linkToExistingGradeItem": "Mevcut not öğesine bağlantı oluştur", //Radio button text
 	"points": "Puan: {points}", // Text label for displaying points of a grade
-	"noGradeItems": "No existing Grade Items exist to be linked", // Reason why existing grade items cannot be linked in the choose grades dialog
-	"noGradeCreatePermission": "You do not have permission to create a new grade item" // Reason why a new grade items cannot be created in the choose grades dialog
+	"noGradeItems": "Not öğesi mevcut değil", // Reason why existing grade items cannot be linked in the choose grades dialog
+	"noGradeCreatePermission": "Yeni bir not öğesi oluşturma izniniz yok" // Reason why a new grade items cannot be created in the choose grades dialog
 };

@@ -10,13 +10,12 @@ export default {
 	"txtAnnotationsOff": "Kommentarer avstängda", // annotations off text
 	"emptyNameError": "Namn krävs", // Error message to inform user that the assignment name is a required field
 	"instructions": "Instruktioner", // Label for the instruction field when creating/editing an assignment
-	"hdrTurnitin": "Turnitin®-integration", // turnitin heading
-	"hlpTurnitin": "Med Turnitin®-integreringen kan du använda Originality Check® för att bedöma elevarbetets akademiska integritet och använda det externa bedömningsverktyget GradeMark® för bedömning.", // turnitin help
-	"btnEditTurnitin": "Hantera Turnitin®-integrering", // edit turnitin button
+	"hdrTurnitin": "Turnitin-integrering", // turnitin heading
+	"hlpTurnitin": "TurnItIn® används till att lägga till ytterligare funktioner till utvärderingar.", // turnitin help
+	"btnEditTurnitin": "Hantera TurnItIn", // edit turnitin button
 	"btnCloseDialog": "Stäng den här dialogrutan", // close dialog button
-	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
-	"txtGradeMarkOn": "GradeMark On", // grade mark on text
-	"btnCancel": "Avbryt", // cancel button
+	"txtOriginalityCheckOn": "Originality Check är aktiverat", // originality check on text
+	"txtGradeMarkOn": "GradeMark är aktiverat", // grade mark on text	"btnCancel": "Avbryt", // cancel button
 	"btnSave": "Spara", // save button
 	"hdrAvailability": "Tillgängliga datum och villkor", // availability header
 	"name": "Namn", // Label for the name field when creating/editing an activity
@@ -40,5 +39,9 @@ export default {
 	"discardChangesTitle": "Vill du ignorera ändringarna?", // Discard Changes User Prompt
 	"discardChangesQuestion": "Är du säker på att du vill ignorera dina ändringar?", // Discard Changes User Prompt
 	"yesLabel": "Ja",
-	"noLabel": "Nej"
+	"noLabel": "Nej",
+	"filesSubmissionLimit": "Tillåtna filer per inlämning",
+	"UnlimitedFilesPerSubmission": "Obegränsad",
+	"OneFilePerSubmission": "En fil",
+	"submissionsRule": "inlämningar"
 };

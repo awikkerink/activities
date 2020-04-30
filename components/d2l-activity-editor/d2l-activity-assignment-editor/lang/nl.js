@@ -10,13 +10,12 @@ export default {
 	"txtAnnotationsOff": "Annotaties uit", // annotations off text
 	"emptyNameError": "Naam is vereist", // Error message to inform user that the assignment name is a required field
 	"instructions": "Instructies", // Label for the instruction field when creating/editing an assignment
-	"hdrTurnitin": "Turnitin®-integratie", // turnitin heading
-	"hlpTurnitin": "Met Turnitin®-integratie kunt u Originality Check® gebruiken om het werk van studenten te beoordelen op academische integriteit, en het externe beoordelingsprogramma GradeMark® gebruiken voor beoordeling.", // turnitin help
-	"btnEditTurnitin": "Turnitin®-integratie beheren", // edit turnitin button
+	"hdrTurnitin": "Turnitin-integratie", // turnitin heading
+	"hlpTurnitin": "Turnitin® voegt extra functionaliteit toe aan de evaluatie.", // turnitin help
+	"btnEditTurnitin": "Turnitin beheren", // edit turnitin button
 	"btnCloseDialog": "Dit dialoogvenster sluiten", // close dialog button
-	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
-	"txtGradeMarkOn": "GradeMark On", // grade mark on text
-	"btnCancel": "Annuleren", // cancel button
+	"txtOriginalityCheckOn": "Authenticiteitscontrole ingeschakeld", // originality check on text
+	"txtGradeMarkOn": "GradeMark ingeschakeld", // grade mark on text	"btnCancel": "Annuleren", // cancel button
 	"btnSave": "Opslaan", // save button
 	"hdrAvailability": "Data en voorwaarden beschikbaarheid", // availability header
 	"name": "Naam", // Label for the name field when creating/editing an activity
@@ -40,5 +39,9 @@ export default {
 	"discardChangesTitle": "Wijzigingen verwijderen?", // Discard Changes User Prompt
 	"discardChangesQuestion": "Weet u zeker dat u uw wijzigingen wilt verwijderen?", // Discard Changes User Prompt
 	"yesLabel": "Ja",
-	"noLabel": "Nee"
+	"noLabel": "Nee",
+	"filesSubmissionLimit": "Bestanden toegestaan per indiening",
+	"UnlimitedFilesPerSubmission": "Onbeperkt",
+	"OneFilePerSubmission": "Eén bestand",
+	"submissionsRule": "Indienen"
 };

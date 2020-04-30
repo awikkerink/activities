@@ -10,12 +10,12 @@ export default {
 	"txtAnnotationsOff": "Anmerkungen deaktiviert", // annotations off text
 	"emptyNameError": "Name erforderlich", // Error message to inform user that the assignment name is a required field
 	"instructions": "Anweisungen", // Label for the instruction field when creating/editing an assignment
-	"hdrTurnitin": "Turnitin®-Integration", // turnitin heading
-	"hlpTurnitin": "Mit der Turnitin®-Integration können Sie Originity Check® zur Prüfung der Arbeit des Lerners auf akademische Integrität und das externe Evaluierungstool GradeMark® für ihre Bewertung verwenden.", // turnitin help
-	"btnEditTurnitin": "Turnitin®-Integration verwalten", // edit turnitin button
+	"hdrTurnitin": "Turnitin-Integration", // turnitin heading
+	"hlpTurnitin": "Turnitin® erweitert die Auswertung um zusätzliche Funktionen.", // turnitin help
+	"btnEditTurnitin": "Turnitin verwalten", // edit turnitin button
 	"btnCloseDialog": "Dieses Dialogfeld schließen", // close dialog button
-	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
-	"txtGradeMarkOn": "GradeMark On", // grade mark on text
+	"txtOriginalityCheckOn": "Originalitätsprüfung ein", // originality check on text
+	"txtGradeMarkOn": "GradeMark ein", // grade mark on text
 	"btnCancel": "Abbrechen", // cancel button
 	"btnSave": "Speichern", // save button
 	"hdrAvailability": "Verfügbarkeitsdaten und Bedingungen", // availability header
@@ -40,5 +40,9 @@ export default {
 	"discardChangesTitle": "Änderungen verwerfen?", // Discard Changes User Prompt
 	"discardChangesQuestion": "Möchten Sie Ihre Änderungen wirklich verwerfen?", // Discard Changes User Prompt
 	"yesLabel": "Ja",
-	"noLabel": "Nein"
+	"noLabel": "Nein",
+	"filesSubmissionLimit": "Zulässige Dateien pro Abgabe",
+	"UnlimitedFilesPerSubmission": "Unbegrenzt",
+	"OneFilePerSubmission": "Eine Datei",
+	"submissionsRule": "Abgaben"
 };

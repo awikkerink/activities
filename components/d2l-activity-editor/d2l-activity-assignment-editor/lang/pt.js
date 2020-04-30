@@ -10,13 +10,12 @@ export default {
 	"txtAnnotationsOff": "Anotações desativadas", // annotations off text
 	"emptyNameError": "O campo Nome é obrigatório", // Error message to inform user that the assignment name is a required field
 	"instructions": "Instruções", // Label for the instruction field when creating/editing an assignment
-	"hdrTurnitin": "Integração do Turnitin®", // turnitin heading
-	"hlpTurnitin": "A integração do Turnitin® permite que você use o Originality Check® para avaliar a integridade acadêmica do trabalho do aluno e a ferramenta externa GradeMark® para realizar a avaliação em si.", // turnitin help
-	"btnEditTurnitin": "Gerenciar Integração do Turnitin®", // edit turnitin button
+	"hdrTurnitin": "Integração do Turnitin", // turnitin heading
+	"hlpTurnitin": "O Turnitin® adiciona mais funcionalidade à avaliação.", // turnitin help
+	"btnEditTurnitin": "Gerenciar o Turnitin", // edit turnitin button
 	"btnCloseDialog": "Fechar esta Caixa de Diálogo", // close dialog button
-	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
-	"txtGradeMarkOn": "GradeMark On", // grade mark on text
-	"btnCancel": "Cancelar", // cancel button
+	"txtOriginalityCheckOn": "Verificação de originalidade ativada", // originality check on text
+	"txtGradeMarkOn": "GradeMark em", // grade mark on text	"btnCancel": "Cancelar", // cancel button
 	"btnSave": "Salvar", // save button
 	"hdrAvailability": "Datas de Disponibilidade e Condições", // availability header
 	"name": "Nome", // Label for the name field when creating/editing an activity
@@ -40,5 +39,9 @@ export default {
 	"discardChangesTitle": "Descartar alterações?", // Discard Changes User Prompt
 	"discardChangesQuestion": "Tem certeza de que deseja descartar suas alterações?", // Discard Changes User Prompt
 	"yesLabel": "Sim",
-	"noLabel": "Não"
+	"noLabel": "Não",
+	"filesSubmissionLimit": "Arquivos permitidos por envio",
+	"UnlimitedFilesPerSubmission": "Ilimitado",
+	"OneFilePerSubmission": "Um arquivo",
+	"submissionsRule": "Envios"
 };
