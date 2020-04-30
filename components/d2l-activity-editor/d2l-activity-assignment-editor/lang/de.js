@@ -16,9 +16,6 @@ export default {
 	"btnCloseDialog": "Dieses Dialogfeld schließen", // close dialog button
 	"txtOriginalityCheckOn": "Originalitätsprüfung ein", // originality check on text
 	"txtGradeMarkOn": "GradeMark ein", // grade mark on text
-	"txtTurnitinOn1": "Originalitätsprüfung und GradeMark ein", // turnitin on text, variant 1
-	"txtTurnitinOn2": "Originalitätsprüfung ein", // turnitin on text, variant 2
-	"txtTurnitinOn3": "GradeMark ein", // turnitin on text, variant 3
 	"btnCancel": "Abbrechen", // cancel button
 	"btnSave": "Speichern", // save button
 	"hdrAvailability": "Verfügbarkeitsdaten und Bedingungen", // availability header

@@ -16,9 +16,6 @@ export default {
 	"btnCloseDialog": "关闭此对话框", // close dialog button
 	"txtOriginalityCheckOn": "原创性检查日期", // originality check on text
 	"txtGradeMarkOn": "GradeMark 日期", // grade mark on text
-	"txtTurnitinOn1": "原创性检查和 GradeMark 日期", // turnitin on text, variant 1
-	"txtTurnitinOn2": "原创性检查日期", // turnitin on text, variant 2
-	"txtTurnitinOn3": "GradeMark 日期", // turnitin on text, variant 3
 	"btnCancel": "取消", // cancel button
 	"btnSave": "保存", // save button
 	"hdrAvailability": "可用日期和条件", // availability header

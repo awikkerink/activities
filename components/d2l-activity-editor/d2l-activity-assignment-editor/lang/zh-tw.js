@@ -16,9 +16,6 @@ export default {
 	"btnCloseDialog": "關閉此對話方塊", // close dialog button
 	"txtOriginalityCheckOn": "原創性檢查開啟", // originality check on text
 	"txtGradeMarkOn": "GradeMark 開啟", // grade mark on text
-	"txtTurnitinOn1": "原創性檢查與 GradeMark  開啟", // turnitin on text, variant 1
-	"txtTurnitinOn2": "原創性檢查開啟", // turnitin on text, variant 2
-	"txtTurnitinOn3": "GradeMark 開啟", // turnitin on text, variant 3
 	"btnCancel": "取消", // cancel button
 	"btnSave": "儲存", // save button
 	"hdrAvailability": "可用情況日期與條件", // availability header

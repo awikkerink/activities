@@ -16,9 +16,6 @@ export default {
 	"btnCloseDialog": "Dit dialoogvenster sluiten", // close dialog button
 	"txtOriginalityCheckOn": "Authenticiteitscontrole ingeschakeld", // originality check on text
 	"txtGradeMarkOn": "GradeMark ingeschakeld", // grade mark on text
-	"txtTurnitinOn1": "Authenticiteitscontrole en GradeMark ingeschakeld", // turnitin on text, variant 1
-	"txtTurnitinOn2": "Authenticiteitscontrole ingeschakeld", // turnitin on text, variant 2
-	"txtTurnitinOn3": "GradeMark ingeschakeld", // turnitin on text, variant 3
 	"btnCancel": "Annuleren", // cancel button
 	"btnSave": "Opslaan", // save button
 	"hdrAvailability": "Data en voorwaarden beschikbaarheid", // availability header

@@ -16,9 +16,6 @@ export default {
 	"btnCloseDialog": "Fermer ce dialogue", // close dialog button
 	"txtOriginalityCheckOn": "Vérification d\'authenticité activée", // originality check on text
 	"txtGradeMarkOn": "Outil GradeMark activé", // grade mark on text
-	"txtTurnitinOn1": "Vérification d\'authenticité et outil GradeMark activés", // turnitin on text, variant 1
-	"txtTurnitinOn2": "Vérification d\'authenticité activée", // turnitin on text, variant 2
-	"txtTurnitinOn3": "Outil GradeMark activé", // turnitin on text, variant 3
 	"btnCancel": "Annuler", // cancel button
 	"btnSave": "Enregistrer", // save button
 	"hdrAvailability": "Dates et conditions de disponibilité", // availability header

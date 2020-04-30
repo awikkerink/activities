@@ -16,9 +16,6 @@ export default {
 	"btnCloseDialog": "Stäng den här dialogrutan", // close dialog button
 	"txtOriginalityCheckOn": "Originality Check är aktiverat", // originality check on text
 	"txtGradeMarkOn": "GradeMark är aktiverat", // grade mark on text
-	"txtTurnitinOn1": "Originality Check och GradeMark är aktiverade", // turnitin on text, variant 1
-	"txtTurnitinOn2": "Originality Check är aktiverat", // turnitin on text, variant 2
-	"txtTurnitinOn3": "GradeMark är aktiverat", // turnitin on text, variant 3
 	"btnCancel": "Avbryt", // cancel button
 	"btnSave": "Spara", // save button
 	"hdrAvailability": "Tillgängliga datum och villkor", // availability header

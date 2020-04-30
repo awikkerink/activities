@@ -16,9 +16,6 @@ export default {
 	"btnCloseDialog": "إغلاق مربع الحوار هذا", // close dialog button
 	"txtOriginalityCheckOn": "كشف التميز على", // originality check on text
 	"txtGradeMarkOn": "GradeMark على", // grade mark on text
-	"txtTurnitinOn1": "كشف التميز وGradeMark على", // turnitin on text, variant 1
-	"txtTurnitinOn2": "كشف التميز على", // turnitin on text, variant 2
-	"txtTurnitinOn3": "GradeMark على", // turnitin on text, variant 3
 	"btnCancel": "إلغاء", // cancel button
 	"btnSave": "حفظ", // save button
 	"hdrAvailability": "تواريخ التوفر وشروطه", // availability header

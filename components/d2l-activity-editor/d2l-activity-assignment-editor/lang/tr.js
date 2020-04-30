@@ -16,9 +16,6 @@ export default {
 	"btnCloseDialog": "Bu Diyaloğu Kapat", // close dialog button
 	"txtOriginalityCheckOn": "Originality Check Açık", // originality check on text
 	"txtGradeMarkOn": "GradeMark Açık", // grade mark on text
-	"txtTurnitinOn1": "Originality Check ve GradeMark Açık", // turnitin on text, variant 1
-	"txtTurnitinOn2": "Originality Check Açık", // turnitin on text, variant 2
-	"txtTurnitinOn3": "GradeMark Açık", // turnitin on text, variant 3
 	"btnCancel": "İptal", // cancel button
 	"btnSave": "Kaydet", // save button
 	"hdrAvailability": "Uygunluk Tarihleri ve Koşulları", // availability header
