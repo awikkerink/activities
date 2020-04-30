@@ -10,15 +10,15 @@ export default {
 	"txtAnnotationsOff": "Kommentarer slået fra", // annotations off text
 	"emptyNameError": "Navn påkrævet", // Error message to inform user that the assignment name is a required field
 	"instructions": "Instruktioner", // Label for the instruction field when creating/editing an assignment
-	"hdrTurnitin": "Turnitin Integration", // turnitin heading
-	"hlpTurnitin": "Turnitin® adds additional functionality to evaluation.", // turnitin help
-	"btnEditTurnitin": "Manage Turnitin", // edit turnitin button
+	"hdrTurnitin": "Turnitin-integration", // turnitin heading
+	"hlpTurnitin": "Turnitin® føjer ekstra funktionalitet til evaluering.", // turnitin help
+	"btnEditTurnitin": "Administrer Turnitin", // edit turnitin button
 	"btnCloseDialog": "Luk denne dialogboks", // close dialog button
-	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
-	"txtGradeMarkOn": "GradeMark On", // grade mark on text
-	"txtTurnitinOn1": "Originality Check and GradeMark On", // turnitin on text, variant 1
-	"txtTurnitinOn2": "Originality Check On", // turnitin on text, variant 2
-	"txtTurnitinOn3": "GradeMark On", // turnitin on text, variant 3
+	"txtOriginalityCheckOn": "Originality Check aktiveret", // originality check on text
+	"txtGradeMarkOn": "GradeMark aktiveret", // grade mark on text
+	"txtTurnitinOn1": "Originality Check og GradeMark aktiveret", // turnitin on text, variant 1
+	"txtTurnitinOn2": "Originality Check aktiveret", // turnitin on text, variant 2
+	"txtTurnitinOn3": "GradeMark aktiveret", // turnitin on text, variant 3
 	"btnCancel": "Annuller", // cancel button
 	"btnSave": "Gem", // save button
 	"hdrAvailability": "Tilgængelighedsdatoer og betingelser", // availability header
@@ -43,5 +43,9 @@ export default {
 	"discardChangesTitle": "Slet ændringer?", // Discard Changes User Prompt
 	"discardChangesQuestion": "Er du sikker på, at du vil slette dine ændringer?", // Discard Changes User Prompt
 	"yesLabel": "Ja",
-	"noLabel": "Nej"
+	"noLabel": "Nej",
+	"filesSubmissionLimit": "Filer tilladt pr. aflevering",
+	"UnlimitedFilesPerSubmission": "Ubegrænset",
+	"OneFilePerSubmission": "En fil",
+	"submissionsRule": "Afleveringer"
 };

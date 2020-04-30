@@ -7,7 +7,7 @@ export default {
 	"btnAddExisting": "Tilføj eksisterende", // add existing button
 	"btnRemoveCondition": "Fjern betingelse", // remove condition button
 	"lblConditionsOperator": "For at få vist dette element skal brugerne opfylde", // conditions operator label
-	"txtNumReleaseConditions": "{count, plural, =1 {{count} Release Condition} other {{count} Release Conditions}}", // num release condition text
+	"txtNumReleaseConditions": "{count, plural, =1 {{count} betingelse for offentliggørelse} other {{count} betingelser for offentliggørelse}}", // num release condition text
 	"btnCancel": "Annuller", // cancel button
 	"btnSave": "Gem og luk", // save and close button
 	"dueDate": "Forfaldsdato", // ARIA label for the due date field when creating/editing an activity
@@ -17,7 +17,7 @@ export default {
 	"endTime": "Sluttidspunkt", // ARIA label for the end time field when creating/editing an activity
 	"startTime": "Starttidspunkt", // ARIA label for the start time field when creating/editing an activity
 	"hidden": "Skjult", // Label displayed with the visibility switch when hidden
-	"ariaHidden": "Skjult for studerende", // Aria Label for the visibility switch when hidden
+	"ariaHidden": "Skjult fra elever", // Aria Label for the visibility switch when hidden
 	"noDueDate": "Ingen forfaldsdato", // Placeholder text for due date field when no due date is set
 	"noEndDate": "Ingen slutdato", // Placeholder text for due date field when no due date is set
 	"noStartDate": "Ingen startdato", // Placeholder text for due date field when no due date is set
@@ -31,13 +31,14 @@ export default {
 	"inGrades": "In Grades", // State of the grades field when there is a score, and an associated grade item
 	"notInGrades": "Not in Grades", // State of the grades field when there is a score, but no associated grade item
 	"addToGrades": "Føj til Karakterer", // Menu item for adding grade association
+	"addAGrade": "Tilføj en karakter", //ARIA label to add a grade to the activity
 	"removeFromGrades": "Remove from Grades", // Menu item for removing grade association
 	"setUngraded": "Nulstil til uden karakter", // Menu item for setting the activity to ungraded
 	"scoreOutOf": "Score Out Of", // ARIA label for the score out of field, when creating/editing an activity
 	"emptyScoreOutOfError": "A points value must be specified for activities in Grades", // Error message to inform user that the score out of value is a required field when a grade item is associated
 	"invalidScoreOutOfError": "Score Out Of must be greater than or equal to 0.01 and less than or equal to 9,999,999,999", // Error message when an invalid score out of value is entered
 	"loading": "Indlæser...", // Message displayed while page is loading
-	"ok": "Ok", // Text of dialog button to commit action
+	"ok": "OK", // Text of dialog button to commit action
 	"cancel": "Annuller", // Text of dialog button to cancel action
 	"ariaToolbarShortcutInstructions": "Tryk på Alt-F10 for værktøjslinjen, og tryk på ESC for at afslutte værktøjslinjen, når du er inde.", // Instructions for screenreader users on how to enter and exit the html editor toolbar
 	"chooseFromGrades": "Vælg mellem karakterer", // Link text and dialog title for the edit grades dialog,
@@ -46,9 +47,9 @@ export default {
 	"dueBetweenStartEndDate": "Forfaldsdato skal være efter startdato og før eller lig med slutdato",
 	"dueAfterStartDate": "Forfaldsdato skal ligge efter startdato",
 	"dueBeforeEndDate": "Forfaldsdato skal være før eller lig med slutdato",
-	"createAndLinkToNewGradeItem": "Opret og knyt til nyt karakterelement", //Radio button text
-	"linkToExistingGradeItem": "Link til eksisterende karakterelement", //Radio button text
+	"createAndLinkToNewGradeItem": "Opret og link til et nyt karakterelement", //Radio button text
+	"linkToExistingGradeItem": "Link til et eksisterende karakterelement", //Radio button text
 	"points": "Point: {points}", // Text label for displaying points of a grade
-	"noGradeItems": "No existing Grade Items exist to be linked", // Reason why existing grade items cannot be linked in the choose grades dialog
-	"noGradeCreatePermission": "You do not have permission to create a new grade item" // Reason why a new grade items cannot be created in the choose grades dialog
+	"noGradeItems": "Ingen eksisterende karakterelementer", // Reason why existing grade items cannot be linked in the choose grades dialog
+	"noGradeCreatePermission": "Du har ikke tilladelse til at oprette et nyt karakterelement" // Reason why a new grade items cannot be created in the choose grades dialog
 };

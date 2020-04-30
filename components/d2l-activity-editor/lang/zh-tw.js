@@ -7,9 +7,9 @@ export default {
 	"btnAddExisting": "新增現有的", // add existing button
 	"btnRemoveCondition": "移除條件", // remove condition button
 	"lblConditionsOperator": "如果要檢視此項目，使用者必須符合", // conditions operator label
-	"txtNumReleaseConditions": "{count, plural, =1 {{count} Release Condition} other {{count} Release Conditions}}", // num release condition text
+	"txtNumReleaseConditions": "{count, plural, =1 {{count} 個發佈條件} other {{count} 個發佈條件}}", // num release condition text
 	"btnCancel": "取消", // cancel button
-	"btnSave": "儲存", // save and close button
+	"btnSave": "儲存並關閉", // save and close button
 	"dueDate": "截止日期", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "結束日期", // ARIA label for the end date field when creating/editing an activity
 	"startDate": "開始日期", // ARIA label for the start date field when creating/editing an activity
@@ -17,12 +17,12 @@ export default {
 	"endTime": "結束時間", // ARIA label for the end time field when creating/editing an activity
 	"startTime": "開始時間", // ARIA label for the start time field when creating/editing an activity
 	"hidden": "已隱藏", // Label displayed with the visibility switch when hidden
-	"ariaHidden": "對學生隱藏", // Aria Label for the visibility switch when hidden
+	"ariaHidden": "對學習者隱藏", // Aria Label for the visibility switch when hidden
 	"noDueDate": "沒有截止日期", // Placeholder text for due date field when no due date is set
 	"noEndDate": "沒有結束日期", // Placeholder text for due date field when no due date is set
 	"noStartDate": "沒有開始日期", // Placeholder text for due date field when no due date is set
 	"visible": "顯示", // Label displayed with the visibility switch when visible
-	"ariaVisible": "學生可看到", // Aria Label for the visibility switch when visible
+	"ariaVisible": "學習者可看到", // Aria Label for the visibility switch when visible
 	"txtAvailabilityStartAndEnd": "可用情況開始於 {startDate} 並結束於 {endDate}", // start/end text
 	"txtAvailabilityStartOnly": "可用情況開始於 {startDate}", // start only text
 	"txtAvailabilityEndOnly": "可用情況結束於 {endDate}", // end only text
@@ -31,6 +31,7 @@ export default {
 	"inGrades": "在「成績」中", // State of the grades field when there is a score, and an associated grade item
 	"notInGrades": "未在「成績」中", // State of the grades field when there is a score, but no associated grade item
 	"addToGrades": "新增至「成績」", // Menu item for adding grade association
+	"addAGrade": "新增成績", //ARIA label to add a grade to the activity
 	"removeFromGrades": "自「成績」中移除", // Menu item for removing grade association
 	"setUngraded": "重設為未評分", // Menu item for setting the activity to ungraded
 	"scoreOutOf": "總分", // ARIA label for the score out of field, when creating/editing an activity
@@ -49,6 +50,6 @@ export default {
 	"createAndLinkToNewGradeItem": "建立並連結至新的成績項目", //Radio button text
 	"linkToExistingGradeItem": "連結至現有成績項目", //Radio button text
 	"points": "分數：{points}", // Text label for displaying points of a grade
-	"noGradeItems": "No existing Grade Items exist to be linked", // Reason why existing grade items cannot be linked in the choose grades dialog
-	"noGradeCreatePermission": "You do not have permission to create a new grade item" // Reason why a new grade items cannot be created in the choose grades dialog
+	"noGradeItems": "無現有成績項目", // Reason why existing grade items cannot be linked in the choose grades dialog
+	"noGradeCreatePermission": "您沒有建立新成績項目的權限" // Reason why a new grade items cannot be created in the choose grades dialog
 };

@@ -7,9 +7,9 @@ export default {
 	"btnAddExisting": "기존 항목 추가", // add existing button
 	"btnRemoveCondition": "조건 제거", // remove condition button
 	"lblConditionsOperator": "이 항목을 보려면 사용자가 다음을 충족해야 합니다.", // conditions operator label
-	"txtNumReleaseConditions": "{count, plural, =1 {{count} Release Condition} other {{count} Release Conditions}}", // num release condition text
+	"txtNumReleaseConditions": "{수, 복수, =1 {{count}개 릴리스 조건} 기타 {{count}개 릴리스 조건}}", // num release condition text
 	"btnCancel": "취소", // cancel button
-	"btnSave": "저장", // save and close button
+	"btnSave": "저장 및 닫기", // save and close button
 	"dueDate": "기한", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "종료일", // ARIA label for the end date field when creating/editing an activity
 	"startDate": "시작일", // ARIA label for the start date field when creating/editing an activity
@@ -17,12 +17,12 @@ export default {
 	"endTime": "종료 시각", // ARIA label for the end time field when creating/editing an activity
 	"startTime": "시작 시각", // ARIA label for the start time field when creating/editing an activity
 	"hidden": "숨김", // Label displayed with the visibility switch when hidden
-	"ariaHidden": "학생에게 표시되지 않음", // Aria Label for the visibility switch when hidden
+	"ariaHidden": "학습자에게 표시되지 않음", // Aria Label for the visibility switch when hidden
 	"noDueDate": "기한 없음", // Placeholder text for due date field when no due date is set
 	"noEndDate": "종료일 없음", // Placeholder text for due date field when no due date is set
 	"noStartDate": "시작일 없음", // Placeholder text for due date field when no due date is set
 	"visible": "표시", // Label displayed with the visibility switch when visible
-	"ariaVisible": "학생에게 표시", // Aria Label for the visibility switch when visible
+	"ariaVisible": "학습자에게 표시됩니다.", // Aria Label for the visibility switch when visible
 	"txtAvailabilityStartAndEnd": "사용 가능 날짜는 {startDate}에 시작되고 {endDate}에 종료됩니다.", // start/end text
 	"txtAvailabilityStartOnly": "사용 가능 날짜 시작일 {startDate}", // start only text
 	"txtAvailabilityEndOnly": "사용 가능 날짜 종료일 {endDate}", // end only text
@@ -31,6 +31,7 @@ export default {
 	"inGrades": "평점 내", // State of the grades field when there is a score, and an associated grade item
 	"notInGrades": "평점에 없음", // State of the grades field when there is a score, but no associated grade item
 	"addToGrades": "평점에 추가", // Menu item for adding grade association
+	"addAGrade": "평점 추가", //ARIA label to add a grade to the activity
 	"removeFromGrades": "평점에서 삭제됩니다.", // Menu item for removing grade association
 	"setUngraded": "평점 없음으로 재설정", // Menu item for setting the activity to ungraded
 	"scoreOutOf": "기준 만점 점수", // ARIA label for the score out of field, when creating/editing an activity
@@ -47,8 +48,8 @@ export default {
 	"dueAfterStartDate": "기한은 시작일 이후여야 합니다.",
 	"dueBeforeEndDate": "기한은 종료일 이전이거나 종료일과 같아야 합니다.",
 	"createAndLinkToNewGradeItem": "새 평점 항목을 생성하고 연결합니다.", //Radio button text
-	"linkToExistingGradeItem": "기존 평점 항목에 연결", //Radio button text
+	"linkToExistingGradeItem": "기존 평점 항목에 연결합니다.", //Radio button text
 	"points": "점수: {points}", // Text label for displaying points of a grade
-	"noGradeItems": "No existing Grade Items exist to be linked", // Reason why existing grade items cannot be linked in the choose grades dialog
-	"noGradeCreatePermission": "You do not have permission to create a new grade item" // Reason why a new grade items cannot be created in the choose grades dialog
+	"noGradeItems": "기존 평점 항목이 없습니다.", // Reason why existing grade items cannot be linked in the choose grades dialog
+	"noGradeCreatePermission": "새 평점 항목을 생성할 권한이 없습니다." // Reason why a new grade items cannot be created in the choose grades dialog
 };

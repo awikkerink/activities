@@ -7,9 +7,9 @@ export default {
 	"btnAddExisting": "Bestaand toevoegen", // add existing button
 	"btnRemoveCondition": "Voorwaarde verwijderen", // remove condition button
 	"lblConditionsOperator": "Om dit item te bekijken, moeten gebruikers voldoen aan", // conditions operator label
-	"txtNumReleaseConditions": "{count, plural, =1 {{count} Release Condition} other {{count} Release Conditions}}", // num release condition text
+	"txtNumReleaseConditions": "{count, plural, =1 {{count} releasevoorwaarde} other {{count} releasevoorwaarden}}", // num release condition text
 	"btnCancel": "Annuleren", // cancel button
-	"btnSave": "Opslaan", // save and close button
+	"btnSave": "Opslaan en sluiten", // save and close button
 	"dueDate": "Uiterste datum", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "Einddatum", // ARIA label for the end date field when creating/editing an activity
 	"startDate": "Startdatum", // ARIA label for the start date field when creating/editing an activity
@@ -22,7 +22,7 @@ export default {
 	"noEndDate": "Geen einddatum", // Placeholder text for due date field when no due date is set
 	"noStartDate": "Geen startdatum", // Placeholder text for due date field when no due date is set
 	"visible": "Zichtbaar", // Label displayed with the visibility switch when visible
-	"ariaVisible": "Zichtbaar voor studenten", // Aria Label for the visibility switch when visible
+	"ariaVisible": "Zichtbaar voor cursisten", // Aria Label for the visibility switch when visible
 	"txtAvailabilityStartAndEnd": "Beschikbaarheid begint op {startDate} en eindigt op {endDate}", // start/end text
 	"txtAvailabilityStartOnly": "Beschikbaarheid begint op {startDate}", // start only text
 	"txtAvailabilityEndOnly": "Beschikbaarheid eindigt op {endDate}", // end only text
@@ -31,6 +31,7 @@ export default {
 	"inGrades": "In Scores", // State of the grades field when there is a score, and an associated grade item
 	"notInGrades": "Niet in Scores", // State of the grades field when there is a score, but no associated grade item
 	"addToGrades": "Toevoegen aan Scores", // Menu item for adding grade association
+	"addAGrade": "Een score toevoegen", //ARIA label to add a grade to the activity
 	"removeFromGrades": "Verwijderen uit Scores", // Menu item for removing grade association
 	"setUngraded": "Terugzetten naar Onbeoordeeld", // Menu item for setting the activity to ungraded
 	"scoreOutOf": "Score uit", // ARIA label for the score out of field, when creating/editing an activity
@@ -46,9 +47,9 @@ export default {
 	"dueBetweenStartEndDate": "Uiterste datum moet later zijn dan startdatum en eerder of tegelijk zijn met einddatum",
 	"dueAfterStartDate": "Uiterste datum moet later zijn dan startdatum",
 	"dueBeforeEndDate": "Uiterste datum moet eerder of tegelijk zijn met einddatum",
-	"createAndLinkToNewGradeItem": "Maak een nieuw score-onderdeel en link ernaar", //Radio button text
-	"linkToExistingGradeItem": "Koppeling naar bestaand score-onderdeel", //Radio button text
+	"createAndLinkToNewGradeItem": "Een nieuw score-onderdeel maken en ernaar koppelen", //Radio button text
+	"linkToExistingGradeItem": "Koppelen naar een bestaand score-onderdeel", //Radio button text
 	"points": "Punten: {points}", // Text label for displaying points of a grade
-	"noGradeItems": "No existing Grade Items exist to be linked", // Reason why existing grade items cannot be linked in the choose grades dialog
-	"noGradeCreatePermission": "You do not have permission to create a new grade item" // Reason why a new grade items cannot be created in the choose grades dialog
+	"noGradeItems": "Geen bestaande score-onderdelen", // Reason why existing grade items cannot be linked in the choose grades dialog
+	"noGradeCreatePermission": "U bent niet gemachtigd om een nieuw score-onderdeel te maken" // Reason why a new grade items cannot be created in the choose grades dialog
 };

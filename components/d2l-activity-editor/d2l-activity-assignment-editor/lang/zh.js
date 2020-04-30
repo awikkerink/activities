@@ -10,15 +10,15 @@ export default {
 	"txtAnnotationsOff": "关闭批注", // annotations off text
 	"emptyNameError": "需要提供名称", // Error message to inform user that the assignment name is a required field
 	"instructions": "说明", // Label for the instruction field when creating/editing an assignment
-	"hdrTurnitin": "Turnitin® 集成", // turnitin heading
-	"hlpTurnitin": "Turnitin® 集成允许您使用原创性检查® 针对学术完整性评估学生学业，并使用 GradeMark® 外部评估工具进行评估。", // turnitin help
-	"btnEditTurnitin": "管理 Turnitin® 集成", // edit turnitin button
+	"hdrTurnitin": "Turnitin 集成", // turnitin heading
+	"hlpTurnitin": "Turnitin® 为评估添加其他功能。", // turnitin help
+	"btnEditTurnitin": "管理 Turnitin", // edit turnitin button
 	"btnCloseDialog": "关闭此对话框", // close dialog button
-	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
-	"txtGradeMarkOn": "GradeMark On", // grade mark on text
-	"txtTurnitinOn1": "Originality Check and GradeMark On", // turnitin on text, variant 1
-	"txtTurnitinOn2": "Originality Check On", // turnitin on text, variant 2
-	"txtTurnitinOn3": "GradeMark On", // turnitin on text, variant 3
+	"txtOriginalityCheckOn": "原创性检查日期", // originality check on text
+	"txtGradeMarkOn": "GradeMark 日期", // grade mark on text
+	"txtTurnitinOn1": "原创性检查和 GradeMark 日期", // turnitin on text, variant 1
+	"txtTurnitinOn2": "原创性检查日期", // turnitin on text, variant 2
+	"txtTurnitinOn3": "GradeMark 日期", // turnitin on text, variant 3
 	"btnCancel": "取消", // cancel button
 	"btnSave": "保存", // save button
 	"hdrAvailability": "可用日期和条件", // availability header
@@ -43,5 +43,9 @@ export default {
 	"discardChangesTitle": "放弃更改？", // Discard Changes User Prompt
 	"discardChangesQuestion": "是否确定要放弃您所做的更改？", // Discard Changes User Prompt
 	"yesLabel": "是",
-	"noLabel": "否"
+	"noLabel": "否",
+	"filesSubmissionLimit": "每次提交允许的文件",
+	"UnlimitedFilesPerSubmission": "无限制",
+	"OneFilePerSubmission": "一个文件",
+	"submissionsRule": "次提交"
 };

@@ -10,15 +10,15 @@ export default {
 	"txtAnnotationsOff": "Kommentarer avstängda", // annotations off text
 	"emptyNameError": "Namn krävs", // Error message to inform user that the assignment name is a required field
 	"instructions": "Instruktioner", // Label for the instruction field when creating/editing an assignment
-	"hdrTurnitin": "Turnitin®-integration", // turnitin heading
-	"hlpTurnitin": "Med Turnitin®-integreringen kan du använda Originality Check® för att bedöma elevarbetets akademiska integritet och använda det externa bedömningsverktyget GradeMark® för bedömning.", // turnitin help
-	"btnEditTurnitin": "Hantera Turnitin®-integrering", // edit turnitin button
+	"hdrTurnitin": "Turnitin-integrering", // turnitin heading
+	"hlpTurnitin": "TurnItIn® används till att lägga till ytterligare funktioner till utvärderingar.", // turnitin help
+	"btnEditTurnitin": "Hantera TurnItIn", // edit turnitin button
 	"btnCloseDialog": "Stäng den här dialogrutan", // close dialog button
-	"txtOriginalityCheckOn": "Originality Check On", // originality check on text
-	"txtGradeMarkOn": "GradeMark On", // grade mark on text
-	"txtTurnitinOn1": "Originality Check and GradeMark On", // turnitin on text, variant 1
-	"txtTurnitinOn2": "Originality Check On", // turnitin on text, variant 2
-	"txtTurnitinOn3": "GradeMark On", // turnitin on text, variant 3
+	"txtOriginalityCheckOn": "Originality Check är aktiverat", // originality check on text
+	"txtGradeMarkOn": "GradeMark är aktiverat", // grade mark on text
+	"txtTurnitinOn1": "Originality Check och GradeMark är aktiverade", // turnitin on text, variant 1
+	"txtTurnitinOn2": "Originality Check är aktiverat", // turnitin on text, variant 2
+	"txtTurnitinOn3": "GradeMark är aktiverat", // turnitin on text, variant 3
 	"btnCancel": "Avbryt", // cancel button
 	"btnSave": "Spara", // save button
 	"hdrAvailability": "Tillgängliga datum och villkor", // availability header
@@ -43,5 +43,9 @@ export default {
 	"discardChangesTitle": "Vill du ignorera ändringarna?", // Discard Changes User Prompt
 	"discardChangesQuestion": "Är du säker på att du vill ignorera dina ändringar?", // Discard Changes User Prompt
 	"yesLabel": "Ja",
-	"noLabel": "Nej"
+	"noLabel": "Nej",
+	"filesSubmissionLimit": "Tillåtna filer per inlämning",
+	"UnlimitedFilesPerSubmission": "Obegränsad",
+	"OneFilePerSubmission": "En fil",
+	"submissionsRule": "inlämningar"
 };

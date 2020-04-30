@@ -5,5 +5,11 @@ export default {
 	"btnCreateNew": "Opret ny", //Text for create new dropdown
 	"btnAddExisting": "Tilføj eksisterende", //Text for Add Existing dropdown
 	"hdrRubrics": "Rubrikker", //Header for the rubrics section
-	"txtAddExisting": "Tilføj eksisterende" //Title for the attach rubrics dialog
+	"btnAttachRubric": "Vedhæft rubrik", //Button for the attach new rubric overlay
+	"btnCancel": "Annuller", //Button for canceling out of the attach new rubric overlay
+	"txtAddExisting": "Tilføj eksisterende", //Title for the attach rubrics dialog,
+	"txtNoRubricAdded": "Ingen rubrik tilføjet", // rubric summary for no rubrics
+	"txtRubricsAdded": "{count, plural, =1 {1 rubrik tilføjet} other {{count} rubrikker tilføjet}}", // count of asoociated rubrics
+	"txtOpenRubricPreview": "Åbn Rubrikker fra dialogboksen for forhåndsvisning", //Text for opening rubric preview dialog
+	"txtDeleteRubric": "Slet rubrik" // Text for deleting rubric icon
 };
