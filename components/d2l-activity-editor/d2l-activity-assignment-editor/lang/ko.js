@@ -15,7 +15,8 @@ export default {
 	"btnEditTurnitin": "Turnitin 관리", // edit turnitin button
 	"btnCloseDialog": "이 대화 상자 닫기", // close dialog button
 	"txtOriginalityCheckOn": "독창성 확인 표시", // originality check on text
-	"txtGradeMarkOn": "GradeMark 표시", // grade mark on text	"btnCancel": "취소", // cancel button
+	"txtGradeMarkOn": "GradeMark 표시", // grade mark on text
+	"btnCancel": "취소", // cancel button
 	"btnSave": "저장", // save button
 	"hdrAvailability": "사용 가능 날짜 및 조건", // availability header
 	"name": "이름", // Label for the name field when creating/editing an activity

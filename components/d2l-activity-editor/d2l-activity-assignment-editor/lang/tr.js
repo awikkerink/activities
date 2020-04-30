@@ -15,7 +15,8 @@ export default {
 	"btnEditTurnitin": "Turnitin\'i Yönet", // edit turnitin button
 	"btnCloseDialog": "Bu Diyaloğu Kapat", // close dialog button
 	"txtOriginalityCheckOn": "Originality Check Açık", // originality check on text
-	"txtGradeMarkOn": "GradeMark Açık", // grade mark on text	"btnCancel": "İptal", // cancel button
+	"txtGradeMarkOn": "GradeMark Açık", // grade mark on text
+	"btnCancel": "İptal", // cancel button
 	"btnSave": "Kaydet", // save button
 	"hdrAvailability": "Uygunluk Tarihleri ve Koşulları", // availability header
 	"name": "Ad", // Label for the name field when creating/editing an activity

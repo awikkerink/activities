@@ -15,7 +15,8 @@ export default {
 	"btnEditTurnitin": "Gérer Turnitin", // edit turnitin button
 	"btnCloseDialog": "Fermer ce dialogue", // close dialog button
 	"txtOriginalityCheckOn": "Vérification d\'authenticité activée", // originality check on text
-	"txtGradeMarkOn": "Outil GradeMark activé", // grade mark on text	"btnCancel": "Annuler", // cancel button
+	"txtGradeMarkOn": "Outil GradeMark activé", // grade mark on text
+	"btnCancel": "Annuler", // cancel button
 	"btnSave": "Enregistrer", // save button
 	"hdrAvailability": "Dates et conditions de disponibilité", // availability header
 	"name": "Nom", // Label for the name field when creating/editing an activity

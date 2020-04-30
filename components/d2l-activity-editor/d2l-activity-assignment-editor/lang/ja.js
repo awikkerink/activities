@@ -15,7 +15,8 @@ export default {
 	"btnEditTurnitin": "Turnitin の管理", // edit turnitin button
 	"btnCloseDialog": "このダイアログを閉じる", // close dialog button
 	"txtOriginalityCheckOn": "Originality Check のオン", // originality check on text
-	"txtGradeMarkOn": "GradeMark のオン", // grade mark on text	"btnCancel": "キャンセル", // cancel button
+	"txtGradeMarkOn": "GradeMark のオン", // grade mark on text
+	"btnCancel": "キャンセル", // cancel button
 	"btnSave": "保存", // save button
 	"hdrAvailability": "可能な日と条件", // availability header
 	"name": "名前", // Label for the name field when creating/editing an activity

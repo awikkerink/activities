@@ -15,7 +15,8 @@ export default {
 	"btnEditTurnitin": "إدارة Turnitin", // edit turnitin button
 	"btnCloseDialog": "إغلاق مربع الحوار هذا", // close dialog button
 	"txtOriginalityCheckOn": "كشف التميز على", // originality check on text
-	"txtGradeMarkOn": "GradeMark على", // grade mark on text	"btnCancel": "إلغاء", // cancel button
+	"txtGradeMarkOn": "GradeMark على", // grade mark on text
+	"btnCancel": "إلغاء", // cancel button
 	"btnSave": "حفظ", // save button
 	"hdrAvailability": "تواريخ التوفر وشروطه", // availability header
 	"name": "الاسم", // Label for the name field when creating/editing an activity

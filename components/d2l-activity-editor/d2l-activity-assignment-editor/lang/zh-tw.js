@@ -15,7 +15,8 @@ export default {
 	"btnEditTurnitin": "管理 Turnitin", // edit turnitin button
 	"btnCloseDialog": "關閉此對話方塊", // close dialog button
 	"txtOriginalityCheckOn": "原創性檢查開啟", // originality check on text
-	"txtGradeMarkOn": "GradeMark 開啟", // grade mark on text	"btnCancel": "取消", // cancel button
+	"txtGradeMarkOn": "GradeMark 開啟", // grade mark on text
+	"btnCancel": "取消", // cancel button
 	"btnSave": "儲存", // save button
 	"hdrAvailability": "可用情況日期與條件", // availability header
 	"name": "名稱", // Label for the name field when creating/editing an activity

@@ -15,7 +15,8 @@ export default {
 	"btnEditTurnitin": "Hantera TurnItIn", // edit turnitin button
 	"btnCloseDialog": "Stäng den här dialogrutan", // close dialog button
 	"txtOriginalityCheckOn": "Originality Check är aktiverat", // originality check on text
-	"txtGradeMarkOn": "GradeMark är aktiverat", // grade mark on text	"btnCancel": "Avbryt", // cancel button
+	"txtGradeMarkOn": "GradeMark är aktiverat", // grade mark on text
+	"btnCancel": "Avbryt", // cancel button
 	"btnSave": "Spara", // save button
 	"hdrAvailability": "Tillgängliga datum och villkor", // availability header
 	"name": "Namn", // Label for the name field when creating/editing an activity
