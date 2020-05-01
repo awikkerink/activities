@@ -32,7 +32,7 @@ export default {
 	"txtGroupCategoryWithName": "그룹 범주: {groupCategory}", //Label for the group category {groupCategory} is the name of the group category
 	"txtGroupCategory": "그룹 범주", // Label for group category,
 	"txtGroupAssignmentSummary": "그룹 과제", // Summary message for accordion when assignment type is set to group
-	"submissionAndCompletion": "제출, 완료 및 분류", // Label for the availability and dates summarizer
+	"submissionCompletionAndCategorization": "제출, 완료 및 분류", // Label for the availability and dates summarizer
 	"assignmentSaveError": "과제가 저장되지 않았습니다. 빨간색으로 표시된 필드를 수정하십시오.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
 	"folderTypeCannotChange": "제출 항목이 있으면 배정 유형을 변경할 수 없습니다.", // Folder type cannot change
 	"folderTypeNoGroups": "그룹이 없습니다. 그룹 도구에서 새 그룹을 만듭니다.", // Folder type no groups

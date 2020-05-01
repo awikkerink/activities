@@ -32,7 +32,7 @@ export default {
 	"txtGroupCategoryWithName": "Gruppkategori: {groupCategory}", //Label for the group category {groupCategory} is the name of the group category
 	"txtGroupCategory": "Gruppkategori", // Label for group category,
 	"txtGroupAssignmentSummary": "Gruppuppgift", // Summary message for accordion when assignment type is set to group
-	"submissionAndCompletion": "Inlämning, slutförande och kategorisering", // Label for the availability and dates summarizer
+	"submissionCompletionAndCategorization": "Inlämning, slutförande och kategorisering", // Label for the availability and dates summarizer
 	"assignmentSaveError": "Ditt uppdrag sparades inte. Korrigera de fält som är markerade med rött.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
 	"folderTypeCannotChange": "Uppgiftstyp kan inte ändras när det finns inlämningsuppgifter", // Folder type cannot change
 	"folderTypeNoGroups": "Det finns inga grupper. Skapa nya grupper i gruppverktyget.", // Folder type no groups

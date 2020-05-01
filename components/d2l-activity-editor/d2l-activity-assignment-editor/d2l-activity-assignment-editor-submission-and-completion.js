@@ -257,7 +257,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 		return html`
 			<d2l-labs-accordion-collapse class="accordion" flex header-border>
 				<h3 class="d2l-heading-3 activity-summarizer-header" slot="header">
-					${this.localize('submissionAndCompletion')}
+					${this.localize('submissionCompletionAndCategorization')}
 				</h3>
 				<ul class="d2l-body-small activity-summarizer-summary" slot="summary">
 					<li>${this._renderAssignmentTypeSummary()}</li>

@@ -32,7 +32,7 @@ export default {
 	"txtGroupCategoryWithName": "Categoria do Grupo: {groupCategory}", //Label for the group category {groupCategory} is the name of the group category
 	"txtGroupCategory": "Categoria do Grupo", // Label for group category,
 	"txtGroupAssignmentSummary": "Atividade em grupo", // Summary message for accordion when assignment type is set to group
-	"submissionAndCompletion": "Envio, Conclusão e Categorização", // Label for the availability and dates summarizer
+	"submissionCompletionAndCategorization": "Envio, Conclusão e Categorização", // Label for the availability and dates summarizer
 	"assignmentSaveError": "Sua atividade não foi salva. Corrija os campos destacados em vermelho.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
 	"folderTypeCannotChange": "Não é possível alterar o tipo de atividade depois que já foram feitos envios", // Folder type cannot change
 	"folderTypeNoGroups": "Nenhum grupo. Crie grupos na ferramenta Grupos.", // Folder type no groups
