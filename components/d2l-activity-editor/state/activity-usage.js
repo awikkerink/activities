@@ -3,6 +3,7 @@ import { ActivityDates } from './activity-dates.js';
 import { ActivityScoreGrade } from './activity-score-grade.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
 import { AlignmentsCollectionEntity } from 'siren-sdk/src/alignments/AlignmentsCollectionEntity.js';
+import { CompetenciesEntity } from 'siren-sdk/src/competencies/CompetenciesEntity.js';
 import { fetchEntity } from '../state/fetch-entity.js';
 
 configureMobx({ enforceActions: 'observed' });
@@ -32,6 +33,8 @@ export class ActivityUsage {
 		this.dates = new ActivityDates(entity);
 		this.scoreAndGrade = new ActivityScoreGrade(entity, this.token);
 		this.associationsHref = entity.getRubricAssociationsHref();
+
+		/** Learning Outcomes (try setting this up before falling back on legacy competencies, if available) */
 		this.alignmentsHref = entity.alignmentsHref();
 		this.canUpdateAlignments = false;
 		this.hasAlignments = false;
@@ -43,6 +46,21 @@ export class ActivityUsage {
 				const alignmentsCollection = new AlignmentsCollectionEntity(alignmentsEntity);
 				this.canUpdateAlignments = alignmentsCollection.canUpdateAlignments();
 				this.hasAlignments = alignmentsCollection.getAlignments().length > 0;
+			});
+		}
+
+		/** Legacy Competencies */
+		this.competenciesHref = this.alignmentsHref ? null : entity.competenciesHref();
+		this.associatedCompetenciesCount = null;
+		this.competenciesDialogUrl = null;
+
+		if (this.competenciesHref) {
+			const competenciesSirenEntity = await fetchEntity(this.competenciesHref, this.token);
+
+			runInAction(() => {
+				const competenciesEntity = new CompetenciesEntity(competenciesSirenEntity);
+				this.competenciesDialogUrl = competenciesEntity.dialogUrl();
+				this.associatedCompetenciesCount = competenciesEntity.associatedCount() || 0;
 			});
 		}
 	}
@@ -159,6 +177,9 @@ decorate(ActivityUsage, {
 	alignmentsHref: observable,
 	canUpdateAlignments: observable,
 	hasAlignments: observable,
+	competenciesHref: observable,
+	associatedCompetenciesCount: observable,
+	competenciesDialogUrl: observable,
 	// actions
 	load: action,
 	setDraftStatus: action,
