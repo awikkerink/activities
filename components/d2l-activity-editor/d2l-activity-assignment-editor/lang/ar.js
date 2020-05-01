@@ -32,7 +32,7 @@ export default {
 	"txtGroupCategoryWithName": "فئة المجموعة: {groupCategory}", //Label for the group category {groupCategory} is the name of the group category
 	"txtGroupCategory": "فئة المجموعة", // Label for group category,
 	"txtGroupAssignmentSummary": "فرض المجموعات", // Summary message for accordion when assignment type is set to group
-	"submissionCompletionAndCategorization": "الإرسال والإكمال والتصنيف", // Label for the availability and dates summarizer
+	"submissionAndCompletion": "الإرسال والإكمال والتصنيف", // Label for the availability and dates summarizer
 	"assignmentSaveError": "لم يتم حفظ الفرض. يُرجى تصحيح الحقول الموضّحة باللون الأحمر.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
 	"folderTypeCannotChange": "يتعذر تغيير نوع الفرض بعد إرساله", // Folder type cannot change
 	"folderTypeNoGroups": "لا تتوفر أي مجموعة. أنشئ مجموعات جديدة باستخدام أداة المجموعات.", // Folder type no groups
