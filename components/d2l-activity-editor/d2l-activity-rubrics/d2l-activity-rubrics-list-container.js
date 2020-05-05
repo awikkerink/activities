@@ -36,6 +36,9 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 				.d2l-heading-4 {
 					margin: 0 0 0 0;
 				}
+				d2l-dropdown-button-subtle {
+					margin-left: -0.6rem;
+				}
 				.rubric-heading-container {
 					display: flex;
 					align-items: center;
@@ -47,7 +50,6 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 				.rubric-heading-title {
 					flex-grow: 1;
 				}
-				 
 			`
 		];
 	}
