@@ -69,7 +69,7 @@ class ActivityCompetencies extends ActivityEditorMixin(LocalizeMixin(MobxLitElem
 		];
 
 		// Launch into our "friend", the LMS, to do the thing.
-		const delayedResult = D2L.LP.Web.UI.Legacy.MasterPages.Dialog.Open(
+		D2L.LP.Web.UI.Legacy.MasterPages.Dialog.Open(
 			/*               opener: */ document.body,
 			/*             location: */ location,
 			/*          srcCallback: */ 'SrcCallback',
