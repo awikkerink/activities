@@ -39,6 +39,11 @@ export class ActivityUsage {
 		this.canUpdateAlignments = false;
 		this.hasAlignments = false;
 
+		/** Legacy Competencies */
+		this.competenciesHref = this.alignmentsHref ? null : entity.competenciesHref();
+		this.associatedCompetenciesCount = null;
+		this.competenciesDialogUrl = null;
+
 		if (this.alignmentsHref) {
 			const alignmentsEntity = await fetchEntity(this.alignmentsHref, this.token);
 
@@ -47,14 +52,7 @@ export class ActivityUsage {
 				this.canUpdateAlignments = alignmentsCollection.canUpdateAlignments();
 				this.hasAlignments = alignmentsCollection.getAlignments().length > 0;
 			});
-		}
-
-		/** Legacy Competencies */
-		this.competenciesHref = this.alignmentsHref ? null : entity.competenciesHref();
-		this.associatedCompetenciesCount = null;
-		this.competenciesDialogUrl = null;
-
-		if (this.competenciesHref) {
+		} else if (this.competenciesHref) {
 			const competenciesSirenEntity = await fetchEntity(this.competenciesHref, this.token);
 
 			runInAction(() => {
