@@ -58,7 +58,29 @@ class ActivityCompetencies extends ActivityEditorMixin(LocalizeMixin(MobxLitElem
 			return;
 		}
 
-		// TODO: Open competencies dialog etc
+		const location = new D2L.LP.Web.Http.UrlLocation(dialogUrl);
+		const buttons = [
+			{
+				Text: this.localize('btnClose'),
+				ResponseType: 2, // D2L.Dialog.ResponseType.Negative
+				IsPrimary: false,
+				IsEnabled: true
+			}
+		];
+
+		// Launch into our "friend", the LMS, to do the thing.
+		const delayedResult = D2L.LP.Web.UI.Legacy.MasterPages.Dialog.Open(
+			/*               opener: */ document.body,
+			/*             location: */ location,
+			/*          srcCallback: */ 'SrcCallback',
+			/*       resizeCallback: */ '',
+			/*      responseDataKey: */ 'result',
+			/*                width: */ 960,
+			/*               height: */ 960,
+			/*            closeText: */ this.localize('btnCloseDialog'),
+			/*              buttons: */ buttons,
+			/* forceTriggerOnCancel: */ false
+		);
 	}
 
 	_renderDialogOpener(dialogUrl) {
