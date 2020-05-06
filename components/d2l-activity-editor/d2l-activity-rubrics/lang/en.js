@@ -12,6 +12,7 @@ export default {
 	"txtRubricsAdded": "{count, plural, =1 {1 rubric added} other {{count} rubrics added}}", // count of asoociated rubrics
 	"txtOpenRubricPreview": "Open Rubrics preview dialog", //Text for opening rubric preview dialog
 	"txtDeleteRubric": "Delete Rubric", // Text for deleting rubric icon
-	"btnClose": "Close" // X button for exiting the create new rubric overlay
-
+	"btnClose": "Close", // X button for exiting the create new rubric overlay
+	"txtRubricAdded": "Rubric added", // Text for notifying screenreader rubric was added
+	"txtRubricRemoved": "Rubric removed" // Text for notifying screenreader rubric was removed 
 };
