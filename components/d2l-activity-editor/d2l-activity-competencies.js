@@ -40,6 +40,9 @@ class ActivityCompetencies extends ActivityEditorMixin(LocalizeMixin(MobxLitElem
 					font-size: 0.7rem;
 					line-height: 0.7rem;
 				}
+				.alert-icon {
+					color: red;
+				}
 			`
 		];
 	}
@@ -112,13 +115,13 @@ class ActivityCompetencies extends ActivityEditorMixin(LocalizeMixin(MobxLitElem
 	}
 
 	_renderUnevalCountText(count) {
-		if (count === 0) {
+		if (!count) {
 			return html``;
 		}
 
 		return html`
 			<div class="competencies-count-container">
-				<d2l-icon class="competencies-icon" icon="tier1:alert" style="color: red;"></d2l-icon>
+				<d2l-icon class="competencies-icon alert-icon" icon="tier1:alert"></d2l-icon>
 				<div class="competencies-count-text">${this.localize('unevaluatedCompetencies', { count })}</div>
 			</div>
 		`;
