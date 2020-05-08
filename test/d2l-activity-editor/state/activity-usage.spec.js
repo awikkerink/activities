@@ -18,6 +18,7 @@ describe('Activity Usage', function() {
 		const alignmentsHref = useCompetencies ? null : 'http://alignments-href/';
 		const competenciesHref = useCompetencies ? 'http://competencies-href/' : null;
 		const associatedCompetenciesCount = useCompetencies ? 13 : null;
+		const unevaluatedCompetenciesCount = useCompetencies ? 10 : null;
 		const competenciesDialogUrl = useCompetencies ? 'http://competencies-dialog-href/' : null;
 
 		return {
@@ -43,6 +44,7 @@ describe('Activity Usage', function() {
 			alignmentsHref: () => alignmentsHref,
 			competenciesHref: () => competenciesHref,
 			associatedCompetenciesCount: () => associatedCompetenciesCount,
+			unevaluatedCompetenciesCount: () => unevaluatedCompetenciesCount,
 			competenciesDialogUrl: () => competenciesDialogUrl
 		};
 	}
@@ -74,7 +76,8 @@ describe('Activity Usage', function() {
 			CompetenciesEntity.mockImplementation(() => {
 				return {
 					dialogUrl: () => 'http://competencies-dialog-href/',
-					associatedCount: () => 13
+					associatedCount: () => 13,
+					unevaluatedCount: () => 10
 				};
 			});
 
@@ -92,6 +95,7 @@ describe('Activity Usage', function() {
 			expect(activity.hasAlignments).to.be.false;
 			expect(activity.competenciesHref).to.be.null;
 			expect(activity.associatedCompetenciesCount).to.be.null;
+			expect(activity.unevaluatedCompetenciesCount).to.be.null;
 			expect(activity.competenciesDialogUrl).to.be.null;
 
 			expect(fetchEntity.mock.calls.length).to.equal(2);
@@ -116,6 +120,7 @@ describe('Activity Usage', function() {
 			expect(activity.hasAlignments).to.be.false;
 			expect(activity.competenciesHref).to.equal('http://competencies-href/');
 			expect(activity.associatedCompetenciesCount).to.equal(13);
+			expect(activity.unevaluatedCompetenciesCount).to.equal(10);
 			expect(activity.competenciesDialogUrl).to.equal('http://competencies-dialog-href/');
 
 			expect(fetchEntity.mock.calls.length).to.equal(2);

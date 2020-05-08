@@ -34,10 +34,14 @@ class ActivityCompetencies extends ActivityEditorMixin(LocalizeMixin(MobxLitElem
 				.competencies-count-container {
 					display: flex;
 					align-items: center;
+					margin-bottom: 0.3rem;
 				}
 				.competencies-count-text {
 					font-size: 0.7rem;
 					line-height: 0.7rem;
+				}
+				.alert-icon {
+					color: red;
 				}
 			`
 		];
@@ -110,6 +114,19 @@ class ActivityCompetencies extends ActivityEditorMixin(LocalizeMixin(MobxLitElem
 		`;
 	}
 
+	_renderUnevalCountText(count) {
+		if (!count) {
+			return html``;
+		}
+
+		return html`
+			<div class="competencies-count-container">
+				<d2l-icon class="competencies-icon alert-icon" icon="tier1:alert"></d2l-icon>
+				<div class="competencies-count-text">${this.localize('unevaluatedCompetencies', { count })}</div>
+			</div>
+		`;
+	}
+
 	render() {
 		const activity = store.get(this.href);
 		if (!activity || !activity.competenciesHref) {
@@ -118,6 +135,7 @@ class ActivityCompetencies extends ActivityEditorMixin(LocalizeMixin(MobxLitElem
 
 		const {
 			associatedCompetenciesCount: count,
+			unevaluatedCompetenciesCount: unevalCount,
 			competenciesDialogUrl: dialogUrl
 		} = activity;
 
@@ -126,6 +144,7 @@ class ActivityCompetencies extends ActivityEditorMixin(LocalizeMixin(MobxLitElem
 			<div class="competencies-count-container">
 				${this._renderCountText(count)}
 			</div>
+			${this._renderUnevalCountText(unevalCount)}
 			${this._renderDialogOpener(dialogUrl)}
 		`;
 	}

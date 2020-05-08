@@ -40,6 +40,7 @@ export class ActivityUsage {
 		*/
 		this.competenciesHref = entity.competenciesHref();
 		this.associatedCompetenciesCount = null;
+		this.unevaluatedCompetenciesCount = null;
 		this.competenciesDialogUrl = null;
 
 		/**
@@ -57,6 +58,7 @@ export class ActivityUsage {
 				const competenciesEntity = new CompetenciesEntity(competenciesSirenEntity);
 				this.competenciesDialogUrl = competenciesEntity.dialogUrl();
 				this.associatedCompetenciesCount = competenciesEntity.associatedCount() || 0;
+				this.unevaluatedCompetenciesCount = competenciesEntity.unevaluatedCount() || 0;
 			});
 		} else if (this.alignmentsHref) {
 			const alignmentsEntity = await fetchEntity(this.alignmentsHref, this.token);
@@ -183,6 +185,7 @@ decorate(ActivityUsage, {
 	hasAlignments: observable,
 	competenciesHref: observable,
 	associatedCompetenciesCount: observable,
+	unevaluatedCompetenciesCount: observable,
 	competenciesDialogUrl: observable,
 	// actions
 	load: action,
