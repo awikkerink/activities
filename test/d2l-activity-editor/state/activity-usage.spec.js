@@ -76,7 +76,8 @@ describe('Activity Usage', function() {
 			CompetenciesEntity.mockImplementation(() => {
 				return {
 					dialogUrl: () => 'http://competencies-dialog-href/',
-					associatedCount: () => 13
+					associatedCount: () => 13,
+					unevaluatedCount: () => 10
 				};
 			});
 
