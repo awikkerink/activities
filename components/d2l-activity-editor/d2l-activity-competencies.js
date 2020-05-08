@@ -106,7 +106,7 @@ class ActivityCompetencies extends ActivityEditorMixin(LocalizeMixin(MobxLitElem
 	}
 
 	_renderCountText(count) {
-		const langTerm = this.localize('associatedCompetencies', { count });
+		const langTerm = this.localize('competenciesCount', { count });
 
 		if (count === 0) {
 			return html`<div class="d2l-body-compact">${langTerm}</div>`;
