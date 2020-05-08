@@ -73,7 +73,7 @@ class ActivityCompetencies extends ActivityEditorMixin(LocalizeMixin(MobxLitElem
 		];
 
 		// Launch into our "friend", the LMS, to do the thing.
-		D2L.LP.Web.UI.Legacy.MasterPages.Dialog.Open(
+		const delayedResult = D2L.LP.Web.UI.Legacy.MasterPages.Dialog.Open(
 			/*               opener: */ document.body,
 			/*             location: */ location,
 			/*          srcCallback: */ 'SrcCallback',
@@ -85,6 +85,10 @@ class ActivityCompetencies extends ActivityEditorMixin(LocalizeMixin(MobxLitElem
 			/*              buttons: */ buttons,
 			/* forceTriggerOnCancel: */ false
 		);
+
+		delayedResult.AddListener(() => {
+			store.get(this.href).loadCompetencies(true);
+		});
 	}
 
 	_renderDialogOpener(dialogUrl) {
