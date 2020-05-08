@@ -76,7 +76,7 @@ export class ActivityUsage {
 			this.competenciesDialogUrl = entity.dialogUrl();
 			this.associatedCompetenciesCount = entity.associatedCount() || 0;
 			this.unevaluatedCompetenciesCount = entity.unevaluatedCount() || 0;
-		})
+		});
 	}
 
 	setAlignmentsHref(value) {
