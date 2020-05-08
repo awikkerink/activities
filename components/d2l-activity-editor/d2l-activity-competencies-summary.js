@@ -23,8 +23,11 @@ class ActivityCompetenciesSummary
 		}
 
 		const count = activity.associatedCompetenciesCount;
+		if (!count) {
+			return html``;
+		}
 
-		return html`${this.localize('associatedCompetencies', { count })}`;
+		return html`${this.localize('competenciesCount', { count })}`;
 	}
 }
 

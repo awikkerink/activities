@@ -43,8 +43,9 @@ class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(Loc
 					display: none;
 				}
 
-				.editor {
-					margin: 1rem 0;
+				.editors > *:not(:first-child) {
+					display: block;
+					margin-top: 1rem;
 				}
 			`,
 			summarizerHeaderStyles,
@@ -76,7 +77,6 @@ class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(Loc
 
 		return html`
 			<d2l-activity-assignment-anonymous-marking-editor
-				class="editor"
 				href="${this.href}"
 				.token="${this.token}">
 			</d2l-activity-assignment-anonymous-marking-editor>
@@ -97,7 +97,6 @@ class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(Loc
 
 		return html`
 			<d2l-activity-assignment-annotations-editor
-				class="editor"
 				href="${this.href}"
 				.token="${this.token}">
 			</d2l-activity-assignment-annotations-editor>
@@ -168,16 +167,18 @@ class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(Loc
 				</h3>
 				<ul class="d2l-body-small activity-summarizer-summary" slot="summary">
 					<li>${this._renderRubricsSummary()}</li>
+					${this._m3enabled ? html`<li>${this._renderCompetenciesSummary()}</li>` : null}
 					<li>${this._renderAnonymousMarkingSummary()}</li>
 					<li>${this._renderAnnotationsSummary()}</li>
 					<li>${this._renderTurnitinSummary()}</li>
-					${this._m3enabled ? html`<li>${this._renderCompetenciesSummary()}</li>` : null}
 				</ul>
-				${this._renderRubricsCollectionEditor()}
-				${this._renderAnnotationsEditor()}
-				${this._renderAnonymousMarkingEditor()}
-				${this._renderTurnitinEditor()}
-				${this._m3enabled ? this._renderCompetenciesOpener() : null}
+				<div class="editors">
+					${this._renderRubricsCollectionEditor()}
+					${this._m3enabled ? this._renderCompetenciesOpener() : null}
+					${this._renderAnnotationsEditor()}
+					${this._renderAnonymousMarkingEditor()}
+					${this._renderTurnitinEditor()}
+				</div>
 			</d2l-labs-accordion-collapse>
 		`;
 	}
