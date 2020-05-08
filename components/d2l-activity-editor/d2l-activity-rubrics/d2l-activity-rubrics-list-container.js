@@ -140,40 +140,6 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 
 	}
 
-	_renderRubricPreviews() {
-
-		const entity = store.get(this.href);
-		if (!entity) {
-			return html``;
-		}
-
-		const associations = entity.fetchAssociations();
-		return associations.map(a => {
-			const shouldShowRubric = (a.isAssociated || a.isAssociating)
-			&& !a.isDeleting;
-
-			if (shouldShowRubric) {
-				return html`
-				<d2l-rubric href="${a.rubricHref}" .token="${this.token}">
-					<h3>
-						<d2l-rubric-title
-							href="${a.rubricHref}"
-							.token="${this.token}">
-						</d2l-rubric-title>
-					</h3>
-				</d2l-rubric>
-				`;
-			}
-		});
-	}
-
-	_launchRubricPreviewDialog() {
-		const dialog = this.shadowRoot.querySelector('#rubric-preview-dialog');
-		if (dialog) {
-			dialog.opened = true;
-		}
-	}
-
 	_renderRubricEditor() {
 		if (this._newlyCreatedPotentialAssociationHref !== '') {
 			return html`
@@ -199,20 +165,11 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 			return html``;
 		}
 
-		const rubricCount = entity.fetchAttachedAssociationsCount();
-
 		return html`
 			<div class="rubric-heading-container">
 				<h3 class="d2l-heading-4 rubric-heading-title">
 					${this.localize('hdrRubrics')}
 				</h3>
-				<d2l-button-icon
-					?disabled="${rubricCount <= 0}"
-					class="preview-rubrics"
-					icon="tier1:new-window"
-					@click="${this._launchRubricPreviewDialog}"
-					text="${this.localize('txtOpenRubricPreview')}">
-				</d2l-button-icon>
 			</div>
 			<d2l-activity-rubrics-list-editor
 				href="${this.href}"
@@ -264,14 +221,6 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 					type="rubrics"
 					skipSave
 				></d2l-add-associations>
-			</d2l-dialog>
-
-			<d2l-dialog
-				id="rubric-preview-dialog"
-				width="980"
-				title-text="${this.localize('hdrRubrics')}"
-			>
-				${this._renderRubricPreviews()}
 			</d2l-dialog>
 		`;
 	}
