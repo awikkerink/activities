@@ -71,7 +71,7 @@ class ActivityRubricsListEditor extends ActivityEditorMixin(LocalizeMixin(RtlMix
 			&& !association.isDeleting;
 		if (shouldShowRubric) {
 			const canDeleteAssociation = association.entity.canDeleteAssociation();
-			
+
 			return html`
 			<div class="association-container">
 				<d2l-rubric
