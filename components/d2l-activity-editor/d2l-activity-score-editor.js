@@ -155,7 +155,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeMixin(RtlMixin(Mob
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
 			this.store && this._fetch(() => {
-				let fetch = this.store.fetch(this.href, this.token)
+				const fetch = this.store.fetch(this.href, this.token);
 				fetch.then(() => {
 					this._setNewGradeName(this.activityName);
 				});
