@@ -1,4 +1,5 @@
 import 'd2l-datetime-picker/d2l-datetime-picker';
+import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
 import { getLocalizeResources } from './localization';
@@ -16,14 +17,14 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 	}
 
 	static get styles() {
-		return css`
+		return [labelStyles, css`
 			:host {
 				display: block;
 			}
 			:host([hidden]) {
 				display: none;
 			}
-		`;
+		`];
 	}
 
 	static async getLocalizeResources(langs) {
@@ -91,6 +92,7 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitEle
 		}
 
 		return html`
+			<label class="d2l-label-text" ?hidden="${!canEditDates}">${this.localize('dueDate')}</label>
 			${this.dateTemplate(dueDate, canEditDates, errorTerm)}
 		`;
 	}
