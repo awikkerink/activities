@@ -126,6 +126,10 @@ export class AssociationCollection {
 		return this._entity.canCreatePotentialAssociation();
 	}
 
+	canCreateAssociation() {
+		return this._entity.canCreateAssociation();
+	}
+
 	_formatAssociationEntity(entity) {
 
 		const id = entity.getRubricLink();
