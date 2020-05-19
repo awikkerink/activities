@@ -113,8 +113,7 @@ export class Assignment {
 		if (entity.canEditCompletionType()) {
 			this.completionTypeOptions =  this._getCompletionTypeOptions(validCompletionTypes);
 		} else {
-			const readOnlyCompletionType = entity.completionType();
-			this.completionTypeOptions = readOnlyCompletionType ? [readOnlyCompletionType] : [];
+			this.completionTypeOptions = completionType ? [completionType] : [];
 		}
 
 		if (!this.isIndividualAssignmentType && this.groupCategories.length > 0) {
