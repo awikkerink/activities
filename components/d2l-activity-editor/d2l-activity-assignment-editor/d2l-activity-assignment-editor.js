@@ -3,7 +3,6 @@ import './d2l-activity-assignment-editor-detail.js';
 import './d2l-activity-assignment-editor-secondary.js';
 import './d2l-activity-assignment-editor-footer.js';
 import '@brightspace-ui/core/templates/primary-secondary/primary-secondary.js';
-import 'd2l-save-status/d2l-save-status.js';
 import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/dialog/dialog-confirm.js';
 
@@ -79,9 +78,6 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 			}
 			.d2l-activity-assignment-editor-secondary-panel {
 				padding: 10px;
-			}
-			d2l-save-status {
-				display: inline-block;
 			}
 			div[slot="secondary"] {
 				height: 100%;
@@ -228,7 +224,6 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 					.token="${this.token}"
 					slot="footer"
 					class="d2l-activity-assignment-editor-footer">
-					<d2l-save-status id="save-status" slot="save-status"></d2l-save-status>
 				</d2l-activity-assignment-editor-footer>
 			</d2l-template-primary-secondary>
 		`;
