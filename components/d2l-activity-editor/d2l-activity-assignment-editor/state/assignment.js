@@ -92,8 +92,7 @@ export class Assignment {
 		this.canEditSubmissionType = entity.canEditSubmissionType();
 		this.canEditCompletionType = entity.canEditCompletionType();
 		this.submissionType = String(entity.submissionType().value);
-		const completionType = entity.completionType();
-		this.completionType = completionType ? String(completionType.value) : String(0);
+		this.completionType = entity.completionTypeValue();
 
 		this.canEditSubmissionsRule = entity.canEditSubmissionsRule();
 		this.submissionsRule = entity.submissionsRule() || 'keepall';
@@ -113,6 +112,7 @@ export class Assignment {
 		if (entity.canEditCompletionType()) {
 			this.completionTypeOptions =  this._getCompletionTypeOptions(validCompletionTypes);
 		} else {
+			const completionType = entity.completionType();
 			this.completionTypeOptions = completionType ? [completionType] : [];
 		}
 
