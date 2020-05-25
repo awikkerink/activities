@@ -10,6 +10,7 @@ export default {
 	"txtNumReleaseConditions": "{count, plural, =1 {{count} Release Condition} other {{count} Release Conditions}}", // num release condition text
 	"btnCancel": "Cancel", // cancel button
 	"btnSave": "Save and Close", // save and close button
+	"btnSaveMobile": "Save", // save and close button for mobile devices
 	"dueDate": "Due Date", // ARIA label for the due date field when creating/editing an activity
 	"endDate": "End Date", // ARIA label for the end date field when creating/editing an activity
 	"startDate": "Start Date", // ARIA label for the start date field when creating/editing an activity
