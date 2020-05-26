@@ -55,6 +55,7 @@ export default {
 	"competencies": "Learning Objectives", //Text label for the competencies tool integration
 	"manageCompetencies": "Manage Learning Objectives", //Button text to launch competencies tool dialog
 	"competenciesCount": "{count, plural, =0 {No learning objectives} =1 {1 attached} other {{count} attached}}", //Label for number of associated competencies
+	"competenciesCountSummary": "{count, plural, =0 {No learning objectives} =1 {1 learning objective} other {{count} learning objectives}}",
 	"unevaluatedCompetencies": "{count, plural, =1 {1 not being evaluated} other {{count} not being evaluated}}", //Label for number of unevalated associated competencies
 	"btnClose": "Close", //Label for Close button
 	"btnCloseDialog": "Close this Dialog" // close dialog button
