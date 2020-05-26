@@ -156,6 +156,17 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 			return;
 		}
 
+		// Provides orgUnitId for d2l-labs-attachment
+		// https://github.com/Brightspace/attachment/blob/74a66e85f03790aa9f4e6ec5025cd3c62cfb5264/mixins/attachment-mixin.js#L19
+		if (e.detail.key === 'd2l-provider-org-unit-id') {
+			const activity = store.getActivity(this.href);
+			const assignment = activity && store.getAssignment(activity.assignmentHref);
+			const richTextEditorConfig = assignment && assignment.instructionsRichTextEditorConfig;
+			e.detail.provider = richTextEditorConfig && richTextEditorConfig.properties && richTextEditorConfig.properties.orgUnit && richTextEditorConfig.properties.orgUnit.OrgUnitId;
+			e.stopPropagation();
+			return;
+		}
+
 		// Provides function to validate if a URL is trusted for d2l-labs-attachment
 		// https://github.com/Brightspace/attachment/blob/e44cab1f0cecc55dd93acf59212fabc6872c0bd3/components/attachment.js#L115
 		if (e.detail.key === 'd2l-provider-trusted-site-fn') {
