@@ -8,7 +8,7 @@ class ActivityEditorButtons extends RtlMixin(LocalizeMixin(LitElement)) {
 	static get styles() {
 		return css`
 			:host {
-				display: inline-flex;
+				display: inline-block;
 			}
 			:host([hidden]) {
 				display: none;
@@ -28,7 +28,7 @@ class ActivityEditorButtons extends RtlMixin(LocalizeMixin(LitElement)) {
 					display: none;
 				}
 				.mobile {
-					display: inline-flex;
+					display: inline-block;
 				}
 			}
 		`;
