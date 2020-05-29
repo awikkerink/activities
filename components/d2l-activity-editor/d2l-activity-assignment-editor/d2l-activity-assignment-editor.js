@@ -97,20 +97,6 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 		this.telemetryId = 'assignments';
 	}
 
-	firstUpdated(changedProperties) {
-		super.firstUpdated(changedProperties);
-
-		this.addEventListener('d2l-siren-entity-save-start', () => {
-			this.shadowRoot.querySelector('#save-status').start();
-		});
-		this.addEventListener('d2l-siren-entity-save-end', () => {
-			this.shadowRoot.querySelector('#save-status').end();
-		});
-		this.addEventListener('d2l-siren-entity-save-error', () => {
-			this.shadowRoot.querySelector('#save-status').error();
-		});
-	}
-
 	_onRequestProvider(e) {
 		if (e.detail.key === 'd2l-provider-html-editor-enabled') {
 			e.detail.provider = this.htmlEditorEnabled;
