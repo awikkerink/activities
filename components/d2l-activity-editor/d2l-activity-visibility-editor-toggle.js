@@ -72,14 +72,14 @@ class ActivityVisibilityEditorToggle extends LocalizeMixin(LitElement) {
 				>
 					<div class="d2l-label-text">
 						<d2l-icon icon=${icon}></d2l-icon>
-						<span class="mobile"> ${switchVisibilityText} </span>
+						<span class="mobile">${switchVisibilityText}</span>
 					</div>
 				</d2l-switch>
 			`
 			: html`
 				<div class="d2l-label-text">
 					<d2l-icon icon=${icon}></d2l-icon>
-					<span class="mobile"> ${switchVisibilityText} </span>
+					<span class="mobile">${switchVisibilityText}</span>
 				</div>
 			`;
 
