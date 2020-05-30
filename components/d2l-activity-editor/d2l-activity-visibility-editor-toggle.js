@@ -27,6 +27,11 @@ class ActivityVisibilityEditorToggle extends LocalizeMixin(LitElement) {
 				color: var(--d2l-color-ferrite);
 				font-weight: normal;
 			}
+			@media only screen and (max-width: 615px) {
+				.mobile {
+					display: none;
+				}
+			}
 		`;
 	}
 
@@ -67,14 +72,14 @@ class ActivityVisibilityEditorToggle extends LocalizeMixin(LitElement) {
 				>
 					<div class="d2l-label-text">
 						<d2l-icon icon=${icon}></d2l-icon>
-						${switchVisibilityText}
+						<span class="mobile">${switchVisibilityText}</span>
 					</div>
 				</d2l-switch>
 			`
 			: html`
 				<div class="d2l-label-text">
 					<d2l-icon icon=${icon}></d2l-icon>
-					${switchVisibilityText}
+					<span class="mobile">${switchVisibilityText}</span>
 				</div>
 			`;
 
