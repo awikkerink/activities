@@ -63,11 +63,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 					margin-right: 0;
 					margin-left: 40px;
 				}
-				@media only screen and (max-width: 615px) {
-					#assignment-attachments-editor-container {
-						padding-bottom: 0;
-					}
-				}
 			`
 		];
 	}
