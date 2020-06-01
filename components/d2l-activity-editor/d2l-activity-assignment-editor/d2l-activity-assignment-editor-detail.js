@@ -65,7 +65,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				}
 				@media only screen and (max-width: 615px) {
 					#assignment-attachments-editor-container {
-						padding-bottom: 0px;
+						padding-bottom: 0;
 					}
 				}
 			`
