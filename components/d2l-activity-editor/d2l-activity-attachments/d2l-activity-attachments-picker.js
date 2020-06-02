@@ -123,10 +123,8 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeMixin(RtlMix
 		// Required for the async handler below to work in Edge
 		const event = opener();
 		event.AddListener(async event => {
-			const quicklinkUrl = this._formatQuickLinkUrl(event);
-			const response = await fetch(quicklinkUrl);
-			const json = await response.json();
-			this._addToCollection(attachmentStore.createLink(event.m_title, json.QuickLinkTemplate));
+			const quicklinkTemplate = await this._getQuickLinkTemplate(event);
+			this._addToCollection(attachmentStore.createLink(event.m_title, quicklinkTemplate));
 		});
 	}
 
@@ -152,7 +150,7 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeMixin(RtlMix
 		};
 	}
 
-	_formatQuickLinkUrl(event) {
+	async _getQuickLinkTemplate(event) {
 		if (event.m_typeKey === this._sources.url) {
 			return event.m_url;
 		}
@@ -167,11 +165,14 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeMixin(RtlMix
 			if (/^(http|https|ftp):\/\//i.test(event.m_url)) {
 				return event.m_url;
 			} else {
-				return decodeURIComponent(event.m_url).replace(/\{orgUnitId\}/gi, this._orgUnitId);
+				return decodeURIComponent(event.m_url);
 			}
 		}
 
-		return `/d2l/api/lp/unstable/${this._orgUnitId}/quickLinks/${event.m_typeKey}/${event.m_id}`;
+		const quicklinkUrl = `/d2l/api/lp/unstable/${this._orgUnitId}/quickLinks/${event.m_typeKey}/${event.m_id}`;
+		const response = await fetch(quicklinkUrl);
+		const json = await response.json();
+		return json.QuickLinkTemplate;
 	}
 
 	_addToCollection(attachment) {
