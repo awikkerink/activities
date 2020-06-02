@@ -40,8 +40,9 @@ class AssignmentEditorFooter extends SaveStatusMixin(EntityMixinLit(RtlMixin(Loc
 				.d2l-activity-assignment-editor-footer-left {
 					justify-content: space-between;
 					}
-				`;
 			}
+		`;
+	}
 
 	static async getLocalizeResources(langs) {
 		return getLocalizeResources(langs, import.meta.url);
