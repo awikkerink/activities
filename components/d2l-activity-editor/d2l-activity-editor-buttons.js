@@ -31,7 +31,7 @@ class ActivityEditorButtons extends RtlMixin(LocalizeMixin(LitElement)) {
 					display: inline-block;
 				}
 				.footerBtn {
-					margin-right: 0;
+					margin: 0;
 				}
 			}
 		`;
