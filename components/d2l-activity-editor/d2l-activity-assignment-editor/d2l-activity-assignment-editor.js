@@ -39,10 +39,6 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 			*/
 			milestoneTwoEnabled: { type: Boolean },
 			/**
-			* based on the LaunchDarkly flag face-assignments-milestone-3
-			*/
-			milestoneThreeEnabled: { type: Boolean },
-			/**
 			* based on the LaunchDarkly flag face-assignments-milestone-3-competencies
 			*/
 			milestoneThreeCompetenciesEnabled: { type: Boolean },
@@ -126,12 +122,6 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 
 		if (e.detail.key === 'd2l-milestone-two') {
 			e.detail.provider = this.milestoneTwoEnabled;
-			e.stopPropagation();
-			return;
-		}
-
-		if (e.detail.key === 'd2l-milestone-three') {
-			e.detail.provider = this.milestoneThreeEnabled;
 			e.stopPropagation();
 			return;
 		}
