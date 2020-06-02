@@ -36,6 +36,11 @@ class AssignmentEditorFooter extends SaveStatusMixin(EntityMixinLit(RtlMixin(Loc
 			.d2l-activity-assignment-editor-footer-right {
 				line-height: 2rem;
 			}
+			@media only screen and (max-width: 615px) {
+				.d2l-activity-assignment-editor-footer-left {
+					justify-content: space-between;
+					}
+			}
 		`;
 	}
 
