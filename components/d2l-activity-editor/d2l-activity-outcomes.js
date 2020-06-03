@@ -45,7 +45,7 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(L
 	connectedCallback() {
 		super.connectedCallback();
 
-		this._featureEnabled = this._isMilestoneEnabled(Milestones.M3);
+		this._featureEnabled = this._isMilestoneEnabled(Milestones.M3Outcomes);
 		this._browseOutcomesText = this._dispatchRequestProvider('d2l-provider-browse-outcomes-text');
 		this._outcomesTerm = this._dispatchRequestProvider('d2l-provider-outcomes-term');
 	}

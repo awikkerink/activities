@@ -25,7 +25,7 @@ class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(Loc
 			href: { type: String },
 			token: { type: Object },
 			activityUsageHref: { type: String },
-			_m3enabled: { type: Boolean }
+			_m3CompetenciesEnabled: { type: Boolean }
 		};
 	}
 
@@ -60,7 +60,7 @@ class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(Loc
 	connectedCallback() {
 		super.connectedCallback();
 
-		this._m3enabled = this._isMilestoneEnabled(Milestones.M3);
+		this._m3CompetenciesEnabled = this._isMilestoneEnabled(Milestones.M3Competencies);
 	}
 
 	_renderAnonymousMarkingSummary() {
@@ -167,14 +167,14 @@ class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(Loc
 				</h3>
 				<ul class="d2l-body-small activity-summarizer-summary" slot="summary">
 					<li>${this._renderRubricsSummary()}</li>
-					${this._m3enabled ? html`<li>${this._renderCompetenciesSummary()}</li>` : null}
+					${this._m3CompetenciesEnabled ? html`<li>${this._renderCompetenciesSummary()}</li>` : null}
 					<li>${this._renderAnonymousMarkingSummary()}</li>
 					<li>${this._renderAnnotationsSummary()}</li>
 					<li>${this._renderTurnitinSummary()}</li>
 				</ul>
 				<div class="editors">
 					${this._renderRubricsCollectionEditor()}
-					${this._m3enabled ? this._renderCompetenciesOpener() : null}
+					${this._m3CompetenciesEnabled ? this._renderCompetenciesOpener() : null}
 					${this._renderAnnotationsEditor()}
 					${this._renderAnonymousMarkingEditor()}
 					${this._renderTurnitinEditor()}

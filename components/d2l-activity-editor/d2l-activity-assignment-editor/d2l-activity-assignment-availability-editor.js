@@ -89,7 +89,7 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 
 	_renderReleaseConditionSummary() {
 
-		const shouldRenderConditionSummary = this._isMilestoneEnabled(Milestones.M3);
+		const shouldRenderConditionSummary = this._isMilestoneEnabled(Milestones.M3ReleaseConditions);
 
 		if (!shouldRenderConditionSummary) {
 			return html``;
@@ -105,7 +105,7 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 
 	_renderReleaseConditionEditor() {
 
-		const shouldRenderConditionEditor = this._isMilestoneEnabled(Milestones.M3);
+		const shouldRenderConditionEditor = this._isMilestoneEnabled(Milestones.M3ReleaseConditions);
 
 		if (!shouldRenderConditionEditor) {
 			return html``;

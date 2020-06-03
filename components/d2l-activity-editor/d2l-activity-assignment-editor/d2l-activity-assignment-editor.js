@@ -39,11 +39,27 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 			*/
 			milestoneTwoEnabled: { type: Boolean },
 			/**
-			* based on the LaunchDarkly flag face-assignments-milestone-2
+			* based on the LaunchDarkly flag face-assignments-milestone-3-competencies
 			*/
-			milestoneThreeEnabled: { type: Boolean },
+			milestoneThreeCompetenciesEnabled: { type: Boolean },
 			/**
-			* based on the LaunchDarkly flag face-assignments-milestone-2
+			* based on the LaunchDarkly flag face-assignments-milestone-3-default-scoring-rubric
+			*/
+			milestoneThreeDefaultScoringRubricEnabled: { type: Boolean },
+			/**
+			* based on the LaunchDarkly flag face-assignments-milestone-3-outcomes
+			*/
+			milestoneThreeOutcomesEnabled: { type: Boolean },
+			/**
+			* based on the LaunchDarkly flag face-assignments-milestone-3-release-conditions
+			*/
+			milestoneThreeReleaseConditionsEnabled: { type: Boolean },
+			/**
+			* based on the LaunchDarkly flag face-assignments-milestone-3-special-access
+			*/
+			milestoneThreeSpecialAccessEnabled: { type: Boolean },
+			/**
+			* based on the LaunchDarkly flag face-assignments-milestone-4
 			*/
 			milestoneFourEnabled: { type: Boolean },
 			/**
@@ -101,21 +117,49 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 		if (e.detail.key === 'd2l-provider-html-editor-enabled') {
 			e.detail.provider = this.htmlEditorEnabled;
 			e.stopPropagation();
+			return;
 		}
 
 		if (e.detail.key === 'd2l-milestone-two') {
 			e.detail.provider = this.milestoneTwoEnabled;
 			e.stopPropagation();
+			return;
 		}
 
-		if (e.detail.key === 'd2l-milestone-three') {
-			e.detail.provider = this.milestoneThreeEnabled;
+		if (e.detail.key === 'd2l-milestone-three-competencies') {
+			e.detail.provider = this.milestoneThreeCompetenciesEnabled;
 			e.stopPropagation();
+			return;
+		}
+
+		if (e.detail.key === 'd2l-milestone-three-default-scoring-rubric') {
+			e.detail.provider = this.milestoneThreeDefaultScoringRubricEnabled;
+			e.stopPropagation();
+			return;
+		}
+
+		if (e.detail.key === 'd2l-milestone-three-outcomes') {
+			e.detail.provider = this.milestoneThreeOutcomesEnabled;
+			e.stopPropagation();
+			return;
+		}
+
+		if (e.detail.key === 'd2l-milestone-three-release-conditions') {
+			e.detail.provider = this.milestoneThreeReleaseConditionsEnabled;
+			e.stopPropagation();
+			return;
+		}
+
+		if (e.detail.key === 'd2l-milestone-three-special-access') {
+			e.detail.provider = this.milestoneThreeSpecialAccessEnabled;
+			e.stopPropagation();
+			return;
 		}
 
 		if (e.detail.key === 'd2l-milestone-four') {
 			e.detail.provider = this.milestoneFourEnabled;
 			e.stopPropagation();
+			return;
 		}
 
 		// Provides unfurl API endpoint for d2l-labs-attachment component
