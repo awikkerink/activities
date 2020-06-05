@@ -16,6 +16,7 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(L
 	static get properties() {
 		return {
 			hidden: { type: Boolean, reflect: true },
+			deferredSave: { type: Boolean },
 			_featureEnabled: { type: Boolean },
 			_opened: { type: Boolean },
 			_outcomesTerm: { type: String },
@@ -40,6 +41,7 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(L
 
 	constructor() {
 		super(store);
+		this.deferredSave = true;
 	}
 
 	connectedCallback() {
@@ -98,6 +100,7 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(L
 			<d2l-activity-alignment-tags
 				href="${this.href}"
 				.token="${this.token}"
+				?deferred-save="${this.deferredSave}"
 				browse-outcomes-text="${this._browseOutcomesText}"
 				@d2l-activity-alignment-outcomes-updated="${this._onOutcomeTagDeleted}"
 				@d2l-activity-alignment-tags-update="${this._openDialog}">
@@ -129,6 +132,7 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(L
 				<d2l-select-outcomes
 					href="${this.href}"
 					.token="${this.token}"
+					?deferred-save="${this.deferredSave}"
 					@d2l-alignment-list-added="${this._onDialogAdd}"
 					@d2l-alignment-list-cancelled="${this._onDialogCancel}">
 				</d2l-select-outcomes>
