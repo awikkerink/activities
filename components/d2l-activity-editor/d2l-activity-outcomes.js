@@ -17,6 +17,7 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(L
 		return {
 			hidden: { type: Boolean, reflect: true },
 			deferredSave: { type: Boolean },
+			hideIndirectAlignments: { type: Boolean },
 			_featureEnabled: { type: Boolean },
 			_opened: { type: Boolean },
 			_outcomesTerm: { type: String },
@@ -42,6 +43,7 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(L
 	constructor() {
 		super(store);
 		this.deferredSave = true;
+		this.hideIndirectAlignments = true;
 	}
 
 	connectedCallback() {
@@ -101,6 +103,7 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(L
 				href="${this.href}"
 				.token="${this.token}"
 				?deferred-save="${this.deferredSave}"
+				?hide-indirect-alignments="${this.hideIndirectAlignments}"
 				browse-outcomes-text="${this._browseOutcomesText}"
 				@d2l-activity-alignment-outcomes-updated="${this._onOutcomeTagDeleted}"
 				@d2l-activity-alignment-tags-update="${this._openDialog}">
