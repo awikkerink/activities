@@ -49,7 +49,6 @@ export class ActivityUsage {
 		 */
 		this.alignmentsHref = this.competenciesHref ? null : entity.alignmentsHref();
 		this.canUpdateAlignments = false;
-		this.hasAlignments = false;
 
 		if (this.competenciesHref) {
 			await this.loadCompetencies();
@@ -59,7 +58,6 @@ export class ActivityUsage {
 			runInAction(() => {
 				const alignmentsCollection = new AlignmentsCollectionEntity(alignmentsEntity);
 				this.canUpdateAlignments = alignmentsCollection.canUpdateAlignments();
-				this.hasAlignments = alignmentsCollection.getAlignments().length > 0;
 			});
 		}
 	}
@@ -85,10 +83,6 @@ export class ActivityUsage {
 
 	setCanUpdateAlignments(value) {
 		this.canUpdateAlignments = value;
-	}
-
-	setHasAlignments(value) {
-		this.hasAlignments = value;
 	}
 
 	setDraftStatus(isDraft) {
@@ -190,7 +184,6 @@ decorate(ActivityUsage, {
 	associationsHref: observable,
 	alignmentsHref: observable,
 	canUpdateAlignments: observable,
-	hasAlignments: observable,
 	competenciesHref: observable,
 	associatedCompetenciesCount: observable,
 	unevaluatedCompetenciesCount: observable,
@@ -207,6 +200,5 @@ decorate(ActivityUsage, {
 	setDates: action,
 	setAlignmentsHref: action,
 	setCanUpdateAlignments: action,
-	setHasAlignments: action,
 	loadCompetencies: action
 });

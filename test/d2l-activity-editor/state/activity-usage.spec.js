@@ -92,7 +92,6 @@ describe('Activity Usage', function() {
 			expect(activity.canEditDraft).to.be.true;
 			expect(activity.canUpdateAlignments).to.be.true;
 			expect(activity.alignmentsHref).to.equal('http://alignments-href/');
-			expect(activity.hasAlignments).to.be.false;
 			expect(activity.competenciesHref).to.be.null;
 			expect(activity.associatedCompetenciesCount).to.be.null;
 			expect(activity.unevaluatedCompetenciesCount).to.be.null;
@@ -117,7 +116,6 @@ describe('Activity Usage', function() {
 			expect(activity.canEditDraft).to.be.true;
 			expect(activity.canUpdateAlignments).to.be.false;
 			expect(activity.alignmentsHref).to.be.null;
-			expect(activity.hasAlignments).to.be.false;
 			expect(activity.competenciesHref).to.equal('http://competencies-href/');
 			expect(activity.associatedCompetenciesCount).to.equal(13);
 			expect(activity.unevaluatedCompetenciesCount).to.equal(10);
