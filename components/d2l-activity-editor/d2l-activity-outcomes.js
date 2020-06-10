@@ -98,7 +98,7 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(L
 	}
 
 	_renderTags() {
-		return html`<label class="d2l-label-text">${this._outcomesTerm}</label>
+		return html`<label class="d2l-label-text" ?hidden="${!this._hasAlignments}">${this._outcomesTerm}</label>
 			<d2l-activity-alignment-tags
 				href="${this.href}"
 				.token="${this.token}"
@@ -106,8 +106,15 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(L
 				?hide-indirect-alignments="${this.hideIndirectAlignments}"
 				browse-outcomes-text="${this._browseOutcomesText}"
 				@d2l-activity-alignment-outcomes-updated="${this._onOutcomeTagDeleted}"
-				@d2l-activity-alignment-tags-update="${this._openDialog}">
+				@d2l-activity-alignment-tags-update="${this._openDialog}"
+				@empty-changed="${this._alignmentTagsEmptyChanged}"
+				?read-only=${!this._hasAlignments}>
 			</d2l-activity-alignment-tags>`;
+	}
+
+	_alignmentTagsEmptyChanged(e) {
+		this._hasAlignments = !e.detail.value;
+		this.requestUpdate();
 	}
 
 	render() {
@@ -117,21 +124,16 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(L
 			return html``;
 		}
 
-		const {
-			canUpdateAlignments,
-			hasAlignments
-		} = activity;
-
-		if (!canUpdateAlignments) {
-			this.hidden = true;
-			return html``;
-		}
-
 		this.hidden = false;
 
+		const {
+			canUpdateAlignments
+		} = activity;
+
 		return html`
-			${hasAlignments ? this._renderTags() : this._renderDialogOpener()}
-			<d2l-dialog title-text="${this._browseOutcomesText}" ?opened="${this._opened}">
+			${this._renderTags()}
+			${canUpdateAlignments && !this._hasAlignments ? html`${this._renderDialogOpener()}` : null}
+			${canUpdateAlignments ? html`<d2l-dialog title-text="${this._browseOutcomesText}" ?opened="${this._opened}">
 				<d2l-select-outcomes
 					href="${this.href}"
 					.token="${this.token}"
@@ -139,7 +141,7 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(L
 					@d2l-alignment-list-added="${this._onDialogAdd}"
 					@d2l-alignment-list-cancelled="${this._onDialogCancel}">
 				</d2l-select-outcomes>
-			</d2l-dialog>
+			</d2l-dialog>` : null}
 		`;
 	}
 }
