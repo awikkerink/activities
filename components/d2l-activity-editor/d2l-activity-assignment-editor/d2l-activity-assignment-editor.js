@@ -273,7 +273,7 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 				telemetryId="${this.telemetryId}"
 				.href=${this.href}
 				.token=${this.token}
-				.isSaving=${this.isSaving}
+				?is-saving=${this.isSaving}
 				unfurlEndpoint="${this.unfurlEndpoint}"
 				trustedSitesEndpoint="${this.trustedSitesEndpoint}"
 				@d2l-request-provider="${this._onRequestProvider}">

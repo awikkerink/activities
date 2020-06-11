@@ -11,7 +11,7 @@ class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(Ac
 
 	static get properties() {
 		return {
-			isSaving: { type: Boolean },
+			isSaving: { type: Boolean, attribute: 'is-saving' },
 			_backdropShown: { type: Boolean },
 			_showBackgroundTimer: { type: Object }
 		};
@@ -62,6 +62,10 @@ class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(Ac
 		if (changedProperties.has('asyncState') && this.asyncState === asyncStates.complete) {
 			this.logLoadEvent(this.href, this.type, this.telemetryId);
 		}
+	}
+
+	updated(changedProperties) {
+		super.updated(changedProperties);
 		if (changedProperties.has('isSaving')) {
 			this._toggleBackdrop(this.isSaving);
 		}
