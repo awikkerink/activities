@@ -31,10 +31,6 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 			 */
 			trustedSitesEndpoint: { type: String },
 			/**
-			 * If there is an error on the page. Is used to toggle the d2l-alert.
-			 */
-			isError: { type: Boolean },
-			/**
 			* based on the LaunchDarkly flag face-assignments-milestone-2
 			*/
 			milestoneTwoEnabled: { type: Boolean },
@@ -247,7 +243,7 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 			<d2l-template-primary-secondary slot="editor" width-type="${this.widthType}">
 				<slot name="editor-nav" slot="header"></slot>
 				<div slot="primary" class="d2l-activity-assignment-editor-primary-panel">
-					${this.isError ? html`<d2l-alert type="error">${this.localize('assignmentSaveError')}</d2l-alert>` : null}
+					<d2l-alert type="error" ?hidden=${!this.isError}>${this.localize('assignmentSaveError')}</d2l-alert>
 					<d2l-activity-assignment-editor-detail
 						href="${assignmentHref}"
 						.token="${this.token}">
@@ -279,7 +275,8 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 				.token=${this.token}
 				unfurlEndpoint="${this.unfurlEndpoint}"
 				trustedSitesEndpoint="${this.trustedSitesEndpoint}"
-				@d2l-request-provider="${this._onRequestProvider}">
+				@d2l-request-provider="${this._onRequestProvider}"
+				?isSaving=${this.isSaving}>
 
 				${this._editorTemplate}
 
