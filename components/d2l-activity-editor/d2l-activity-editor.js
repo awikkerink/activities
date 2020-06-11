@@ -93,7 +93,7 @@ class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(Ac
 			<div id="editor-container" ?hidden="${this.asyncState !== asyncStates.complete}">
 				<slot name="editor"></slot>
 			</div>
-			<d2l-backdrop for-target="editor-container" ?shown="${this.isSaving && this._backdropShown}" cut-out slow-transition></d2l-backdrop>
+			<d2l-backdrop for-target="editor-container" ?shown="${this._backdropShown}" cut-out slow-transition></d2l-backdrop>
 		`;
 	}
 }
