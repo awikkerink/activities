@@ -46,7 +46,6 @@ class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(Ac
 	async validate() {
 		const activity = store.get(this.href);
 		if (activity) {
-			this._toggleBackdrop(true);
 			await activity.validate();
 		}
 	}
@@ -54,8 +53,17 @@ class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(Ac
 	async save() {
 		const activity = store.get(this.href);
 		if (activity) {
-			this._toggleBackdrop(true);
 			await activity.save();
+		}
+	}
+
+	update(changedProperties) {
+		super.update(changedProperties);
+		if (changedProperties.has('asyncState') && this.asyncState === asyncStates.complete) {
+			this.logLoadEvent(this.href, this.type, this.telemetryId);
+		}
+		if (changedProperties.has('isSaving')) {
+			this._toggleBackdrop(this.isSaving);
 		}
 	}
 
@@ -68,13 +76,6 @@ class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(Ac
 			clearTimeout(this._showBackgroundTimer);
 			this._showBackgroundTimer = null;
 			this._backdropShown = false;
-		}
-	}
-
-	update(changedProperties) {
-		super.update(changedProperties);
-		if (changedProperties.has('asyncState') && this.asyncState === asyncStates.complete) {
-			this.logLoadEvent(this.href, this.type, this.telemetryId);
 		}
 	}
 
