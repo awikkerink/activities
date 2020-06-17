@@ -43,7 +43,8 @@ export class Assignment {
 			assignmentHasSubmissions: entity.assignmentHasSubmissions(),
 			allCompletionTypeOptions: entity.allCompletionTypeOptions(),
 			canEditCompletionType: entity.canEditCompletionType(),
-			completionType: entity.completionTypeValue()
+			completionTypeValue: entity.completionTypeValue(),
+			completionType: entity.completionType()
 		});
 
 		this.name = entity.name();
@@ -111,6 +112,10 @@ export class Assignment {
 
 	setAssignmentTypeGroupCategory(value) {
 		this.assignmentTypeProps.setAssignmentTypeGroupCategory(value);
+	}
+
+	setAssignmentTypeProps(assignmentTypeProps) {
+		this.assignmentTypeProps = new AssignmentTypeProps(assignmentTypeProps);
 	}
 
 	setCompletionType(value) {
@@ -218,6 +223,8 @@ decorate(Assignment, {
 	defaultScoringRubricId: observable,
 	notificationEmail: observable,
 	canEditNotificationEmail: observable,
+	anonymousMarkingProps: observable,
+	assignmentTypeProps: observable,
 	showNotificationEmail: computed,
 	// actions
 	load: action,

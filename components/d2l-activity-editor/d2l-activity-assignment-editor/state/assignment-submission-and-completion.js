@@ -16,13 +16,13 @@ export class SubmissionAndCompletionProps {
 		this.assignmentHasSubmissions = entity.assignmentHasSubmissions;
 		this.allCompletionTypeOptions = entity.allCompletionTypeOptions;
 		this.canEditCompletionType = entity.canEditCompletionType;
-		this.completionType = entity.completionType;
+		this.completionType = entity.completionTypeValue;
 
 		const validCompletionTypes = this._getValidCompletionTypes(this.submissionType);
 		if (this.canEditCompletionType) {
 			this.completionTypeOptions =  this._getCompletionTypeOptions(validCompletionTypes);
 		} else {
-			const completionType = entity.completionType();
+			const completionType = entity.completionType;
 			this.completionTypeOptions = completionType ? [completionType] : [];
 		}
 	}
@@ -116,11 +116,14 @@ decorate(SubmissionAndCompletionProps, {
 	submissionsRuleOptions: observable,
 	canEditFilesSubmissionLimit: observable,
 	filesSubmissionLimit: observable,
-	setCompletionType: observable,
+	completionType: observable,
+	completionTypeOptions: observable,
+	canEditCompletionType: observable,
 	// computed
 	showFilesSubmissionLimit: computed,
 	showSubmissionsRule: computed,
 	// actions
 	setSubmissionsRule: action,
 	setFilesSubmissionLimit: action,
+	setCompletionType: action,
 });
