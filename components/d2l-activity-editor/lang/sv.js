@@ -53,9 +53,9 @@ export default {
 	"noGradeCreatePermission": "Du har inte behörighet att skapa betygsobjekt", // Reason why a new grade items cannot be created in the choose grades dialog
 	"competencies": "Inlärningsmål", //Text label for the competencies tool integration
 	"manageCompetencies": "Hantera utbildningsmål", //Button text to launch competencies tool dialog
-	"competenciesCount": "{count, plural, =0 {No learning objectives} =1 {1 attached} other {{count} attached}}", //Label for number of associated competencies
+	"competenciesCount": "{count, plural, =0 {Inga inlärningsmål} =1 {1 bifogat} other {{count} bifogade}}", //Label for number of associated competencies
 	"competenciesCountSummary": "{count, plural, =0 {Inga inlärningsmål} =1 {1 inlärningsmål} other {{count} inlärningsmål}}",
-	"unevaluatedCompetencies": "{count, plural, =1 {1 not being evaluated} other {{count} not being evaluated}}", //Label for number of unevalated associated competencies
+	"unevaluatedCompetencies": "{count, plural, =1 {1 bedömning saknas} other {{count} bedömningar saknas}}", //Label for number of unevalated associated competencies
 	"btnClose": "Stäng", //Label for Close button
 	"btnCloseDialog": "Stäng den här dialogrutan" // close dialog button
 };

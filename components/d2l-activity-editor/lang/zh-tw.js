@@ -53,9 +53,9 @@ export default {
 	"noGradeCreatePermission": "您沒有建立新成績項目的權限", // Reason why a new grade items cannot be created in the choose grades dialog
 	"competencies": "學習目標", //Text label for the competencies tool integration
 	"manageCompetencies": "管理學習目標", //Button text to launch competencies tool dialog
-	"competenciesCount": "{count, plural, =0 {No learning objectives} =1 {1 attached} other {{count} attached}}", //Label for number of associated competencies
+	"competenciesCount": "{count, plural, =0 {沒有學習目標} =1 {已附加 1 項} other {已附加 {count} 項}}", //Label for number of associated competencies
 	"competenciesCountSummary": "{count, plural, =0 {沒有學習目標} =1 {1 個學習目標} other {{count} 個學習目標}}",
-	"unevaluatedCompetencies": "{count, plural, =1 {1 not being evaluated} other {{count} not being evaluated}}", //Label for number of unevalated associated competencies
+	"unevaluatedCompetencies": "{count, plural, =1 {缺少 1 項評量} other {缺少 {count} 項評量}}", //Label for number of unevalated associated competencies
 	"btnClose": "關閉", //Label for Close button
 	"btnCloseDialog": "關閉此對話方塊" // close dialog button
 };

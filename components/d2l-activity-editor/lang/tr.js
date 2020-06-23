@@ -53,9 +53,9 @@ export default {
 	"noGradeCreatePermission": "Yeni bir not öğesi oluşturma izniniz yok", // Reason why a new grade items cannot be created in the choose grades dialog
 	"competencies": "Öğrenme Hedefleri", //Text label for the competencies tool integration
 	"manageCompetencies": "Öğrenme Hedeflerini Yönet", //Button text to launch competencies tool dialog
-	"competenciesCount": "{count, plural, =0 {No learning objectives} =1 {1 attached} other {{count} attached}}", //Label for number of associated competencies
+	"competenciesCount": "{count, plural, =0 {Öğrenme hedefi yok} =1 {1 ekli} other {{count} ekli}}", //Label for number of associated competencies
 	"competenciesCountSummary": "{count, plural, =0 {Öğrenme hedefi yok} =1 {1 öğrenme hedefi} other {{count} öğrenme hedefi}}",
-	"unevaluatedCompetencies": "{count, plural, =1 {1 not being evaluated} other {{count} not being evaluated}}", //Label for number of unevalated associated competencies
+	"unevaluatedCompetencies": "{count, plural, =1 {1 eksik değerlendirme} other {{count} eksik değerlendirme}}", //Label for number of unevalated associated competencies
 	"btnClose": "Kapat", //Label for Close button
 	"btnCloseDialog": "Bu Diyaloğu Kapat" // close dialog button
 };
