@@ -53,9 +53,9 @@ export default {
 	"noGradeCreatePermission": "Sie haben keine Berechtigung, einen neuen Benotungsgegenstand zu erstellen.", // Reason why a new grade items cannot be created in the choose grades dialog
 	"competencies": "Lernziele", //Text label for the competencies tool integration
 	"manageCompetencies": "Lernziele verwalten", //Button text to launch competencies tool dialog
-	"competenciesCount": "{count, plural, =0 {Keine Lernziele} =1 {1 angehängt} andere {{count} angehängt}}", //Label for number of associated competencies
-	"competenciesCountSummary": "{count, plural, =0 {Keine Lernziele} =1 {1 Lernziel} andere {{count} Lernziele}}",
-	"unevaluatedCompetencies": "{count, plural, =1 {1 fehlende Bewertung} andere {{count} fehlende Bewertungen}}", //Label for number of unevalated associated competencies
+	"competenciesCount": "{count, plural, =0 {Keine Lernziele} =1 {1 angehängt} other {{count} angehängt}}", //Label for number of associated competencies
+	"competenciesCountSummary": "{count, plural, =0 {Keine Lernziele} =1 {1 Lernziel} other {{count} Lernziele}}",
+	"unevaluatedCompetencies": "{count, plural, =1 {1 fehlende Bewertung} other {{count} fehlende Bewertungen}}", //Label for number of unevalated associated competencies
 	"btnClose": "Schließen", //Label for Close button
 	"btnCloseDialog": "Dieses Dialogfeld schließen" // close dialog button
 };
