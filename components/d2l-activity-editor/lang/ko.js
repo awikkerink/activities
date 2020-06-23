@@ -55,9 +55,9 @@ export default {
 	"noGradeCreatePermission": "새 평점 항목을 생성할 권한이 없습니다.", // Reason why a new grade items cannot be created in the choose grades dialog
 	"competencies": "학습 목표", //Text label for the competencies tool integration
 	"manageCompetencies": "학습 목표 관리", //Button text to launch competencies tool dialog
-	"competenciesCount": "{count, plural, =0 {No learning objectives} =1 {1 attached} other {{count} attached}}", //Label for number of associated competencies
-	"competenciesCountSummary": "{수, 복수, =0 {학습 목표 없음} =1 {1 학습 목표} 기타 {{count}개의 학습 목표}}",
-	"unevaluatedCompetencies": "{count, plural, =1 {1 not being evaluated} other {{count} not being evaluated}}", //Label for number of unevalated associated competencies
+	"competenciesCount": "{count, plural, =0 {학습 목표 없음} =1 {1개 첨부됨} other {{count}개 첨부됨}}", //Label for number of associated competencies
+	"competenciesCountSummary": "{count, plural, =0 {학습 목표 없음} =1 {1개 학습 목표} other {{count}개 학습 목표}}",
+	"unevaluatedCompetencies": "{count, plural, =1 {1개 평가 누락} other {{count}개 평가 누락}}", //Label for number of unevalated associated competencies
 	"btnClose": "닫기", //Label for Close button
 	"btnCloseDialog": "이 대화 상자 닫기" // close dialog button
 };

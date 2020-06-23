@@ -55,9 +55,9 @@ export default {
 	"noGradeCreatePermission": "U bent niet gemachtigd om een nieuw score-onderdeel te maken", // Reason why a new grade items cannot be created in the choose grades dialog
 	"competencies": "Leerdoelen", //Text label for the competencies tool integration
 	"manageCompetencies": "Leerdoelen beheren", //Button text to launch competencies tool dialog
-	"competenciesCount": "{count, plural, =0 {No learning objectives} =1 {1 attached} other {{count} attached}}", //Label for number of associated competencies
+	"competenciesCount": "{count, plural, =0 {Geen leerdoelen} =1 {1 toegevoegd} other {{count} toegevoegd}}", //Label for number of associated competencies
 	"competenciesCountSummary": "{count, plural, =0 {Geen leerdoelen} =1 {1 leerdoel} other {{count} leerdoelen}}",
-	"unevaluatedCompetencies": "{count, plural, =1 {1 not being evaluated} other {{count} not being evaluated}}", //Label for number of unevalated associated competencies
+	"unevaluatedCompetencies": "{count, plural, =1 {1 ontbrekende evaluatie} other {{count} ontbrekende evaluaties}}}", //Label for number of unevalated associated competencies
 	"btnClose": "Sluiten", //Label for Close button
 	"btnCloseDialog": "Dit dialoogvenster sluiten" // close dialog button
 };

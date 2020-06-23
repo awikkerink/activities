@@ -57,7 +57,7 @@ export default {
 	"manageCompetencies": "Administrer undervisningsformål", //Button text to launch competencies tool dialog
 	"competenciesCount": "{count, plural, =0 {No learning objectives} =1 {1 attached} other {{count} attached}}", //Label for number of associated competencies
 	"competenciesCountSummary": "{count, plural, =0 {No learning objectives} =1 {1 learning objective} other {{count} learning objectives}}",
-	"unevaluatedCompetencies": "{count, plural, =1 {1 not being evaluated} other {{count} not being evaluated}}", //Label for number of unevalated associated competencies
+	"unevaluatedCompetencies": "{count, plural, =1 {1 missing assessment} other {{count} missing assessments}}", //Label for number of unevalated associated competencies
 	"btnClose": "Luk", //Label for Close button
 	"btnCloseDialog": "Luk denne dialogboks" // close dialog button
 };
