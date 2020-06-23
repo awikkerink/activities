@@ -55,9 +55,9 @@ export default {
 	"noGradeCreatePermission": "No tiene permiso para crear un nuevo elemento de calificación", // Reason why a new grade items cannot be created in the choose grades dialog
 	"competencies": "Objetivos de aprendizaje", //Text label for the competencies tool integration
 	"manageCompetencies": "Administrar objetivos de aprendizaje", //Button text to launch competencies tool dialog
-	"competenciesCount": "{count, plural, =0 {No learning objectives} =1 {1 attached} other {{count} attached}}", //Label for number of associated competencies
+	"competenciesCount": "{count, plural, =0 {Sin objetivos de aprendizaje} =1 {1 adjunto} other {{count} adjuntos}}", //Label for number of associated competencies
 	"competenciesCountSummary": "{count, plural, =0 {Sin objetivos de aprendizaje} =1 {1 objetivo de aprendizaje} other {{count} objetivos de aprendizaje}}",
-	"unevaluatedCompetencies": "{count, plural, =1 {1 not being evaluated} other {{count} not being evaluated}}", //Label for number of unevalated associated competencies
+	"unevaluatedCompetencies": "{count, plural, =1 {1 evaluación faltante} other {{count} evaluaciones faltantes}}", //Label for number of unevalated associated competencies
 	"btnClose": "Cerrar", //Label for Close button
 	"btnCloseDialog": "Cerrar este cuadro de diálogo" // close dialog button
 };
