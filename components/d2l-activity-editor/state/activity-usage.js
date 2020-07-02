@@ -1,6 +1,7 @@
 import { action, configure as configureMobx, decorate, observable, runInAction } from 'mobx';
 import { ActivityDates } from './activity-dates.js';
 import { ActivityScoreGrade } from './activity-score-grade.js';
+import { ActivitySpecialAccess } from './activity-special-access.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
 import { AlignmentsCollectionEntity } from 'siren-sdk/src/alignments/AlignmentsCollectionEntity.js';
 import { CompetenciesEntity } from 'siren-sdk/src/competencies/CompetenciesEntity.js';
@@ -33,6 +34,9 @@ export class ActivityUsage {
 		this.dates = new ActivityDates(entity);
 		this.scoreAndGrade = new ActivityScoreGrade(entity, this.token);
 		this.associationsHref = entity.getDirectRubricAssociationsHref();
+
+		const specialAccessHref = entity.specialAccessHref();
+		this.specialAccess = specialAccessHref ? await this._loadSpecialAccess(specialAccessHref) : null;
 
 		/**
 		 * Legacy Competencies
@@ -75,6 +79,17 @@ export class ActivityUsage {
 			this.associatedCompetenciesCount = entity.associatedCount() || 0;
 			this.unevaluatedCompetenciesCount = entity.unevaluatedCount() || 0;
 		});
+	}
+
+	async _loadSpecialAccess(href) {
+		if (!href) {
+			return null;
+		}
+
+		const entity = new ActivitySpecialAccess(href, this.token);
+		await entity.fetch();
+
+		return entity;
 	}
 
 	setAlignmentsHref(value) {
@@ -197,6 +212,7 @@ decorate(ActivityUsage, {
 	associatedCompetenciesCount: observable,
 	unevaluatedCompetenciesCount: observable,
 	competenciesDialogUrl: observable,
+	specialAccess: observable,
 	// actions
 	load: action,
 	setDraftStatus: action,

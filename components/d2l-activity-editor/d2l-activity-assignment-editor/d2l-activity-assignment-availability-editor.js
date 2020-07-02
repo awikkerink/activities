@@ -2,6 +2,7 @@ import '../d2l-activity-availability-dates-summary.js';
 import '../d2l-activity-availability-dates-editor.js';
 import '../d2l-activity-usage-conditions-editor.js';
 import '../d2l-activity-usage-conditions-summary.js';
+import '../d2l-activity-special-access-editor.js';
 import '@brightspace-ui-labs/accordion/accordion-collapse.js';
 import { ActivityEditorFeaturesMixin, Milestones } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { bodySmallStyles, heading3Styles, heading4Styles } from '@brightspace-ui/core/components/typography/styles.js';
@@ -131,8 +132,25 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 	}
 
 	_renderSpecialAccessEditor() {
+		const specialAccessMilestoneEnabled = this._isMilestoneEnabled(Milestones.M3SpecialAccess);
+		const activity = store.get(this.href);
 
-		return html``;
+		if (!specialAccessMilestoneEnabled || !activity || !activity.specialAccess) {
+			return html``;
+		}
+
+		return html`
+			<div class="editor">
+				<h3 class="d2l-heading-4">
+					${this.localize('hdrSpecialAccess')}
+				</h3>
+				<d2l-activity-special-access-editor
+					description="${this.localize('hlpSpecialAccess')}"
+					href="${this.href}"
+					.token="${this.token}">
+				</d2l-activity-special-access-editor>
+			</div>
+		`;
 	}
 
 	// Returns true if any error states relevant to this accordion are set

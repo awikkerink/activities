@@ -57,5 +57,9 @@ export default {
 	"competenciesCountSummary": "{count, plural, =0 {No learning objectives} =1 {1 learning objective} other {{count} learning objectives}}",
 	"unevaluatedCompetencies": "{count, plural, =1 {1 missing assessment} other {{count} missing assessments}}", //Label for number of unevalated associated competencies
 	"btnClose": "Close", //Label for Close button
-	"btnCloseDialog": "Close this Dialog" // close dialog button
+	"btnCloseDialog": "Close this Dialog", // close dialog button
+	"btnManageSpecialAccess": "Manage Special Access", // manage special access button
+	"specialAccessRestrictedText": "Only users with special access can see this folder", // restricted special access description
+	"specialAccessNotRestrictedText": "Users can submit outside normal availability dates", // not restricted special access description
+	"specialAccessCount": "{count, plural, =1 {1 user} other {{count} users}} with special access" // Label for number of special access users
 };
