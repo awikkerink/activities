@@ -176,8 +176,17 @@ export class ActivityUsage {
 		await this.fetch();
 	}
 
-	get dirty() {
-		return !this._entity.equals(this._makeUsageData());
+	async _alignmentsDirty() {
+		if (!this.alignmentsHref || !this.canUpdateAlignments) {
+			return false;
+		}
+
+		const alignmentsCollection = new AlignmentsCollectionEntity(await fetchEntity(this.alignmentsHref, this.token), this.token);
+		return alignmentsCollection.hasSubmitAction();
+	}
+
+	async dirty() {
+		return !this._entity.equals(this._makeUsageData()) || await this._alignmentsDirty();
 	}
 }
 
