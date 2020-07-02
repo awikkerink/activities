@@ -72,15 +72,19 @@ class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(Ac
 	}
 
 	_toggleBackdrop(show) {
-		if (show && !this._showBackgroundTimer) {
-			this._showBackgroundTimer = setTimeout(() => {
-				this._backdropShown = true;
-			}, 800);
-		} else if (!show) {
-			clearTimeout(this._showBackgroundTimer);
-			this._showBackgroundTimer = null;
-			this._backdropShown = false;
-		}
+		// this.backdropShown = !this._backdropShown;
+		this._backdropShown = show;
+
+		// if (show && !this._showBackgroundTimer) {
+		// 	this._showBackgroundTimer = setTimeout(() => {
+		// 		this._backdropShown = true;
+		// 	}, 800);
+		// } else if (!show) {
+		// 	this._backdropShown = show;
+		// 	clearTimeout(this._showBackgroundTimer);
+		// 	this._showBackgroundTimer = null;
+		// 	this._backdropShown = false;
+		// }
 	}
 
 	hasPendingChanges() {
@@ -101,6 +105,7 @@ class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(Ac
 				for-target="editor-container"
 				?shown="${this._backdropShown}"
 				no-animate-hide
+				delay-transition
 				slow-transition>
 			</d2l-backdrop>
 		`;
