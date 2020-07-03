@@ -23,8 +23,8 @@ export class ActivitySpecialAccess {
 	load(entity) {
 		this._entity = entity;
 		this.isRestricted = entity.isRestricted();
-		this.userCount = entity.userCount(),
-		this.url = entity.url()
+		this.userCount = entity.userCount();
+		this.url = entity.url();
 	}
 }
 

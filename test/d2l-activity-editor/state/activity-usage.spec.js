@@ -207,11 +207,13 @@ describe('Activity Usage', function() {
 
 		it('fetches special access', async() => {
 			ActivityUsageEntity.mockImplementation(() => {
-				const defaultEntityMock = defaultEntityMock();
-				defaultEntityMock.specialAccessHref = () => "http://special-access-href";
-				return defaultEntityMock;
+				const defaultEntity = defaultEntityMock();
+				defaultEntity.specialAccessHref = () => 'http://special-access-href';
+				return defaultEntity;
 			});
 
+			const activity = new ActivityUsage('http://1', 'token');
+			await activity.fetch();
 			expect(activity.specialAccess).to.be.an('object');
 		});
 	});
