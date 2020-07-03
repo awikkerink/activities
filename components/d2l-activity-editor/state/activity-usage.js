@@ -35,9 +35,13 @@ export class ActivityUsage {
 		this.scoreAndGrade = new ActivityScoreGrade(entity, this.token);
 		this.associationsHref = entity.getDirectRubricAssociationsHref();
 
-		const specialAccessHref = entity.specialAccessHref();
-		this.specialAccess = specialAccessHref ? await this._loadSpecialAccess(specialAccessHref) : null;
+		await Promise.all([
+			this._loadSpecialAccess(entity),
+			this._loadCompetencyOutcomes(entity)
+		]);
+	}
 
+	async _loadCompetencyOutcomes(entity) {
 		/**
 		 * Legacy Competencies
 		 * Href will be available if competencies tool is enabled and outcomes tool is disabled or there are no intents in the course.
@@ -50,19 +54,14 @@ export class ActivityUsage {
 		/**
 		 * Learning Outcomes
 		 * Href will be available if outcomes tool is enabled.
-		 */
+		*/
 		this.alignmentsHref = this.competenciesHref ? null : entity.alignmentsHref();
 		this.canUpdateAlignments = false;
 
 		if (this.competenciesHref) {
 			await this.loadCompetencies();
 		} else if (this.alignmentsHref) {
-			const alignmentsEntity = await fetchEntity(this.alignmentsHref, this.token);
-
-			runInAction(() => {
-				const alignmentsCollection = new AlignmentsCollectionEntity(alignmentsEntity);
-				this.canUpdateAlignments = alignmentsCollection.canUpdateAlignments();
-			});
+			await this._loadOutcomes();
 		}
 	}
 
@@ -81,11 +80,25 @@ export class ActivityUsage {
 		});
 	}
 
-	async _loadSpecialAccess(href) {
-		const entity = new ActivitySpecialAccess(href, this.token);
-		await entity.fetch();
+	async _loadOutcomes() {
+		const alignmentsEntity = await fetchEntity(this.alignmentsHref, this.token);
 
-		return entity;
+		runInAction(() => {
+			const alignmentsCollection = new AlignmentsCollectionEntity(alignmentsEntity);
+			this.canUpdateAlignments = alignmentsCollection.canUpdateAlignments();
+		});
+	}
+
+	async _loadSpecialAccess(entity) {
+		const specialAccessHref = entity.specialAccessHref();
+		let specialAccess = null;
+
+		if (specialAccessHref) {
+			specialAccess = new ActivitySpecialAccess(specialAccessHref, this.token);
+			await specialAccess.fetch();
+		}
+
+		runInAction(() => this.specialAccess = specialAccess);
 	}
 
 	setAlignmentsHref(value) {
