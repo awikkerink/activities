@@ -82,10 +82,6 @@ export class ActivityUsage {
 	}
 
 	async _loadSpecialAccess(href) {
-		if (!href) {
-			return null;
-		}
-
 		const entity = new ActivitySpecialAccess(href, this.token);
 		await entity.fetch();
 

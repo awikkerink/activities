@@ -50,6 +50,7 @@ class ActivitySpecialAccessEditor extends ActivityEditorMixin(RtlMixin(LocalizeM
 
 	constructor() {
 		super();
+		this.description = "";
 	}
 
 	_renderDescription(specialAccess) {

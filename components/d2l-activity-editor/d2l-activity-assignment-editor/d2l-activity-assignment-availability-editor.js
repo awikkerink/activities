@@ -21,7 +21,9 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 		return {
 			href: { type: String },
 			token: { type: Object },
-			_opened: { type: Boolean }
+			_opened: { type: Boolean },
+			_m3ReleaseConditionsEnabled: { type: Boolean },
+			_m3SpecialAccessEnabled: { type: Boolean }
 		};
 	}
 
@@ -62,6 +64,13 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 		this._opened = false;
 	}
 
+	connectedCallback() {
+		super.connectedCallback();
+
+		this._m3ReleaseConditionsEnabled = this._isMilestoneEnabled(Milestones.M3ReleaseConditions);
+		this._m3SpecialAccessEnabled = this._isMilestoneEnabled(Milestones.M3SpecialAccess);
+	}
+
 	_onAccordionStateChange(e) {
 		this._opened = e.detail.opened;
 	}
@@ -89,10 +98,7 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 	}
 
 	_renderReleaseConditionSummary() {
-
-		const shouldRenderConditionSummary = this._isMilestoneEnabled(Milestones.M3ReleaseConditions);
-
-		if (!shouldRenderConditionSummary) {
+		if (!this._m3ReleaseConditionsEnabled) {
 			return html``;
 		}
 
@@ -105,10 +111,7 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 	}
 
 	_renderReleaseConditionEditor() {
-
-		const shouldRenderConditionEditor = this._isMilestoneEnabled(Milestones.M3ReleaseConditions);
-
-		if (!shouldRenderConditionEditor) {
+		if (!this._m3ReleaseConditionsEnabled) {
 			return html``;
 		}
 
@@ -132,10 +135,9 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 	}
 
 	_renderSpecialAccessEditor() {
-		const specialAccessMilestoneEnabled = this._isMilestoneEnabled(Milestones.M3SpecialAccess);
 		const activity = store.get(this.href);
 
-		if (!specialAccessMilestoneEnabled || !activity || !activity.specialAccess) {
+		if (!this._m3SpecialAccessEnabled || !activity || !activity.specialAccess) {
 			return html``;
 		}
 
