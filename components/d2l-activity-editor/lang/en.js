@@ -61,5 +61,19 @@ export default {
 	"btnManageSpecialAccess": "Manage Special Access", // manage special access button
 	"specialAccessRestrictedText": "Only users with special access can see this folder", // restricted special access description
 	"specialAccessNotRestrictedText": "Users can submit outside normal availability dates", // not restricted special access description
-	"specialAccessCount": "{count, plural, =1 {1 user} other {{count} users}} with special access" // Label for number of special access users
+	"specialAccessCount": "{count, plural, =1 {1 user} other {{count} users}} with special access", // Label for number of special access users
+
+	"d2l-activity-rubrics.btnAddRubric": "Add rubric", //text for add rubric button
+	"d2l-activity-rubrics.btnCreateNew": "Create New", //Text for create new dropdown
+	"d2l-activity-rubrics.btnAddExisting": "Add Existing", //Text for Add Existing dropdown
+	"d2l-activity-rubrics.hdrRubrics": "Rubrics", //Header for the rubrics section
+	"d2l-activity-rubrics.btnAttachRubric": "zzAttach Rubric", //Button for the attach new rubric overlay
+	"d2l-activity-rubrics.btnCancel": "Cancel", //Button for canceling out of the attach new rubric overlay
+	"d2l-activity-rubrics.txtAddExisting": "zzzAdd Existing", //Title for the attach rubrics dialog,
+	"d2l-activity-rubrics.txtNoRubricAdded": "No rubric added", // rubric summary for no rubrics
+	"d2l-activity-rubrics.txtRubricsAdded": "{count, plural, =1 {1 rubric added} other {{count} rubrics added}}", // count of asoociated rubrics
+	"d2l-activity-rubrics.txtDeleteRubric": "zzDelete Rubric", // Text for deleting rubric icon
+	"d2l-activity-rubrics.btnClose": "Close", // X button for exiting the create new rubric overlay
+	"d2l-activity-rubrics.txtRubricAdded": "Rubric added", // Text for notifying screenreader rubric was added
+	"d2l-activity-rubrics.txtRubricRemoved": "Rubric removed" // Text for notifying screenreader rubric was removed 
 };
