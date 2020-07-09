@@ -66,10 +66,6 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeActivityEdit
 		`;
 	}
 
-	static async getLocalizeResources(langs) {
-		return getLocalizeResources(langs, import.meta.url);
-	}
-
 	constructor() {
 		super(store);
 

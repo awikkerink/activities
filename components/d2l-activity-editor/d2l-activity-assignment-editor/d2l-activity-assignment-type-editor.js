@@ -1,15 +1,14 @@
 import { bodyCompactStyles, bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
-import { getLocalizeResources } from '../localization.js';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { LocalizeActivityEditor } from '../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 import { assignments as store } from './state/assignment-store.js';
 
-class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeMixin(MobxLitElement))) {
+class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivityEditor(MobxLitElement))) {
 
 	static get styles() {
 		return [
@@ -56,10 +55,6 @@ class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeMixin(Mo
 		];
 	}
 
-	static async getLocalizeResources(langs) {
-		return getLocalizeResources(langs, import.meta.url);
-	}
-
 	constructor() {
 		super(store);
 	}
@@ -97,15 +92,15 @@ class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeMixin(Mo
 		const isIndividualAssignmentType = assignment.isIndividualAssignmentType;
 
 		if (assignment.assignmentHasSubmissions) {
-			return this.localize('folderTypeCannotChange');
+			return this.localize('d2l-activity-assignment-editor.folderTypeCannotChange');
 		}
 
 		if (isIndividualAssignmentType && assignment.groupCategories.length === 0) {
-			return this.localize('folderTypeNoGroups');
+			return this.localize('d2l-activity-assignment-editor.folderTypeNoGroups');
 		}
 
 		if (!isIndividualAssignmentType) {
-			return this.localize('folderTypeCreateGroups');
+			return this.localize('d2l-activity-assignment-editor.folderTypeCreateGroups');
 		}
 
 		return;
@@ -122,9 +117,9 @@ class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeMixin(Mo
 		const infoText = this._getInformationText(assignment);
 		const isReadOnly = assignment.isReadOnly;
 		const groupTypeDisabled = assignment.isGroupAssignmentTypeDisabled;
-		const folderTypeText =	isIndividualType ? this.localize('txtIndividual') : this.localize('txtGroup');
+		const folderTypeText =	isIndividualType ? this.localize('d2l-activity-assignment-editor.txtIndividual') : this.localize('d2l-activity-assignment-editor.txtGroup');
 		const groupTypeText = !isIndividualType && assignment.selectedGroupCategoryName
-			? this.localize('txtGroupCategoryWithName', 'groupCategory', assignment.selectedGroupCategoryName)
+			? this.localize('d2l-activity-assignment-editor.txtGroupCategoryWithName', 'groupCategory', assignment.selectedGroupCategoryName)
 			: '';
 
 		return html`
@@ -144,7 +139,7 @@ class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeMixin(Mo
 						@change="${this._setIndividualAssignmentType}"
 						?checked="${isIndividualType}"
 					>
-					${this.localize('txtIndividual')}
+					${this.localize('d2l-activity-assignment-editor.txtIndividual')}
 				</label>
 				<label class="d2l-input-radio-label ${groupTypeDisabled ? 'd2l-input-radio-label-disabled' : ''}">
 					<input
@@ -156,10 +151,10 @@ class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeMixin(Mo
 						?checked="${!isIndividualType}"
 						?disabled="${groupTypeDisabled}"
 					>
-					${this.localize('txtGroup')}
+					${this.localize('d2l-activity-assignment-editor.txtGroup')}
 				</label>
 				<div class="select-list group-info" ?hidden="${isIndividualType}">
-					<label class="d2l-label-text">${this.localize('txtGroupCategory')}</label>
+					<label class="d2l-label-text">${this.localize('d2l-activity-assignment-editor.txtGroupCategory')}</label>
 					<select
 						class="d2l-input-select block-select"
 						id="assignemnt-group-categories"

@@ -9,12 +9,11 @@ import '@brightspace-ui/core/components/dialog/dialog-confirm.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorContainerMixin } from '../mixins/d2l-activity-editor-container-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
-import { getLocalizeResources } from '../localization.js';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { LocalizeActivityEditor } from '../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { shared as store } from './state/assignment-store.js';
 
-class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(ActivityEditorMixin(MobxLitElement))) {
+class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeActivityEditor(ActivityEditorMixin(MobxLitElement))) {
 
 	static get properties() {
 		return {
@@ -98,9 +97,7 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 		`;
 	}
 
-	static async getLocalizeResources(langs) {
-		return getLocalizeResources(langs, import.meta.url);
-	}
+
 
 	constructor() {
 		super(store);
@@ -243,7 +240,7 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 			<d2l-template-primary-secondary slot="editor" width-type="${this.widthType}">
 				<slot name="editor-nav" slot="header"></slot>
 				<div slot="primary" class="d2l-activity-assignment-editor-primary-panel">
-					<d2l-alert type="error" ?hidden=${!this.isError}>${this.localize('assignmentSaveError')}</d2l-alert>
+					<d2l-alert type="error" ?hidden=${!this.isError}>${this.localize('d2l-activity-assignment-editor.assignmentSaveError')}</d2l-alert>
 					<d2l-activity-assignment-editor-detail
 						href="${assignmentHref}"
 						.token="${this.token}">
@@ -282,9 +279,9 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeMixin(Activi
 
 			</d2l-activity-editor>
 
-			<d2l-dialog-confirm title-text="${this.localize('discardChangesTitle')}" text=${this.localize('discardChangesQuestion')}>
-				<d2l-button slot="footer" primary dialog-action="confirm">${this.localize('yesLabel')}</d2l-button>
-				<d2l-button slot="footer" dialog-action="cancel">${this.localize('noLabel')}</d2l-button>
+			<d2l-dialog-confirm title-text="${this.localize('d2l-activity-assignment-editor.discardChangesTitle')}" text=${this.localize('d2l-activity-assignment-editor.discardChangesQuestion')}>
+				<d2l-button slot="footer" primary dialog-action="confirm">${this.localize('d2l-activity-assignment-editor.yesLabel')}</d2l-button>
+				<d2l-button slot="footer" dialog-action="cancel">${this.localize('d2l-activity-assignment-editor.noLabel')}</d2l-button>
 			</d2l-dialog-confirm>
 		`;
 	}

@@ -67,12 +67,12 @@ export default {
 	"d2l-activity-rubrics.btnCreateNew": "Create New", //Text for create new dropdown
 	"d2l-activity-rubrics.btnAddExisting": "Add Existing", //Text for Add Existing dropdown
 	"d2l-activity-rubrics.hdrRubrics": "Rubrics", //Header for the rubrics section
-	"d2l-activity-rubrics.btnAttachRubric": "zzAttach Rubric", //Button for the attach new rubric overlay
+	"d2l-activity-rubrics.btnAttachRubric": "Attach Rubric", //Button for the attach new rubric overlay
 	"d2l-activity-rubrics.btnCancel": "Cancel", //Button for canceling out of the attach new rubric overlay
-	"d2l-activity-rubrics.txtAddExisting": "zzzAdd Existing", //Title for the attach rubrics dialog,
+	"d2l-activity-rubrics.txtAddExisting": "Add Existing", //Title for the attach rubrics dialog,
 	"d2l-activity-rubrics.txtNoRubricAdded": "No rubric added", // rubric summary for no rubrics
 	"d2l-activity-rubrics.txtRubricsAdded": "{count, plural, =1 {1 rubric added} other {{count} rubrics added}}", // count of asoociated rubrics
-	"d2l-activity-rubrics.txtDeleteRubric": "zzDelete Rubric", // Text for deleting rubric icon
+	"d2l-activity-rubrics.txtDeleteRubric": "Delete Rubric", // Text for deleting rubric icon
 	"d2l-activity-rubrics.btnClose": "Close", // X button for exiting the create new rubric overlay
 	"d2l-activity-rubrics.txtRubricAdded": "Rubric added", // Text for notifying screenreader rubric was added
 	"d2l-activity-rubrics.txtRubricRemoved": "Rubric removed", // Text for notifying screenreader rubric was removed 
@@ -98,5 +98,53 @@ export default {
 	"d2l-activity-attachments.addFileMenu": "File Upload", // Attach menu item text
 	"d2l-activity-attachments.addLinkMenu": "Weblink", // Attach menu item text
 	"d2l-activity-attachments.addOneDriveLinkMenu": "OneDrive", // Attach menu item text
-	"d2l-activity-attachments.addQuicklinkMenu": "Existing Activity" // Attach menu item text
+	"d2l-activity-attachments.addQuicklinkMenu": "Existing Activity", // Attach menu item text
+
+	"d2l-activity-assignment-editor.hdrReleaseConditions": "Release Conditions", // release conditions heading
+	"d2l-activity-assignment-editor.hlpReleaseConditions": "Users are not able to access or view the assignment unless they meet the release conditions.", // release conditions help
+	"d2l-activity-assignment-editor.completionType": "Marked as completed", // Label for the completion type field when creating/editing an assignment
+	"d2l-activity-assignment-editor.lblAnonymousMarking": "Anonymous Marking", // Label for anonymous marking
+	"d2l-activity-assignment-editor.chkAnonymousMarking": "Hide student names during assessment", // Checkbox for anonymous marking
+	"d2l-activity-assignment-editor.dueDate": "Due Date", // ARIA label for the due date field when creating/editing an activity
+	"d2l-activity-assignment-editor.txtAnnotationsOff": "Annotations off", // annotations off text
+	"d2l-activity-assignment-editor.emptyNameError": "Name is required", // Error message to inform user that the assignment name is a required field
+	"d2l-activity-assignment-editor.instructions": "Instructions", // Label for the instruction field when creating/editing an assignment
+	"d2l-activity-assignment-editor.hdrTurnitin": "Turnitin Integration", // turnitin heading
+	"d2l-activity-assignment-editor.hlpTurnitin": "Turnitin® adds additional functionality to evaluation.", // turnitin help
+	"d2l-activity-assignment-editor.btnEditTurnitin": "Manage Turnitin", // edit turnitin button
+	"d2l-activity-assignment-editor.btnCloseDialog": "Close this Dialog", // close dialog button
+	"d2l-activity-assignment-editor.txtOriginalityCheckOn": "Originality Check On", // originality check on text
+	"d2l-activity-assignment-editor.txtGradeMarkOn": "GradeMark On", // grade mark on text
+	"d2l-activity-assignment-editor.txtTurnitinOn": "Turnitin enabled", // turnitin on text
+	"d2l-activity-assignment-editor.btnCancel": "Cancel", // cancel button
+	"d2l-activity-assignment-editor.btnSave": "Save", // save button
+	"d2l-activity-assignment-editor.hdrAvailability": "Availability Dates & Conditions", // availability header
+	"d2l-activity-assignment-editor.name": "Name", // Label for the name field when creating/editing an activity
+	"d2l-activity-assignment-editor.submissionType": "Submission Type", // Label for the submission type field when creating/editing an assignment
+	"d2l-activity-assignment-editor.annotationTools": "Annotation Tools", // Label for enabling/disabling Annotation Tools when creating/editing an assignment
+	"d2l-activity-assignment-editor.annotationToolDescription": "Make annotation tools available for assessment", //Description next to the checkbox for annotation tools when creating/editing an assignment
+	"d2l-activity-assignment-editor.scoreOutOf": "Score Out Of", // Label for the score-out-of field when creating/editing an activity
+	"d2l-activity-assignment-editor.anonymousGradingEnabled": "Anonymous marking", // Summary message for accordion when anonymous grading is enabled
+	"d2l-activity-assignment-editor.evaluationAndFeedback": "Evaluation & Feedback", // Header text for the evaluation and feedback summarizer
+	"d2l-activity-assignment-editor.txtAssignmentType": "Assignment Type", // Label for assignment type
+	"d2l-activity-assignment-editor.txtIndividual": "Individual Assignment", // Label for individual assignment type
+	"d2l-activity-assignment-editor.txtGroup": "Group Assignment", // Label for group assignment type,
+	"d2l-activity-assignment-editor.txtGroupCategoryWithName": "Group Category: {groupCategory}", //Label for the group category {groupCategory} is the name of the group category
+	"d2l-activity-assignment-editor.txtGroupCategory": "Group Category", // Label for group category,
+	"d2l-activity-assignment-editor.txtGroupAssignmentSummary": "Group assignment", // Summary message for accordion when assignment type is set to group
+	"d2l-activity-assignment-editor.submissionCompletionAndCategorization": "Submission & Completion", // Label for the availability and dates summarizer
+	"d2l-activity-assignment-editor.assignmentSaveError": "Your assignment wasn't saved. Please correct the fields outlined in red.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
+	"d2l-activity-assignment-editor.folderTypeCannotChange": "Assignment type cannot be changed once submissions are present", // Folder type cannot change
+	"d2l-activity-assignment-editor.folderTypeNoGroups": "No groups exist. Create new groups in the Groups tool.", // Folder type no groups
+	"d2l-activity-assignment-editor.folderTypeCreateGroups": "Create new groups in the Groups tool.", // Folder type create groups
+	"d2l-activity-assignment-editor.discardChangesTitle": "Discard changes?", // Discard Changes User Prompt
+	"d2l-activity-assignment-editor.discardChangesQuestion": "Are you sure you want to discard your changes?", // Discard Changes User Prompt
+	"d2l-activity-assignment-editor.yesLabel": "Yes",
+	"d2l-activity-assignment-editor.noLabel": "No",
+	"d2l-activity-assignment-editor.filesSubmissionLimit": "Files Allowed Per Submission",
+	"d2l-activity-assignment-editor.UnlimitedFilesPerSubmission": "Unlimited",
+	"d2l-activity-assignment-editor.OneFilePerSubmission": "One File",
+	"d2l-activity-assignment-editor.submissionsRule": "Submissions",
+	"d2l-activity-assignment-editor.hdrSpecialAccess": "Special Access", // special access heading
+	"d2l-activity-assignment-editor.hlpSpecialAccess": "Special Access allows assignments to be available to only a select group of users or individualized due dates for certain users.", // special access help
 };

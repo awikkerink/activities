@@ -6,15 +6,14 @@ import { css, html } from 'lit-element/lit-element.js';
 import { summarizerHeaderStyles, summarizerSummaryStyles } from './activity-summarizer-styles.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { classMap } from 'lit-html/directives/class-map.js';
-import { getLocalizeResources } from '../localization.js';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { LocalizeActivityEditor } from '../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 import { shared as store } from './state/assignment-store.js';
 
-class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixin(RtlMixin(LocalizeMixin(MobxLitElement))) {
+class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivityEditor(MobxLitElement))) {
 
 	static get styles() {
 		return [
@@ -52,10 +51,6 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 		];
 	}
 
-	static async getLocalizeResources(langs) {
-		return getLocalizeResources(langs, import.meta.url);
-	}
-
 	_saveCompletionTypeOnChange(event) {
 		store.getAssignment(this.href).setCompletionType(event.target.value);
 	}
@@ -87,7 +82,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 		return html `
 			<div id="assignment-type-container">
 				<label class="d2l-label-text">
-					${this.localize('txtAssignmentType')}
+					${this.localize('d2l-activity-assignment-editor.txtAssignmentType')}
 				</label>
 				<d2l-activity-assignment-type-editor
 					href="${this.href}"
@@ -132,7 +127,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 		return html`
 			<div id="assignment-files-submission-limit-container">
 				<label class="d2l-label-text" for="assignment-files-submission-limit-container">
-					${this.localize('filesSubmissionLimit')}
+					${this.localize('d2l-activity-assignment-editor.filesSubmissionLimit')}
 				</label>
 
 				<label class="${classMap({'files-submission-limit-unlimited': true, ...radioClasses})}">
@@ -145,7 +140,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 						?disabled=${isReadOnly}
 						?checked="${assignment.filesSubmissionLimit === 'unlimited'}"
 					>
-					${this.localize('UnlimitedFilesPerSubmission')}
+					${this.localize('d2l-activity-assignment-editor.UnlimitedFilesPerSubmission')}
 				</label>
 
 				<label class="${classMap({'files-submission-limit-one': true, ...radioClasses})}">
@@ -158,7 +153,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 						?disabled=${isReadOnly}
 						?checked="${assignment.filesSubmissionLimit === 'onefilepersubmission'}"
 					>
-					${this.localize('OneFilePerSubmission')}
+					${this.localize('d2l-activity-assignment-editor.OneFilePerSubmission')}
 				</label>
 			</div>
 		`;
@@ -177,7 +172,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 		return html `
 			<div id="assignment-submissions-rule-container">
 				<label class="d2l-label-text" for="assignment-submissions-rule-container">
-					${this.localize('submissionsRule')}
+					${this.localize('d2l-activity-assignment-editor.submissionsRule')}
 				</label>
 
 				${assignment.submissionsRuleOptions.map((x) => html`
@@ -202,7 +197,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 		return html `
 			<div id="assignment-submission-type-container">
 				<label class="d2l-label-text" for="assignment-submission-type">
-					${this.localize('submissionType')}
+					${this.localize('d2l-activity-assignment-editor.submissionType')}
 				</label>
 				<select
 					id="assignment-submission-type"
@@ -236,7 +231,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 		return html `
 			<div id="assignment-completion-type-container" ?hidden="${completionHidden}">
 				<label class="d2l-label-text" for="assignment-completion-type">
-					${this.localize('completionType')}
+					${this.localize('d2l-activity-assignment-editor.completionType')}
 				</label>
 				<select
 					id="assignment-completion-type"
@@ -258,7 +253,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 		return html`
 			<d2l-labs-accordion-collapse class="accordion" flex header-border>
 				<h3 class="d2l-heading-3 activity-summarizer-header" slot="header">
-					${this.localize('submissionCompletionAndCategorization')}
+					${this.localize('d2l-activity-assignment-editor.submissionCompletionAndCategorization')}
 				</h3>
 				<ul class="d2l-body-small activity-summarizer-summary" slot="summary">
 					<li>${this._renderAssignmentTypeSummary()}</li>

@@ -3,13 +3,12 @@ import '@brightspace-ui/core/components/icons/icon.js';
 import { bodySmallStyles, heading4Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
-import { getLocalizeResources } from '../localization';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { LocalizeActivityEditor } from '../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { assignments as store } from './state/assignment-store.js';
 
 class AssignmentTurnitinEditor
-	extends ActivityEditorMixin(LocalizeMixin(MobxLitElement)) {
+	extends ActivityEditorMixin(LocalizeActivityEditor(MobxLitElement)) {
 
 	static get styles() {
 
@@ -48,11 +47,6 @@ class AssignmentTurnitinEditor
 		];
 	}
 
-	static async getLocalizeResources(langs) {
-
-		return getLocalizeResources(langs, import.meta.url);
-	}
-
 	constructor() {
 
 		super(store);
@@ -74,13 +68,13 @@ class AssignmentTurnitinEditor
 		const buttons = [
 			{
 				Key: 'save',
-				Text: this.localize('btnSave'),
+				Text: this.localize('d2l-activity-assignment-editor.btnSave'),
 				ResponseType: 1, // D2L.Dialog.ResponseType.Positive
 				IsPrimary: true,
 				IsEnabled: true
 			},
 			{
-				Text: this.localize('btnCancel'),
+				Text: this.localize('d2l-activity-assignment-editor.btnCancel'),
 				ResponseType: 2, // D2L.Dialog.ResponseType.Negative
 				IsPrimary: false,
 				IsEnabled: true
@@ -96,7 +90,7 @@ class AssignmentTurnitinEditor
 			/*      responseDataKey: */ 'result',
 			/*                width: */ 960,
 			/*               height: */ 960,
-			/*            closeText: */ this.localize('btnCloseDialog'),
+			/*            closeText: */ this.localize('d2l-activity-assignment-editor.btnCloseDialog'),
 			/*              buttons: */ buttons,
 			/* forceTriggerOnCancel: */ false
 		);
@@ -136,7 +130,7 @@ class AssignmentTurnitinEditor
 				originalityCheckItem = html`
 					<li class="feature-summary-item">
 						<d2l-icon icon="tier1:check"></d2l-icon>
-						${this.localize('txtOriginalityCheckOn')}
+						${this.localize('d2l-activity-assignment-editor.txtOriginalityCheckOn')}
 					</li>
 				`;
 			}
@@ -146,7 +140,7 @@ class AssignmentTurnitinEditor
 				gradeMarkItem = html`
 					<li class="feature-summary-item">
 						<d2l-icon icon="tier1:check"></d2l-icon>
-						${this.localize('txtGradeMarkOn')}
+						${this.localize('d2l-activity-assignment-editor.txtGradeMarkOn')}
 					</li>
 				`;
 			}
@@ -161,11 +155,11 @@ class AssignmentTurnitinEditor
 
 		return html`
 			<div id="assignment-turnitin-container" ?hidden="${!isEditorDisplayed}">
-				<h4 class="d2l-heading-4">${this.localize('hdrTurnitin')}</h4>
-				<p class="help-text d2l-body-small">${this.localize('hlpTurnitin')}</p>
+				<h4 class="d2l-heading-4">${this.localize('d2l-activity-assignment-editor.hdrTurnitin')}</h4>
+				<p class="help-text d2l-body-small">${this.localize('d2l-activity-assignment-editor.hlpTurnitin')}</p>
 				${featureSummary}
 				<d2l-button-subtle
-					text="${this.localize('btnEditTurnitin')}"
+					text="${this.localize('d2l-activity-assignment-editor.btnEditTurnitin')}"
 					@click="${this._onClickEdit}"
 					?hidden="${!canEditTurnitin}">
 				</d2l-button-subtle>
