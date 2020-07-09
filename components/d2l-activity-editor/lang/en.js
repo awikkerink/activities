@@ -82,4 +82,21 @@ export default {
 	"d2l-activity-grades.gradeItem": "Grade Item", //ARIA label for grade-item picker when linking an activity to an existing grade item
 	"d2l-activity-grades.newGradeItemCategory": "Grade Category", // Label for selecting a category dropdown
 	"d2l-activity-grades.noGradeItemCategory": "No Category", // Category dropdown text for not selecting a category
+
+	"d2l-activity-attachments.addGoogleDriveLink": "Attach from Google Drive", // Tooltip for a button that adds a link to a Google Drive file
+	"d2l-activity-attachments.ddFile": "File Upload", // Tooltip for a button that opens a file upload dialog
+	"d2l-activity-attachments.addLink": "Attach Weblink", // Tooltip for a button that adds a link to a URL
+	"d2l-activity-attachments.addOneDriveLink": "Attach from OneDrive", // Tooltip for a button that adds a link to a OneDrive file
+	"d2l-activity-attachments.addQuicklink": "Attach Link to Existing Activity", // Tooltip for a button that adds a link to an existing activity
+	"d2l-activity-attachments.back": "Back", // Text for a back button
+	"d2l-activity-attachments.closeDialog": "Close Dialog", // ARIA text for button to close dialog
+	"d2l-activity-attachments.recordAudio": "Record Audio", // Text for a button that opens a dialog to record audio
+	"d2l-activity-attachments.recordVideo": "Record Video", // Text for a button that opens a dialog to record video
+	"d2l-activity-attachments.save": "Save", // Text for a save button,
+	"d2l-activity-attachments.attach": "Attach", // Text for Attach button to open attachment row
+	"d2l-activity-attachments.addGoogleDriveLinkMenu": "Google Drive", // Attach menu item text
+	"d2l-activity-attachments.addFileMenu": "File Upload", // Attach menu item text
+	"d2l-activity-attachments.addLinkMenu": "Weblink", // Attach menu item text
+	"d2l-activity-attachments.addOneDriveLinkMenu": "OneDrive", // Attach menu item text
+	"d2l-activity-attachments.addQuicklinkMenu": "Existing Activity" // Attach menu item text
 };
