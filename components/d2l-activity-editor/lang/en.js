@@ -75,5 +75,11 @@ export default {
 	"d2l-activity-rubrics.txtDeleteRubric": "zzDelete Rubric", // Text for deleting rubric icon
 	"d2l-activity-rubrics.btnClose": "Close", // X button for exiting the create new rubric overlay
 	"d2l-activity-rubrics.txtRubricAdded": "Rubric added", // Text for notifying screenreader rubric was added
-	"d2l-activity-rubrics.txtRubricRemoved": "Rubric removed" // Text for notifying screenreader rubric was removed 
+	"d2l-activity-rubrics.txtRubricRemoved": "Rubric removed", // Text for notifying screenreader rubric was removed 
+
+	"d2l-activity-grades.points": "Points: {points}", // Text label for displaying points of a grade
+	"d2l-activity-grades.weight": "Weight: {weight}", // Text label for displaying weight of a grade
+	"d2l-activity-grades.gradeItem": "Grade Item", //ARIA label for grade-item picker when linking an activity to an existing grade item
+	"d2l-activity-grades.newGradeItemCategory": "Grade Category", // Label for selecting a category dropdown
+	"d2l-activity-grades.noGradeItemCategory": "No Category", // Category dropdown text for not selecting a category
 };
