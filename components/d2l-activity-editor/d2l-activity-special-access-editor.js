@@ -4,13 +4,12 @@ import '@brightspace-ui/core/components/button/button-subtle.js';
 import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
-import { getLocalizeResources } from './localization';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { LocalizeActivityEditor } from './mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { shared as store } from './state/activity-store.js';
 
-class ActivitySpecialAccessEditor extends ActivityEditorMixin(RtlMixin(LocalizeMixin(MobxLitElement))) {
+class ActivitySpecialAccessEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivityEditor(MobxLitElement))) {
 
 	static get properties() {
 
@@ -44,10 +43,6 @@ class ActivitySpecialAccessEditor extends ActivityEditorMixin(RtlMixin(LocalizeM
 		];
 	}
 
-	static async getLocalizeResources(langs) {
-		return getLocalizeResources(langs, import.meta.url);
-	}
-
 	constructor() {
 		super();
 		this.description = '';
@@ -63,8 +58,8 @@ class ActivitySpecialAccessEditor extends ActivityEditorMixin(RtlMixin(LocalizeM
 				</p>
 			`;
 		} else {
-			const specialAccessTypeDescription = isRestricted ? html`${this.localize('specialAccessRestrictedText')}` : html`${this.localize('specialAccessNotRestrictedText')}`;
-			const userCountText = html`${this.localize('specialAccessCount', { count: userCount })}`;
+			const specialAccessTypeDescription = isRestricted ? html`${this.localize('d2l-activity-editor.specialAccessRestrictedText')}` : html`${this.localize('d2l-activity-editor.specialAccessNotRestrictedText')}`;
+			const userCountText = html`${this.localize('d2l-activity-editor.specialAccessCount', { count: userCount })}`;
 			return html`
 				<label class="d2l-label-text">${specialAccessTypeDescription}</label>
 				<div class="special-access-user-count-container">
@@ -78,7 +73,7 @@ class ActivitySpecialAccessEditor extends ActivityEditorMixin(RtlMixin(LocalizeM
 	_renderManageButton() {
 		return html`
 			<d2l-button-subtle
-				text="${this.localize('btnManageSpecialAccess')}">
+				text="${this.localize('d2l-activity-editor.btnManageSpecialAccess')}">
 			</d2l-button-subtle>
 		`;
 	}

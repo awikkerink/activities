@@ -5,15 +5,14 @@ import 'd2l-dropdown/d2l-dropdown-menu.js';
 import { bodyCompactStyles, bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
-import { getLocalizeResources } from './localization';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { LocalizeActivityEditor } from './mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 import store from './state/conditions-store.js';
 
 class ActivityConditionsEditor
-	extends ActivityEditorMixin(RtlMixin(LocalizeMixin(MobxLitElement))) {
+	extends ActivityEditorMixin(RtlMixin(LocalizeActivityEditor(MobxLitElement))) {
 
 	static get properties() {
 
@@ -51,10 +50,6 @@ class ActivityConditionsEditor
 			`,
 			...this.listItemStyles
 		];
-	}
-
-	static async getLocalizeResources(langs) {
-		return getLocalizeResources(langs, import.meta.url);
 	}
 
 	static get listItemStyles() {
@@ -124,7 +119,7 @@ class ActivityConditionsEditor
 
 			return html`
 				<p class="d2l-label-text">
-					${this.localize('lblConditionsOperator')}
+					${this.localize('d2l-activity-editor.lblConditionsOperator')}
 				</p>
 			`;
 		}
@@ -161,7 +156,7 @@ class ActivityConditionsEditor
 		return html`
 			<div>
 				<label class="d2l-label-text" for="operator">
-					${this.localize('lblConditionsOperator')}
+					${this.localize('d2l-activity-editor.lblConditionsOperator')}
 				</label>
 				<select
 					class="d2l-input-select"
@@ -199,7 +194,7 @@ class ActivityConditionsEditor
 				</span>
 				<span class="d2l-list-item-deleter">
 					<d2l-button-icon
-						text="${this.localize('btnRemoveCondition')}"
+						text="${this.localize('d2l-activity-editor.btnRemoveCondition')}"
 						icon="tier1:close-large"
 						data-key="${key}"
 						@click="${this._removeCondition}">
@@ -332,7 +327,7 @@ class ActivityConditionsEditor
 		if (canAttachExisting) {
 			attachExistingTemplate = html`
 				<d2l-menu-item
-					text="${this.localize('btnAddExisting')}"
+					text="${this.localize('d2l-activity-editor.btnAddExisting')}"
 					@d2l-menu-item-select="${this._addExisting}">
 				</d2l-menu-item>
 			`;
@@ -342,7 +337,7 @@ class ActivityConditionsEditor
 		if (canCreateNew) {
 			createNewTemplate = html`
 				<d2l-menu-item
-					text="${this.localize('btnCreateNew')}"
+					text="${this.localize('d2l-activity-editor.btnCreateNew')}"
 					@d2l-menu-item-select="${this._createNew}">
 				</d2l-menu-item>
 			`;
@@ -350,9 +345,9 @@ class ActivityConditionsEditor
 
 		return html`
 			<d2l-dropdown-button-subtle
-				text="${this.localize('btnAddReleaseCondition')}">
+				text="${this.localize('d2l-activity-editor.btnAddReleaseCondition')}">
 				<d2l-dropdown-menu>
-					<d2l-menu label="${this.localize('btnAddReleaseCondition')}">
+					<d2l-menu label="${this.localize('d2l-activity-editor.btnAddReleaseCondition')}">
 						${createNewTemplate}
 						${attachExistingTemplate}
 					</d2l-menu>
