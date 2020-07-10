@@ -12,8 +12,7 @@ class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(Ac
 	static get properties() {
 		return {
 			isSaving: { type: Boolean, attribute: 'is-saving' },
-			_backdropShown: { type: Boolean },
-			_showBackgroundTimer: { type: Object }
+			_backdropShown: { type: Boolean }
 		};
 	}
 
@@ -40,7 +39,6 @@ class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(Ac
 
 		this.isSaving = false;
 		this._backdropShown = false;
-		this._showBackgroundTimer = null;
 	}
 
 	async validate() {
@@ -72,21 +70,13 @@ class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(Ac
 	}
 
 	_toggleBackdrop(show) {
-		if (show && !this._showBackgroundTimer) {
-			this._showBackgroundTimer = setTimeout(() => {
-				this._backdropShown = true;
-			}, 800);
-		} else if (!show) {
-			clearTimeout(this._showBackgroundTimer);
-			this._showBackgroundTimer = null;
-			this._backdropShown = false;
-		}
+		this._backdropShown = show;
 	}
 
 	hasPendingChanges() {
 		const activity = store.get(this.href);
 		if (activity) {
-			return activity.dirty;
+			return activity.dirty();
 		}
 		return false;
 	}
@@ -101,6 +91,7 @@ class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(Ac
 				for-target="editor-container"
 				?shown="${this._backdropShown}"
 				no-animate-hide
+				delay-transition
 				slow-transition>
 			</d2l-backdrop>
 		`;

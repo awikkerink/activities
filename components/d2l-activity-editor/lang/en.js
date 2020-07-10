@@ -8,6 +8,7 @@ export default {
 	"btnRemoveCondition": "Remove Condition", // remove condition button
 	"lblConditionsOperator": "To view this item, users must satisfy", // conditions operator label
 	"txtNumReleaseConditions": "{count, plural, =1 {{count} Release Condition} other {{count} Release Conditions}}", // num release condition text
+	"txtNumSpecialAccess": "{userCount, plural, =1 {1 user with special access} other {{userCount} users with special access}}", // num users with special access text
 	"btnCancel": "Cancel", // cancel button
 	"btnSave": "Save and Close", // save and close button
 	"btnSaveMobile": "Save", // save and close button for mobile devices
