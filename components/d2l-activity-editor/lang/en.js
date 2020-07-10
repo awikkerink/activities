@@ -66,7 +66,7 @@ export default {
 	"d2l-activity-rubrics.btnAddRubric": "Add rubric", //text for add rubric button
 	"d2l-activity-rubrics.btnCreateNew": "Create New", //Text for create new dropdown
 	"d2l-activity-rubrics.btnAddExisting": "Add Existing", //Text for Add Existing dropdown
-	"d2l-activity-rubrics.hdrRubrics": "zzRubrics", //Header for the rubrics section
+	"d2l-activity-rubrics.hdrRubrics": "Rubrics", //Header for the rubrics section
 	"d2l-activity-rubrics.btnAttachRubric": "Attach Rubric", //Button for the attach new rubric overlay
 	"d2l-activity-rubrics.btnCancel": "Cancel", //Button for canceling out of the attach new rubric overlay
 	"d2l-activity-rubrics.txtAddExisting": "Add Existing", //Title for the attach rubrics dialog,
