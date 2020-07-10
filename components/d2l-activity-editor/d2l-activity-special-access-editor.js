@@ -85,10 +85,6 @@ class ActivitySpecialAccessEditor extends ActivityEditorMixin(RtlMixin(LocalizeM
 	}
 
 	_openSpecialAccessDialog() {
-		const specialAccessDialog = this.shadowRoot.querySelector('#special-access-dialog');
-		if (specialAccessDialog) {
-			specialAccessDialog.open();
-		}
 		const specialAccess = store.get(this.href).specialAccess;
 		const dialogUrl = specialAccess && specialAccess.url;
 
