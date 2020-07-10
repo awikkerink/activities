@@ -61,5 +61,6 @@ export default {
 	"btnManageSpecialAccess": "Manage Special Access", // manage special access button
 	"specialAccessRestrictedText": "Only users with special access can see this folder", // restricted special access description
 	"specialAccessNotRestrictedText": "Users can submit outside normal availability dates", // not restricted special access description
-	"specialAccessCount": "{count, plural, =1 {1 user} other {{count} users}} with special access" // Label for number of special access users
+	"specialAccessCount": "{count, plural, =1 {1 user} other {{count} users}} with special access", // Label for number of special access users
+	"specialAccessDialogTitle": "Manage Special Access" // Dialog title
 };
