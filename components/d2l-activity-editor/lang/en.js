@@ -8,6 +8,7 @@ export default {
 	"editor.btnRemoveCondition": "Remove Condition", // remove condition button
 	"editor.lblConditionsOperator": "To view this item, users must satisfy", // conditions operator label
 	"editor.txtNumReleaseConditions": "{count, plural, =1 {{count} Release Condition} other {{count} Release Conditions}}", // num release condition text
+	"editor.txtNumSpecialAccess": "{userCount, plural, =1 {1 user with special access} other {{userCount} users with special access}}", // num users with special access text
 	"editor.btnCancel": "Cancel", // cancel button
 	"editor.btnSave": "Save and Close", // save and close button
 	"editor.btnSaveMobile": "Save", // save and close button for mobile devices
@@ -62,6 +63,7 @@ export default {
 	"editor.specialAccessRestrictedText": "Only users with special access can see this folder", // restricted special access description
 	"editor.specialAccessNotRestrictedText": "Users can submit outside normal availability dates", // not restricted special access description
 	"editor.specialAccessCount": "{count, plural, =1 {1 user} other {{count} users}} with special access", // Label for number of special access users
+	"editor.specialAccessDialogTitle": "Manage Special Access", // Dialog title
 
 	"rubrics.btnAddRubric": "Add rubric", //text for add rubric button
 	"rubrics.btnCreateNew": "Create New", //Text for create new dropdown
