@@ -1,14 +1,14 @@
 import { bodyCompactStyles, bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
-import { LocalizeActivityAssignmentsMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
+import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 import { assignments as store } from './state/assignment-store.js';
 
-class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivityAssignmentsMixin(MobxLitElement))) {
+class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement))) {
 
 	static get styles() {
 		return [

@@ -9,11 +9,11 @@ import '@brightspace-ui/core/components/dialog/dialog-confirm.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorContainerMixin } from '../mixins/d2l-activity-editor-container-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
-import { LocalizeActivityAssignmentsMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
+import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { shared as store } from './state/assignment-store.js';
 
-class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeActivityAssignmentsMixin(ActivityEditorMixin(MobxLitElement))) {
+class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeActivityAssignmentEditorMixin(ActivityEditorMixin(MobxLitElement))) {
 
 	static get properties() {
 		return {

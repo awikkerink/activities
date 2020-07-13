@@ -1,12 +1,11 @@
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
-import { getLocalizeResources } from '../localization';
-import { LocalizeActivityAssignmentsMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
+import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { assignments as store } from './state/assignment-store.js';
 
 class ActivityAssignmentAnonymousMarkingSummary
-	extends ActivityEditorMixin(LocalizeActivityAssignmentsMixin(MobxLitElement)) {
+	extends ActivityEditorMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement)) {
 
 	static get styles() {
 

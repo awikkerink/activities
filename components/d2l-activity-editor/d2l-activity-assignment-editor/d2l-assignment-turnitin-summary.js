@@ -1,12 +1,12 @@
 import '@brightspace-ui/core/components/icons/icon.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { html } from 'lit-element/lit-element';
-import { LocalizeActivityAssignmentsMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
+import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { assignments as store } from './state/assignment-store.js';
 
 class AssignmentTurnitinSummary
-	extends ActivityEditorMixin(LocalizeActivityAssignmentsMixin(MobxLitElement)) {
+	extends ActivityEditorMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement)) {
 
 	constructor() {
 

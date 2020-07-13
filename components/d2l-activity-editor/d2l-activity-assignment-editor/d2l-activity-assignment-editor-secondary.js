@@ -7,10 +7,10 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
-import { LocalizeActivityAssignmentsMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
+import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 
-class AssignmentEditorSecondary extends ActivityEditorFeaturesMixin(RtlMixin(EntityMixinLit(LocalizeActivityAssignmentsMixin(LitElement)))) {
+class AssignmentEditorSecondary extends ActivityEditorFeaturesMixin(RtlMixin(EntityMixinLit(LocalizeActivityAssignmentEditorMixin(LitElement)))) {
 
 	static get properties() {
 		return {

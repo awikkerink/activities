@@ -3,11 +3,11 @@ import '../d2l-activity-visibility-editor.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
-import { LocalizeActivityAssignmentsMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
+import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SaveStatusMixin } from '../save-status-mixin.js';
 
-class AssignmentEditorFooter extends SaveStatusMixin(EntityMixinLit(RtlMixin(LocalizeActivityAssignmentsMixin(LitElement)))) {
+class AssignmentEditorFooter extends SaveStatusMixin(EntityMixinLit(RtlMixin(LocalizeActivityAssignmentEditorMixin(LitElement)))) {
 
 	static get properties() {
 		return {

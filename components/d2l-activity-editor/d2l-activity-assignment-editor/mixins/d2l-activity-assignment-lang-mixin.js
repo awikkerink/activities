@@ -1,6 +1,6 @@
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 
-export const LocalizeActivityAssignmentsMixin = superclass => class extends LocalizeMixin(superclass) {
+export const LocalizeActivityAssignmentEditorMixin = superclass => class extends LocalizeMixin(superclass) {
 
 	static async getLocalizeResources(langs) {
 		let translations;
@@ -8,8 +8,8 @@ export const LocalizeActivityAssignmentsMixin = superclass => class extends Loca
 			switch (lang) {
 				case 'ar':
 					translations = await import('../lang/ar.js');
-                    break;
-                case 'da-dk':
+					break;
+				case 'da-dk':
 					translations = await import('../lang/da-dk.js');
 					break;
 				case 'de':
