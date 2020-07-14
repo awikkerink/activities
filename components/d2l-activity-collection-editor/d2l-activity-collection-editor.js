@@ -92,6 +92,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			const imageChunk = this._loadedImages.length;
 			this._loadedImages[imageChunk] = { loaded: 0, total: null };
 			let totalInLoadingChunk = 0;
+			this._collectionMoveElement = async (itemToMoveId, targetId) => await collection.moveItem(itemToMoveId, targetId);
 			collection.onItemsChange((item, index) => {
 				item.onActivityUsageChange((usage) => {
 					usage.onOrganizationChange((organization) => {
@@ -107,6 +108,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 							}
 						};
 						items[index].itemSelf = item.self();
+						items[index].id = item.id();
 						if (typeof this._organizationImageChunk[item.self()] === 'undefined') {
 							this._organizationImageChunk[item.self()] = imageChunk;
 							totalInLoadingChunk++;
@@ -601,14 +603,29 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		return firstLoad ? whenLoaded() : until(promiseToWatch.then(whenLoaded), whileLoading());
 	}
 
+	async _handleListItemPositionChange(e) {
+		const keyFn = (item) => item.id;
+		e.detail.reorder(this._items, { keyFn });
+		this.requestUpdate('_items', []);
+
+		if (this._movingCollectionItemPromise) {
+			await this._movingCollectionItemPromise;
+		}
+		const origin = e.detail.fetchPosition(this._items, e.detail.dragTargetKey, keyFn);
+		const dropKey = origin > 0 ? keyFn(this._items[origin - 1]) : null;
+		this._movingCollectionItemPromise = this._collectionMoveElement(e.detail.dragTargetKey, dropKey);
+		await this._movingCollectionItemPromise;
+		this._movingCollectionItemPromise = null;
+	}
+
 	_renderItemList() {
 		if (this._items.length <= 0) {
 			return html`<div class="d2l-activity-collection-no-activity d2l-body-standard">${this.localize('noActivitiesInLearningPath')}</div>`;
 		}
 
-		const items = repeat(this._items, (item) => item.self(), item => {
+		const items = repeat(this._items, (item) => item.id, item => {
 			return html`
-				<d2l-list-item>
+				<d2l-list-item  key="${item.id}" draggable>
 					<div slot="illustration" class="d2l-activitiy-collection-list-item-illustration">
 						${this._renderCourseImageSkeleton()}
 						<d2l-organization-image
@@ -628,7 +645,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			`;
 		});
 
-		return html`<d2l-list>${items}</d2l-list>`;
+		return html`<d2l-list @d2l-list-item-position-change="${this._handleListItemPositionChange}">${items}</d2l-list>`;
 	}
 
 	_renderCandidateItems() {
