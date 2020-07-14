@@ -7,7 +7,7 @@ export default {
 	"editor.btnAddExisting": "Add Existing", // add existing button
 	"editor.btnRemoveCondition": "Remove Condition", // remove condition button
 	"editor.lblConditionsOperator": "To view this item, users must satisfy", // conditions operator label
-	"editor.txtNumReleaseConditions": "{count, plural, =1 {{count} Release Condition} other {{count} Release Conditions}}", // num release condition text
+	"editor.txtNumReleaseConditions": "{count, plural, =1 {{count} release condition} other {{count} release conditions}}", // num release condition text
 	"editor.txtNumSpecialAccess": "{userCount, plural, =1 {1 user with special access} other {{userCount} users with special access}}", // num users with special access text
 	"editor.btnCancel": "Cancel", // cancel button
 	"editor.btnSave": "Save and Close", // save and close button
@@ -100,5 +100,5 @@ export default {
 	"attachments.addFileMenu": "File Upload", // Attach menu item text
 	"attachments.addLinkMenu": "Weblink", // Attach menu item text
 	"attachments.addOneDriveLinkMenu": "OneDrive", // Attach menu item text
-	"attachments.addQuicklinkMenu": "Existing Activity", // Attach menu item text
+	"attachments.addQuicklinkMenu": "Existing Activity" // Attach menu item text
 };
