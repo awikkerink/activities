@@ -174,7 +174,7 @@ export class Conditions {
 		const isExistingCondition = this._conditions.has(dto.Id);
 		if (isExistingCondition) {
 			this._conditionsToRemove.delete(dto.Id);
-		} else if (dto.Id){
+		} else if (dto.Id) {
 			this._conditionsToAdd.set(dto.Id, dto.Text);
 		} else {
 			this._conditionsToCreate.set(this._constructKey(dto), dto);
