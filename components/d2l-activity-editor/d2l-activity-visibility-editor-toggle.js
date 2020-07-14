@@ -4,7 +4,6 @@ import { classMap } from 'lit-html/directives/class-map.js';
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
 import { offscreenStyles } from '@brightspace-ui/core/components/offscreen/offscreen.js';
 
-const baseUrl = import.meta.url;
 class ActivityVisibilityEditorToggle extends LocalizeActivityEditorMixin(LitElement) {
 
 	static get properties() {

@@ -36,7 +36,6 @@ class ActivityEditorButtons extends RtlMixin(LocalizeActivityEditorMixin(LitElem
 		`;
 	}
 
-
 	_save() {
 		const event = new CustomEvent('d2l-activity-editor-save', {
 			bubbles: true,
