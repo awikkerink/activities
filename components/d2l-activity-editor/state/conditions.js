@@ -110,8 +110,9 @@ export class Conditions {
 			results.push({ key: key, title: dto.Text });
 		}
 
-		for(const[key, text] of this._conditionsToAdd){
-			results.push({ key: key, title: text })
+		for (const[key, text] of this._conditionsToAdd) {
+
+			results.push({ key: key, title: text });
 		}
 
 		return results;
@@ -222,7 +223,7 @@ export class Conditions {
 			return true;
 		}
 
-		if(this._conditionsToAdd.size > 0){
+		if (this._conditionsToAdd.size > 0) {
 			return true;
 		}
 
