@@ -1,10 +1,17 @@
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
+import { getLocalizeResources } from '../localization.js';
 import { html } from 'lit-element/lit-element.js';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { assignments as store } from './state/assignment-store.js';
 
 class ActivityAssignmentAnnotationsSummary
-	extends ActivityEditorMixin(MobxLitElement) {
+	extends ActivityEditorMixin(LocalizeMixin(MobxLitElement)) {
+
+	static async getLocalizeResources(langs) {
+
+		return getLocalizeResources(langs, import.meta.url);
+	}
 
 	constructor() {
 

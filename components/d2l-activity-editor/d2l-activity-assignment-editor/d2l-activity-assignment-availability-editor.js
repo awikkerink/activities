@@ -10,11 +10,12 @@ import { bodySmallStyles, heading3Styles, heading4Styles } from '@brightspace-ui
 import { css, html } from 'lit-element/lit-element.js';
 import { summarizerHeaderStyles, summarizerSummaryStyles } from './activity-summarizer-styles.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
-import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
+import { getLocalizeResources } from '../localization.js';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { shared as store } from '../state/activity-store.js';
 
-class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(LocalizeActivityAssignmentEditorMixin(ActivityEditorMixin(MobxLitElement))) {
+class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(LocalizeMixin(ActivityEditorMixin(MobxLitElement))) {
 
 	static get properties() {
 
@@ -53,6 +54,10 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 			summarizerHeaderStyles,
 			summarizerSummaryStyles,
 		];
+	}
+
+	static async getLocalizeResources(langs) {
+		return getLocalizeResources(langs, import.meta.url);
 	}
 
 	constructor() {

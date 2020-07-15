@@ -3,10 +3,11 @@ import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/as
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
 import { ActivityEditorTelemetryMixin } from './mixins/d2l-activity-editor-telemetry-mixin';
-import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
+import { getLocalizeResources } from './localization';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { shared as store } from './state/activity-store.js';
 
-class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(ActivityEditorMixin(LocalizeActivityEditorMixin(LitElement)))) {
+class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(ActivityEditorMixin(LocalizeMixin(LitElement)))) {
 
 	static get properties() {
 		return {
@@ -27,6 +28,10 @@ class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(Ac
 				padding: 20px;
 			}
 		`;
+	}
+
+	static async getLocalizeResources(langs) {
+		return getLocalizeResources(langs, import.meta.url);
 	}
 
 	constructor() {
@@ -78,7 +83,7 @@ class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(Ac
 
 	render() {
 		return html`
-			<div ?hidden="${this.asyncState === asyncStates.complete}" class="d2l-activity-editor-loading">${this.localize('editor.loading')}</div>
+			<div ?hidden="${this.asyncState === asyncStates.complete}" class="d2l-activity-editor-loading">${this.localize('loading')}</div>
 			<div id="editor-container" ?hidden="${this.asyncState !== asyncStates.complete}">
 				<slot name="editor"></slot>
 			</div>
