@@ -28,6 +28,7 @@ import 'd2l-alert/d2l-alert-toast.js';
 import '@brightspace-ui-labs/edit-in-place/d2l-labs-edit-in-place.js';
 import '../d2l-activity-editor/d2l-activity-visibility-auto-editor.js';
 import { getLocalizeResources } from './localization.js';
+import { deepTargetFind } from '@polymer/polymer/lib/utils/gestures';
 
 const baseUrl = import.meta.url;
 class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
@@ -88,11 +89,10 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			}
 			hasACollection = true;
 			const items = [];
-			let itemsLoadedOnce = false;
 			const imageChunk = this._loadedImages.length;
 			this._loadedImages[imageChunk] = { loaded: 0, total: null };
 			let totalInLoadingChunk = 0;
-			this._collectionMoveElement = async (itemToMoveId, targetId) => await collection.moveItem(itemToMoveId, targetId);
+			this._collectionMoveElement = async(itemToMoveId, targetId) => await collection.moveItem(itemToMoveId, targetId);
 			collection.onItemsChange((item, index) => {
 				item.onActivityUsageChange((usage) => {
 					usage.onOrganizationChange((organization) => {
@@ -113,10 +113,6 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 							this._organizationImageChunk[item.self()] = imageChunk;
 							totalInLoadingChunk++;
 						}
-
-						if (itemsLoadedOnce) {
-							this._items = items;
-						}
 					});
 				});
 			});
@@ -126,8 +122,8 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 
 			collection.subEntitiesLoaded().then(() => {
 				this._items = items;
-				itemsLoadedOnce = true;
 				this._loadedImages[imageChunk].total = totalInLoadingChunk;
+				this._movingCollectionItemPromise && this._movingCollectionItemPromise.resolve();
 			});
 		});
 
@@ -244,7 +240,13 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			_canEditDraft: { type: Boolean },
 			_description: { type: String },
 			_isDraft: { type: Boolean },
-			_items: { type: Array },
+			_items: { type: Array, hasChanged(newVal, oldValue) {
+				if (!oldValue || newVal.length !== oldValue.length) return true;
+				for (let i = 0; i < newVal.length; i++) {
+					if (oldValue[i].id !== newVal[i].id) return true;
+				}
+				return false;
+			}},
 			_name: { type: String },
 			_selectionCount: { type: Number },
 			_candidateLoad: { type: Object },
@@ -604,18 +606,20 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 	}
 
 	async _handleListItemPositionChange(e) {
-		const keyFn = (item) => item.id;
-		e.detail.reorder(this._items, { keyFn });
-		this.requestUpdate('_items', []);
-
 		if (this._movingCollectionItemPromise) {
 			await this._movingCollectionItemPromise;
 		}
+		const keyFn = (item) => item.id;
+		const announceFn = (newLocation, newIndex) => {
+			return `Moved ${newLocation.name()} to position ${newIndex + 1} out of ${this._items.length}. Press ENTER or SPACE to confirm movement.`;
+		};
+		const oldItems = [];
+		this._items.forEach(item => oldItems.push(item));
+		e.detail.reorder(oldItems, { announceFn, keyFn });
+		this._items = oldItems;
 		const origin = e.detail.fetchPosition(this._items, e.detail.dragTargetKey, keyFn);
 		const dropKey = origin > 0 ? keyFn(this._items[origin - 1]) : null;
-		this._movingCollectionItemPromise = this._collectionMoveElement(e.detail.dragTargetKey, dropKey);
-		await this._movingCollectionItemPromise;
-		this._movingCollectionItemPromise = null;
+		this._collectionMoveElement(e.detail.dragTargetKey, dropKey);
 	}
 
 	_renderItemList() {
