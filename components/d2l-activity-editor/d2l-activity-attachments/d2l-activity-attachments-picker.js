@@ -8,12 +8,13 @@ import 'd2l-dropdown/d2l-dropdown-menu.js';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { shared as attachmentStore } from './state/attachment-store.js';
-import { LocalizeActivityEditorMixin } from '../mixins/d2l-activity-editor-lang-mixin.js';
+import { getLocalizeResources } from '../localization';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin';
 import { shared as store } from './state/attachment-collections-store.js';
 
-class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeActivityEditorMixin(RtlMixin(MobxLitElement))) {
+class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeMixin(RtlMixin(MobxLitElement))) {
 
 	static get styles() {
 		return css`
@@ -64,6 +65,10 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeActivityEdit
 				}
 			}
 		`;
+	}
+
+	static async getLocalizeResources(langs) {
+		return getLocalizeResources(langs, import.meta.url);
 	}
 
 	constructor() {
@@ -252,76 +257,76 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeActivityEdit
 				<d2l-button-icon
 					id="add-file-button"
 					icon="d2l-tier1:upload"
-					text="${this.localize('attachments.addFile')}"
+					text="${this.localize('addFile')}"
 					?hidden="${!canAddFile}"
 					@click="${this._launchAddFileDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip
 					for="add-file-button"
 					aria-hidden="true"
-					disable-focus-lock>${this.localize('attachments.addFile')}</d2l-tooltip>
+					disable-focus-lock>${this.localize('addFile')}</d2l-tooltip>
 					<!-- Important: keep tooltip content inline, otherwise screenreader gets confused -->
 				<d2l-button-icon
 					id="add-quicklink-button"
 					icon="d2l-tier1:quicklink"
-					text="${this.localize('attachments.addQuicklink')}"
+					text="${this.localize('addQuicklink')}"
 					?hidden="${!canAddLink}"
 					@click="${this._launchAddQuicklinkDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip
 					for="add-quicklink-button"
 					aria-hidden="true"
-					disable-focus-lock>${this.localize('attachments.addQuicklink')}</d2l-tooltip>
+					disable-focus-lock>${this.localize('addQuicklink')}</d2l-tooltip>
 
 				<d2l-button-icon
 					id="add-link-button"
 					icon="d2l-tier1:link"
-					text="${this.localize('attachments.addLink')}"
+					text="${this.localize('addLink')}"
 					?hidden="${!canAddLink}"
 					@click="${this._launchAddLinkDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip
 					for="add-link-button"
 					aria-hidden="true"
-					disable-focus-lock>${this.localize('attachments.addLink')}</d2l-tooltip>
+					disable-focus-lock>${this.localize('addLink')}</d2l-tooltip>
 
 				<d2l-button-icon
 					id="add-google-drive-link-button"
 					icon="d2l-tier1:google-drive"
-					text="${this.localize('attachments.addGoogleDriveLink')}"
+					text="${this.localize('addGoogleDriveLink')}"
 					?hidden="${!canAddGoogleDriveLink}"
 					@click="${this._launchAddGoogleDriveLinkDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip
 					for="add-google-drive-link-button"
 					aria-hidden="true"
-					disable-focus-lock>${this.localize('attachments.addGoogleDriveLink')}</d2l-tooltip>
+					disable-focus-lock>${this.localize('addGoogleDriveLink')}</d2l-tooltip>
 
 				<d2l-button-icon
 					id="add-onedrive-link-button"
 					icon="d2l-tier1:one-drive"
-					text="${this.localize('attachments.addOneDriveLink')}"
+					text="${this.localize('addOneDriveLink')}"
 					?hidden="${!canAddOneDriveLink}"
 					@click="${this._launchAddOneDriveLinkDialog}">
 				</d2l-button-icon>
 				<d2l-tooltip
 					for="add-onedrive-link-button"
 					aria-hidden="true"
-					disable-focus-lock>${this.localize('attachments.addOneDriveLink')}</d2l-tooltip>
+					disable-focus-lock>${this.localize('addOneDriveLink')}</d2l-tooltip>
 
 				<div class="button-container-right">
 					<d2l-button-subtle
 						id="record-audio-button"
 						icon="tier1:mic"
 						?hidden="${!canRecordAudio}"
-						text="${this.localize('attachments.recordAudio')}"
+						text="${this.localize('recordAudio')}"
 						@click="${this._launchRecordAudioDialog}">
 					</d2l-button-subtle>
 					<d2l-button-subtle
 						id="record-video-button"
 						icon="tier1:file-video"
 						?hidden="${!canRecordVideo}"
-						text="${this.localize('attachments.recordVideo')}"
+						text="${this.localize('recordVideo')}"
 						@click="${this._launchRecordVideoDialog}">
 					</d2l-button-subtle>
 				</div>
@@ -332,35 +337,35 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeActivityEdit
 						id="attach-dropdown"
 						class="d2l-dropdown-opener opener-border-0 option-menu-toggle"
 						icon="d2l-tier1:attach"
-						text="${this.localize('attachments.attach')}">
+						text="${this.localize('attach')}">
 					</d2l-button-icon>
 					<d2l-tooltip for="attach-dropdown"
-						position="top" disable-focus-lock>${this.localize('attachments.attach')}
+						position="top" disable-focus-lock>${this.localize('attach')}
 					</d2l-tooltip>
 					<d2l-dropdown-menu id="dropdown" align="end" no-pointer vertical-offset="6px">
-						<d2l-menu role="menu" label="${this.localize('attachments.attach')}">
+						<d2l-menu role="menu" label="${this.localize('attach')}">
 							<d2l-menu-item
-								text="${this.localize('attachments.addFileMenu')}"
+								text="${this.localize('addFileMenu')}"
 								?hidden="${!canAddFile}"
 								@d2l-menu-item-select="${this._launchAddFileDialog}"
 							></d2l-menu-item>
 							<d2l-menu-item
-								text="${this.localize('attachments.addQuicklinkMenu')}"
+								text="${this.localize('addQuicklinkMenu')}"
 								?hidden="${!canAddLink}"
 								@d2l-menu-item-select="${this._launchAddQuicklinkDialog}"
 							></d2l-menu-item>
 							<d2l-menu-item
-								text="${this.localize('attachments.addLinkMenu')}"
+								text="${this.localize('addLinkMenu')}"
 								?hidden="${!canAddLink}"
 								@d2l-menu-item-select="${this._launchAddLinkDialog}"
 							></d2l-menu-item>
 							<d2l-menu-item
-								text="${this.localize('attachments.addGoogleDriveLinkMenu')}"
+								text="${this.localize('addGoogleDriveLinkMenu')}"
 								?hidden="${!canAddGoogleDriveLink}"
 								@d2l-menu-item-select="${this._launchAddGoogleDriveLinkDialog}"
 							></d2l-menu-item>
 							<d2l-menu-item
-								text="${this.localize('attachments.addOneDriveLinkMenu')}"
+								text="${this.localize('addOneDriveLinkMenu')}"
 								?hidden="${!canAddLink}"
 								@d2l-menu-item-select="${this._launchAddOneDriveLinkDialog}"
 							></d2l-menu-item>
@@ -372,21 +377,21 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeActivityEdit
 						id="record-audio-button-small"
 						icon="tier1:mic"
 						?hidden="${!canRecordAudio}"
-						text="${this.localize('attachments.recordAudio')}"
+						text="${this.localize('recordAudio')}"
 						@click="${this._launchRecordAudioDialog}">
 					</d2l-button-icon>
 					<d2l-tooltip for="record-audio-button-small"
-						position="top" disable-focus-lock>${this.localize('attachments.recordAudio')}
+						position="top" disable-focus-lock>${this.localize('recordAudio')}
 					</d2l-tooltip>
 					<d2l-button-icon
 						id="record-video-button-small"
 						icon="tier1:file-video"
 						?hidden="${!canRecordVideo}"
-						text="${this.localize('attachments.recordVideo')}"
+						text="${this.localize('recordVideo')}"
 						@click="${this._launchRecordVideoDialog}">
 					</d2l-button-icon>
 					<d2l-tooltip for="record-video-button-small"
-						position="top" disable-focus-lock>${this.localize('attachments.recordVideo')}
+						position="top" disable-focus-lock>${this.localize('recordVideo')}
 					</d2l-tooltip>
 				</span>
 			</div>

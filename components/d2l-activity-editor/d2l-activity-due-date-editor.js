@@ -1,12 +1,13 @@
 import 'd2l-datetime-picker/d2l-datetime-picker';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
+import { getLocalizeResources } from './localization';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
-import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { shared as store } from './state/activity-store.js';
 
-class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeActivityEditorMixin(MobxLitElement)) {
+class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeMixin(MobxLitElement)) {
 
 	static get properties() {
 		return {
@@ -24,6 +25,10 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeActivityEditorMi
 				display: none;
 			}
 		`];
+	}
+
+	static async getLocalizeResources(langs) {
+		return getLocalizeResources(langs, import.meta.url);
 	}
 
 	constructor() {
@@ -47,11 +52,11 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeActivityEditorMi
 					hide-label
 					name="date"
 					id="date"
-					date-label="${this.localize('editor.dueDate')}"
-					time-label="${this.localize('editor.dueTime')}"
+					date-label="${this.localize('dueDate')}"
+					time-label="${this.localize('dueTime')}"
 					datetime="${date}"
 					overrides="${this._overrides}"
-					placeholder="${this.localize('editor.noDueDate')}"
+					placeholder="${this.localize('noDueDate')}"
 					aria-invalid="${errorTerm ? 'true' : 'false'}"
 					invalid="${errorTerm}"
 					tooltip-red
@@ -87,7 +92,7 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeActivityEditorMi
 		}
 
 		return html`
-			<label class="d2l-label-text" ?hidden="${!canEditDates}">${this.localize('editor.dueDate')}</label>
+			<label class="d2l-label-text" ?hidden="${!canEditDates}">${this.localize('dueDate')}</label>
 			${this.dateTemplate(dueDate, canEditDates, errorTerm)}
 		`;
 	}

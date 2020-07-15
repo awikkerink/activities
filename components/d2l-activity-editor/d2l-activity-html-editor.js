@@ -1,11 +1,12 @@
 import 'd2l-html-editor/d2l-html-editor.js';
 import 'd2l-html-editor/d2l-html-editor-client.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { getLocalizeResources } from './localization.js';
 import { getUniqueId } from '@brightspace-ui/core/helpers/uniqueId';
-import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { resolveUrl } from '@polymer/polymer/lib/utils/resolve-url.js';
 
-class ActivityHtmlEditor extends LocalizeActivityEditorMixin(LitElement) {
+class ActivityHtmlEditor extends LocalizeMixin(LitElement) {
 
 	static get properties() {
 		return {
@@ -116,6 +117,10 @@ class ActivityHtmlEditor extends LocalizeActivityEditorMixin(LitElement) {
 		`;
 	}
 
+	static async getLocalizeResources(langs) {
+		return getLocalizeResources(langs, import.meta.url);
+	}
+
 	constructor() {
 		super();
 		this._htmlEditorUniqueId = `htmleditor-${getUniqueId()}`;
@@ -147,7 +152,7 @@ class ActivityHtmlEditor extends LocalizeActivityEditorMixin(LitElement) {
 				toolbar="bold italic underline numlist bullist d2l_isf"
 				plugins="lists paste d2l_isf d2l_replacestring">
 
-				<div id="toolbar-shortcut-${this._htmlEditorUniqueId}" hidden="">${this.localize('editor.ariaToolbarShortcutInstructions')}</div>
+				<div id="toolbar-shortcut-${this._htmlEditorUniqueId}" hidden="">${this.localize('ariaToolbarShortcutInstructions')}</div>
 				<div
 					class="d2l-html-editor-container"
 					id="${this._htmlEditorUniqueId}"
