@@ -110,7 +110,7 @@ export class Conditions {
 			results.push({ key: key, title: dto.Text });
 		}
 
-		for (const[key, text] of this._conditionsToAdd) {
+		for (const [key, text] of this._conditionsToAdd) {
 
 			results.push({ key: key, title: text });
 		}
@@ -183,7 +183,7 @@ export class Conditions {
 
 	remove(key) {
 
-		const didRemoveNewCondition = 
+		const didRemoveNewCondition =
 			this._conditionsToCreate.delete(key)
 				|| this._conditionsToAdd.delete(key);
 		if (didRemoveNewCondition) {
