@@ -680,7 +680,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			`;
 		});
 
-		return html`<d2l-list @d2l-list-item-position-change="${this._handleListItemPositionChange}">${items}</d2l-list>`;
+		return html`<d2l-list grid @d2l-list-item-position-change="${this._handleListItemPositionChange}">${items}</d2l-list>`;
 	}
 
 	_renderCandidateItems() {
@@ -708,12 +708,12 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 				</d2l-list-item>
 			`;
 		});
-		return html`<d2l-list @d2l-list-selection-change=${this.handleSelectionChange}>${items}</d2l-list>`;
+		return html`<d2l-list grid @d2l-list-selection-change=${this.handleSelectionChange}>${items}</d2l-list>`;
 	}
 
 	_renderCourseImageSkeleton() {
 		return html`
-			<svg viewBox="0 0 180 77" width="100%" slot="illustration" class="d2l-activity-collection-image-skeleton">
+			<svg viewBox="0 0 172 84" width="100%" slot="illustration" class="d2l-activity-collection-image-skeleton">
 				<rect x="0" width="100%" y="0" height="100%" stroke="none" class="d2l-activity-collection-skeleton-rect"></rect>
 			</svg>
 		`;
@@ -721,7 +721,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 
 	_renderItemListSkeleton(numberOfItems) {
 		const itemsSkeleton = html`
-			<d2l-list-item>
+			<d2l-labs-list-item-accumulator draggable>
 				${this._renderCourseImageSkeleton()}
 				<d2l-list-item-content>
 					<svg width="100%" class="d2l-activity-collection-body-compact-skeleton-svg">
@@ -734,7 +734,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 					</div>
 				</d2l-list-item-content>
 				<d2l-button-icon slot="actions" icon="d2l-tier1:close-default" disabled>
-			</d2l-list-item>
+			</d2l-labs-list-item-accumulator>
 		`;
 		return html`<d2l-list>${(new Array(numberOfItems)).fill(itemsSkeleton)}</d2l-list>`;
 	}
