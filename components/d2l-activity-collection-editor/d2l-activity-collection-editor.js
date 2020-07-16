@@ -288,6 +288,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			.d2l-activity-collection-activities {
 				max-width: 881px;
 				padding: 0 0.05rem;
+				margin: 0 -1.5rem;
 			}
 			.d2l-activity-collection-list-actions {
 				align-items: baseline;
@@ -447,7 +448,6 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			}
 
 			.d2l-activity-collection-grey-out {
-				filter: grayscale(1);
 				pointer-events: none;
 			}
 
@@ -671,11 +671,9 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 							?hidden="${!this._loadedImages[this._organizationImageChunk[item.itemSelf]].allLoaded}">
 						</d2l-organization-image>
 					</div>
-					<d2l-list-item-content>
-						${item.name()}
-						<div slot="supporting-info">${item.hasClass(organizationClasses.courseOffering) ? this.localize('course') : null}</div>
-					</d2l-list-item-content>
-					<d2l-menu-item slot="action-secondary" text="${this.localize('removeActivity')}" icon="d2l-tier1:close-default" @click=${item.removeItem}></d2l-menu-item>
+					${item.name()}
+					<div slot="supporting-info">${item.hasClass(organizationClasses.courseOffering) ? this.localize('course') : null}</div>
+					<d2l-menu-item slot="secondary-action" text="${this.localize('removeActivity')}" @click=${item.removeItem}></d2l-menu-item>
 				</d2l-labs-list-item-accumulator>
 			`;
 		});
@@ -723,17 +721,14 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		const itemsSkeleton = html`
 			<d2l-labs-list-item-accumulator draggable>
 				${this._renderCourseImageSkeleton()}
-				<d2l-list-item-content>
-					<svg width="100%" class="d2l-activity-collection-body-compact-skeleton-svg">
-						<rect x="0" width="40%" y="0" height="100%" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
+				<svg width="100%" class="d2l-activity-collection-body-compact-skeleton-svg">
+					<rect x="0" width="40%" y="0" height="100%" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
+				</svg>
+				<div slot="secondary">
+					<svg width="100%" class="d2l-activity-collection-body-small-skeleton-svg">
+						<rect x="0" width="30%" y="0" height="100%" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
 					</svg>
-					<div slot="supporting-info">
-						<svg width="100%" class="d2l-activity-collection-body-small-skeleton-svg">
-							<rect x="0" width="30%" y="0" height="100%" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
-						</svg>
-					</div>
-				</d2l-list-item-content>
-				<d2l-button-icon slot="actions" icon="d2l-tier1:close-default" disabled>
+				</div>
 			</d2l-labs-list-item-accumulator>
 		`;
 		return html`<d2l-list>${(new Array(numberOfItems)).fill(itemsSkeleton)}</d2l-list>`;
