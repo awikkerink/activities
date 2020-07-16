@@ -675,7 +675,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 						${item.name()}
 						<div slot="supporting-info">${item.hasClass(organizationClasses.courseOffering) ? this.localize('course') : null}</div>
 					</d2l-list-item-content>
-					<d2l-button-icon slot="actions" text="${this.localize('removeActivity', 'courseName', item.name())}" icon="d2l-tier1:close-default" @click=${item.removeItem}>
+					<d2l-menu-item slot="action-secondary" text="${this.localize('removeActivity')}" icon="d2l-tier1:close-default" @click=${item.removeItem}></d2l-menu-item>
 				</d2l-labs-list-item-accumulator>
 			`;
 		});
