@@ -645,7 +645,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		this._reorderLoading = true;
 		const keyFn = (item) => item.id;
 		const announceFn = (newLocation, newIndex) => {
-			return `Moved ${newLocation.name()} to position ${newIndex + 1} out of ${this._items.length}. Press ENTER or SPACE to confirm movement.`;
+			return this.localize('moveActivity', 'activityName', newLocation.name(), 'newPosition', (newIndex + 1), 'totalNumberOfActivities', this._items.length);
 		};
 		const oldItems = [];
 		this._items.forEach(item => oldItems.push(item));
