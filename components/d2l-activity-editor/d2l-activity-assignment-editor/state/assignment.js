@@ -87,6 +87,8 @@ export class Assignment {
 		this.editTurnitinUrl = entity.editTurnitinUrl();
 		this.isOriginalityCheckEnabled = entity.isOriginalityCheckEnabled();
 		this.isGradeMarkEnabled = entity.isGradeMarkEnabled();
+		this.canEditDefaultScoringRubric = entity.canEditDefaultScoringRubric();
+		this.defaultScoringRubricId = String(entity.getDefaultScoringRubric()) || '-1';
 		this.submissionTypeOptions = entity.submissionTypeOptions();
 		this.allCompletionTypeOptions = entity.allCompletionTypeOptions();
 		this.canEditSubmissionType = entity.canEditSubmissionType();
@@ -180,6 +182,16 @@ export class Assignment {
 		this.instructions = value;
 	}
 
+	setDefaultScoringRubric(rubricId) {
+		if (rubricId) {
+			this.defaultScoringRubricId = String(rubricId);
+		}
+	}
+
+	resetDefaultScoringRubricId() {
+		this.defaultScoringRubricId = '-1';
+	}
+
 	_makeAssignmentData() {
 		/* NOTE: if you add fields here, please make sure you update the corresponding equals method in siren-sdk.
 		 		 The cancel workflow is making use of that to detect changes.
@@ -191,7 +203,8 @@ export class Assignment {
 			annotationToolsAvailable: this.annotationToolsAvailable,
 			submissionType: this.submissionType,
 			isIndividualAssignmentType: this.isIndividualAssignmentType,
-			groupTypeId: this.selectedGroupCategoryId
+			groupTypeId: this.selectedGroupCategoryId,
+			defaultScoringRubricId: this.defaultScoringRubricId
 		};
 		if (this.canEditCompletionType) {
 			data.completionType = this.completionType;
@@ -266,6 +279,8 @@ decorate(Assignment, {
 	selectedGroupCategoryId: observable,
 	isGroupAssignmentTypeDisabled: observable,
 	isReadOnly: observable,
+	canEditDefaultScoringRubric: observable,
+	defaultScoringRubricId: observable,
 	selectedGroupCategoryName: observable,
 	showFilesSubmissionLimit: computed,
 	showSubmissionsRule: computed,
@@ -283,5 +298,7 @@ decorate(Assignment, {
 	setToGroupAssignmentType: action,
 	setAssignmentTypeGroupCategory: action,
 	setFilesSubmissionLimit: action,
-	setSubmissionsRule: action
+	setSubmissionsRule: action,
+	setDefaultScoringRubric: action,
+	resetDefaultScoringRubricId: action
 });
