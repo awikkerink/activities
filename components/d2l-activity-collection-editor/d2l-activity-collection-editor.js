@@ -31,6 +31,9 @@ import '@brightspace-ui-labs/edit-in-place/d2l-labs-edit-in-place.js';
 import '../d2l-activity-editor/d2l-activity-visibility-auto-editor.js';
 import { getLocalizeResources } from './localization.js';
 
+const spaceKeyDown = 32;
+const spaceKeyEnter = 13;
+
 const baseUrl = import.meta.url;
 class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 
@@ -613,13 +616,13 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 						${activityCount}
 					</div>
 				</div>
+				<div class=${classMap(collectionActivitiesClasses)}>
+					${items}
+				</div>
+				<d2l-alert-toast id="delete-succeeded-toast" type="default" announce-text=${this.localize('deleteSucceeded', 'activityName', this._currentDeleteItemName)}>
+					${this.localize('deleteSucceeded', 'activityName', this._currentDeleteItemName)}
+				</d2l-alert-toast>
 			</div>
-			<div class=${classMap(collectionActivitiesClasses)}>
-				${items}
-			</div>
-			<d2l-alert-toast id="delete-succeeded-toast" type="default" announce-text=${this.localize('deleteSucceeded', 'activityName', this._currentDeleteItemName)}>
-				${this.localize('deleteSucceeded', 'activityName', this._currentDeleteItemName)}
-			</d2l-alert-toast>
 			${this._renderCandidates()}
 		`;
 	}
@@ -672,8 +675,13 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 						</d2l-organization-image>
 					</div>
 					${item.name()}
-					<div slot="supporting-info">${item.hasClass(organizationClasses.courseOffering) ? this.localize('course') : null}</div>
-					<d2l-menu-item slot="secondary-action" text="${this.localize('removeActivity')}" @click=${item.removeItem}></d2l-menu-item>
+					<div slot="secondary">${item.hasClass(organizationClasses.courseOffering) ? this.localize('course') : null}</div>
+					<d2l-menu-item
+						slot="secondary-action"
+						text="${this.localize('removeActivity')}"
+						@keydown=${(e) => (e.keyCode === spaceKeyDown || e.keyCode === spaceKeyEnter) && item.removeItem()}
+						@click=${item.removeItem}>
+					</d2l-menu-item>
 				</d2l-labs-list-item-accumulator>
 			`;
 		});
@@ -719,7 +727,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 
 	_renderItemListSkeleton(numberOfItems) {
 		const itemsSkeleton = html`
-			<d2l-labs-list-item-accumulator draggable>
+			<d2l-labs-list-item-accumulator draggable key="skeleton">
 				${this._renderCourseImageSkeleton()}
 				<svg width="100%" class="d2l-activity-collection-body-compact-skeleton-svg">
 					<rect x="0" width="40%" y="0" height="100%" stroke="none" rx="4" class="d2l-activity-collection-skeleton-rect"></rect>
@@ -758,8 +766,6 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 				? html`<d2l-loading-spinner size="85"></d2l-loading-spinner>`
 				: null;
 
-		const spaceKeyDown = 32;
-		const spaceKeyEnter = 13;
 		const selectedNav = this._selectionCount > 0
 			? html`
 				${this.localize('selected', 'count', this._selectionCount)}
