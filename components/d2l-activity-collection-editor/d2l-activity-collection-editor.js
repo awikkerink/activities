@@ -408,7 +408,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			.d2l-activitiy-collection-list-item-illustration {
 				display: grid;
 				grid-template-columns: 100%;
-  				grid-template-rows: 100%;
+				grid-template-rows: 100%;
 				grid-template-areas: only-one;
 				position: relative;
 			}
@@ -416,7 +416,7 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 			.d2l-activity-collection-image-skeleton,
 			.d2l-activitiy-collection-organization-image {
 				grid-column: 1;
-  				grid-row: 1;
+				grid-row: 1;
 			}
 
 			@keyframes loadingPulse {
