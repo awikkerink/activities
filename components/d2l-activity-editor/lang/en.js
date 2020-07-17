@@ -77,7 +77,7 @@ export default {
 	"rubrics.txtDeleteRubric": "Delete Rubric", // Text for deleting rubric icon
 	"rubrics.btnClose": "Close", // X button for exiting the create new rubric overlay
 	"rubrics.txtRubricAdded": "Rubric added", // Text for notifying screenreader rubric was added
-	"rubrics.txtRubricRemoved": "Rubric removed", // Text for notifying screenreader rubric was removed 
+	"rubrics.txtRubricRemoved": "Rubric removed", // Text for notifying screenreader rubric was removed
 	"rubrics.defaultScoringRubric": "Default Scoring Rubric", // Sub heading for the default scoring rubric select dropdown
 	"rubrics.noDefaultScoringRubricSelected": "No default selected", // option in default scoring rubric when no default scoring rubric selected
 
@@ -88,7 +88,7 @@ export default {
 	"grades.noGradeItemCategory": "No Category", // Category dropdown text for not selecting a category
 
 	"attachments.addGoogleDriveLink": "Attach from Google Drive", // Tooltip for a button that adds a link to a Google Drive file
-	"attachments.ddFile": "File Upload", // Tooltip for a button that opens a file upload dialog
+	"attachments.addFile": "File Upload", // Tooltip for a button that opens a file upload dialog
 	"attachments.addLink": "Attach Weblink", // Tooltip for a button that adds a link to a URL
 	"attachments.addOneDriveLink": "Attach from OneDrive", // Tooltip for a button that adds a link to a OneDrive file
 	"attachments.addQuicklink": "Attach Link to Existing Activity", // Tooltip for a button that adds a link to an existing activity
