@@ -123,14 +123,7 @@ class ActivitySpecialAccessEditor extends ActivityEditorMixin(RtlMixin(LocalizeA
 		delayedResult.AddReleaseListener(() => specialAccess.fetch(true));
 
 		// Save or Cancel button handler
-		delayedResult.AddListener(result => {
-			const resultIsValid = Array.isArray(result) && result.length >= 2;
-			if (resultIsValid) {
-				const [isRestricted, userCount] = result;
-				specialAccess.setIsRestricted(isRestricted);
-				specialAccess.setUserCount(userCount);
-			}
-		});
+		delayedResult.AddListener(() => specialAccess.fetch(true));
 	}
 
 	render() {
