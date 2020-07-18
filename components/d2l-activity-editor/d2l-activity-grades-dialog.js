@@ -126,7 +126,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 		} = activity.scoreAndGrade;
 
 		return html`
-			<d2l-dialog title-text="${this.localize('chooseFromGrades')}" @d2l-dialog-open="${this._onDialogOpen}">
+			<d2l-dialog title-text="${this.localize('chooseFromGrades')}" width="460" @d2l-dialog-open="${this._onDialogOpen}">
 				<label class="d2l-input-radio-label ${!this._canLinkNewGrade ? 'd2l-input-radio-label-disabled' : ''}">
 					<input
 						type="radio"
