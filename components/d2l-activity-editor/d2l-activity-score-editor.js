@@ -274,7 +274,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeActivityEditorMixi
 							showing
 							align="start"
 						>
-							${scoreOutOfError ? html`<span>${this.localize(scoreOutOfError)}</span>` : null}
+							${scoreOutOfError ? html`<span>${this.localize(`editor.${scoreOutOfError}`)}</span>` : null}
 						</d2l-tooltip>
 					` : null}
 					<div class="d2l-body-compact grade-type-text">${gradeType}</div>
