@@ -38,6 +38,9 @@ class ActivitySpecialAccessEditor extends ActivityEditorMixin(RtlMixin(LocalizeA
 				font-size: 0.7rem;
 				line-height: 0.7rem;
 			}
+			.alert-icon {
+				color: red;
+			}
 			`
 		];
 	}
@@ -48,25 +51,33 @@ class ActivitySpecialAccessEditor extends ActivityEditorMixin(RtlMixin(LocalizeA
 	}
 
 	_renderDescription(specialAccess) {
-		const {isRestricted, userCount } = specialAccess;
+		const { isRestricted, userCount } = specialAccess;
 
-		if (userCount === 0) {
+		if (!isRestricted && userCount === 0) {
 			return html`
 				<p class="d2l-body-small">
 					${this.description}
 				</p>
 			`;
-		} else {
-			const specialAccessTypeDescription = isRestricted ? html`${this.localize('editor.specialAccessRestrictedText')}` : html`${this.localize('editor.specialAccessNotRestrictedText')}`;
-			const userCountText = html`${this.localize('editor.specialAccessCount', { count: userCount })}`;
-			return html`
-				<label class="d2l-label-text">${specialAccessTypeDescription}</label>
-				<div class="special-access-user-count-container">
-					<d2l-icon class="special-access-user-count-icon" icon="tier1:access-special"></d2l-icon>
-					<div class="special-access-user-count-text">${userCountText}</div>
-				</div>
-			`;
 		}
+
+		const specialAccessTypeDescription = html`${this.localize(isRestricted ?
+			'editor.specialAccessRestrictedText' :
+			'editor.specialAccessNotRestrictedText'
+		)}`;
+
+		const userCountText = html`${this.localize('editor.specialAccessCount', { count: userCount })}`;
+		const icon = isRestricted && userCount === 0 ?
+			html`<d2l-icon class="special-access-user-count-icon alert-icon" icon="tier1:alert"></d2l-icon>` :
+			html`<d2l-icon class="special-access-user-count-icon" icon="tier1:access-special"></d2l-icon>`;
+
+		return html`
+			<label class="d2l-label-text">${specialAccessTypeDescription}</label>
+			<div class="special-access-user-count-container">
+				${icon}
+				<div class="special-access-user-count-text">${userCountText}</div>
+			</div>
+		`;
 	}
 
 	_renderManageButton() {
