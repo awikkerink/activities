@@ -126,7 +126,6 @@ class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 			<div ?hidden=${!isReadOnly} id="read-only-assignment-type-container">
 				<div class="d2l-body-compact">${folderTypeText}</div>
 				<div class="d2l-body-compact">${groupTypeText}</div>
-				<p class="d2l-body-small">${infoText}</p>
 			</div>
 
 			<div ?hidden=${isReadOnly} id="editable-assignment-type-container">
