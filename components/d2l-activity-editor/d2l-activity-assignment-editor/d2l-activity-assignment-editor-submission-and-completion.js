@@ -1,6 +1,7 @@
 import '@brightspace-ui-labs/accordion/accordion-collapse.js';
 import './d2l-activity-assignment-type-editor.js';
 import './d2l-activity-assignment-type-summary.js';
+import './d2l-activity-submission-email-notification-summary.js';
 import { bodySmallStyles, heading3Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { summarizerHeaderStyles, summarizerSummaryStyles } from './activity-summarizer-styles.js';
@@ -247,6 +248,17 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 	_renderAssignmentCompletionTypeSummary() {
 		return html``;
 	}
+
+	// _renderSubmissionEmailNotificationSummary() {
+	// 	if (!this.SubmissionEmailNotificationEnabled) {
+	// 		return html``;
+	// 	}
+
+	// 	return html`
+	// 		<d2l-activity-submission-email-notification-summary>
+	// 		</d2l-activity-submission-email-notification-summary>
+	// 	`;
+	// }
 
 	render() {
 		const assignment = store.getAssignment(this.href);
