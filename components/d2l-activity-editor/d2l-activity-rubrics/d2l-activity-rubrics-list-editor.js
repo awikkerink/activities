@@ -88,7 +88,7 @@ class ActivityRubricsListEditor extends ActivityEditorFeaturesMixin(ActivityEdit
 				<d2l-rubric
 					class="association-box"
 					force-compact
-					href="${association.rubricHref}"
+					.href="${association.rubricHref}"
 					.token="${this.token}">
 				</d2l-rubric>
 				<d2l-button-icon

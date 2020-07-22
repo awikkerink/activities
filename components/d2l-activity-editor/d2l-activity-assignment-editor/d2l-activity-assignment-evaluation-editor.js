@@ -122,7 +122,7 @@ class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(Loc
 	_renderRubricsSummary() {
 		return html`
 			<d2l-activity-rubrics-summary-wrapper
-				href="${this.activityUsageHref}"
+				.href="${this.activityUsageHref}"
 				.token="${this.token}">
 			</d2l-activity-rubrics-summary-wrapper>
 		`;
@@ -131,7 +131,7 @@ class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(Loc
 	_renderCompetenciesSummary() {
 		return html`
 			<d2l-activity-competencies-summary
-				href="${this.activityUsageHref}"
+				.href="${this.activityUsageHref}"
 				.token="${this.token}">
 			</d2l-activity-competencies-summary>
 		`;
@@ -150,7 +150,7 @@ class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(Loc
 	_renderCompetenciesOpener() {
 		return html`
 			<d2l-activity-competencies
-				href="${this.activityUsageHref}"
+				.href="${this.activityUsageHref}"
 				.token="${this.token}">
 			</d2l-activity-competencies>
 		`;
