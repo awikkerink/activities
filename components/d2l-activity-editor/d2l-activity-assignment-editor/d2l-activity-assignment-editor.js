@@ -240,19 +240,19 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeActivityAssi
 				<div slot="primary" class="d2l-activity-assignment-editor-primary-panel">
 					<d2l-alert type="error" ?hidden=${!this.isError}>${this.localize('assignmentSaveError')}</d2l-alert>
 					<d2l-activity-assignment-editor-detail
-						href="${assignmentHref}"
+						.href="${assignmentHref}"
 						.token="${this.token}">
 					</d2l-activity-assignment-editor-detail>
 				</div>
 				<div slot="secondary">
 					<d2l-activity-assignment-editor-secondary
-						href="${assignmentHref}"
+						.href="${assignmentHref}"
 						.token="${this.token}"
 						class="d2l-activity-assignment-editor-secondary-panel">
 					</d2l-activity-assignment-editor-secondary>
 				</div>
 				<d2l-activity-assignment-editor-footer
-					href="${assignmentHref}"
+					.href="${assignmentHref}"
 					.token="${this.token}"
 					slot="footer"
 					class="d2l-activity-assignment-editor-footer">
