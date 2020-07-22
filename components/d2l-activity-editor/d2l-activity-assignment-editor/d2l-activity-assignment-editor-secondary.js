@@ -69,7 +69,7 @@ class AssignmentEditorSecondary extends ActivityEditorFeaturesMixin(RtlMixin(Ent
 
 		const availabilityAccordian = html`
 			<d2l-activity-assignment-availability-editor
-				href="${this._activityUsageHref}"
+				.href="${this._activityUsageHref}"
 				.token="${this.token}">
 			</d2l-activity-assignment-availability-editor>
 		`;
