@@ -164,7 +164,7 @@ class ActivityRubricsListContainer extends ActivityEditorFeaturesMixin(ActivityE
 		if (this._newlyCreatedPotentialAssociationHref !== '') {
 			return html`
 				<d2l-rubric-editor
-					href="${this._newlyCreatedPotentialAssociationHref}"
+					.href="${this._newlyCreatedPotentialAssociationHref}"
 					.token="${this.token}"
 					title-dropdown-hidden>
 				</d2l-rubric-editor>`;
@@ -269,7 +269,7 @@ class ActivityRubricsListContainer extends ActivityEditorFeaturesMixin(ActivityE
 			</div>
 			<d2l-activity-rubrics-list-editor
 				href="${this.href}"
-				activityUsageHref=${this.activityUsageHref}
+				.activityUsageHref=${this.activityUsageHref}
 				.token=${this.token}
 				.assignmentHref=${this.assignmentHref}
 			></d2l-activity-rubrics-list-editor>
