@@ -109,6 +109,7 @@ export class Assignment {
 		this.isReadOnly = entity.isAssignmentTypeReadOnly();
 		this.assignmentHasSubmissions = entity.assignmentHasSubmissions();
 		this.selectedGroupCategoryName = entity.getAssignmentTypeSelectedGroupCategoryName();
+		this.hasSubmissions = entity.hasSubmissions();
 
 		const validCompletionTypes = this._getValidCompletionTypes(this.submissionType);
 		if (entity.canEditCompletionType()) {
@@ -282,6 +283,7 @@ decorate(Assignment, {
 	canEditDefaultScoringRubric: observable,
 	defaultScoringRubricId: observable,
 	selectedGroupCategoryName: observable,
+	hasSubmissions: observable,
 	showFilesSubmissionLimit: computed,
 	showSubmissionsRule: computed,
 	// actions

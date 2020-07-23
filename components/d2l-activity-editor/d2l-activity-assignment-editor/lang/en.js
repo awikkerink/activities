@@ -48,4 +48,5 @@ export default {
 	"submissionsRule": "Submissions",
 	"hdrSpecialAccess": "Special Access", // special access heading
 	"hlpSpecialAccess": "Special Access allows assignments to be available to only a select group of users or individualized due dates for certain users.", // special access help
+	"assignmentLocked": "Some settings are locked because submissions have been received."
 };
