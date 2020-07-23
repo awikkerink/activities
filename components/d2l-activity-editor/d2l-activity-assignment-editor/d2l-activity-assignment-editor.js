@@ -11,6 +11,7 @@ import { ActivityEditorContainerMixin } from '../mixins/d2l-activity-editor-cont
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
+import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { shared as store } from './state/assignment-store.js';
 
 class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeActivityAssignmentEditorMixin(ActivityEditorMixin(MobxLitElement))) {
@@ -98,7 +99,11 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeActivityAssi
 				display: flex;
 			}
 			d2l-icon {
-				padding-inline-end: 1rem;
+				padding-right: 1rem;
+			}
+			:host([dir="rtl"]) d2l-icon {
+				padding-right: 0;
+				padding-left: 1rem;
 			}
 		`;
 	}
