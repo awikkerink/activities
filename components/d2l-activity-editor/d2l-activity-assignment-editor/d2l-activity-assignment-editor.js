@@ -94,6 +94,9 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeActivityAssi
 				height: 100%;
 				background: var(--d2l-color-gypsum);
 			}
+			.locked-alert {
+				display: flex;
+			}
 			d2l-icon {
 				padding-inline-end: 1rem;
 			}
@@ -246,8 +249,10 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeActivityAssi
 				<div slot="primary" class="d2l-activity-assignment-editor-primary-panel">
 					<d2l-alert type="error" ?hidden=${!this.isError}>${this.localize('assignmentSaveError')}</d2l-alert>
 					<d2l-alert ?hidden=${!hasSubmissions}>
-						<d2l-icon icon="tier1:lock-locked"></d2l-icon>
-						${this.localize('assignmentLocked')}
+						<div class="locked-alert">
+							<d2l-icon icon="tier1:lock-locked"></d2l-icon>
+							<div>${this.localize('assignmentLocked')}</div>
+						</div>
 					</d2l-alert>
 					<d2l-activity-assignment-editor-detail
 						href="${assignmentHref}"
