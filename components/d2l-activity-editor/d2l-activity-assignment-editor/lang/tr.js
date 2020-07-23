@@ -35,7 +35,6 @@ export default {
 	"txtGroupAssignmentSummary": "Grup ödevi", // Summary message for accordion when assignment type is set to group
 	"submissionCompletionAndCategorization": "Gönderme ve Tamamlama", // Label for the availability and dates summarizer
 	"assignmentSaveError": "Ödeviniz kaydedilmedi. Lütfen kırmızı ile gösterilen alanları düzeltin.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
-	"folderTypeCannotChange": "Gönderimler mevcut olduğunda ödev türü değiştirilemez", // Folder type cannot change
 	"folderTypeNoGroups": "Hiç grup yok. Gruplar aracında yeni gruplar oluşturun.", // Folder type no groups
 	"folderTypeCreateGroups": "Gruplar aracında yeni gruplar oluşturun.", // Folder type create groups
 	"discardChangesTitle": "Değişiklikler atılsın mı?", // Discard Changes User Prompt

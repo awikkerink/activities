@@ -35,7 +35,6 @@ export default {
 	"txtGroupAssignmentSummary": "فرض المجموعات", // Summary message for accordion when assignment type is set to group
 	"submissionCompletionAndCategorization": "الإرسال والإكمال", // Label for the availability and dates summarizer
 	"assignmentSaveError": "لم يتم حفظ الفرض. يُرجى تصحيح الحقول الموضّحة باللون الأحمر.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
-	"folderTypeCannotChange": "يتعذر تغيير نوع الفرض بعد إرساله", // Folder type cannot change
 	"folderTypeNoGroups": "لا تتوفر أي مجموعة. أنشئ مجموعات جديدة باستخدام أداة المجموعات.", // Folder type no groups
 	"folderTypeCreateGroups": "أنشئ مجموعات جديدة باستخدام أداة المجموعات.", // Folder type create groups
 	"discardChangesTitle": "هل تريد تجاهل التغييرات؟", // Discard Changes User Prompt
