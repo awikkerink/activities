@@ -183,7 +183,7 @@ class ActivityConditionsEditor
 		}
 
 		const key = event.target.dataset.key;
-		const conditions = this._conditions(entity).reduce((map, x) => {
+		const conditions = entity.conditions.reduce((map, x) => {
 			map[`${x.key}`] = x.title;
 			return map;
 		}, {});
@@ -196,10 +196,6 @@ class ActivityConditionsEditor
 			const title = condition.replace(/<strong>|<\/strong>/g, '');
 			announce(`${this.localize('editor.txtConditionRemoved', {title})}`);
 		}
-	}
-
-	_conditions({conditions}) {
-		return conditions;
 	}
 
 	_renderCondition({ key, title }) {
