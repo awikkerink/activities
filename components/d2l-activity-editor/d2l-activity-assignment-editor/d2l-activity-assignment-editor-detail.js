@@ -200,7 +200,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				<div id="score-container">
 					<label class="d2l-label-text">${this.localize('scoreOutOf')}</label>
 					<d2l-activity-score-editor
-						href="${activityUsageHref}"
+						.href="${activityUsageHref}"
 						.token="${this.token}"
 						.activityName="${name}">
 					</d2l-activity-score-editor>
@@ -208,7 +208,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 
 				<div id="duedate-container">
 					<d2l-activity-due-date-editor
-						href="${activityUsageHref}"
+						.href="${activityUsageHref}"
 						.token="${this.token}">
 					</d2l-activity-due-date-editor>
 				</div>

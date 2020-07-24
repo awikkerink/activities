@@ -36,7 +36,6 @@ export default {
 	"txtSubmissionEmailNotificationSummary": "Submission notification  by email", // Summary message when submission notification by email option is enabled
 	"submissionCompletionAndCategorization": "Submission & Completion", // Label for the availability and dates summarizer
 	"assignmentSaveError": "Your assignment wasn't saved. Please correct the fields outlined in red.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
-	"folderTypeCannotChange": "Assignment type cannot be changed once submissions are present", // Folder type cannot change
 	"folderTypeNoGroups": "No groups exist. Create new groups in the Groups tool.", // Folder type no groups
 	"folderTypeCreateGroups": "Create new groups in the Groups tool.", // Folder type create groups
 	"discardChangesTitle": "Discard changes?", // Discard Changes User Prompt
@@ -49,4 +48,5 @@ export default {
 	"submissionsRule": "Submissions",
 	"hdrSpecialAccess": "Special Access", // special access heading
 	"hlpSpecialAccess": "Special Access allows assignments to be available to only a select group of users or individualized due dates for certain users.", // special access help
+	"assignmentLocked": "Some settings are locked because submissions have been received."
 };

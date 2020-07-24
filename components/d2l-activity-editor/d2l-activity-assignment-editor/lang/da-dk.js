@@ -35,7 +35,6 @@ export default {
 	"txtGroupAssignmentSummary": "Gruppeopgave", // Summary message for accordion when assignment type is set to group
 	"submissionCompletionAndCategorization": "Aflevering og færdiggørelse", // Label for the availability and dates summarizer
 	"assignmentSaveError": "Din opgave blev ikke gemt. Ret de felter, der er markeret med rødt.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
-	"folderTypeCannotChange": "Opgavetype kan ikke ændres, når opgaverne er afleveret", // Folder type cannot change
 	"folderTypeNoGroups": "Der eksisterer ingen grupper. Opret nye grupper i værktøjet Grupper.", // Folder type no groups
 	"folderTypeCreateGroups": "Opret nye grupper i værktøjet Grupper.", // Folder type create groups
 	"discardChangesTitle": "Slet ændringer?", // Discard Changes User Prompt

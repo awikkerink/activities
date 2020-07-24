@@ -11,9 +11,10 @@ import { ActivityEditorContainerMixin } from '../mixins/d2l-activity-editor-cont
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
+import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { shared as store } from './state/assignment-store.js';
 
-class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeActivityAssignmentEditorMixin(ActivityEditorMixin(MobxLitElement))) {
+class AssignmentEditor extends ActivityEditorContainerMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(ActivityEditorMixin(MobxLitElement)))) {
 
 	static get properties() {
 		return {
@@ -54,9 +55,9 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeActivityAssi
 			*/
 			milestoneThreeSpecialAccessEnabled: { type: Boolean },
 			/**
-			* based on the LaunchDarkly flag face-assignments-milestone-4
+			* based on the LaunchDarkly flag face-assignments-milestone-4-email-submission
 			*/
-			milestoneFourEnabled: { type: Boolean },
+			milestoneFourEmailSubmission: { type: Boolean },
 			/**
 			* based on the config variable d2l.Languages.Terminology.LearningOutcomes
 			*/
@@ -93,6 +94,16 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeActivityAssi
 			div[slot="secondary"] {
 				height: 100%;
 				background: var(--d2l-color-gypsum);
+			}
+			.locked-alert {
+				display: flex;
+			}
+			d2l-icon {
+				padding-right: 1rem;
+			}
+			:host([dir="rtl"]) d2l-icon {
+				padding-right: 0;
+				padding-left: 1rem;
 			}
 		`;
 	}
@@ -147,8 +158,8 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeActivityAssi
 			return;
 		}
 
-		if (e.detail.key === 'd2l-milestone-four') {
-			e.detail.provider = this.milestoneFourEnabled;
+		if (e.detail.key === 'd2l-milestone-four-email-submission') {
+			e.detail.provider = this.milestoneFourEmailSubmission;
 			e.stopPropagation();
 			return;
 		}
@@ -234,25 +245,34 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeActivityAssi
 			assignmentHref
 		} = activity;
 
+		const assignment = store.getAssignment(activity.assignmentHref);
+		const hasSubmissions = assignment && assignment.assignmentHasSubmissions;
+
 		return html`
 			<d2l-template-primary-secondary slot="editor" width-type="${this.widthType}">
 				<slot name="editor-nav" slot="header"></slot>
 				<div slot="primary" class="d2l-activity-assignment-editor-primary-panel">
 					<d2l-alert type="error" ?hidden=${!this.isError}>${this.localize('assignmentSaveError')}</d2l-alert>
+					<d2l-alert ?hidden=${!hasSubmissions}>
+						<div class="locked-alert">
+							<d2l-icon icon="tier1:lock-locked"></d2l-icon>
+							<div>${this.localize('assignmentLocked')}</div>
+						</div>
+					</d2l-alert>
 					<d2l-activity-assignment-editor-detail
-						href="${assignmentHref}"
+						.href="${assignmentHref}"
 						.token="${this.token}">
 					</d2l-activity-assignment-editor-detail>
 				</div>
 				<div slot="secondary">
 					<d2l-activity-assignment-editor-secondary
-						href="${assignmentHref}"
+						.href="${assignmentHref}"
 						.token="${this.token}"
 						class="d2l-activity-assignment-editor-secondary-panel">
 					</d2l-activity-assignment-editor-secondary>
 				</div>
 				<d2l-activity-assignment-editor-footer
-					href="${assignmentHref}"
+					.href="${assignmentHref}"
 					.token="${this.token}"
 					slot="footer"
 					class="d2l-activity-assignment-editor-footer">

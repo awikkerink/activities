@@ -70,7 +70,7 @@ class AssignmentEditorFooter extends SaveStatusMixin(EntityMixinLit(RtlMixin(Loc
 		return html`
 			<div class="d2l-activity-assignment-editor-footer-left">
 				<d2l-activity-visibility-editor
-					href="${this._activityUsageHref}"
+					.href="${this._activityUsageHref}"
 					.token="${this.token}">
 				</d2l-activity-visibility-editor>
 				<d2l-activity-editor-buttons></d2l-activity-editor-buttons>

@@ -35,7 +35,6 @@ export default {
 	"txtGroupAssignmentSummary": "Travail de groupe", // Summary message for accordion when assignment type is set to group
 	"submissionCompletionAndCategorization": "Soumission et achèvement", // Label for the availability and dates summarizer
 	"assignmentSaveError": "Votre travail n\'était pas enregistré. Veuillez corriger les champs indiqués en rouge.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
-	"folderTypeCannotChange": "Le type de travail ne peut pas être changé lorsque des soumissions existent.", // Folder type cannot change
 	"folderTypeNoGroups": "Aucun groupe n\'existe. Créez des groupes dans l\'outil Groupes.", // Folder type no groups
 	"folderTypeCreateGroups": "Créez des groupes dans l\'outil Groupes.", // Folder type create groups
 	"discardChangesTitle": "Abandonner les modifications?", // Discard Changes User Prompt

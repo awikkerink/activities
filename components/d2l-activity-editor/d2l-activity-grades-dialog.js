@@ -126,7 +126,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 		} = activity.scoreAndGrade;
 
 		return html`
-			<d2l-dialog title-text="${this.localize('chooseFromGrades')}" @d2l-dialog-open="${this._onDialogOpen}">
+			<d2l-dialog title-text="${this.localize('editor.chooseFromGrades')}" width="460" @d2l-dialog-open="${this._onDialogOpen}">
 				<label class="d2l-input-radio-label ${!this._canLinkNewGrade ? 'd2l-input-radio-label-disabled' : ''}">
 					<input
 						type="radio"
@@ -135,7 +135,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 						?disabled="${!this._canLinkNewGrade}"
 						.checked="${this._createNewRadioChecked}"
 						@change="${this._dialogRadioChanged}">
-					${this.localize('createAndLinkToNewGradeItem')}
+					${this.localize('editor.createAndLinkToNewGradeItem')}
 				</label>
 				<d2l-input-radio-spacer ?hidden="${!this._createNewRadioChecked && this._canLinkNewGrade}">
 					${this._canLinkNewGrade ? html`
@@ -144,15 +144,15 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 							<div>
 								<div class="d2l-activity-grades-dialog-create-new-activity-name">${newGradeName}</div>
 								<div class="d2l-body-small">${scoreOutOf && !scoreOutOfError ? html`
-									${this.localize('points', { points: formatNumber(scoreOutOf, { maximumFractionDigits: 2 })})}
+									${this.localize('editor.points', { points: formatNumber(scoreOutOf, { maximumFractionDigits: 2 })})}
 								` : null }
 								</div>
 							</div>
 						</div>
-						<d2l-activity-grade-category-selector href="${this.href}" .token="${this.token}"></d2l-activity-grade-category-selector>
+						<d2l-activity-grade-category-selector .href="${this.href}" .token="${this.token}"></d2l-activity-grade-category-selector>
 					` : html`
 						<div class="d2l-body-small">
-							${this.localize('noGradeCreatePermission')}
+							${this.localize('editor.noGradeCreatePermission')}
 						</div>
 					`}
 				</d2l-input-radio-spacer>
@@ -164,18 +164,18 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 						?disabled="${!this._hasGradeCandidates}"
 						.checked="${!this._createNewRadioChecked && this._hasGradeCandidates}"
 						@change="${this._dialogRadioChanged}">
-					${this.localize('linkToExistingGradeItem')}
+					${this.localize('editor.linkToExistingGradeItem')}
 				</label>
 				<d2l-input-radio-spacer ?hidden="${this._createNewRadioChecked && this._hasGradeCandidates}" ?disabled="${!this._hasGradeCandidates}">
 					${this._hasGradeCandidates ? html`<d2l-activity-grade-candidate-selector
-						href="${this.href}"
+						.href="${this.href}"
 						.token="${this.token}">
 					</d2l-activity-grade-candidate-selector>` : html`<div class="d2l-body-small">
-						${this.localize('noGradeItems')}
+						${this.localize('editor.noGradeItems')}
 					</div>`}
 				</d2l-input-radio-spacer>
-				<d2l-button slot="footer" primary dialog-action="done">${this.localize('ok')}</d2l-button>
-				<d2l-button slot="footer" dialog-action="cancel">${this.localize('cancel')}</d2l-button>
+				<d2l-button slot="footer" primary dialog-action="done">${this.localize('editor.ok')}</d2l-button>
+				<d2l-button slot="footer" dialog-action="cancel">${this.localize('editor.cancel')}</d2l-button>
 			</d2l-dialog>
 		`;
 	}

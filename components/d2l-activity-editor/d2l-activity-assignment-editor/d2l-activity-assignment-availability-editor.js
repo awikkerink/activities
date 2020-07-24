@@ -46,6 +46,10 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 					margin: 1rem 0;
 				}
 
+				.editor:last-child {
+					margin-bottom: 0;
+				}
+
 				.d2l-heading-4 {
 					margin: 0 0 0.6rem 0;
 				}
