@@ -14,7 +14,7 @@ class ActivityConditionsSummary
 	render() {
 
 		const entity = store.get(this.href);
-		if (!entity) {
+		if (!entity || this.skeleton) {
 			return html``;
 		}
 

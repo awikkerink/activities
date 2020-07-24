@@ -76,7 +76,7 @@ class ActivityConditionsEditor
 				display: flex;
 				margin-right: 12px;
 				margin-bottom: 2px;
-				float: left;	
+				float: left;
 			}
 
 			.d2l-list-item-content {
@@ -367,7 +367,7 @@ class ActivityConditionsEditor
 	render() {
 
 		const entity = store.get(this.href);
-		if (!entity) {
+		if (!entity || this.skeleton) {
 			return html``;
 		}
 

@@ -21,7 +21,8 @@ class ActivityUsageConditionsSummary extends ActivityEditorMixin(MobxLitElement)
 		return html`
 			<d2l-activity-conditions-summary
 				href="${entity.conditionsHref}"
-				.token="${this.token}">
+				.token="${this.token}"
+				?skeleton="${this.skeleton}">
 			</d2l-activity-conditions-summary>
 		`;
 	}

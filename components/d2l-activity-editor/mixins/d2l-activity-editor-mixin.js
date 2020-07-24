@@ -27,6 +27,10 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 			 * Token JWT Token for brightspace | a function that returns a JWT token for brightspace | null (defaults to cookie authentication in a browser)
 			 */
 			token: { type: String },
+
+			skeleton: {
+				type: Boolean
+			}
 		};
 	}
 
@@ -34,6 +38,7 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 		super();
 		this._container = null;
 		this.store = store;
+		this.skeleton = false;
 	}
 
 	async validate() {}
@@ -64,7 +69,7 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 	}
 
 	_sendPendingEvent(promise) {
-		const pendingEvent = new AsyncStateEvent(promise);
+		const pendingEvent = new AsyncStateEvent(promise, `${this.localName}: ${this.href}`);
 		this.dispatchEvent(pendingEvent);
 	}
 

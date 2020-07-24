@@ -30,7 +30,7 @@ class ActivityAvailabilityDatesSummary
 	render() {
 
 		const activity = store.get(this.href);
-		if (!activity) {
+		if (!activity || this.skeleton) {
 			return html``;
 		}
 

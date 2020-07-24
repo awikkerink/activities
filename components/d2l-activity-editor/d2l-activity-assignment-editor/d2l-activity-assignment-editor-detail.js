@@ -6,6 +6,7 @@ import '../d2l-activity-score-editor.js';
 import '../d2l-activity-text-editor.js';
 import '../d2l-activity-attachments/d2l-activity-attachments-editor.js';
 
+import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { css, html } from 'lit-element/lit-element.js';
 
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
@@ -24,7 +25,7 @@ import { SaveStatusMixin } from '../save-status-mixin.js';
 import { shared as store } from './state/assignment-store.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
-class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMixinLit(LocalizeActivityAssignmentEditorMixin(RtlMixin(ActivityEditorMixin(MobxLitElement)))))) {
+class AssignmentEditorDetail extends AsyncContainerMixin(ErrorHandlingMixin(SaveStatusMixin(EntityMixinLit(LocalizeActivityAssignmentEditorMixin(RtlMixin(ActivityEditorMixin(MobxLitElement))))))) {
 
 	static get properties() {
 		return {
@@ -174,7 +175,10 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 			activityUsageHref
 		} = assignment;
 
+		const skeleton = this.asyncState !== asyncStates.complete;
 		return html`
+			<div ?hidden="${!skeleton}">Still LOADING</div>
+
 			<div id="assignment-name-container">
 				<label class="d2l-label-text" for="assignment-name">${this.localize('name')}*</label>
 				<d2l-input-text

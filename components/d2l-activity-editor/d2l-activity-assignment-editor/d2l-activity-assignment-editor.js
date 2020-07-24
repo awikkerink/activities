@@ -248,7 +248,8 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeActivityAssi
 					<d2l-activity-assignment-editor-secondary
 						href="${assignmentHref}"
 						.token="${this.token}"
-						class="d2l-activity-assignment-editor-secondary-panel">
+						class="d2l-activity-assignment-editor-secondary-panel"
+						async-complete-delay="0">
 					</d2l-activity-assignment-editor-secondary>
 				</div>
 				<d2l-activity-assignment-editor-footer

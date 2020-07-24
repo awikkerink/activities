@@ -1,12 +1,11 @@
 import '@brightspace-ui/core/components/backdrop/backdrop.js';
-import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
 import { ActivityEditorTelemetryMixin } from './mixins/d2l-activity-editor-telemetry-mixin';
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
 import { shared as store } from './state/activity-store.js';
 
-class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(ActivityEditorMixin(LocalizeActivityEditorMixin(LitElement)))) {
+class ActivityEditor extends ActivityEditorTelemetryMixin(ActivityEditorMixin(LocalizeActivityEditorMixin(LitElement))) {
 
 	static get properties() {
 		return {
@@ -52,9 +51,9 @@ class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(Ac
 
 	update(changedProperties) {
 		super.update(changedProperties);
-		if (changedProperties.has('asyncState') && this.asyncState === asyncStates.complete) {
-			this.logLoadEvent(this.href, this.type, this.telemetryId);
-		}
+		// if (changedProperties.has('asyncState') && this.asyncState === asyncStates.complete) {
+		// 	this.logLoadEvent(this.href, this.type, this.telemetryId);
+		// }
 	}
 
 	updated(changedProperties) {
@@ -78,8 +77,7 @@ class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(Ac
 
 	render() {
 		return html`
-			<div ?hidden="${this.asyncState === asyncStates.complete}" class="d2l-activity-editor-loading">${this.localize('editor.loading')}</div>
-			<div id="editor-container" ?hidden="${this.asyncState !== asyncStates.complete}">
+			<div id="editor-container">
 				<slot name="editor"></slot>
 			</div>
 			<d2l-backdrop
