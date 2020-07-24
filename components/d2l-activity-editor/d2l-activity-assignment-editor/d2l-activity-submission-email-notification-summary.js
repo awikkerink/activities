@@ -23,12 +23,12 @@ class SubmissionEmailNotificationSummary extends ActivityEditorMixin(RtlMixin(Lo
 	}
 
 	render() {
-		// const assignment = store.get(this.href);
-		// if (assignment && assignment.isSumbissionEmailNotificationEnabled) {
-		return html`${this.localize('txtSubmissionEmailNotificationSummary')}`;
-		// }
+		const assignment = store.get(this.href);
+		if (assignment && assignment.isNotificationEnabled) {
+			return html`${this.localize('txtSubmissionEmailNotificationSummary')}`;
+		}
 
-		// return html``;
+		return html``;
 	}
 }
 

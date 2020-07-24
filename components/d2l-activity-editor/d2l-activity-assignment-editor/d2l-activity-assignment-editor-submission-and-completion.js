@@ -8,6 +8,7 @@ import { summarizerHeaderStyles, summarizerSummaryStyles } from './activity-summ
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { classMap } from 'lit-html/directives/class-map.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
+import { Milestones } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
@@ -249,16 +250,18 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 		return html``;
 	}
 
-	// _renderSubmissionEmailNotificationSummary() {
-	// 	if (!this.SubmissionEmailNotificationEnabled) {
-	// 		return html``;
-	// 	}
-
-	// 	return html`
-	// 		<d2l-activity-submission-email-notification-summary>
-	// 		</d2l-activity-submission-email-notification-summary>
-	// 	`;
-	// }
+	_renderSubmissionEmailNotificationSummary(assignment) {
+		const isNotificationEnabled = this._isMilestoneEnabled(Milestones.M4EmailSubmission);
+		if (!isNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
+			return html ``;
+		}
+		return html`
+			<d2l-activity-submission-email-notification-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-submission-email-notification-summary>
+		`;
+	}
 
 	render() {
 		const assignment = store.getAssignment(this.href);
@@ -271,6 +274,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 					<li>${this._renderAssignmentTypeSummary()}</li>
 					<li>${this._renderAssignmentSubmissionTypeSummary(assignment)}</li>
 					<li>${this._renderAssignmentCompletionTypeSummary()}</li>
+					<li>${this._renderSubmissionEmailNotificationSummary(assignment)}</li>
 				</ul>
 				${this._renderAssignmentType()}
 				${this._renderAssignmentSubmissionType(assignment)}
