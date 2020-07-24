@@ -53,6 +53,12 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 		];
 	}
 
+	connectedCallback() {
+		super.connectedCallback();
+
+		this._m4EmailNotificationEnabled = this._isMilestoneEnabled(Milestones.M4EmailSubmission);
+	}
+
 	_saveCompletionTypeOnChange(event) {
 		store.getAssignment(this.href).setCompletionType(event.target.value);
 	}
@@ -251,8 +257,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 	}
 
 	_renderSubmissionEmailNotificationSummary(assignment) {
-		const isNotificationEnabled = this._isMilestoneEnabled(Milestones.M4EmailSubmission);
-		if (!isNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
+		if (!this._m4EmailNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
 			return html ``;
 		}
 		return html`
