@@ -9,14 +9,16 @@ import '../d2l-activity-rubrics/d2l-activity-rubrics-summary-wrapper.js';
 import './d2l-assignment-turnitin-editor.js';
 import './d2l-assignment-turnitin-summary.js';
 import { ActivityEditorFeaturesMixin, Milestones } from '../mixins/d2l-activity-editor-features-mixin.js';
+import { MobxLitElement } from '@adobe/lit-mobx';
+import { shared as store } from './state/assignment-store.js';
 
 import { bodySmallStyles, heading3Styles } from '@brightspace-ui/core/components/typography/styles.js';
-import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { css, html } from 'lit-element/lit-element.js';
 import { summarizerHeaderStyles, summarizerSummaryStyles } from './activity-summarizer-styles.js';
 
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 
-class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(LocalizeActivityAssignmentEditorMixin(LitElement)) {
+class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement)) {
 
 	static get properties() {
 
@@ -157,6 +159,11 @@ class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(Loc
 	}
 
 	render() {
+		const assignment = store.getAssignment(this.href);
+		if (!assignment) {
+			return html``;
+		}
+
 		return html`
 			<d2l-labs-accordion-collapse flex header-border>
 				<h3 class="d2l-heading-3 activity-summarizer-header" slot="header">
