@@ -35,7 +35,6 @@ export default {
 	"txtGroupAssignmentSummary": "Atividade em grupo", // Summary message for accordion when assignment type is set to group
 	"submissionCompletionAndCategorization": "Envio e Conclusão", // Label for the availability and dates summarizer
 	"assignmentSaveError": "Sua atividade não foi salva. Corrija os campos destacados em vermelho.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
-	"folderTypeCannotChange": "Não é possível alterar o tipo de atividade depois que já foram feitos envios", // Folder type cannot change
 	"folderTypeNoGroups": "Nenhum grupo. Crie grupos na ferramenta Grupos.", // Folder type no groups
 	"folderTypeCreateGroups": "Crie grupos na ferramenta Grupos.", // Folder type create groups
 	"discardChangesTitle": "Descartar alterações?", // Discard Changes User Prompt

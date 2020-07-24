@@ -35,7 +35,6 @@ export default {
 	"txtGroupAssignmentSummary": "Groepsopdracht", // Summary message for accordion when assignment type is set to group
 	"submissionCompletionAndCategorization": "Indiening & voltooiing", // Label for the availability and dates summarizer
 	"assignmentSaveError": "Uw opdracht is niet opgeslagen. Corrigeer de rood omlijnde velden.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
-	"folderTypeCannotChange": "Type opdracht kan niet worden gewijzigd zodra er indieningen aanwezig zijn", // Folder type cannot change
 	"folderTypeNoGroups": "Er bestaan geen groepen. Maak nieuwe groepen aan in de Groepen-tool.", // Folder type no groups
 	"folderTypeCreateGroups": "Maak nieuwe groepen aan in de Groepen-tool.", // Folder type create groups
 	"discardChangesTitle": "Wijzigingen verwijderen?", // Discard Changes User Prompt
