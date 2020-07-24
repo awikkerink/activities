@@ -21,7 +21,15 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 			 */
 			href: {
 				type: String,
-				reflect: true
+				reflect: true,
+				converter: (value) => {
+					// `value` is a string
+					// Convert it to a value of type `type` and return it
+					if (value === 'undefined') {
+						return '';
+					}
+					return value;
+				}
 			},
 			/**
 			 * Token JWT Token for brightspace | a function that returns a JWT token for brightspace | null (defaults to cookie authentication in a browser)

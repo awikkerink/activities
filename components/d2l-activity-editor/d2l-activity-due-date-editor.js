@@ -65,6 +65,11 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeActivityEditorMi
 
 	render() {
 		const entity = store.get(this.href);
+		if (!entity || this.skeleton) {
+			return html`
+				<div style="height:30px; width:100px; background-color:grey"></div>
+			`;
+		}
 		const dates = entity ? entity.dates : null;
 		let dueDate, canEditDates, errorTerm;
 

@@ -162,9 +162,9 @@ class AssignmentEditorDetail extends AsyncContainerMixin(ErrorHandlingMixin(Save
 
 	render() {
 		const assignment = store.getAssignment(this.href);
-		if (!assignment) {
-			return html``;
-		}
+		// if (!assignment) {
+		// 	return html``;
+		// }
 
 		const {
 			name,
@@ -173,12 +173,10 @@ class AssignmentEditorDetail extends AsyncContainerMixin(ErrorHandlingMixin(Save
 			canEditInstructions,
 			instructionsRichTextEditorConfig,
 			activityUsageHref
-		} = assignment;
+		} = assignment || {} ;
 
 		const skeleton = this.asyncState !== asyncStates.complete;
 		return html`
-			<div ?hidden="${!skeleton}">Still LOADING</div>
-
 			<div id="assignment-name-container">
 				<label class="d2l-label-text" for="assignment-name">${this.localize('name')}*</label>
 				<d2l-input-text
@@ -206,14 +204,16 @@ class AssignmentEditorDetail extends AsyncContainerMixin(ErrorHandlingMixin(Save
 					<d2l-activity-score-editor
 						href="${activityUsageHref}"
 						.token="${this.token}"
-						.activityName="${name}">
+						.activityName="${name}"
+						?skeleton="${skeleton}">
 					</d2l-activity-score-editor>
 				</div>
 
 				<div id="duedate-container">
 					<d2l-activity-due-date-editor
 						href="${activityUsageHref}"
-						.token="${this.token}">
+						.token="${this.token}"
+						?skeleton="${skeleton}">
 					</d2l-activity-due-date-editor>
 				</div>
 			</div>

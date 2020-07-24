@@ -227,8 +227,10 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeActivityEditorMixi
 
 	render() {
 		const activity = store.get(this.href);
-		if (!activity) {
-			return html``;
+		if (!activity || this.skeleton) {
+			return html`
+				<div style="height:30px; width:300px; background-color:grey"></div>
+			`;
 		}
 
 		const {
