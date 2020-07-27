@@ -100,6 +100,8 @@ export class Assignment {
 		this.submissionsRule = entity.submissionsRule() || 'keepall';
 		this.submissionsRuleOptions = entity.getSubmissionsRuleOptions();
 
+		this.notificationEmail = entity.notificationEmail() || "";
+
 		this.canEditFilesSubmissionLimit = entity.canEditFilesSubmissionLimit();
 		this.filesSubmissionLimit = entity.filesSubmissionLimit() || 'unlimited';
 
@@ -215,6 +217,9 @@ export class Assignment {
 		if (this.showSubmissionsRule) {
 			data.submissionsRule = this.submissionsRule;
 		}
+		if (this.showNotificationEmail) {
+			data.notificationEmail = this.notificationEmail;
+		}
 		return data;
 	}
 	async save() {
@@ -245,6 +250,14 @@ export class Assignment {
 			.find(x => String(x.value) === '1' && `${x.value}` === `${this.submissionType}`);
 
 		return isFileSubmission || isTextSubmission;
+	}
+
+	get showNotificationEmail() {
+		return this.showSubmissionsRule;
+	}
+
+	setNotificationEmail(value) {
+		this.notificationEmail = value;
 	}
 }
 
@@ -284,6 +297,8 @@ decorate(Assignment, {
 	selectedGroupCategoryName: observable,
 	showFilesSubmissionLimit: computed,
 	showSubmissionsRule: computed,
+	notificationEmail: observable,
+	showNotificationEmail: computed,
 	// actions
 	load: action,
 	setName: action,
@@ -300,5 +315,6 @@ decorate(Assignment, {
 	setFilesSubmissionLimit: action,
 	setSubmissionsRule: action,
 	setDefaultScoringRubric: action,
-	resetDefaultScoringRubricId: action
+	resetDefaultScoringRubricId: action,
+	setNotificationEmail: action
 });
