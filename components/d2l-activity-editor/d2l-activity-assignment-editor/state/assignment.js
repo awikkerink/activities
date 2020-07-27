@@ -100,7 +100,7 @@ export class Assignment {
 		this.submissionsRule = entity.submissionsRule() || 'keepall';
 		this.submissionsRuleOptions = entity.getSubmissionsRuleOptions();
 
-		this.notificationEmail = entity.notificationEmail() || "";
+		this.notificationEmail = entity.notificationEmail() || '';
 
 		this.canEditFilesSubmissionLimit = entity.canEditFilesSubmissionLimit();
 		this.filesSubmissionLimit = entity.filesSubmissionLimit() || 'unlimited';
