@@ -84,6 +84,7 @@ describe('Assignment ', function() {
 				getAssignmentTypeSelectedGroupCategoryName: () => null,
 				canEditSubmissionsRule: () => true,
 				submissionsRule: () => 'keepall',
+				notificationEmail: () => '',
 				getSubmissionsRuleOptions: () => [
 					{
 						'type': 'radio',

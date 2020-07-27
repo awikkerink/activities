@@ -57,7 +57,7 @@ class AssignmentEditor extends ActivityEditorContainerMixin(RtlMixin(LocalizeAct
 			/**
 			* based on the LaunchDarkly flag face-assignments-milestone-4-email-submission
 			*/
-			milestoneFourEmailSubmission: { type: Boolean },
+			milestoneFourEmailSubmissionEnabled: { type: Boolean },
 			/**
 			* based on the config variable d2l.Languages.Terminology.LearningOutcomes
 			*/
@@ -159,7 +159,7 @@ class AssignmentEditor extends ActivityEditorContainerMixin(RtlMixin(LocalizeAct
 		}
 
 		if (e.detail.key === 'd2l-milestone-four-email-submission') {
-			e.detail.provider = this.milestoneFourEmailSubmission;
+			e.detail.provider = this.milestoneFourEmailSubmissionEnabled;
 			e.stopPropagation();
 			return;
 		}
