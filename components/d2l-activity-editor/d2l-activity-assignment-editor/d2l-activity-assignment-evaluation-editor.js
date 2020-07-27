@@ -12,8 +12,8 @@ import { ActivityEditorFeaturesMixin, Milestones } from '../mixins/d2l-activity-
 import { bodySmallStyles, heading3Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { summarizerHeaderStyles, summarizerSummaryStyles } from './activity-summarizer-styles.js';
-import { MobxLitElement } from '@adobe/lit-mobx';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
+import { MobxLitElement } from '@adobe/lit-mobx';
 import { shared as store } from './state/assignment-store.js';
 
 class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement)) {
