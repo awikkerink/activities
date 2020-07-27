@@ -266,7 +266,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 		} else {
 			const completionType = this._getSelectedCompletionType(assignment);
 			if (completionType) {
-				completionTypeContent= html`<div class="d2l-body-compact">${completionType.title}</div>`;
+				completionTypeContent = html`<div class="d2l-body-compact">${completionType.title}</div>`;
 			}
 		}
 
