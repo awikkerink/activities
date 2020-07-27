@@ -24,8 +24,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 
 		return {
 			href: { type: String },
-			token: { type: Object },
-			_m4EmailNotificationEnabled: { type: Boolean }
+			token: { type: Object }
 		};
 	}
 
@@ -68,12 +67,6 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 			summarizerHeaderStyles,
 			summarizerSummaryStyles
 		];
-	}
-
-	connectedCallback() {
-		super.connectedCallback();
-
-		this._m4EmailNotificationEnabled = this._isMilestoneEnabled(Milestones.M4EmailSubmission);
 	}
 
 	_saveCompletionTypeOnChange(event) {
