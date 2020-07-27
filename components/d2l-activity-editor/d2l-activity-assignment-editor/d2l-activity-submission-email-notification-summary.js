@@ -23,8 +23,9 @@ class SubmissionEmailNotificationSummary extends ActivityEditorMixin(RtlMixin(Lo
 	}
 
 	render() {
+
 		const assignment = store.get(this.href);
-		if (assignment && assignment.isNotificationEnabled) {
+		if (assignment && assignment.notificationEmail) {
 			return html`${this.localize('txtSubmissionEmailNotificationSummary')}`;
 		}
 

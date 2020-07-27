@@ -15,7 +15,7 @@ import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 import { shared as store } from './state/assignment-store.js';
 
-class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeaturesMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(ActivityEditorMixin(MobxLitElement)))) {
+class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement))) {
 
 	static get properties() {
 
@@ -266,7 +266,8 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 	}
 
 	_renderSubmissionEmailNotificationSummary(assignment) {
-		if (!this._m4EmailNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
+		const isNotificationEnabled = this._isMilestoneEnabled(Milestones.M4EmailSubmission);
+		if (!isNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
 			return html ``;
 		}
 		return html`
