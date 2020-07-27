@@ -90,12 +90,13 @@ class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 		}
 
 		const isIndividualAssignmentType = assignment.isIndividualAssignmentType;
+		const hasSubmissions = assignment.assignmentHasSubmissions;
 
-		if (isIndividualAssignmentType && assignment.groupCategories.length === 0) {
+		if (!hasSubmissions && isIndividualAssignmentType && assignment.groupCategories.length === 0) {
 			return this.localize('folderTypeNoGroups');
 		}
 
-		if (!isIndividualAssignmentType) {
+		if (!hasSubmissions && !isIndividualAssignmentType) {
 			return this.localize('folderTypeCreateGroups');
 		}
 
