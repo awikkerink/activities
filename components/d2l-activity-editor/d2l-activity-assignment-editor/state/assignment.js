@@ -69,6 +69,13 @@ export class Assignment {
 		}
 	}
 
+	_getIsAnonymousMarkingAvailable() {
+		// only file (0) and text (1) submissions can have anonymous marking, see https://docs.valence.desire2learn.com/res/dropbox.html#attributes
+		const submissionTypesWithAnonMarking = ['0', '1'];
+
+		return this._entity.isAnonymousMarkingAvailable() && submissionTypesWithAnonMarking.includes(this.submissionType);
+	}
+
 	load(entity) {
 		this._entity = entity;
 		this.name = entity.name();
@@ -76,9 +83,6 @@ export class Assignment {
 		this.instructions = entity.instructionsEditorHtml();
 		this.canEditInstructions = entity.canEditInstructions();
 		this.instructionsRichTextEditorConfig = entity.instructionsRichTextEditorConfig();
-		this.isAnonymousMarkingAvailable = entity.isAnonymousMarkingAvailable();
-		this.isAnonymousMarkingEnabled = entity.isAnonymousMarkingEnabled();
-		this.canEditAnonymousMarking = entity.canEditAnonymousMarking();
 		this.anonymousMarkingHelpText = entity.getAnonymousMarkingHelpText();
 		this.canSeeAnnotations = entity.canSeeAnnotations();
 		this.annotationToolsAvailable = entity.getAvailableAnnotationTools();
@@ -95,6 +99,11 @@ export class Assignment {
 		this.canEditCompletionType = entity.canEditCompletionType();
 		this.submissionType = String(entity.submissionType().value);
 		this.completionType = entity.completionTypeValue();
+
+		// set up anonymous marking _after_ submission type
+		this.isAnonymousMarkingEnabled = entity.isAnonymousMarkingEnabled();
+		this.canEditAnonymousMarking = entity.canEditAnonymousMarking();
+		this.isAnonymousMarkingAvailable = this._getIsAnonymousMarkingAvailable();
 
 		this.canEditSubmissionsRule = entity.canEditSubmissionsRule();
 		this.submissionsRule = entity.submissionsRule() || 'keepall';
@@ -131,6 +140,8 @@ export class Assignment {
 	setSubmissionType(value) {
 		this.submissionType = value;
 		this._setValidCompletionTypeForSubmissionType();
+
+		this.isAnonymousMarkingAvailable = this._getIsAnonymousMarkingAvailable();
 	}
 
 	setFilesSubmissionLimit(value) {

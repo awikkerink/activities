@@ -31,7 +31,7 @@ describe('Assignment ', function() {
 				isOriginalityCheckEnabled: () => undefined,
 				isGradeMarkEnabled: () => undefined,
 				instructionsRichTextEditorConfig: () => {},
-				isAnonymousMarkingAvailable: () => undefined,
+				isAnonymousMarkingAvailable: () => true,
 				isAnonymousMarkingEnabled: () => undefined,
 				canEditAnonymousMarking: () => undefined,
 				getAnonymousMarkingHelpText: () => undefined,
@@ -134,6 +134,7 @@ describe('Assignment ', function() {
 		expect(assignment.canEditCompletionType).to.equal(true);
 		expect(assignment.submissionType).to.equal('2');
 		expect(assignment.completionType).to.equal('2');
+		expect(assignment.isAnonymousMarkingAvailable).to.equal(false);
 
 		expect(fetchEntity.mock.calls.length).to.equal(1);
 		expect(AssignmentEntity.mock.calls[0][0]).to.equal(sirenEntity);
@@ -150,6 +151,7 @@ describe('Assignment ', function() {
 		expect(assignment.submissionType).to.equal('3');
 		expect(assignment.completionType).to.equal('3');
 		expect(assignment.canEditCompletionType).to.equal(true);
+		expect(assignment.isAnonymousMarkingAvailable).to.equal(false);
 	});
 
 	it('setSubmissionType when new submission type does not have completion types', async() => {
@@ -162,6 +164,7 @@ describe('Assignment ', function() {
 		expect(assignment.submissionType).to.equal('1');
 		expect(assignment.completionType).to.equal(null);
 		expect(assignment.canEditCompletionType).to.equal(true);
+		expect(assignment.isAnonymousMarkingAvailable).to.equal(true);
 	});
 
 	it('setSubmissionType when current completion type is valid', async() => {
