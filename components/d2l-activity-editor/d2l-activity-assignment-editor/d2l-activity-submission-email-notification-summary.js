@@ -28,7 +28,6 @@ class SubmissionEmailNotificationSummary extends ActivityEditorMixin(RtlMixin(Lo
 		if (assignment && assignment.notificationEmail) {
 			return html`${this.localize('txtSubmissionEmailNotificationSummary')}`;
 		}
-
 		return html``;
 	}
 }
