@@ -9,14 +9,16 @@ import '../d2l-activity-rubrics/d2l-activity-rubrics-summary-wrapper.js';
 import './d2l-assignment-turnitin-editor.js';
 import './d2l-assignment-turnitin-summary.js';
 import { ActivityEditorFeaturesMixin, Milestones } from '../mixins/d2l-activity-editor-features-mixin.js';
+import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { bodySmallStyles, heading3Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { summarizerHeaderStyles, summarizerSummaryStyles } from './activity-summarizer-styles.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { shared as store } from './state/assignment-store.js';
+import { shared as activityStore } from '../state/activity-store.js';
 
-class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement)) {
+class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(LocalizeActivityAssignmentEditorMixin(ActivityEditorMixin(MobxLitElement))) {
 
 	static get properties() {
 
@@ -162,6 +164,11 @@ class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(Loc
 			return html``;
 		}
 
+		const activity = activityStore.get(this.activityUsageHref);
+		if(!activity) {
+			return html``;
+		}
+
 		return html`
 			<d2l-labs-accordion-collapse flex header-border>
 				<h3 class="d2l-heading-3 activity-summarizer-header" slot="header">
@@ -169,14 +176,14 @@ class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(Loc
 				</h3>
 				<ul class="d2l-body-small activity-summarizer-summary" slot="summary">
 					${this._m2Enabled ? html`<li>${this._renderRubricsSummary()}</li>` : null}
-					${this._m3CompetenciesEnabled ? html`<li>${this._renderCompetenciesSummary()}</li>` : null}
+					${this._m3CompetenciesEnabled && activity.canEditCompetencies ? html`<li>${this._renderCompetenciesSummary()}</li>` : null}
 					${this._m2Enabled ? html`<li>${this._renderAnnotationsSummary()}</li>` : null}
 					${this._m2Enabled ? html`<li>${this._renderAnonymousMarkingSummary()}</li>` : null}
 					${this._m2Enabled ? html`<li>${this._renderTurnitinSummary()}</li>` : null}
 				</ul>
 				<div class="editors">
 					${this._m2Enabled ? html`${this._renderRubricsCollectionEditor()}` : null}
-					${this._m3CompetenciesEnabled ? this._renderCompetenciesOpener() : null}
+					${this._m3CompetenciesEnabled && activity.canEditCompetencies ? this._renderCompetenciesOpener() : null}
 					${this._m2Enabled ? html`${this._renderAnnotationsEditor()}` : null}
 					${this._m2Enabled ? html`${this._renderAnonymousMarkingEditor()}` : null}
 					${this._m2Enabled ? html`${this._renderTurnitinEditor()}` : null}
