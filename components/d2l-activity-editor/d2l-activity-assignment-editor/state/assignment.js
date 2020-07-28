@@ -69,11 +69,13 @@ export class Assignment {
 		}
 	}
 
-	_getIsAnonymousMarkingAvailable() {
+	_isSubmissionTypeWithAnonMarking() {
 		// only file (0) and text (1) submissions can have anonymous marking, see https://docs.valence.desire2learn.com/res/dropbox.html#attributes
-		const submissionTypesWithAnonMarking = ['0', '1'];
+		return ['0', '1'].includes(this.submissionType);
+	}
 
-		return this._entity.isAnonymousMarkingAvailable() && submissionTypesWithAnonMarking.includes(this.submissionType);
+	_getIsAnonymousMarkingAvailable() {
+		return this._entity.isAnonymousMarkingAvailable() && this._isSubmissionTypeWithAnonMarking();
 	}
 
 	load(entity) {
@@ -210,13 +212,15 @@ export class Assignment {
 		const data = {
 			name: this.name,
 			instructions: this.instructions,
-			isAnonymous: this.isAnonymousMarkingEnabled,
 			annotationToolsAvailable: this.annotationToolsAvailable,
 			submissionType: this.submissionType,
 			isIndividualAssignmentType: this.isIndividualAssignmentType,
 			groupTypeId: this.selectedGroupCategoryId,
 			defaultScoringRubricId: this.defaultScoringRubricId
 		};
+		if (this._isSubmissionTypeWithAnonMarking()) {
+			data.isAnonymous = this.isAnonymousMarkingEnabled;
+		}
 		if (this.canEditCompletionType) {
 			data.completionType = this.completionType;
 		}
