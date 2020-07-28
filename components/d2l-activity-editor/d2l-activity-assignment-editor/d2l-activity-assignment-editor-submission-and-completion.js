@@ -24,7 +24,8 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 
 		return {
 			href: { type: String },
-			token: { type: Object }
+			token: { type: Object },
+			_m4EmailNotificationEnabled: { type: Boolean }
 		};
 	}
 
@@ -67,6 +68,11 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 			summarizerHeaderStyles,
 			summarizerSummaryStyles
 		];
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+		this._m4EmailNotificationEnabled = this._isMilestoneEnabled(Milestones.M4EmailSubmission);
 	}
 
 	_saveCompletionTypeOnChange(event) {
@@ -211,8 +217,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 	}
 
 	_renderAssignmentSubmissionNotificationEmail(assignment) {
-		const isNotificationEnabled = this._isMilestoneEnabled(Milestones.M4EmailSubmission);
-		if (!isNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
+		if (!this._m4EmailNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
 			return html ``;
 		}
 
@@ -245,8 +250,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 	}
 
 	_renderSubmissionEmailNotificationSummary(assignment) {
-		const isNotificationEnabled = this._isMilestoneEnabled(Milestones.M4EmailSubmission);
-		if (!isNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
+		if (!this._m4EmailNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
 			return html ``;
 		}
 		return html`
