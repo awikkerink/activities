@@ -145,7 +145,8 @@ class ActivityHtmlEditor extends LocalizeActivityEditorMixin(LitElement) {
 				max-rows="1000"
 				fullpage-enabled="0"
 				toolbar="bold italic underline numlist bullist d2l_isf"
-				plugins="lists paste d2l_isf d2l_replacestring">
+				plugins="lists paste d2l_isf d2l_replacestring"
+				?disabled="${this.disabled}">
 
 				<div id="toolbar-shortcut-${this._htmlEditorUniqueId}" hidden="">${this.localize('editor.ariaToolbarShortcutInstructions')}</div>
 				<div
@@ -153,7 +154,6 @@ class ActivityHtmlEditor extends LocalizeActivityEditorMixin(LitElement) {
 					id="${this._htmlEditorUniqueId}"
 					aria-label="${this.ariaLabel}"
 					aria-describedby="toolbar-shortcut-${this._htmlEditorUniqueId}"
-					?disabled="${this.disabled}"
 					role="textbox"
 					prevent-submit>
 				</div>
@@ -164,11 +164,9 @@ class ActivityHtmlEditor extends LocalizeActivityEditorMixin(LitElement) {
 		super.updated(changedProperties);
 		// This is acknowledged to be non-idiomatic (manipulating DOM outside render), but this
 		// is unforunately a necessary evil of using the tinymce/HTML editor.
-		if (changedProperties.has('richtextEditorConfig')) {
-			const editor = this.shadowRoot.querySelector('d2l-html-editor');
-			if (editor) {
-				editor.d2lPluginSettings = this.richtextEditorConfig.properties || {};
-			}
+		const editor = this.shadowRoot.querySelector('d2l-html-editor');
+		if (editor) {
+			editor.d2lPluginSettings = (this.richtextEditorConfig || {}).properties || {};
 		}
 
 		if (changedProperties.has('value') && typeof changedProperties.get('value') === 'undefined') {

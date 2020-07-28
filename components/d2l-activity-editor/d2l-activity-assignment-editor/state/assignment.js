@@ -73,7 +73,7 @@ export class Assignment {
 		this._entity = entity;
 		this.name = entity.name();
 		this.canEditName = entity.canEditName();
-		this.instructions = entity.instructionsEditorHtml();
+		this.instructions = entity.canEditInstructions() ? entity.instructionsEditorHtml() : entity.instructionsHtml();
 		this.canEditInstructions = entity.canEditInstructions();
 		this.instructionsRichTextEditorConfig = entity.instructionsRichTextEditorConfig();
 		this.isAnonymousMarkingAvailable = entity.isAnonymousMarkingAvailable();
