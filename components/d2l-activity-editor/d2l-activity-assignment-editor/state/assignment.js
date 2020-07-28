@@ -108,7 +108,7 @@ export class Assignment {
 		this.isGroupAssignmentTypeDisabled = entity.isGroupAssignmentTypeDisabled();
 		this.isIndividualAssignmentType = entity.isIndividualAssignmentType();
 		this.groupCategories = entity.getAssignmentTypeGroupCategoryOptions();
-		this.isReadOnly = entity.isAssignmentTypeReadOnly();
+		this.canEditAssignmentType = !entity.isAssignmentTypeReadOnly();
 		this.assignmentHasSubmissions = entity.assignmentHasSubmissions();
 		this.selectedGroupCategoryName = entity.getAssignmentTypeSelectedGroupCategoryName();
 
@@ -291,7 +291,7 @@ decorate(Assignment, {
 	groupCategories: observable,
 	selectedGroupCategoryId: observable,
 	isGroupAssignmentTypeDisabled: observable,
-	isReadOnly: observable,
+	canEditAssignmentType: observable,
 	canEditDefaultScoringRubric: observable,
 	defaultScoringRubricId: observable,
 	selectedGroupCategoryName: observable,
