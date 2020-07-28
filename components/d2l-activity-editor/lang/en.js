@@ -62,8 +62,9 @@ export default {
 	"editor.btnManageSpecialAccess": "Manage Special Access", // manage special access button
 	"editor.specialAccessRestrictedText": "Only users with special access can see this folder", // restricted special access description
 	"editor.specialAccessNotRestrictedText": "Users can submit outside normal availability dates", // not restricted special access description
-	"editor.specialAccessCount": "{count, plural, =1 {1 user} other {{count} users}} with special access", // Label for number of special access users
+	"editor.specialAccessCount": "{count, plural, =0 {No users} =1 {1 user} other {{count} users}} with special access", // Label for number of special access users
 	"editor.specialAccessDialogTitle": "Manage Special Access", // Dialog title
+	"editor.specialAccessHidden": "Hidden by special access", // Warning label that the activity is restricted but is being hidden from all users by special access rules
 
 	"rubrics.btnAddRubric": "Add rubric", //text for add rubric button
 	"rubrics.btnCreateNew": "Create New", //Text for create new dropdown

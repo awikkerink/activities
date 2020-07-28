@@ -13,7 +13,6 @@ import { DescribableEntityMixin } from 'siren-sdk/src/entityAddons/describable-e
 import { SimpleEntity } from 'siren-sdk/src/es6/SimpleEntity.js';
 import { ActionCollectionEntity } from 'siren-sdk/src/activities/ActionCollectionEntity.js';
 import { performSirenAction } from 'siren-sdk/src/es6/SirenAction.js';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/colors/colors.js';
@@ -29,13 +28,12 @@ import 'd2l-organizations/components/d2l-organization-image/d2l-organization-ima
 import 'd2l-alert/d2l-alert-toast.js';
 import '@brightspace-ui-labs/edit-in-place/d2l-labs-edit-in-place.js';
 import '../d2l-activity-editor/d2l-activity-visibility-auto-editor.js';
-import { getLocalizeResources } from './localization.js';
+import { LocalizeActivityCollectionEditor } from './localization';
 
 const spaceKeyDown = 32;
 const spaceKeyEnter = 13;
 
-const baseUrl = import.meta.url;
-class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
+class CollectionEditor extends LocalizeActivityCollectionEditor(EntityMixinLit(LitElement)) {
 
 	constructor() {
 		super();
@@ -57,10 +55,6 @@ class CollectionEditor extends LocalizeMixin(EntityMixinLit(LitElement)) {
 		this._candidateItemsLoading = false;
 		this._setEntityType(ActivityUsageEntity);
 		this._movingCollectionItemPromises = [];
-	}
-
-	static async getLocalizeResources(langs) {
-		return getLocalizeResources(langs, baseUrl);
 	}
 
 	set _entity(entity) {

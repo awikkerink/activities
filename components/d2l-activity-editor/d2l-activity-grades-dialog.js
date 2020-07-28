@@ -149,7 +149,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 								</div>
 							</div>
 						</div>
-						<d2l-activity-grade-category-selector href="${this.href}" .token="${this.token}"></d2l-activity-grade-category-selector>
+						<d2l-activity-grade-category-selector .href="${this.href}" .token="${this.token}"></d2l-activity-grade-category-selector>
 					` : html`
 						<div class="d2l-body-small">
 							${this.localize('editor.noGradeCreatePermission')}
@@ -168,7 +168,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 				</label>
 				<d2l-input-radio-spacer ?hidden="${this._createNewRadioChecked && this._hasGradeCandidates}" ?disabled="${!this._hasGradeCandidates}">
 					${this._hasGradeCandidates ? html`<d2l-activity-grade-candidate-selector
-						href="${this.href}"
+						.href="${this.href}"
 						.token="${this.token}">
 					</d2l-activity-grade-candidate-selector>` : html`<div class="d2l-body-small">
 						${this.localize('editor.noGradeItems')}

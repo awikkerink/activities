@@ -35,7 +35,6 @@ export default {
 	"txtGroupAssignmentSummary": "群組作業", // Summary message for accordion when assignment type is set to group
 	"submissionCompletionAndCategorization": "提交與完成", // Label for the availability and dates summarizer
 	"assignmentSaveError": "您的作業未儲存。請修正以紅色顯示的欄位。", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
-	"folderTypeCannotChange": "一旦提交，便無法變更作業類型", // Folder type cannot change
 	"folderTypeNoGroups": "尚無群組。在「群組」工具中建立新群組。", // Folder type no groups
 	"folderTypeCreateGroups": "在「群組」工具中建立新群組。", // Folder type create groups
 	"discardChangesTitle": "捨棄變更？", // Discard Changes User Prompt

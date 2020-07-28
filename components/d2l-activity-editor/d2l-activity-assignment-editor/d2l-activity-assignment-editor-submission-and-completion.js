@@ -1,6 +1,9 @@
 import '@brightspace-ui-labs/accordion/accordion-collapse.js';
+import 'd2l-inputs/d2l-input-text.js';
+
 import './d2l-activity-assignment-type-editor.js';
 import './d2l-activity-assignment-type-summary.js';
+import { ActivityEditorFeaturesMixin, Milestones } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { bodyCompactStyles, bodySmallStyles, heading3Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { summarizerHeaderStyles, summarizerSummaryStyles } from './activity-summarizer-styles.js';
@@ -12,7 +15,7 @@ import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 import { shared as store } from './state/assignment-store.js';
 
-class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement))) {
+class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeaturesMixin(ActivityEditorMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement)))) {
 
 	static get styles() {
 		return [
@@ -44,6 +47,11 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 
 				.d2l-input-radio-label {
 					margin-bottom: 10px;
+				}
+
+				#notification-email {
+					margin-top: 10px;
+					margin-bottom: 2px;
 				}
 			`,
 			summarizerHeaderStyles,
@@ -194,6 +202,40 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 		`;
 	}
 
+	_renderAssignmentSubmissionNotificationEmail(assignment) {
+		const isNotificationEnabled = this._isMilestoneEnabled(Milestones.M4EmailSubmission);
+		if (!isNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
+			return html ``;
+		}
+
+		return html `
+		<div id="assignment-notification-email-container">
+			<label class="d2l-label-text" for="assignment-notification-email-container">
+				${this.localize('hdrSubmissionNotificationEmail')}
+			</label>
+			<p class="d2l-body-small">
+				${this.localize('hlpSubmissionNotificationEmail')}
+			</p>
+
+			<d2l-input-text
+				id="notification-email"
+				label="${this.localize('hdrSubmissionNotificationEmail')}"
+				label-hidden
+				value=""
+				maxlength="1024"
+				@change="${this._onNotificationEmailChanged}"
+				@blur="${this._onNotificationEmailChanged}"
+			></d2l-input-text>
+		</div>
+	`;
+	}
+
+	_onNotificationEmailChanged(e) {
+		const assignment = store.getAssignment(this.href);
+		const data = e.target.value;
+		assignment && assignment.setNotificationEmail(data);
+	}
+
 	_renderAssignmentSubmissionType(assignment) {
 		if (!assignment) {
 			return html``;
@@ -308,6 +350,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 				${this._renderAssignmentFilesSubmissionLimit(assignment)}
 				${this._renderAssignmentSubmissionsRule(assignment)}
 				${this._renderAssignmentCompletionType(assignment)}
+				${this._renderAssignmentSubmissionNotificationEmail(assignment)}
 			</d2l-labs-accordion-collapse>
 		`;
 	}

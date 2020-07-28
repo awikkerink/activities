@@ -35,7 +35,6 @@ export default {
 	"txtGroupAssignmentSummary": "Gruppuppgift", // Summary message for accordion when assignment type is set to group
 	"submissionCompletionAndCategorization": "Inlämning och slutförande", // Label for the availability and dates summarizer
 	"assignmentSaveError": "Ditt uppdrag sparades inte. Korrigera de fält som är markerade med rött.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
-	"folderTypeCannotChange": "Uppgiftstyp kan inte ändras när det finns inlämningsuppgifter", // Folder type cannot change
 	"folderTypeNoGroups": "Det finns inga grupper. Skapa nya grupper i gruppverktyget.", // Folder type no groups
 	"folderTypeCreateGroups": "Skapa nya grupper i gruppverktyget.", // Folder type create groups
 	"discardChangesTitle": "Vill du ignorera ändringarna?", // Discard Changes User Prompt
