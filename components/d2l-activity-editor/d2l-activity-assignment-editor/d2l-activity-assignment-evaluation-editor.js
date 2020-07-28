@@ -13,9 +13,9 @@ import { bodySmallStyles, heading3Styles } from '@brightspace-ui/core/components
 import { css, html } from 'lit-element/lit-element.js';
 import { summarizerHeaderStyles, summarizerSummaryStyles } from './activity-summarizer-styles.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
+import { shared as activityStore } from '../state/activity-store.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
-import { shared as activityStore } from '../state/activity-store.js';
 import { shared as store } from './state/assignment-store.js';
 
 class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(LocalizeActivityAssignmentEditorMixin(ActivityEditorMixin(MobxLitElement))) {
