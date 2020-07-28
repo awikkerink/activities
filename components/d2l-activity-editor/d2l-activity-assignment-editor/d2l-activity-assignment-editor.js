@@ -97,6 +97,7 @@ class AssignmentEditor extends ActivityEditorContainerMixin(RtlMixin(LocalizeAct
 			}
 			.locked-alert {
 				display: flex;
+				align-items: baseline;
 			}
 			d2l-icon {
 				padding-right: 1rem;
