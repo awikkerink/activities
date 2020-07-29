@@ -101,11 +101,11 @@ class ActivityHtmlEditor extends LocalizeActivityEditorMixin(LitElement) {
 				/* d2l-input-invalid */
 				border-color: var(--d2l-color-cinnabar);
 			}
-			d2l-html-editor > .d2l-html-editor-container:disabled {
+			d2l-html-editor[disabled] > .d2l-html-editor-container {
 				/* d2l-input-disabled */
 				opacity: 0.5;
 			}
-			d2l-html-editor > .d2l-html-editor-container:hover:disabled {
+			d2l-html-editor[disabled] > .d2l-html-editor-container:hover {
 				/* d2l-input-hover-disabled */
 				background-color: var(--d2l-input-background-color);
 				border-color: var(--d2l-input-border-color);
