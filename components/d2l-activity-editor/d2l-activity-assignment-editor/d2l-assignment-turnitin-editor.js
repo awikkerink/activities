@@ -159,8 +159,7 @@ class AssignmentTurnitinEditor
 				${featureSummary}
 				<d2l-button-subtle
 					text="${this.localize('btnEditTurnitin')}"
-					@click="${this._onClickEdit}"
-					?hidden="${!canEditTurnitin}">
+					@click="${this._onClickEdit}">
 				</d2l-button-subtle>
 			</div>
 		`;
