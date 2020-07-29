@@ -200,7 +200,6 @@ export class Assignment {
 		*/
 		const data = {
 			name: this.name,
-			instructions: this.instructions,
 			isAnonymous: this.isAnonymousMarkingEnabled,
 			annotationToolsAvailable: this.annotationToolsAvailable,
 			submissionType: this.submissionType,
@@ -208,6 +207,9 @@ export class Assignment {
 			groupTypeId: this.selectedGroupCategoryId,
 			defaultScoringRubricId: this.defaultScoringRubricId
 		};
+		if (this.canEditInstructions) {
+			data.instructions = this.instructions;
+		}
 		if (this.canEditCompletionType) {
 			data.completionType = this.completionType;
 		}
