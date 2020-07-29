@@ -111,7 +111,8 @@ export class Assignment {
 		this.submissionsRule = entity.submissionsRule() || 'keepall';
 		this.submissionsRuleOptions = entity.getSubmissionsRuleOptions();
 
-		this.notificationEmail = entity.notificationEmail() || '';
+		this.notificationEmail = entity.notificationEmail();
+		this.canEditNotificationEmail = entity.canEditNotificationEmail();
 
 		this.canEditFilesSubmissionLimit = entity.canEditFilesSubmissionLimit();
 		this.filesSubmissionLimit = entity.filesSubmissionLimit() || 'unlimited';
@@ -270,7 +271,7 @@ export class Assignment {
 	}
 
 	get showNotificationEmail() {
-		return this.showSubmissionsRule;
+		return typeof this.notificationEmail !== 'undefined' && this.showSubmissionsRule;
 	}
 
 	setNotificationEmail(value) {
@@ -315,6 +316,7 @@ decorate(Assignment, {
 	showFilesSubmissionLimit: computed,
 	showSubmissionsRule: computed,
 	notificationEmail: observable,
+	canEditNotificationEmail: observable,
 	showNotificationEmail: computed,
 	// actions
 	load: action,
