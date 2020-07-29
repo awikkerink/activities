@@ -164,9 +164,11 @@ class ActivityHtmlEditor extends LocalizeActivityEditorMixin(LitElement) {
 		super.updated(changedProperties);
 		// This is acknowledged to be non-idiomatic (manipulating DOM outside render), but this
 		// is unforunately a necessary evil of using the tinymce/HTML editor.
-		const editor = this.shadowRoot.querySelector('d2l-html-editor');
-		if (editor) {
-			editor.d2lPluginSettings = (this.richtextEditorConfig || {}).properties || {};
+		if (changedProperties.has('richtextEditorConfig')) {
+			const editor = this.shadowRoot.querySelector('d2l-html-editor');
+			if (editor) {
+				editor.d2lPluginSettings = this.richtextEditorConfig.properties || {};
+			}
 		}
 
 		if (changedProperties.has('value') && typeof changedProperties.get('value') === 'undefined') {
