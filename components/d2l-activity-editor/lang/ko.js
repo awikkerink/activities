@@ -10,8 +10,8 @@ export default {
 	"editor.txtConditionAdded": "Added  condition: {title}",
 	"editor.txtConditionRemoved": "Removed condition: {title}",
 	"editor.txtConditionsAdded": "Added {count} conditions",
-	"editor.txtNumReleaseConditions": "{count, plural, =1 {{count}개 릴리스 조건} 기타 {{count}개 릴리스 조건}}", // num release condition text
-	"editor.txtNumSpecialAccess": "{userCount, plural, =1 {특별 접근 권한이 있는 1명 사용자} 기타 {특별 접근 권한이 있는 {userCount}명 사용자}}", // num users with special access text
+	"editor.txtNumReleaseConditions": "{count, plural, =1 {{count}개 릴리스 조건} other {{count}개 릴리스 조건}}", // num release condition text
+	"editor.txtNumSpecialAccess": "{userCount, plural, =1 {특별 접근 권한이 있는 1명 사용자} other {특별 접근 권한이 있는 {userCount}명 사용자}}", // num users with special access text
 	"editor.btnCancel": "취소", // cancel button
 	"editor.btnSave": "저장 및 닫기", // save and close button
 	"editor.btnSaveMobile": "저장", // save and close button for mobile devices
@@ -59,7 +59,7 @@ export default {
 	"editor.manageCompetencies": "학습 목표 관리", //Button text to launch competencies tool dialog
 	"editor.competenciesCount": "{count, plural, =0 {학습 목표 없음} =1 {1개 첨부됨} other {{count}개 첨부됨}}", //Label for number of associated competencies
 	"editor.competenciesCountSummary": "{count, plural, =0 {학습 목표 없음} =1 {1개 학습 목표} other {{count}개 학습 목표}}",
-	"editor.unevaluatedCompetencies": "{count, plural, =1 {1개 평가 누락} 기타 {{count}개 평가 누락}}", //Label for number of unevalated associated competencies
+	"editor.unevaluatedCompetencies": "{count, plural, =1 {1개 평가 누락} other {{count}개 평가 누락}}", //Label for number of unevalated associated competencies
 	"editor.btnClose": "닫기", //Label for Close button
 	"editor.btnCloseDialog": "이 대화 상자 닫기", // close dialog button
 	"editor.btnManageSpecialAccess": "특별 접근 관리", // manage special access button
@@ -77,7 +77,7 @@ export default {
 	"rubrics.btnCancel": "취소", //Button for canceling out of the attach new rubric overlay
 	"rubrics.txtAddExisting": "기존 항목 추가", //Title for the attach rubrics dialog,
 	"rubrics.txtNoRubricAdded": "추가된 루브릭 없음", // rubric summary for no rubrics
-	"rubrics.txtRubricsAdded": "{수, 복수, =1 {루브릭 1개 추가} 기타 {{count}개 루브릭 추가}}", // count of asoociated rubrics
+	"rubrics.txtRubricsAdded": "{count, plural, =1 {루브릭 1개 추가} other {{count}개 루브릭 추가}}", // count of asoociated rubrics
 	"rubrics.txtDeleteRubric": "루브릭 삭제", // Text for deleting rubric icon
 	"rubrics.btnClose": "닫기", // X button for exiting the create new rubric overlay
 	"rubrics.txtRubricAdded": "루브릭 추가됨", // Text for notifying screenreader rubric was added
