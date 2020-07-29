@@ -191,10 +191,16 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 				${this._getNameTooltip()}
 			</div>
 
-			<d2l-activity-outcomes
-				href="${activityUsageHref}"
-				.token="${this.token}">
-			</d2l-activity-outcomes>
+			${canEditName ? /** This is a hack. US117892. Learning outcomes shouldn't show if the user lacks the Assignment Add/Edit Submission Folders permission.
+								We are using `canEditName` instead of relying on something in outcomes,
+								because the outcomes Manage Alignments permission is currently not truly pluggable,
+								and so it cannot be plugged into Dropbox to check Assignment permissions.
+				*/ html`
+					<d2l-activity-outcomes
+						href="${activityUsageHref}"
+						.token="${this.token}">
+					</d2l-activity-outcomes>
+				` : null }
 
 			<div id="score-and-duedate-container">
 				<div id="score-container">

@@ -101,11 +101,11 @@ class ActivityHtmlEditor extends LocalizeActivityEditorMixin(LitElement) {
 				/* d2l-input-invalid */
 				border-color: var(--d2l-color-cinnabar);
 			}
-			d2l-html-editor > .d2l-html-editor-container:disabled {
+			d2l-html-editor[disabled] > .d2l-html-editor-container {
 				/* d2l-input-disabled */
 				opacity: 0.5;
 			}
-			d2l-html-editor > .d2l-html-editor-container:hover:disabled {
+			d2l-html-editor[disabled] > .d2l-html-editor-container:hover {
 				/* d2l-input-hover-disabled */
 				background-color: var(--d2l-input-background-color);
 				border-color: var(--d2l-input-border-color);
@@ -145,7 +145,8 @@ class ActivityHtmlEditor extends LocalizeActivityEditorMixin(LitElement) {
 				max-rows="1000"
 				fullpage-enabled="0"
 				toolbar="bold italic underline numlist bullist d2l_isf"
-				plugins="lists paste d2l_isf d2l_replacestring">
+				plugins="lists paste d2l_isf d2l_replacestring"
+				?disabled="${this.disabled}">
 
 				<div id="toolbar-shortcut-${this._htmlEditorUniqueId}" hidden="">${this.localize('editor.ariaToolbarShortcutInstructions')}</div>
 				<div
@@ -153,7 +154,6 @@ class ActivityHtmlEditor extends LocalizeActivityEditorMixin(LitElement) {
 					id="${this._htmlEditorUniqueId}"
 					aria-label="${this.ariaLabel}"
 					aria-describedby="toolbar-shortcut-${this._htmlEditorUniqueId}"
-					?disabled="${this.disabled}"
 					role="textbox"
 					prevent-submit>
 				</div>

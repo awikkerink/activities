@@ -82,7 +82,7 @@ export class Assignment {
 		this._entity = entity;
 		this.name = entity.name();
 		this.canEditName = entity.canEditName();
-		this.instructions = entity.instructionsEditorHtml();
+		this.instructions = entity.canEditInstructions() ? entity.instructionsEditorHtml() : entity.instructionsHtml();
 		this.canEditInstructions = entity.canEditInstructions();
 		this.instructionsRichTextEditorConfig = entity.instructionsRichTextEditorConfig();
 		this.anonymousMarkingHelpText = entity.getAnonymousMarkingHelpText();
@@ -213,7 +213,6 @@ export class Assignment {
 		*/
 		const data = {
 			name: this.name,
-			instructions: this.instructions,
 			annotationToolsAvailable: this.annotationToolsAvailable,
 			submissionType: this.submissionType,
 			isIndividualAssignmentType: this.isIndividualAssignmentType,
@@ -222,6 +221,9 @@ export class Assignment {
 		};
 		if (this._isSubmissionTypeWithAnonMarking()) {
 			data.isAnonymous = this.isAnonymousMarkingEnabled;
+		}
+		if (this.canEditInstructions) {
+			data.instructions = this.instructions;
 		}
 		if (this.canEditCompletionType) {
 			data.completionType = this.completionType;

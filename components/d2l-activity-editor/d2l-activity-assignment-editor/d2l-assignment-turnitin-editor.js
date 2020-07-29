@@ -120,7 +120,6 @@ class AssignmentTurnitinEditor
 		} = entity;
 
 		const isTurnitinEnabled = isOriginalityCheckEnabled || isGradeMarkEnabled;
-		const isEditorDisplayed = canEditTurnitin || isTurnitinEnabled;
 
 		let featureSummary;
 		if (isTurnitinEnabled) {
@@ -154,14 +153,13 @@ class AssignmentTurnitinEditor
 		}
 
 		return html`
-			<div id="assignment-turnitin-container" ?hidden="${!isEditorDisplayed}">
+			<div id="assignment-turnitin-container" ?hidden="${!canEditTurnitin}">
 				<h4 class="d2l-heading-4">${this.localize('hdrTurnitin')}</h4>
 				<p class="help-text d2l-body-small">${this.localize('hlpTurnitin')}</p>
 				${featureSummary}
 				<d2l-button-subtle
 					text="${this.localize('btnEditTurnitin')}"
-					@click="${this._onClickEdit}"
-					?hidden="${!canEditTurnitin}">
+					@click="${this._onClickEdit}">
 				</d2l-button-subtle>
 			</div>
 		`;
