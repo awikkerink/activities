@@ -3,6 +3,7 @@ import 'd2l-inputs/d2l-input-text.js';
 
 import './d2l-activity-assignment-type-editor.js';
 import './d2l-activity-assignment-type-summary.js';
+import './d2l-activity-submission-email-notification-summary.js';
 import { ActivityEditorFeaturesMixin, Milestones } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { bodyCompactStyles, bodySmallStyles, heading3Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
@@ -16,6 +17,15 @@ import { selectStyles } from '@brightspace-ui/core/components/inputs/input-selec
 import { shared as store } from './state/assignment-store.js';
 
 class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeaturesMixin(ActivityEditorMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement)))) {
+
+	static get properties() {
+
+		return {
+			href: { type: String },
+			token: { type: Object },
+			_m4EmailNotificationEnabled: { type: Boolean }
+		};
+	}
 
 	static get styles() {
 		return [
@@ -57,6 +67,11 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 			summarizerHeaderStyles,
 			summarizerSummaryStyles
 		];
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+		this._m4EmailNotificationEnabled = this._isMilestoneEnabled(Milestones.M4EmailSubmission);
 	}
 
 	_saveCompletionTypeOnChange(event) {
@@ -203,8 +218,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 	}
 
 	_renderAssignmentSubmissionNotificationEmail(assignment) {
-		const isNotificationEnabled = this._isMilestoneEnabled(Milestones.M4EmailSubmission);
-		if (!isNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
+		if (!this._m4EmailNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
 			return html ``;
 		}
 
@@ -221,7 +235,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 				id="notification-email"
 				label="${this.localize('hdrSubmissionNotificationEmail')}"
 				label-hidden
-				value=""
+				value="${assignment.notificationEmail}"
 				maxlength="1024"
 				@change="${this._onNotificationEmailChanged}"
 				@blur="${this._onNotificationEmailChanged}"
@@ -234,6 +248,18 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 		const assignment = store.getAssignment(this.href);
 		const data = e.target.value;
 		assignment && assignment.setNotificationEmail(data);
+	}
+
+	_renderSubmissionEmailNotificationSummary(assignment) {
+		if (!this._m4EmailNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
+			return html ``;
+		}
+		return html`
+			<d2l-activity-submission-email-notification-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-submission-email-notification-summary>
+		`;
 	}
 
 	_renderAssignmentSubmissionType(assignment) {
@@ -344,6 +370,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 					<li>${this._renderAssignmentTypeSummary()}</li>
 					<li>${this._renderAssignmentSubmissionTypeSummary(assignment)}</li>
 					<li>${this._renderAssignmentCompletionTypeSummary()}</li>
+					<li>${this._renderSubmissionEmailNotificationSummary(assignment)}</li>
 				</ul>
 				${this._renderAssignmentType()}
 				${this._renderAssignmentSubmissionType(assignment)}

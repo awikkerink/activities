@@ -33,6 +33,7 @@ export default {
 	"txtGroupCategoryWithName": "Group Category: {groupCategory}", //Label for the group category {groupCategory} is the name of the group category
 	"txtGroupCategory": "Group Category", // Label for group category,
 	"txtGroupAssignmentSummary": "Group assignment", // Summary message for accordion when assignment type is set to group
+	"txtSubmissionEmailNotificationSummary": "Submission notification by email", // Summary message when submission notification by email option is enabled
 	"submissionCompletionAndCategorization": "Submission & Completion", // Label for the availability and dates summarizer
 	"assignmentSaveError": "Your assignment wasn't saved. Please correct the fields outlined in red.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
 	"folderTypeNoGroups": "No groups exist. Create new groups in the Groups tool.", // Folder type no groups

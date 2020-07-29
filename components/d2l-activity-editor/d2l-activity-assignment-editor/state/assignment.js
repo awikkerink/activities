@@ -69,6 +69,15 @@ export class Assignment {
 		}
 	}
 
+	_isSubmissionTypeWithAnonMarking() {
+		// only file (0) and text (1) submissions can have anonymous marking, see https://docs.valence.desire2learn.com/res/dropbox.html#attributes
+		return ['0', '1'].includes(this.submissionType);
+	}
+
+	_getIsAnonymousMarkingAvailable() {
+		return this._entity.isAnonymousMarkingAvailable() && this._isSubmissionTypeWithAnonMarking();
+	}
+
 	load(entity) {
 		this._entity = entity;
 		this.name = entity.name();
@@ -76,9 +85,6 @@ export class Assignment {
 		this.instructions = entity.canEditInstructions() ? entity.instructionsEditorHtml() : entity.instructionsHtml();
 		this.canEditInstructions = entity.canEditInstructions();
 		this.instructionsRichTextEditorConfig = entity.instructionsRichTextEditorConfig();
-		this.isAnonymousMarkingAvailable = entity.isAnonymousMarkingAvailable();
-		this.isAnonymousMarkingEnabled = entity.isAnonymousMarkingEnabled();
-		this.canEditAnonymousMarking = entity.canEditAnonymousMarking();
 		this.anonymousMarkingHelpText = entity.getAnonymousMarkingHelpText();
 		this.canSeeAnnotations = entity.canSeeAnnotations();
 		this.annotationToolsAvailable = entity.getAvailableAnnotationTools();
@@ -95,6 +101,11 @@ export class Assignment {
 		this.canEditCompletionType = entity.canEditCompletionType();
 		this.submissionType = String(entity.submissionType().value);
 		this.completionType = entity.completionTypeValue();
+
+		// set up anonymous marking _after_ submission type
+		this.isAnonymousMarkingEnabled = entity.isAnonymousMarkingEnabled();
+		this.canEditAnonymousMarking = entity.canEditAnonymousMarking();
+		this.isAnonymousMarkingAvailable = this._getIsAnonymousMarkingAvailable();
 
 		this.canEditSubmissionsRule = entity.canEditSubmissionsRule();
 		this.submissionsRule = entity.submissionsRule() || 'keepall';
@@ -133,6 +144,8 @@ export class Assignment {
 	setSubmissionType(value) {
 		this.submissionType = value;
 		this._setValidCompletionTypeForSubmissionType();
+
+		this.isAnonymousMarkingAvailable = this._getIsAnonymousMarkingAvailable();
 	}
 
 	setFilesSubmissionLimit(value) {
@@ -200,13 +213,15 @@ export class Assignment {
 		*/
 		const data = {
 			name: this.name,
-			isAnonymous: this.isAnonymousMarkingEnabled,
 			annotationToolsAvailable: this.annotationToolsAvailable,
 			submissionType: this.submissionType,
 			isIndividualAssignmentType: this.isIndividualAssignmentType,
 			groupTypeId: this.selectedGroupCategoryId,
 			defaultScoringRubricId: this.defaultScoringRubricId
 		};
+		if (this._isSubmissionTypeWithAnonMarking()) {
+			data.isAnonymous = this.isAnonymousMarkingEnabled;
+		}
 		if (this.canEditInstructions) {
 			data.instructions = this.instructions;
 		}
