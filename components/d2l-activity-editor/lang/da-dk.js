@@ -111,7 +111,7 @@ export default {
 	"assignment-editor.hdrReleaseConditions": "Release Conditions", // release conditions heading
 	"assignment-editor.hlpReleaseConditions": "Users are not able to access or view the assignment unless they meet the release conditions.", // release conditions help
 	"assignment-editor.completionType": "Marked as completed", // Label for the completion type field when creating/editing an assignment
-	"assignment-editor.lblAnonymousMarking": "Anonymous Marking", // Label for anonymous marsking
+	"assignment-editor.lblAnonymousMarking": "Anonymous Marking", // Label for anonymous marking
 	"assignment-editor.chkAnonymousMarking": "Hide student names during assessment", // Checkbox for anonymous marking
 	"assignment-editor.dueDate": "Forfaldsdato", // ARIA label for the due date field when creating/editing an activity
 	"assignment-editor.txtAnnotationsOff": "Kommentarer slået fra", // annotations off text
