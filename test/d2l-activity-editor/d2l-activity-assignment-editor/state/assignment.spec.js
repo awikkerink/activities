@@ -85,6 +85,7 @@ describe('Assignment ', function() {
 				canEditSubmissionsRule: () => true,
 				submissionsRule: () => 'keepall',
 				notificationEmail: () => '',
+				canEditNotificationEmail: () => true,
 				getSubmissionsRuleOptions: () => [
 					{
 						'type': 'radio',

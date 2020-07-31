@@ -237,6 +237,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 				label-hidden
 				value="${assignment.notificationEmail}"
 				maxlength="1024"
+				?disabled="${!assignment.canEditNotificationEmail}"
 				@change="${this._onNotificationEmailChanged}"
 				@blur="${this._onNotificationEmailChanged}"
 			></d2l-input-text>
