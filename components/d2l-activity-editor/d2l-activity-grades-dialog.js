@@ -51,7 +51,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 				padding-right: 0;
 				padding-left: 10px;
 			}
-			.d2l-icon {
+			.d2l-activity-grades-dialog-grade-icon {
 				padding-top: 6px;
 				padding-bottom: 6px;
 			}
@@ -148,7 +148,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 				<d2l-input-radio-spacer ?hidden="${!this._createNewRadioChecked && this._canLinkNewGrade}">
 					${this._canLinkNewGrade ? html`
 						<div class="d2l-activity-grades-dialog-create-new-container">
-							<div class="d2l-activity-grades-dialog-create-new-icon"><d2l-icon class="d2l-icon" icon="tier1:grade"></d2l-icon></div>
+							<div class="d2l-activity-grades-dialog-create-new-icon"><d2l-icon class="d2l-activity-grades-dialog-grade-icon" icon="tier1:grade"></d2l-icon></div>
 							<div>
 								<div class="d2l-activity-grades-dialog-create-new-activity-name">${newGradeName}</div>
 								<div class="d2l-body-small">${scoreOutOf && !scoreOutOfError ? html`
