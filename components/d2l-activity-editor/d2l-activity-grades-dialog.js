@@ -49,7 +49,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 			}
 			:host([dir="rtl"]) .d2l-activity-grades-dialog-create-new-icon {
 				padding-right: 0;
-				padding-left: 10px;
+				padding-left: 9px;
 			}
 			.d2l-activity-grades-dialog-grade-icon {
 				padding-top: 6px;
