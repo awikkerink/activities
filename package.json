@@ -7,8 +7,9 @@
   "name": "d2l-activities",
   "scripts": {
     "build": "gulp build",
-    "lint": "npm run lint:wc && npm run lint:js",
+    "lint": "npm run lint:style && npm run lint:wc && npm run lint:js",
     "lint:js": "eslint . --ext .js,.html test/**/*.js test/**/*.html demo/**/*.html",
+    "lint:style": "stylelint \"**/*.js\"",
     "lint:wc": "polymer lint -i \"./*\" \"components\" \"demo\" \"test\"",
     "test:diff": "mocha test/**/*.visual-diff.js -t 40000",
     "test:diff:golden": "mocha test/**/*.visual-diff.js -t 40000 --golden",
@@ -75,6 +76,7 @@
     "@brightspace-ui-labs/list-item-accumulator": "^1.0.0",
     "@brightspace-ui/core": "^1.55.0",
     "@brightspace-ui/intl": "^3.0.1",
+    "@brightspace-ui/stylelint-config": "^0.0.1",
     "@d2l/d2l-attachment": "Brightspace/attachment#semver:^1",
     "@polymer/iron-resizable-behavior": "^3.0.0",
     "@polymer/polymer": "^3.0.0",
@@ -112,6 +114,7 @@
     "merge-stream": "^1.0.1",
     "mobx": "^5.15.2",
     "require-dir": "^1.2.0",
-    "siren-sdk": "BrightspaceHypermediaComponents/siren-sdk#semver:^1"
+    "siren-sdk": "BrightspaceHypermediaComponents/siren-sdk#semver:^1",
+    "stylelint": "^13.6.1"
   }
 }

@@ -41,19 +41,19 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 				margin-bottom: 18px;
 			}
 			.d2l-activity-grades-dialog-create-new-activity-name {
-				word-break: break-word;
 				overflow-wrap: anywhere; /* not supported by safari */
+				word-break: break-word;
 			}
 			.d2l-activity-grades-dialog-create-new-icon {
 				padding-right: 9px;
 			}
 			:host([dir="rtl"]) .d2l-activity-grades-dialog-create-new-icon {
-				padding-right: 0;
 				padding-left: 9px;
+				padding-right: 0;
 			}
 			.d2l-activity-grades-dialog-grade-icon {
-				padding-top: 6px;
 				padding-bottom: 6px;
+				padding-top: 6px;
 			}
 			.d2l-input-radio-label-disabled {
 				margin-bottom: 0;
