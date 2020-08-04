@@ -30,7 +30,7 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 			/**
 			 * Order in which the editor validation and saving occurs (lowest first)
 			 */
-			order: { type: Number },
+			saveOrder: { type: Number },
 		};
 	}
 
@@ -38,7 +38,7 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 		super();
 		this._container = null;
 		this.store = store;
-		this.order = 1000;
+		this.saveOrder = 1000;
 	}
 
 	async validate() {}

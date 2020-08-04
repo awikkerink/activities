@@ -75,7 +75,7 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 		this.isSaving = true;
 		this.markSaveStart(this.type, this.telemetryId);
 
-		const orderedEditors = Array.from(this._editors).sort((a, b) => a.order - b.order);
+		const orderedEditors = Array.from(this._editors).sort((a, b) => a.saveOrder - b.saveOrder);
 
 		const validations = [];
 		for (const editor of orderedEditors) {
