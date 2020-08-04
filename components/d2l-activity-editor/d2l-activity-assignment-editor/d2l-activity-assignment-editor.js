@@ -114,6 +114,7 @@ class AssignmentEditor extends ActivityEditorContainerMixin(RtlMixin(LocalizeAct
 
 		this.type = 'assignment';
 		this.telemetryId = 'assignments';
+		this.order = 2000;
 	}
 
 	_onRequestProvider(e) {
