@@ -80,11 +80,14 @@ class ActivitySpecialAccessEditor extends ActivityEditorMixin(RtlMixin(LocalizeA
 		`;
 	}
 
-	_renderManageButton() {
+	_renderManageButton(specialAccess) {
+		const hasDialogUrl = specialAccess && specialAccess.url;
+
 		return html`
 			<d2l-button-subtle
 				text="${this.localize('editor.btnManageSpecialAccess')}"
-				@click="${this._openSpecialAccessDialog}">
+				@click="${this._openSpecialAccessDialog}"
+				?disabled="${!hasDialogUrl}">
 			</d2l-button-subtle>
 		`;
 	}
@@ -146,7 +149,7 @@ class ActivitySpecialAccessEditor extends ActivityEditorMixin(RtlMixin(LocalizeA
 
 		return html`
 			${this._renderDescription(entity.specialAccess)}
-			${this._renderManageButton()}
+			${this._renderManageButton(entity.specialAccess)}
 		`;
 	}
 }
