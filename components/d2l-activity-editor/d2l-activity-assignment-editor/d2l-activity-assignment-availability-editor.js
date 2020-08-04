@@ -112,7 +112,7 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 
 	_renderReleaseConditionEditor() {
 		const activity = store.get(this.href);
-		if (!this._m3ReleaseConditionsEnabled || !activity || !activity.conditionsHref) {
+		if (!this._m3ReleaseConditionsEnabled || !activity || !activity.canEditReleaseConditions) {
 			return html``;
 		}
 
