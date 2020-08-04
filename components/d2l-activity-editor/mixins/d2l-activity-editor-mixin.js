@@ -30,7 +30,7 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 			/**
 			 * Order in which the editor validation and saving occurs (lowest first)
 			 */
-			saveOrder: { type: Number },
+			saveOrder: { attribute: 'save-order', reflect: true, type: Number },
 		};
 	}
 
