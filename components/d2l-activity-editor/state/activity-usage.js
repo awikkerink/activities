@@ -221,6 +221,7 @@ decorate(ActivityUsage, {
 	// props
 	dueDate: observable,
 	conditionsHref: observable,
+	canEditReleaseConditions: observable,
 	isDraft: observable,
 	canEditDraft: observable,
 	isError: observable,
