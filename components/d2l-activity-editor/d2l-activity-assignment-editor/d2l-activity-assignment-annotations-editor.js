@@ -53,11 +53,6 @@ class ActivityAssignmentAnnotationsEditor
 			return html``;
 		}
 
-		const shouldRenderEditor = entity.canSeeAnnotations;
-		if (!shouldRenderEditor) {
-			return html``;
-		}
-
 		return html`
 			<label class="d2l-label-text">
 				${this.localize('annotationTools')}
@@ -65,7 +60,8 @@ class ActivityAssignmentAnnotationsEditor
 			<d2l-input-checkbox
 				@change="${this._toggleAnnotationToolsAvailability}"
 				?checked="${entity.annotationToolsAvailable}"
-				ariaLabel="${this.localize('annotationToolDescription')}">
+				ariaLabel="${this.localize('annotationToolDescription')}"
+				?disabled="${!entity.canSeeAnnotations}">
 				${this.localize('annotationToolDescription')}
 			</d2l-input-checkbox>
 		`;
