@@ -55,14 +55,14 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 				padding-top: 6px;
 				padding-bottom: 6px;
 			}
-			.d2l-input-radio-label {
-				padding-bottom: 10px;
-			}
 			.d2l-input-radio-label-disabled {
 				margin-bottom: 0;
 			}
 			.d2l-activity-grade-category-selector {
 				padding-top: 16px;
+			}
+			#linkToExistingGradeItemRadioButton {
+				padding-bottom: 10px;
 			}
 			`
 		];
@@ -167,7 +167,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 						</div>
 					`}
 				</d2l-input-radio-spacer>
-				<label class="d2l-input-radio-label ${!this._hasGradeCandidates ? 'd2l-input-radio-label-disabled' : ''}">
+				<label id="linkToExistingGradeItemRadioButton" class="d2l-input-radio-label ${!this._hasGradeCandidates ? 'd2l-input-radio-label-disabled' : ''}">
 					<input
 						type="radio"
 						name="chooseFromGrades"
