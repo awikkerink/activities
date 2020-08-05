@@ -25,10 +25,10 @@ class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 					display: none;
 				}
 
-				.block-select {
-					width: 100%;
-					max-width: 300px;
+				.d2l-help-text {
 					display: block;
+					max-width: 300px;
+					width: 100%;
 				}
 
 				.d2l-body-small {
@@ -39,16 +39,16 @@ class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 					margin: 0 0 0.3rem 0;
 				}
 
-				.group-info {
+				.d2l-group-info {
 					padding-left: 1.8rem;
 				}
 
-				.info-text {
-					padding-left: 1.7rem;
+				.d2l-info-text {
 					margin: 0.1rem 0 0 0;
+					padding-left: 1.7rem;
 				}
 
-				.individual-type {
+				.d2l-individual-type {
 					margin: 0 0 0.5rem 0;
 				}
 			`
@@ -126,7 +126,7 @@ class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 			</div>
 
 			<div ?hidden=${!canEditAssignmentType} id="editable-assignment-type-container">
-				<label class="individual-type d2l-input-radio-label">
+				<label class="d2l-individual-type d2l-input-radio-label">
 					<input
 						id="assignment-type-individual"
 						type="radio"
@@ -149,17 +149,17 @@ class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 					>
 					${this.localize('txtGroup')}
 				</label>
-				<div class="select-list group-info" ?hidden="${isIndividualType}">
+				<div class="select-list d2l-group-info" ?hidden="${isIndividualType}">
 					<label class="d2l-label-text">${this.localize('txtGroupCategory')}</label>
 					<select
-						class="d2l-input-select block-select"
+						class="d2l-input-select d2l-help-text"
 						id="assignemnt-group-categories"
 						@change="${this._changeGroupCategory}"
 						>
 						${this._getGroupCategoryOptions(assignment)}
 					</select>
 				</div>
-				<p class="info-text d2l-body-small">${infoText}</p>
+				<p class="d2l-info-text d2l-body-small">${infoText}</p>
 			</div>
 		`;
 	}

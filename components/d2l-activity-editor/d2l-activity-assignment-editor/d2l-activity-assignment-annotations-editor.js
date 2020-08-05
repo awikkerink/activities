@@ -23,13 +23,13 @@ class ActivityAssignmentAnnotationsEditor
 			}
 
 			d2l-input-checkbox {
-				padding-right: 1rem;
 				margin: 0;
+				padding-right: 1rem;
 			}
 
 			:host([dir="rtl"]) d2l-input-checkbox {
-				padding-right: 0;
 				padding-left: 1rem;
+				padding-right: 0;
 			}
 			`
 		];
