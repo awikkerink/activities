@@ -42,6 +42,16 @@ class ActivityHtmlEditor extends LocalizeActivityEditorMixin(LitElement) {
 			d2l-html-editor > .d2l-html-editor-container * {
 				max-width: 100%;
 			}
+
+			/* Disabled styles copied from input-styles */
+			d2l-html-editor[disabled] > .d2l-html-editor-container {
+				opacity: 0.5;
+			}
+			d2l-html-editor[disabled] > .d2l-html-editor-container:hover {
+				border-color: var(--d2l-color-galena);
+				border-width: 1px;
+				padding: var(--d2l-input-padding, 0.4rem 0.75rem);
+			}
 		`];
 	}
 
