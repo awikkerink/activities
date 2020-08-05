@@ -61,7 +61,7 @@ class ActivityAssignmentAnnotationsEditor
 				@change="${this._toggleAnnotationToolsAvailability}"
 				?checked="${entity.annotationToolsAvailable}"
 				ariaLabel="${this.localize('annotationToolDescription')}"
-				?disabled="${!entity.canSeeAnnotations}">
+				?disabled="${!entity.canEditAnnotations}">
 				${this.localize('annotationToolDescription')}
 			</d2l-input-checkbox>
 		`;
