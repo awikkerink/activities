@@ -55,6 +55,9 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 				padding-top: 6px;
 				padding-bottom: 6px;
 			}
+			.d2l-input-radio-label {
+				padding-bottom: 10px;
+			}
 			.d2l-input-radio-label-disabled {
 				margin-bottom: 0;
 			}
