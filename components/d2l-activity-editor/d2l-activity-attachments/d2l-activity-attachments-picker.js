@@ -260,7 +260,7 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeActivityEdit
 				<d2l-button-icon
 					id="add-file-button"
 					icon="d2l-tier1:upload"
-					text="${this.localize('attachments.addFile')}"
+					aria-label="${this.localize('attachments.addFile')}"
 					?hidden="${!canAddFile}"
 					@click="${this._launchAddFileDialog}">
 				</d2l-button-icon>
@@ -272,7 +272,7 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeActivityEdit
 				<d2l-button-icon
 					id="add-quicklink-button"
 					icon="d2l-tier1:quicklink"
-					text="${this.localize('attachments.addQuicklink')}"
+					aria-label="${this.localize('attachments.addQuicklink')}"
 					?hidden="${!canAddLink}"
 					@click="${this._launchAddQuicklinkDialog}">
 				</d2l-button-icon>
@@ -284,7 +284,7 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeActivityEdit
 				<d2l-button-icon
 					id="add-link-button"
 					icon="d2l-tier1:link"
-					text="${this.localize('attachments.addLink')}"
+					aria-label="${this.localize('attachments.addLink')}"
 					?hidden="${!canAddLink}"
 					@click="${this._launchAddLinkDialog}">
 				</d2l-button-icon>
@@ -296,7 +296,7 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeActivityEdit
 				<d2l-button-icon
 					id="add-google-drive-link-button"
 					icon="d2l-tier1:google-drive"
-					text="${this.localize('attachments.addGoogleDriveLink')}"
+					aria-label="${this.localize('attachments.addGoogleDriveLink')}"
 					?hidden="${!canAddGoogleDriveLink}"
 					@click="${this._launchAddGoogleDriveLinkDialog}">
 				</d2l-button-icon>
@@ -308,7 +308,7 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeActivityEdit
 				<d2l-button-icon
 					id="add-onedrive-link-button"
 					icon="d2l-tier1:one-drive"
-					text="${this.localize('attachments.addOneDriveLink')}"
+					aria-label="${this.localize('attachments.addOneDriveLink')}"
 					?hidden="${!canAddOneDriveLink}"
 					@click="${this._launchAddOneDriveLinkDialog}">
 				</d2l-button-icon>
