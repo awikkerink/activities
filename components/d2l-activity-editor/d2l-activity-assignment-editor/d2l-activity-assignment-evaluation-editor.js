@@ -45,7 +45,7 @@ class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(Loc
 					display: none;
 				}
 
-				.editors > *:not(:first-child) {
+				.d2l-editors > *:not(:first-child) {
 					display: block;
 					margin-top: 1rem;
 				}
@@ -171,17 +171,17 @@ class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(Loc
 
 		return html`
 			<d2l-labs-accordion-collapse flex header-border>
-				<h3 class="d2l-heading-3 activity-summarizer-header" slot="header">
+				<h3 class="d2l-heading-3 d2l-activity-summarizer-header" slot="header">
 					${this.localize('evaluationAndFeedback')}
 				</h3>
-				<ul class="d2l-body-small activity-summarizer-summary" slot="summary">
+				<ul class="d2l-body-small d2l-activity-summarizer-summary" slot="summary">
 					${this._m2Enabled ? html`<li>${this._renderRubricsSummary()}</li>` : null}
 					${this._m3CompetenciesEnabled && activity.canEditCompetencies ? html`<li>${this._renderCompetenciesSummary()}</li>` : null}
 					${this._m2Enabled ? html`<li>${this._renderAnnotationsSummary()}</li>` : null}
 					${this._m2Enabled ? html`<li>${this._renderAnonymousMarkingSummary()}</li>` : null}
 					${this._m2Enabled && assignment.canEditTurnitin ? html`<li>${this._renderTurnitinSummary()}</li>` : null}
 				</ul>
-				<div class="editors">
+				<div class="d2l-editors">
 					${this._m2Enabled ? html`${this._renderRubricsCollectionEditor()}` : null}
 					${this._m3CompetenciesEnabled && activity.canEditCompetencies ? this._renderCompetenciesOpener() : null}
 					${this._m2Enabled ? html`${this._renderAnnotationsEditor()}` : null}

@@ -40,10 +40,10 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 					display: block;
 				}
 
-				.block-select {
-					width: 100%;
-					max-width: 300px;
+				.d2l-block-select {
 					display: block;
+					max-width: 300px;
+					width: 100%;
 				}
 
 				div[id*="container"] {
@@ -60,8 +60,8 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 				}
 
 				#notification-email {
-					margin-top: 10px;
 					margin-bottom: 2px;
+					margin-top: 10px;
 				}
 			`,
 			summarizerHeaderStyles,
@@ -273,7 +273,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 			submissionTypeContent = html`
 				<select
 					id="assignment-submission-type"
-					class="d2l-input-select block-select"
+					class="d2l-input-select d2l-block-select"
 					@change="${this._saveSubmissionTypeOnChange}">
 						${this._getSubmissionTypeOptions(assignment)}
 				</select>
@@ -327,7 +327,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 			completionTypeContent = html`
 				<select
 					id="assignment-completion-type"
-					class="d2l-input-select block-select"
+					class="d2l-input-select d2l-block-select"
 					@change="${this._saveCompletionTypeOnChange}">
 						${this._getCompletionTypeOptions(assignment)}
 				</select>
@@ -364,10 +364,10 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 		const assignment = store.getAssignment(this.href);
 		return html`
 			<d2l-labs-accordion-collapse class="accordion" flex header-border>
-				<h3 class="d2l-heading-3 activity-summarizer-header" slot="header">
+				<h3 class="d2l-heading-3 d2l-activity-summarizer-header" slot="header">
 					${this.localize('submissionCompletionAndCategorization')}
 				</h3>
-				<ul class="d2l-body-small activity-summarizer-summary" slot="summary">
+				<ul class="d2l-body-small d2l-activity-summarizer-summary" slot="summary">
 					<li>${this._renderAssignmentTypeSummary()}</li>
 					<li>${this._renderAssignmentSubmissionTypeSummary(assignment)}</li>
 					<li>${this._renderAssignmentCompletionTypeSummary()}</li>
