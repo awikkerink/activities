@@ -1,0 +1,16 @@
+{
+  "class": [
+    "lessons-face-create-activity"
+  ],
+  "entities": [
+    {
+      "class": [],
+      "rel": [],
+      "properties": {
+      },
+      "actions": []
+    }
+  ],
+  "links": [],
+  "actions": []
+}
