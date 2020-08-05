@@ -35,7 +35,7 @@ describe('Assignment ', function() {
 				isAnonymousMarkingEnabled: () => undefined,
 				canEditAnonymousMarking: () => undefined,
 				getAnonymousMarkingHelpText: () => undefined,
-				canSeeAnnotations: () => undefined,
+				canEditAnnotations: () => undefined,
 				getAvailableAnnotationTools: () => undefined,
 				activityUsageHref: () => 'http://activity/1',
 				submissionTypeOptions: () => [
