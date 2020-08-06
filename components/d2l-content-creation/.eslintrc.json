@@ -1,6 +1,0 @@
-{
-  "extends": "brightspace/lit-config",
-  "rules": {
-    "order/properties-alphabetical-order": "off"
-  }
-}
