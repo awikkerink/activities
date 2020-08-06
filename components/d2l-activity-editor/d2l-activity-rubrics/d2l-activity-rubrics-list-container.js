@@ -179,13 +179,12 @@ class ActivityRubricsListContainer extends ActivityEditorFeaturesMixin(ActivityE
 		const canCreatePotentialAssociation = entity.canCreatePotentialAssociation();
 		const canCreateAssociation = entity.canCreateAssociation();
 
-		if (!canCreateAssociation && !canCreatePotentialAssociation) {
-			return html``;
-		}
+		const canEditRubricAssociation = canCreatePotentialAssociation || canCreateAssociation;
 
 		return html`
 		<d2l-dropdown-button-subtle
 			text="${this.localize('rubrics.btnAddRubric')}"
+			?disabled="${!canEditRubricAssociation}"
 		>
 			<d2l-dropdown-menu align="start">
 				<d2l-menu label="${this.localize('rubrics.btnAddRubric')}">
