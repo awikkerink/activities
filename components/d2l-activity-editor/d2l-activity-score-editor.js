@@ -265,6 +265,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeActivityEditorMixi
 						@blur="${this._onScoreOutOfChanged}"
 						aria-invalid="${scoreOutOfError ? 'true' : ''}"
 						?disabled="${!canEditScoreOutOf}"
+						novalidate
 					></d2l-input-text>
 					${scoreOutOfError ? html`
 						<d2l-tooltip
