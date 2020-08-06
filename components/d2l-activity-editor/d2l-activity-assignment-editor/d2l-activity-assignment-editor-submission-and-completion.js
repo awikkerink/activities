@@ -240,6 +240,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 				?disabled="${!assignment.canEditNotificationEmail}"
 				@change="${this._onNotificationEmailChanged}"
 				@blur="${this._onNotificationEmailChanged}"
+				novalidate
 			></d2l-input-text>
 		</div>
 	`;
