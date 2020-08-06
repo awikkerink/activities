@@ -6,15 +6,6 @@ import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 
 class ContentCreationHtml extends RtlMixin(LitElement) {
 
-	static get properties() {
-		return {
-			/**
-			* Set the WidthType on the template to constrain page width if necessary
-			*/
-			widthType: { type: String, attribute: 'width-type' }
-		};
-	}
-
 	static get styles() {
 		return css`
 			:host {
@@ -41,7 +32,7 @@ class ContentCreationHtml extends RtlMixin(LitElement) {
 	get _editorTemplate() {
 
 		return html`
-			<d2l-template-primary-secondary width-type="${this.widthType}">
+			<d2l-template-primary-secondary>
 				<slot name="editor-nav" slot="header"></slot>
 				<div slot="primary">
 					<p>This is the primary slot for HTML create template</p>
