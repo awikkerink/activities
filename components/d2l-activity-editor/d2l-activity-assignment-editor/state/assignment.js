@@ -86,7 +86,7 @@ export class Assignment {
 		this.canEditInstructions = entity.canEditInstructions();
 		this.instructionsRichTextEditorConfig = entity.instructionsRichTextEditorConfig();
 		this.anonymousMarkingHelpText = entity.getAnonymousMarkingHelpText();
-		this.canSeeAnnotations = entity.canSeeAnnotations();
+		this.canEditAnnotations = entity.canEditAnnotations();
 		this.annotationToolsAvailable = entity.getAvailableAnnotationTools();
 		this.activityUsageHref = entity.activityUsageHref();
 		this.canEditTurnitin = entity.canEditTurnitin();
@@ -290,7 +290,7 @@ decorate(Assignment, {
 	isAnonymousMarkingEnabled: observable,
 	canEditAnonymousMarking: observable,
 	anonymousMarkingHelpText: observable,
-	canSeeAnnotations: observable,
+	canEditAnnotations: observable,
 	annotationToolsAvailable: observable,
 	activityUsageHref: observable,
 	completionTypeOptions: observable,
