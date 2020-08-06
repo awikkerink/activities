@@ -1,0 +1,6 @@
+{
+  "extends": "brightspace/lit-config",
+  "rules": {
+    "sort-class-members/sort-class-members": "off"
+  }
+}
