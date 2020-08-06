@@ -4,7 +4,7 @@ import '@brightspace-ui/core/components/colors/colors.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 
-class LessonsFaceCreateEditor extends RtlMixin(LitElement) {
+class ContentCreationHtml extends RtlMixin(LitElement) {
 
 	static get properties() {
 		return {
@@ -20,9 +20,13 @@ class LessonsFaceCreateEditor extends RtlMixin(LitElement) {
 			:host {
 				display: block;
 			}
+			div[slot="primary"] {
+				padding: 20px;
+			}
 			div[slot="secondary"] {
-				height: 100%;
+				height: calc(100% - 20px);
 				background: var(--d2l-color-gypsum);
+				padding: 10px;
 			}
 			d2l-icon {
 				padding-right: 1rem;
@@ -40,13 +44,13 @@ class LessonsFaceCreateEditor extends RtlMixin(LitElement) {
 			<d2l-template-primary-secondary width-type="${this.widthType}">
 				<slot name="editor-nav" slot="header"></slot>
 				<div slot="primary">
-					<p>This is the primary slot</p>
+					<p>This is the primary slot for HTML create template</p>
 				</div>
 				<div slot="secondary">
-					<p>This is the secondary slot</p>
+					<p>This is the secondary slot for HTML create template</p>
 				</div>
 				<div slot="footer">
-					<p>This is the footer slot</p>
+					<p>This is the footer slot for HTML create template</p>
 				</div>
 			</d2l-template-primary-secondary>
 		`;
@@ -56,4 +60,4 @@ class LessonsFaceCreateEditor extends RtlMixin(LitElement) {
 		return this._editorTemplate;
 	}
 }
-customElements.define('d2l-activity-lessons-face-create-editor', LessonsFaceCreateEditor);
+customElements.define('d2l-content-creation-html', ContentCreationHtml);
