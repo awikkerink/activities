@@ -53,6 +53,11 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeActivityEditorMixi
 				--d2l-input-padding: 0.4rem 0.75rem 0.4rem 1.65rem;
 				--d2l-input-padding-focus: calc(0.4rem - 1px) calc(0.75rem - 1px) calc(0.4rem - 1px) calc(1.65rem - 1px);
 			}
+			#ungraded:disabled,
+			.d2l-grade-info:disabled {
+				cursor: default;
+				opacity: 0.5;
+			}
 			#score-info-container,
 			#score-out-of-container,
 			#grade-info-container {
@@ -86,16 +91,20 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeActivityEditorMixi
 				margin-left: 0.3rem;
 				margin-right: 0;
 			}
-			.d2l-grade-info {
+			.d2l-grade-info,
+			.d2l-grade-info:disabled:hover,
+			.d2l-grade-info:disabled:focus {
 				background: none;
 				border: 2px solid transparent;
 				border-radius: 0.3rem;
-				cursor: pointer;
 				display: flex;
 				flex-wrap: nowrap;
 				height: 42px;
 				outline: none;
 				padding: 0.5rem 0.6rem 0.4rem;
+			}
+			.d2l-grade-info {
+				cursor: pointer;
 			}
 			.d2l-grade-info div {
 				flex-shrink: 1;
@@ -130,6 +139,12 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeActivityEditorMixi
 			.d2l-grade-info:hover > *,
 			.d2l-grade-info:focus > * {
 				color: var(--d2l-color-celestine-minus-1);
+			}
+			.d2l-grade-info:disabled:hover,
+			.d2l-grade-info:disabled:focus,
+			.d2l-grade-info:disabled:hover > *,
+			.d2l-grade-info:disabled:focus > * {
+				color: var(--d2l-color-ferrite);
 			}
 			button {
 				/* needed otherwise user agent style overrides this */
@@ -248,6 +263,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeActivityEditorMixi
 				<button id="ungraded" class="d2l-input"
 					@click="${this._setGraded}"
 					aria-label="${this.localize('editor.addAGrade')}"
+					?disabled="${!canEditScoreOutOf}"
 				>
 					${this.localize('editor.ungraded')}
 				</button>
@@ -282,8 +298,8 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeActivityEditorMixi
 				${canSeeGrades ? html`
 					<div id="grade-info-container">
 						<div id="divider"></div>
-						<d2l-dropdown>
-							<button class="d2l-label-text d2l-grade-info d2l-dropdown-opener">
+						<d2l-dropdown ?disabled="${!canEditScoreOutOf}">
+							<button class="d2l-label-text d2l-grade-info d2l-dropdown-opener" ?disabled="${!canEditScoreOutOf}">
 								${inGrades ? html`<d2l-icon icon="tier1:grade"></d2l-icon>` : null}
 								<div>${inGrades ? this.localize('editor.inGrades') : this.localize('editor.notInGrades')}</div>
 								<d2l-icon icon="tier1:chevron-down"></d2l-icon>
