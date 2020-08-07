@@ -124,6 +124,12 @@ export class ActivityScoreGrade {
 
 		return newGradeCandidateEntity.getSaveAction();
 	}
+
+	async primeGradeSave() {
+		if (this.inGrades && this.createNewGrade) {
+			await this.fetchNewGradeCandidates();
+		}
+	}
 }
 
 decorate(ActivityScoreGrade, {
@@ -153,5 +159,6 @@ decorate(ActivityScoreGrade, {
 	fetchGradeCandidates: action,
 	fetchNewGradeCandidates: action,
 	linkToNewGrade: action,
-	setNewGradeName: action
+	setNewGradeName: action,
+	primeGradeSave: action
 });
