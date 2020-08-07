@@ -119,17 +119,13 @@ class ActivitySpecialAccessEditor extends ActivityEditorMixin(RtlMixin(LocalizeA
 		];
 
 		// Launch into our "friend", the LMS, to do the thing.
-		const delayedResult = D2L.LP.Web.UI.Legacy.MasterPages.Dialog.Open(
-			/*               opener: */ document.body,
+		const delayedResult = D2L.LP.Web.UI.Legacy.MasterPages.Dialog.OpenFullscreen(
 			/*             location: */ location,
 			/*          srcCallback: */ 'SrcCallback',
-			/*       resizeCallback: */ '',
 			/*      responseDataKey: */ 'result',
-			/*                width: */ 1920,
-			/*               height: */ 1080,
-			/*            closeText: */ this.localize('editor.btnCloseDialog'),
 			/*              buttons: */ buttons,
-			/* forceTriggerOnCancel: */ false
+			/* forceTriggerOnCancel: */ false,
+			/*            titleText: */ ''
 		);
 
 		// "X" abort handler
