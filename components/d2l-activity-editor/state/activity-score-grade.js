@@ -124,6 +124,12 @@ export class ActivityScoreGrade {
 
 		return newGradeCandidateEntity.getSaveAction();
 	}
+
+	async save() {
+		if (this.inGrades && this.createNewGrade) {
+			await this.fetchNewGradeCandidates();
+		}
+	}
 }
 
 decorate(ActivityScoreGrade, {

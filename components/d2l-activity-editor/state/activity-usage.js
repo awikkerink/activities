@@ -197,6 +197,8 @@ export class ActivityUsage {
 
 		await this.saveAlignments();
 
+		await this.scoreAndGrade.save();
+
 		await this._entity.save(this._makeUsageData());
 
 		await this.fetch();
