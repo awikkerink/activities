@@ -11,8 +11,7 @@
   "rules": {
     "no-var": "error",
     "prefer-const": "error",
-    "sort-class-members/sort-class-members": "off",
-    "order/properties-alphabetical-order": "off"
+    "sort-class-members/sort-class-members": "off"
   },
   "globals": {
     "fastdom": false

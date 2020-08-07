@@ -15,16 +15,16 @@ class ContentCreationHtml extends RtlMixin(LitElement) {
 				padding: 20px;
 			}
 			div[slot="secondary"] {
-				height: calc(100% - 20px);
 				background: var(--d2l-color-gypsum);
+				height: calc(100% - 20px);
 				padding: 10px;
 			}
 			d2l-icon {
 				padding-right: 1rem;
 			}
 			:host([dir="rtl"]) d2l-icon {
-				padding-right: 0;
 				padding-left: 1rem;
+				padding-right: 0;
 			}
 		`;
 	}
