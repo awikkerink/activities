@@ -59,7 +59,7 @@ export default {
 	"editor.manageCompetencies": "Manage Learning Objectives", //Button text to launch competencies tool dialog
 	"editor.competenciesCount": "{count, plural, =1 {1 attached} other {{count} attached}}", //Label for number of associated competencies
 	"editor.noLearningObjectives": "No learning objectives", //text label when there are no associated learning objectives
-	"editor.competenciesCountSummary": "{count, plural, =1 {1 learning objective} other {{count} learning objectives}}",
+	"editor.competenciesCountSummary": "{count, plural, =1 {1 learning objective} other {{count} learning objectives}}", // num release condition text
 	"editor.unevaluatedCompetencies": "{count, plural, =1 {1 missing assessment} other {{count} missing assessments}}", //Label for number of unevalated associated competencies
 	"editor.btnClose": "Close", //Label for Close button
 	"editor.btnCloseDialog": "Close this Dialog", // close dialog button
