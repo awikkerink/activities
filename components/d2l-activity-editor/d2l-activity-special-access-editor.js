@@ -66,7 +66,12 @@ class ActivitySpecialAccessEditor extends ActivityEditorMixin(RtlMixin(LocalizeA
 			'editor.specialAccessNotRestrictedText'
 		)}`;
 
-		const userCountText = html`${this.localize('editor.specialAccessCount', { count: userCount })}`;
+		let userCountText = html`${this.localize('editor.specialAccessCount', { count: userCount })}`;
+
+		if (userCount === 0) {
+			userCountText = html`${this.localize('editor.noUsersWithSpecialAccess')}`;
+		}
+
 		const icon = isRestricted && userCount === 0 ?
 			html`<d2l-icon class="d2l-special-access-user-count-icon d2l-alert-icon" icon="tier1:alert"></d2l-icon>` :
 			html`<d2l-icon class="d2l-special-access-user-count-icon" icon="tier1:access-special"></d2l-icon>`;
