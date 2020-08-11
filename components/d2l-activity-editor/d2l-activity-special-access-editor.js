@@ -69,7 +69,7 @@ class ActivitySpecialAccessEditor extends ActivityEditorMixin(RtlMixin(LocalizeA
 		let userCountText = html`${this.localize('editor.specialAccessCount', { count: userCount })}`;
 
 		if (userCount === 0) {
-			userCountText = html`${this.localize('editor.noUsersWithSpecialAccess', { count: userCount })}`;
+			userCountText = html`${this.localize('editor.noUsersWithSpecialAccess')}`;
 		}
 
 		const icon = isRestricted && userCount === 0 ?

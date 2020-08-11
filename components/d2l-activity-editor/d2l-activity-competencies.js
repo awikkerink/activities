@@ -115,7 +115,7 @@ class ActivityCompetencies extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 
 	_renderCountText(count) {
 		if (count === 0) {
-			const langTerm = this.localize('editor.noLearningObjectives', { count });
+			const langTerm = this.localize('editor.noLearningObjectives');
 			return html`<div id="no-learning-objectives-summary" class="d2l-body-small">${langTerm}</div>`;
 		} else {
 			const langTerm = this.localize('editor.competenciesCount', { count });
