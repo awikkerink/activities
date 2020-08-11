@@ -58,11 +58,8 @@ export default {
 	"editor.competencies": "أهداف التعلّم", //Text label for the competencies tool integration
 	"editor.manageCompetencies": "إدارة أهداف التعلّم", //Button text to launch competencies tool dialog
 	"editor.competenciesCount": "{count, plural, =1 {مرفق واحد} other ‏{{count} من المرفقات}}", // num release condition text
-	// "editor.competenciesCount": "{count, plural, =1 {مرفق واحد} other ‏{{count} من المرفقات}}",
 	"editor.noLearningObjectives": "ما من أهداف تعلّم",
-	// "editor.noLearningObjectives": "ما من أهداف تعلّم",
 	"editor.competenciesCountSummary": "{count, plural, =1 {هدف تعلّم واحد} other ‏{{count} من أهداف التعلّم}}", // num release condition text
-	// "editor.competenciesCountSummary": "{count, plural, =1 {هدف تعلّم واحد} other ‏{{count} من أهداف التعلّم}}",
 	"editor.unevaluatedCompetencies": "{count, plural, =1 {تقييم واحد مفقود} other ‏{{count} من التقييمات المفقودة}}", //Label for number of unevalated associated competencies
 	"editor.btnClose": "إغلاق", //Label for Close button
 	"editor.btnCloseDialog": "إغلاق مربع الحوار هذا", // close dialog button
