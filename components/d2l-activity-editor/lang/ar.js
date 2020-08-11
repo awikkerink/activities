@@ -57,15 +57,17 @@ export default {
 	"editor.noGradeCreatePermission": "ليس لديك الإذن لإنشاء مادة جديدة سيتم وضع علامة عليها", // Reason why a new grade items cannot be created in the choose grades dialog
 	"editor.competencies": "أهداف التعلّم", //Text label for the competencies tool integration
 	"editor.manageCompetencies": "إدارة أهداف التعلّم", //Button text to launch competencies tool dialog
-	"editor.competenciesCount": "{count, plural, =0 {ما من أهداف تعلّم} =1 {مرفق واحد} other ‏{{count} من المرفقات}}", //Label for number of associated competencies
-	"editor.competenciesCountSummary": "{count, plural, =0 {ما من أهداف تعلّم} =1 {هدف تعلّم واحد} other ‏{{count} من أهداف التعلّم}}",
+	"editor.competenciesCount": "{count, plural, =1 {مرفق واحد} other ‏{{count} من المرفقات}}",
+	"editor.noLearningObjectives": "ما من أهداف تعلّم",
+	"editor.competenciesCountSummary": "{count, plural, =1 {هدف تعلّم واحد} other ‏{{count} من أهداف التعلّم}}",
 	"editor.unevaluatedCompetencies": "{count, plural, =1 {تقييم واحد مفقود} other ‏{{count} من التقييمات المفقودة}}", //Label for number of unevalated associated competencies
 	"editor.btnClose": "إغلاق", //Label for Close button
 	"editor.btnCloseDialog": "إغلاق مربع الحوار هذا", // close dialog button
 	"editor.btnManageSpecialAccess": "إدارة الوصول الخاص", // manage special access button
 	"editor.specialAccessRestrictedText": "يمكن فقط للمستخدمين الذين يتمتعون بإمكانية وصول خاص رؤية هذا المجلد", // restricted special access description
 	"editor.specialAccessNotRestrictedText": "يمكن للمستخدمين إجراء عملية الإرسال خارج تواريخ التوفّر الاعتيادية", // not restricted special access description
-	"editor.specialAccessCount": "{count, plural, =0 {No users} =1 {1 user} other {{count} users}} with special access", // Label for number of special access users
+	"editor.specialAccessCount": "{count, plural, =1 {1 user} other {{count} users}} with special access", // Label for number of special access users
+	"editor.noUsersWithSpecialAccess": "No users",
 	"editor.specialAccessDialogTitle": "إدارة الوصول الخاص", // Dialog title
 	"editor.specialAccessHidden": "Hidden by special access", // Warning label that the activity is restricted but is being hidden from all users by special access rules
 
