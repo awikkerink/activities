@@ -186,7 +186,8 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 					aria-label="${this.localize('name')}"
 					?disabled="${!canEditName}"
 					aria-invalid="${this._nameError ? 'true' : ''}"
-					prevent-submit>
+					prevent-submit
+					novalidate>
 				</d2l-input-text>
 				${this._getNameTooltip()}
 			</div>

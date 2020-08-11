@@ -5,6 +5,7 @@ import { AlignmentsCollectionEntity } from 'siren-sdk/src/alignments/AlignmentsC
 import { CompetenciesEntity } from 'siren-sdk/src/competencies/CompetenciesEntity.js';
 import { expect } from 'chai';
 import { fetchEntity } from '../../../components/d2l-activity-editor/state/fetch-entity.js';
+import { GradeCandidateCollectionEntity } from 'siren-sdk/src/activities/GradeCandidateCollectionEntity';
 import sinon from 'sinon';
 import { when } from 'mobx';
 
@@ -12,6 +13,7 @@ jest.mock('siren-sdk/src/activities/ActivitySpecialAccessEntity.js');
 jest.mock('siren-sdk/src/activities/ActivityUsageEntity.js');
 jest.mock('siren-sdk/src/alignments/AlignmentsCollectionEntity.js');
 jest.mock('siren-sdk/src/competencies/CompetenciesEntity.js');
+jest.mock('siren-sdk/src/activities/GradeCandidateCollectionEntity.js');
 jest.mock('../../../components/d2l-activity-editor/state/fetch-entity.js');
 
 describe('Activity Usage', function() {
@@ -58,6 +60,7 @@ describe('Activity Usage', function() {
 		ActivitySpecialAccessEntity.mockClear();
 		ActivityUsageEntity.mockClear();
 		AlignmentsCollectionEntity.mockClear();
+		GradeCandidateCollectionEntity.mockClear();
 		fetchEntity.mockClear();
 	});
 
@@ -261,6 +264,13 @@ describe('Activity Usage', function() {
 			}));
 
 			fetchEntity.mockImplementation(() => sirenEntity);
+
+			const gradeCandidateCollectionEntityMock = {
+				href: () => 'http://grade-candidate-collection-href',
+				getGradeCandidates: () => [],
+				getAssociateNewGradeAction: () => {}
+			};
+			GradeCandidateCollectionEntity.mockImplementation(() => gradeCandidateCollectionEntityMock);
 		});
 
 		it('saves', async() => {
