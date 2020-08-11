@@ -56,7 +56,7 @@ export default {
 	"editor.noGradeItems": "No existing grade items", // Reason why existing grade items cannot be linked in the choose grades dialog
 	"editor.noGradeCreatePermission": "You do not have permission to create a new grade item", // Reason why a new grade items cannot be created in the choose grades dialog
 	"editor.competencies": "Learning Objectives", //Text label for the competencies tool integration
-	"editor.manageCompetencies": "Manage Learning Objectives!!!!", //Button text to launch competencies tool dialog
+	"editor.manageCompetencies": "Manage Learning Objectives", //Button text to launch competencies tool dialog
 	"editor.competenciesCount": "{count, plural, =1 {1 attached} other {{count} attached}}", //Label for number of associated competencies
 	"editor.noLearningObjectives": "No learning objectives",
 	"editor.competenciesCountSummary": "{count, plural, =1 {1 learning objective} other {{count} learning objectives}}",
