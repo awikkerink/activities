@@ -28,6 +28,7 @@ export class ActivityUsage {
 	async load(entity) {
 		this._entity = entity;
 		this.conditionsHref = entity.conditionsHref();
+		this.canEditReleaseConditions = entity.canEditReleaseConditions();
 		this.isDraft = entity.isDraft();
 		this.canEditDraft = entity.canEditDraft();
 		this.isError = false;
@@ -222,6 +223,7 @@ decorate(ActivityUsage, {
 	// props
 	dueDate: observable,
 	conditionsHref: observable,
+	canEditReleaseConditions: observable,
 	isDraft: observable,
 	canEditDraft: observable,
 	isError: observable,

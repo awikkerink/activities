@@ -42,6 +42,7 @@ describe('Activity Usage', function() {
 			associatedGrade: () => undefined,
 			gradeCandidatesHref: () => '',
 			conditionsHref: () => undefined,
+			canEditReleaseConditions: () => true,
 			getDirectRubricAssociationsHref: () => undefined,
 			newGradeCandidatesHref: () => undefined,
 			isNewGradeCandidate: () => false,
