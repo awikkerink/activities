@@ -6,17 +6,23 @@ import '@brightspace-ui/core/components/colors/colors.js';
 import { ActivityEditorFeaturesMixin, Milestones } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
-import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
+import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 
-class AssignmentEditorSecondary extends AsyncContainerMixin(ActivityEditorFeaturesMixin(RtlMixin(EntityMixinLit(LocalizeActivityAssignmentEditorMixin(LitElement))))) {
+class AssignmentEditorSecondary extends AsyncContainerMixin(ActivityEditorFeaturesMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(ActivityEditorMixin(LitElement))))) {
 
 	static get properties() {
 		return {
-			_activityUsageHref: { type: String }
+			activityUsageHref: {
+				type: String,
+				attribute: 'activity-usage-href'
+			},
+			skeleton: {
+				type: Boolean,
+				reflect: true
+			}
 		};
 	}
 
@@ -44,29 +50,8 @@ class AssignmentEditorSecondary extends AsyncContainerMixin(ActivityEditorFeatur
 
 	constructor() {
 		super();
-		this._setEntityType(AssignmentEntity);
 		this._debounceJobs = {};
-
-		this._activityUsageHref = '';
-	}
-
-	set _entity(entity) {
-		if (this._entityHasChanged(entity)) {
-			this._onAssignmentChange(entity);
-			super._entity = entity;
-		}
-	}
-
-	_onAssignmentChange(assignment) {
-		if (!assignment) {
-			return;
-		}
-
-		this._activityUsageHref = assignment.activityUsageHref();
-	}
-
-	get skeleton() {
-		return this.asyncState !== asyncStates.complete;
+		this.skeleton = true;
 	}
 
 	render() {
@@ -75,9 +60,10 @@ class AssignmentEditorSecondary extends AsyncContainerMixin(ActivityEditorFeatur
 
 		const availabilityAccordian = html`
 			<d2l-activity-assignment-availability-editor
-				href="${this._activityUsageHref}"
+				href="${this.activityUsageHref}"
 				.token="${this.token}"
-				?skeleton="${this.skeleton}">
+				?skeleton="${this.skeleton}"
+			>
 			</d2l-activity-assignment-availability-editor>
 		`;
 
@@ -94,7 +80,7 @@ class AssignmentEditorSecondary extends AsyncContainerMixin(ActivityEditorFeatur
 				href="${this.href}"
 				.token="${this.token}"
 				?skeleton="${this.skeleton}"
-				.activityUsageHref=${this._activityUsageHref}>
+				.activityUsageHref=${this.activityUsageHref}>
 			</d2l-activity-assignment-evaluation-editor>
 		` : null;
 
@@ -103,7 +89,13 @@ class AssignmentEditorSecondary extends AsyncContainerMixin(ActivityEditorFeatur
 			${submissionCompletionCategorizationAccordian}
 			${evaluationAccordian}
 		`;
+	}
 
+	updated(changedProperties) {
+		super.updated(changedProperties);
+		if (changedProperties.has('asyncState')) {
+			this.skeleton = this.asyncState !== asyncStates.complete;
+		}
 	}
 }
 customElements.define('d2l-activity-assignment-editor-secondary', AssignmentEditorSecondary);

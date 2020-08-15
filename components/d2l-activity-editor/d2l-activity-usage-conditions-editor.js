@@ -16,13 +16,18 @@ class ActivityUsageConditionsEditor extends ActivityEditorMixin(MobxLitElement) 
 	constructor() {
 
 		super(store);
+
+		this.r = false;
 	}
 
 	render() {
-
 		const entity = store.get(this.href);
 		if (!entity || !entity.conditionsHref) {
 			return html``;
+		}
+		if (!this.r) {
+			window.performance.measure('usageConditionsEditorEntity', this.localName);
+			this.r = true;
 		}
 
 		return html`
@@ -34,6 +39,12 @@ class ActivityUsageConditionsEditor extends ActivityEditorMixin(MobxLitElement) 
 			</d2l-activity-conditions-editor>
 		`;
 	}
+
+	firstUpdated(changedProperties) {
+		super.firstUpdated(changedProperties);
+		// window.performance.mark('conditionsRenderFirst')
+	}
+
 }
 
 customElements.define(

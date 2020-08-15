@@ -8,13 +8,12 @@ import '../d2l-activity-attachments/d2l-activity-attachments-editor.js';
 
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { css, html } from 'lit-element/lit-element.js';
+import { renderSkeleton, skeletonStyles } from '../skeleton.js';
 
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
-import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { shared as attachmentCollectionStore } from '../d2l-activity-attachments/state/attachment-collections-store.js';
 import { shared as attachmentStore } from '../d2l-activity-attachments/state/attachment-store.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
-import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ErrorHandlingMixin } from '../error-handling-mixin.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LinksInMessageProcessor } from '@d2l/d2l-attachment/helpers/links-in-message-processor.js';
@@ -25,18 +24,24 @@ import { SaveStatusMixin } from '../save-status-mixin.js';
 import { shared as store } from './state/assignment-store.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
-class AssignmentEditorDetail extends AsyncContainerMixin(ErrorHandlingMixin(SaveStatusMixin(EntityMixinLit(LocalizeActivityAssignmentEditorMixin(RtlMixin(ActivityEditorMixin(MobxLitElement))))))) {
+class AssignmentEditorDetail extends AsyncContainerMixin(ErrorHandlingMixin(SaveStatusMixin(LocalizeActivityAssignmentEditorMixin(RtlMixin(ActivityEditorMixin(MobxLitElement)))))) {
 
 	static get properties() {
 		return {
 			_nameError: { type: String },
 			_attachmentsHref: { type: String },
-			_linksProcessor: { type: Object }
+			_linksProcessor: { type: Object },
+			activityUsageHref: {
+				type: String,
+				attribute: 'activity-usage-href'
+			},
+			skeleton: { type: Boolean, reflect: true }
 		};
 	}
 
 	static get styles() {
 		return [
+			skeletonStyles,
 			labelStyles,
 			css`
 				:host {
@@ -69,11 +74,11 @@ class AssignmentEditorDetail extends AsyncContainerMixin(ErrorHandlingMixin(Save
 
 	constructor() {
 		super();
-		this._setEntityType(AssignmentEntity);
 		this._debounceJobs = {};
 
 		this._attachmentsHref = '';
 		this._linksProcessor = new LinksInMessageProcessor();
+		this.skeleton = true;
 	}
 
 	set _entity(entity) {
@@ -171,15 +176,14 @@ class AssignmentEditorDetail extends AsyncContainerMixin(ErrorHandlingMixin(Save
 			canEditName,
 			instructions,
 			canEditInstructions,
-			instructionsRichTextEditorConfig,
-			activityUsageHref
+			instructionsRichTextEditorConfig
 		} = assignment || {} ;
 
-		const skeleton = this.asyncState !== asyncStates.complete;
 		return html`
 			<div id="assignment-name-container">
-				<label class="d2l-label-text" for="assignment-name">${this.localize('name')}*</label>
+				<label class="skeletize d2l-label-text" for="assignment-name">${this.localize('name')}*</label>
 				<d2l-input-text
+				  class="skeletize"
 					id="assignment-name"
 					maxlength="128"
 					value="${name}"
@@ -194,33 +198,37 @@ class AssignmentEditorDetail extends AsyncContainerMixin(ErrorHandlingMixin(Save
 			</div>
 
 			<d2l-activity-outcomes
-				href="${activityUsageHref}"
+				href="${this.activityUsageHref}"
 				.token="${this.token}">
 			</d2l-activity-outcomes>
 
 			<div id="score-and-duedate-container">
 				<div id="score-container">
-					<label class="d2l-label-text">${this.localize('scoreOutOf')}</label>
+					<label class="skeletize d2l-label-text">
+						${this.localize('scoreOutOf')}
+					</label>
 					<d2l-activity-score-editor
-						href="${activityUsageHref}"
+						href="${this.activityUsageHref}"
 						.token="${this.token}"
 						.activityName="${name}"
-						?skeleton="${skeleton}">
+						?skeleton="${this.skeleton}">
 					</d2l-activity-score-editor>
 				</div>
 
 				<div id="duedate-container">
 					<d2l-activity-due-date-editor
-						href="${activityUsageHref}"
+						href="${this.activityUsageHref}"
 						.token="${this.token}"
-						?skeleton="${skeleton}">
+						?skeleton="${this.skeleton}">
 					</d2l-activity-due-date-editor>
 				</div>
 			</div>
 
 			<div id="assignment-instructions-container">
-				<label class="d2l-label-text">${this.localize('instructions')}</label>
+				<label class="skeletize d2l-label-text">${this.localize('instructions')}</label>
 				<d2l-activity-text-editor
+				  ?skeleton="${this.skeleton}"
+				  class="skeletize"
 					.value="${instructions}"
 					.richtextEditorConfig="${instructionsRichTextEditorConfig}"
 					@d2l-activity-text-editor-change="${this._saveInstructionsOnChange}"
@@ -229,8 +237,9 @@ class AssignmentEditorDetail extends AsyncContainerMixin(ErrorHandlingMixin(Save
 				</d2l-activity-text-editor>
 			</div>
 
-			<div id="assignment-attachments-editor-container" ?hidden="${!this._attachmentsHref}">
+			<div id="assignment-attachments-editor-container">
 				<d2l-activity-attachments-editor
+				  ?skeleton="${this.skeleton}"
 					href="${this._attachmentsHref}"
 					.token="${this.token}">
 				</d2l-activity-attachments-editor>
@@ -244,6 +253,10 @@ class AssignmentEditorDetail extends AsyncContainerMixin(ErrorHandlingMixin(Save
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
 			super._fetch(() => store.fetchAssignment(this.href, this.token));
+		}
+
+		if (changedProperties.has('asyncState')) {
+			this.skeleton = this.asyncState !== asyncStates.complete;
 		}
 	}
 }

@@ -15,6 +15,7 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { summarizerHeaderStyles, summarizerSummaryStyles } from './activity-summarizer-styles.js';
 
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
+import { skeletonStyles } from '../skeleton.js';
 
 class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(LocalizeActivityAssignmentEditorMixin(LitElement)) {
 
@@ -25,13 +26,15 @@ class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(Loc
 			token: { type: Object },
 			activityUsageHref: { type: String },
 			_m2Enabled: { type: Boolean },
-			_m3CompetenciesEnabled: { type: Boolean }
+			_m3CompetenciesEnabled: { type: Boolean },
+			skeleton: { type: Boolean, reflect: true }
 		};
 	}
 
 	static get styles() {
 
 		return [
+			skeletonStyles,
 			bodySmallStyles,
 			heading3Styles,
 			css`
@@ -158,11 +161,16 @@ class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(Loc
 
 	render() {
 		return html`
-			<d2l-labs-accordion-collapse flex header-border>
-				<h3 class="d2l-heading-3 activity-summarizer-header" slot="header">
+			<d2l-labs-accordion-collapse
+				?disabled="${this.skeleton}"
+				?no-icons="${this.skeleton}"
+				flex
+				header-border
+			>
+				<h3 class="d2l-heading-3 activity-summarizer-header skeletize" slot="header">
 					${this.localize('evaluationAndFeedback')}
 				</h3>
-				<ul class="d2l-body-small activity-summarizer-summary" slot="summary">
+				<ul class="d2l-body-small activity-summarizer-summary skeletize" slot="summary">
 					${this._m2Enabled ? html`<li>${this._renderRubricsSummary()}</li>` : null}
 					${this._m3CompetenciesEnabled ? html`<li>${this._renderCompetenciesSummary()}</li>` : null}
 					${this._m2Enabled ? html`<li>${this._renderAnnotationsSummary()}</li>` : null}

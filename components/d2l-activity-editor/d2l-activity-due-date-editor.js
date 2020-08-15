@@ -1,7 +1,9 @@
 import 'd2l-datetime-picker/d2l-datetime-picker';
 import { css, html } from 'lit-element/lit-element';
+import { renderSkeleton, skeletonStyles } from './skeleton.js';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
+
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { shared as store } from './state/activity-store.js';
@@ -11,12 +13,13 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeActivityEditorMi
 	static get properties() {
 		return {
 			_overrides: { type: Object },
-			_isFirstLoad: { type: Boolean }
+			_isFirstLoad: { type: Boolean },
+			skeleton: { type: Boolean, reflect: true}
 		};
 	}
 
 	static get styles() {
-		return [labelStyles, css`
+		return [skeletonStyles, labelStyles, css`
 			:host {
 				display: block;
 			}
@@ -30,6 +33,7 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeActivityEditorMi
 		super();
 		this._overrides = document.documentElement.dataset.intlOverrides || '{}';
 		this._isFirstLoad = true;
+		this.r = false;
 	}
 
 	_onDatetimePickerDatetimeCleared() {
@@ -42,34 +46,42 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeActivityEditorMi
 
 	dateTemplate(date, canEdit, errorTerm) {
 		return html`
-			<div id="datetime-picker-container" ?hidden="${!canEdit}">
-				<d2l-datetime-picker
-					hide-label
-					name="date"
-					id="date"
-					date-label="${this.localize('editor.dueDate')}"
-					time-label="${this.localize('editor.dueTime')}"
-					datetime="${date}"
-					overrides="${this._overrides}"
-					placeholder="${this.localize('editor.noDueDate')}"
-					aria-invalid="${errorTerm ? 'true' : 'false'}"
-					invalid="${errorTerm}"
-					tooltip-red
-					boundary="{&quot;below&quot;:240}"
-					@d2l-datetime-picker-datetime-changed="${this._onDatetimePickerDatetimeChanged}"
-					@d2l-datetime-picker-datetime-cleared="${this._onDatetimePickerDatetimeCleared}">
-				</d2l-datetime-picker>
+			<div style="position: relative">
+				<div id="datetime-picker-container" ?hidden="${!canEdit}">
+					<d2l-datetime-picker
+					  class="skeletize"
+						hide-label
+						name="date"
+						id="date"
+						date-label="${this.localize('editor.dueDate')}"
+						time-label="${this.localize('editor.dueTime')}"
+						datetime="${date}"
+						overrides="${this._overrides}"
+						placeholder="${this.localize('editor.noDueDate')}"
+						aria-invalid="${errorTerm ? 'true' : 'false'}"
+						invalid="${errorTerm}"
+						tooltip-red
+						boundary="{&quot;below&quot;:240}"
+						@d2l-datetime-picker-datetime-changed="${this._onDatetimePickerDatetimeChanged}"
+						@d2l-datetime-picker-datetime-cleared="${this._onDatetimePickerDatetimeCleared}">
+					</d2l-datetime-picker>
+				</div>
 			</div>
 		`;
 	}
 
 	render() {
 		const entity = store.get(this.href);
-		if (!entity || this.skeleton) {
+		if (!entity) {
 			return html`
-				<div style="height:30px; width:100px; background-color:grey"></div>
 			`;
 		}
+
+		if (!this.r) {
+			window.performance.measure('dueDateEditorEntity', this.localName);
+			this.r = true;
+		}
+
 		const dates = entity ? entity.dates : null;
 		let dueDate, canEditDates, errorTerm;
 
@@ -92,7 +104,9 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeActivityEditorMi
 		}
 
 		return html`
-			<label class="d2l-label-text" ?hidden="${!canEditDates}">${this.localize('editor.dueDate')}</label>
+			<label class="skeletize d2l-label-text" ?hidden="${!canEditDates}">
+				${this.localize('editor.dueDate')}
+			</label>
 			${this.dateTemplate(dueDate, canEditDates, errorTerm)}
 		`;
 	}

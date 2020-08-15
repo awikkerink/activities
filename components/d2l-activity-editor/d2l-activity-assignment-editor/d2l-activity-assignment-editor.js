@@ -5,6 +5,7 @@ import './d2l-activity-assignment-editor-footer.js';
 import '@brightspace-ui/core/templates/primary-secondary/primary-secondary.js';
 import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/dialog/dialog-confirm.js';
+import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorContainerMixin } from '../mixins/d2l-activity-editor-container-mixin.js';
@@ -13,7 +14,7 @@ import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-ass
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { shared as store } from './state/assignment-store.js';
 
-class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeActivityAssignmentEditorMixin(ActivityEditorMixin(MobxLitElement))) {
+class AssignmentEditor extends AsyncContainerMixin(ActivityEditorContainerMixin(LocalizeActivityAssignmentEditorMixin(ActivityEditorMixin(MobxLitElement)))) {
 
 	static get properties() {
 		return {
@@ -102,6 +103,7 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeActivityAssi
 
 		this.type = 'assignment';
 		this.telemetryId = 'assignments';
+		this.r = false;
 	}
 
 	_onRequestProvider(e) {
@@ -226,13 +228,14 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeActivityAssi
 
 	get _editorTemplate() {
 		const activity = store.getActivity(this.href);
-		if (!activity) {
-			return html``;
+		if (!this.r && activity) {
+			// window.performance.measure(this.localName + "2", this.localName + "2");
+			this.r = true;
 		}
 
 		const {
 			assignmentHref
-		} = activity;
+		} = activity || {};
 
 		return html`
 			<d2l-template-primary-secondary slot="editor" width-type="${this.widthType}">
@@ -241,19 +244,21 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeActivityAssi
 					<d2l-alert type="error" ?hidden=${!this.isError}>${this.localize('assignmentSaveError')}</d2l-alert>
 					<d2l-activity-assignment-editor-detail
 						href="${assignmentHref}"
+						activity-usage-href="${this.href}"
 						.token="${this.token}">
 					</d2l-activity-assignment-editor-detail>
 				</div>
 				<div slot="secondary">
 					<d2l-activity-assignment-editor-secondary
 						href="${assignmentHref}"
+						activity-usage-href="${this.href}"
 						.token="${this.token}"
 						class="d2l-activity-assignment-editor-secondary-panel"
 						async-complete-delay="0">
 					</d2l-activity-assignment-editor-secondary>
 				</div>
 				<d2l-activity-assignment-editor-footer
-					href="${assignmentHref}"
+					href="${this.href}"
 					.token="${this.token}"
 					slot="footer"
 					class="d2l-activity-assignment-editor-footer">
@@ -318,7 +323,12 @@ class AssignmentEditor extends ActivityEditorContainerMixin(LocalizeActivityAssi
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
-			super._fetch(() => store.fetchActivity(this.href, this.token));
+			window.performance.mark(this.localName);
+			super._fetch(() => store.fetchActivity(this.href, this.token)).then(() => {
+				console.log('d2l-activity-assignment-editor fetched');
+				window.performance.measure(this.localName, this.localName);
+				// window.performance.mark(this.localName + "2")
+			});
 		}
 	}
 

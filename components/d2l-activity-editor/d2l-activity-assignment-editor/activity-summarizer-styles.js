@@ -6,7 +6,16 @@ export const summarizerHeaderStyles = css`
 		margin-top: 20px !important;
 		margin-bottom: 12px !important;
 	}
-`;
+
+	:host([skeleton]) .activity-summarizer-header.skeletize::before {
+		width: 50%;
+		white-space: nowrap;
+	}
+
+	:host([skeleton]) .activity-summarizer-header.skeletize {
+		white-space: nowrap;
+	}
+	`;
 
 export const summarizerSummaryStyles = css`
 	.activity-summarizer-summary {
@@ -15,6 +24,18 @@ export const summarizerSummaryStyles = css`
 		margin-top: 5px;
 		min-height: 20px;
 		color: var(--d2l-color-tungsten);
+	}
+
+	:host([skeleton]) .activity-summarizer-summary.skeletize::before {
+		width: 40%;
+	}
+
+	:host([skeleton]) .activity-summarizer-summary.skeletize {
+		height: 1rem;
+	}
+
+	:host([skeleton]) .activity-summarizer-summary.skeletize li {
+		display: none;
 	}
 
 	ul.activity-summarizer-summary > li {

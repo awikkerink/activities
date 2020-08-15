@@ -17,6 +17,11 @@ class ActivityRubricsSummaryWrapper
 			return html``;
 		}
 
+		if (!this.r) {
+			window.performance.measure('rubricsSummaryEntity', this.localName);
+			this.r = true;
+		}
+
 		return html`
 			<d2l-activity-rubrics-summary
 				href="${entity.associationsHref}"

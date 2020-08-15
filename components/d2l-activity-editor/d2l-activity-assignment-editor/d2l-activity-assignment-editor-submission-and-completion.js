@@ -11,12 +11,20 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
+import { skeletonStyles } from '../skeleton.js';
 import { shared as store } from './state/assignment-store.js';
 
 class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement))) {
 
+	static get properties() {
+		return {
+			skeleton: { type: Boolean, reflect: true }
+		};
+	}
+
 	static get styles() {
 		return [
+			skeletonStyles,
 			bodySmallStyles,
 			heading3Styles,
 			labelStyles,
@@ -251,11 +259,16 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorMixi
 	render() {
 		const assignment = store.getAssignment(this.href);
 		return html`
-			<d2l-labs-accordion-collapse class="accordion" flex header-border>
-				<h3 class="d2l-heading-3 activity-summarizer-header" slot="header">
+			<d2l-labs-accordion-collapse class="accordion"
+				flex
+				header-border
+				?disabled="${this.skeleton}"
+				?no-icons="${this.skeleton}"
+			>
+				<h3 class="d2l-heading-3 activity-summarizer-header skeletize" slot="header">
 					${this.localize('submissionCompletionAndCategorization')}
 				</h3>
-				<ul class="d2l-body-small activity-summarizer-summary" slot="summary">
+				<ul class="d2l-body-small activity-summarizer-summary skeletize" slot="summary">
 					<li>${this._renderAssignmentTypeSummary()}</li>
 					<li>${this._renderAssignmentSubmissionTypeSummary(assignment)}</li>
 					<li>${this._renderAssignmentCompletionTypeSummary()}</li>

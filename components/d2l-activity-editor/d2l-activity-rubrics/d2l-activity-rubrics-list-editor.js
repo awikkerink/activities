@@ -114,6 +114,11 @@ class ActivityRubricsListEditor extends ActivityEditorFeaturesMixin(ActivityEdit
 			return html``;
 		}
 
+		if (!this.r) {
+			// window.performance.measure('rubricsListEditorEntity', this.localName);
+			this.r = true;
+		}
+
 		const associations = entity.fetchAssociations();
 		return html`${associations.map(this._renderAssociation, this)}`;
 	}

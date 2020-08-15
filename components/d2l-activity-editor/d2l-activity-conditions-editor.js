@@ -96,9 +96,9 @@ class ActivityConditionsEditor
 		];
 	}
 
-	constructor() {
-		super(store);
-	}
+	// constructor() {
+	// 	super(store);
+	// }
 
 	async save() {
 
@@ -365,11 +365,16 @@ class ActivityConditionsEditor
 	}
 
 	render() {
-
 		const entity = store.get(this.href);
-		if (!entity || this.skeleton) {
+		if (!entity) {
+			window.performance.mark('conditionsEditorNoEntity');
 			return html``;
 		}
+		console.log('conditionsEditor');
+
+		// window.performance.measure('conditionsRenderElapsed', 'conditionsRenderFirst');
+		window.performance.measure('conditionsElapsed', 'conditionsStart');
+		window.performance.measure('conditionsEditorEntity', 'conditionsEditorNoEntity');
 
 		return html`
 			${this._renderDescription(entity)}
@@ -377,6 +382,16 @@ class ActivityConditionsEditor
 			${this._renderConditions(entity)}
 			${this._renderAddCondition(entity)}
 		`;
+	}
+
+	updated(changedProperties) {
+		super.updated(changedProperties);
+
+		if ((changedProperties.has('href') || changedProperties.has('token')) &&
+			this.href && this.token) {
+			window.performance.mark('conditionsStart');
+			super._fetch(() => store.fetch(this.href, this.token));
+		}
 	}
 }
 

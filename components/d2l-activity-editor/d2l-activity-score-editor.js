@@ -11,6 +11,8 @@ import 'd2l-dropdown/d2l-dropdown-menu.js';
 import 'd2l-tooltip/d2l-tooltip';
 import { bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element';
+import { renderSkeleton, skeletonStyles } from './skeleton.js';
+
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
 import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles.js';
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
@@ -23,12 +25,14 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeActivityEditorMixi
 	static get properties() {
 		return {
 			activityName: { type: String },
-			_focusUngraded: { type: Boolean }
+			_focusUngraded: { type: Boolean },
+			skeleton: { type: Boolean, reflect: true }
 		};
 	}
 
 	static get styles() {
 		return [
+			skeletonStyles,
 			bodyCompactStyles,
 			labelStyles,
 			inputStyles,
@@ -226,12 +230,12 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeActivityEditorMixi
 	}
 
 	render() {
+		console.log('score render');
 		const activity = store.get(this.href);
-		if (!activity || this.skeleton) {
-			return html`
-				<div style="height:30px; width:300px; background-color:grey"></div>
-			`;
-		}
+		// if (!activity || this.skeleton) {
+		// 	return html`
+		// 	`;
+		// }
 
 		const {
 			scoreOutOf,
@@ -241,13 +245,13 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeActivityEditorMixi
 			inGrades,
 			isUngraded,
 			canSeeGrades
-		} = activity.scoreAndGrade;
+		} = activity && activity.scoreAndGrade ||  {};
 
 		this._focusUngraded = isUngraded;
 
-		return isUngraded ? html`
+		return isUngraded || this.skeleton ? html`
 			<div id="ungraded-button-container">
-				<button id="ungraded" class="d2l-input"
+				<button id="ungraded" class="d2l-input skeletize"
 					@click="${this._setGraded}"
 					aria-label="${this.localize('editor.addAGrade')}"
 				>

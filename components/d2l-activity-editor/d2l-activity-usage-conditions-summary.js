@@ -18,6 +18,12 @@ class ActivityUsageConditionsSummary extends ActivityEditorMixin(MobxLitElement)
 			return html``;
 		}
 
+		if (!this.r) {
+			window.performance.measure('conditionsSummaryEntity', this.localName);
+			console.log('conditionsSummaryEntity');
+			this.r = true;
+		}
+
 		return html`
 			<d2l-activity-conditions-summary
 				href="${entity.conditionsHref}"

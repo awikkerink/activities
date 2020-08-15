@@ -1,6 +1,7 @@
 import 'd2l-inputs/d2l-input-textarea';
 import './d2l-activity-html-editor';
-import { html, LitElement } from 'lit-element/lit-element';
+import { css, html, LitElement } from 'lit-element/lit-element';
+import { renderSkeleton, skeletonStyles } from './skeleton.js';
 
 class ActivityTextEditor extends LitElement {
 
@@ -11,6 +12,14 @@ class ActivityTextEditor extends LitElement {
 			disabled: { type: Boolean },
 			ariaLabel: { type: String },
 		};
+	}
+
+	static get styles() {
+		return [
+			skeletonStyles,
+			css`
+			`
+		];
 	}
 
 	_onPlaintextChange() {
@@ -47,6 +56,7 @@ class ActivityTextEditor extends LitElement {
 		if (htmlEditorEnabled) {
 			return html`
 				<d2l-activity-html-editor
+				  class="skeletize"
 					ariaLabel="${this.ariaLabel}"
 					.value="${this.value}"
 					?disabled="${this.disabled}"
@@ -57,6 +67,7 @@ class ActivityTextEditor extends LitElement {
 		} else {
 			return html`
 				<d2l-input-textarea
+				  class="skeletize"
 					id="text-editor"
 					value="${this.value}"
 					?disabled="${this.disabled}"

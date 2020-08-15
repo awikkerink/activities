@@ -12,6 +12,7 @@ import { summarizerHeaderStyles, summarizerSummaryStyles } from './activity-summ
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
+import { skeletonStyles } from '../skeleton.js';
 import { shared as store } from '../state/activity-store.js';
 
 class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(LocalizeActivityAssignmentEditorMixin(ActivityEditorMixin(MobxLitElement))) {
@@ -23,13 +24,16 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 			token: { type: Object },
 			_opened: { type: Boolean },
 			_m3ReleaseConditionsEnabled: { type: Boolean },
-			_m3SpecialAccessEnabled: { type: Boolean }
+			_m3SpecialAccessEnabled: { type: Boolean },
+			skeleton: { type: Boolean, reflect: true }
+
 		};
 	}
 
 	static get styles() {
 
 		return [
+			skeletonStyles,
 			bodySmallStyles,
 			heading3Styles,
 			heading4Styles,
@@ -81,7 +85,7 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 			<d2l-activity-availability-dates-summary
 				href="${this.href}"
 				.token="${this.token}"
-				?skeleton="${this.skeleton}">
+			>
 			</d2l-activity-availability-dates-summary>
 		`;
 	}
@@ -93,7 +97,7 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 				<d2l-activity-availability-dates-editor
 					href="${this.href}"
 					.token="${this.token}"
-					?skeleton="${this.skeleton}">
+				>
 				</d2l-activity-availability-dates-editor>
 			</div>
 		`;
@@ -108,7 +112,7 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 			<d2l-activity-usage-conditions-summary
 				href="${this.href}"
 				.token="${this.token}"
-				?skeleton="${this.skeleton}">
+			>
 			</d2l-activity-usage-conditions-summary>
 		`;
 	}
@@ -127,7 +131,7 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 					description="${this.localize('hlpReleaseConditions')}"
 					href="${this.href}"
 					.token="${this.token}"
-					?skeleton="${this.skeleton}">
+				>
 				</d2l-activity-usage-conditions-editor>
 			</div>
 		`;
@@ -184,18 +188,16 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 	render() {
 		return html`
 			<d2l-labs-accordion-collapse
+			  ?disabled="${this.skeleton}"
 				?no-icons="${this.skeleton}"
 				flex
 				header-border
 				?opened=${this._isOpened()}
 				@d2l-labs-accordion-collapse-state-changed=${this._onAccordionStateChange}>
-				<h3 class="d2l-heading-3 activity-summarizer-header" slot="header">
-					${this.skeleton ?
-		html`<div style="height:30px; background-color:grey"></div>` :
-		html`${this.localize('hdrAvailability')}`}
+				<h3 class="d2l-heading-3 activity-summarizer-header skeletize" slot="header">
+						${this.localize('hdrAvailability')}
 				</h3>
-				<ul class="d2l-body-small activity-summarizer-summary" slot="summary">
-					<li ?hidden="${!this.skeleton}" style="height:30px; background-color:grey"></li>
+				<ul class="d2l-body-small activity-summarizer-summary skeletize" slot="summary">
 					<li>${this._renderAvailabilityDatesSummary()}</li>
 					<li>${this._renderReleaseConditionSummary()}</li>
 					<li>${this._renderSpecialAccessSummary()}</li>
@@ -203,11 +205,9 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 					${this._renderAvailabilityDatesEditor()}
 					${this._renderReleaseConditionEditor()}
 					${this._renderSpecialAccessEditor()}
-				}
 			</d2l-labs-accordion-collapse>
 		`;
 	}
-
 }
 
 customElements.define(

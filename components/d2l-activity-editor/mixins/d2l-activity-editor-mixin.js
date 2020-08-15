@@ -46,7 +46,7 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 		super();
 		this._container = null;
 		this.store = store;
-		this.skeleton = false;
+		this.r = false;
 	}
 
 	async validate() {}
@@ -73,11 +73,11 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 	async _fetch(fetcher) {
 		const promise = fetcher();
 		this._sendPendingEvent(promise);
-		return await promise;
+		return promise;
 	}
 
 	_sendPendingEvent(promise) {
-		const pendingEvent = new AsyncStateEvent(promise, `${this.localName}: ${this.href}`);
+		const pendingEvent = new AsyncStateEvent(promise, this.localName, this.href);
 		this.dispatchEvent(pendingEvent);
 	}
 
@@ -99,7 +99,13 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 		}
 	}
 
+	update(changedProperties) {
+		console.log('update: ' + this.localName);
+		super.update(changedProperties);
+	}
+
 	updated(changedProperties) {
+		console.log('updated: ' + this.localName);
 		super.updated(changedProperties);
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&

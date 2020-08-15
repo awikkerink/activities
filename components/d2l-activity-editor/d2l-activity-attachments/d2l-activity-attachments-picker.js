@@ -14,7 +14,11 @@ import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin';
 import { shared as store } from './state/attachment-collections-store.js';
 
 class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeActivityEditorMixin(RtlMixin(MobxLitElement))) {
-
+	static get properties() {
+		return {
+			skeleton: { type: Boolean, reflect: true }
+		};
+	}
 	static get styles() {
 		return css`
 			:host {
@@ -26,6 +30,11 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeActivityEdit
 				border-radius: 6px;
 				border: 1px solid var(--d2l-color-mica);
 				padding: 12px;
+			}
+
+			:host([skeleton]) {
+				min-height: 2.2rem;
+				border: none;
 			}
 
 			.button-container {

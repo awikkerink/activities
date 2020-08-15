@@ -7,11 +7,19 @@ import { repeat } from 'lit-html/directives/repeat';
 import { shared as store } from './state/attachment-collections-store.js';
 
 class ActivityAttachmentsList extends ActivityEditorMixin(MobxLitElement) {
-
+	static get properties() {
+		return {
+			skeleton: { type: Boolean, reflect: true }
+		};
+	}
 	static get styles() {
 		return css`
 			:host {
 				display: block;
+			}
+			:host([skeleton]) {
+				/* required to offset margin top in d2l-labs-attachment-list */
+				margin-top: 20px;
 			}
 			d2l-activity-attachment {
 				margin-bottom: 20px;
@@ -25,14 +33,14 @@ class ActivityAttachmentsList extends ActivityEditorMixin(MobxLitElement) {
 
 	render() {
 		const collection = store.get(this.href);
-		if (!collection) {
-			return html``;
-		}
 
 		const {
 			attachments,
 			canAddAttachments
-		} = collection;
+		} = collection || {
+			attachments: [],
+			canAddAttachments: true
+		};
 
 		return html`
 			<d2l-labs-attachment-list ?editing="${canAddAttachments}">
