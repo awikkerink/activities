@@ -81,8 +81,12 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 	}
 
 	_getSubmissionTypeOptions(assignment) {
+		if (!assignment || !assignment.assignmentSubmissionProps) {
+			return html``;
+		}
+
 		return html`
-			${assignment.submissionTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.submissionType}>${option.title}</option>`)}
+			${assignment.assignmentSubmissionProps.submissionTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.assignmentSubmissionProps.submissionType}>${option.title}</option>`)}
 		`;
 	}
 
@@ -131,11 +135,15 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 	_setSubmisisonsRule(e) {
 		const assignment = store.getAssignment(this.href);
 		const data = e.target.value;
-		assignment && assignment.setSubmissionsRule(data);
+		assignment &&
+		assignment.assignmentSubmissionProps &&
+		assignment.assignmentSubmissionProps.setSubmissionsRule(data);
 	}
 
 	_renderAssignmentFilesSubmissionLimit(assignment) {
-		if (!assignment || !assignment.showFilesSubmissionLimit) {
+		if (!assignment ||
+			!assignment.assignmentSubmissionProps ||
+			!assignment.assignmentSubmissionProps.showFilesSubmissionLimit) {
 			return html ``;
 		}
 
@@ -143,7 +151,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 		const oneFilePerSubmissionText = this.localize('OneFilePerSubmission');
 
 		let submissionLimitContent;
-		if (assignment.canEditFilesSubmissionLimit) {
+		if (assignment.assignmentSubmissionProps.canEditFilesSubmissionLimit) {
 			submissionLimitContent = html`
 				<label class="d2l-input-radio-label files-submission-limit-unlimited">
 				<input
@@ -152,7 +160,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 					name="filesSubmissionLimit"
 					value="unlimited"
 					@change="${this._setfilesSubmisisonLimit}"
-					?checked="${assignment.filesSubmissionLimit === 'unlimited'}"
+					?checked="${assignment.assignmentSubmissionProps.filesSubmissionLimit === 'unlimited'}"
 				>
 					${unlimitedFilesPerSubmissionText}
 				</label>
@@ -164,13 +172,17 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 						name="filesSubmissionLimit"
 						value="onefilepersubmission"
 						@change="${this._setfilesSubmisisonLimit}"
-						?checked="${assignment.filesSubmissionLimit === 'onefilepersubmission'}"
+						?checked="${assignment.assignmentSubmissionProps.filesSubmissionLimit === 'onefilepersubmission'}"
 					>
 					${oneFilePerSubmissionText}
 				</label>
 			`;
 		} else {
-			submissionLimitContent = html`<div class="d2l-body-compact">${assignment.filesSubmissionLimit === 'unlimited' ? unlimitedFilesPerSubmissionText : oneFilePerSubmissionText}</div>`;
+			submissionLimitContent = html`
+				<div class="d2l-body-compact">
+					${assignment.assignmentSubmissionProps.filesSubmissionLimit === 'unlimited' ? unlimitedFilesPerSubmissionText : oneFilePerSubmissionText}
+				</div>
+			`;
 		}
 
 		return html`
@@ -184,28 +196,31 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 	}
 
 	_renderAssignmentSubmissionsRule(assignment) {
-		if (!assignment || !assignment.showSubmissionsRule) {
+
+		if (!assignment ||
+			!assignment.assignmentSubmissionProps ||
+			!assignment.assignmentSubmissionProps.showSubmissionsRule) {
 			return html ``;
 		}
 
 		let submissionsRuleContent;
-		if (assignment.canEditSubmissionsRule) {
+		if (assignment.assignmentSubmissionProps.canEditSubmissionsRule) {
 			submissionsRuleContent = html`
-				${assignment.submissionsRuleOptions.map((x) => html`
+				${assignment.assignmentSubmissionProps.submissionsRuleOptions.map((x) => html`
 					<label class="d2l-input-radio-label">
 						<input
 							type="radio"
 							name="submissionsRule"
 							.value="${x.value}"
 							@change="${this._setSubmisisonsRule}"
-							?checked="${assignment.submissionsRule === x.value}"
+							?checked="${assignment.assignmentSubmissionProps.submissionsRule === x.value}"
 						>
 						${x.title}
 					</label>
 				`) }
 			`;
 		} else {
-			const found = assignment.submissionsRuleOptions.find(x => assignment.submissionsRule === x.value);
+			const found = assignment.assignmentSubmissionProps.submissionsRuleOptions.find(x => assignment.assignmentSubmissionProps.submissionsRule === x.value);
 			submissionsRuleContent = html`<div class="d2l-body-compact">${found.title}</div>`;
 		}
 
@@ -293,12 +308,12 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 	}
 
 	_renderAssignmentSubmissionType(assignment) {
-		if (!assignment) {
+		if (!assignment || !assignment.assignmentSubmissionProps) {
 			return html``;
 		}
 
 		let submissionTypeContent = html``;
-		if (assignment.canEditSubmissionType) {
+		if (assignment.assignmentSubmissionProps.canEditSubmissionType) {
 			submissionTypeContent = html`
 				<select
 					id="assignment-submission-type"
@@ -325,7 +340,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 	}
 
 	_renderAssignmentSubmissionTypeSummary(assignment) {
-		if (!assignment) {
+		if (!assignment || !assignment.assignmentSubmissionProps) {
 			return html``;
 		}
 
@@ -339,11 +354,11 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 	}
 
 	_getSelectedSubmissionType(assignment) {
-		if (!assignment || !assignment.submissionTypeOptions) {
+		if (!assignment || !assignment.assignmentSubmissionProps || !assignment.assignmentSubmissionProps.submissionTypeOptions) {
 			return html``;
 		}
 
-		return assignment.submissionTypeOptions.find(opt => String(opt.value) === assignment.submissionType);
+		return assignment.assignmentSubmissionProps.submissionTypeOptions.find(opt => String(opt.value) === assignment.assignmentSubmissionProps.submissionType);
 	}
 
 	_renderAssignmentCompletionType(assignment) {
