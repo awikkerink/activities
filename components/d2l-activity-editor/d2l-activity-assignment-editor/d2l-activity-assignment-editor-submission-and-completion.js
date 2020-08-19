@@ -81,12 +81,12 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 	}
 
 	_getSubmissionTypeOptions(assignment) {
-		if (!assignment || !assignment.assignmentSubmissionProps) {
+		if (!assignment || !assignment.submissionAndCompletionProps) {
 			return html``;
 		}
 
 		return html`
-			${assignment.assignmentSubmissionProps.submissionTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.assignmentSubmissionProps.submissionType}>${option.title}</option>`)}
+			${assignment.submissionAndCompletionProps.submissionTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.submissionAndCompletionProps.submissionType}>${option.title}</option>`)}
 		`;
 	}
 
@@ -95,8 +95,8 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 	}
 
 	_getCompletionTypeOptions(assignment) {
-		const completionTypeOptions = assignment ? assignment.completionTypeOptions : [];
-		const completionType = assignment ? assignment.completionType : '0';
+		const completionTypeOptions = assignment && assignment.submissionAndCompletionProps ? assignment.submissionAndCompletionProps.completionTypeOptions : [];
+		const completionType = assignment && assignment.submissionAndCompletionProps ? assignment.submissionAndCompletionProps.completionType : '0';
 
 		return html`
 			${completionTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === completionType}>${option.title}</option>`)}
@@ -136,14 +136,14 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 		const assignment = store.getAssignment(this.href);
 		const data = e.target.value;
 		assignment &&
-		assignment.assignmentSubmissionProps &&
-		assignment.assignmentSubmissionProps.setSubmissionsRule(data);
+		assignment.submissionAndCompletionProps &&
+		assignment.submissionAndCompletionProps.setSubmissionsRule(data);
 	}
 
 	_renderAssignmentFilesSubmissionLimit(assignment) {
 		if (!assignment ||
-			!assignment.assignmentSubmissionProps ||
-			!assignment.assignmentSubmissionProps.showFilesSubmissionLimit) {
+			!assignment.submissionAndCompletionProps ||
+			!assignment.submissionAndCompletionProps.showFilesSubmissionLimit) {
 			return html ``;
 		}
 
@@ -151,7 +151,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 		const oneFilePerSubmissionText = this.localize('OneFilePerSubmission');
 
 		let submissionLimitContent;
-		if (assignment.assignmentSubmissionProps.canEditFilesSubmissionLimit) {
+		if (assignment.submissionAndCompletionProps.canEditFilesSubmissionLimit) {
 			submissionLimitContent = html`
 				<label class="d2l-input-radio-label files-submission-limit-unlimited">
 				<input
@@ -160,7 +160,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 					name="filesSubmissionLimit"
 					value="unlimited"
 					@change="${this._setfilesSubmisisonLimit}"
-					?checked="${assignment.assignmentSubmissionProps.filesSubmissionLimit === 'unlimited'}"
+					?checked="${assignment.submissionAndCompletionProps.filesSubmissionLimit === 'unlimited'}"
 				>
 					${unlimitedFilesPerSubmissionText}
 				</label>
@@ -172,7 +172,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 						name="filesSubmissionLimit"
 						value="onefilepersubmission"
 						@change="${this._setfilesSubmisisonLimit}"
-						?checked="${assignment.assignmentSubmissionProps.filesSubmissionLimit === 'onefilepersubmission'}"
+						?checked="${assignment.submissionAndCompletionProps.filesSubmissionLimit === 'onefilepersubmission'}"
 					>
 					${oneFilePerSubmissionText}
 				</label>
@@ -180,7 +180,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 		} else {
 			submissionLimitContent = html`
 				<div class="d2l-body-compact">
-					${assignment.assignmentSubmissionProps.filesSubmissionLimit === 'unlimited' ? unlimitedFilesPerSubmissionText : oneFilePerSubmissionText}
+					${assignment.submissionAndCompletionProps.filesSubmissionLimit === 'unlimited' ? unlimitedFilesPerSubmissionText : oneFilePerSubmissionText}
 				</div>
 			`;
 		}
@@ -198,29 +198,29 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 	_renderAssignmentSubmissionsRule(assignment) {
 
 		if (!assignment ||
-			!assignment.assignmentSubmissionProps ||
-			!assignment.assignmentSubmissionProps.showSubmissionsRule) {
+			!assignment.submissionAndCompletionProps ||
+			!assignment.submissionAndCompletionProps.showSubmissionsRule) {
 			return html ``;
 		}
 
 		let submissionsRuleContent;
-		if (assignment.assignmentSubmissionProps.canEditSubmissionsRule) {
+		if (assignment.submissionAndCompletionProps.canEditSubmissionsRule) {
 			submissionsRuleContent = html`
-				${assignment.assignmentSubmissionProps.submissionsRuleOptions.map((x) => html`
+				${assignment.submissionAndCompletionProps.submissionsRuleOptions.map((x) => html`
 					<label class="d2l-input-radio-label">
 						<input
 							type="radio"
 							name="submissionsRule"
 							.value="${x.value}"
 							@change="${this._setSubmisisonsRule}"
-							?checked="${assignment.assignmentSubmissionProps.submissionsRule === x.value}"
+							?checked="${assignment.submissionAndCompletionProps.submissionsRule === x.value}"
 						>
 						${x.title}
 					</label>
 				`) }
 			`;
 		} else {
-			const found = assignment.assignmentSubmissionProps.submissionsRuleOptions.find(x => assignment.assignmentSubmissionProps.submissionsRule === x.value);
+			const found = assignment.submissionAndCompletionProps.submissionsRuleOptions.find(x => assignment.submissionAndCompletionProps.submissionsRule === x.value);
 			submissionsRuleContent = html`<div class="d2l-body-compact">${found.title}</div>`;
 		}
 
@@ -308,12 +308,12 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 	}
 
 	_renderAssignmentSubmissionType(assignment) {
-		if (!assignment || !assignment.assignmentSubmissionProps) {
+		if (!assignment || !assignment.submissionAndCompletionProps) {
 			return html``;
 		}
 
 		let submissionTypeContent = html``;
-		if (assignment.assignmentSubmissionProps.canEditSubmissionType) {
+		if (assignment.submissionAndCompletionProps.canEditSubmissionType) {
 			submissionTypeContent = html`
 				<select
 					id="assignment-submission-type"
@@ -340,7 +340,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 	}
 
 	_renderAssignmentSubmissionTypeSummary(assignment) {
-		if (!assignment || !assignment.assignmentSubmissionProps) {
+		if (!assignment || !assignment.submissionAndCompletionProps) {
 			return html``;
 		}
 
@@ -354,20 +354,23 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 	}
 
 	_getSelectedSubmissionType(assignment) {
-		if (!assignment || !assignment.assignmentSubmissionProps || !assignment.assignmentSubmissionProps.submissionTypeOptions) {
+		if (!assignment || !assignment.submissionAndCompletionProps || !assignment.submissionAndCompletionProps.submissionTypeOptions) {
 			return html``;
 		}
 
-		return assignment.assignmentSubmissionProps.submissionTypeOptions.find(opt => String(opt.value) === assignment.assignmentSubmissionProps.submissionType);
+		return assignment.submissionAndCompletionProps.submissionTypeOptions.find(opt => String(opt.value) === assignment.submissionAndCompletionProps.submissionType);
 	}
 
 	_renderAssignmentCompletionType(assignment) {
-		if (!assignment || !assignment.completionTypeOptions || assignment.completionTypeOptions.length === 0) {
+		if (!assignment ||
+			!assignment.submissionAndCompletionProps ||
+			!assignment.submissionAndCompletionProps.completionTypeOptions ||
+			assignment.submissionAndCompletionProps.completionTypeOptions.length === 0) {
 			return html``;
 		}
 
 		let completionTypeContent = html``;
-		if (assignment.canEditCompletionType) {
+		if (assignment.submissionAndCompletionProps.canEditCompletionType) {
 			completionTypeContent = html`
 				<select
 					id="assignment-completion-type"
@@ -394,10 +397,14 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 	}
 
 	_getSelectedCompletionType(assignment) {
-		if (!assignment || !assignment.completionTypeOptions) {
+		if (!assignment ||
+			!assignment.submissionAndCompletionProps ||
+			!assignment.submissionAndCompletionProps.completionTypeOptions) {
 			return html``;
 		}
-		return assignment.completionTypeOptions.find(opt => String(opt.value) === assignment.completionType);
+		return assignment.submissionAndCompletionProps.completionTypeOptions.find(
+			opt => String(opt.value) === assignment.submissionAndCompletionProps.completionType
+		);
 	}
 
 	_renderAssignmentCompletionTypeSummary() {
