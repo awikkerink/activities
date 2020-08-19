@@ -32,9 +32,9 @@ describe('Assignment ', function() {
 				isGradeMarkEnabled: () => undefined,
 				instructionsRichTextEditorConfig: () => {},
 				isAnonymousMarkingAvailable: () => true,
-				isAnonymousMarkingEnabled: () => undefined,
-				canEditAnonymousMarking: () => undefined,
-				getAnonymousMarkingHelpText: () => undefined,
+				isAnonymousMarkingEnabled: () => true,
+				canEditAnonymousMarking: () => true,
+				getAnonymousMarkingHelpText: () => 'Anonymous marking help text',
 				canEditAnnotations: () => undefined,
 				getAvailableAnnotationTools: () => undefined,
 				activityUsageHref: () => 'http://activity/1',
@@ -136,7 +136,7 @@ describe('Assignment ', function() {
 		expect(assignment.submissionAndCompletionProps.canEditCompletionType).to.equal(true);
 		expect(assignment.submissionAndCompletionProps.submissionType).to.equal('2');
 		expect(assignment.submissionAndCompletionProps.completionType).to.equal('2');
-		expect(assignment.isAnonymousMarkingAvailable).to.equal(false);
+		expect(assignment.anonymousMarkingProps.isAnonymousMarkingAvailable).to.equal(false);
 
 		expect(fetchEntity.mock.calls.length).to.equal(1);
 		expect(AssignmentEntity.mock.calls[0][0]).to.equal(sirenEntity);
@@ -146,27 +146,27 @@ describe('Assignment ', function() {
 	it('setSubmissionType when new submission type has completion types', async() => {
 		const assignment = new Assignment('http://assignment/1', 'token');
 		await assignment.fetch();
-		assignment.submissionType = '1';
+		assignment.submissionAndCompletionProps.submissionType = '1';
 		assignment.submissionAndCompletionProps.completionType = null;
 		assignment.setSubmissionType('3');
 
 		expect(assignment.submissionAndCompletionProps.submissionType).to.equal('3');
 		expect(assignment.submissionAndCompletionProps.completionType).to.equal('3');
 		expect(assignment.submissionAndCompletionProps.canEditCompletionType).to.equal(true);
-		expect(assignment.isAnonymousMarkingAvailable).to.equal(false);
+		expect(assignment.anonymousMarkingProps.isAnonymousMarkingAvailable).to.equal(false);
 	});
 
 	it('setSubmissionType when new submission type does not have completion types', async() => {
 		const assignment = new Assignment('http://assignment/1', 'token');
 		await assignment.fetch();
-		assignment.submissionType = '3';
+		assignment.submissionAndCompletionProps.submissionType = '3';
 		assignment.submissionAndCompletionProps.completionType = '3';
 		assignment.setSubmissionType('1');
 
 		expect(assignment.submissionAndCompletionProps.submissionType).to.equal('1');
 		expect(assignment.submissionAndCompletionProps.completionType).to.equal(null);
 		expect(assignment.submissionAndCompletionProps.canEditCompletionType).to.equal(true);
-		expect(assignment.isAnonymousMarkingAvailable).to.equal(true);
+		expect(assignment.anonymousMarkingProps.isAnonymousMarkingAvailable).to.equal(true);
 	});
 
 	it('setSubmissionType when current completion type is valid', async() => {

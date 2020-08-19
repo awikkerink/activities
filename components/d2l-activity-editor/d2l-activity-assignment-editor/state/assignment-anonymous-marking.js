@@ -20,10 +20,10 @@ export class AnonymousMarkingProps {
 
 	setIsAnonymousMarkingAvailableForSubmissionType(submissionType) {
 		this.isAnonymousMarkingAvailable =
-			this.entityAnonymousMarkingAvailable && this._isSubmissionTypeWithAnonMarking(submissionType);
+			this.entityAnonymousMarkingAvailable && this.isSubmissionTypeWithAnonMarking(submissionType);
 	}
 
-	_isSubmissionTypeWithAnonMarking(submissionType) {
+	isSubmissionTypeWithAnonMarking(submissionType) {
 		// only file (0) and text (1) submissions can have anonymous marking, see https://docs.valence.desire2learn.com/res/dropbox.html#attributes
 		return ['0', '1'].includes(submissionType);
 	}
