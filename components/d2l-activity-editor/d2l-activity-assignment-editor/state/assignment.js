@@ -1,5 +1,5 @@
 import { action, computed, configure as configureMobx, decorate, observable } from 'mobx';
-import { AnonymousMarkingProps } from './assignment-anonymous-marking';
+import { AnonymousMarkingProps } from './assignment-anonymous-marking.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { fetchEntity } from '../../state/fetch-entity.js';
 import { SubmissionAndCompletionProps } from './assignment-submission-and-completion.js';
