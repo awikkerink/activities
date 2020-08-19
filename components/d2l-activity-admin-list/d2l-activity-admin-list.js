@@ -2,7 +2,7 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { heading1Styles, bodyStandardStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ActivityUsageCollectionEntity } from 'siren-sdk/src/activities/ActivityUsageCollectionEntity.js';
-import {ifDefined} from 'lit-html/directives/if-defined';
+import { ifDefined } from 'lit-html/directives/if-defined';
 import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/list/list.js';
@@ -29,7 +29,7 @@ class AdminList extends EntityMixinLit(LitElement) {
 		collection.onItemsChange((item, index) => {
 			item.onActivityUsageChange((usage) => {
 				usage.onOrganizationChange((organization) => {
-					this._items[index] = {usage, organization};
+					this._items[index] = { usage, organization };
 					this.requestUpdate();
 				});
 			});

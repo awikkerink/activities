@@ -50,6 +50,61 @@ class ActivitySpecialAccessEditor extends ActivityEditorMixin(RtlMixin(LocalizeA
 		this.description = '';
 	}
 
+	render() {
+		const entity = store.get(this.href);
+
+		if (!entity || !entity.specialAccess) {
+			return html``;
+		}
+
+		return html`
+			${this._renderDescription(entity.specialAccess)}
+			${this._renderManageButton(entity.specialAccess)}
+		`;
+	}
+	_openSpecialAccessDialog() {
+		const specialAccess = store.get(this.href).specialAccess;
+		const dialogUrl = specialAccess && specialAccess.url;
+
+		if (!dialogUrl) {
+			return;
+		}
+
+		const location = new D2L.LP.Web.Http.UrlLocation(dialogUrl);
+
+		const buttons = [
+			{
+				Key: 'save',
+				Text: this.localize('editor.btnSave'),
+				ResponseType: 1, // D2L.Dialog.ResponseType.Positive
+				IsPrimary: true,
+				IsEnabled: true
+			},
+			{
+				Text: this.localize('editor.btnCancel'),
+				ResponseType: 2, // D2L.Dialog.ResponseType.Negative
+				IsPrimary: false,
+				IsEnabled: true
+			}
+		];
+
+		// Launch into our "friend", the LMS, to do the thing.
+		const delayedResult = D2L.LP.Web.UI.Legacy.MasterPages.Dialog.OpenFullscreen(
+			/*             location: */ location,
+			/*          srcCallback: */ 'SrcCallback',
+			/*      responseDataKey: */ 'result',
+			/*              buttons: */ buttons,
+			/* forceTriggerOnCancel: */ false,
+			/*            titleText: */ ''
+		);
+
+		// "X" abort handler
+		// refetch special access in case the user count has changed
+		delayedResult.AddReleaseListener(() => specialAccess.fetch(true));
+
+		// Save or Cancel button handler
+		delayedResult.AddListener(() => specialAccess.fetch(true));
+	}
 	_renderDescription(specialAccess) {
 		const { isRestricted, userCount } = specialAccess;
 
@@ -97,62 +152,6 @@ class ActivitySpecialAccessEditor extends ActivityEditorMixin(RtlMixin(LocalizeA
 		`;
 	}
 
-	_openSpecialAccessDialog() {
-		const specialAccess = store.get(this.href).specialAccess;
-		const dialogUrl = specialAccess && specialAccess.url;
-
-		if (!dialogUrl) {
-			return;
-		}
-
-		const location = new D2L.LP.Web.Http.UrlLocation(dialogUrl);
-
-		const buttons = [
-			{
-				Key: 'save',
-				Text: this.localize('editor.btnSave'),
-				ResponseType: 1, // D2L.Dialog.ResponseType.Positive
-				IsPrimary: true,
-				IsEnabled: true
-			},
-			{
-				Text: this.localize('editor.btnCancel'),
-				ResponseType: 2, // D2L.Dialog.ResponseType.Negative
-				IsPrimary: false,
-				IsEnabled: true
-			}
-		];
-
-		// Launch into our "friend", the LMS, to do the thing.
-		const delayedResult = D2L.LP.Web.UI.Legacy.MasterPages.Dialog.OpenFullscreen(
-			/*             location: */ location,
-			/*          srcCallback: */ 'SrcCallback',
-			/*      responseDataKey: */ 'result',
-			/*              buttons: */ buttons,
-			/* forceTriggerOnCancel: */ false,
-			/*            titleText: */ ''
-		);
-
-		// "X" abort handler
-		// refetch special access in case the user count has changed
-		delayedResult.AddReleaseListener(() => specialAccess.fetch(true));
-
-		// Save or Cancel button handler
-		delayedResult.AddListener(() => specialAccess.fetch(true));
-	}
-
-	render() {
-		const entity = store.get(this.href);
-
-		if (!entity || !entity.specialAccess) {
-			return html``;
-		}
-
-		return html`
-			${this._renderDescription(entity.specialAccess)}
-			${this._renderManageButton(entity.specialAccess)}
-		`;
-	}
 }
 
 customElements.define(

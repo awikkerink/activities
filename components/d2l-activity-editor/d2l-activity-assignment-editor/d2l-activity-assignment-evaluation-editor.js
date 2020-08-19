@@ -61,103 +61,6 @@ class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(Loc
 		this._m3CompetenciesEnabled = this._isMilestoneEnabled(Milestones.M3Competencies);
 	}
 
-	_renderAnonymousMarkingSummary() {
-
-		return html`
-			<d2l-activity-assignment-anonymous-marking-summary
-				href="${this.href}"
-				.token="${this.token}">
-			</d2l-activity-assignment-anonymous-marking-summary>
-		`;
-	}
-
-	_renderAnonymousMarkingEditor() {
-
-		return html`
-			<d2l-activity-assignment-anonymous-marking-editor
-				href="${this.href}"
-				.token="${this.token}">
-			</d2l-activity-assignment-anonymous-marking-editor>
-		`;
-	}
-
-	_renderAnnotationsSummary() {
-
-		return html`
-			<d2l-activity-assignment-annotations-summary
-				href="${this.href}"
-				.token="${this.token}">
-			</d2l-activity-assignment-annotations-summary>
-		`;
-	}
-
-	_renderAnnotationsEditor() {
-
-		return html`
-			<d2l-activity-assignment-annotations-editor
-				href="${this.href}"
-				.token="${this.token}">
-			</d2l-activity-assignment-annotations-editor>
-		`;
-	}
-
-	_renderTurnitinSummary() {
-
-		return html`
-			<d2l-assignment-turnitin-summary
-				href="${this.href}"
-				.token="${this.token}">
-			</d2l-assignment-turnitin-summary>
-		`;
-	}
-
-	_renderTurnitinEditor() {
-
-		return html`
-			<d2l-assignment-turnitin-editor
-				href="${this.href}"
-				.token="${this.token}">
-			</d2l-assignment-turnitin-editor>
-		`;
-	}
-
-	_renderRubricsSummary() {
-		return html`
-			<d2l-activity-rubrics-summary-wrapper
-				.href="${this.activityUsageHref}"
-				.token="${this.token}">
-			</d2l-activity-rubrics-summary-wrapper>
-		`;
-	}
-
-	_renderCompetenciesSummary() {
-		return html`
-			<d2l-activity-competencies-summary
-				.href="${this.activityUsageHref}"
-				.token="${this.token}">
-			</d2l-activity-competencies-summary>
-		`;
-	}
-
-	_renderRubricsCollectionEditor() {
-		return html`
-			<d2l-activity-rubrics-list-wrapper
-				.href="${this.activityUsageHref}"
-				.token="${this.token}"
-				.assignmentHref="${this.href}">
-			</d2l-activity-rubrics-list-wrapper>
-		`;
-	}
-
-	_renderCompetenciesOpener() {
-		return html`
-			<d2l-activity-competencies
-				.href="${this.activityUsageHref}"
-				.token="${this.token}">
-			</d2l-activity-competencies>
-		`;
-	}
-
 	render() {
 		const assignment = store.getAssignment(this.href);
 		if (!assignment) {
@@ -191,6 +94,96 @@ class ActivityAssignmentEvaluationEditor extends ActivityEditorFeaturesMixin(Loc
 			</d2l-labs-accordion-collapse>
 		`;
 	}
+	_renderAnnotationsEditor() {
+
+		return html`
+			<d2l-activity-assignment-annotations-editor
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-assignment-annotations-editor>
+		`;
+	}
+	_renderAnnotationsSummary() {
+
+		return html`
+			<d2l-activity-assignment-annotations-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-assignment-annotations-summary>
+		`;
+	}
+	_renderAnonymousMarkingEditor() {
+
+		return html`
+			<d2l-activity-assignment-anonymous-marking-editor
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-assignment-anonymous-marking-editor>
+		`;
+	}
+	_renderAnonymousMarkingSummary() {
+
+		return html`
+			<d2l-activity-assignment-anonymous-marking-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-assignment-anonymous-marking-summary>
+		`;
+	}
+
+	_renderCompetenciesOpener() {
+		return html`
+			<d2l-activity-competencies
+				.href="${this.activityUsageHref}"
+				.token="${this.token}">
+			</d2l-activity-competencies>
+		`;
+	}
+	_renderCompetenciesSummary() {
+		return html`
+			<d2l-activity-competencies-summary
+				.href="${this.activityUsageHref}"
+				.token="${this.token}">
+			</d2l-activity-competencies-summary>
+		`;
+	}
+	_renderRubricsCollectionEditor() {
+		return html`
+			<d2l-activity-rubrics-list-wrapper
+				.href="${this.activityUsageHref}"
+				.token="${this.token}"
+				.assignmentHref="${this.href}">
+			</d2l-activity-rubrics-list-wrapper>
+		`;
+	}
+	_renderRubricsSummary() {
+		return html`
+			<d2l-activity-rubrics-summary-wrapper
+				.href="${this.activityUsageHref}"
+				.token="${this.token}">
+			</d2l-activity-rubrics-summary-wrapper>
+		`;
+	}
+	_renderTurnitinEditor() {
+
+		return html`
+			<d2l-assignment-turnitin-editor
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-assignment-turnitin-editor>
+		`;
+	}
+
+	_renderTurnitinSummary() {
+
+		return html`
+			<d2l-assignment-turnitin-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-assignment-turnitin-summary>
+		`;
+	}
+
 }
 customElements.define(
 	'd2l-activity-assignment-evaluation-editor',

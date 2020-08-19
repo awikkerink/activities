@@ -69,210 +69,6 @@ class ActivityRubricsListContainer extends ActivityEditorFeaturesMixin(ActivityE
 		this._newlyCreatedPotentialAssociationHref = '';
 	}
 
-	_toggleDialog(toggle) {
-
-		const dialog = this.shadowRoot.querySelector('#attach-rubric-dialog');
-		if (dialog) {
-			if (toggle) {
-				this.shadowRoot.querySelector('d2l-add-associations').reset();
-			}
-			dialog.opened = toggle;
-		}
-	}
-
-	_resizeDialog(e) {
-		e.currentTarget.resize();
-	}
-
-	_closeAttachRubricDialog(e) {
-		const entity = associationStore.get(this.href);
-		if (e && e.detail && e.detail.associations) {
-			const m3FeatureFlagEnabled = this._isMilestoneEnabled(Milestones.M3DefaultScoringRubric);
-
-			if (m3FeatureFlagEnabled) {
-				entity.addAssociations(e.detail.associations);
-			} else {
-				entity.addAssociations_DoNotUse(e.detail.associations);
-			}
-			announce(this.localize('rubrics.txtRubricAdded'));
-		}
-		this._toggleDialog(false);
-	}
-
-	_openAttachRubricDialog() {
-		this._toggleDialog(true);
-	}
-
-	_closeEditNewAssociationOverlay() {
-		const editNewAssociationOverlay =
-			this.shadowRoot.querySelector('#create-new-association-dialog');
-		if (editNewAssociationOverlay) {
-			this._clearNewRubricHref();
-			editNewAssociationOverlay.close();
-		}
-	}
-
-	_attachRubric() {
-		const entity = associationStore.get(this.href);
-
-		if (!entity) {
-			return;
-		}
-
-		const m3FeatureFlagEnabled = this._isMilestoneEnabled(Milestones.M3DefaultScoringRubric);
-
-		if (m3FeatureFlagEnabled) {
-			entity.addAssociations([this._newlyCreatedPotentialAssociation]);
-		} else {
-			entity.addAssociations_DoNotUse([this._newlyCreatedPotentialAssociation]);
-		}
-		this._closeEditNewAssociationOverlay();
-		announce(this.localize('rubrics.txtRubricAdded'));
-	}
-
-	async _createNewAssociation() {
-
-		const entity = associationStore.get(this.href);
-		if (!entity) {
-			return;
-		}
-
-		this._newlyCreatedPotentialAssociation = await entity.createPotentialAssociation();
-
-		if (!this._newlyCreatedPotentialAssociation) {
-			return;
-		}
-
-		const potentialAssociationEntity = new Association(
-			this._newlyCreatedPotentialAssociation,
-			this.token
-		);
-
-		this._newlyCreatedPotentialAssociationHref = potentialAssociationEntity.getRubricLink();
-
-		const editNewAssociationOverlay = this.shadowRoot.querySelector('#create-new-association-dialog');
-		if (editNewAssociationOverlay) {
-			editNewAssociationOverlay.open();
-		}
-
-	}
-
-	_renderRubricEditor() {
-		if (this._newlyCreatedPotentialAssociationHref !== '') {
-			return html`
-				<d2l-rubric-editor
-					.href="${this._newlyCreatedPotentialAssociationHref}"
-					.token="${this.token}"
-					title-dropdown-hidden>
-				</d2l-rubric-editor>`;
-		} else {
-			return html``;
-		}
-	}
-
-	_clearNewRubricHref() {
-		this._newlyCreatedPotentialAssociationHref = '';
-	}
-
-	_renderRubricsList(entity) {
-		const canCreatePotentialAssociation = entity.canCreatePotentialAssociation();
-		const canCreateAssociation = entity.canCreateAssociation();
-		const associationsCount = entity.fetchAttachedAssociationsCount();
-
-		if (!canCreatePotentialAssociation && !canCreateAssociation && associationsCount === 0) {
-			return html``;
-		}
-
-		return html`
-			<div class="d2l-rubric-heading-container">
-				<h3 class="d2l-heading-4 d2l-rubric-heading-title">
-					${this.localize('rubrics.hdrRubrics')}
-				</h3>
-			</div>
-			<d2l-activity-rubrics-list-editor
-				href="${this.href}"
-				.activityUsageHref=${this.activityUsageHref}
-				.token=${this.token}
-				.assignmentHref=${this.assignmentHref}
-			></d2l-activity-rubrics-list-editor>
-			`;
-	}
-
-	_renderAddRubricDropdown(entity) {
-
-		const canCreatePotentialAssociation = entity.canCreatePotentialAssociation();
-		const canCreateAssociation = entity.canCreateAssociation();
-
-		const canEditRubricAssociation = canCreatePotentialAssociation || canCreateAssociation;
-
-		return html`
-		<d2l-dropdown-button-subtle
-			text="${this.localize('rubrics.btnAddRubric')}"
-			?disabled="${!canEditRubricAssociation}"
-		>
-			<d2l-dropdown-menu align="start">
-				<d2l-menu label="${this.localize('rubrics.btnAddRubric')}">
-					<d2l-menu-item
-						text="${this.localize('rubrics.btnCreateNew')}"
-						@d2l-menu-item-select="${this._createNewAssociation}"
-						?hidden=${!canCreatePotentialAssociation}
-					>
-					</d2l-menu-item>
-					<d2l-menu-item
-						text="${this.localize('rubrics.btnAddExisting')}"
-						@d2l-menu-item-select="${this._openAttachRubricDialog}"
-						?hidden=${!canCreateAssociation}
-					>
-					</d2l-menu-item>
-				</d2l-menu>
-			</d2l-dropdown-menu>
-		</d2l-dropdown-button-subtle>
-		`;
-
-	}
-
-	_saveDefaultScoringRubricOnChange(event) {
-		const assignment = assignmentStore.getAssignment(this.assignmentHref);
-
-		if (!assignment) {
-			return;
-		}
-
-		assignment.setDefaultScoringRubric(event.target.value);
-	}
-
-	_renderDefaultScoringRubric(entity) {
-
-		const assignment = assignmentStore.getAssignment(this.assignmentHref);
-		const shouldRender = this._isMilestoneEnabled(Milestones.M3DefaultScoringRubric);
-
-		if (!entity || !assignment || !shouldRender) {
-			return html``;
-		}
-
-		const isReadOnly = !assignment.canEditDefaultScoringRubric;
-		if (!entity.defaultScoringRubricOptions || entity.defaultScoringRubricOptions.length <= 1) {
-			return html``;
-		}
-
-		return html`
-			<div class="d2l-default-scoring-rubric-heading-container">
-				<label class="d2l-label-text" for="assignment-default-scoring-rubric">
-					${this.localize('rubrics.defaultScoringRubric')}
-				</label>
-			</div>
-			<select
-				id="assignment-default-scoring-rubric"
-				class="d2l-input-select block-select"
-				@change="${this._saveDefaultScoringRubricOnChange}"
-				?disabled=${isReadOnly}>
-					<option value="-1" ?selected=${'-1' === assignment.defaultScoringRubricId}>${this.localize('rubrics.noDefaultScoringRubricSelected')}</option>
-					${entity.defaultScoringRubricOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.defaultScoringRubricId}>${option.title}</option>`)}
-			</select>
-		`;
-
-	}
-
 	render() {
 		const entity = associationStore.get(this.href);
 
@@ -321,5 +117,203 @@ class ActivityRubricsListContainer extends ActivityEditorFeaturesMixin(ActivityE
 			</d2l-dialog>
 		`;
 	}
+	_attachRubric() {
+		const entity = associationStore.get(this.href);
+
+		if (!entity) {
+			return;
+		}
+
+		const m3FeatureFlagEnabled = this._isMilestoneEnabled(Milestones.M3DefaultScoringRubric);
+
+		if (m3FeatureFlagEnabled) {
+			entity.addAssociations([this._newlyCreatedPotentialAssociation]);
+		} else {
+			entity.addAssociations_DoNotUse([this._newlyCreatedPotentialAssociation]);
+		}
+		this._closeEditNewAssociationOverlay();
+		announce(this.localize('rubrics.txtRubricAdded'));
+	}
+	_clearNewRubricHref() {
+		this._newlyCreatedPotentialAssociationHref = '';
+	}
+	_closeAttachRubricDialog(e) {
+		const entity = associationStore.get(this.href);
+		if (e && e.detail && e.detail.associations) {
+			const m3FeatureFlagEnabled = this._isMilestoneEnabled(Milestones.M3DefaultScoringRubric);
+
+			if (m3FeatureFlagEnabled) {
+				entity.addAssociations(e.detail.associations);
+			} else {
+				entity.addAssociations_DoNotUse(e.detail.associations);
+			}
+			announce(this.localize('rubrics.txtRubricAdded'));
+		}
+		this._toggleDialog(false);
+	}
+	_closeEditNewAssociationOverlay() {
+		const editNewAssociationOverlay =
+			this.shadowRoot.querySelector('#create-new-association-dialog');
+		if (editNewAssociationOverlay) {
+			this._clearNewRubricHref();
+			editNewAssociationOverlay.close();
+		}
+	}
+	_resizeDialog(e) {
+		e.currentTarget.resize();
+	}
+	
+	async _createNewAssociation() {
+
+		const entity = associationStore.get(this.href);
+		if (!entity) {
+			return;
+		}
+
+		this._newlyCreatedPotentialAssociation = await entity.createPotentialAssociation();
+
+		if (!this._newlyCreatedPotentialAssociation) {
+			return;
+		}
+
+		const potentialAssociationEntity = new Association(
+			this._newlyCreatedPotentialAssociation,
+			this.token
+		);
+
+		this._newlyCreatedPotentialAssociationHref = potentialAssociationEntity.getRubricLink();
+
+		const editNewAssociationOverlay = this.shadowRoot.querySelector('#create-new-association-dialog');
+		if (editNewAssociationOverlay) {
+			editNewAssociationOverlay.open();
+		}
+
+	}
+_toggleDialog(toggle) {
+
+		const dialog = this.shadowRoot.querySelector('#attach-rubric-dialog');
+		if (dialog) {
+			if (toggle) {
+				this.shadowRoot.querySelector('d2l-add-associations').reset();
+			}
+			dialog.opened = toggle;
+		}
+	}
+	
+	
+	_openAttachRubricDialog() {
+		this._toggleDialog(true);
+	}
+
+	_renderAddRubricDropdown(entity) {
+
+		const canCreatePotentialAssociation = entity.canCreatePotentialAssociation();
+		const canCreateAssociation = entity.canCreateAssociation();
+
+		const canEditRubricAssociation = canCreatePotentialAssociation || canCreateAssociation;
+
+		return html`
+		<d2l-dropdown-button-subtle
+			text="${this.localize('rubrics.btnAddRubric')}"
+			?disabled="${!canEditRubricAssociation}"
+		>
+			<d2l-dropdown-menu align="start">
+				<d2l-menu label="${this.localize('rubrics.btnAddRubric')}">
+					<d2l-menu-item
+						text="${this.localize('rubrics.btnCreateNew')}"
+						@d2l-menu-item-select="${this._createNewAssociation}"
+						?hidden=${!canCreatePotentialAssociation}
+					>
+					</d2l-menu-item>
+					<d2l-menu-item
+						text="${this.localize('rubrics.btnAddExisting')}"
+						@d2l-menu-item-select="${this._openAttachRubricDialog}"
+						?hidden=${!canCreateAssociation}
+					>
+					</d2l-menu-item>
+				</d2l-menu>
+			</d2l-dropdown-menu>
+		</d2l-dropdown-button-subtle>
+		`;
+
+	}
+	_renderDefaultScoringRubric(entity) {
+
+		const assignment = assignmentStore.getAssignment(this.assignmentHref);
+		const shouldRender = this._isMilestoneEnabled(Milestones.M3DefaultScoringRubric);
+
+		if (!entity || !assignment || !shouldRender) {
+			return html``;
+		}
+
+		const isReadOnly = !assignment.canEditDefaultScoringRubric;
+		if (!entity.defaultScoringRubricOptions || entity.defaultScoringRubricOptions.length <= 1) {
+			return html``;
+		}
+
+		return html`
+			<div class="d2l-default-scoring-rubric-heading-container">
+				<label class="d2l-label-text" for="assignment-default-scoring-rubric">
+					${this.localize('rubrics.defaultScoringRubric')}
+				</label>
+			</div>
+			<select
+				id="assignment-default-scoring-rubric"
+				class="d2l-input-select block-select"
+				@change="${this._saveDefaultScoringRubricOnChange}"
+				?disabled=${isReadOnly}>
+					<option value="-1" ?selected=${'-1' === assignment.defaultScoringRubricId}>${this.localize('rubrics.noDefaultScoringRubricSelected')}</option>
+					${entity.defaultScoringRubricOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.defaultScoringRubricId}>${option.title}</option>`)}
+			</select>
+		`;
+
+	}
+	_renderRubricEditor() {
+		if (this._newlyCreatedPotentialAssociationHref !== '') {
+			return html`
+				<d2l-rubric-editor
+					.href="${this._newlyCreatedPotentialAssociationHref}"
+					.token="${this.token}"
+					title-dropdown-hidden>
+				</d2l-rubric-editor>`;
+		} else {
+			return html``;
+		}
+	}
+
+	_renderRubricsList(entity) {
+		const canCreatePotentialAssociation = entity.canCreatePotentialAssociation();
+		const canCreateAssociation = entity.canCreateAssociation();
+		const associationsCount = entity.fetchAttachedAssociationsCount();
+
+		if (!canCreatePotentialAssociation && !canCreateAssociation && associationsCount === 0) {
+			return html``;
+		}
+
+		return html`
+			<div class="d2l-rubric-heading-container">
+				<h3 class="d2l-heading-4 d2l-rubric-heading-title">
+					${this.localize('rubrics.hdrRubrics')}
+				</h3>
+			</div>
+			<d2l-activity-rubrics-list-editor
+				href="${this.href}"
+				.activityUsageHref=${this.activityUsageHref}
+				.token=${this.token}
+				.assignmentHref=${this.assignmentHref}
+			></d2l-activity-rubrics-list-editor>
+			`;
+	}
+
+	_saveDefaultScoringRubricOnChange(event) {
+		const assignment = assignmentStore.getAssignment(this.assignmentHref);
+
+		if (!assignment) {
+			return;
+		}
+
+		assignment.setDefaultScoringRubric(event.target.value);
+	}
+
 }
 customElements.define('d2l-activity-rubrics-list-container', ActivityRubricsListContainer);

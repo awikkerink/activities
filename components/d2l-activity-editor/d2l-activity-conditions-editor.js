@@ -101,6 +101,20 @@ class ActivityConditionsEditor
 		super(store);
 	}
 
+	render() {
+
+		const entity = store.get(this.href);
+		if (!entity) {
+			return html``;
+		}
+
+		return html`
+			${this._renderDescription(entity)}
+			${this._renderOperators(entity)}
+			${this._renderConditions(entity)}
+			${this._renderAddCondition(entity)}
+		`;
+	}
 	async save() {
 
 		const entity = store.get(this.href);
@@ -109,130 +123,6 @@ class ActivityConditionsEditor
 		}
 
 		await entity.save();
-	}
-
-	_renderDescription({ conditions }) {
-
-		if (conditions.length <= 0) {
-
-			return html`
-				<p class="d2l-body-small">
-					${this.description}
-				</p>
-			`;
-		}
-
-		if (conditions.length === 1) {
-
-			return html`
-				<p class="d2l-label-text">
-					${this.localize('editor.lblConditionsOperator')}
-				</p>
-			`;
-		}
-
-		// label rendered by operator select list for a11y
-		return html``;
-	}
-
-	_renderOperator({ value, selected, title }) {
-
-		return html`
-			<option value="${value}" ?selected="${selected}">
-				${title}
-			</option>
-		`;
-	}
-
-	_setOperator(event) {
-
-		const entity = store.get(this.href);
-		if (!entity) {
-			return;
-		}
-
-		entity.setOperator(event.target.value);
-	}
-
-	_renderOperators({ conditions, operators }) {
-
-		if (conditions.length <= 1) {
-			return html``;
-		}
-
-		return html`
-			<div>
-				<label class="d2l-label-text" for="operator">
-					${this.localize('editor.lblConditionsOperator')}
-				</label>
-				<select
-					class="d2l-input-select"
-					id="operator"
-					@change="${this._setOperator}">
-					${operators.map(this._renderOperator, this)}
-				</select>
-			</div>
-		`;
-	}
-
-	_removeCondition(event) {
-
-		const entity = store.get(this.href);
-		if (!entity) {
-			return;
-		}
-
-		const key = event.target.dataset.key;
-		const conditions = entity.conditions.reduce((map, x) => {
-			map[`${x.key}`] = x.title;
-			return map;
-		}, {});
-
-		const condition = conditions[key];
-		entity.remove(key);
-
-		if (condition) {
-			// don't want <strong> tags in screenreader text
-			const title = condition.replace(/<strong>|<\/strong>/g, '');
-			announce(`${this.localize('editor.txtConditionRemoved', {title})}`);
-		}
-	}
-
-	_renderCondition({ key, title }) {
-
-		return html`
-			<li class="d2l-list-item">
-				<span class="d2l-list-item-body">
-					<span class="d2l-list-item-decoration">
-						<d2l-icon
-							icon="tier2:release-conditions"
-							style="width:30px;height:30px;">
-						</d2l-icon>
-					</span>
-					<span
-						class="d2l-list-item-content d2l-body-compact"
-						.innerHTML="${title}">
-					</span>
-				</span>
-				<span class="d2l-list-item-deleter">
-					<d2l-button-icon
-						text="${this.localize('editor.btnRemoveCondition')}"
-						icon="tier1:close-default"
-						data-key="${key}"
-						@click="${this._removeCondition}">
-					</d2l-button-icon>
-				</span>
-			</li>
-		`;
-	}
-
-	_renderConditions({ conditions }) {
-
-		return html`
-			<ul class="d2l-conditions">
-				${conditions.map(this._renderCondition, this)}
-			</ul>
-		`;
 	}
 
 	_addExisting(event) {
@@ -289,17 +179,16 @@ class ActivityConditionsEditor
 					if (result.length === 1) {
 						// don't want <strong> tags in screenreader text
 						const title = result[0].Text.replace(/<strong>|<\/strong>/g, '');
-						announce(`${this.localize('editor.txtConditionAdded', {title})}`);
+						announce(`${this.localize('editor.txtConditionAdded', { title })}`);
 					}
 					if (result.length > 1) {
 						const count = result.length;
-						announce(`${this.localize('editor.txtConditionsAdded', {count})}`);
+						announce(`${this.localize('editor.txtConditionsAdded', { count })}`);
 					}
 				}
 			}
 		});
 	}
-
 	_createNew(event) {
 
 		const entity = store.get(this.href);
@@ -349,11 +238,32 @@ class ActivityConditionsEditor
 				entity.add(result);
 
 				const title = result.Text.replace(/<strong>|<\/strong>/g, '');
-				announce(`${this.localize('editor.txtConditionAdded', {title})}`);
+				announce(`${this.localize('editor.txtConditionAdded', { title })}`);
 			}
 		});
 	}
+	_removeCondition(event) {
 
+		const entity = store.get(this.href);
+		if (!entity) {
+			return;
+		}
+
+		const key = event.target.dataset.key;
+		const conditions = entity.conditions.reduce((map, x) => {
+			map[`${x.key}`] = x.title;
+			return map;
+		}, {});
+
+		const condition = conditions[key];
+		entity.remove(key);
+
+		if (condition) {
+			// don't want <strong> tags in screenreader text
+			const title = condition.replace(/<strong>|<\/strong>/g, '');
+			announce(`${this.localize('editor.txtConditionRemoved', { title })}`);
+		}
+	}
 	_renderAddCondition(entity) {
 
 		const { canAttachExisting, canCreateNew } = entity;
@@ -394,21 +304,105 @@ class ActivityConditionsEditor
 			</d2l-dropdown>
 		`;
 	}
+	_renderCondition({ key, title }) {
 
-	render() {
+		return html`
+			<li class="d2l-list-item">
+				<span class="d2l-list-item-body">
+					<span class="d2l-list-item-decoration">
+						<d2l-icon
+							icon="tier2:release-conditions"
+							style="width:30px;height:30px;">
+						</d2l-icon>
+					</span>
+					<span
+						class="d2l-list-item-content d2l-body-compact"
+						.innerHTML="${title}">
+					</span>
+				</span>
+				<span class="d2l-list-item-deleter">
+					<d2l-button-icon
+						text="${this.localize('editor.btnRemoveCondition')}"
+						icon="tier1:close-default"
+						data-key="${key}"
+						@click="${this._removeCondition}">
+					</d2l-button-icon>
+				</span>
+			</li>
+		`;
+	}
+	_renderConditions({ conditions }) {
 
-		const entity = store.get(this.href);
-		if (!entity) {
+		return html`
+			<ul class="d2l-conditions">
+				${conditions.map(this._renderCondition, this)}
+			</ul>
+		`;
+	}
+	_renderDescription({ conditions }) {
+
+		if (conditions.length <= 0) {
+
+			return html`
+				<p class="d2l-body-small">
+					${this.description}
+				</p>
+			`;
+		}
+
+		if (conditions.length === 1) {
+
+			return html`
+				<p class="d2l-label-text">
+					${this.localize('editor.lblConditionsOperator')}
+				</p>
+			`;
+		}
+
+		// label rendered by operator select list for a11y
+		return html``;
+	}
+
+
+	_renderOperator({ value, selected, title }) {
+
+		return html`
+			<option value="${value}" ?selected="${selected}">
+				${title}
+			</option>
+		`;
+	}
+
+	_renderOperators({ conditions, operators }) {
+
+		if (conditions.length <= 1) {
 			return html``;
 		}
 
 		return html`
-			${this._renderDescription(entity)}
-			${this._renderOperators(entity)}
-			${this._renderConditions(entity)}
-			${this._renderAddCondition(entity)}
+			<div>
+				<label class="d2l-label-text" for="operator">
+					${this.localize('editor.lblConditionsOperator')}
+				</label>
+				<select
+					class="d2l-input-select"
+					id="operator"
+					@change="${this._setOperator}">
+					${operators.map(this._renderOperator, this)}
+				</select>
+			</div>
 		`;
 	}
+	_setOperator(event) {
+
+		const entity = store.get(this.href);
+		if (!entity) {
+			return;
+		}
+
+		entity.setOperator(event.target.value);
+	}
+
 }
 
 customElements.define(

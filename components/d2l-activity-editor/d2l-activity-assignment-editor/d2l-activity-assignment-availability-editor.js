@@ -71,18 +71,41 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 		this._m3SpecialAccessEnabled = this._isMilestoneEnabled(Milestones.M3SpecialAccess);
 	}
 
+	render() {
+		return html`
+			<d2l-labs-accordion-collapse
+				flex
+				header-border
+				?opened=${this._isOpened()}
+				@d2l-labs-accordion-collapse-state-changed=${this._onAccordionStateChange}>
+				<h3 class="d2l-heading-3 d2l-activity-summarizer-header" slot="header">
+					${this.localize('hdrAvailability')}
+				</h3>
+				<ul class="d2l-body-small d2l-activity-summarizer-summary" slot="summary">
+					<li>${this._renderAvailabilityDatesSummary()}</li>
+					<li>${this._renderReleaseConditionSummary()}</li>
+					<li>${this._renderSpecialAccessSummary()}</li>
+				</ul>
+				${this._renderAvailabilityDatesEditor()}
+				${this._renderReleaseConditionEditor()}
+				${this._renderSpecialAccessEditor()}
+			</d2l-labs-accordion-collapse>
+		`;
+	}
+	// Returns true if any error states relevant to this accordion are set
+	_errorInAccordion() {
+		const activity = store.get(this.href);
+		if (!activity || !activity.dates) {
+			return false;
+		}
+
+		return !!(activity.dates.endDateErrorTerm || activity.dates.startDateErrorTerm);
+	}
+	_isOpened() {
+		return this._opened || this._errorInAccordion();
+	}
 	_onAccordionStateChange(e) {
 		this._opened = e.detail.opened;
-	}
-
-	_renderAvailabilityDatesSummary() {
-
-		return html`
-			<d2l-activity-availability-dates-summary
-				href="${this.href}"
-				.token="${this.token}">
-			</d2l-activity-availability-dates-summary>
-		`;
 	}
 
 	_renderAvailabilityDatesEditor() {
@@ -96,17 +119,13 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 			</div>
 		`;
 	}
-
-	_renderReleaseConditionSummary() {
-		if (!this._m3ReleaseConditionsEnabled) {
-			return html``;
-		}
+	_renderAvailabilityDatesSummary() {
 
 		return html`
-			<d2l-activity-usage-conditions-summary
+			<d2l-activity-availability-dates-summary
 				href="${this.href}"
 				.token="${this.token}">
-			</d2l-activity-usage-conditions-summary>
+			</d2l-activity-availability-dates-summary>
 		`;
 	}
 
@@ -129,17 +148,16 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 			</div>
 		`;
 	}
-
-	_renderSpecialAccessSummary() {
-		if (!this._m3SpecialAccessEnabled) {
+	_renderReleaseConditionSummary() {
+		if (!this._m3ReleaseConditionsEnabled) {
 			return html``;
 		}
 
 		return html`
-			<d2l-activity-special-access-summary
+			<d2l-activity-usage-conditions-summary
 				href="${this.href}"
 				.token="${this.token}">
-			</d2l-activity-special-access-summary>
+			</d2l-activity-usage-conditions-summary>
 		`;
 	}
 
@@ -163,40 +181,16 @@ class ActivityAssignmentAvailabilityEditor extends ActivityEditorFeaturesMixin(L
 			</div>
 		`;
 	}
-
-	// Returns true if any error states relevant to this accordion are set
-	_errorInAccordion() {
-		const activity = store.get(this.href);
-		if (!activity || !activity.dates) {
-			return false;
+	_renderSpecialAccessSummary() {
+		if (!this._m3SpecialAccessEnabled) {
+			return html``;
 		}
 
-		return !!(activity.dates.endDateErrorTerm || activity.dates.startDateErrorTerm);
-	}
-
-	_isOpened() {
-		return this._opened || this._errorInAccordion();
-	}
-
-	render() {
 		return html`
-			<d2l-labs-accordion-collapse
-				flex
-				header-border
-				?opened=${this._isOpened()}
-				@d2l-labs-accordion-collapse-state-changed=${this._onAccordionStateChange}>
-				<h3 class="d2l-heading-3 d2l-activity-summarizer-header" slot="header">
-					${this.localize('hdrAvailability')}
-				</h3>
-				<ul class="d2l-body-small d2l-activity-summarizer-summary" slot="summary">
-					<li>${this._renderAvailabilityDatesSummary()}</li>
-					<li>${this._renderReleaseConditionSummary()}</li>
-					<li>${this._renderSpecialAccessSummary()}</li>
-				</ul>
-				${this._renderAvailabilityDatesEditor()}
-				${this._renderReleaseConditionEditor()}
-				${this._renderSpecialAccessEditor()}
-			</d2l-labs-accordion-collapse>
+			<d2l-activity-special-access-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-special-access-summary>
 		`;
 	}
 

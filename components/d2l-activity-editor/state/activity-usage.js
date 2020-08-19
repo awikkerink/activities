@@ -16,6 +16,9 @@ export class ActivityUsage {
 		this.token = token;
 	}
 
+	async dirty() {
+		return !this._entity.equals(this._makeUsageData()) || await this._alignmentsDirty();
+	}
 	async fetch() {
 		const sirenEntity = await fetchEntity(this.href, this.token);
 		if (sirenEntity) {
@@ -42,6 +45,46 @@ export class ActivityUsage {
 		]);
 	}
 
+	async loadCompetencies(bypassCache) {
+		if (!this.competenciesHref) {
+			return;
+		}
+
+		const sirenEntity = await fetchEntity(this.competenciesHref, this.token, bypassCache);
+
+		runInAction(() => {
+			const entity = new CompetenciesEntity(sirenEntity);
+			this.competenciesDialogUrl = entity.dialogUrl();
+			this.canEditCompetencies = !!this.competenciesDialogUrl;
+			this.associatedCompetenciesCount = entity.associatedCount() || 0;
+			this.unevaluatedCompetenciesCount = entity.unevaluatedCount() || 0;
+		});
+	}
+	async save() {
+		if (!this._entity) {
+			return;
+		}
+
+		await this.saveAlignments();
+
+		await this.scoreAndGrade.primeGradeSave();
+
+		await this._entity.save(this._makeUsageData());
+
+		await this.fetch();
+	}
+	async saveAlignments() {
+		if (this.alignmentsHref && this.canUpdateAlignments) {
+			const alignmentsCollection = new AlignmentsCollectionEntity(await fetchEntity(this.alignmentsHref, this.token), this.token);
+			return alignmentsCollection.save();
+		}
+	}
+	setAlignmentsHref(value) {
+		this.alignmentsHref = value;
+	}
+	setCanEditDraft(value) {
+		this.canEditDraft = value;
+	}
 	async _loadCompetencyOutcomes(entity) {
 		/**
 		 * Legacy Competencies
@@ -66,24 +109,14 @@ export class ActivityUsage {
 			await this._loadOutcomes();
 		}
 	}
-
-	async loadCompetencies(bypassCache) {
-		if (!this.competenciesHref) {
-			return;
-		}
-
-		const sirenEntity = await fetchEntity(this.competenciesHref, this.token, bypassCache);
-
-		runInAction(() => {
-			const entity = new CompetenciesEntity(sirenEntity);
-			this.competenciesDialogUrl = entity.dialogUrl();
-			this.canEditCompetencies = !!this.competenciesDialogUrl;
-			this.associatedCompetenciesCount = entity.associatedCount() || 0;
-			this.unevaluatedCompetenciesCount = entity.unevaluatedCount() || 0;
-		});
+	
+	setCanUpdateAlignments(value) {
+		this.canUpdateAlignments = value;
 	}
-
-	async _loadOutcomes() {
+	setDates(val) {
+		this.dates = val;
+	}
+async _loadOutcomes() {
 		const alignmentsEntity = await fetchEntity(this.alignmentsHref, this.token);
 
 		runInAction(() => {
@@ -92,6 +125,8 @@ export class ActivityUsage {
 		});
 	}
 
+
+	
 	async _loadSpecialAccess(entity) {
 		const specialAccessHref = entity.specialAccessHref();
 		let specialAccess = null;
@@ -103,37 +138,20 @@ export class ActivityUsage {
 
 		runInAction(() => this.specialAccess = specialAccess);
 	}
-
-	setAlignmentsHref(value) {
-		this.alignmentsHref = value;
-	}
-
-	setCanUpdateAlignments(value) {
-		this.canUpdateAlignments = value;
-	}
-
+	
 	setDraftStatus(isDraft) {
 		this.isDraft = isDraft;
-	}
-
-	setCanEditDraft(value) {
-		this.canEditDraft = value;
-	}
-
-	setIsError(value) {
-		this.isError = value;
 	}
 
 	setErrorLangTerms(errorType) {
 		this.dates.setErrorLangTerms(errorType);
 	}
+	setIsError(value) {
+		this.isError = value;
+	}
 
 	setScoreAndGrade(val) {
 		this.scoreAndGrade = val;
-	}
-
-	setDates(val) {
-		this.dates = val;
 	}
 
 	async validate() {
@@ -166,6 +184,14 @@ export class ActivityUsage {
 		}
 	}
 
+	async _alignmentsDirty() {
+		if (!this.alignmentsHref || !this.canUpdateAlignments) {
+			return false;
+		}
+
+		const alignmentsCollection = new AlignmentsCollectionEntity(await fetchEntity(this.alignmentsHref, this.token), this.token);
+		return alignmentsCollection.hasSubmitAction();
+	}
 	_makeUsageData() {
 		return {
 			isDraft: this.isDraft,
@@ -184,39 +210,6 @@ export class ActivityUsage {
 		};
 	}
 
-	async saveAlignments() {
-		if (this.alignmentsHref && this.canUpdateAlignments) {
-			const alignmentsCollection = new AlignmentsCollectionEntity(await fetchEntity(this.alignmentsHref, this.token), this.token);
-			return alignmentsCollection.save();
-		}
-	}
-
-	async save() {
-		if (!this._entity) {
-			return;
-		}
-
-		await this.saveAlignments();
-
-		await this.scoreAndGrade.primeGradeSave();
-
-		await this._entity.save(this._makeUsageData());
-
-		await this.fetch();
-	}
-
-	async _alignmentsDirty() {
-		if (!this.alignmentsHref || !this.canUpdateAlignments) {
-			return false;
-		}
-
-		const alignmentsCollection = new AlignmentsCollectionEntity(await fetchEntity(this.alignmentsHref, this.token), this.token);
-		return alignmentsCollection.hasSubmitAction();
-	}
-
-	async dirty() {
-		return !this._entity.equals(this._makeUsageData()) || await this._alignmentsDirty();
-	}
 }
 
 decorate(ActivityUsage, {

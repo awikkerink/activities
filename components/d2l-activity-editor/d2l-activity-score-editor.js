@@ -159,87 +159,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeActivityEditorMixi
 		super(store);
 	}
 
-	updated(changedProperties) {
-		super.updated(changedProperties);
-
-		if ((changedProperties.has('href') || changedProperties.has('token')) &&
-			this.href && this.token) {
-			this.store && this._fetch(() => {
-				const fetch = this.store.fetch(this.href, this.token);
-				fetch.then(() => {
-					this._setNewGradeName(this.activityName);
-				});
-			});
-		}
-
-		changedProperties.forEach((oldValue, propName) => {
-			if (propName === '_focusUngraded' && typeof oldValue !== 'undefined') {
-				const toFocus = this._focusUngraded ?
-					this.shadowRoot.querySelector('#ungraded') :
-					this.shadowRoot.querySelector('#score-out-of');
-				toFocus.focus();
-			} else if (propName === 'activityName') {
-				this._setNewGradeName(this.activityName);
-			}
-		});
-	}
-
-	_setNewGradeName(name) {
-		const activity = store.get(this.href);
-		if (activity) {
-			activity.scoreAndGrade.setNewGradeName(name);
-		}
-	}
-
-	_onScoreOutOfChanged() {
-		const scoreAndGrade = store.get(this.href).scoreAndGrade;
-		const scoreOutOf = this.shadowRoot.querySelector('#score-out-of').value;
-		if (scoreOutOf === scoreAndGrade.scoreOutOf) {
-			return;
-		}
-
-		scoreAndGrade.setScoreOutOf(scoreOutOf);
-	}
-
-	_addToGrades() {
-		store.get(this.href).scoreAndGrade.addToGrades();
-	}
-
-	_removeFromGrades() {
-		store.get(this.href).scoreAndGrade.removeFromGrades();
-	}
-
-	_setGraded() {
-		const scoreAndGrade = store.get(this.href).scoreAndGrade;
-		scoreAndGrade.setGraded(scoreAndGrade.canEditGrades);
-	}
-
-	_setUngraded() {
-		store.get(this.href).scoreAndGrade.setUngraded();
-	}
-
-	_addOrRemoveMenuItem() {
-		const scoreAndGrade = store.get(this.href).scoreAndGrade;
-		return scoreAndGrade.inGrades ? html`
-			<d2l-menu-item
-				text="${this.localize('editor.removeFromGrades')}"
-				@d2l-menu-item-select="${this._removeFromGrades}"
-			></d2l-menu-item>
-		` : scoreAndGrade.canEditGrades ? html`
-			<d2l-menu-item
-				text="${this.localize('editor.addToGrades')}"
-				@d2l-menu-item-select="${this._addToGrades}"
-			></d2l-menu-item>
-		` : null;
-	}
-
-	_chooseFromGrades() {
-		const activityGradesElement = this.shadowRoot.querySelector('d2l-activity-grades-dialog');
-		if (activityGradesElement) {
-			activityGradesElement.open();
-		}
-	}
-
 	render() {
 		const activity = store.get(this.href);
 		if (!activity) {
@@ -327,5 +246,83 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeActivityEditorMixi
 			</div>
 		`;
 	}
+	updated(changedProperties) {
+		super.updated(changedProperties);
+
+		if ((changedProperties.has('href') || changedProperties.has('token')) &&
+			this.href && this.token) {
+			this.store && this._fetch(() => {
+				const fetch = this.store.fetch(this.href, this.token);
+				fetch.then(() => {
+					this._setNewGradeName(this.activityName);
+				});
+			});
+		}
+
+		changedProperties.forEach((oldValue, propName) => {
+			if (propName === '_focusUngraded' && typeof oldValue !== 'undefined') {
+				const toFocus = this._focusUngraded ?
+					this.shadowRoot.querySelector('#ungraded') :
+					this.shadowRoot.querySelector('#score-out-of');
+				toFocus.focus();
+			} else if (propName === 'activityName') {
+				this._setNewGradeName(this.activityName);
+			}
+		});
+	}
+
+	_addOrRemoveMenuItem() {
+		const scoreAndGrade = store.get(this.href).scoreAndGrade;
+		return scoreAndGrade.inGrades ? html`
+			<d2l-menu-item
+				text="${this.localize('editor.removeFromGrades')}"
+				@d2l-menu-item-select="${this._removeFromGrades}"
+			></d2l-menu-item>
+		` : scoreAndGrade.canEditGrades ? html`
+			<d2l-menu-item
+				text="${this.localize('editor.addToGrades')}"
+				@d2l-menu-item-select="${this._addToGrades}"
+			></d2l-menu-item>
+		` : null;
+	}
+	_addToGrades() {
+		store.get(this.href).scoreAndGrade.addToGrades();
+	}
+	_chooseFromGrades() {
+		const activityGradesElement = this.shadowRoot.querySelector('d2l-activity-grades-dialog');
+		if (activityGradesElement) {
+			activityGradesElement.open();
+		}
+	}
+	_onScoreOutOfChanged() {
+		const scoreAndGrade = store.get(this.href).scoreAndGrade;
+		const scoreOutOf = this.shadowRoot.querySelector('#score-out-of').value;
+		if (scoreOutOf === scoreAndGrade.scoreOutOf) {
+			return;
+		}
+
+		scoreAndGrade.setScoreOutOf(scoreOutOf);
+	}
+
+	_removeFromGrades() {
+		store.get(this.href).scoreAndGrade.removeFromGrades();
+	}
+	_setGraded() {
+		const scoreAndGrade = store.get(this.href).scoreAndGrade;
+		scoreAndGrade.setGraded(scoreAndGrade.canEditGrades);
+	}
+_setNewGradeName(name) {
+		const activity = store.get(this.href);
+		if (activity) {
+			activity.scoreAndGrade.setNewGradeName(name);
+		}
+	}
+
+	
+
+	_setUngraded() {
+		store.get(this.href).scoreAndGrade.setUngraded();
+	}
+
 }
 customElements.define('d2l-activity-score-editor', ActivityScoreEditor);

@@ -75,90 +75,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		this._linksProcessor = new LinksInMessageProcessor();
 	}
 
-	set _entity(entity) {
-		if (this._entityHasChanged(entity)) {
-			this._onAssignmentChange(entity);
-			super._entity = entity;
-		}
-	}
-
-	addLinks(links) {
-		const collection = attachmentCollectionStore.get(this._attachmentsHref);
-		links = links || [];
-		links.forEach(element => {
-			collection.addAttachment(attachmentStore.createLink(element.name, element.url));
-		});
-	}
-
-	_saveInstructions(value) {
-		store.getAssignment(this.href).setInstructions(value);
-		this._debounceJobs.value = Debouncer.debounce(
-			this._debounceJobs.value,
-			timeOut.after(2000),
-			() => this._linksProcessor.process(value, linkAttachments => this.addLinks(linkAttachments))
-		);
-	}
-
-	_onAssignmentChange(assignment) {
-		if (!assignment) {
-			return;
-		}
-
-		this._attachmentsHref = assignment.attachmentsCollectionHref();
-	}
-
-	_saveOnChange(jobName) {
-		this._debounceJobs[jobName] && this._debounceJobs[jobName].flush();
-	}
-
-	_saveName(value) {
-		store.getAssignment(this.href).setName(value);
-	}
-
-	_saveNameOnInput(e) {
-		const name = e.target.value;
-		const isNameEmpty = (name || '').trim().length === 0;
-
-		const errorProperty = '_nameError';
-		const emptyNameErrorLangterm = 'emptyNameError';
-		const tooltipId = 'name-tooltip';
-
-		if (isNameEmpty) {
-			this.setError(errorProperty, emptyNameErrorLangterm, tooltipId);
-		} else {
-			this.clearError(errorProperty);
-			this._debounceJobs.name = Debouncer.debounce(
-				this._debounceJobs.name,
-				timeOut.after(500),
-				() => this._saveName(name)
-			);
-		}
-	}
-
-	_saveInstructionsOnChange(e) {
-		const instructions = e.detail.content;
-
-		this._debounceJobs.instructions = Debouncer.debounce(
-			this._debounceJobs.instructions,
-			timeOut.after(500),
-			() => this._saveInstructions(instructions)
-		);
-	}
-
-	_getNameTooltip() {
-		if (this._nameError) {
-			return html`
-				<d2l-tooltip
-					id="name-tooltip"
-					for="assignment-name"
-					position="bottom"
-					?showing="${this._nameError}">
-					${this._nameError}
-				</d2l-tooltip>
-			`;
-		}
-	}
-
 	render() {
 		const assignment = store.getAssignment(this.href);
 		if (!assignment) {
@@ -240,7 +156,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 			</div>
 		`;
 	}
-
 	updated(changedProperties) {
 		super.updated(changedProperties);
 
@@ -249,5 +164,83 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 			super._fetch(() => store.fetchAssignment(this.href, this.token));
 		}
 	}
+	addLinks(links) {
+		const collection = attachmentCollectionStore.get(this._attachmentsHref);
+		links = links || [];
+		links.forEach(element => {
+			collection.addAttachment(attachmentStore.createLink(element.name, element.url));
+		});
+	}
+	set _entity(entity) {
+		if (this._entityHasChanged(entity)) {
+			this._onAssignmentChange(entity);
+			super._entity = entity;
+		}
+	}
+
+	_getNameTooltip() {
+		if (this._nameError) {
+			return html`
+				<d2l-tooltip
+					id="name-tooltip"
+					for="assignment-name"
+					position="bottom"
+					?showing="${this._nameError}">
+					${this._nameError}
+				</d2l-tooltip>
+			`;
+		}
+	}
+	_onAssignmentChange(assignment) {
+		if (!assignment) {
+			return;
+		}
+
+		this._attachmentsHref = assignment.attachmentsCollectionHref();
+	}
+	_saveInstructions(value) {
+		store.getAssignment(this.href).setInstructions(value);
+		this._debounceJobs.value = Debouncer.debounce(
+			this._debounceJobs.value,
+			timeOut.after(2000),
+			() => this._linksProcessor.process(value, linkAttachments => this.addLinks(linkAttachments))
+		);
+	}
+
+	_saveInstructionsOnChange(e) {
+		const instructions = e.detail.content;
+
+		this._debounceJobs.instructions = Debouncer.debounce(
+			this._debounceJobs.instructions,
+			timeOut.after(500),
+			() => this._saveInstructions(instructions)
+		);
+	}
+	_saveName(value) {
+		store.getAssignment(this.href).setName(value);
+	}
+	_saveNameOnInput(e) {
+		const name = e.target.value;
+		const isNameEmpty = (name || '').trim().length === 0;
+
+		const errorProperty = '_nameError';
+		const emptyNameErrorLangterm = 'emptyNameError';
+		const tooltipId = 'name-tooltip';
+
+		if (isNameEmpty) {
+			this.setError(errorProperty, emptyNameErrorLangterm, tooltipId);
+		} else {
+			this.clearError(errorProperty);
+			this._debounceJobs.name = Debouncer.debounce(
+				this._debounceJobs.name,
+				timeOut.after(500),
+				() => this._saveName(name)
+			);
+		}
+	}
+	_saveOnChange(jobName) {
+		this._debounceJobs[jobName] && this._debounceJobs[jobName].flush();
+	}
+
 }
 customElements.define('d2l-activity-assignment-editor-detail', AssignmentEditorDetail);

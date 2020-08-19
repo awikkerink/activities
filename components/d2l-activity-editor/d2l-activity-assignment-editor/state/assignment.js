@@ -12,6 +12,12 @@ export class Assignment {
 		this.token = token;
 	}
 
+	delete() {
+		return this._entity.delete();
+	}
+	get dirty() {
+		return !this._entity.equals(this._makeAssignmentData());
+	}
 	async fetch() {
 		const sirenEntity = await fetchEntity(this.href, this.token);
 		if (sirenEntity) {
@@ -19,15 +25,6 @@ export class Assignment {
 			this.load(entity);
 		}
 		return this;
-	}
-
-	_isSubmissionTypeWithAnonMarking() {
-		// only file (0) and text (1) submissions can have anonymous marking, see https://docs.valence.desire2learn.com/res/dropbox.html#attributes
-		return ['0', '1'].includes(this.submissionAndCompletionProps.submissionType);
-	}
-
-	_getIsAnonymousMarkingAvailable() {
-		return this._entity.isAnonymousMarkingAvailable() && this._isSubmissionTypeWithAnonMarking();
 	}
 
 	load(entity) {
@@ -94,34 +91,52 @@ export class Assignment {
 			}
 		}
 	}
+	resetDefaultScoringRubricId() {
+		this.defaultScoringRubricId = '-1';
+	}
+	async save() {
+		if (!this._entity) {
+			return;
+		}
+		await this._entity.save(this._makeAssignmentData());
+		await this.fetch();
+	}
+	setCompletionType(value) {
+		this.submissionAndCompletionProps.setCompletionType(value);
+	}
+	_getIsAnonymousMarkingAvailable() {
+		return this._entity.isAnonymousMarkingAvailable() && this._isSubmissionTypeWithAnonMarking();
+	}
 
-	setSubmissionType(value) {
+	setAnonymousMarking(value) {
+		this.isAnonymousMarkingEnabled = value;
+	}
+_isSubmissionTypeWithAnonMarking() {
+		// only file (0) and text (1) submissions can have anonymous marking, see https://docs.valence.desire2learn.com/res/dropbox.html#attributes
+		return ['0', '1'].includes(this.submissionAndCompletionProps.submissionType);
+	}
+	
+	
+	
+	setAssignmentTypeGroupCategory(value) {
+		this.selectedGroupCategoryId = value;
+	}
+setFilesSubmissionLimit(value) {
+		this.submissionAndCompletionProps.setFilesSubmissionLimit(value);
+	}
+	setSubmissionsRule(value) {
+		this.submissionAndCompletionProps.setSubmissionsRule(value);
+	}
+setSubmissionType(value) {
 		this.submissionAndCompletionProps.setSubmissionType(value);
 
 		this.isAnonymousMarkingAvailable = this._getIsAnonymousMarkingAvailable();
 	}
-
-	setFilesSubmissionLimit(value) {
-		this.submissionAndCompletionProps.setFilesSubmissionLimit(value);
-	}
-
-	setSubmissionsRule(value) {
-		this.submissionAndCompletionProps.setSubmissionsRule(value);
-	}
-
-	setTurnitin(isOriginalityCheckEnabled, isGradeMarkEnabled) {
-		this.isOriginalityCheckEnabled = isOriginalityCheckEnabled;
-		this.isGradeMarkEnabled = isGradeMarkEnabled;
-	}
-
-	setCompletionType(value) {
-		this.submissionAndCompletionProps.setCompletionType(value);
-	}
-
-	setToIndividualAssignmentType() {
-		this.isIndividualAssignmentType = true;
-	}
-
+	
+	
+	
+	
+	
 	setToGroupAssignmentType() {
 		this.isIndividualAssignmentType = false;
 		this.selectedGroupCategoryId =
@@ -129,29 +144,19 @@ export class Assignment {
 				? String(this.selectedGroupCategoryId)
 				: String(this.groupCategories[0].value);
 	}
-
-	setAssignmentTypeGroupCategory(value) {
-		this.selectedGroupCategoryId = value;
+	setToIndividualAssignmentType() {
+		this.isIndividualAssignmentType = true;
 	}
-
-	setAnonymousMarking(value) {
-		this.isAnonymousMarkingEnabled = value;
+setTurnitin(isOriginalityCheckEnabled, isGradeMarkEnabled) {
+		this.isOriginalityCheckEnabled = isOriginalityCheckEnabled;
+		this.isGradeMarkEnabled = isGradeMarkEnabled;
 	}
+	
+	
+	
 
 	setAnnotationToolsAvailable(value) {
 		this.annotationToolsAvailable = value;
-	}
-
-	setName(value) {
-		this.name = value;
-	}
-
-	setInstructions(value) {
-		this.instructions = value;
-	}
-
-	setSubmissionAndCompletionProps(submissionAndCompletionProps) {
-		this.submissionAndCompletionProps = new SubmissionAndCompletionProps(submissionAndCompletionProps);
 	}
 
 	setDefaultScoringRubric(rubricId) {
@@ -159,11 +164,23 @@ export class Assignment {
 			this.defaultScoringRubricId = String(rubricId);
 		}
 	}
-
-	resetDefaultScoringRubricId() {
-		this.defaultScoringRubricId = '-1';
+	setInstructions(value) {
+		this.instructions = value;
+	}
+	setName(value) {
+		this.name = value;
 	}
 
+	setNotificationEmail(value) {
+		this.notificationEmail = value;
+	}
+	setSubmissionAndCompletionProps(submissionAndCompletionProps) {
+		this.submissionAndCompletionProps = new SubmissionAndCompletionProps(submissionAndCompletionProps);
+	}
+
+	get showNotificationEmail() {
+		return typeof this.notificationEmail !== 'undefined' && this.submissionAndCompletionProps.showSubmissionsRule;
+	}
 	_makeAssignmentData() {
 		/* NOTE: if you add fields here, please make sure you update the corresponding equals method in siren-sdk.
 		 		 The cancel workflow is making use of that to detect changes.
@@ -197,29 +214,6 @@ export class Assignment {
 		return data;
 	}
 
-	async save() {
-		if (!this._entity) {
-			return;
-		}
-		await this._entity.save(this._makeAssignmentData());
-		await this.fetch();
-	}
-
-	get dirty() {
-		return !this._entity.equals(this._makeAssignmentData());
-	}
-
-	delete() {
-		return this._entity.delete();
-	}
-
-	get showNotificationEmail() {
-		return typeof this.notificationEmail !== 'undefined' && this.submissionAndCompletionProps.showSubmissionsRule;
-	}
-
-	setNotificationEmail(value) {
-		this.notificationEmail = value;
-	}
 }
 
 decorate(Assignment, {

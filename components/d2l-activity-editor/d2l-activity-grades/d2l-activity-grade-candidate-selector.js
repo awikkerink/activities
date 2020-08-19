@@ -32,37 +32,6 @@ class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeActivit
 		super(store);
 	}
 
-	_renderGradeCandidateTemplates(gradeCandidates, selected) {
-		return gradeCandidates.map(gc => {
-			if (gc.isCategory) {
-				return this._renderGradeCategory(gc, selected);
-			} else {
-				return this._renderGradeCandidate(gc, selected);
-			}
-		});
-	}
-
-	_renderGradeCandidate(gc, selected) {
-		return html`<option value="${gc.href}" .selected="${selected && gc.href === selected.href}">${gc.name}</option>`;
-	}
-
-	_renderGradeCategory(gradeCategory, selected) {
-		return html`
-			<optgroup label="${gradeCategory.name}">
-				${gradeCategory.gradeCandidates.map(gc => this._renderGradeCandidate(gc, selected))}
-			</optgroup>
-		`;
-	}
-
-	_setSelected(event) {
-		if (event && event.target && event.target.value) {
-			const activity = store.get(this.href);
-			if (activity && activity.scoreAndGrade.gradeCandidateCollection) {
-				activity.scoreAndGrade.gradeCandidateCollection.setSelected(event.target.value);
-			}
-		}
-	}
-
 	render() {
 		const activity = store.get(this.href);
 
@@ -94,6 +63,36 @@ class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeActivit
 			</div>
 		`;
 	}
+	_renderGradeCandidate(gc, selected) {
+		return html`<option value="${gc.href}" .selected="${selected && gc.href === selected.href}">${gc.name}</option>`;
+	}
+	_renderGradeCandidateTemplates(gradeCandidates, selected) {
+		return gradeCandidates.map(gc => {
+			if (gc.isCategory) {
+				return this._renderGradeCategory(gc, selected);
+			} else {
+				return this._renderGradeCandidate(gc, selected);
+			}
+		});
+	}
+
+	_renderGradeCategory(gradeCategory, selected) {
+		return html`
+			<optgroup label="${gradeCategory.name}">
+				${gradeCategory.gradeCandidates.map(gc => this._renderGradeCandidate(gc, selected))}
+			</optgroup>
+		`;
+	}
+
+	_setSelected(event) {
+		if (event && event.target && event.target.value) {
+			const activity = store.get(this.href);
+			if (activity && activity.scoreAndGrade.gradeCandidateCollection) {
+				activity.scoreAndGrade.gradeCandidateCollection.setSelected(event.target.value);
+			}
+		}
+	}
+
 }
 
 customElements.define('d2l-activity-grade-candidate-selector', ActivityGradeCandidateSelector);

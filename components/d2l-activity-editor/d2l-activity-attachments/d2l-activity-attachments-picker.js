@@ -108,138 +108,6 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeActivityEdit
 		};
 	}
 
-	get _orgUnitId() {
-		const match = this.href.match(/\.(com|d2l)\/(\d+)\//);
-		if (!match || match.length < 3) {
-			return -1;
-		}
-		const orgUnitId = match[2];
-		return orgUnitId;
-	}
-
-	_launchAddFileDialog() {
-		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.FileUploadDialogOpener');
-		if (opener) {
-			opener();
-		}
-	}
-
-	_launchAddQuicklinkDialog() {
-		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.AddQuicklinkDialogOpener');
-		if (!opener) {
-			return;
-		}
-
-		// Required for the async handler below to work in Edge
-		const event = opener();
-		event.AddListener(async event => {
-			const quicklinkTemplate = await this._getQuickLinkTemplate(event);
-			this._addToCollection(attachmentStore.createLink(event.m_title, quicklinkTemplate));
-		});
-	}
-
-	get _sources() {
-		return {
-			announcement: 'news',
-			assignment: 'dropbox',
-			calendar: 'schedule',
-			chat: 'chat',
-			checklist: 'checklist',
-			content: 'content',
-			courseFile: 'coursefile',
-			discussion: 'discuss',
-			ePortfolio: 'epobject',
-			formTemplate: 'form',
-			googleDrive: 'google-drive',
-			lti: 'lti',
-			oneDrive: 'one-drive',
-			quiz: 'quiz',
-			selfAssessment: 'selfassess',
-			survey: 'survey',
-			url: 'url'
-		};
-	}
-
-	async _getQuickLinkTemplate(event) {
-		if (event.m_typeKey === this._sources.url) {
-			return event.m_url;
-		}
-
-		const isRemotePlugin = Boolean(
-			event.m_url &&
-			event.m_url.length > 0 &&
-			!Object.values(this._sources).includes(event.m_typeKey)
-		);
-
-		if (isRemotePlugin) {
-			if (/^(http|https|ftp):\/\//i.test(event.m_url)) {
-				return event.m_url;
-			} else {
-				return decodeURIComponent(event.m_url);
-			}
-		}
-
-		const quicklinkUrl = `/d2l/api/lp/unstable/${this._orgUnitId}/quickLinks/${event.m_typeKey}/${event.m_id}`;
-		const response = await fetch(quicklinkUrl);
-		const json = await response.json();
-		return json.QuickLinkTemplate;
-	}
-
-	_addToCollection(attachment) {
-		const collection = store.get(this.href);
-		collection.addAttachment(attachment);
-	}
-
-	_launchAddLinkDialog() {
-		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.AddLinkDialogOpener');
-		if (!opener) {
-			return;
-		}
-
-		const event = opener();
-		event.AddListener(event => {
-			this._addToCollection(attachmentStore.createLink(event.m_title, event.m_url));
-		});
-	}
-
-	_launchAddGoogleDriveLinkDialog() {
-		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.AddGoogleDriveLinkDialogOpener');
-		if (!opener) {
-			return;
-		}
-
-		const event = opener();
-		event.AddListener(event => {
-			this._addToCollection(attachmentStore.createGoogleDriveLink(event.m_title, event.m_url));
-		});
-	}
-
-	_launchAddOneDriveLinkDialog() {
-		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.AddOneDriveLinkDialogOpener');
-		if (!opener) {
-			return;
-		}
-
-		const event = opener();
-		event.AddListener(event => {
-			this._addToCollection(attachmentStore.createOneDriveLink(event.m_title, event.m_url));
-		});
-	}
-
-	_launchRecordVideoDialog() {
-		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.RecordVideoDialogOpener');
-		if (opener) {
-			opener();
-		}
-	}
-
-	_launchRecordAudioDialog() {
-		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.RecordAudioDialogOpener');
-		if (opener) {
-			opener();
-		}
-	}
-
 	render() {
 		const collection = store.get(this.href);
 		if (!collection) {
@@ -400,5 +268,135 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeActivityEdit
 			</div>
 		`;
 	}
+	_addToCollection(attachment) {
+		const collection = store.get(this.href);
+		collection.addAttachment(attachment);
+	}
+	async _getQuickLinkTemplate(event) {
+		if (event.m_typeKey === this._sources.url) {
+			return event.m_url;
+		}
+
+		const isRemotePlugin = Boolean(
+			event.m_url &&
+			event.m_url.length > 0 &&
+			!Object.values(this._sources).includes(event.m_typeKey)
+		);
+
+		if (isRemotePlugin) {
+			if (/^(http|https|ftp):\/\//i.test(event.m_url)) {
+				return event.m_url;
+			} else {
+				return decodeURIComponent(event.m_url);
+			}
+		}
+
+		const quicklinkUrl = `/d2l/api/lp/unstable/${this._orgUnitId}/quickLinks/${event.m_typeKey}/${event.m_id}`;
+		const response = await fetch(quicklinkUrl);
+		const json = await response.json();
+		return json.QuickLinkTemplate;
+	}
+	_launchAddFileDialog() {
+		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.FileUploadDialogOpener');
+		if (opener) {
+			opener();
+		}
+	}
+	_launchAddGoogleDriveLinkDialog() {
+		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.AddGoogleDriveLinkDialogOpener');
+		if (!opener) {
+			return;
+		}
+
+		const event = opener();
+		event.AddListener(event => {
+			this._addToCollection(attachmentStore.createGoogleDriveLink(event.m_title, event.m_url));
+		});
+	}
+	_launchAddLinkDialog() {
+		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.AddLinkDialogOpener');
+		if (!opener) {
+			return;
+		}
+
+		const event = opener();
+		event.AddListener(event => {
+			this._addToCollection(attachmentStore.createLink(event.m_title, event.m_url));
+		});
+	}
+	_launchAddQuicklinkDialog() {
+		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.AddQuicklinkDialogOpener');
+		if (!opener) {
+			return;
+		}
+
+		// Required for the async handler below to work in Edge
+		const event = opener();
+		event.AddListener(async event => {
+			const quicklinkTemplate = await this._getQuickLinkTemplate(event);
+			this._addToCollection(attachmentStore.createLink(event.m_title, quicklinkTemplate));
+		});
+	}
+	_launchAddOneDriveLinkDialog() {
+		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.AddOneDriveLinkDialogOpener');
+		if (!opener) {
+			return;
+		}
+
+		const event = opener();
+		event.AddListener(event => {
+			this._addToCollection(attachmentStore.createOneDriveLink(event.m_title, event.m_url));
+		});
+	}
+get _orgUnitId() {
+		const match = this.href.match(/\.(com|d2l)\/(\d+)\//);
+		if (!match || match.length < 3) {
+			return -1;
+		}
+		const orgUnitId = match[2];
+		return orgUnitId;
+	}
+
+
+
+
+
+	
+	
+	get _sources() {
+		return {
+			announcement: 'news',
+			assignment: 'dropbox',
+			calendar: 'schedule',
+			chat: 'chat',
+			checklist: 'checklist',
+			content: 'content',
+			courseFile: 'coursefile',
+			discussion: 'discuss',
+			ePortfolio: 'epobject',
+			formTemplate: 'form',
+			googleDrive: 'google-drive',
+			lti: 'lti',
+			oneDrive: 'one-drive',
+			quiz: 'quiz',
+			selfAssessment: 'selfassess',
+			survey: 'survey',
+			url: 'url'
+		};
+	}
+
+	_launchRecordAudioDialog() {
+		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.RecordAudioDialogOpener');
+		if (opener) {
+			opener();
+		}
+	}
+	_launchRecordVideoDialog() {
+		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.RecordVideoDialogOpener');
+		if (opener) {
+			opener();
+		}
+	}
+
 }
 customElements.define('d2l-activity-attachments-picker', ActivityAttachmentsPicker);

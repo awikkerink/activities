@@ -40,12 +40,6 @@ class ActivityAssignmentAnnotationsEditor
 		super(store);
 	}
 
-	_toggleAnnotationToolsAvailability(event) {
-
-		const entity = store.get(this.href);
-		entity.setAnnotationToolsAvailable(event.target.checked);
-	}
-
 	render() {
 
 		const entity = store.get(this.href);
@@ -66,6 +60,12 @@ class ActivityAssignmentAnnotationsEditor
 			</d2l-input-checkbox>
 		`;
 	}
+	_toggleAnnotationToolsAvailability(event) {
+
+		const entity = store.get(this.href);
+		entity.setAnnotationToolsAvailable(event.target.checked);
+	}
+
 }
 
 customElements.define(

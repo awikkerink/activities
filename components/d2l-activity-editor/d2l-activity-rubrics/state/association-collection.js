@@ -13,94 +13,6 @@ export class AssociationCollection {
 		this.associationsMap = new Map();
 	}
 
-	async fetch() {
-		const sirenEntity = await fetchEntity(this.href, this.token);
-
-		if (sirenEntity) {
-			const entity = new Associations(sirenEntity, this.token);
-			this.load(entity);
-		}
-		return this;
-	}
-
-	load(entity) {
-		this._entity = entity;
-
-		this.associationsMap = new Map();
-
-		this.defaultScoringRubricOptions = [];
-
-		this._entity.getAllAssociations().forEach(asc => {
-
-			const associationEntity = new Association(asc, this.token);
-			const rubricHref = associationEntity.getRubricLink();
-			const formattedEntity = this._formatAssociationEntity(associationEntity);
-
-			if (!this.associationsMap.has(rubricHref)) {
-				this.associationsMap.set(rubricHref, formattedEntity);
-			}
-		});
-
-		const associations = this.fetchAssociations();
-		const validDefaultScoringOption = associations.filter(association => (association.isAssociating || association.isAssociated) && !association.isDeleting);
-
-		for (const option of validDefaultScoringOption) {
-			this.addDefaultScoringRubricOption(option.rubricHref);
-		}
-	}
-
-	getRubricIdFromHref(rubricHref) {
-		if (!rubricHref) {
-			return;
-		}
-
-		return rubricHref.split('/').pop();
-	}
-
-	async addDefaultScoringRubricOption(rubricHref) {
-		if (rubricHref) {
-			const rubricEntity = await fetchEntity(rubricHref, this.token);
-			const rubricId = this.getRubricIdFromHref(rubricHref);
-
-			const rubricAlreadyAnOption = this.defaultScoringRubricOptions.some(option => option.value === rubricId);
-
-			if (rubricEntity && !rubricAlreadyAnOption) {
-				runInAction(() => this.defaultScoringRubricOptions.push({title: rubricEntity.properties.name, value: rubricId}));
-			}
-		}
-	}
-
-	removeDefaultScoringRubricOption(rubricHref, assignment) {
-		if (rubricHref && assignment) {
-			const rubricId = this.getRubricIdFromHref(rubricHref);
-			if (assignment.defaultScoringRubricId === rubricId) {
-				assignment.resetDefaultScoringRubricId();
-			}
-
-			this.defaultScoringRubricOptions = this.defaultScoringRubricOptions.filter(
-				option => option.value !== rubricId
-			);
-		}
-	}
-
-	fetchAssociations() {
-		return Array.from(this.associationsMap.values());
-	}
-
-	fetchAttachedAssociationsCount() {
-		const associations = Array.from(this.associationsMap.values());
-		let attachedAssociationCount = 0;
-
-		for (const association of associations) {
-			if ((association.isAssociated || association.isAssociating)
-				&& !association.isDeleting
-			) {
-				attachedAssociationCount++;
-			}
-		}
-		return attachedAssociationCount;
-	}
-
 	addAssociations(associationsToAdd) {
 
 		for (const ata of associationsToAdd) {
@@ -127,7 +39,6 @@ export class AssociationCollection {
 		}
 
 	}
-
 	addAssociations_DoNotUse(associationsToAdd) {
 
 		for (const ata of associationsToAdd) {
@@ -152,6 +63,117 @@ export class AssociationCollection {
 		}
 
 	}
+	async addDefaultScoringRubricOption(rubricHref) {
+		if (rubricHref) {
+			const rubricEntity = await fetchEntity(rubricHref, this.token);
+			const rubricId = this.getRubricIdFromHref(rubricHref);
+
+			const rubricAlreadyAnOption = this.defaultScoringRubricOptions.some(option => option.value === rubricId);
+
+			if (rubricEntity && !rubricAlreadyAnOption) {
+				runInAction(() => this.defaultScoringRubricOptions.push({ title: rubricEntity.properties.name, value: rubricId }));
+			}
+		}
+	}
+	addPotentialAssociationToMap(rubricHref, formattedEntity) {
+		if (!this.associationsMap.has(rubricHref)) {
+			this.associationsMap.set(rubricHref, formattedEntity);
+		}
+	}
+	canCreateAssociation() {
+		return this._entity.canCreateAssociation();
+	}
+	canCreatePotentialAssociation() {
+		return this._entity.canCreatePotentialAssociation();
+	}
+	async fetch() {
+		const sirenEntity = await fetchEntity(this.href, this.token);
+
+		if (sirenEntity) {
+			const entity = new Associations(sirenEntity, this.token);
+			this.load(entity);
+		}
+		return this;
+	}
+	
+	async createPotentialAssociation() {
+		const newAssociation = await this._entity.createPotentialAssociation();
+		const associationEntity = new Association(newAssociation, this.token);
+
+		const rubricHref = associationEntity.getRubricLink();
+		const formattedEntity = this._formatAssociationEntity(associationEntity);
+		this.addPotentialAssociationToMap(rubricHref, formattedEntity);
+
+		return newAssociation;
+	}
+fetchAssociations() {
+		return Array.from(this.associationsMap.values());
+	}
+	getRubricIdFromHref(rubricHref) {
+		if (!rubricHref) {
+			return;
+		}
+
+		return rubricHref.split('/').pop();
+	}
+	load(entity) {
+		this._entity = entity;
+
+		this.associationsMap = new Map();
+
+		this.defaultScoringRubricOptions = [];
+
+		this._entity.getAllAssociations().forEach(asc => {
+
+			const associationEntity = new Association(asc, this.token);
+			const rubricHref = associationEntity.getRubricLink();
+			const formattedEntity = this._formatAssociationEntity(associationEntity);
+
+			if (!this.associationsMap.has(rubricHref)) {
+				this.associationsMap.set(rubricHref, formattedEntity);
+			}
+		});
+
+		const associations = this.fetchAssociations();
+		const validDefaultScoringOption = associations.filter(association => (association.isAssociating || association.isAssociated) && !association.isDeleting);
+
+		for (const option of validDefaultScoringOption) {
+			this.addDefaultScoringRubricOption(option.rubricHref);
+		}
+	}
+	
+	
+	fetchAttachedAssociationsCount() {
+		const associations = Array.from(this.associationsMap.values());
+		let attachedAssociationCount = 0;
+
+		for (const association of associations) {
+			if ((association.isAssociated || association.isAssociating)
+				&& !association.isDeleting
+			) {
+				attachedAssociationCount++;
+			}
+		}
+		return attachedAssociationCount;
+	}
+	removeDefaultScoringRubricOption(rubricHref, assignment) {
+		if (rubricHref && assignment) {
+			const rubricId = this.getRubricIdFromHref(rubricHref);
+			if (assignment.defaultScoringRubricId === rubricId) {
+				assignment.resetDefaultScoringRubricId();
+			}
+
+			this.defaultScoringRubricOptions = this.defaultScoringRubricOptions.filter(
+				option => option.value !== rubricId
+			);
+		}
+	}
+
+
+
+
+
+
 
 	deleteAssociation(rubricHref, assignment) {
 
@@ -183,37 +205,22 @@ export class AssociationCollection {
 		}
 	}
 
+	get dirty() {
+		const associations = Array.from(this.associationsMap.values());
+		for (const association of associations) {
+			if (association.isAssociating || association.isDeleting) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 	async save() {
 		const associations = this.associationsMap.values();
 
 		for await (const association of associations) {
 			await this._saveChanges(association);
 		}
-	}
-
-	addPotentialAssociationToMap(rubricHref, formattedEntity) {
-		if (!this.associationsMap.has(rubricHref)) {
-			this.associationsMap.set(rubricHref, formattedEntity);
-		}
-	}
-
-	async createPotentialAssociation() {
-		const newAssociation = await this._entity.createPotentialAssociation();
-		const associationEntity = new Association(newAssociation, this.token);
-
-		const rubricHref = associationEntity.getRubricLink();
-		const formattedEntity = this._formatAssociationEntity(associationEntity);
-		this.addPotentialAssociationToMap(rubricHref, formattedEntity);
-
-		return newAssociation;
-	}
-
-	canCreatePotentialAssociation() {
-		return this._entity.canCreatePotentialAssociation();
-	}
-
-	canCreateAssociation() {
-		return this._entity.canCreateAssociation();
 	}
 
 	_formatAssociationEntity(entity) {
@@ -241,16 +248,6 @@ export class AssociationCollection {
 		}
 	}
 
-	get dirty() {
-		const associations = Array.from(this.associationsMap.values());
-		for (const association of associations) {
-			if (association.isAssociating || association.isDeleting) {
-				return true;
-			}
-		}
-
-		return false;
-	}
 }
 
 decorate(AssociationCollection, {

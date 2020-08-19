@@ -4,7 +4,7 @@ import { repeat } from 'lit-html/directives/repeat';
 import { until } from 'lit-html/directives/until.js';
 import { guard } from 'lit-html/directives/guard';
 import { classMap } from 'lit-html/directives/class-map.js';
-import { heading1Styles, heading4Styles, bodyCompactStyles, bodyStandardStyles, labelStyles} from '@brightspace-ui/core/components/typography/styles.js';
+import { heading1Styles, heading4Styles, bodyCompactStyles, bodyStandardStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
 import { classes as organizationClasses } from 'siren-sdk/src/organizations/OrganizationEntity.js';
@@ -246,13 +246,13 @@ class CollectionEditor extends LocalizeActivityCollectionEditor(EntityMixinLit(L
 					if (oldValue[i].id !== newVal[i].id) return true;
 				}
 				return false;
-			}},
+			} },
 			_name: { type: String },
 			_selectionCount: { type: Number },
 			_candidateLoad: { type: Object },
-			_candidateItemsLoading: {type: Boolean},
-			_isLoadingMore: {type: Boolean},
-			_reorderLoading: {type: Boolean},
+			_candidateItemsLoading: { type: Boolean },
+			_isLoadingMore: { type: Boolean },
+			_reorderLoading: { type: Boolean },
 			ariaBusy: { type: String, reflect: true, attribute: 'aria-busy' },
 			ariaLive: { type: String, reflect: true, attribute: 'aria-live' },
 			role: { type: String, reflect: true, attribute: 'role' }
@@ -584,8 +584,8 @@ class CollectionEditor extends LocalizeActivityCollectionEditor(EntityMixinLit(L
 
 		const items = this._handleFirstLoad(this._renderItemList.bind(this), () => html`${this._renderItemListSkeleton(3)}`);
 
-		const collectionActivitiesClasses = { 'd2l-activity-collection-activities': true,  'd2l-activity-collection-grey-out': this._reorderLoading};
-		const listActionsClasses = { 'd2l-activity-collection-list-actions': true,  'd2l-activity-collection-grey-out': this._reorderLoading};
+		const collectionActivitiesClasses = { 'd2l-activity-collection-activities': true,  'd2l-activity-collection-grey-out': this._reorderLoading };
+		const listActionsClasses = { 'd2l-activity-collection-list-actions': true,  'd2l-activity-collection-grey-out': this._reorderLoading };
 		return html`
 			<div class="d2l-activity-collection-header">
 				<div class="d2l-activity-collection-header-content">
