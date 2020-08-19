@@ -28,11 +28,13 @@ class ActivityAssignmentAnonymousMarkingSummary
 	render() {
 
 		const entity = store.get(this.href);
-		if (!entity) {
+		if (!entity || !entity.anonymousMarkingProps) {
 			return html``;
 		}
 
-		const shouldRenderSummaryText = entity.isAnonymousMarkingAvailable && entity.isAnonymousMarkingEnabled;
+		const shouldRenderSummaryText =
+			entity.anonymousMarkingProps.isAnonymousMarkingAvailable &&
+			entity.anonymousMarkingProps.isAnonymousMarkingEnabled;
 		if (!shouldRenderSummaryText) {
 			return html``;
 		}

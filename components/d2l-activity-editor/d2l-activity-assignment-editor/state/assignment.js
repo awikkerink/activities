@@ -1,4 +1,5 @@
 import { action, computed, configure as configureMobx, decorate, observable } from 'mobx';
+import { AnonymousMarkingProps } from './assignment-anonymous-marking';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { fetchEntity } from '../../state/fetch-entity.js';
 import { SubmissionAndCompletionProps } from './assignment-submission-and-completion.js';
@@ -19,15 +20,6 @@ export class Assignment {
 			this.load(entity);
 		}
 		return this;
-	}
-
-	_isSubmissionTypeWithAnonMarking() {
-		// only file (0) and text (1) submissions can have anonymous marking, see https://docs.valence.desire2learn.com/res/dropbox.html#attributes
-		return ['0', '1'].includes(this.submissionAndCompletionProps.submissionType);
-	}
-
-	_getIsAnonymousMarkingAvailable() {
-		return this._entity.isAnonymousMarkingAvailable() && this._isSubmissionTypeWithAnonMarking();
 	}
 
 	load(entity) {
@@ -52,7 +44,6 @@ export class Assignment {
 		this.instructions = entity.canEditInstructions() ? entity.instructionsEditorHtml() : entity.instructionsHtml();
 		this.canEditInstructions = entity.canEditInstructions();
 		this.instructionsRichTextEditorConfig = entity.instructionsRichTextEditorConfig();
-		this.anonymousMarkingHelpText = entity.getAnonymousMarkingHelpText();
 		this.canEditAnnotations = entity.canEditAnnotations();
 		this.annotationToolsAvailable = entity.getAvailableAnnotationTools();
 		this.activityUsageHref = entity.activityUsageHref();
@@ -64,9 +55,13 @@ export class Assignment {
 		this.defaultScoringRubricId = String(entity.getDefaultScoringRubric()) || '-1';
 
 		// set up anonymous marking _after_ submission type
-		this.isAnonymousMarkingEnabled = entity.isAnonymousMarkingEnabled();
-		this.canEditAnonymousMarking = entity.canEditAnonymousMarking();
-		this.isAnonymousMarkingAvailable = this._getIsAnonymousMarkingAvailable();
+		this.anonymousMarkingProps = new AnonymousMarkingProps({
+			isAnonymousMarkingEnabled: entity.isAnonymousMarkingEnabled(),
+			canEditAnonymousMarking: entity.canEditAnonymousMarking(),
+			isAnonymousMarkingAvailable: entity.isAnonymousMarkingAvailable(),
+			anonymousMarkingHelpText: entity.getAnonymousMarkingHelpText(),
+			submissionType: this.submissionAndCompletionProps.submissionType
+		});
 
 		this.canEditSubmissionsRule = entity.canEditSubmissionsRule();
 		this.submissionsRule = entity.submissionsRule() || 'keepall';
@@ -98,7 +93,7 @@ export class Assignment {
 	setSubmissionType(value) {
 		this.submissionAndCompletionProps.setSubmissionType(value);
 
-		this.isAnonymousMarkingAvailable = this._getIsAnonymousMarkingAvailable();
+		this.anonymousMarkingProps.setIsAnonymousMarkingAvailableForSubmissionType(this.submissionAndCompletionProps.submissionType);
 	}
 
 	setFilesSubmissionLimit(value) {
@@ -135,7 +130,7 @@ export class Assignment {
 	}
 
 	setAnonymousMarking(value) {
-		this.isAnonymousMarkingEnabled = value;
+		this.anonymousMarkingProps.setAnonymousMarking(value);
 	}
 
 	setAnnotationToolsAvailable(value) {
@@ -152,6 +147,10 @@ export class Assignment {
 
 	setSubmissionAndCompletionProps(submissionAndCompletionProps) {
 		this.submissionAndCompletionProps = new SubmissionAndCompletionProps(submissionAndCompletionProps);
+	}
+
+	setAnonymousMarkingProps(anonymousMarkingProps) {
+		this.anonymousMarkingProps = new AnonymousMarkingProps(anonymousMarkingProps);
 	}
 
 	setDefaultScoringRubric(rubricId) {
@@ -177,7 +176,7 @@ export class Assignment {
 			defaultScoringRubricId: this.defaultScoringRubricId
 		};
 		if (this._isSubmissionTypeWithAnonMarking()) {
-			data.isAnonymous = this.isAnonymousMarkingEnabled;
+			data.isAnonymous = this.anonymousMarkingProps.isAnonymousMarkingEnabled;
 		}
 		if (this.canEditInstructions) {
 			data.instructions = this.instructions;
@@ -230,10 +229,6 @@ decorate(Assignment, {
 	instructions: observable,
 	canEditInstructions: observable,
 	instructionsRichTextEditorConfig: observable,
-	isAnonymousMarkingAvailable: observable,
-	isAnonymousMarkingEnabled: observable,
-	canEditAnonymousMarking: observable,
-	anonymousMarkingHelpText: observable,
 	canEditAnnotations: observable,
 	annotationToolsAvailable: observable,
 	activityUsageHref: observable,

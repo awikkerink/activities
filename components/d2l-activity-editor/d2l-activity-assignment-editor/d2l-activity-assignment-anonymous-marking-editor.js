@@ -67,7 +67,7 @@ class ActivityAssignmentAnonymousMarkingEditor
 			return html``;
 		}
 
-		const shouldRenderEditor = entity.isAnonymousMarkingAvailable;
+		const shouldRenderEditor = entity.anonymousMarkingProps.isAnonymousMarkingAvailable;
 		if (!shouldRenderEditor) {
 			return html``;
 		}
@@ -78,8 +78,8 @@ class ActivityAssignmentAnonymousMarkingEditor
 			</label>
 			<d2l-input-checkbox
 				@change="${this._saveAnonymousMarking}"
-				?checked="${entity.isAnonymousMarkingEnabled}"
-				?disabled="${!entity.canEditAnonymousMarking}"
+				?checked="${entity.anonymousMarkingProps.isAnonymousMarkingEnabled}"
+				?disabled="${!entity.anonymousMarkingProps.canEditAnonymousMarking}"
 				ariaLabel="${this.localize('chkAnonymousMarking')}">
 				${this.localize('chkAnonymousMarking')}
 			</d2l-input-checkbox>

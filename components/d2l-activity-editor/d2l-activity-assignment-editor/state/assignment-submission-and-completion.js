@@ -4,8 +4,7 @@ configureMobx({ enforceActions: 'observed' });
 
 export class SubmissionAndCompletionProps {
 
-	constructor(entity, token) {
-		this.token = token;
+	constructor(entity) {
 		this.submissionTypeOptions = entity.submissionTypeOptions;
 		this.submissionType = String(entity.submissionType);
 		this.canEditSubmissionType = entity.canEditSubmissionType;
