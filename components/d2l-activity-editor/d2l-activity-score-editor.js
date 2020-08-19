@@ -311,14 +311,12 @@ class ActivityScoreEditor extends ActivityEditorMixin(LocalizeActivityEditorMixi
 		const scoreAndGrade = store.get(this.href).scoreAndGrade;
 		scoreAndGrade.setGraded(scoreAndGrade.canEditGrades);
 	}
-_setNewGradeName(name) {
+	_setNewGradeName(name) {
 		const activity = store.get(this.href);
 		if (activity) {
 			activity.scoreAndGrade.setNewGradeName(name);
 		}
 	}
-
-	
 
 	_setUngraded() {
 		store.get(this.href).scoreAndGrade.setUngraded();

@@ -324,6 +324,17 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeActivityEdit
 			this._addToCollection(attachmentStore.createLink(event.m_title, event.m_url));
 		});
 	}
+	_launchAddOneDriveLinkDialog() {
+		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.AddOneDriveLinkDialogOpener');
+		if (!opener) {
+			return;
+		}
+
+		const event = opener();
+		event.AddListener(event => {
+			this._addToCollection(attachmentStore.createOneDriveLink(event.m_title, event.m_url));
+		});
+	}
 	_launchAddQuicklinkDialog() {
 		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.AddQuicklinkDialogOpener');
 		if (!opener) {
@@ -337,18 +348,20 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(LocalizeActivityEdit
 			this._addToCollection(attachmentStore.createLink(event.m_title, quicklinkTemplate));
 		});
 	}
-	_launchAddOneDriveLinkDialog() {
-		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.AddOneDriveLinkDialogOpener');
-		if (!opener) {
-			return;
-		}
 
-		const event = opener();
-		event.AddListener(event => {
-			this._addToCollection(attachmentStore.createOneDriveLink(event.m_title, event.m_url));
-		});
+	_launchRecordAudioDialog() {
+		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.RecordAudioDialogOpener');
+		if (opener) {
+			opener();
+		}
 	}
-get _orgUnitId() {
+	_launchRecordVideoDialog() {
+		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.RecordVideoDialogOpener');
+		if (opener) {
+			opener();
+		}
+	}
+	get _orgUnitId() {
 		const match = this.href.match(/\.(com|d2l)\/(\d+)\//);
 		if (!match || match.length < 3) {
 			return -1;
@@ -357,12 +370,6 @@ get _orgUnitId() {
 		return orgUnitId;
 	}
 
-
-
-
-
-	
-	
 	get _sources() {
 		return {
 			announcement: 'news',
@@ -383,19 +390,6 @@ get _orgUnitId() {
 			survey: 'survey',
 			url: 'url'
 		};
-	}
-
-	_launchRecordAudioDialog() {
-		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.RecordAudioDialogOpener');
-		if (opener) {
-			opener();
-		}
-	}
-	_launchRecordVideoDialog() {
-		const opener = D2L.LP.Web.UI.ObjectRepository.TryGet('D2L.ActivityEditor.RecordVideoDialogOpener');
-		if (opener) {
-			opener();
-		}
 	}
 
 }

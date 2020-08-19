@@ -147,7 +147,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 
 		return assignment.submissionAndCompletionProps.submissionTypeOptions.find(opt => String(opt.value) === assignment.submissionAndCompletionProps.submissionType);
 	}
-_getSubmissionTypeOptions(assignment) {
+	_getSubmissionTypeOptions(assignment) {
 		if (!assignment || !assignment.submissionAndCompletionProps) {
 			return html``;
 		}
@@ -156,7 +156,49 @@ _getSubmissionTypeOptions(assignment) {
 			${assignment.submissionAndCompletionProps.submissionTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.submissionAndCompletionProps.submissionType}>${option.title}</option>`)}
 		`;
 	}
-	
+
+	_onNotificationEmailChanged(e) {
+		const assignment = store.getAssignment(this.href);
+		const data = e.target.value;
+		assignment && assignment.setNotificationEmail(data);
+	}
+	_renderAssignmentCompletionType(assignment) {
+		if (!assignment ||
+			!assignment.submissionAndCompletionProps ||
+			!assignment.submissionAndCompletionProps.completionTypeOptions ||
+			assignment.submissionAndCompletionProps.completionTypeOptions.length === 0) {
+			return html``;
+		}
+
+		let completionTypeContent = html``;
+		if (assignment.submissionAndCompletionProps.canEditCompletionType) {
+			completionTypeContent = html`
+				<select
+					id="assignment-completion-type"
+					class="d2l-input-select d2l-block-select"
+					@change="${this._saveCompletionTypeOnChange}">
+						${this._getCompletionTypeOptions(assignment)}
+				</select>
+			`;
+		} else {
+			const completionType = this._getSelectedCompletionType(assignment);
+			if (completionType) {
+				completionTypeContent = html`<div class="d2l-body-compact">${completionType.title}</div>`;
+			}
+		}
+
+		return html`
+			<div id="assignment-completion-type-container">
+				<label class="d2l-label-text" for="assignment-completion-type">
+					${this.localize('completionType')}
+				</label>
+				${completionTypeContent}
+			</div>
+		`;
+	}
+	_renderAssignmentCompletionTypeSummary() {
+		return html``;
+	}
 	_renderAssignmentFilesSubmissionLimit(assignment) {
 		if (!assignment ||
 			!assignment.submissionAndCompletionProps ||
@@ -211,10 +253,6 @@ _getSubmissionTypeOptions(assignment) {
 			</div>
 		`;
 	}
-	_saveCompletionTypeOnChange(event) {
-		store.getAssignment(this.href).setCompletionType(event.target.value);
-	}
-
 
 	_renderAssignmentSubmissionNotificationEmail(assignment) {
 		if (!this._m4EmailNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
@@ -247,12 +285,6 @@ _getSubmissionTypeOptions(assignment) {
 		</div>
 	`;
 	}
-_saveSubmissionTypeOnChange(event) {
-		store.getAssignment(this.href).setSubmissionType(event.target.value);
-	}
-	
-	
-	
 	_renderAssignmentSubmissionsRule(assignment) {
 
 		if (!assignment ||
@@ -290,89 +322,6 @@ _saveSubmissionTypeOnChange(event) {
 				${submissionsRuleContent}
 			</div>
 		`;
-	}
-_renderAssignmentType() {
-		return html `
-			<div id="assignment-type-container">
-				<label class="d2l-label-text">
-					${this.localize('txtAssignmentType')}
-				</label>
-				<d2l-activity-assignment-type-editor
-					href="${this.href}"
-					.token="${this.token}">
-				</d2l-activity-assignment-type-editor>
-			</div>
-		`;
-	}
-	
-	
-	_renderAssignmentTypeSummary() {
-		return html`
-			<d2l-activity-assignment-type-summary
-				href="${this.href}"
-				.token="${this.token}">
-			</d2l-activity-assignment-type-summary>
-		`;
-	}
-	
-	_onNotificationEmailChanged(e) {
-		const assignment = store.getAssignment(this.href);
-		const data = e.target.value;
-		assignment && assignment.setNotificationEmail(data);
-	}
-_setfilesSubmisisonLimit(e) {
-		const assignment = store.getAssignment(this.href);
-		const data = e.target.value;
-		assignment && assignment.setFilesSubmissionLimit(data);
-	}
-
-	
-	_setSubmisisonsRule(e) {
-		const assignment = store.getAssignment(this.href);
-		const data = e.target.value;
-		assignment &&
-		assignment.submissionAndCompletionProps &&
-		assignment.submissionAndCompletionProps.setSubmissionsRule(data);
-	}
-	
-	
-
-	_renderAssignmentCompletionType(assignment) {
-		if (!assignment ||
-			!assignment.submissionAndCompletionProps ||
-			!assignment.submissionAndCompletionProps.completionTypeOptions ||
-			assignment.submissionAndCompletionProps.completionTypeOptions.length === 0) {
-			return html``;
-		}
-
-		let completionTypeContent = html``;
-		if (assignment.submissionAndCompletionProps.canEditCompletionType) {
-			completionTypeContent = html`
-				<select
-					id="assignment-completion-type"
-					class="d2l-input-select d2l-block-select"
-					@change="${this._saveCompletionTypeOnChange}">
-						${this._getCompletionTypeOptions(assignment)}
-				</select>
-			`;
-		} else {
-			const completionType = this._getSelectedCompletionType(assignment);
-			if (completionType) {
-				completionTypeContent = html`<div class="d2l-body-compact">${completionType.title}</div>`;
-			}
-		}
-
-		return html`
-			<div id="assignment-completion-type-container">
-				<label class="d2l-label-text" for="assignment-completion-type">
-					${this.localize('completionType')}
-				</label>
-				${completionTypeContent}
-			</div>
-		`;
-	}
-	_renderAssignmentCompletionTypeSummary() {
-		return html``;
 	}
 	_renderAssignmentSubmissionType(assignment) {
 		if (!assignment || !assignment.submissionAndCompletionProps) {
@@ -418,6 +367,38 @@ _setfilesSubmisisonLimit(e) {
 
 		return html``;
 	}
+_saveCompletionTypeOnChange(event) {
+		store.getAssignment(this.href).setCompletionType(event.target.value);
+	}
+	
+	
+	_saveSubmissionTypeOnChange(event) {
+		store.getAssignment(this.href).setSubmissionType(event.target.value);
+	}
+	
+	_renderAssignmentType() {
+		return html `
+			<div id="assignment-type-container">
+				<label class="d2l-label-text">
+					${this.localize('txtAssignmentType')}
+				</label>
+				<d2l-activity-assignment-type-editor
+					href="${this.href}"
+					.token="${this.token}">
+				</d2l-activity-assignment-type-editor>
+			</div>
+		`;
+	}
+
+	_renderAssignmentTypeSummary() {
+		return html`
+			<d2l-activity-assignment-type-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-assignment-type-summary>
+		`;
+	}
+
 	_renderSubmissionEmailNotificationSummary(assignment) {
 		if (!this._m4EmailNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
 			return html ``;
@@ -428,6 +409,19 @@ _setfilesSubmisisonLimit(e) {
 				.token="${this.token}">
 			</d2l-activity-submission-email-notification-summary>
 		`;
+	}
+	_setfilesSubmisisonLimit(e) {
+		const assignment = store.getAssignment(this.href);
+		const data = e.target.value;
+		assignment && assignment.setFilesSubmissionLimit(data);
+	}
+
+	_setSubmisisonsRule(e) {
+		const assignment = store.getAssignment(this.href);
+		const data = e.target.value;
+		assignment &&
+		assignment.submissionAndCompletionProps &&
+		assignment.submissionAndCompletionProps.setSubmissionsRule(data);
 	}
 
 }

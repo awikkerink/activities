@@ -55,7 +55,7 @@ export class SubmissionAndCompletionProps {
 
 		return isFileSubmission || isTextSubmission;
 	}
-_getCompletionTypeOptions(validCompletionTypes) {
+	_getCompletionTypeOptions(validCompletionTypes) {
 		let completionTypeOptions = [];
 
 		if (validCompletionTypes && validCompletionTypes.length > 0) {
@@ -67,7 +67,6 @@ _getCompletionTypeOptions(validCompletionTypes) {
 		return completionTypeOptions;
 	}
 
-	
 	_getValidCompletionTypes(currentSubmissionType) {
 		const selectedSubmissionType = String(currentSubmissionType);
 
@@ -81,7 +80,6 @@ _getCompletionTypeOptions(validCompletionTypes) {
 
 		return submissionType.completionTypes;
 	}
-
 
 	_isCompletionTypeValid(completionTypeId, validCompletionTypes) {
 		const completionType = String(completionTypeId);

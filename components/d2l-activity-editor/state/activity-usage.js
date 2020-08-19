@@ -85,6 +85,21 @@ export class ActivityUsage {
 	setCanEditDraft(value) {
 		this.canEditDraft = value;
 	}
+	setCanUpdateAlignments(value) {
+		this.canUpdateAlignments = value;
+	}
+	setDates(val) {
+		this.dates = val;
+	}
+	setDraftStatus(isDraft) {
+		this.isDraft = isDraft;
+	}
+	setErrorLangTerms(errorType) {
+		this.dates.setErrorLangTerms(errorType);
+	}
+	setIsError(value) {
+		this.isError = value;
+	}
 	async _loadCompetencyOutcomes(entity) {
 		/**
 		 * Legacy Competencies
@@ -109,51 +124,11 @@ export class ActivityUsage {
 			await this._loadOutcomes();
 		}
 	}
-	
-	setCanUpdateAlignments(value) {
-		this.canUpdateAlignments = value;
-	}
-	setDates(val) {
-		this.dates = val;
-	}
-async _loadOutcomes() {
-		const alignmentsEntity = await fetchEntity(this.alignmentsHref, this.token);
 
-		runInAction(() => {
-			const alignmentsCollection = new AlignmentsCollectionEntity(alignmentsEntity);
-			this.canUpdateAlignments = alignmentsCollection.canUpdateAlignments();
-		});
-	}
-
-
-	
-	async _loadSpecialAccess(entity) {
-		const specialAccessHref = entity.specialAccessHref();
-		let specialAccess = null;
-
-		if (specialAccessHref) {
-			specialAccess = new ActivitySpecialAccess(specialAccessHref, this.token);
-			await specialAccess.fetch();
-		}
-
-		runInAction(() => this.specialAccess = specialAccess);
-	}
-	
-	setDraftStatus(isDraft) {
-		this.isDraft = isDraft;
-	}
-
-	setErrorLangTerms(errorType) {
-		this.dates.setErrorLangTerms(errorType);
-	}
-	setIsError(value) {
-		this.isError = value;
-	}
 
 	setScoreAndGrade(val) {
 		this.scoreAndGrade = val;
 	}
-
 	async validate() {
 		if (!this._entity) {
 			return;
@@ -182,6 +157,27 @@ async _loadOutcomes() {
 		if (this.isError) {
 			throw new Error('Activity Usage validation failed');
 		}
+	}
+async _loadOutcomes() {
+		const alignmentsEntity = await fetchEntity(this.alignmentsHref, this.token);
+
+		runInAction(() => {
+			const alignmentsCollection = new AlignmentsCollectionEntity(alignmentsEntity);
+			this.canUpdateAlignments = alignmentsCollection.canUpdateAlignments();
+		});
+	}
+	
+	
+	async _loadSpecialAccess(entity) {
+		const specialAccessHref = entity.specialAccessHref();
+		let specialAccess = null;
+
+		if (specialAccessHref) {
+			specialAccess = new ActivitySpecialAccess(specialAccessHref, this.token);
+			await specialAccess.fetch();
+		}
+
+		runInAction(() => this.specialAccess = specialAccess);
 	}
 
 	async _alignmentsDirty() {

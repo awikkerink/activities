@@ -94,6 +94,21 @@ export class AttachmentCollection {
 	setCanAddFile(value) {
 		this.canAddFile = value;
 	}
+	setCanAddGoogleDriveLink(value) {
+		this.canAddGoogleDriveLink = value;
+	}
+	setCanAddLink(value) {
+		this.canAddLink = value;
+	}
+	setCanAddOneDriveLink(value) {
+		this.canAddOneDriveLink = value;
+	}
+	setCanRecordAudio(value) {
+		this.canRecordAudio = value;
+	}
+	setCanRecordVideo(value) {
+		this.canAddRecordVideo = value;
+	}
 	async _getFilesEntity() {
 		if (!this._filesEntity) {
 			const sirenEntity = await fetchEntity(this._filesHref, this.token);
@@ -104,23 +119,7 @@ export class AttachmentCollection {
 		return this._filesEntity;
 	}
 
-	setCanAddGoogleDriveLink(value) {
-		this.canAddGoogleDriveLink = value;
-	}
-	setCanAddLink(value) {
-		this.canAddLink = value;
-	}
 
-	setCanAddOneDriveLink(value) {
-		this.canAddOneDriveLink = value;
-	}
-
-	setCanRecordAudio(value) {
-		this.canRecordAudio = value;
-	}
-	setCanRecordVideo(value) {
-		this.canAddRecordVideo = value;
-	}
 
 	_hasChanged(attachment) {
 		if (attachment.deleted && !attachment.creating) {

@@ -363,7 +363,6 @@ class ActivityConditionsEditor
 		return html``;
 	}
 
-
 	_renderOperator({ value, selected, title }) {
 
 		return html`

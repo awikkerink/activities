@@ -57,34 +57,19 @@ export class Conditions {
 
 		return this._entity ? this._entity.attachExistingOpenButtonText() : null;
 	}
-	get canAttachExisting() {
-
-		return this._entity ? this._entity.canAttachExisting() : false;
-	}
-	
 	get attachExistingPositiveButtonText() {
 
 		return this._entity ? this._entity.attachExistingPositiveButtonText() : null;
 	}
-async fetch() {
+	get canAttachExisting() {
 
-		const sirenEntity = await fetchEntity(this.href, this.token);
-		if (sirenEntity) {
-
-			const entity = new LegacyConditions(sirenEntity, this.token);
-			this.load(entity);
-		}
-
-		return this;
+		return this._entity ? this._entity.canAttachExisting() : false;
 	}
-
-	
 
 	get canCreateNew() {
 
 		return this._entity ? this._entity.canCreateNew() : false;
 	}
-
 	get canSave() {
 
 		return this._entity ? this._entity.canSave() : false;
@@ -121,6 +106,19 @@ async fetch() {
 
 		return this._entity ? this._entity.createNewDialogUrl() : null;
 	}
+async fetch() {
+
+		const sirenEntity = await fetchEntity(this.href, this.token);
+		if (sirenEntity) {
+
+			const entity = new LegacyConditions(sirenEntity, this.token);
+			this.load(entity);
+		}
+
+		return this;
+	}
+	
+	
 
 	get createNewNegativeButtonText() {
 
@@ -220,16 +218,11 @@ async fetch() {
 			Int1: dto.Int1
 		};
 	}
-_getSelectedOperator(operators) {
+	_getSelectedOperator(operators) {
 
 		const item = operators.find(x => x.selected);
 		return item ? item.value : DefaultOperator;
 	}
-
-
-
-
-	
 
 	get _shouldSave() {
 

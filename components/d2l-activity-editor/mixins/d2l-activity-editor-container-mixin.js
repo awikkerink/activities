@@ -81,15 +81,13 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 		}
 		return false;
 	}
+	_hasSkipAlertAncestor(node) {
+		return null !== findComposedAncestor(node, elm => elm && elm.hasAttribute && elm.hasAttribute('skip-alert'));
+	}
 	_registerEditor(e) {
 		this._editors.add(e.detail.editor);
 		e.detail.container = this;
 		e.stopPropagation();
-	}
-
-
-	_hasSkipAlertAncestor(node) {
-		return null !== findComposedAncestor(node, elm => elm && elm.hasAttribute && elm.hasAttribute('skip-alert'));
 	}
 
 	async _save() {

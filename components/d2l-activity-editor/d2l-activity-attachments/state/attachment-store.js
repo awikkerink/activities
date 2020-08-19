@@ -37,15 +37,13 @@ export class AttachmentStore extends ObjectStore {
 		this.put(tempId, file);
 		return file;
 	}
-_createLink(Type, name, url) {
+	_createLink(Type, name, url) {
 		const tempId = nextTempId();
 		const link = new Type(tempId);
 		link.initLink(name, url);
 		this.put(tempId, link);
 		return link;
 	}
-	
-	
 
 }
 

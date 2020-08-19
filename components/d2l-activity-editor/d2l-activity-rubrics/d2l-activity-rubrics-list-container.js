@@ -159,10 +159,6 @@ class ActivityRubricsListContainer extends ActivityEditorFeaturesMixin(ActivityE
 			editNewAssociationOverlay.close();
 		}
 	}
-	_resizeDialog(e) {
-		e.currentTarget.resize();
-	}
-	
 	async _createNewAssociation() {
 
 		const entity = associationStore.get(this.href);
@@ -189,22 +185,9 @@ class ActivityRubricsListContainer extends ActivityEditorFeaturesMixin(ActivityE
 		}
 
 	}
-_toggleDialog(toggle) {
-
-		const dialog = this.shadowRoot.querySelector('#attach-rubric-dialog');
-		if (dialog) {
-			if (toggle) {
-				this.shadowRoot.querySelector('d2l-add-associations').reset();
-			}
-			dialog.opened = toggle;
-		}
-	}
-	
-	
 	_openAttachRubricDialog() {
 		this._toggleDialog(true);
 	}
-
 	_renderAddRubricDropdown(entity) {
 
 		const canCreatePotentialAssociation = entity.canCreatePotentialAssociation();
@@ -280,6 +263,10 @@ _toggleDialog(toggle) {
 			return html``;
 		}
 	}
+	_resizeDialog(e) {
+		e.currentTarget.resize();
+	}
+
 
 	_renderRubricsList(entity) {
 		const canCreatePotentialAssociation = entity.canCreatePotentialAssociation();
@@ -304,6 +291,18 @@ _toggleDialog(toggle) {
 			></d2l-activity-rubrics-list-editor>
 			`;
 	}
+_toggleDialog(toggle) {
+
+		const dialog = this.shadowRoot.querySelector('#attach-rubric-dialog');
+		if (dialog) {
+			if (toggle) {
+				this.shadowRoot.querySelector('d2l-add-associations').reset();
+			}
+			dialog.opened = toggle;
+		}
+	}
+
+	
 
 	_saveDefaultScoringRubricOnChange(event) {
 		const assignment = assignmentStore.getAssignment(this.assignmentHref);

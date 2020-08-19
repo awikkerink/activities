@@ -177,7 +177,7 @@ class AssignmentEditor extends ActivityEditorContainerMixin(RtlMixin(LocalizeAct
 
 		await assignment.save();
 	}
-get _editorTemplate() {
+	get _editorTemplate() {
 		const activity = store.getActivity(this.href);
 		if (!activity) {
 			return html``;
@@ -222,8 +222,7 @@ get _editorTemplate() {
 			</d2l-template-primary-secondary>
 		`;
 	}
-	
-	
+
 	_onRequestProvider(e) {
 		if (e.detail.key === 'd2l-provider-html-editor-enabled') {
 			e.detail.provider = this.htmlEditorEnabled;

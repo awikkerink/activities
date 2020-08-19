@@ -77,40 +77,38 @@ export class ActivityScoreGrade {
 		this.createNewGrade = true;
 		this.setGraded();
 	}
-removeFromGrades() {
-		this.inGrades = false;
-		if (this.scoreOutOfError === 'emptyScoreOutOfError') {
-			this.scoreOutOfError = null;
-		}
-	}
-	
-	setGraded() {
-		this.inGrades = true;
-		this.isUngraded = false;
-	}
-
 	async primeGradeSave() {
 		if (this.inGrades && this.createNewGrade) {
 			await this.fetchNewGradeCandidates();
 		}
 	}
-setScoreOutOf(value) {
+	removeFromGrades() {
+		this.inGrades = false;
+		if (this.scoreOutOfError === 'emptyScoreOutOfError') {
+			this.scoreOutOfError = null;
+		}
+	}
+
+	setGraded() {
+		this.inGrades = true;
+		this.isUngraded = false;
+	}
+
+	setNewGradeName(name) {
+		this.newGradeName = name;
+	}
+	setScoreOutOf(value) {
 		this.scoreOutOf = value;
 		this.scoreOutOfError = null;
 		this.validate();
 	}
-	
-	
+
 	setUngraded() {
 		this.inGrades = false;
 		this.isUngraded = true;
 		this.setScoreOutOf('');
 	}
-	
-	
-	setNewGradeName(name) {
-		this.newGradeName = name;
-	}
+
 	validate() {
 		// This validation was hardcoded in the original UI implementation.
 		// It might have been better to come up with a way to represent this in the Siren representation
