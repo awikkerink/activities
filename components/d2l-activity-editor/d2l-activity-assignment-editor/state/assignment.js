@@ -175,7 +175,7 @@ export class Assignment {
 			groupTypeId: this.selectedGroupCategoryId,
 			defaultScoringRubricId: this.defaultScoringRubricId
 		};
-		if (this.anonymousMarkingProps.isSubmissionTypeWithAnonMarking(this.SubmissionAndCompletionProps.submissionType)) {
+		if (this.anonymousMarkingProps.isSubmissionTypeWithAnonMarking(this.submissionAndCompletionProps.submissionType)) {
 			data.isAnonymous = this.anonymousMarkingProps.isAnonymousMarkingEnabled;
 		}
 		if (this.canEditInstructions) {
