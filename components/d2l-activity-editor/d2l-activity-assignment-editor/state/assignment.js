@@ -1,6 +1,7 @@
 import { action, computed, configure as configureMobx, decorate, observable } from 'mobx';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { fetchEntity } from '../../state/fetch-entity.js';
+import { SubmissionAndCompletionProps } from './assignment-submission-and-completion.js';
 
 configureMobx({ enforceActions: 'observed' });
 
@@ -20,58 +21,9 @@ export class Assignment {
 		return this;
 	}
 
-	_getValidCompletionTypes(currentSubmissionType) {
-		const selectedSubmissionType = String(currentSubmissionType);
-
-		const submissionType = this.submissionTypeOptions.find(
-			submissionType => submissionType.value.toString() === selectedSubmissionType
-		);
-
-		if (!submissionType) {
-			return [];
-		}
-
-		return submissionType.completionTypes;
-	}
-
-	_isCompletionTypeValid(completionTypeId, validCompletionTypes) {
-		const completionType = String(completionTypeId);
-
-		if (!validCompletionTypes) {
-			return false;
-		}
-
-		return validCompletionTypes.some(validCompletionType => validCompletionType.toString() === completionType);
-	}
-
-	_getCompletionTypeOptions(validCompletionTypes) {
-		let completionTypeOptions = [];
-
-		if (validCompletionTypes && validCompletionTypes.length > 0) {
-			completionTypeOptions = this.allCompletionTypeOptions.filter(
-				completionType => this._isCompletionTypeValid(completionType.value, validCompletionTypes)
-			);
-		}
-
-		return completionTypeOptions;
-	}
-
-	_setValidCompletionTypeForSubmissionType() {
-		const validCompletionTypes = this._getValidCompletionTypes(this.submissionType);
-		this.completionTypeOptions = this._getCompletionTypeOptions(validCompletionTypes);
-
-		if (this.completionType === null || !this._isCompletionTypeValid(this.completionType, validCompletionTypes)) {
-			if (validCompletionTypes && validCompletionTypes.length > 0) {
-				this.completionType = String(validCompletionTypes[0]);
-			} else {
-				this.completionType = null;
-			}
-		}
-	}
-
 	_isSubmissionTypeWithAnonMarking() {
 		// only file (0) and text (1) submissions can have anonymous marking, see https://docs.valence.desire2learn.com/res/dropbox.html#attributes
-		return ['0', '1'].includes(this.submissionType);
+		return ['0', '1'].includes(this.submissionAndCompletionProps.submissionType);
 	}
 
 	_getIsAnonymousMarkingAvailable() {
@@ -80,6 +32,21 @@ export class Assignment {
 
 	load(entity) {
 		this._entity = entity;
+		this.submissionAndCompletionProps = new SubmissionAndCompletionProps({
+			submissionTypeOptions: entity.submissionTypeOptions(),
+			submissionType: entity.submissionType().value,
+			canEditSubmissionType: entity.canEditSubmissionType(),
+			canEditSubmissionsRule: entity.canEditSubmissionsRule(),
+			submissionsRule: entity.submissionsRule(),
+			submissionsRuleOptions: entity.getSubmissionsRuleOptions(),
+			canEditFilesSubmissionLimit: entity.canEditFilesSubmissionLimit(),
+			filesSubmissionLimit: entity.filesSubmissionLimit(),
+			assignmentHasSubmissions: entity.assignmentHasSubmissions(),
+			allCompletionTypeOptions: entity.allCompletionTypeOptions(),
+			canEditCompletionType: entity.canEditCompletionType(),
+			completionType: entity.completionTypeValue()
+		});
+
 		this.name = entity.name();
 		this.canEditName = entity.canEditName();
 		this.instructions = entity.canEditInstructions() ? entity.instructionsEditorHtml() : entity.instructionsHtml();
@@ -95,12 +62,6 @@ export class Assignment {
 		this.isGradeMarkEnabled = entity.isGradeMarkEnabled();
 		this.canEditDefaultScoringRubric = entity.canEditDefaultScoringRubric();
 		this.defaultScoringRubricId = String(entity.getDefaultScoringRubric()) || '-1';
-		this.submissionTypeOptions = entity.submissionTypeOptions();
-		this.allCompletionTypeOptions = entity.allCompletionTypeOptions();
-		this.canEditSubmissionType = entity.canEditSubmissionType();
-		this.canEditCompletionType = entity.canEditCompletionType();
-		this.submissionType = String(entity.submissionType().value);
-		this.completionType = entity.completionTypeValue();
 
 		// set up anonymous marking _after_ submission type
 		this.isAnonymousMarkingEnabled = entity.isAnonymousMarkingEnabled();
@@ -124,14 +85,6 @@ export class Assignment {
 		this.assignmentHasSubmissions = entity.assignmentHasSubmissions();
 		this.selectedGroupCategoryName = entity.getAssignmentTypeSelectedGroupCategoryName();
 
-		const validCompletionTypes = this._getValidCompletionTypes(this.submissionType);
-		if (entity.canEditCompletionType()) {
-			this.completionTypeOptions =  this._getCompletionTypeOptions(validCompletionTypes);
-		} else {
-			const completionType = entity.completionType();
-			this.completionTypeOptions = completionType ? [completionType] : [];
-		}
-
 		if (!this.isIndividualAssignmentType && this.groupCategories.length > 0) {
 			this.selectedGroupCategoryId = String(this.groupCategories[0].value);
 			const category = this.groupCategories.find(category => category.selected === true);
@@ -143,18 +96,17 @@ export class Assignment {
 	}
 
 	setSubmissionType(value) {
-		this.submissionType = value;
-		this._setValidCompletionTypeForSubmissionType();
+		this.submissionAndCompletionProps.setSubmissionType(value);
 
 		this.isAnonymousMarkingAvailable = this._getIsAnonymousMarkingAvailable();
 	}
 
 	setFilesSubmissionLimit(value) {
-		this.filesSubmissionLimit = value;
+		this.submissionAndCompletionProps.setFilesSubmissionLimit(value);
 	}
 
 	setSubmissionsRule(value) {
-		this.submissionsRule = value;
+		this.submissionAndCompletionProps.setSubmissionsRule(value);
 	}
 
 	setTurnitin(isOriginalityCheckEnabled, isGradeMarkEnabled) {
@@ -163,7 +115,7 @@ export class Assignment {
 	}
 
 	setCompletionType(value) {
-		this.completionType = value;
+		this.submissionAndCompletionProps.setCompletionType(value);
 	}
 
 	setToIndividualAssignmentType() {
@@ -198,6 +150,10 @@ export class Assignment {
 		this.instructions = value;
 	}
 
+	setSubmissionAndCompletionProps(submissionAndCompletionProps) {
+		this.submissionAndCompletionProps = new SubmissionAndCompletionProps(submissionAndCompletionProps);
+	}
+
 	setDefaultScoringRubric(rubricId) {
 		if (rubricId) {
 			this.defaultScoringRubricId = String(rubricId);
@@ -215,7 +171,7 @@ export class Assignment {
 		const data = {
 			name: this.name,
 			annotationToolsAvailable: this.annotationToolsAvailable,
-			submissionType: this.submissionType,
+			submissionType: this.submissionAndCompletionProps.submissionType,
 			isIndividualAssignmentType: this.isIndividualAssignmentType,
 			groupTypeId: this.selectedGroupCategoryId,
 			defaultScoringRubricId: this.defaultScoringRubricId
@@ -226,20 +182,21 @@ export class Assignment {
 		if (this.canEditInstructions) {
 			data.instructions = this.instructions;
 		}
-		if (this.canEditCompletionType) {
-			data.completionType = this.completionType;
+		if (this.submissionAndCompletionProps.canEditCompletionType) {
+			data.completionType = this.submissionAndCompletionProps.completionType;
 		}
-		if (this.showFilesSubmissionLimit) {
-			data.filesSubmissionLimit = this.filesSubmissionLimit;
+		if (this.submissionAndCompletionProps.showFilesSubmissionLimit) {
+			data.filesSubmissionLimit = this.submissionAndCompletionProps.filesSubmissionLimit;
 		}
-		if (this.showSubmissionsRule) {
-			data.submissionsRule = this.submissionsRule;
+		if (this.submissionAndCompletionProps.showSubmissionsRule) {
+			data.submissionsRule = this.submissionAndCompletionProps.submissionsRule;
 		}
 		if (this.showNotificationEmail) {
 			data.notificationEmail = this.notificationEmail;
 		}
 		return data;
 	}
+
 	async save() {
 		if (!this._entity) {
 			return;
@@ -256,22 +213,8 @@ export class Assignment {
 		return this._entity.delete();
 	}
 
-	get showFilesSubmissionLimit() {
-		return this.submissionTypeOptions
-			.find(x => String(x.value) === '0' && `${x.value}` === `${this.submissionType}`);
-	}
-
-	get showSubmissionsRule() {
-		const isFileSubmission = this.submissionTypeOptions
-			.find(x => String(x.value) === '0' && `${x.value}` === `${this.submissionType}`);
-		const isTextSubmission = this.submissionTypeOptions
-			.find(x => String(x.value) === '1' && `${x.value}` === `${this.submissionType}`);
-
-		return isFileSubmission || isTextSubmission;
-	}
-
 	get showNotificationEmail() {
-		return typeof this.notificationEmail !== 'undefined' && this.showSubmissionsRule;
+		return typeof this.notificationEmail !== 'undefined' && this.submissionAndCompletionProps.showSubmissionsRule;
 	}
 
 	setNotificationEmail(value) {
@@ -281,6 +224,7 @@ export class Assignment {
 
 decorate(Assignment, {
 	// props
+	submissionAndCompletionProps: observable,
 	name: observable,
 	canEditName: observable,
 	instructions: observable,
@@ -294,16 +238,11 @@ decorate(Assignment, {
 	annotationToolsAvailable: observable,
 	activityUsageHref: observable,
 	completionTypeOptions: observable,
-	canEditSubmissionType: observable,
 	canEditCompletionType: observable,
-	canEditFilesSubmissionLimit: observable,
-	filesSubmissionLimit:observable,
 	canEditTurnitin: observable,
 	editTurnitinUrl: observable,
 	isOriginalityCheckEnabled: observable,
 	isGradeMarkEnabled: observable,
-	submissionType: observable,
-	submissionsRule: observable,
 	completionType: observable,
 	isIndividualAssignmentType: observable,
 	groupCategories: observable,
@@ -313,8 +252,6 @@ decorate(Assignment, {
 	canEditDefaultScoringRubric: observable,
 	defaultScoringRubricId: observable,
 	selectedGroupCategoryName: observable,
-	showFilesSubmissionLimit: computed,
-	showSubmissionsRule: computed,
 	notificationEmail: observable,
 	canEditNotificationEmail: observable,
 	showNotificationEmail: computed,
@@ -331,8 +268,7 @@ decorate(Assignment, {
 	setToIndividualAssignmentType: action,
 	setToGroupAssignmentType: action,
 	setAssignmentTypeGroupCategory: action,
-	setFilesSubmissionLimit: action,
-	setSubmissionsRule: action,
+	setSubmissionAndCompletionProps: action,
 	setDefaultScoringRubric: action,
 	resetDefaultScoringRubricId: action,
 	setNotificationEmail: action
