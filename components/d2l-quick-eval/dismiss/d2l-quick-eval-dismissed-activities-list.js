@@ -38,7 +38,7 @@ class D2LQuickEvalDismissedActivitiesList extends LitQuickEvalLocalize(LitElemen
 	_computeSubtitleText(act) {
 		const result = [act.course];
 		if (act.dismissedDate) {
-			result.push(this.localize('dismissedOn', {date: formatDateTime(new Date(act.dismissedDate))}));
+			result.push(this.localize('dismissedOn', { date: formatDateTime(new Date(act.dismissedDate)) }));
 		}
 		return result;
 	}

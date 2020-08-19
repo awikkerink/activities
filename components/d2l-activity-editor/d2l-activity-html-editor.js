@@ -60,17 +60,6 @@ class ActivityHtmlEditor extends LocalizeActivityEditorMixin(LitElement) {
 		this._htmlEditorUniqueId = `htmleditor-${getUniqueId()}`;
 	}
 
-	_onContentChange() {
-		const content = this.shadowRoot.querySelector('d2l-html-editor').getContent();
-		this.dispatchEvent(new CustomEvent('d2l-activity-html-editor-change', {
-			bubbles: true,
-			composed: true,
-			detail: {
-				content: content
-			}
-		}));
-	}
-
 	render() {
 		return html`
 			<d2l-html-editor
@@ -98,7 +87,6 @@ class ActivityHtmlEditor extends LocalizeActivityEditorMixin(LitElement) {
 				</div>
 			</d2l-html-editor>`;
 	}
-
 	updated(changedProperties) {
 		super.updated(changedProperties);
 		// This is acknowledged to be non-idiomatic (manipulating DOM outside render), but this
@@ -117,6 +105,17 @@ class ActivityHtmlEditor extends LocalizeActivityEditorMixin(LitElement) {
 			}
 		}
 	}
+	_onContentChange() {
+		const content = this.shadowRoot.querySelector('d2l-html-editor').getContent();
+		this.dispatchEvent(new CustomEvent('d2l-activity-html-editor-change', {
+			bubbles: true,
+			composed: true,
+			detail: {
+				content: content
+			}
+		}));
+	}
+
 }
 
 customElements.define('d2l-activity-html-editor', ActivityHtmlEditor);

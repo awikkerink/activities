@@ -13,20 +13,6 @@ class ActivityAvailabilityDatesSummary
 		this._overrides = document.documentElement.dataset.intlOverrides || '{}';
 	}
 
-	updated(changedProperties) {
-
-		super.updated(changedProperties);
-
-		const didHrefTokenChange =
-			changedProperties.has('href') ||
-			changedProperties.has('token');
-
-		if (didHrefTokenChange && this.href && this.token) {
-
-			super._fetch(() => store.fetch(this.href, this.token));
-		}
-	}
-
 	render() {
 
 		const activity = store.get(this.href);
@@ -50,6 +36,19 @@ class ActivityAvailabilityDatesSummary
 		}
 
 		return html`${text}`;
+	}
+	updated(changedProperties) {
+
+		super.updated(changedProperties);
+
+		const didHrefTokenChange =
+			changedProperties.has('href') ||
+			changedProperties.has('token');
+
+		if (didHrefTokenChange && this.href && this.token) {
+
+			super._fetch(() => store.fetch(this.href, this.token));
+		}
 	}
 
 	_formatDate(suspiciousString) {

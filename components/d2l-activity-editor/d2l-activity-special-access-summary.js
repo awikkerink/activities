@@ -10,6 +10,15 @@ class ActivitySpecialAccessSummary extends ActivityEditorMixin(LocalizeActivityE
 		super(store);
 	}
 
+	render() {
+
+		const entity = store.get(this.href);
+		if (!entity || !entity.specialAccess) {
+			return html``;
+		} else {
+			return html`${this._renderSummary(entity.specialAccess)}`;
+		}
+	}
 	_renderSummary(specialAccess) {
 		const { isRestricted, userCount } = specialAccess;
 
@@ -22,15 +31,6 @@ class ActivitySpecialAccessSummary extends ActivityEditorMixin(LocalizeActivityE
 		}
 	}
 
-	render() {
-
-		const entity = store.get(this.href);
-		if (!entity || !entity.specialAccess) {
-			return html``;
-		} else {
-			return html`${this._renderSummary(entity.specialAccess)}`;
-		}
-	}
 }
 
 customElements.define(

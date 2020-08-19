@@ -39,14 +39,6 @@ class ActivityGradeCategorySelector extends ActivityEditorMixin(LocalizeActivity
 		super(store);
 	}
 
-	_setSelected(e) {
-		if (e.target && e.target.value) {
-			this.newGradeCandidatesCollection.setSelected(e.target.value);
-		} else {
-			this.newGradeCandidatesCollection.setSelected();
-		}
-	}
-
 	render() {
 		const activity = store.get(this.href);
 
@@ -78,6 +70,14 @@ class ActivityGradeCategorySelector extends ActivityEditorMixin(LocalizeActivity
 			</div>
 		`;
 	}
+	_setSelected(e) {
+		if (e.target && e.target.value) {
+			this.newGradeCandidatesCollection.setSelected(e.target.value);
+		} else {
+			this.newGradeCandidatesCollection.setSelected();
+		}
+	}
+
 }
 
 customElements.define('d2l-activity-grade-category-selector', ActivityGradeCategorySelector);

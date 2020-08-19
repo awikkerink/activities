@@ -48,69 +48,6 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(R
 		this._outcomesTerm = this._dispatchRequestProvider('d2l-provider-outcomes-term');
 	}
 
-	_dispatchRequestProvider(key) {
-		const event = new CustomEvent('d2l-request-provider', {
-			detail: { key: key },
-			bubbles: true,
-			composed: true,
-			cancelable: true
-		});
-		this.dispatchEvent(event);
-		return event.detail.provider;
-	}
-
-	_onDialogAdd() {
-		this._closeDialog();
-
-		// react to outcomes being added/removed via selector dialog
-	}
-
-	_onDialogCancel() {
-		this._closeDialog();
-
-		// react to outcomes selector dialog being closed via cancel
-	}
-
-	_onOutcomeTagDeleted() {
-		// react to an outcomes tag being deleted
-	}
-
-	_openDialog() {
-		this._opened = true;
-	}
-
-	_closeDialog() {
-		this._opened = false;
-	}
-
-	_renderDialogOpener() {
-		return html`<d2l-button-subtle
-			text="${this._outcomesTerm}"
-			@click="${this._openDialog}"
-			h-align="text">
-		</d2l-button-subtle>`;
-	}
-
-	_renderTags() {
-		return html`<label class="d2l-label-text" ?hidden="${!this._hasAlignments}">${this._outcomesTerm}</label>
-			<d2l-activity-alignment-tags
-				href="${this.href}"
-				.token="${this.token}"
-				?deferred-save="${this.deferredSave}"
-				?hide-indirect-alignments="${this.hideIndirectAlignments}"
-				browse-outcomes-text="${this._browseOutcomesText}"
-				@d2l-activity-alignment-outcomes-updated="${this._onOutcomeTagDeleted}"
-				@d2l-activity-alignment-tags-update="${this._openDialog}"
-				@empty-changed="${this._alignmentTagsEmptyChanged}"
-				?read-only=${!this._hasAlignments}>
-			</d2l-activity-alignment-tags>`;
-	}
-
-	_alignmentTagsEmptyChanged(e) {
-		this._hasAlignments = !e.detail.value;
-		this.requestUpdate();
-	}
-
 	render() {
 		const activity = store.get(this.href);
 		if (!activity || !this._featureEnabled) {
@@ -146,5 +83,66 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(R
 			</d2l-dialog>` : null}
 		`;
 	}
+	_alignmentTagsEmptyChanged(e) {
+		this._hasAlignments = !e.detail.value;
+		this.requestUpdate();
+	}
+	_closeDialog() {
+		this._opened = false;
+	}
+	_dispatchRequestProvider(key) {
+		const event = new CustomEvent('d2l-request-provider', {
+			detail: { key: key },
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+		this.dispatchEvent(event);
+		return event.detail.provider;
+	}
+
+	_onDialogAdd() {
+		this._closeDialog();
+
+		// react to outcomes being added/removed via selector dialog
+	}
+
+	_onDialogCancel() {
+		this._closeDialog();
+
+		// react to outcomes selector dialog being closed via cancel
+	}
+
+	_onOutcomeTagDeleted() {
+		// react to an outcomes tag being deleted
+	}
+
+	_openDialog() {
+		this._opened = true;
+	}
+
+	_renderDialogOpener() {
+		return html`<d2l-button-subtle
+			text="${this._outcomesTerm}"
+			@click="${this._openDialog}"
+			h-align="text">
+		</d2l-button-subtle>`;
+	}
+
+	_renderTags() {
+		return html`<label class="d2l-label-text" ?hidden="${!this._hasAlignments}">${this._outcomesTerm}</label>
+			<d2l-activity-alignment-tags
+				href="${this.href}"
+				.token="${this.token}"
+				?deferred-save="${this.deferredSave}"
+				?hide-indirect-alignments="${this.hideIndirectAlignments}"
+				browse-outcomes-text="${this._browseOutcomesText}"
+				@d2l-activity-alignment-outcomes-updated="${this._onOutcomeTagDeleted}"
+				@d2l-activity-alignment-tags-update="${this._openDialog}"
+				@empty-changed="${this._alignmentTagsEmptyChanged}"
+				?read-only=${!this._hasAlignments}>
+			</d2l-activity-alignment-tags>`;
+	}
+
 }
 customElements.define('d2l-activity-outcomes', ActivityOutcomes);

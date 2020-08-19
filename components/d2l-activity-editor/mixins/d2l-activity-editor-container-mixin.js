@@ -32,24 +32,6 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 		this.isSaving = false;
 	}
 
-	_registerEditor(e) {
-		this._editors.add(e.detail.editor);
-		e.detail.container = this;
-		e.stopPropagation();
-	}
-
-	unregisterEditor(editor) {
-		this._editors.delete(editor);
-	}
-
-	get saveCompleteEvent() {
-		return new CustomEvent('d2l-activity-editor-save-complete', {
-			bubbles: true,
-			composed: true,
-			cancelable: true
-		});
-	}
-
 	get cancelCompleteEvent() {
 		return new CustomEvent('d2l-activity-editor-cancel-complete', {
 			bubbles: true,
@@ -57,11 +39,37 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 			cancelable: true
 		});
 	}
-
-	_hasSkipAlertAncestor(node) {
-		return null !== findComposedAncestor(node, elm => elm && elm.hasAttribute && elm.hasAttribute('skip-alert'));
+	async delete() {}
+	get saveCompleteEvent() {
+		return new CustomEvent('d2l-activity-editor-save-complete', {
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+	}
+	unregisterEditor(editor) {
+		this._editors.delete(editor);
 	}
 
+	async _cancel() {
+		const editorsPendingChanges = await Promise.all(
+			Array.from(this._editors).map(editor => editor.hasPendingChanges())
+		);
+
+		if (editorsPendingChanges.some(Boolean)) {
+			const dialog = this.shadowRoot.querySelector('d2l-dialog-confirm');
+			const action = await dialog.open();
+			if (action === 'cancel' || action === 'abort') {
+				return;
+			}
+		}
+
+		if (this.isNew) {
+			await this.delete();
+		}
+
+		this.dispatchEvent(this.cancelCompleteEvent);
+	}
 	_focusOnInvalid() {
 		const isAriaInvalid = node => node.getAttribute('aria-invalid') === 'true' && node.getClientRects().length > 0 && !this._hasSkipAlertAncestor(node);
 		for (const editor of this._editors) {
@@ -73,8 +81,14 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 		}
 		return false;
 	}
-
-	async delete() {}
+	_hasSkipAlertAncestor(node) {
+		return null !== findComposedAncestor(node, elm => elm && elm.hasAttribute && elm.hasAttribute('skip-alert'));
+	}
+	_registerEditor(e) {
+		this._editors.add(e.detail.editor);
+		e.detail.container = this;
+		e.stopPropagation();
+	}
 
 	async _save() {
 		this.isSaving = true;
@@ -117,23 +131,4 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 		this.logSaveEvent(this.href, this.type, this.telemetryId);
 	}
 
-	async _cancel() {
-		const editorsPendingChanges = await Promise.all(
-			Array.from(this._editors).map(editor => editor.hasPendingChanges())
-		);
-
-		if (editorsPendingChanges.some(Boolean)) {
-			const dialog = this.shadowRoot.querySelector('d2l-dialog-confirm');
-			const action = await dialog.open();
-			if (action === 'cancel' || action === 'abort') {
-				return;
-			}
-		}
-
-		if (this.isNew) {
-			await this.delete();
-		}
-
-		this.dispatchEvent(this.cancelCompleteEvent);
-	}
 };

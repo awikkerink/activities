@@ -21,78 +21,59 @@ export class Conditions {
 		this._conditionsToAdd = new Map(); // Id -> text
 	}
 
-	async fetch() {
+	add(dto) {
 
-		const sirenEntity = await fetchEntity(this.href, this.token);
-		if (sirenEntity) {
-
-			const entity = new LegacyConditions(sirenEntity, this.token);
-			this.load(entity);
+		if (dto === undefined) {
+			return;
 		}
 
-		return this;
+		if (Array.isArray(dto)) {
+			dto.forEach(this.add, this);
+			return;
+		}
+
+		const isExistingCondition = this._conditions.has(dto.Id);
+		if (isExistingCondition) {
+			this._conditionsToRemove.delete(dto.Id);
+		} else if (dto.Id) {
+			this._conditionsToAdd.set(`${dto.Id}`, dto.Text);
+		} else {
+			this._conditionsToCreate.set(this._constructKey(dto), dto);
+		}
 	}
-
-	get canAttachExisting() {
-
-		return this._entity ? this._entity.canAttachExisting() : false;
-	}
-
-	get attachExistingDialogUrl() {
-
-		return this._entity ? this._entity.attachExistingDialogUrl() : null;
-	}
-
-	get attachExistingOpenButtonText() {
-
-		return this._entity ? this._entity.attachExistingOpenButtonText() : null;
-	}
-
 	get attachExistingDialogTitle() {
 
 		return this._entity ? this._entity.attachExistingDialogTitle() : null;
 	}
+	get attachExistingDialogUrl() {
 
+		return this._entity ? this._entity.attachExistingDialogUrl() : null;
+	}
+	get attachExistingNegativeButtonText() {
+
+		return this._entity ? this._entity.attachExistingNegativeButtonText() : null;
+	}
+	get attachExistingOpenButtonText() {
+
+		return this._entity ? this._entity.attachExistingOpenButtonText() : null;
+	}
 	get attachExistingPositiveButtonText() {
 
 		return this._entity ? this._entity.attachExistingPositiveButtonText() : null;
 	}
+	get canAttachExisting() {
 
-	get attachExistingNegativeButtonText() {
-
-		return this._entity ? this._entity.attachExistingNegativeButtonText() : null;
+		return this._entity ? this._entity.canAttachExisting() : false;
 	}
 
 	get canCreateNew() {
 
 		return this._entity ? this._entity.canCreateNew() : false;
 	}
+	get canSave() {
 
-	get createNewDialogUrl() {
-
-		return this._entity ? this._entity.createNewDialogUrl() : null;
+		return this._entity ? this._entity.canSave() : false;
 	}
-
-	get createNewOpenButtonText() {
-
-		return this._entity ? this._entity.createNewOpenButtonText() : null;
-	}
-
-	get createNewDialogTitle() {
-
-		return this._entity ? this._entity.createNewDialogTitle() : null;
-	}
-
-	get createNewPositiveButtonText() {
-
-		return this._entity ? this._entity.createNewPositiveButtonText() : null;
-	}
-
-	get createNewNegativeButtonText() {
-
-		return this._entity ? this._entity.createNewNegativeButtonText() : null;
-	}
-
 	get conditions() {
 
 		const results = [];
@@ -117,23 +98,36 @@ export class Conditions {
 
 		return results;
 	}
+	get createNewDialogTitle() {
 
-	get operators() {
+		return this._entity ? this._entity.createNewDialogTitle() : null;
+	}
+	get createNewDialogUrl() {
 
-		const results = [];
+		return this._entity ? this._entity.createNewDialogUrl() : null;
+	}
+	get createNewNegativeButtonText() {
 
-		for (const { value, title } of this._operators) {
+		return this._entity ? this._entity.createNewNegativeButtonText() : null;
+	}
+	get createNewOpenButtonText() {
 
-			results.push({ value, title, selected: value === this._operator });
+		return this._entity ? this._entity.createNewOpenButtonText() : null;
+	}
+	get createNewPositiveButtonText() {
+
+		return this._entity ? this._entity.createNewPositiveButtonText() : null;
+	}
+	async fetch() {
+
+		const sirenEntity = await fetchEntity(this.href, this.token);
+		if (sirenEntity) {
+
+			const entity = new LegacyConditions(sirenEntity, this.token);
+			this.load(entity);
 		}
 
-		return results;
-	}
-
-	_getSelectedOperator(operators) {
-
-		const item = operators.find(x => x.selected);
-		return item ? item.value : DefaultOperator;
+		return this;
 	}
 
 	load(entity) {
@@ -146,39 +140,16 @@ export class Conditions {
 		this._conditionsToRemove = new Set();
 		this._conditionsToAdd = new Map();
 	}
+	get operators() {
 
-	_constructKey(dto) {
+		const results = [];
 
-		return `${dto.ConditionTypeId},${dto.Id1},${dto.Id2},${dto.Id2},${dto.Percentage1},${dto.Percentage2},${dto.Int1}`;
-	}
+		for (const { value, title } of this._operators) {
 
-	setOperator(value) {
-
-		const item = this._operators.find(x => x.value === value);
-		if (item) {
-			this._operator = item.value;
-		}
-	}
-
-	add(dto) {
-
-		if (dto === undefined) {
-			return;
+			results.push({ value, title, selected: value === this._operator });
 		}
 
-		if (Array.isArray(dto)) {
-			dto.forEach(this.add, this);
-			return;
-		}
-
-		const isExistingCondition = this._conditions.has(dto.Id);
-		if (isExistingCondition) {
-			this._conditionsToRemove.delete(dto.Id);
-		} else if (dto.Id) {
-			this._conditionsToAdd.set(`${dto.Id}`, dto.Text);
-		} else {
-			this._conditionsToCreate.set(this._constructKey(dto), dto);
-		}
+		return results;
 	}
 
 	remove(key) {
@@ -195,46 +166,6 @@ export class Conditions {
 			this._conditionsToRemove.add(id);
 		}
 	}
-
-	get canSave() {
-
-		return this._entity ? this._entity.canSave() : false;
-	}
-
-	_formatNewCondition(dto) {
-
-		return {
-			ConditionType: dto.ConditionTypeId,
-			Id1: dto.Id1,
-			Id2: dto.Id2,
-			Percentage1: dto.Percentage1,
-			Percentage2: dto.Percentage2,
-			Int1: dto.Int1
-		};
-	}
-
-	get _shouldSave() {
-
-		if (this._conditionsToCreate.size > 0) {
-			return true;
-		}
-
-		if (this._conditionsToRemove.size > 0) {
-			return true;
-		}
-
-		if (this._conditionsToAdd.size > 0) {
-			return true;
-		}
-
-		const operator = this._getSelectedOperator(this._operators);
-		if (operator !== this._operator) {
-			return true;
-		}
-
-		return false;
-	}
-
 	async save() {
 
 		if (!this.canSave) {
@@ -261,6 +192,56 @@ export class Conditions {
 		});
 		await this.fetch();
 	}
+	setOperator(value) {
+
+		const item = this._operators.find(x => x.value === value);
+		if (item) {
+			this._operator = item.value;
+		}
+	}
+	_constructKey(dto) {
+
+		return `${dto.ConditionTypeId},${dto.Id1},${dto.Id2},${dto.Id2},${dto.Percentage1},${dto.Percentage2},${dto.Int1}`;
+	}
+	_formatNewCondition(dto) {
+
+		return {
+			ConditionType: dto.ConditionTypeId,
+			Id1: dto.Id1,
+			Id2: dto.Id2,
+			Percentage1: dto.Percentage1,
+			Percentage2: dto.Percentage2,
+			Int1: dto.Int1
+		};
+	}
+	_getSelectedOperator(operators) {
+
+		const item = operators.find(x => x.selected);
+		return item ? item.value : DefaultOperator;
+	}
+
+	get _shouldSave() {
+
+		if (this._conditionsToCreate.size > 0) {
+			return true;
+		}
+
+		if (this._conditionsToRemove.size > 0) {
+			return true;
+		}
+
+		if (this._conditionsToAdd.size > 0) {
+			return true;
+		}
+
+		const operator = this._getSelectedOperator(this._operators);
+		if (operator !== this._operator) {
+			return true;
+		}
+
+		return false;
+	}
+
 }
 
 decorate(Conditions, {

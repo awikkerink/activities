@@ -72,6 +72,72 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 		super(store);
 	}
 
+	render() {
+		const activity = store.get(this.href);
+		if (!activity) {
+			return html``;
+		}
+
+		const {
+			scoreOutOf,
+			scoreOutOfError,
+			newGradeName
+		} = activity.scoreAndGrade;
+
+		return html`
+			<d2l-dialog title-text="${this.localize('editor.chooseFromGrades')}" width="460" @d2l-dialog-open="${this._onDialogOpen}">
+				<label class="d2l-input-radio-label ${!this._canLinkNewGrade ? 'd2l-input-radio-label-disabled' : ''}">
+					<input
+						type="radio"
+						name="chooseFromGrades"
+						value="createNew"
+						?disabled="${!this._canLinkNewGrade}"
+						.checked="${this._createNewRadioChecked}"
+						@change="${this._dialogRadioChanged}">
+					${this.localize('editor.createAndLinkToNewGradeItem')}
+				</label>
+				<d2l-input-radio-spacer ?hidden="${!this._createNewRadioChecked && this._canLinkNewGrade}">
+					${this._canLinkNewGrade ? html`
+						<div class="d2l-activity-grades-dialog-create-new-container">
+							<div class="d2l-activity-grades-dialog-create-new-icon"><d2l-icon class="d2l-activity-grades-dialog-grade-icon" icon="tier1:grade"></d2l-icon></div>
+							<div>
+								<div class="d2l-activity-grades-dialog-create-new-activity-name">${newGradeName}</div>
+								<div class="d2l-body-small">${scoreOutOf && !scoreOutOfError ? html`
+									${this.localize('editor.points', { points: formatNumber(scoreOutOf, { maximumFractionDigits: 2 }) })}
+								` : null }
+								</div>
+							</div>
+						</div>
+						<d2l-activity-grade-category-selector .href="${this.href}" .token="${this.token}"></d2l-activity-grade-category-selector>
+					` : html`
+						<div class="d2l-body-small">
+							${this.localize('editor.noGradeCreatePermission')}
+						</div>
+					`}
+				</d2l-input-radio-spacer>
+				<label id="linkToExistingGradeItemRadioButton" class="d2l-input-radio-label ${!this._hasGradeCandidates ? 'd2l-input-radio-label-disabled' : ''}">
+					<input
+						type="radio"
+						name="chooseFromGrades"
+						value="linkExisting"
+						?disabled="${!this._hasGradeCandidates}"
+						.checked="${!this._createNewRadioChecked && this._hasGradeCandidates}"
+						@change="${this._dialogRadioChanged}">
+					${this.localize('editor.linkToExistingGradeItem')}
+				</label>
+				<d2l-input-radio-spacer ?hidden="${this._createNewRadioChecked && this._hasGradeCandidates}" ?disabled="${!this._hasGradeCandidates}">
+					${this._hasGradeCandidates ? html`<d2l-activity-grade-candidate-selector
+						.href="${this.href}"
+						.token="${this.token}">
+					</d2l-activity-grade-candidate-selector>` : html`<div class="d2l-body-small">
+						${this.localize('editor.noGradeItems')}
+					</div>`}
+				</d2l-input-radio-spacer>
+				<d2l-button slot="footer" primary dialog-action="done">${this.localize('editor.ok')}</d2l-button>
+				<d2l-button slot="footer" dialog-action="cancel">${this.localize('editor.cancel')}</d2l-button>
+			</d2l-dialog>
+		`;
+	}
 	async open() {
 		const scoreAndGrade = store.get(this.href).scoreAndGrade;
 		await Promise.all([
@@ -124,71 +190,5 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 		e.target.resize();
 	}
 
-	render() {
-		const activity = store.get(this.href);
-		if (!activity) {
-			return html``;
-		}
-
-		const {
-			scoreOutOf,
-			scoreOutOfError,
-			newGradeName
-		} = activity.scoreAndGrade;
-
-		return html`
-			<d2l-dialog title-text="${this.localize('editor.chooseFromGrades')}" width="460" @d2l-dialog-open="${this._onDialogOpen}">
-				<label class="d2l-input-radio-label ${!this._canLinkNewGrade ? 'd2l-input-radio-label-disabled' : ''}">
-					<input
-						type="radio"
-						name="chooseFromGrades"
-						value="createNew"
-						?disabled="${!this._canLinkNewGrade}"
-						.checked="${this._createNewRadioChecked}"
-						@change="${this._dialogRadioChanged}">
-					${this.localize('editor.createAndLinkToNewGradeItem')}
-				</label>
-				<d2l-input-radio-spacer ?hidden="${!this._createNewRadioChecked && this._canLinkNewGrade}">
-					${this._canLinkNewGrade ? html`
-						<div class="d2l-activity-grades-dialog-create-new-container">
-							<div class="d2l-activity-grades-dialog-create-new-icon"><d2l-icon class="d2l-activity-grades-dialog-grade-icon" icon="tier1:grade"></d2l-icon></div>
-							<div>
-								<div class="d2l-activity-grades-dialog-create-new-activity-name">${newGradeName}</div>
-								<div class="d2l-body-small">${scoreOutOf && !scoreOutOfError ? html`
-									${this.localize('editor.points', { points: formatNumber(scoreOutOf, { maximumFractionDigits: 2 })})}
-								` : null }
-								</div>
-							</div>
-						</div>
-						<d2l-activity-grade-category-selector .href="${this.href}" .token="${this.token}"></d2l-activity-grade-category-selector>
-					` : html`
-						<div class="d2l-body-small">
-							${this.localize('editor.noGradeCreatePermission')}
-						</div>
-					`}
-				</d2l-input-radio-spacer>
-				<label id="linkToExistingGradeItemRadioButton" class="d2l-input-radio-label ${!this._hasGradeCandidates ? 'd2l-input-radio-label-disabled' : ''}">
-					<input
-						type="radio"
-						name="chooseFromGrades"
-						value="linkExisting"
-						?disabled="${!this._hasGradeCandidates}"
-						.checked="${!this._createNewRadioChecked && this._hasGradeCandidates}"
-						@change="${this._dialogRadioChanged}">
-					${this.localize('editor.linkToExistingGradeItem')}
-				</label>
-				<d2l-input-radio-spacer ?hidden="${this._createNewRadioChecked && this._hasGradeCandidates}" ?disabled="${!this._hasGradeCandidates}">
-					${this._hasGradeCandidates ? html`<d2l-activity-grade-candidate-selector
-						.href="${this.href}"
-						.token="${this.token}">
-					</d2l-activity-grade-candidate-selector>` : html`<div class="d2l-body-small">
-						${this.localize('editor.noGradeItems')}
-					</div>`}
-				</d2l-input-radio-spacer>
-				<d2l-button slot="footer" primary dialog-action="done">${this.localize('editor.ok')}</d2l-button>
-				<d2l-button slot="footer" dialog-action="cancel">${this.localize('editor.cancel')}</d2l-button>
-			</d2l-dialog>
-		`;
-	}
 }
 customElements.define('d2l-activity-grades-dialog', ActivityGradesDialog);

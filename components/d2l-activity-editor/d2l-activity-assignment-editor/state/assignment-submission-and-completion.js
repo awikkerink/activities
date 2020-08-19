@@ -1,4 +1,4 @@
-import {action, computed, configure as configureMobx, decorate, observable } from 'mobx';
+import { action, computed, configure as configureMobx, decorate, observable } from 'mobx';
 
 configureMobx({ enforceActions: 'observed' });
 
@@ -28,6 +28,45 @@ export class SubmissionAndCompletionProps {
 		}
 	}
 
+	setCompletionType(value) {
+		this.completionType = value;
+	}
+	setFilesSubmissionLimit(value) {
+		this.filesSubmissionLimit = value;
+	}
+	setSubmissionsRule(value) {
+		this.submissionsRule = value;
+	}
+	setSubmissionType(value) {
+		this.submissionType = value;
+
+		this._setValidCompletionTypeForSubmissionType();
+	}
+
+	get showFilesSubmissionLimit() {
+		return this.submissionTypeOptions
+			.find(x => String(x.value) === '0' && `${x.value}` === `${this.submissionType}`);
+	}
+	get showSubmissionsRule() {
+		const isFileSubmission = this.submissionTypeOptions
+			.find(x => String(x.value) === '0' && `${x.value}` === `${this.submissionType}`);
+		const isTextSubmission = this.submissionTypeOptions
+			.find(x => String(x.value) === '1' && `${x.value}` === `${this.submissionType}`);
+
+		return isFileSubmission || isTextSubmission;
+	}
+	_getCompletionTypeOptions(validCompletionTypes) {
+		let completionTypeOptions = [];
+
+		if (validCompletionTypes && validCompletionTypes.length > 0) {
+			completionTypeOptions = this.allCompletionTypeOptions.filter(
+				completionType => this._isCompletionTypeValid(completionType.value, validCompletionTypes)
+			);
+		}
+
+		return completionTypeOptions;
+	}
+
 	_getValidCompletionTypes(currentSubmissionType) {
 		const selectedSubmissionType = String(currentSubmissionType);
 
@@ -52,18 +91,6 @@ export class SubmissionAndCompletionProps {
 		return validCompletionTypes.some(validCompletionType => validCompletionType.toString() === completionType);
 	}
 
-	_getCompletionTypeOptions(validCompletionTypes) {
-		let completionTypeOptions = [];
-
-		if (validCompletionTypes && validCompletionTypes.length > 0) {
-			completionTypeOptions = this.allCompletionTypeOptions.filter(
-				completionType => this._isCompletionTypeValid(completionType.value, validCompletionTypes)
-			);
-		}
-
-		return completionTypeOptions;
-	}
-
 	_setValidCompletionTypeForSubmissionType() {
 		const validCompletionTypes = this._getValidCompletionTypes(this.submissionType);
 		this.completionTypeOptions = this._getCompletionTypeOptions(validCompletionTypes);
@@ -78,37 +105,6 @@ export class SubmissionAndCompletionProps {
 		}
 	}
 
-	setSubmissionType(value) {
-		this.submissionType = value;
-
-		this._setValidCompletionTypeForSubmissionType();
-	}
-
-	setSubmissionsRule(value) {
-		this.submissionsRule = value;
-	}
-
-	setFilesSubmissionLimit(value) {
-		this.filesSubmissionLimit = value;
-	}
-
-	setCompletionType(value) {
-		this.completionType = value;
-	}
-
-	get showFilesSubmissionLimit() {
-		return this.submissionTypeOptions
-			.find(x => String(x.value) === '0' && `${x.value}` === `${this.submissionType}`);
-	}
-
-	get showSubmissionsRule() {
-		const isFileSubmission = this.submissionTypeOptions
-			.find(x => String(x.value) === '0' && `${x.value}` === `${this.submissionType}`);
-		const isTextSubmission = this.submissionTypeOptions
-			.find(x => String(x.value) === '1' && `${x.value}` === `${this.submissionType}`);
-
-		return isFileSubmission || isTextSubmission;
-	}
 }
 
 decorate(SubmissionAndCompletionProps, {

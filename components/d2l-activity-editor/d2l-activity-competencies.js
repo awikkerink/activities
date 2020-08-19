@@ -61,6 +61,27 @@ class ActivityCompetencies extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 		super(store);
 	}
 
+	render() {
+		const activity = store.get(this.href);
+		if (!activity || !activity.competenciesHref) {
+			return html``;
+		}
+
+		const {
+			associatedCompetenciesCount: count,
+			unevaluatedCompetenciesCount: unevalCount,
+			competenciesDialogUrl: dialogUrl
+		} = activity;
+
+		return html`
+			<label class="d2l-label-text">${this.localize('editor.competencies')}</label>
+			<div class="d2l-competencies-count-container">
+				${this._renderCountText(count)}
+			</div>
+			${this._renderUnevalCountText(unevalCount)}
+			${this._renderDialogOpener(dialogUrl)}
+		`;
+	}
 	_openManageCompetencies() {
 		const dialogUrl = store.get(this.href).competenciesDialogUrl;
 
@@ -99,6 +120,18 @@ class ActivityCompetencies extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 		delayedResult.AddReleaseListener(() => store.get(this.href).loadCompetencies(true));
 	}
 
+	_renderCountText(count) {
+		if (count === 0) {
+			const langTerm = this.localize('editor.noLearningObjectives');
+			return html`<div id="no-learning-objectives-summary" class="d2l-body-small">${langTerm}</div>`;
+		} else {
+			const langTerm = this.localize('editor.competenciesCount', { count });
+			return html`
+			<d2l-icon class="d2l-competencies-icon" icon="tier1:user-competencies"></d2l-icon>
+			<div class="d2l-competencies-count-text">${langTerm}</div>
+		`;
+		}
+	}
 	_renderDialogOpener(dialogUrl) {
 		if (!dialogUrl) {
 			return html``;
@@ -113,19 +146,6 @@ class ActivityCompetencies extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 		`;
 	}
 
-	_renderCountText(count) {
-		if (count === 0) {
-			const langTerm = this.localize('editor.noLearningObjectives');
-			return html`<div id="no-learning-objectives-summary" class="d2l-body-small">${langTerm}</div>`;
-		} else {
-			const langTerm = this.localize('editor.competenciesCount', { count });
-			return html`
-			<d2l-icon class="d2l-competencies-icon" icon="tier1:user-competencies"></d2l-icon>
-			<div class="d2l-competencies-count-text">${langTerm}</div>
-		`;
-		}
-	}
-
 	_renderUnevalCountText(count) {
 		if (!count) {
 			return html``;
@@ -136,28 +156,6 @@ class ActivityCompetencies extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 				<d2l-icon class="d2l-competencies-icon d2l-alert-icon" icon="tier1:alert"></d2l-icon>
 				<div class="d2l-competencies-count-text">${this.localize('editor.unevaluatedCompetencies', { count })}</div>
 			</div>
-		`;
-	}
-
-	render() {
-		const activity = store.get(this.href);
-		if (!activity || !activity.competenciesHref) {
-			return html``;
-		}
-
-		const {
-			associatedCompetenciesCount: count,
-			unevaluatedCompetenciesCount: unevalCount,
-			competenciesDialogUrl: dialogUrl
-		} = activity;
-
-		return html`
-			<label class="d2l-label-text">${this.localize('editor.competencies')}</label>
-			<div class="d2l-competencies-count-container">
-				${this._renderCountText(count)}
-			</div>
-			${this._renderUnevalCountText(unevalCount)}
-			${this._renderDialogOpener(dialogUrl)}
 		`;
 	}
 

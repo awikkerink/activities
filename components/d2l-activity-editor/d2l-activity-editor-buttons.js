@@ -36,6 +36,21 @@ class ActivityEditorButtons extends RtlMixin(LocalizeActivityEditorMixin(LitElem
 		`;
 	}
 
+	render() {
+		return html`
+			<d2l-button class="d2l-desktop" primary @click="${this._save}">${this.localize('editor.btnSave')}</d2l-button>
+			<d2l-button class="d2l-mobile d2l-footerBtn" primary @click="${this._save}">${this.localize('editor.btnSaveMobile')}</d2l-button>
+			<d2l-button class="d2l-footerBtn" @click="${this._cancel}">${this.localize('editor.btnCancel')}</d2l-button>
+		`;
+	}
+	_cancel() {
+		const event = new CustomEvent('d2l-activity-editor-cancel', {
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+		this.dispatchEvent(event);
+	}
 	_save() {
 		const event = new CustomEvent('d2l-activity-editor-save', {
 			bubbles: true,
@@ -45,22 +60,6 @@ class ActivityEditorButtons extends RtlMixin(LocalizeActivityEditorMixin(LitElem
 		this.dispatchEvent(event);
 	}
 
-	_cancel() {
-		const event = new CustomEvent('d2l-activity-editor-cancel', {
-			bubbles: true,
-			composed: true,
-			cancelable: true
-		});
-		this.dispatchEvent(event);
-	}
-
-	render() {
-		return html`
-			<d2l-button class="d2l-desktop" primary @click="${this._save}">${this.localize('editor.btnSave')}</d2l-button>
-			<d2l-button class="d2l-mobile d2l-footerBtn" primary @click="${this._save}">${this.localize('editor.btnSaveMobile')}</d2l-button>
-			<d2l-button class="d2l-footerBtn" @click="${this._cancel}">${this.localize('editor.btnCancel')}</d2l-button>
-		`;
-	}
 }
 
 customElements.define('d2l-activity-editor-buttons', ActivityEditorButtons);

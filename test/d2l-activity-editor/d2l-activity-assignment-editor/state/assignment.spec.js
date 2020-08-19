@@ -39,10 +39,10 @@ describe('Assignment ', function() {
 				getAvailableAnnotationTools: () => undefined,
 				activityUsageHref: () => 'http://activity/1',
 				submissionTypeOptions: () => [
-					{title: 'File submission', value: 0, completionTypes: null, selected: false},
-					{title: 'Text submission', value: 1, completionTypes: null, selected: false},
-					{title: 'On paper submission', value: 2, completionTypes: [1, 2], selected: true},
-					{title: 'Observed in person', value: 3, completionTypes: [3], selected: false}
+					{ title: 'File submission', value: 0, completionTypes: null, selected: false },
+					{ title: 'Text submission', value: 1, completionTypes: null, selected: false },
+					{ title: 'On paper submission', value: 2, completionTypes: [1, 2], selected: true },
+					{ title: 'Observed in person', value: 3, completionTypes: [3], selected: false }
 				],
 				allCompletionTypeOptions: () => [
 					{
@@ -72,8 +72,8 @@ describe('Assignment ', function() {
 				canEditDefaultScoringRubric: () => true,
 				getDefaultScoringRubric: () => '-1',
 				filesSubmissionLimit: () => 'unlimited',
-				submissionType: () => { return {title: 'On paper submission', value: 2}; },
-				completionType: () => { return {title: 'Manually by learners', value: 2}; },
+				submissionType: () => { return { title: 'On paper submission', value: 2 }; },
+				completionType: () => { return { title: 'Manually by learners', value: 2 }; },
 				completionTypeValue: () => { return '2'; },
 				isGroupAssignmentTypeDisabled: () => false,
 				isIndividualAssignmentType: () => true,
@@ -123,14 +123,14 @@ describe('Assignment ', function() {
 		expect(assignment.instructions).to.equal('These are your instructions');
 		expect(assignment.activityUsageHref).to.equal('http://activity/1');
 		expect(assignment.submissionAndCompletionProps.submissionTypeOptions).to.eql([
-			{title: 'File submission', value: 0, completionTypes: null, selected: false},
-			{title: 'Text submission', value: 1, completionTypes: null, selected: false},
-			{title: 'On paper submission', value: 2, completionTypes: [1, 2], selected: true},
-			{title: 'Observed in person', value: 3, completionTypes: [3], selected: false}
+			{ title: 'File submission', value: 0, completionTypes: null, selected: false },
+			{ title: 'Text submission', value: 1, completionTypes: null, selected: false },
+			{ title: 'On paper submission', value: 2, completionTypes: [1, 2], selected: true },
+			{ title: 'Observed in person', value: 3, completionTypes: [3], selected: false }
 		]);
 		expect(assignment.submissionAndCompletionProps.completionTypeOptions).to.eql([
-			{selected: false, title: 'Manually by learners', value: 1},
-			{selected: false, title: 'Automatically on evaluation', value: 2}
+			{ selected: false, title: 'Manually by learners', value: 1 },
+			{ selected: false, title: 'Automatically on evaluation', value: 2 }
 		]);
 		expect(assignment.submissionAndCompletionProps.canEditSubmissionType).to.equal(true);
 		expect(assignment.submissionAndCompletionProps.canEditCompletionType).to.equal(true);

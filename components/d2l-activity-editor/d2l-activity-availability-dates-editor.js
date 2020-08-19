@@ -27,22 +27,6 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeActiv
 		this._overrides = document.documentElement.dataset.intlOverrides || '{}';
 	}
 
-	_onStartDatetimePickerDatetimeCleared() {
-		store.get(this.href).dates.setStartDate('');
-	}
-
-	_onStartDatetimePickerDatetimeChanged(e) {
-		store.get(this.href).dates.setStartDate(e.detail.toISOString());
-	}
-
-	_onEndDatetimePickerDatetimeCleared() {
-		store.get(this.href).dates.setEndDate('');
-	}
-
-	_onEndDatetimePickerDatetimeChanged(e) {
-		store.get(this.href).dates.setEndDate(e.detail.toISOString());
-	}
-
 	render() {
 		const entity = store.get(this.href);
 		const dates = entity ? entity.dates : null;
@@ -103,7 +87,6 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeActiv
 			</div>
 		`;
 	}
-
 	updated(changedProperties) {
 		super.updated(changedProperties);
 
@@ -112,5 +95,18 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeActiv
 			super._fetch(() => store.fetch(this.href, this.token));
 		}
 	}
+	_onEndDatetimePickerDatetimeChanged(e) {
+		store.get(this.href).dates.setEndDate(e.detail.toISOString());
+	}
+	_onEndDatetimePickerDatetimeCleared() {
+		store.get(this.href).dates.setEndDate('');
+	}
+	_onStartDatetimePickerDatetimeChanged(e) {
+		store.get(this.href).dates.setStartDate(e.detail.toISOString());
+	}
+	_onStartDatetimePickerDatetimeCleared() {
+		store.get(this.href).dates.setStartDate('');
+	}
+
 }
 customElements.define('d2l-activity-availability-dates-editor', ActivityAvailabilityDatesEditor);

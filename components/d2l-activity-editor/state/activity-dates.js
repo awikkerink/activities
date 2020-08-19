@@ -14,22 +14,16 @@ export class ActivityDates {
 		this.endDateErrorTerm = null;
 	}
 
+	setCanEditDates(value) {
+		this.canEditDates = value;
+	}
 	setDueDate(date) {
 		this.dueDate = date;
-	}
-
-	setStartDate(date) {
-		this.startDate = date;
 	}
 
 	setEndDate(date) {
 		this.endDate = date;
 	}
-
-	setCanEditDates(value) {
-		this.canEditDates = value;
-	}
-
 	setErrorLangTerms(errorType) {
 		if (errorType && errorType.includes('end-due-start-date-error')) {
 			this.dueDateErrorTerm = 'editor.dueBetweenStartEndDate';
@@ -77,6 +71,10 @@ export class ActivityDates {
 		this.startDateErrorTerm = null;
 		this.endDateErrorTerm = null;
 	}
+	setStartDate(date) {
+		this.startDate = date;
+	}
+
 }
 
 decorate(ActivityDates, {

@@ -1,4 +1,4 @@
-import { ActivitySpecialAccess} from '../../../components/d2l-activity-editor/state/activity-special-access.js';
+import { ActivitySpecialAccess } from '../../../components/d2l-activity-editor/state/activity-special-access.js';
 import { ActivitySpecialAccessEntity } from 'siren-sdk/src/activities/ActivitySpecialAccessEntity.js';
 import { expect } from 'chai';
 import { fetchEntity } from '../../../components/d2l-activity-editor/state/fetch-entity.js';
