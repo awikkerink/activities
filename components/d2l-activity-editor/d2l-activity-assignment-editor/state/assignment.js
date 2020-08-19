@@ -264,6 +264,7 @@ decorate(Assignment, {
 	setToGroupAssignmentType: action,
 	setAssignmentTypeGroupCategory: action,
 	setSubmissionAndCompletionProps: action,
+	setAnonymousMarkingProps: action,
 	setDefaultScoringRubric: action,
 	resetDefaultScoringRubricId: action,
 	setNotificationEmail: action
