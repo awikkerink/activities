@@ -125,35 +125,25 @@ export class Assignment {
 	setInstructions(value) {
 		this.instructions = value;
 	}
-	_getIsAnonymousMarkingAvailable() {
-		return this._entity.isAnonymousMarkingAvailable() && this._isSubmissionTypeWithAnonMarking();
-	}
-
-
 	setName(value) {
 		this.name = value;
 	}
-_isSubmissionTypeWithAnonMarking() {
-		// only file (0) and text (1) submissions can have anonymous marking, see https://docs.valence.desire2learn.com/res/dropbox.html#attributes
-		return ['0', '1'].includes(this.submissionAndCompletionProps.submissionType);
-	}
-	
-	
 	setNotificationEmail(value) {
 		this.notificationEmail = value;
 	}
 	setSubmissionAndCompletionProps(submissionAndCompletionProps) {
 		this.submissionAndCompletionProps = new SubmissionAndCompletionProps(submissionAndCompletionProps);
 	}
-setSubmissionsRule(value) {
+	setSubmissionsRule(value) {
 		this.submissionAndCompletionProps.setSubmissionsRule(value);
 	}
-	
-	
 	setSubmissionType(value) {
 		this.submissionAndCompletionProps.setSubmissionType(value);
 
 		this.isAnonymousMarkingAvailable = this._getIsAnonymousMarkingAvailable();
+	}
+	_getIsAnonymousMarkingAvailable() {
+		return this._entity.isAnonymousMarkingAvailable() && this._isSubmissionTypeWithAnonMarking();
 	}
 	
 	setToGroupAssignmentType() {
@@ -163,6 +153,12 @@ setSubmissionsRule(value) {
 				? String(this.selectedGroupCategoryId)
 				: String(this.groupCategories[0].value);
 	}
+_isSubmissionTypeWithAnonMarking() {
+		// only file (0) and text (1) submissions can have anonymous marking, see https://docs.valence.desire2learn.com/res/dropbox.html#attributes
+		return ['0', '1'].includes(this.submissionAndCompletionProps.submissionType);
+	}
+
+	
 
 	setToIndividualAssignmentType() {
 		this.isIndividualAssignmentType = true;

@@ -106,7 +106,19 @@ export class Conditions {
 
 		return this._entity ? this._entity.createNewDialogUrl() : null;
 	}
-async fetch() {
+	get createNewNegativeButtonText() {
+
+		return this._entity ? this._entity.createNewNegativeButtonText() : null;
+	}
+	get createNewOpenButtonText() {
+
+		return this._entity ? this._entity.createNewOpenButtonText() : null;
+	}
+	get createNewPositiveButtonText() {
+
+		return this._entity ? this._entity.createNewPositiveButtonText() : null;
+	}
+	async fetch() {
 
 		const sirenEntity = await fetchEntity(this.href, this.token);
 		if (sirenEntity) {
@@ -116,22 +128,6 @@ async fetch() {
 		}
 
 		return this;
-	}
-	
-	
-
-	get createNewNegativeButtonText() {
-
-		return this._entity ? this._entity.createNewNegativeButtonText() : null;
-	}
-	get createNewOpenButtonText() {
-
-		return this._entity ? this._entity.createNewOpenButtonText() : null;
-	}
-
-	get createNewPositiveButtonText() {
-
-		return this._entity ? this._entity.createNewPositiveButtonText() : null;
 	}
 
 	load(entity) {

@@ -367,15 +367,6 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 
 		return html``;
 	}
-_saveCompletionTypeOnChange(event) {
-		store.getAssignment(this.href).setCompletionType(event.target.value);
-	}
-	
-	
-	_saveSubmissionTypeOnChange(event) {
-		store.getAssignment(this.href).setSubmissionType(event.target.value);
-	}
-	
 	_renderAssignmentType() {
 		return html `
 			<div id="assignment-type-container">
@@ -389,7 +380,6 @@ _saveCompletionTypeOnChange(event) {
 			</div>
 		`;
 	}
-
 	_renderAssignmentTypeSummary() {
 		return html`
 			<d2l-activity-assignment-type-summary
@@ -398,7 +388,6 @@ _saveCompletionTypeOnChange(event) {
 			</d2l-activity-assignment-type-summary>
 		`;
 	}
-
 	_renderSubmissionEmailNotificationSummary(assignment) {
 		if (!this._m4EmailNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
 			return html ``;
@@ -410,6 +399,14 @@ _saveCompletionTypeOnChange(event) {
 			</d2l-activity-submission-email-notification-summary>
 		`;
 	}
+	_saveCompletionTypeOnChange(event) {
+		store.getAssignment(this.href).setCompletionType(event.target.value);
+	}
+
+	_saveSubmissionTypeOnChange(event) {
+		store.getAssignment(this.href).setSubmissionType(event.target.value);
+	}
+
 	_setfilesSubmisisonLimit(e) {
 		const assignment = store.getAssignment(this.href);
 		const data = e.target.value;

@@ -119,8 +119,6 @@ export class AttachmentCollection {
 		return this._filesEntity;
 	}
 
-
-
 	_hasChanged(attachment) {
 		if (attachment.deleted && !attachment.creating) {
 			return true;

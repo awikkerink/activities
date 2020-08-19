@@ -263,11 +263,6 @@ class ActivityRubricsListContainer extends ActivityEditorFeaturesMixin(ActivityE
 			return html``;
 		}
 	}
-	_resizeDialog(e) {
-		e.currentTarget.resize();
-	}
-
-
 	_renderRubricsList(entity) {
 		const canCreatePotentialAssociation = entity.canCreatePotentialAssociation();
 		const canCreateAssociation = entity.canCreateAssociation();
@@ -291,18 +286,9 @@ class ActivityRubricsListContainer extends ActivityEditorFeaturesMixin(ActivityE
 			></d2l-activity-rubrics-list-editor>
 			`;
 	}
-_toggleDialog(toggle) {
-
-		const dialog = this.shadowRoot.querySelector('#attach-rubric-dialog');
-		if (dialog) {
-			if (toggle) {
-				this.shadowRoot.querySelector('d2l-add-associations').reset();
-			}
-			dialog.opened = toggle;
-		}
+	_resizeDialog(e) {
+		e.currentTarget.resize();
 	}
-
-	
 
 	_saveDefaultScoringRubricOnChange(event) {
 		const assignment = assignmentStore.getAssignment(this.assignmentHref);
@@ -312,6 +298,16 @@ _toggleDialog(toggle) {
 		}
 
 		assignment.setDefaultScoringRubric(event.target.value);
+	}
+	_toggleDialog(toggle) {
+
+		const dialog = this.shadowRoot.querySelector('#attach-rubric-dialog');
+		if (dialog) {
+			if (toggle) {
+				this.shadowRoot.querySelector('d2l-add-associations').reset();
+			}
+			dialog.opened = toggle;
+		}
 	}
 
 }
