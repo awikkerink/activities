@@ -54,12 +54,6 @@ class ActivityAssignmentAnonymousMarkingEditor
 		super(store);
 	}
 
-	_saveAnonymousMarking(event) {
-
-		const entity = store.get(this.href);
-		entity.setAnonymousMarking(event.target.checked);
-	}
-
 	render() {
 
 		const entity = store.get(this.href);
@@ -90,6 +84,12 @@ class ActivityAssignmentAnonymousMarkingEditor
 			</d2l-input-checkbox-spacer>
 		`;
 	}
+	_saveAnonymousMarking(event) {
+
+		const entity = store.get(this.href);
+		entity.setAnonymousMarking(event.target.checked);
+	}
+
 }
 customElements.define(
 	'd2l-activity-assignment-anonymous-marking-editor',

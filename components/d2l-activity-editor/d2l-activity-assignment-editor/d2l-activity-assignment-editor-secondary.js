@@ -48,21 +48,6 @@ class AssignmentEditorSecondary extends ActivityEditorFeaturesMixin(RtlMixin(Ent
 		this._activityUsageHref = '';
 	}
 
-	set _entity(entity) {
-		if (this._entityHasChanged(entity)) {
-			this._onAssignmentChange(entity);
-			super._entity = entity;
-		}
-	}
-
-	_onAssignmentChange(assignment) {
-		if (!assignment) {
-			return;
-		}
-
-		this._activityUsageHref = assignment.activityUsageHref();
-	}
-
 	render() {
 		const showSubmissionCompletionAccordian = this._isMilestoneEnabled(Milestones.M2);
 		const showEvaluationAccordian = this._isMilestoneEnabled(Milestones.M2) || this._isMilestoneEnabled(Milestones.M3Competencies);
@@ -96,5 +81,20 @@ class AssignmentEditorSecondary extends ActivityEditorFeaturesMixin(RtlMixin(Ent
 		`;
 
 	}
+	set _entity(entity) {
+		if (this._entityHasChanged(entity)) {
+			this._onAssignmentChange(entity);
+			super._entity = entity;
+		}
+	}
+
+	_onAssignmentChange(assignment) {
+		if (!assignment) {
+			return;
+		}
+
+		this._activityUsageHref = assignment.activityUsageHref();
+	}
+
 }
 customElements.define('d2l-activity-assignment-editor-secondary', AssignmentEditorSecondary);

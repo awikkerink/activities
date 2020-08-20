@@ -36,46 +36,6 @@ class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(Ac
 		this._backdropShown = false;
 	}
 
-	async validate() {
-		const activity = store.get(this.href);
-		if (activity) {
-			await activity.validate();
-		}
-	}
-
-	async save() {
-		const activity = store.get(this.href);
-		if (activity) {
-			await activity.save();
-		}
-	}
-
-	update(changedProperties) {
-		super.update(changedProperties);
-		if (changedProperties.has('asyncState') && this.asyncState === asyncStates.complete) {
-			this.logLoadEvent(this.href, this.type, this.telemetryId);
-		}
-	}
-
-	updated(changedProperties) {
-		super.updated(changedProperties);
-		if (changedProperties.has('isSaving')) {
-			this._toggleBackdrop(this.isSaving);
-		}
-	}
-
-	_toggleBackdrop(show) {
-		this._backdropShown = show;
-	}
-
-	hasPendingChanges() {
-		const activity = store.get(this.href);
-		if (activity) {
-			return activity.dirty();
-		}
-		return false;
-	}
-
 	render() {
 		return html`
 			<div ?hidden="${this.asyncState === asyncStates.complete}" class="d2l-activity-editor-loading">${this.localize('editor.loading')}</div>
@@ -91,5 +51,42 @@ class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(Ac
 			</d2l-backdrop>
 		`;
 	}
+	update(changedProperties) {
+		super.update(changedProperties);
+		if (changedProperties.has('asyncState') && this.asyncState === asyncStates.complete) {
+			this.logLoadEvent(this.href, this.type, this.telemetryId);
+		}
+	}
+	updated(changedProperties) {
+		super.updated(changedProperties);
+		if (changedProperties.has('isSaving')) {
+			this._toggleBackdrop(this.isSaving);
+		}
+	}
+	hasPendingChanges() {
+		const activity = store.get(this.href);
+		if (activity) {
+			return activity.dirty();
+		}
+		return false;
+	}
+	async save() {
+		const activity = store.get(this.href);
+		if (activity) {
+			await activity.save();
+		}
+	}
+
+	async validate() {
+		const activity = store.get(this.href);
+		if (activity) {
+			await activity.validate();
+		}
+	}
+
+	_toggleBackdrop(show) {
+		this._backdropShown = show;
+	}
+
 }
 customElements.define('d2l-activity-editor', ActivityEditor);

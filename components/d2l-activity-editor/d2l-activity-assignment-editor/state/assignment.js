@@ -13,6 +13,12 @@ export class Assignment {
 		this.token = token;
 	}
 
+	delete() {
+		return this._entity.delete();
+	}
+	get dirty() {
+		return !this._entity.equals(this._makeAssignmentData());
+	}
 	async fetch() {
 		const sirenEntity = await fetchEntity(this.href, this.token);
 		if (sirenEntity) {
@@ -90,33 +96,57 @@ export class Assignment {
 		}
 	}
 
-	setSubmissionType(value) {
-		this.submissionAndCompletionProps.setSubmissionType(value);
-
-		this.anonymousMarkingProps.setIsAnonymousMarkingAvailableForSubmissionType(this.submissionAndCompletionProps.submissionType);
+	resetDefaultScoringRubricId() {
+		this.defaultScoringRubricId = '-1';
 	}
-
-	setFilesSubmissionLimit(value) {
-		this.submissionAndCompletionProps.setFilesSubmissionLimit(value);
+	async save() {
+		if (!this._entity) {
+			return;
+		}
+		await this._entity.save(this._makeAssignmentData());
+		await this.fetch();
 	}
-
-	setSubmissionsRule(value) {
-		this.submissionAndCompletionProps.setSubmissionsRule(value);
+	setAnnotationToolsAvailable(value) {
+		this.annotationToolsAvailable = value;
 	}
-
-	setTurnitin(isOriginalityCheckEnabled, isGradeMarkEnabled) {
-		this.isOriginalityCheckEnabled = isOriginalityCheckEnabled;
-		this.isGradeMarkEnabled = isGradeMarkEnabled;
+	setAnonymousMarking(value) {
+		this.isAnonymousMarkingEnabled = value;
 	}
-
+	setAssignmentTypeGroupCategory(value) {
+		this.selectedGroupCategoryId = value;
+	}
 	setCompletionType(value) {
 		this.submissionAndCompletionProps.setCompletionType(value);
 	}
 
-	setToIndividualAssignmentType() {
-		this.isIndividualAssignmentType = true;
+	setDefaultScoringRubric(rubricId) {
+		if (rubricId) {
+			this.defaultScoringRubricId = String(rubricId);
+		}
 	}
+	setFilesSubmissionLimit(value) {
+		this.submissionAndCompletionProps.setFilesSubmissionLimit(value);
+	}
+	setInstructions(value) {
+		this.instructions = value;
+	}
+	setName(value) {
+		this.name = value;
+	}
+	setNotificationEmail(value) {
+		this.notificationEmail = value;
+	}
+	setSubmissionAndCompletionProps(submissionAndCompletionProps) {
+		this.submissionAndCompletionProps = new SubmissionAndCompletionProps(submissionAndCompletionProps);
+	}
+	setSubmissionsRule(value) {
+		this.submissionAndCompletionProps.setSubmissionsRule(value);
+	}
+	setSubmissionType(value) {
+		this.submissionAndCompletionProps.setSubmissionType(value);
 
+		this.anonymousMarkingProps.setIsAno1nymousMarkingAvailableForSubmissionType(this.submissionAndCompletionProps.submissionType);
+	}
 	setToGroupAssignmentType() {
 		this.isIndividualAssignmentType = false;
 		this.selectedGroupCategoryId =
@@ -125,42 +155,28 @@ export class Assignment {
 				: String(this.groupCategories[0].value);
 	}
 
-	setAssignmentTypeGroupCategory(value) {
-		this.selectedGroupCategoryId = value;
+	setToIndividualAssignmentType() {
+		this.isIndividualAssignmentType = true;
 	}
-
-	setAnonymousMarking(value) {
-		this.anonymousMarkingProps.setAnonymousMarking(value);
+	setTurnitin(isOriginalityCheckEnabled, isGradeMarkEnabled) {
+		this.isOriginalityCheckEnabled = isOriginalityCheckEnabled;
+		this.isGradeMarkEnabled = isGradeMarkEnabled;
 	}
-
-	setAnnotationToolsAvailable(value) {
-		this.annotationToolsAvailable = value;
-	}
-
-	setName(value) {
-		this.name = value;
-	}
-
-	setInstructions(value) {
-		this.instructions = value;
-	}
-
-	setSubmissionAndCompletionProps(submissionAndCompletionProps) {
-		this.submissionAndCompletionProps = new SubmissionAndCompletionProps(submissionAndCompletionProps);
+	get showNotificationEmail() {
+		return typeof this.notificationEmail !== 'undefined' && this.submissionAndCompletionProps.showSubmissionsRule;
 	}
 
 	setAnonymousMarkingProps(anonymousMarkingProps) {
 		this.anonymousMarkingProps = new AnonymousMarkingProps(anonymousMarkingProps);
 	}
 
-	setDefaultScoringRubric(rubricId) {
-		if (rubricId) {
-			this.defaultScoringRubricId = String(rubricId);
-		}
+	_getIsAnonymousMarkingAvailable() {
+		return this._entity.isAnonymousMarkingAvailable() && this._isSubmissionTypeWithAnonMarking();
 	}
 
-	resetDefaultScoringRubricId() {
-		this.defaultScoringRubricId = '-1';
+	_isSubmissionTypeWithAnonMarking() {
+		// only file (0) and text (1) submissions can have anonymous marking, see https://docs.valence.desire2learn.com/res/dropbox.html#attributes
+		return ['0', '1'].includes(this.submissionAndCompletionProps.submissionType);
 	}
 
 	_makeAssignmentData() {
@@ -196,29 +212,6 @@ export class Assignment {
 		return data;
 	}
 
-	async save() {
-		if (!this._entity) {
-			return;
-		}
-		await this._entity.save(this._makeAssignmentData());
-		await this.fetch();
-	}
-
-	get dirty() {
-		return !this._entity.equals(this._makeAssignmentData());
-	}
-
-	delete() {
-		return this._entity.delete();
-	}
-
-	get showNotificationEmail() {
-		return typeof this.notificationEmail !== 'undefined' && this.submissionAndCompletionProps.showSubmissionsRule;
-	}
-
-	setNotificationEmail(value) {
-		this.notificationEmail = value;
-	}
 }
 
 decorate(Assignment, {

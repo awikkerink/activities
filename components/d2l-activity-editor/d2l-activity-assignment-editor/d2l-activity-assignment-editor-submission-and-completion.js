@@ -76,10 +76,77 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 		this._m4EmailNotificationEnabled = this._isMilestoneEnabled(Milestones.M4EmailSubmission);
 	}
 
-	_saveCompletionTypeOnChange(event) {
-		store.getAssignment(this.href).setCompletionType(event.target.value);
+	render() {
+		const assignment = store.getAssignment(this.href);
+		return html`
+			<d2l-labs-accordion-collapse class="accordion" flex header-border>
+				<h3 class="d2l-heading-3 d2l-activity-summarizer-header" slot="header">
+					${this.localize('submissionCompletionAndCategorization')}
+				</h3>
+				<ul class="d2l-body-small d2l-activity-summarizer-summary" slot="summary">
+					<li>${this._renderAssignmentTypeSummary()}</li>
+					<li>${this._renderAssignmentSubmissionTypeSummary(assignment)}</li>
+					<li>${this._renderAssignmentCompletionTypeSummary()}</li>
+					<li>${this._renderSubmissionEmailNotificationSummary(assignment)}</li>
+				</ul>
+				${this._renderAssignmentType()}
+				${this._renderAssignmentSubmissionType(assignment)}
+				${this._renderAssignmentFilesSubmissionLimit(assignment)}
+				${this._renderAssignmentSubmissionsRule(assignment)}
+				${this._renderAssignmentCompletionType(assignment)}
+				${this._renderAssignmentSubmissionNotificationEmail(assignment)}
+			</d2l-labs-accordion-collapse>
+		`;
 	}
+	_checkNotificationEmail(e) {
+		const errorProperty = '_notificationEmailError';
+		const invalidNotificationEmailErrorLangterm = 'invalidNotificationEmailError';
+		const tooltipId = 'notification-email-tooltip';
 
+		const notificationEmail = e.target.value;
+		const isEmpty = (notificationEmail || '').length === 0;
+
+		const matches = /^(\s?[^\s,]+@[^\s,]+\.[^\s,]+\s?,)*(\s?[^\s,]+@[^\s,]+\.[^\s,]+)$/.exec(notificationEmail);
+		if (!isEmpty && matches === null) {
+			this.setError(errorProperty, invalidNotificationEmailErrorLangterm, tooltipId);
+		} else {
+			this.clearError(errorProperty);
+		}
+	}
+	_getCompletionTypeOptions(assignment) {
+		const completionTypeOptions = assignment && assignment.submissionAndCompletionProps ? assignment.submissionAndCompletionProps.completionTypeOptions : [];
+		const completionType = assignment && assignment.submissionAndCompletionProps ? assignment.submissionAndCompletionProps.completionType : '0';
+
+		return html`
+			${completionTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === completionType}>${option.title}</option>`)}
+		`;
+	}
+	_getNotificationEmailTooltip() {
+		if (this._notificationEmailError) {
+			return html `
+				<d2l-tooltip id="notification-email-tooltip" for="notification-email" state="error" align="start" offset="10">
+					${this._notificationEmailError}
+				</d2l-tooltip>
+			`;
+		}
+	}
+	_getSelectedCompletionType(assignment) {
+		if (!assignment ||
+			!assignment.submissionAndCompletionProps ||
+			!assignment.submissionAndCompletionProps.completionTypeOptions) {
+			return html``;
+		}
+		return assignment.submissionAndCompletionProps.completionTypeOptions.find(
+			opt => String(opt.value) === assignment.submissionAndCompletionProps.completionType
+		);
+	}
+	_getSelectedSubmissionType(assignment) {
+		if (!assignment || !assignment.submissionAndCompletionProps || !assignment.submissionAndCompletionProps.submissionTypeOptions) {
+			return html``;
+		}
+
+		return assignment.submissionAndCompletionProps.submissionTypeOptions.find(opt => String(opt.value) === assignment.submissionAndCompletionProps.submissionType);
+	}
 	_getSubmissionTypeOptions(assignment) {
 		if (!assignment || !assignment.submissionAndCompletionProps) {
 			return html``;
@@ -90,56 +157,48 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 		`;
 	}
 
-	_saveSubmissionTypeOnChange(event) {
-		store.getAssignment(this.href).setSubmissionType(event.target.value);
+	_onNotificationEmailChanged(e) {
+		const assignment = store.getAssignment(this.href);
+		const data = e.target.value;
+		assignment && assignment.setNotificationEmail(data);
 	}
+	_renderAssignmentCompletionType(assignment) {
+		if (!assignment ||
+			!assignment.submissionAndCompletionProps ||
+			!assignment.submissionAndCompletionProps.completionTypeOptions ||
+			assignment.submissionAndCompletionProps.completionTypeOptions.length === 0) {
+			return html``;
+		}
 
-	_getCompletionTypeOptions(assignment) {
-		const completionTypeOptions = assignment && assignment.submissionAndCompletionProps ? assignment.submissionAndCompletionProps.completionTypeOptions : [];
-		const completionType = assignment && assignment.submissionAndCompletionProps ? assignment.submissionAndCompletionProps.completionType : '0';
+		let completionTypeContent = html``;
+		if (assignment.submissionAndCompletionProps.canEditCompletionType) {
+			completionTypeContent = html`
+				<select
+					id="assignment-completion-type"
+					class="d2l-input-select d2l-block-select"
+					@change="${this._saveCompletionTypeOnChange}">
+						${this._getCompletionTypeOptions(assignment)}
+				</select>
+			`;
+		} else {
+			const completionType = this._getSelectedCompletionType(assignment);
+			if (completionType) {
+				completionTypeContent = html`<div class="d2l-body-compact">${completionType.title}</div>`;
+			}
+		}
 
 		return html`
-			${completionTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === completionType}>${option.title}</option>`)}
-		`;
-	}
-
-	_renderAssignmentType() {
-		return html `
-			<div id="assignment-type-container">
-				<label class="d2l-label-text">
-					${this.localize('txtAssignmentType')}
+			<div id="assignment-completion-type-container">
+				<label class="d2l-label-text" for="assignment-completion-type">
+					${this.localize('completionType')}
 				</label>
-				<d2l-activity-assignment-type-editor
-					href="${this.href}"
-					.token="${this.token}">
-				</d2l-activity-assignment-type-editor>
+				${completionTypeContent}
 			</div>
 		`;
 	}
-
-	_renderAssignmentTypeSummary() {
-		return html`
-			<d2l-activity-assignment-type-summary
-				href="${this.href}"
-				.token="${this.token}">
-			</d2l-activity-assignment-type-summary>
-		`;
+	_renderAssignmentCompletionTypeSummary() {
+		return html``;
 	}
-
-	_setfilesSubmisisonLimit(e) {
-		const assignment = store.getAssignment(this.href);
-		const data = e.target.value;
-		assignment && assignment.setFilesSubmissionLimit(data);
-	}
-
-	_setSubmisisonsRule(e) {
-		const assignment = store.getAssignment(this.href);
-		const data = e.target.value;
-		assignment &&
-		assignment.submissionAndCompletionProps &&
-		assignment.submissionAndCompletionProps.setSubmissionsRule(data);
-	}
-
 	_renderAssignmentFilesSubmissionLimit(assignment) {
 		if (!assignment ||
 			!assignment.submissionAndCompletionProps ||
@@ -195,6 +254,37 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 		`;
 	}
 
+	_renderAssignmentSubmissionNotificationEmail(assignment) {
+		if (!this._m4EmailNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
+			return html ``;
+		}
+
+		return html `
+		<div id="assignment-notification-email-container">
+			<label class="d2l-label-text" for="assignment-notification-email-container">
+				${this.localize('hdrSubmissionNotificationEmail')}
+			</label>
+			<p class="d2l-body-small">
+				${this.localize('hlpSubmissionNotificationEmail')}
+			</p>
+
+			<d2l-input-text
+				id="notification-email"
+				label="${this.localize('hdrSubmissionNotificationEmail')}"
+				label-hidden
+				value="${assignment.notificationEmail}"
+				maxlength="1024"
+				?disabled="${!assignment.canEditNotificationEmail}"
+				@change="${this._onNotificationEmailChanged}"
+				@blur="${this._checkNotificationEmail}"
+				aria-invalid="${this._notificationEmailError ? 'true' : ''}"
+				skip-alert
+				novalidate
+			></d2l-input-text>
+			${this._getNotificationEmailTooltip()}
+		</div>
+	`;
+	}
 	_renderAssignmentSubmissionsRule(assignment) {
 
 		if (!assignment ||
@@ -233,80 +323,6 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 			</div>
 		`;
 	}
-
-	_renderAssignmentSubmissionNotificationEmail(assignment) {
-		if (!this._m4EmailNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
-			return html ``;
-		}
-
-		return html `
-		<div id="assignment-notification-email-container">
-			<label class="d2l-label-text" for="assignment-notification-email-container">
-				${this.localize('hdrSubmissionNotificationEmail')}
-			</label>
-			<p class="d2l-body-small">
-				${this.localize('hlpSubmissionNotificationEmail')}
-			</p>
-
-			<d2l-input-text
-				id="notification-email"
-				label="${this.localize('hdrSubmissionNotificationEmail')}"
-				label-hidden
-				value="${assignment.notificationEmail}"
-				maxlength="1024"
-				?disabled="${!assignment.canEditNotificationEmail}"
-				@change="${this._onNotificationEmailChanged}"
-				@blur="${this._checkNotificationEmail}"
-				aria-invalid="${this._notificationEmailError ? 'true' : ''}"
-				skip-alert
-				novalidate
-			></d2l-input-text>
-			${this._getNotificationEmailTooltip()}
-		</div>
-	`;
-	}
-	_getNotificationEmailTooltip() {
-		if (this._notificationEmailError) {
-			return html `
-				<d2l-tooltip id="notification-email-tooltip" for="notification-email" state="error" align="start" offset="10">
-					${this._notificationEmailError}
-				</d2l-tooltip>
-			`;
-		}
-	}
-	_checkNotificationEmail(e) {
-		const errorProperty = '_notificationEmailError';
-		const invalidNotificationEmailErrorLangterm = 'invalidNotificationEmailError';
-		const tooltipId = 'notification-email-tooltip';
-
-		const notificationEmail = e.target.value;
-		const isEmpty = (notificationEmail || '').length === 0;
-
-		const matches = /^(\s?[^\s,]+@[^\s,]+\.[^\s,]+\s?,)*(\s?[^\s,]+@[^\s,]+\.[^\s,]+)$/.exec(notificationEmail);
-		if (!isEmpty && matches === null) {
-			this.setError(errorProperty, invalidNotificationEmailErrorLangterm, tooltipId);
-		} else {
-			this.clearError(errorProperty);
-		}
-	}
-	_onNotificationEmailChanged(e) {
-		const assignment = store.getAssignment(this.href);
-		const data = e.target.value;
-		assignment && assignment.setNotificationEmail(data);
-	}
-
-	_renderSubmissionEmailNotificationSummary(assignment) {
-		if (!this._m4EmailNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
-			return html ``;
-		}
-		return html`
-			<d2l-activity-submission-email-notification-summary
-				href="${this.href}"
-				.token="${this.token}">
-			</d2l-activity-submission-email-notification-summary>
-		`;
-	}
-
 	_renderAssignmentSubmissionType(assignment) {
 		if (!assignment || !assignment.submissionAndCompletionProps) {
 			return html``;
@@ -338,7 +354,6 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 			</div>
 		`;
 	}
-
 	_renderAssignmentSubmissionTypeSummary(assignment) {
 		if (!assignment || !assignment.submissionAndCompletionProps) {
 			return html``;
@@ -352,86 +367,59 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 
 		return html``;
 	}
-
-	_getSelectedSubmissionType(assignment) {
-		if (!assignment || !assignment.submissionAndCompletionProps || !assignment.submissionAndCompletionProps.submissionTypeOptions) {
-			return html``;
-		}
-
-		return assignment.submissionAndCompletionProps.submissionTypeOptions.find(opt => String(opt.value) === assignment.submissionAndCompletionProps.submissionType);
-	}
-
-	_renderAssignmentCompletionType(assignment) {
-		if (!assignment ||
-			!assignment.submissionAndCompletionProps ||
-			!assignment.submissionAndCompletionProps.completionTypeOptions ||
-			assignment.submissionAndCompletionProps.completionTypeOptions.length === 0) {
-			return html``;
-		}
-
-		let completionTypeContent = html``;
-		if (assignment.submissionAndCompletionProps.canEditCompletionType) {
-			completionTypeContent = html`
-				<select
-					id="assignment-completion-type"
-					class="d2l-input-select d2l-block-select"
-					@change="${this._saveCompletionTypeOnChange}">
-						${this._getCompletionTypeOptions(assignment)}
-				</select>
-			`;
-		} else {
-			const completionType = this._getSelectedCompletionType(assignment);
-			if (completionType) {
-				completionTypeContent = html`<div class="d2l-body-compact">${completionType.title}</div>`;
-			}
-		}
-
-		return html`
-			<div id="assignment-completion-type-container">
-				<label class="d2l-label-text" for="assignment-completion-type">
-					${this.localize('completionType')}
+	_renderAssignmentType() {
+		return html `
+			<div id="assignment-type-container">
+				<label class="d2l-label-text">
+					${this.localize('txtAssignmentType')}
 				</label>
-				${completionTypeContent}
+				<d2l-activity-assignment-type-editor
+					href="${this.href}"
+					.token="${this.token}">
+				</d2l-activity-assignment-type-editor>
 			</div>
 		`;
 	}
-
-	_getSelectedCompletionType(assignment) {
-		if (!assignment ||
-			!assignment.submissionAndCompletionProps ||
-			!assignment.submissionAndCompletionProps.completionTypeOptions) {
-			return html``;
-		}
-		return assignment.submissionAndCompletionProps.completionTypeOptions.find(
-			opt => String(opt.value) === assignment.submissionAndCompletionProps.completionType
-		);
-	}
-
-	_renderAssignmentCompletionTypeSummary() {
-		return html``;
-	}
-
-	render() {
-		const assignment = store.getAssignment(this.href);
+	_renderAssignmentTypeSummary() {
 		return html`
-			<d2l-labs-accordion-collapse class="accordion" flex header-border>
-				<h3 class="d2l-heading-3 d2l-activity-summarizer-header" slot="header">
-					${this.localize('submissionCompletionAndCategorization')}
-				</h3>
-				<ul class="d2l-body-small d2l-activity-summarizer-summary" slot="summary">
-					<li>${this._renderAssignmentTypeSummary()}</li>
-					<li>${this._renderAssignmentSubmissionTypeSummary(assignment)}</li>
-					<li>${this._renderAssignmentCompletionTypeSummary()}</li>
-					<li>${this._renderSubmissionEmailNotificationSummary(assignment)}</li>
-				</ul>
-				${this._renderAssignmentType()}
-				${this._renderAssignmentSubmissionType(assignment)}
-				${this._renderAssignmentFilesSubmissionLimit(assignment)}
-				${this._renderAssignmentSubmissionsRule(assignment)}
-				${this._renderAssignmentCompletionType(assignment)}
-				${this._renderAssignmentSubmissionNotificationEmail(assignment)}
-			</d2l-labs-accordion-collapse>
+			<d2l-activity-assignment-type-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-assignment-type-summary>
 		`;
 	}
+	_renderSubmissionEmailNotificationSummary(assignment) {
+		if (!this._m4EmailNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
+			return html ``;
+		}
+		return html`
+			<d2l-activity-submission-email-notification-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-submission-email-notification-summary>
+		`;
+	}
+	_saveCompletionTypeOnChange(event) {
+		store.getAssignment(this.href).setCompletionType(event.target.value);
+	}
+
+	_saveSubmissionTypeOnChange(event) {
+		store.getAssignment(this.href).setSubmissionType(event.target.value);
+	}
+
+	_setfilesSubmisisonLimit(e) {
+		const assignment = store.getAssignment(this.href);
+		const data = e.target.value;
+		assignment && assignment.setFilesSubmissionLimit(data);
+	}
+
+	_setSubmisisonsRule(e) {
+		const assignment = store.getAssignment(this.href);
+		const data = e.target.value;
+		assignment &&
+		assignment.submissionAndCompletionProps &&
+		assignment.submissionAndCompletionProps.setSubmissionsRule(data);
+	}
+
 }
 customElements.define('d2l-activity-assignment-editor-submission-and-completion-editor', ActivityAssignmentSubmissionAndCompletionEditor);

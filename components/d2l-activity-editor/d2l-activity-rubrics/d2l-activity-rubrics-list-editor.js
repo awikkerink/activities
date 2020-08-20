@@ -46,6 +46,28 @@ class ActivityRubricsListEditor extends ActivityEditorFeaturesMixin(ActivityEdit
 		super(store);
 	}
 
+	render() {
+
+		const entity = store.get(this.href);
+
+		if (!entity) {
+			return html``;
+		}
+
+		const associations = entity.fetchAssociations();
+		return html`${associations.map(this._renderAssociation, this)}`;
+	}
+	hasPendingChanges() {
+		const entity = store.get(this.href);
+		return entity && entity.dirty;
+	}
+	async save() {
+		const entity = store.get(this.href);
+		if (!entity) {
+			return;
+		}
+		await entity.save();
+	}
 	_deleteAssociation(e) {
 		const m3FeatureFlagEnabled = this._isMilestoneEnabled(Milestones.M3DefaultScoringRubric);
 
@@ -67,14 +89,6 @@ class ActivityRubricsListEditor extends ActivityEditorFeaturesMixin(ActivityEdit
 			entity.deleteAssociation_DoNotUse(e.target.dataset.id);
 			announce(this.localize('rubrics.txtRubricRemoved'));
 		}
-	}
-
-	async save() {
-		const entity = store.get(this.href);
-		if (!entity) {
-			return;
-		}
-		await entity.save();
 	}
 
 	_renderAssociation(association) {
@@ -104,23 +118,6 @@ class ActivityRubricsListEditor extends ActivityEditorFeaturesMixin(ActivityEdit
 		} else {
 			return html``;
 		}
-	}
-
-	render() {
-
-		const entity = store.get(this.href);
-
-		if (!entity) {
-			return html``;
-		}
-
-		const associations = entity.fetchAssociations();
-		return html`${associations.map(this._renderAssociation, this)}`;
-	}
-
-	hasPendingChanges() {
-		const entity = store.get(this.href);
-		return entity && entity.dirty;
 	}
 
 }

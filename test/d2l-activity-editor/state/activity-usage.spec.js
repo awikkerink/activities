@@ -1,5 +1,5 @@
 import { ActivitySpecialAccessEntity } from 'siren-sdk/src/activities/ActivitySpecialAccessEntity.js';
-import { ActivityUsage} from '../../../components/d2l-activity-editor/state/activity-usage.js';
+import { ActivityUsage } from '../../../components/d2l-activity-editor/state/activity-usage.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
 import { AlignmentsCollectionEntity } from 'siren-sdk/src/alignments/AlignmentsCollectionEntity.js';
 import { CompetenciesEntity } from 'siren-sdk/src/competencies/CompetenciesEntity.js';

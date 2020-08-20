@@ -32,37 +32,10 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeActivityEditorMi
 		this._isFirstLoad = true;
 	}
 
-	_onDatetimePickerDatetimeCleared() {
-		store.get(this.href).dates.setDueDate('');
+	firstUpdated() {
+		super.firstUpdated();
+		this._isFirstLoad = false;
 	}
-
-	_onDatetimePickerDatetimeChanged(e) {
-		store.get(this.href).dates.setDueDate(e.detail.toISOString());
-	}
-
-	dateTemplate(date, canEdit, errorTerm) {
-		return html`
-			<div id="datetime-picker-container" ?hidden="${!canEdit}">
-				<d2l-datetime-picker
-					hide-label
-					name="date"
-					id="date"
-					date-label="${this.localize('editor.dueDate')}"
-					time-label="${this.localize('editor.dueTime')}"
-					datetime="${date}"
-					overrides="${this._overrides}"
-					placeholder="${this.localize('editor.noDueDate')}"
-					aria-invalid="${errorTerm ? 'true' : 'false'}"
-					invalid="${errorTerm}"
-					tooltip-red
-					boundary="{&quot;below&quot;:240}"
-					@d2l-datetime-picker-datetime-changed="${this._onDatetimePickerDatetimeChanged}"
-					@d2l-datetime-picker-datetime-cleared="${this._onDatetimePickerDatetimeCleared}">
-				</d2l-datetime-picker>
-			</div>
-		`;
-	}
-
 	render() {
 		const entity = store.get(this.href);
 		const dates = entity ? entity.dates : null;
@@ -91,12 +64,6 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeActivityEditorMi
 			${this.dateTemplate(dueDate, canEditDates, errorTerm)}
 		`;
 	}
-
-	firstUpdated() {
-		super.firstUpdated();
-		this._isFirstLoad = false;
-	}
-
 	updated(changedProperties) {
 		super.updated(changedProperties);
 
@@ -104,6 +71,35 @@ class ActivityDueDateEditor extends ActivityEditorMixin(LocalizeActivityEditorMi
 			this.href && this.token) {
 			super._fetch(() => store.fetch(this.href, this.token));
 		}
+	}
+	dateTemplate(date, canEdit, errorTerm) {
+		return html`
+			<div id="datetime-picker-container" ?hidden="${!canEdit}">
+				<d2l-datetime-picker
+					hide-label
+					name="date"
+					id="date"
+					date-label="${this.localize('editor.dueDate')}"
+					time-label="${this.localize('editor.dueTime')}"
+					datetime="${date}"
+					overrides="${this._overrides}"
+					placeholder="${this.localize('editor.noDueDate')}"
+					aria-invalid="${errorTerm ? 'true' : 'false'}"
+					invalid="${errorTerm}"
+					tooltip-red
+					boundary="{&quot;below&quot;:240}"
+					@d2l-datetime-picker-datetime-changed="${this._onDatetimePickerDatetimeChanged}"
+					@d2l-datetime-picker-datetime-cleared="${this._onDatetimePickerDatetimeCleared}">
+				</d2l-datetime-picker>
+			</div>
+		`;
+	}
+	_onDatetimePickerDatetimeChanged(e) {
+		store.get(this.href).dates.setDueDate(e.detail.toISOString());
+	}
+
+	_onDatetimePickerDatetimeCleared() {
+		store.get(this.href).dates.setDueDate('');
 	}
 
 }

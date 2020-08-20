@@ -34,16 +34,6 @@ class ActivityVisibilityEditorToggle extends LocalizeActivityEditorMixin(LitElem
 		this._textHidden = false;
 	}
 
-	_onChange() {
-		this.dispatchEvent(
-			new CustomEvent('d2l-activity-visibility-editor-toggle-change', { bubbles: true })
-		);
-	}
-
-	get switchEnabled() {
-		return this.canEditDraft && !this.disabled;
-	}
-
 	connectedCallback() {
 		super.connectedCallback();
 		this._narrowViewportQuery = matchMedia('only screen and (max-width: 615px)');
@@ -56,7 +46,6 @@ class ActivityVisibilityEditorToggle extends LocalizeActivityEditorMixin(LitElem
 			this._narrowViewportQuery.addListener((e) => this._textHidden = e.matches);
 		}
 	}
-
 	render() {
 		if (this.switchEnabled) {
 			return html`
@@ -70,7 +59,7 @@ class ActivityVisibilityEditorToggle extends LocalizeActivityEditorMixin(LitElem
 			return html`
 				<div class="d2l-label-text">
 					<d2l-icon icon="${this.isDraft ? 'tier1:visibility-hide' : 'tier1:visibility-show'}"></d2l-icon>
-					<span class="${classMap({'d2l-offscreen': this._textHidden})}">
+					<span class="${classMap({ 'd2l-offscreen': this._textHidden })}">
 						${this.isDraft ? this.localize('editor.hidden') : this.localize('editor.visible')}
 					</span>
 				</div>
@@ -78,5 +67,14 @@ class ActivityVisibilityEditorToggle extends LocalizeActivityEditorMixin(LitElem
 		}
 
 	}
+	get switchEnabled() {
+		return this.canEditDraft && !this.disabled;
+	}
+	_onChange() {
+		this.dispatchEvent(
+			new CustomEvent('d2l-activity-visibility-editor-toggle-change', { bubbles: true })
+		);
+	}
+
 }
 customElements.define('d2l-activity-visibility-editor-toggle', ActivityVisibilityEditorToggle);

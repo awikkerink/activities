@@ -41,13 +41,36 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 		this.saveOrder = 1000;
 	}
 
-	async validate() {}
+	connectedCallback() {
+		if (super.connectedCallback) {
+			super.connectedCallback();
+		}
 
-	async save() {}
+		this._dispatchActivityEditorEvent();
+	}
+	disconnectedCallback() {
+		if (this._container) {
+			this._container.unregisterEditor(this);
+		}
 
+		if (super.disconnectedCallback) {
+			super.disconnectedCallback();
+		}
+	}
+	updated(changedProperties) {
+		super.updated(changedProperties);
+
+		if ((changedProperties.has('href') || changedProperties.has('token')) &&
+			this.href && this.token) {
+			this.store && this._fetch(() => this.store.fetch(this.href, this.token));
+		}
+	}
 	hasPendingChanges() {
 		return false;
 	}
+	async save() {}
+
+	async validate() {}
 
 	_dispatchActivityEditorEvent() {
 		const event = new CustomEvent('d2l-activity-editor-connected', {
@@ -73,30 +96,4 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 		this.dispatchEvent(pendingEvent);
 	}
 
-	connectedCallback() {
-		if (super.connectedCallback) {
-			super.connectedCallback();
-		}
-
-		this._dispatchActivityEditorEvent();
-	}
-
-	disconnectedCallback() {
-		if (this._container) {
-			this._container.unregisterEditor(this);
-		}
-
-		if (super.disconnectedCallback) {
-			super.disconnectedCallback();
-		}
-	}
-
-	updated(changedProperties) {
-		super.updated(changedProperties);
-
-		if ((changedProperties.has('href') || changedProperties.has('token')) &&
-			this.href && this.token) {
-			this.store && this._fetch(() => this.store.fetch(this.href, this.token));
-		}
-	}
 };

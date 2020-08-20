@@ -59,50 +59,6 @@ class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 		super(store);
 	}
 
-	_getGroupCategoryOptions(assignment) {
-		if (assignment) {
-			return html`${assignment.groupCategories.map(
-				option => html`
-					<option value=${option.value} ?selected=${String(option.value) === assignment.selectedGroupCategoryId}>
-						${option.title}
-					</option>
-					`
-			)}`;
-		}
-		return html``;
-	}
-
-	_setIndividualAssignmentType() {
-		store.get(this.href).setToIndividualAssignmentType();
-	}
-
-	_setGroupAssignmentType() {
-		store.get(this.href).setToGroupAssignmentType();
-	}
-
-	_changeGroupCategory(event) {
-		store.get(this.href).setAssignmentTypeGroupCategory(event.target.value);
-	}
-
-	_getInformationText(assignment) {
-		if (!assignment) {
-			return;
-		}
-
-		const isIndividualAssignmentType = assignment.isIndividualAssignmentType;
-		const hasSubmissions = assignment.submissionAndCompletionProps && assignment.submissionAndCompletionProps.assignmentHasSubmissions;
-
-		if (!hasSubmissions && isIndividualAssignmentType && assignment.groupCategories.length === 0) {
-			return this.localize('folderTypeNoGroups');
-		}
-
-		if (!hasSubmissions && !isIndividualAssignmentType) {
-			return this.localize('folderTypeCreateGroups');
-		}
-
-		return;
-	}
-
 	render() {
 		const assignment = store.get(this.href);
 
@@ -163,5 +119,46 @@ class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 			</div>
 		`;
 	}
+	_changeGroupCategory(event) {
+		store.get(this.href).setAssignmentTypeGroupCategory(event.target.value);
+	}
+	_getGroupCategoryOptions(assignment) {
+		if (assignment) {
+			return html`${assignment.groupCategories.map(
+				option => html`
+					<option value=${option.value} ?selected=${String(option.value) === assignment.selectedGroupCategoryId}>
+						${option.title}
+					</option>
+					`
+			)}`;
+		}
+		return html``;
+	}
+
+	_getInformationText(assignment) {
+		if (!assignment) {
+			return;
+		}
+
+		const isIndividualAssignmentType = assignment.isIndividualAssignmentType;
+		const hasSubmissions = assignment.submissionAndCompletionProps && assignment.submissionAndCompletionProps.assignmentHasSubmissions;
+
+		if (!hasSubmissions && isIndividualAssignmentType && assignment.groupCategories.length === 0) {
+			return this.localize('folderTypeNoGroups');
+		}
+
+		if (!hasSubmissions && !isIndividualAssignmentType) {
+			return this.localize('folderTypeCreateGroups');
+		}
+
+		return;
+	}
+	_setGroupAssignmentType() {
+		store.get(this.href).setToGroupAssignmentType();
+	}
+	_setIndividualAssignmentType() {
+		store.get(this.href).setToIndividualAssignmentType();
+	}
+
 }
 customElements.define('d2l-activity-assignment-type-editor', AssignmentTypeEditor);

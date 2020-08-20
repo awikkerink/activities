@@ -52,60 +52,6 @@ class AssignmentTurnitinEditor
 		super(store);
 	}
 
-	_onClickEdit() {
-
-		const entity = store.get(this.href);
-		if (!entity) {
-			return;
-		}
-
-		const url = entity.editTurnitinUrl;
-		if (!url) {
-			return;
-		}
-
-		const location = new D2L.LP.Web.Http.UrlLocation(url);
-		const buttons = [
-			{
-				Key: 'save',
-				Text: this.localize('btnSave'),
-				ResponseType: 1, // D2L.Dialog.ResponseType.Positive
-				IsPrimary: true,
-				IsEnabled: true
-			},
-			{
-				Text: this.localize('btnCancel'),
-				ResponseType: 2, // D2L.Dialog.ResponseType.Negative
-				IsPrimary: false,
-				IsEnabled: true
-			}
-		];
-
-		// Launch into our friend, the LMS, to do the thing.
-		const delayedResult = D2L.LP.Web.UI.Legacy.MasterPages.Dialog.Open(
-			/*               opener: */ document.body,
-			/*             location: */ location,
-			/*          srcCallback: */ 'SrcCallback',
-			/*       resizeCallback: */ '',
-			/*      responseDataKey: */ 'result',
-			/*                width: */ 960,
-			/*               height: */ 960,
-			/*            closeText: */ this.localize('btnCloseDialog'),
-			/*              buttons: */ buttons,
-			/* forceTriggerOnCancel: */ false
-		);
-		delayedResult.AddListener(result => {
-
-			const resultIsValid = Array.isArray(result) && result.length >= 2;
-			if (!resultIsValid) {
-				return;
-			}
-
-			const [isOriginalityCheckEnabled, isGradeMarkEnabled] = result;
-			entity.setTurnitin(isOriginalityCheckEnabled, isGradeMarkEnabled);
-		});
-	}
-
 	render() {
 
 		const entity = store.get(this.href);
@@ -164,6 +110,60 @@ class AssignmentTurnitinEditor
 			</div>
 		`;
 	}
+	_onClickEdit() {
+
+		const entity = store.get(this.href);
+		if (!entity) {
+			return;
+		}
+
+		const url = entity.editTurnitinUrl;
+		if (!url) {
+			return;
+		}
+
+		const location = new D2L.LP.Web.Http.UrlLocation(url);
+		const buttons = [
+			{
+				Key: 'save',
+				Text: this.localize('btnSave'),
+				ResponseType: 1, // D2L.Dialog.ResponseType.Positive
+				IsPrimary: true,
+				IsEnabled: true
+			},
+			{
+				Text: this.localize('btnCancel'),
+				ResponseType: 2, // D2L.Dialog.ResponseType.Negative
+				IsPrimary: false,
+				IsEnabled: true
+			}
+		];
+
+		// Launch into our friend, the LMS, to do the thing.
+		const delayedResult = D2L.LP.Web.UI.Legacy.MasterPages.Dialog.Open(
+			/*               opener: */ document.body,
+			/*             location: */ location,
+			/*          srcCallback: */ 'SrcCallback',
+			/*       resizeCallback: */ '',
+			/*      responseDataKey: */ 'result',
+			/*                width: */ 960,
+			/*               height: */ 960,
+			/*            closeText: */ this.localize('btnCloseDialog'),
+			/*              buttons: */ buttons,
+			/* forceTriggerOnCancel: */ false
+		);
+		delayedResult.AddListener(result => {
+
+			const resultIsValid = Array.isArray(result) && result.length >= 2;
+			if (!resultIsValid) {
+				return;
+			}
+
+			const [isOriginalityCheckEnabled, isGradeMarkEnabled] = result;
+			entity.setTurnitin(isOriginalityCheckEnabled, isGradeMarkEnabled);
+		});
+	}
+
 }
 
 customElements.define(
