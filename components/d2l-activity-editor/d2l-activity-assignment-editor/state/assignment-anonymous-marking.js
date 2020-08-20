@@ -1,4 +1,4 @@
-import {action, configure as configureMobx, decorate, observable } from 'mobx';
+import { action, configure as configureMobx, decorate, observable } from 'mobx';
 
 configureMobx({ enforceActions: 'observed' });
 
@@ -14,6 +14,11 @@ export class AnonymousMarkingProps {
 		this.setIsAnonymousMarkingAvailableForSubmissionType(entity.submissionType);
 	}
 
+	isSubmissionTypeWithAnonMarking(submissionType) {
+		// only file (0) and text (1) submissions can have anonymous marking, see https://docs.valence.desire2learn.com/res/dropbox.html#attributes
+		return ['0', '1'].includes(submissionType);
+	}
+
 	setAnonymousMarking(value) {
 		this.isAnonymousMarkingEnabled = value;
 	}
@@ -23,10 +28,6 @@ export class AnonymousMarkingProps {
 			this.entityAnonymousMarkingAvailable && this.isSubmissionTypeWithAnonMarking(submissionType);
 	}
 
-	isSubmissionTypeWithAnonMarking(submissionType) {
-		// only file (0) and text (1) submissions can have anonymous marking, see https://docs.valence.desire2learn.com/res/dropbox.html#attributes
-		return ['0', '1'].includes(submissionType);
-	}
 }
 
 decorate(AnonymousMarkingProps, {

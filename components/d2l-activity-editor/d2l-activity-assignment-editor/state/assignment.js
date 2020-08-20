@@ -112,6 +112,10 @@ export class Assignment {
 	setAnonymousMarking(value) {
 		this.isAnonymousMarkingEnabled = value;
 	}
+	setAnonymousMarkingProps(anonymousMarkingProps) {
+		this.anonymousMarkingProps = new AnonymousMarkingProps(anonymousMarkingProps);
+	}
+
 	setAssignmentTypeGroupCategory(value) {
 		this.selectedGroupCategoryId = value;
 	}
@@ -145,7 +149,7 @@ export class Assignment {
 	setSubmissionType(value) {
 		this.submissionAndCompletionProps.setSubmissionType(value);
 
-		this.anonymousMarkingProps.setIsAno1nymousMarkingAvailableForSubmissionType(this.submissionAndCompletionProps.submissionType);
+		this.anonymousMarkingProps.setIsAnonymousMarkingAvailableForSubmissionType(this.submissionAndCompletionProps.submissionType);
 	}
 	setToGroupAssignmentType() {
 		this.isIndividualAssignmentType = false;
@@ -164,10 +168,6 @@ export class Assignment {
 	}
 	get showNotificationEmail() {
 		return typeof this.notificationEmail !== 'undefined' && this.submissionAndCompletionProps.showSubmissionsRule;
-	}
-
-	setAnonymousMarkingProps(anonymousMarkingProps) {
-		this.anonymousMarkingProps = new AnonymousMarkingProps(anonymousMarkingProps);
 	}
 
 	_getIsAnonymousMarkingAvailable() {
