@@ -80,7 +80,7 @@ class ActivityRubricsListContainer extends ActivityEditorFeaturesMixin(ActivityE
 			<div class="d2l-rubric-heading-container">
 				<h3 class="d2l-heading-4 d2l-rubric-heading-title">
 					${this.localize('rubrics.hdrRubrics')}
-					</h3>
+				</h3>
 				</div>
 				<d2l-activity-rubrics-list-editor
 					href="${this.href}"
