@@ -1,4 +1,5 @@
 import { action, computed, configure as configureMobx, decorate, observable } from 'mobx';
+import { AnonymousMarkingProps } from './assignment-anonymous-marking.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { fetchEntity } from '../../state/fetch-entity.js';
 import { SubmissionAndCompletionProps } from './assignment-submission-and-completion.js';
@@ -49,7 +50,6 @@ export class Assignment {
 		this.instructions = entity.canEditInstructions() ? entity.instructionsEditorHtml() : entity.instructionsHtml();
 		this.canEditInstructions = entity.canEditInstructions();
 		this.instructionsRichTextEditorConfig = entity.instructionsRichTextEditorConfig();
-		this.anonymousMarkingHelpText = entity.getAnonymousMarkingHelpText();
 		this.canEditAnnotations = entity.canEditAnnotations();
 		this.annotationToolsAvailable = entity.getAvailableAnnotationTools();
 		this.activityUsageHref = entity.activityUsageHref();
@@ -61,9 +61,13 @@ export class Assignment {
 		this.defaultScoringRubricId = String(entity.getDefaultScoringRubric()) || '-1';
 
 		// set up anonymous marking _after_ submission type
-		this.isAnonymousMarkingEnabled = entity.isAnonymousMarkingEnabled();
-		this.canEditAnonymousMarking = entity.canEditAnonymousMarking();
-		this.isAnonymousMarkingAvailable = this._getIsAnonymousMarkingAvailable();
+		this.anonymousMarkingProps = new AnonymousMarkingProps({
+			isAnonymousMarkingEnabled: entity.isAnonymousMarkingEnabled(),
+			canEditAnonymousMarking: entity.canEditAnonymousMarking(),
+			isAnonymousMarkingAvailable: entity.isAnonymousMarkingAvailable(),
+			anonymousMarkingHelpText: entity.getAnonymousMarkingHelpText(),
+			submissionType: this.submissionAndCompletionProps.submissionType
+		});
 
 		this.canEditSubmissionsRule = entity.canEditSubmissionsRule();
 		this.submissionsRule = entity.submissionsRule() || 'keepall';
@@ -91,6 +95,7 @@ export class Assignment {
 			}
 		}
 	}
+
 	resetDefaultScoringRubricId() {
 		this.defaultScoringRubricId = '-1';
 	}
@@ -105,8 +110,12 @@ export class Assignment {
 		this.annotationToolsAvailable = value;
 	}
 	setAnonymousMarking(value) {
-		this.isAnonymousMarkingEnabled = value;
+		this.anonymousMarkingProps.setAnonymousMarking(value);
 	}
+	setAnonymousMarkingProps(anonymousMarkingProps) {
+		this.anonymousMarkingProps = new AnonymousMarkingProps(anonymousMarkingProps);
+	}
+
 	setAssignmentTypeGroupCategory(value) {
 		this.selectedGroupCategoryId = value;
 	}
@@ -140,7 +149,7 @@ export class Assignment {
 	setSubmissionType(value) {
 		this.submissionAndCompletionProps.setSubmissionType(value);
 
-		this.isAnonymousMarkingAvailable = this._getIsAnonymousMarkingAvailable();
+		this.anonymousMarkingProps.setIsAnonymousMarkingAvailableForSubmissionType(this.submissionAndCompletionProps.submissionType);
 	}
 	setToGroupAssignmentType() {
 		this.isIndividualAssignmentType = false;
@@ -149,6 +158,7 @@ export class Assignment {
 				? String(this.selectedGroupCategoryId)
 				: String(this.groupCategories[0].value);
 	}
+
 	setToIndividualAssignmentType() {
 		this.isIndividualAssignmentType = true;
 	}
@@ -158,14 +168,6 @@ export class Assignment {
 	}
 	get showNotificationEmail() {
 		return typeof this.notificationEmail !== 'undefined' && this.submissionAndCompletionProps.showSubmissionsRule;
-	}
-	_getIsAnonymousMarkingAvailable() {
-		return this._entity.isAnonymousMarkingAvailable() && this._isSubmissionTypeWithAnonMarking();
-	}
-
-	_isSubmissionTypeWithAnonMarking() {
-		// only file (0) and text (1) submissions can have anonymous marking, see https://docs.valence.desire2learn.com/res/dropbox.html#attributes
-		return ['0', '1'].includes(this.submissionAndCompletionProps.submissionType);
 	}
 
 	_makeAssignmentData() {
@@ -180,8 +182,8 @@ export class Assignment {
 			groupTypeId: this.selectedGroupCategoryId,
 			defaultScoringRubricId: this.defaultScoringRubricId
 		};
-		if (this._isSubmissionTypeWithAnonMarking()) {
-			data.isAnonymous = this.isAnonymousMarkingEnabled;
+		if (this.anonymousMarkingProps.isSubmissionTypeWithAnonMarking(this.submissionAndCompletionProps.submissionType)) {
+			data.isAnonymous = this.anonymousMarkingProps.isAnonymousMarkingEnabled;
 		}
 		if (this.canEditInstructions) {
 			data.instructions = this.instructions;
@@ -211,10 +213,6 @@ decorate(Assignment, {
 	instructions: observable,
 	canEditInstructions: observable,
 	instructionsRichTextEditorConfig: observable,
-	isAnonymousMarkingAvailable: observable,
-	isAnonymousMarkingEnabled: observable,
-	canEditAnonymousMarking: observable,
-	anonymousMarkingHelpText: observable,
 	canEditAnnotations: observable,
 	annotationToolsAvailable: observable,
 	activityUsageHref: observable,
@@ -250,6 +248,7 @@ decorate(Assignment, {
 	setToGroupAssignmentType: action,
 	setAssignmentTypeGroupCategory: action,
 	setSubmissionAndCompletionProps: action,
+	setAnonymousMarkingProps: action,
 	setDefaultScoringRubric: action,
 	resetDefaultScoringRubricId: action,
 	setNotificationEmail: action
