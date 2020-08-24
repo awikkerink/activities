@@ -59,6 +59,9 @@ class ActivityRubricsListContainer extends ActivityEditorFeaturesMixin(ActivityE
 				.d2l-rubric-heading-title {
 					flex-grow: 1;
 				}
+				d2l-simple-overlay {
+					--d2l-scrollable-height: calc(100vh - 225px);
+				}
 			`
 		];
 	}
