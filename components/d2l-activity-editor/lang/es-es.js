@@ -89,7 +89,7 @@ export default {
 
 	"grades.points": "Puntos: {points}", // Text label for displaying points of a grade
 	"grades.weight": "Ponderación: {weight}", // Text label for displaying weight of a grade
-	"grades.gradeItem": "Elemento de[br]calificación", //ARIA label for grade-item picker when linking an activity to an existing grade item
+	"grades.gradeItem": "Elemento de calificación", //ARIA label for grade-item picker when linking an activity to an existing grade item
 	"grades.newGradeItemCategory": "Categoría de calificación", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "Ninguna categoría", // Category dropdown text for not selecting a category
 
