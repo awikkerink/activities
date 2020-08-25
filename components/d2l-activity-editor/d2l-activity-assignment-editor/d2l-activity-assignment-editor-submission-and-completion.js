@@ -65,6 +65,10 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 					margin-bottom: 2px;
 					margin-top: 10px;
 				}
+
+				#notification-email-tooltip {
+					z-index: auto;
+				}
 			`,
 			summarizerHeaderStyles,
 			summarizerSummaryStyles
