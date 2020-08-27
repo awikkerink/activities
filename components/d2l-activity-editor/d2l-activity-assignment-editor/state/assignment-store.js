@@ -8,9 +8,15 @@ export class AssignmentStore {
 		this._activities = new ObjectStore(AssignmentActivityUsage);
 	}
 
+	clear() {
+		this._assignments.clear();
+		this._activities.clear();
+	}
+
 	fetchActivity(href, token) {
 		return this._activities.fetch(href, token);
 	}
+
 	fetchAssignment(href, token) {
 		return this._assignments.fetch(href, token);
 	}
@@ -18,10 +24,14 @@ export class AssignmentStore {
 	getActivity(href) {
 		return this._activities.get(href);
 	}
+
 	getAssignment(href) {
 		return this._assignments.get(href);
 	}
 
+	put(href, object) {
+		this._assignments.put(href, object);
+	}
 }
 
 export const shared = new AssignmentStore();

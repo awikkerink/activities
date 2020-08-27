@@ -102,6 +102,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 			</d2l-labs-accordion-collapse>
 		`;
 	}
+
 	_checkNotificationEmail(e) {
 		const errorProperty = '_notificationEmailError';
 		const invalidNotificationEmailErrorLangterm = 'invalidNotificationEmailError';
@@ -140,6 +141,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends ActivityEditorFeat
 			!assignment.submissionAndCompletionProps.completionTypeOptions) {
 			return html``;
 		}
+
 		return assignment.submissionAndCompletionProps.completionTypeOptions.find(
 			opt => String(opt.value) === assignment.submissionAndCompletionProps.completionType
 		);
