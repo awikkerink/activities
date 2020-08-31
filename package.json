@@ -32,7 +32,7 @@
     "@brightspace-ui/stylelint-config": "^0.0.1",
     "@brightspace-ui/visual-diff": "^1.0.1",
     "@open-wc/testing": "^2.5.1",
-    "@open-wc/testing-karma": "^3.4.4",
+    "@open-wc/testing-karma": "^4.0.5",
     "@polymer/iron-component-page": "^3.0.0-pre.18",
     "@polymer/iron-demo-helpers": "^3.0.0-pre.18",
     "@polymer/iron-test-helpers": "^3.0.0-pre.18",
