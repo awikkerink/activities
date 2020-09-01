@@ -16,7 +16,8 @@ export default {
 	noActivitiesInLearningPath: "There are no activities in this learning path.", // Displayed when the learning path is loaded and contains no activities
 	noActivitiesFound: "There were no activities found using your search term.", // Displayed when the learning path has no activities while in the screen that allows you to add them.
 	numberOfActivities: "{count, plural, =1 {1 Activity} other {{count} Activities}}", // The number of learning tasks currently in the list.
-	removeActivity: "Remove {activityName}", // An action to remove a learning task from a list of tasks that are related
+	removeActivity: "Remove", // An action to remove a learning task from a list of tasks that are related
+	removeActivityAria: "Remove {activityName}", // An action to remove a learning task from a list of tasks that are related with the activity name
 	search: "Search", // When adding activities to the learning path, this is where you can search for potential activities to add.
 	searchPlaceholder: "Search...", // Placeholder text for the search input to search the list of potential activities.
 	selected: "{count} selected.", // When adding activities (bulk add) to a learning path this is the number of activities that will be added to the list.
