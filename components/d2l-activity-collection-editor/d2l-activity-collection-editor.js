@@ -673,8 +673,8 @@ class CollectionEditor extends LocalizeActivityCollectionEditor(EntityMixinLit(L
 					<div slot="secondary">${item.hasClass(organizationClasses.courseOffering) ? this.localize('course') : null}</div>
 					<d2l-menu-item
 						slot="secondary-action"
-						text="${this.localize('removeActivity', 'activityName', '')}"
-						aria-label="${this.localize('removeActivity', 'activityName', item.name())}"
+						text="${this.localize('removeActivity')}"
+						aria-label="${this.localize('removeActivityAria', 'activityName', item.name())}"
 						@keydown=${(e) => (e.keyCode === spaceKeyDown || e.keyCode === spaceKeyEnter) && item.removeItem()}
 						@click=${item.removeItem}>
 					</d2l-menu-item>
