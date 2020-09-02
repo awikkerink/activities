@@ -13,7 +13,7 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeActiv
 			:host([hidden]) {
 				display: none;
 			}
-			#start-date-picker {
+			#start-date-input {
 				padding-bottom: 20px;
 			}
 		`];
@@ -38,7 +38,7 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeActiv
 
 		return html`
 			<d2l-input-date-time
-				id="start-date-picker"
+				id="start-date-input"
 				label="${this.localize('editor.startDate')}"
 				value="${dates.startDate}"
 				.validationError="${startDateErrorValue}"
@@ -46,6 +46,7 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeActiv
 				@change="${this._onStartDatetimeChanged}">
 			</d2l-input-date-time>
 			<d2l-input-date-time
+				id="end-date-input"
 				label="${this.localize('editor.endDate')}"
 				value="${dates.endDate}"
 				.validationError="${endDateErrorValue}"
