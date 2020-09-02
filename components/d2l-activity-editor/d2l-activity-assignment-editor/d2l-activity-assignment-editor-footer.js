@@ -8,12 +8,6 @@ import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 
 class AssignmentEditorFooter extends SaveStatusMixin(ActivityEditorMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(LitElement)))) {
 
-	static get properties() {
-		return {
-			_activityUsageHref: { type: String }
-		};
-	}
-
 	static get styles() {
 		return css`
 			:host {
@@ -61,11 +55,5 @@ class AssignmentEditorFooter extends SaveStatusMixin(ActivityEditorMixin(RtlMixi
 			</div>
 		`;
 	}
-	set _entity(entity) {
-		if (this._entityHasChanged(entity)) {
-			super._entity = entity;
-		}
-	}
-
 }
 customElements.define('d2l-activity-assignment-editor-footer', AssignmentEditorFooter);
