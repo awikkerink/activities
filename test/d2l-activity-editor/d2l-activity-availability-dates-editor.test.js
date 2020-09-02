@@ -37,14 +37,14 @@ describe('d2l-activity-availability-dates-editor', function() {
 		await expect(el).to.be.accessible();
 	});
 
-	describe('visible', function() {
-		it('renders both date pickers when enabled', async() => {
+	describe('inputs visible', function() {
+		it('renders both availability date inputs when enabled', async() => {
 			expect(startDateInput).to.exist;
 			expect(endDateInput).to.exist;
 		});
 	});
 
-	describe('hidden', function() {
+	describe('inputs hidden', function() {
 		beforeEach(async() => {
 			dates.setCanEditDates(false);
 			await elementUpdated(el);
@@ -53,19 +53,19 @@ describe('d2l-activity-availability-dates-editor', function() {
 			endDateInput = el.shadowRoot.querySelector('#end-date-input');
 		});
 
-		it('hides both date pickers if not allowed to edit', async() => {
+		it('hides both availability date inputs if not allowed to edit', async() => {
 			expect(startDateInput).to.not.exist;
 			expect(endDateInput).to.not.exist;
 		});
 	});
 
 	describe('dates', function() {
-		it('displays dates', async() => {
+		it('displays correct dates', async() => {
 			expect(startDateInput).to.have.attr('value', '2020-02-24T04:59:00.000Z');
 			expect(endDateInput).to.have.attr('value', '2020-02-26T04:59:00.000Z');
 		});
 
-		it('displays updated dates on change', async() => {
+		it('updates date values on change', async() => {
 			dates.setStartDate('2020-02-25T04:59:00.000Z');
 			dates.setEndDate('2020-02-27T04:59:00.000Z');
 			await elementUpdated(el);
@@ -75,7 +75,7 @@ describe('d2l-activity-availability-dates-editor', function() {
 		});
 	});
 
-	describe('invalid', function() {
+	describe('invalid state', function() {
 		it('sets start date to be invalid for given error', async() => {
 			dates.setErrorLangTerms('start-after-due-date-error');
 			await elementUpdated(el);
