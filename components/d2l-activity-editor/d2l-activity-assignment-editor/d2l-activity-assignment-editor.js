@@ -328,7 +328,7 @@ class AssignmentEditor extends ActivityEditorContainerMixin(RtlMixin(LocalizeAct
 						options
 					);
 				}).then(filteredContent => {
-					const matchSrc = function (str) {
+					const matchSrc = function(str) {
 						// excludes matching query string as filterHtml may modify the query string
 						return str.match(/src=["']([^?"']+)/i);
 					};
