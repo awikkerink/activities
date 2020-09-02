@@ -1,10 +1,10 @@
 import '../d2l-activity-editor-buttons.js';
 import '../d2l-activity-visibility-editor.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SaveStatusMixin } from '../save-status-mixin.js';
-import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 
 class AssignmentEditorFooter extends SaveStatusMixin(ActivityEditorMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(LitElement)))) {
 
@@ -35,10 +35,6 @@ class AssignmentEditorFooter extends SaveStatusMixin(ActivityEditorMixin(RtlMixi
 				}
 			}
 		`;
-	}
-
-	constructor() {
-		super();
 	}
 
 	render() {
