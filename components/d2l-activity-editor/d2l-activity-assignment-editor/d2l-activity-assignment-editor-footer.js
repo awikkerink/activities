@@ -47,15 +47,13 @@ class AssignmentEditorFooter extends SaveStatusMixin(EntityMixinLit(RtlMixin(Loc
 	constructor() {
 		super();
 		this._setEntityType(AssignmentEntity);
-
-		this._activityUsageHref = '';
 	}
 
 	render() {
 		return html`
 			<div class="d2l-activity-assignment-editor-footer-left">
 				<d2l-activity-visibility-editor
-					.href="${this._activityUsageHref}"
+					.href="${this.href}"
 					.token="${this.token}">
 				</d2l-activity-visibility-editor>
 				<d2l-activity-editor-buttons></d2l-activity-editor-buttons>
@@ -67,17 +65,8 @@ class AssignmentEditorFooter extends SaveStatusMixin(EntityMixinLit(RtlMixin(Loc
 	}
 	set _entity(entity) {
 		if (this._entityHasChanged(entity)) {
-			this._onAssignmentChange(entity);
 			super._entity = entity;
 		}
-	}
-
-	_onAssignmentChange(assignment) {
-		if (!assignment) {
-			return;
-		}
-
-		this._activityUsageHref = assignment.activityUsageHref();
 	}
 
 }
