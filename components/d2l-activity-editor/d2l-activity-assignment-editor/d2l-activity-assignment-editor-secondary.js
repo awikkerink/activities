@@ -4,7 +4,6 @@ import './d2l-activity-assignment-editor-submission-and-completion.js';
 import '@brightspace-ui/core/components/colors/colors.js';
 import { ActivityEditorFeaturesMixin, Milestones } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
@@ -42,10 +41,7 @@ class AssignmentEditorSecondary extends ActivityEditorFeaturesMixin(RtlMixin(Ent
 
 	constructor() {
 		super();
-		this._setEntityType(AssignmentEntity);
 		this._debounceJobs = {};
-
-		this._activityUsageHref = '';
 	}
 
 	render() {
@@ -80,20 +76,6 @@ class AssignmentEditorSecondary extends ActivityEditorFeaturesMixin(RtlMixin(Ent
 			${evaluationAccordian}
 		`;
 
-	}
-	set _entity(entity) {
-		if (this._entityHasChanged(entity)) {
-			this._onAssignmentChange(entity);
-			super._entity = entity;
-		}
-	}
-
-	_onAssignmentChange(assignment) {
-		if (!assignment) {
-			return;
-		}
-
-		this._activityUsageHref = assignment.activityUsageHref();
 	}
 
 }
