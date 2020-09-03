@@ -217,7 +217,7 @@ class AssignmentEditor extends ActivityEditorContainerMixin(RtlMixin(LocalizeAct
 					</d2l-activity-assignment-editor-secondary>
 				</div>
 				<d2l-activity-assignment-editor-footer
-					.href="${assignmentHref}"
+					.href="${this.href}"
 					.token="${this.token}"
 					slot="footer"
 					class="d2l-activity-assignment-editor-footer">
