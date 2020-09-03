@@ -26,7 +26,7 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 					return (value === 'undefined') ?  '' : value;
 				}
 			},
-			/**"
+			/**
 			 * Token JWT Token for brightspace | a function that returns a JWT token for brightspace | null (defaults to cookie authentication in a browser)
 			 */
 			token: { type: String },
