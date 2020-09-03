@@ -213,6 +213,7 @@ class AssignmentEditor extends ActivityEditorContainerMixin(RtlMixin(LocalizeAct
 					<d2l-activity-assignment-editor-secondary
 						.href="${assignmentHref}"
 						.token="${this.token}"
+						activity-usage-href="${this.href}"
 						class="d2l-activity-assignment-editor-secondary-panel">
 					</d2l-activity-assignment-editor-secondary>
 				</div>
