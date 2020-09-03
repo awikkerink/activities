@@ -30,7 +30,8 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 		return {
 			_nameError: { type: String },
 			_attachmentsHref: { type: String },
-			_linksProcessor: { type: Object }
+			_linksProcessor: { type: Object },
+			activityUsageHref: { type: String, attribute: 'activity-usage-href' },
 		};
 	}
 
@@ -87,7 +88,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 			instructions,
 			canEditInstructions,
 			instructionsRichTextEditorConfig,
-			activityUsageHref
 		} = assignment;
 
 		return html`
@@ -114,16 +114,16 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 								and so it cannot be plugged into Dropbox to check Assignment permissions.
 				*/ html`
 					<d2l-activity-outcomes
-						href="${activityUsageHref}"
+						href="${this.activityUsageHref}"
 						.token="${this.token}">
 					</d2l-activity-outcomes>
-				` : null }
+				` : null}
 
 			<div id="score-and-duedate-container">
 				<div id="score-container">
 					<label class="d2l-label-text">${this.localize('scoreOutOf')}</label>
 					<d2l-activity-score-editor
-						.href="${activityUsageHref}"
+						.href="${this.activityUsageHref}"
 						.token="${this.token}"
 						.activityName="${name}">
 					</d2l-activity-score-editor>
@@ -131,7 +131,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(EntityMi
 
 				<div id="duedate-container">
 					<d2l-activity-due-date-editor
-						.href="${activityUsageHref}"
+						.href="${this.activityUsageHref}"
 						.token="${this.token}">
 					</d2l-activity-due-date-editor>
 				</div>
