@@ -23,7 +23,7 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 				type: String,
 				reflect: true,
 				converter: (value) => {
-					return (value === 'undefined') ?  "" : value
+					return (value === 'undefined') ?  '' : value;
 				}
 			},
 			/**"
