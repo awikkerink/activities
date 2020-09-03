@@ -14,12 +14,18 @@ export class Assignment {
 		this.token = token;
 	}
 
+	cancelCreate() {
+		return this._entity.cancelCreate();
+	}
+
 	delete() {
 		return this._entity.delete();
 	}
+
 	get dirty() {
 		return !this._entity.equals(this._makeAssignmentData());
 	}
+
 	async fetch() {
 		const sirenEntity = await fetchEntity(this.href, this.token);
 		if (sirenEntity) {
@@ -197,7 +203,6 @@ export class Assignment {
 		}
 		return data;
 	}
-
 }
 
 decorate(Assignment, {
@@ -243,5 +248,7 @@ decorate(Assignment, {
 	setAnonymousMarkingProps: action,
 	setDefaultScoringRubric: action,
 	resetDefaultScoringRubricId: action,
-	setNotificationEmail: action
+	setNotificationEmail: action,
+	delete: action,
+	cancelCreate: action
 });
