@@ -5,11 +5,12 @@ import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SaveStatusMixin } from '../save-status-mixin.js';
+import { SkeltizeMixin } from '../mixins/d2l-skeletize-mixin';
 
-class AssignmentEditorFooter extends SaveStatusMixin(ActivityEditorMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(LitElement)))) {
+class AssignmentEditorFooter extends SkeltizeMixin(SaveStatusMixin(ActivityEditorMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(LitElement))))) {
 
 	static get styles() {
-		return css`
+		return [super.styles, css`
 			:host {
 				display: flex;
 			}
@@ -34,12 +35,12 @@ class AssignmentEditorFooter extends SaveStatusMixin(ActivityEditorMixin(RtlMixi
 					justify-content: space-between;
 				}
 			}
-		`;
+		`];
 	}
 
 	render() {
 		return html`
-			<div class="d2l-activity-assignment-editor-footer-left">
+			<div class="skeletize d2l-activity-assignment-editor-footer-left">
 				<d2l-activity-visibility-editor
 					.href="${this.href}"
 					.token="${this.token}">
