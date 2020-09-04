@@ -66,6 +66,6 @@ export const SkeletizeMixin = superclass => class extends superclass {
 
 	constructor() {
 		super();
-		this.skeleton = false;
+		this.skeleton = true;
 	}
 };
