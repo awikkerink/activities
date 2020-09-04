@@ -82,10 +82,9 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(Localize
 			canEditName,
 			instructions,
 			canEditInstructions,
+			attachmentsHref,
 			instructionsRichTextEditorConfig,
 		} = assignment;
-
-		const attachmentsHref = assignment._entity.attachmentsCollectionHref();
 
 		return html`
 			<div id="assignment-name-container">
@@ -162,6 +161,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(Localize
 		}
 	}
 	addLinks(links) {
+		const attachmentsHref = store.getAssignment(this.href).attachmentsHref;
 		const collection = attachmentCollectionStore.get(attachmentsHref);
 		links = links || [];
 		links.forEach(element => {

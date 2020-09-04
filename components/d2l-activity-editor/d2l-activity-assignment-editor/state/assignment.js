@@ -52,6 +52,7 @@ export class Assignment {
 		this.instructions = entity.canEditInstructions() ? entity.instructionsEditorHtml() : entity.instructionsHtml();
 		this.canEditInstructions = entity.canEditInstructions();
 		this.instructionsRichTextEditorConfig = entity.instructionsRichTextEditorConfig();
+		this.attachmentsHref = entity.attachmentsCollectionHref();
 		this.canEditAnnotations = entity.canEditAnnotations();
 		this.annotationToolsAvailable = entity.getAvailableAnnotationTools();
 		this.activityUsageHref = entity.activityUsageHref();
@@ -208,6 +209,7 @@ decorate(Assignment, {
 	instructions: observable,
 	canEditInstructions: observable,
 	instructionsRichTextEditorConfig: observable,
+	attachmentsHref: observable,
 	canEditAnnotations: observable,
 	annotationToolsAvailable: observable,
 	activityUsageHref: observable,
