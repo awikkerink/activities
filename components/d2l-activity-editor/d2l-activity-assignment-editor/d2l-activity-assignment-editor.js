@@ -205,6 +205,7 @@ class AssignmentEditor extends ActivityEditorContainerMixin(RtlMixin(LocalizeAct
 						</div>
 					</d2l-alert>
 					<d2l-activity-assignment-editor-detail
+						activity-usage-href=${this.href}
 						.href="${assignmentHref}"
 						.token="${this.token}">
 					</d2l-activity-assignment-editor-detail>
