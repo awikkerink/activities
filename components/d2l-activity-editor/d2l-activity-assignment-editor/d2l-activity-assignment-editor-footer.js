@@ -40,7 +40,7 @@ class AssignmentEditorFooter extends SkeltizeMixin(SaveStatusMixin(ActivityEdito
 
 	render() {
 		return html`
-			<div class="skeletize d2l-activity-assignment-editor-footer-left">
+			<div class="d2l-skeletize d2l-activity-assignment-editor-footer-left">
 				<d2l-activity-visibility-editor
 					.href="${this.href}"
 					.token="${this.token}">

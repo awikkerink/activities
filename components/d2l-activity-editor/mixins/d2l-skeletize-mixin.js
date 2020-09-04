@@ -1,10 +1,10 @@
 import '@brightspace-ui/core/components/colors/colors.js';
 import { css } from 'lit-element/lit-element.js';
 
-export const SkeltizeMixin = superclass => class extends superclass {
+export const SkeletizeMixin = superclass => class extends superclass {
 	static get properties() {
 		return {
-			skeleton: { attribute: 'skeleton', reflect: true, type: Boolean }
+			skeleton: { reflect: true, type: Boolean }
 		};
 	}
 
@@ -16,7 +16,7 @@ export const SkeltizeMixin = superclass => class extends superclass {
 			75% { background-color: var(--d2l-color-sylvite); }
 			100% { background-color: var(--d2l-color-sylvite); }
 		}
-		:host([skeleton]) .skeletize::before {
+		:host([skeleton]) .d2l-skeletize::before {
 			animation: loadingPulse 1.8s linear infinite;
 			background-color: var(--d2l-color-sylvite);
 			border-radius: 0.2rem;
@@ -28,7 +28,7 @@ export const SkeltizeMixin = superclass => class extends superclass {
 			top: 0;
 			z-index: 2000;
 		}
-		:host([skeleton]) .skeletize {
+		:host([skeleton]) .d2l-skeletize {
 			border: none;
 			box-shadow: none;
 			color: transparent;
@@ -42,7 +42,7 @@ export const SkeltizeMixin = superclass => class extends superclass {
 			100% { background: var(--d2l-color-sylvite); }
 		}
 
-		.skeletize::before {
+		.d2l-skeletize::before {
 			animation: loadingPulse 1.8s linear infinite;
 			background-color: var(--d2l-color-sylvite);
 			border-radius: 0.2rem;
@@ -55,7 +55,7 @@ export const SkeltizeMixin = superclass => class extends superclass {
 			z-index: 2000;
 		}
 
-		.skeletize {
+		.d2l-skeletize {
 			border: none;
 			box-shadow: none;
 			color: transparent;
