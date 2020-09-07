@@ -9,6 +9,7 @@ import '../d2l-activity-attachments/d2l-activity-attachments-editor.js';
 import { css, html } from 'lit-element/lit-element.js';
 
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
+import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { shared as attachmentCollectionStore } from '../d2l-activity-attachments/state/attachment-collections-store.js';
 import { shared as attachmentStore } from '../d2l-activity-attachments/state/attachment-store.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
@@ -19,21 +20,24 @@ import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-ass
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SaveStatusMixin } from '../save-status-mixin.js';
+import { SkeletizeMixin } from '../mixins/d2l-skeletize-mixin';
 import { shared as store } from './state/assignment-store.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
-class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(LocalizeActivityAssignmentEditorMixin(RtlMixin(ActivityEditorMixin(MobxLitElement))))) {
+class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(SkeletizeMixin(SaveStatusMixin(LocalizeActivityAssignmentEditorMixin(RtlMixin(ActivityEditorMixin(MobxLitElement))))))) {
 
 	static get properties() {
 		return {
 			_nameError: { type: String },
 			_linksProcessor: { type: Object },
 			activityUsageHref: { type: String, attribute: 'activity-usage-href' },
+			...super.properties // perhaps too broad for just applying the skeleton property?
 		};
 	}
 
 	static get styles() {
 		return [
+			super.styles,
 			labelStyles,
 			css`
 				:host {
@@ -88,9 +92,10 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(Localize
 
 		return html`
 			<div id="assignment-name-container">
-				<label class="d2l-label-text" for="assignment-name">${this.localize('name')}*</label>
+				<label class="d2l-label-text d2l-skeletize" for="assignment-name">${this.localize('name')}*</label>
 				<d2l-input-text
 					id="assignment-name"
+					class="d2l-skeletize"
 					maxlength="128"
 					value="${name}"
 					@change="${this._saveOnChange('name')}"
@@ -110,15 +115,17 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(Localize
 								and so it cannot be plugged into Dropbox to check Assignment permissions.
 				*/ html`
 					<d2l-activity-outcomes
-						href="${this.activityUsageHref}"
+						class="d2l-skeletize"
+						.href="${this.activityUsageHref}"
 						.token="${this.token}">
 					</d2l-activity-outcomes>
 				` : null}
 
 			<div id="score-and-duedate-container">
 				<div id="score-container">
-					<label class="d2l-label-text">${this.localize('scoreOutOf')}</label>
+					<label class="d2l-label-text d2l-skeletize">${this.localize('scoreOutOf')}</label>
 					<d2l-activity-score-editor
+						class="d2l-skeletize"
 						.href="${this.activityUsageHref}"
 						.token="${this.token}"
 						.activityName="${name}">
@@ -127,14 +134,15 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(Localize
 
 				<div id="duedate-container">
 					<d2l-activity-due-date-editor
+						class="d2l-skeletize"
 						.href="${this.activityUsageHref}"
 						.token="${this.token}">
 					</d2l-activity-due-date-editor>
 				</div>
 			</div>
 
-			<div id="assignment-instructions-container">
-				<label class="d2l-label-text">${this.localize('instructions')}</label>
+			<div id="assignment-instructions-container" class="d2l-skeletize"> <!--This doesn't style correctly-->
+				<label class="d2l-label-text d2l-skeletize">${this.localize('instructions')}</label>
 				<d2l-activity-text-editor
 					.value="${instructions}"
 					.richtextEditorConfig="${instructionsRichTextEditorConfig}"
@@ -146,6 +154,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(Localize
 
 			<div id="assignment-attachments-editor-container" ?hidden="${!attachmentsHref}">
 				<d2l-activity-attachments-editor
+					class="d2l-skeletize"
 					href="${attachmentsHref}"
 					.token="${this.token}">
 				</d2l-activity-attachments-editor>
@@ -158,6 +167,9 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(Localize
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
 			super._fetch(() => store.fetchAssignment(this.href, this.token));
+		}
+		if (changedProperties.has('asyncState')) {
+			this.skeleton = this.asyncState !== asyncStates.complete;
 		}
 	}
 	addLinks(links) {
