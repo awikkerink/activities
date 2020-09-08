@@ -70,8 +70,8 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 	constructor() {
 		super();
 		this._debounceJobs = {};
-
 		this._linksProcessor = new LinksInMessageProcessor();
+		this.skeleton = true;
 	}
 
 	render() {

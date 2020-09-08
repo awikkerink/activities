@@ -41,7 +41,7 @@ class AssignmentEditorFooter extends SkeletizeMixin(AsyncContainerMixin(SaveStat
 
 	constructor() {
 		super();
-		this.skeleton = false;
+		this.skeleton = true;
 	}
 
 	render() {
