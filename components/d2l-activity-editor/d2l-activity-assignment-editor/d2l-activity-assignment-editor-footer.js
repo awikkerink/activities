@@ -9,10 +9,6 @@ import { SkeletizeMixin } from '../mixins/d2l-skeletize-mixin';
 
 class AssignmentEditorFooter extends SkeletizeMixin(SaveStatusMixin(ActivityEditorMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(LitElement))))) {
 
-	static get properties() {
-		return { skeleton: super.properties.skeleton };
-	}
-
 	static get styles() {
 		return [super.styles, css`
 			:host {
@@ -40,6 +36,11 @@ class AssignmentEditorFooter extends SkeletizeMixin(SaveStatusMixin(ActivityEdit
 				}
 			}
 		`];
+	}
+
+	constructor() {
+		super();
+		this.skeleton = false;
 	}
 
 	render() {
