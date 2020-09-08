@@ -35,8 +35,9 @@ describe('d2l-activity-score-editor', function() {
 		activity.setScoreAndGrade(score);
 		store.put(href, activity);
 
+		const skeleton = false;
 		el = await fixture(html`
-			<d2l-activity-score-editor href=${href} token="token"></d2l-activity-score-editor>
+			<d2l-activity-score-editor href=${href} token="token" .skeleton="${skeleton}"></d2l-activity-score-editor>
 		`);
 	});
 
