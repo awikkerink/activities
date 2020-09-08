@@ -6,10 +6,10 @@ import '../d2l-activity-score-editor.js';
 import '../d2l-activity-text-editor.js';
 import '../d2l-activity-attachments/d2l-activity-attachments-editor.js';
 
+import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { css, html } from 'lit-element/lit-element.js';
 
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
-import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { shared as attachmentCollectionStore } from '../d2l-activity-attachments/state/attachment-collections-store.js';
 import { shared as attachmentStore } from '../d2l-activity-attachments/state/attachment-store.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';

@@ -1,7 +1,7 @@
 import '../d2l-activity-editor-buttons.js';
 import '../d2l-activity-visibility-editor.js';
-import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
+import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
