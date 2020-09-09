@@ -69,7 +69,6 @@ class ActivityAttachmentsPicker extends SkeletizeMixin(ActivityEditorMixin(Local
 
 	constructor() {
 		super(store);
-		this.skeleton = true;
 
 		D2L.ActivityEditor = D2L.ActivityEditor || {};
 		// Referenced by the server-side ActivitiesView renderer
