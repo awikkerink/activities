@@ -38,7 +38,7 @@ class ActivityAttachmentsList extends ActivityEditorMixin(MobxLitElement) {
 		} = collection;
 
 		return html`
-			<d2l-labs-attachment-list ?editing="${canAddAttachments}" ?hidden="${this.skeleton}">
+			<d2l-labs-attachment-list ?editing="${canAddAttachments}">
 				${repeat(attachments, href => href, href => html`
 					<li slot="attachment" class="panel">
 						<d2l-activity-attachment
