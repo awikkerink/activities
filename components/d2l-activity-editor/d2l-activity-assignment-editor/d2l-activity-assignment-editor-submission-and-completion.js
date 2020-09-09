@@ -32,6 +32,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletizeMixin(Act
 
 	static get styles() {
 		return [
+			super.styles,
 			bodyCompactStyles,
 			bodySmallStyles,
 			heading3Styles,
@@ -90,10 +91,10 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletizeMixin(Act
 				header-border
 				?disabled="${this.skeleton}"
 				?no-icons="${this.skeleton}">
-				<h3 class="d2l-heading-3 d2l-activity-summarizer-header" slot="header">
+				<h3 class="d2l-heading-3 d2l-activity-summarizer-header d2l-skeletize" slot="header">
 					${this.localize('submissionCompletionAndCategorization')}
 				</h3>
-				<ul class="d2l-body-small d2l-activity-summarizer-summary" slot="summary">
+				<ul class="d2l-body-small d2l-activity-summarizer-summary d2l-skeletize" slot="summary">
 					<li>${this._renderAssignmentTypeSummary()}</li>
 					<li>${this._renderAssignmentSubmissionTypeSummary(assignment)}</li>
 					<li>${this._renderAssignmentCompletionTypeSummary()}</li>

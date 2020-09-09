@@ -31,6 +31,7 @@ class ActivityAssignmentAvailabilityEditor extends SkeletizeMixin(ActivityEditor
 	static get styles() {
 
 		return [
+			super.styles,
 			bodySmallStyles,
 			heading3Styles,
 			heading4Styles,
@@ -56,7 +57,7 @@ class ActivityAssignmentAvailabilityEditor extends SkeletizeMixin(ActivityEditor
 				}
 			`,
 			summarizerHeaderStyles,
-			summarizerSummaryStyles,
+			summarizerSummaryStyles
 		];
 	}
 
@@ -81,10 +82,10 @@ class ActivityAssignmentAvailabilityEditor extends SkeletizeMixin(ActivityEditor
 				?disabled="${this.skeleton}"
 				?no-icons="${this.skeleton}"
 				@d2l-labs-accordion-collapse-state-changed=${this._onAccordionStateChange}>
-				<h3 class="d2l-heading-3 d2l-activity-summarizer-header" slot="header">
+				<h3 class="d2l-heading-3 d2l-activity-summarizer-header d2l-skeletize" slot="header">
 					${this.localize('hdrAvailability')}
 				</h3>
-				<ul class="d2l-body-small d2l-activity-summarizer-summary" slot="summary">
+				<ul class="d2l-body-small d2l-activity-summarizer-summary d2l-skeletize" slot="summary">
 					<li>${this._renderAvailabilityDatesSummary()}</li>
 					<li>${this._renderReleaseConditionSummary()}</li>
 					<li>${this._renderSpecialAccessSummary()}</li>
