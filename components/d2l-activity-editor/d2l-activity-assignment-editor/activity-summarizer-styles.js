@@ -8,8 +8,8 @@ export const summarizerHeaderStyles = css`
 	}
 
 	:host([skeleton]) .d2l-activity-summarizer-header.d2l-skeletize::before {
-		width: 70%;
 		white-space: nowrap;
+		width: 70%;
 	}
 
 	:host([skeleton]) .d2l-activity-summarizer-header.d2l-skeletize {
