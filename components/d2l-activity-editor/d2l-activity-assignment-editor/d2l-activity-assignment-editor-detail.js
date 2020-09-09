@@ -95,9 +95,10 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 
 		return html`
 			<div id="assignment-name-container">
-				<label class="d2l-label-text" for="assignment-name">${this.localize('name')}*</label>
+				<label class="d2l-label-text d2l-skeletize" for="assignment-name">${this.localize('name')}*</label>
 				<d2l-input-text
 					id="assignment-name"
+					class="d2l-skeletize"
 					maxlength="128"
 					value="${name}"
 					@change="${this._saveOnChange('name')}"
@@ -135,6 +136,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 
 				<div id="duedate-container">
 					<d2l-activity-due-date-editor
+						?skeleton="${this.skeleton}"
 						.href="${this.activityUsageHref}"
 						.token="${this.token}">
 					</d2l-activity-due-date-editor>
@@ -142,8 +144,9 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 			</div>
 
 			<div id="assignment-instructions-container">
-				<label class="d2l-label-text">${this.localize('instructions')}</label>
+				<label class="d2l-label-text d2l-skeletize">${this.localize('instructions')}</label>
 				<d2l-activity-text-editor
+					?skeleton="${this.skeleton}"
 					.value="${instructions}"
 					.richtextEditorConfig="${instructionsRichTextEditorConfig}"
 					@d2l-activity-text-editor-change="${this._saveInstructionsOnChange}"
@@ -154,6 +157,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 
 			<div id="assignment-attachments-editor-container" ?hidden="${!attachmentsHref}">
 				<d2l-activity-attachments-editor
+					?skeleton="${this.skeleton}"
 					href="${attachmentsHref}"
 					.token="${this.token}">
 				</d2l-activity-attachments-editor>
