@@ -8,7 +8,8 @@ import { shared as store } from './state/attachment-collections-store.js';
 class ActivityAttachmentsEditor extends ActivityEditorMixin(MobxLitElement) {
 	static get properties() {
 		return {
-			_canAddAttachments: { type: Boolean }
+			_canAddAttachments: { type: Boolean },
+			skeleton: { type: Boolean }
 		};
 	}
 
@@ -34,19 +35,20 @@ class ActivityAttachmentsEditor extends ActivityEditorMixin(MobxLitElement) {
 			canAddAttachments,
 		} = collection;
 
-		return html`
-			<d2l-activity-attachments-list
+		return html`${!this.skeleton ?
+			html`<d2l-activity-attachments-list
 				href="${this.href}"
 				.token="${this.token}">
-			</d2l-activity-attachments-list>
+			</d2l-activity-attachments-list>`
+			: html``}
 
-			${canAddAttachments	?	html`
+			${canAddAttachments ? html`
 				<d2l-activity-attachments-picker
 					href="${this.href}"
 					.token="${this.token}"
 				>
 				</d2l-activity-attachments-picker>
-			` :	html``}
+			` : html``}
 		`;
 	}
 
