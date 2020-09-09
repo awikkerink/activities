@@ -124,8 +124,9 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 
 			<div id="score-and-duedate-container">
 				<div id="score-container">
-					<label class="d2l-label-text">${this.localize('scoreOutOf')}</label>
+					<label class="d2l-label-text d2l-skeletize">${this.localize('scoreOutOf')}</label>
 					<d2l-activity-score-editor
+						?skeleton="${this.skeleton}"
 						.href="${this.activityUsageHref}"
 						.token="${this.token}"
 						.activityName="${name}">
