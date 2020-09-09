@@ -46,6 +46,7 @@ class ActivityAttachmentsEditor extends ActivityEditorMixin(MobxLitElement) {
 				<d2l-activity-attachments-picker
 					href="${this.href}"
 					.token="${this.token}"
+					.skeleton="${this.skeleton}"
 				>
 				</d2l-activity-attachments-picker>
 			` : html``}
