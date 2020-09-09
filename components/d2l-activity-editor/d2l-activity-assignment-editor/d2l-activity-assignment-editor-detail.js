@@ -145,14 +145,15 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 
 			<div id="assignment-instructions-container">
 				<label class="d2l-label-text d2l-skeletize">${this.localize('instructions')}</label>
-				<d2l-activity-text-editor
-					?skeleton="${this.skeleton}"
-					.value="${instructions}"
-					.richtextEditorConfig="${instructionsRichTextEditorConfig}"
-					@d2l-activity-text-editor-change="${this._saveInstructionsOnChange}"
-					ariaLabel="${this.localize('instructions')}"
-					?disabled="${!canEditInstructions}">
-				</d2l-activity-text-editor>
+				<div class="d2l-skeletize">
+					<d2l-activity-text-editor
+						.value="${instructions}"
+						.richtextEditorConfig="${instructionsRichTextEditorConfig}"
+						@d2l-activity-text-editor-change="${this._saveInstructionsOnChange}"
+						ariaLabel="${this.localize('instructions')}"
+						?disabled="${!canEditInstructions}">
+					</d2l-activity-text-editor>
+				</div>
 			</div>
 
 			<div id="assignment-attachments-editor-container" ?hidden="${!attachmentsHref}">
