@@ -6,6 +6,7 @@ import '@brightspace-ui/core/templates/primary-secondary/primary-secondary.js';
 import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/dialog/dialog-confirm.js';
 
+import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorContainerMixin } from '../mixins/d2l-activity-editor-container-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
@@ -14,7 +15,7 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { shared as store } from './state/assignment-store.js';
 
-class AssignmentEditor extends ActivityEditorContainerMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(ActivityEditorMixin(MobxLitElement)))) {
+class AssignmentEditor extends ActivityEditorContainerMixin(AsyncContainerMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(ActivityEditorMixin(MobxLitElement))))) {
 
 	static get properties() {
 		return {
@@ -115,6 +116,7 @@ class AssignmentEditor extends ActivityEditorContainerMixin(RtlMixin(LocalizeAct
 		this.type = 'assignment';
 		this.telemetryId = 'assignments';
 		this.saveOrder = 2000;
+		this.skeleton = true;
 	}
 
 	render() {
@@ -145,6 +147,9 @@ class AssignmentEditor extends ActivityEditorContainerMixin(RtlMixin(LocalizeAct
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
 			super._fetch(() => store.fetchActivity(this.href, this.token));
+		}
+		if (changedProperties.has('asyncState')) {
+			this.skeleton = this.asyncState !== asyncStates.complete;
 		}
 	}
 

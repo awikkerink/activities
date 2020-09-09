@@ -6,6 +6,7 @@ import '../d2l-activity-score-editor.js';
 import '../d2l-activity-text-editor.js';
 import '../d2l-activity-attachments/d2l-activity-attachments-editor.js';
 
+import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { css, html } from 'lit-element/lit-element.js';
 
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
@@ -19,10 +20,11 @@ import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-ass
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SaveStatusMixin } from '../save-status-mixin.js';
+import { SkeletizeMixin } from '../mixins/d2l-skeletize-mixin';
 import { shared as store } from './state/assignment-store.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
-class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(LocalizeActivityAssignmentEditorMixin(RtlMixin(ActivityEditorMixin(MobxLitElement))))) {
+class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(SkeletizeMixin(SaveStatusMixin(LocalizeActivityAssignmentEditorMixin(RtlMixin(ActivityEditorMixin(MobxLitElement))))))) {
 
 	static get properties() {
 		return {
@@ -34,6 +36,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(Localize
 
 	static get styles() {
 		return [
+			super.styles,
 			labelStyles,
 			css`
 				:host {
@@ -71,8 +74,8 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(Localize
 	constructor() {
 		super();
 		this._debounceJobs = {};
-
 		this._linksProcessor = new LinksInMessageProcessor();
+		this.skeleton = true;
 	}
 
 	render() {
@@ -162,6 +165,9 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(SaveStatusMixin(Localize
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
 			super._fetch(() => store.fetchAssignment(this.href, this.token));
+		}
+		if (changedProperties.has('asyncState')) {
+			this.skeleton = this.asyncState !== asyncStates.complete;
 		}
 	}
 	addLinks(links) {
