@@ -35,22 +35,20 @@ class ActivityAttachmentsEditor extends ActivityEditorMixin(MobxLitElement) {
 			canAddAttachments,
 		} = collection;
 
-		return html`${!this.skeleton ?
-			html`<d2l-activity-attachments-list
-				href="${this.href}"
-				.token="${this.token}">
-			</d2l-activity-attachments-list>`
-			: html``}
-
+		return html`<d2l-activity-attachments-list
+			?hidden="${this.skeleton}"
+			href="${this.href}"
+			.token="${this.token}">
+		</d2l-activity-attachments-list>
 			${canAddAttachments ? html`
-				<d2l-activity-attachments-picker
-					href="${this.href}"
-					.token="${this.token}"
-					.skeleton="${this.skeleton}"
-				>
-				</d2l-activity-attachments-picker>
-			` : html``}
-		`;
+		<d2l-activity-attachments-picker
+			href="${this.href}"
+			.token="${this.token}"
+			.skeleton="${this.skeleton}"
+		>
+		</d2l-activity-attachments-picker>
+	` : html``}
+`;
 	}
 
 	hasPendingChanges() {
