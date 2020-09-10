@@ -26,7 +26,6 @@ class ActivityAttachmentsEditor extends ActivityEditorMixin(SkeletizeMixin(MobxL
 	}
 
 	render() {
-		console.log("Rendering in ActivityAttachmentsEditor. this.skeleton", this.skeleton);
 		const collection = store.get(this.href);
 		if (!collection) {
 			return html``;
@@ -45,6 +44,7 @@ class ActivityAttachmentsEditor extends ActivityEditorMixin(SkeletizeMixin(MobxL
 		</d2l-activity-attachments-list>
 			${canAddAttachments ? html`
 		<d2l-activity-attachments-picker
+			?skeleton="${this.skeleton}"
 			href="${this.href}"
 			.token="${this.token}"
 		>
