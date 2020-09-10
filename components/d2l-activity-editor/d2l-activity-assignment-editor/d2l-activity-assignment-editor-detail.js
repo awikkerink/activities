@@ -124,8 +124,9 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 
 			<div id="score-and-duedate-container">
 				<div id="score-container">
-					<label class="d2l-label-text">${this.localize('scoreOutOf')}</label>
+					<label class="d2l-label-text d2l-skeletize">${this.localize('scoreOutOf')}</label>
 					<d2l-activity-score-editor
+						?skeleton="${this.skeleton}"
 						.href="${this.activityUsageHref}"
 						.token="${this.token}"
 						.activityName="${name}">
@@ -141,14 +142,16 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 			</div>
 
 			<div id="assignment-instructions-container">
-				<label class="d2l-label-text">${this.localize('instructions')}</label>
-				<d2l-activity-text-editor
-					.value="${instructions}"
-					.richtextEditorConfig="${instructionsRichTextEditorConfig}"
-					@d2l-activity-text-editor-change="${this._saveInstructionsOnChange}"
-					ariaLabel="${this.localize('instructions')}"
-					?disabled="${!canEditInstructions}">
-				</d2l-activity-text-editor>
+				<label class="d2l-label-text d2l-skeletize">${this.localize('instructions')}</label>
+				<div class="d2l-skeletize">
+					<d2l-activity-text-editor
+						.value="${instructions}"
+						.richtextEditorConfig="${instructionsRichTextEditorConfig}"
+						@d2l-activity-text-editor-change="${this._saveInstructionsOnChange}"
+						ariaLabel="${this.localize('instructions')}"
+						?disabled="${!canEditInstructions}">
+					</d2l-activity-text-editor>
+				</div>
 			</div>
 
 			<div id="assignment-attachments-editor-container" ?hidden="${!attachmentsHref}">
