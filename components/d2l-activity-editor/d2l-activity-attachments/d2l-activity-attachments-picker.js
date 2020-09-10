@@ -123,7 +123,7 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(SkeletizeMixin(Local
 			canRecordVideo,
 			canRecordAudio
 		} = collection || {
-			canAddFile: true
+			canAddFile: true // fallback to ensure skeleton state displays with correct height
 		};
 
 		return html`
