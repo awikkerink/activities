@@ -27,7 +27,7 @@ class ActivityAttachmentsEditor extends ActivityEditorMixin(SkeletizeMixin(MobxL
 
 	render() {
 		const collection = store.get(this.href);
-		if (!collection) {
+		if (!collection && !this.skeleton) {
 			return html``;
 		}
 

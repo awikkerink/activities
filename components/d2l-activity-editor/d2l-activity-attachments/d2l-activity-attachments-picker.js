@@ -111,7 +111,7 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(SkeletizeMixin(Local
 
 	render() {
 		const collection = store.get(this.href);
-		if (!collection) {
+		if (!collection && !this.skeleton) {
 			return html``;
 		}
 
@@ -122,7 +122,9 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(SkeletizeMixin(Local
 			canAddOneDriveLink,
 			canRecordVideo,
 			canRecordAudio
-		} = collection;
+		} = collection || {
+			canAddFile: true
+		};
 
 		return html`
 			<div class="d2l-button-container d2l-skeletize">
