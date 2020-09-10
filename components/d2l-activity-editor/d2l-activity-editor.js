@@ -41,6 +41,13 @@ class ActivityEditor extends ActivityEditorTelemetryMixin(AsyncContainerMixin(Ac
 			<div id="editor-container">
 				<slot name="editor"></slot>
 			</div>
+			<d2l-backdrop
+				for-target="editor-container"
+				?shown="${this._backdropShown}"
+				no-animate-hide
+				delay-transition
+				slow-transition>
+			</d2l-backdrop>
 		`;
 	}
 	update(changedProperties) {
