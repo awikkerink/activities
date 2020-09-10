@@ -26,6 +26,7 @@ class ActivityAttachmentsEditor extends ActivityEditorMixin(SkeletizeMixin(MobxL
 	}
 
 	render() {
+		console.log("Rendering in ActivityAttachmentsEditor. this.skeleton", this.skeleton);
 		const collection = store.get(this.href);
 		if (!collection) {
 			return html``;
@@ -33,7 +34,9 @@ class ActivityAttachmentsEditor extends ActivityEditorMixin(SkeletizeMixin(MobxL
 
 		const {
 			canAddAttachments,
-		} = collection;
+		} = collection || {
+			canAddAttachments: true
+		};
 
 		return html`<d2l-activity-attachments-list
 			?hidden="${this.skeleton}"
@@ -44,7 +47,6 @@ class ActivityAttachmentsEditor extends ActivityEditorMixin(SkeletizeMixin(MobxL
 		<d2l-activity-attachments-picker
 			href="${this.href}"
 			.token="${this.token}"
-			.skeleton="${this.skeleton}"
 		>
 		</d2l-activity-attachments-picker>
 	` : html``}
