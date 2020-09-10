@@ -21,9 +21,9 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(SkeletizeMixin(Local
 			.d2l-attachments-picker-container {
 				align-items: center;
 				background: var(--d2l-color-regolith);
+				border: 1px solid var(--d2l-color-mica);
 				border-radius: 6px;
 				display: flex;
-				border: 1px solid var(--d2l-color-mica);
 				flex-direction: row;
 				justify-content: space-between;
 			}
