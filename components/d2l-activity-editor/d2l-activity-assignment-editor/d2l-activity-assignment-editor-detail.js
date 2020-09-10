@@ -80,9 +80,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 
 	render() {
 		const assignment = store.getAssignment(this.href);
-		if (!assignment) {
-			return html``;
-		}
 
 		const {
 			name,
@@ -91,7 +88,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 			canEditInstructions,
 			attachmentsHref,
 			instructionsRichTextEditorConfig,
-		} = assignment;
+		} = assignment || {};
 
 		return html`
 			<div id="assignment-name-container">
