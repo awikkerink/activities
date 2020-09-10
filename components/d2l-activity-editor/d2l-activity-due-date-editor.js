@@ -47,9 +47,10 @@ class ActivityDueDateEditor extends SkeletizeMixin(ActivityEditorMixin(LocalizeA
 			</div>
 			<d2l-input-date-time
 				class="d2l-skeletize"
+				id="due-date-input"
 				label="${this.localize('editor.dueDate')}"
 				label-hidden
-				id="due-date-input"
+				time-default-value="endOfDay"
 				value="${dueDate}"
 				@change="${this._onDatetimeChanged}">
 			</d2l-input-date-time>
