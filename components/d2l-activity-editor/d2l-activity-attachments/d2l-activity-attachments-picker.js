@@ -21,7 +21,6 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(SkeletizeMixin(Local
 			:host {
 				align-items: center;
 				background: var(--d2l-color-regolith);
-				border: 1px solid var(--d2l-color-mica);
 				border-radius: 6px;
 				display: flex;
 				flex-direction: row;
@@ -31,6 +30,7 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(SkeletizeMixin(Local
 			.d2l-button-container {
 				display: flex;
 				flex-direction: row;
+				border: 1px solid var(--d2l-color-mica);
 				padding: 12px;
 				width: 100%;
 			}
@@ -88,7 +88,7 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(SkeletizeMixin(Local
 			}));
 		};
 		// Referenced by the server-side ActivitiesView renderer
-		D2L.ActivityEditor.RecordVideoDialogCallback = async(file) => {
+		D2L.ActivityEditor.RecordVideoDialogCallback = async (file) => {
 			const collection = store.get(this.href);
 			const previewUrl = await collection.getPreviewUrl(file.FileSystemType, file.FileId);
 			this._addToCollection(attachmentStore.createVideo(file.FileName, file.FileSystemType, file.FileId, previewUrl));
@@ -98,7 +98,7 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(SkeletizeMixin(Local
 			}));
 		};
 		// Referenced by the server-side ActivitiesView renderer
-		D2L.ActivityEditor.RecordAudioDialogCallback = async(file) => {
+		D2L.ActivityEditor.RecordAudioDialogCallback = async (file) => {
 			const collection = store.get(this.href);
 			const previewUrl = await collection.getPreviewUrl(file.FileSystemType, file.FileId);
 			this._addToCollection(attachmentStore.createAudio(file.FileName, file.FileSystemType, file.FileId, previewUrl));
