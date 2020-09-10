@@ -18,11 +18,12 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(SkeletizeMixin(Local
 
 	static get styles() {
 		return [super.styles, css`
-			:host {
+			.d2l-attachments-picker-container {
 				align-items: center;
 				background: var(--d2l-color-regolith);
 				border-radius: 6px;
 				display: flex;
+				border: 1px solid var(--d2l-color-mica);
 				flex-direction: row;
 				justify-content: space-between;
 			}
@@ -30,7 +31,6 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(SkeletizeMixin(Local
 			.d2l-button-container {
 				display: flex;
 				flex-direction: row;
-				border: 1px solid var(--d2l-color-mica);
 				padding: 12px;
 				width: 100%;
 			}
@@ -127,7 +127,8 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(SkeletizeMixin(Local
 		};
 
 		return html`
-			<div class="d2l-button-container d2l-skeletize">
+		<div class="d2l-attachments-picker-container d2l-skeletize">
+			<div class="d2l-button-container">
 				<d2l-button-icon
 					id="add-file-button"
 					icon="d2l-tier1:upload"
@@ -269,6 +270,7 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(SkeletizeMixin(Local
 					</d2l-tooltip>
 				</span>
 			</div>
+		</div>
 		`;
 	}
 	_addToCollection(attachment) {
