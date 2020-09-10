@@ -88,7 +88,7 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(SkeletizeMixin(Local
 			}));
 		};
 		// Referenced by the server-side ActivitiesView renderer
-		D2L.ActivityEditor.RecordVideoDialogCallback = async (file) => {
+		D2L.ActivityEditor.RecordVideoDialogCallback = async(file) => {
 			const collection = store.get(this.href);
 			const previewUrl = await collection.getPreviewUrl(file.FileSystemType, file.FileId);
 			this._addToCollection(attachmentStore.createVideo(file.FileName, file.FileSystemType, file.FileId, previewUrl));
@@ -98,7 +98,7 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(SkeletizeMixin(Local
 			}));
 		};
 		// Referenced by the server-side ActivitiesView renderer
-		D2L.ActivityEditor.RecordAudioDialogCallback = async (file) => {
+		D2L.ActivityEditor.RecordAudioDialogCallback = async(file) => {
 			const collection = store.get(this.href);
 			const previewUrl = await collection.getPreviewUrl(file.FileSystemType, file.FileId);
 			this._addToCollection(attachmentStore.createAudio(file.FileName, file.FileSystemType, file.FileId, previewUrl));
@@ -110,7 +110,6 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(SkeletizeMixin(Local
 	}
 
 	render() {
-		console.log("Rendering in ActivityAttachmentsPicker. this.skeleton = ", this.skeleton);
 		const collection = store.get(this.href);
 		if (!collection) {
 			return html``;
