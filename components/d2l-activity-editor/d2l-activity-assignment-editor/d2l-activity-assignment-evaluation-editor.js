@@ -65,15 +65,8 @@ class ActivityAssignmentEvaluationEditor extends SkeletizeMixin(ActivityEditorFe
 	}
 
 	render() {
-		const assignment = store.getAssignment(this.href);
-		if (!assignment) {
-			return html``;
-		}
-
-		const activity = activityStore.get(this.activityUsageHref);
-		if (!activity) {
-			return html``;
-		}
+		const assignment = store.getAssignment(this.href) || {};
+		const activity = activityStore.get(this.activityUsageHref) || {};
 
 		return html`
 			<d2l-labs-accordion-collapse
