@@ -187,15 +187,11 @@ class AssignmentEditor extends ActivityEditorContainerMixin(AsyncContainerMixin(
 	}
 	get _editorTemplate() {
 		const activity = store.getActivity(this.href);
-		if (!activity) {
-			return html``;
-		}
-
 		const {
 			assignmentHref
-		} = activity;
+		} = activity || {};
 
-		const assignment = store.getAssignment(activity.assignmentHref);
+		const assignment = store.getAssignment(assignmentHref);
 		const hasSubmissions = assignment && assignment.submissionAndCompletionProps.assignmentHasSubmissions;
 
 		return html`
