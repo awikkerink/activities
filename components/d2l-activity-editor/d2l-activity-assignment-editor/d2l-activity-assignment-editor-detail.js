@@ -47,14 +47,14 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 				}
 				:host > div,
 				d2l-activity-outcomes,
-				#score-container {
+				#score-container,
+				#duedate-container {
 					padding-bottom: 20px;
 				}
 				#score-and-duedate-container {
 					display: flex;
 					flex-wrap: wrap;
-					min-height: 90px;  /* Hack to force a consistent the height for the old */
-					padding-bottom: 0; /* datetime picker. Can hopefully be removed when the new picker is used. */
+					padding-bottom: 0;
 				}
 				#score-container {
 					margin-right: 40px;
