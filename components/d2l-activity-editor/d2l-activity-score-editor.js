@@ -166,10 +166,6 @@ class ActivityScoreEditor extends SkeletizeMixin(ActivityEditorMixin(LocalizeAct
 
 	render() {
 		const activity = store.get(this.href);
-		if (!activity) {
-			return html``;
-		}
-
 		const {
 			scoreOutOf,
 			scoreOutOfError,
@@ -178,7 +174,7 @@ class ActivityScoreEditor extends SkeletizeMixin(ActivityEditorMixin(LocalizeAct
 			inGrades,
 			isUngraded,
 			canSeeGrades
-		} = activity.scoreAndGrade || {};
+		} = activity && activity.scoreAndGrade || {};
 
 		this._focusUngraded = isUngraded;
 

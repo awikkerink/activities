@@ -47,21 +47,23 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 				}
 				:host > div,
 				d2l-activity-outcomes,
-				#score-container,
-				#duedate-container {
+				#score-container {
 					padding-bottom: 20px;
 				}
 				#score-and-duedate-container {
 					display: flex;
 					flex-wrap: wrap;
-					padding-bottom: 0;
+					min-height: 90px;  /* Hack to force a consistent the height for the old */
+					padding-bottom: 0; /* datetime picker. Can hopefully be removed when the new picker is used. */
 				}
 				#score-container {
 					margin-right: 40px;
 				}
-				.d2l-label-text {
-					display: block;
-					padding-bottom: 7px;
+				.d2l-activity-label-container {
+					margin-bottom: -1px; /* hacky: trying to be pixel perfect, we will replace it d2l-input-label soon */
+				}
+				.d2l-activity-label-container > label {
+					vertical-align: top;
 				}
 				:host([dir="rtl"]) #score-container {
 					margin-left: 40px;
@@ -80,9 +82,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 
 	render() {
 		const assignment = store.getAssignment(this.href);
-		if (!assignment) {
-			return html``;
-		}
 
 		const {
 			name,
@@ -91,11 +90,13 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 			canEditInstructions,
 			attachmentsHref,
 			instructionsRichTextEditorConfig,
-		} = assignment;
+		} = assignment || {};
 
 		return html`
 			<div id="assignment-name-container">
-				<label class="d2l-label-text d2l-skeletize" for="assignment-name">${this.localize('name')}*</label>
+				<div class="d2l-activity-label-container">
+					<label class="d2l-label-text d2l-skeletize" for="assignment-name">${this.localize('name')}*</label>
+				</div>
 				<d2l-input-text
 					id="assignment-name"
 					class="d2l-skeletize"
@@ -125,7 +126,9 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 
 			<div id="score-and-duedate-container">
 				<div id="score-container">
-					<label class="d2l-label-text d2l-skeletize">${this.localize('scoreOutOf')}</label>
+					<div class="d2l-activity-label-container">
+						<label class="d2l-label-text d2l-skeletize">${this.localize('scoreOutOf')}</label>
+					</div>
 					<d2l-activity-score-editor
 						?skeleton="${this.skeleton}"
 						.href="${this.activityUsageHref}"
@@ -144,7 +147,9 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 			</div>
 
 			<div id="assignment-instructions-container">
-				<label class="d2l-label-text d2l-skeletize">${this.localize('instructions')}</label>
+				<div class="d2l-activity-label-container">
+					<label class="d2l-label-text d2l-skeletize">${this.localize('instructions')}</label>
+				</div>
 				<div class="d2l-skeletize">
 					<d2l-activity-text-editor
 						.value="${instructions}"
@@ -156,7 +161,7 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 				</div>
 			</div>
 
-			<div id="assignment-attachments-editor-container" ?hidden="${!attachmentsHref}">
+			<div id="assignment-attachments-editor-container" ?hidden="${!attachmentsHref && !this.skeleton}">
 				<d2l-activity-attachments-editor
 					?skeleton="${this.skeleton}"
 					href="${attachmentsHref}"
