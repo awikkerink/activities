@@ -7,6 +7,12 @@ import { shared as store } from '../state/activity-store';
 class ActivityRubricsListWrapper
 	extends ActivityEditorMixin(MobxLitElement) {
 
+	static get properties() {
+		return {
+			assignmentHref: { type: String }
+		};
+	}
+
 	constructor() {
 		super(store);
 	}
