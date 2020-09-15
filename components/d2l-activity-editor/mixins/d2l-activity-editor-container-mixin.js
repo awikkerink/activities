@@ -72,9 +72,10 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 
 		this.dispatchEvent(this.cancelCompleteEvent);
 	}
-	_focusOnInvalid() {
+	async _focusOnInvalid() {
 		const isAriaInvalid = node => node.getAttribute('aria-invalid') === 'true' && node.getClientRects().length > 0 && !this._hasSkipAlertAncestor(node);
 		for (const editor of this._editors) {
+			await editor.updateComplete;
 			const el = getFirstFocusableDescendant(editor, true, isAriaInvalid);
 			if (el) {
 				el.focus();
@@ -110,7 +111,8 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 		}
 
 		// Catch both client- and server-side validation errors
-		if (this._focusOnInvalid()) {
+		const isInvalid = await this._focusOnInvalid();
+		if (isInvalid) {
 			this.isError = true;
 			this.isSaving = false;
 			return;
