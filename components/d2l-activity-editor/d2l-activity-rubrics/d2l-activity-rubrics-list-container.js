@@ -26,7 +26,8 @@ class ActivityRubricsListContainer extends ActivityEditorFeaturesMixin(ActivityE
 	static get properties() {
 		return {
 			_newlyCreatedPotentialAssociationHref: { type: String },
-			activityUsageHref: { type: String }
+			activityUsageHref: { type: String },
+			assignmentHref: { type: String }
 		};
 	}
 
