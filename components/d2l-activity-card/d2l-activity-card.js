@@ -44,6 +44,7 @@ class D2lActivityCard extends ActivityCardLocalize(PolymerElement) {
 
 				.d2l-activity-card-content-organization-info {
 					display: block;
+					word-break: break-word;
 				}
 
 				.d2l-activity-card-activity-information {
