@@ -90,7 +90,7 @@ D2L.PolymerBehaviors.Siren.D2LSirenHelperBehaviorImpl = {
 			extraParams.push(
 				{
 					name: 'collectionSearch',
-					value: searchVal
+					value: window.btoa(searchVal)	// base64 encoding of the search text
 				}
 			);
 		}

@@ -177,7 +177,7 @@
 					},
 					{
 						name: 'collectionSearch',
-						value: 'arthas'
+						value: window.btoa('arthas')
 					}
 				];
 				assert.deepEqual(params, expectedParams);
@@ -220,7 +220,7 @@
 				const expectedParams = [
 					{
 						name: 'collectionSearch',
-						value: 'ragnaros'
+						value: window.btoa('ragnaros')
 					}
 				];
 				assert.deepEqual(params, expectedParams);
