@@ -14,6 +14,7 @@ class ActivityHtmlEditor extends LocalizeActivityEditorMixin(LitElement) {
 			value: { type: String },
 			ariaLabel: { type: String },
 			disabled: { type: Boolean },
+			key: { type: String },
 			_htmlEditorUniqueId: { type: String }
 		};
 	}
@@ -98,7 +99,7 @@ class ActivityHtmlEditor extends LocalizeActivityEditorMixin(LitElement) {
 			}
 		}
 
-		if (changedProperties.has('value') && typeof changedProperties.get('value') === 'undefined') {
+		if ((changedProperties.has('value') && typeof changedProperties.get('value') === 'undefined') || changedProperties.has('key')) {
 			const editorContainer = this.shadowRoot.querySelector('d2l-html-editor > .d2l-html-editor-container');
 			if (editorContainer) {
 				editorContainer.innerHTML = this.value;
