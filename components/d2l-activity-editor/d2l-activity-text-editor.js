@@ -10,6 +10,7 @@ class ActivityTextEditor extends LitElement {
 			richtextEditorConfig: { type: Object },
 			disabled: { type: Boolean },
 			ariaLabel: { type: String },
+			key: { type: String },
 		};
 	}
 
@@ -28,6 +29,7 @@ class ActivityTextEditor extends LitElement {
 			return html`
 				<d2l-activity-html-editor
 					ariaLabel="${this.ariaLabel}"
+					.key="${this.key}"
 					.value="${this.value}"
 					?disabled="${this.disabled}"
 					@d2l-activity-html-editor-change="${this._onRichtextChange}"
