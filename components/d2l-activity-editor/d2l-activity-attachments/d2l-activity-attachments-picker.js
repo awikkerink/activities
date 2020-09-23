@@ -89,9 +89,13 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(SkeletizeMixin(Local
 		};
 		// Referenced by the server-side ActivitiesView renderer
 		D2L.ActivityEditor.RecordVideoDialogCallback = async(file) => {
+			const fileId = file.GetId();
+			const fileName = file.GetName();
+			const fileSystemType = file.GetFileSystemType();
+
 			const collection = store.get(this.href);
-			const previewUrl = await collection.getPreviewUrl(file.FileSystemType, file.FileId);
-			this._addToCollection(attachmentStore.createVideo(file.FileName, file.FileSystemType, file.FileId, previewUrl));
+			const previewUrl = await collection.getPreviewUrl(fileSystemType, fileId);
+			this._addToCollection(attachmentStore.createVideo(fileName, fileSystemType, fileId, previewUrl));
 			this.dispatchEvent(new CustomEvent('d2l-activity-attachments-picker-video-uploaded', {
 				bubbles: true,
 				composed: true
@@ -99,9 +103,13 @@ class ActivityAttachmentsPicker extends ActivityEditorMixin(SkeletizeMixin(Local
 		};
 		// Referenced by the server-side ActivitiesView renderer
 		D2L.ActivityEditor.RecordAudioDialogCallback = async(file) => {
+			const fileId = file.GetId();
+			const fileName = file.GetName();
+			const fileSystemType = file.GetFileSystemType();
+
 			const collection = store.get(this.href);
-			const previewUrl = await collection.getPreviewUrl(file.FileSystemType, file.FileId);
-			this._addToCollection(attachmentStore.createAudio(file.FileName, file.FileSystemType, file.FileId, previewUrl));
+			const previewUrl = await collection.getPreviewUrl(fileSystemType, fileId);
+			this._addToCollection(attachmentStore.createAudio(fileName, fileSystemType, fileId, previewUrl));
 			this.dispatchEvent(new CustomEvent('d2l-activity-attachments-picker-audio-uploaded', {
 				bubbles: true,
 				composed: true
