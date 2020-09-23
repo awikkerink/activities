@@ -177,7 +177,7 @@
 					},
 					{
 						name: 'collectionSearch',
-						value: 'arthas'
+						value: window.btoa('arthas')
 					}
 				];
 				assert.deepEqual(params, expectedParams);
@@ -220,7 +220,7 @@
 				const expectedParams = [
 					{
 						name: 'collectionSearch',
-						value: 'ragnaros'
+						value: window.btoa('ragnaros')
 					}
 				];
 				assert.deepEqual(params, expectedParams);
@@ -234,6 +234,19 @@
 				const evalLink = component._buildRelativeUri(url, params);
 				assert.equal(evalLink, url);
 			});
+			test('when creating a link, if there is an extra param, return correct link', () => {
+				const url = '/d2l/lms/tool/mark.d2l?ou=122041&db=1004';
+				const params = [
+					{
+						name: 'sort',
+						value: 'Y3Rpb24iOjB9'
+					}
+				];
+				const expectedEvalLink = url + '&cfi=sort_Y3Rpb24iOjB9';
+
+				const evalLink = component._buildRelativeUri(url, params);
+				assert.equal(evalLink, expectedEvalLink);
+			});
 			test('when creating a link, if there are extra params, return correct link', () => {
 				const url = '/d2l/lms/tool/mark.d2l?ou=122041&db=1004';
 				const params = [
@@ -246,7 +259,7 @@
 						value: 'Y3Rpb24iOjB9'
 					}
 				];
-				const expectedEvalLink = url + '&filter=96W3siU29ydCI6eyJJ&sort=Y3Rpb24iOjB9';
+				const expectedEvalLink = url + '&cfi=filter_96W3siU29ydCI6eyJJ-sort_Y3Rpb24iOjB9';
 
 				const evalLink = component._buildRelativeUri(url, params);
 				assert.equal(evalLink, expectedEvalLink);
@@ -263,7 +276,7 @@
 						value: 'Y3Rpb24iOjB9'
 					}
 				];
-				const expectedEvalLink = url + '?filter=96W3siU29ydCI6eyJJ&sort=Y3Rpb24iOjB9';
+				const expectedEvalLink = url + '?cfi=filter_96W3siU29ydCI6eyJJ-sort_Y3Rpb24iOjB9';
 
 				const evalLink = component._buildRelativeUri(url, params);
 				assert.equal(evalLink, expectedEvalLink);

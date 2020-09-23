@@ -90,7 +90,7 @@ D2L.PolymerBehaviors.Siren.D2LSirenHelperBehaviorImpl = {
 			extraParams.push(
 				{
 					name: 'collectionSearch',
-					value: searchVal
+					value: window.btoa(searchVal)	// base64 encoding of the search text
 				}
 			);
 		}
@@ -106,9 +106,13 @@ D2L.PolymerBehaviors.Siren.D2LSirenHelperBehaviorImpl = {
 		const parsedUrl = new window.URL(url, 'https://notused.com');
 		const searchParams = GetQueryStringParams(parsedUrl.search);
 
+		let extraInfo = '';
 		extraParams.forEach(param => {
-			searchParams[param.name] = param.value;
+			extraInfo += '-' + param.name + '_' + param.value;
 		});
+
+		searchParams['cfi'] = extraInfo.substring(1);
+
 		return parsedUrl.pathname + DictToQueryString(searchParams);
 	},
 
