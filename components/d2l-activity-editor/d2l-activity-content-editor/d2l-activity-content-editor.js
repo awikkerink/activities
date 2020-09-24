@@ -47,6 +47,8 @@ class ContentEditor extends ActivityEditorContainerMixin(RtlMixin(ActivityEditor
 
 	constructor() {
 		super(store);
+		// Override the 'scroll' property set by the page to remove the unnecessary scrollbar
+		document.body.style.overflow = 'hidden';
 	}
 
 	render() {
