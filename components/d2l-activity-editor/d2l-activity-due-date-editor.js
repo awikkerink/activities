@@ -5,11 +5,11 @@ import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
-import { SkeletizeMixin } from './mixins/d2l-skeletize-mixin';
+import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 
 import { shared as store } from './state/activity-store.js';
 
-class ActivityDueDateEditor extends SkeletizeMixin(ActivityEditorMixin(LocalizeActivityEditorMixin(MobxLitElement))) {
+class ActivityDueDateEditor extends SkeletonMixin(ActivityEditorMixin(LocalizeActivityEditorMixin(MobxLitElement))) {
 
 	static get styles() {
 		return [
