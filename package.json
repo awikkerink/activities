@@ -114,7 +114,7 @@
     "d2l-tooltip": "BrightspaceUI/tooltip#semver:^3",
     "d2l-typography": "BrightspaceUI/typography#semver:^7",
     "d2l-users": "BrightspaceHypermediaComponents/users#semver:^2",
-    "del": "^5.1.0",
+    "del": "^6.0.0",
     "fastdom": "^1.0.8",
     "lit-html": "^1.1.2",
     "merge-stream": "^1.0.1",
