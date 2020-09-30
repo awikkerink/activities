@@ -6,9 +6,9 @@ import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SaveStatusMixin } from '../save-status-mixin.js';
-import { SkeletizeMixin } from '../mixins/d2l-skeletize-mixin';
+import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 
-class AssignmentEditorFooter extends SkeletizeMixin(AsyncContainerMixin(SaveStatusMixin(ActivityEditorMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(LitElement)))))) {
+class AssignmentEditorFooter extends SkeletonMixin(AsyncContainerMixin(SaveStatusMixin(ActivityEditorMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(LitElement)))))) {
 
 	static get styles() {
 		return [super.styles, css`
