@@ -1,8 +1,9 @@
 import { html, LitElement } from 'lit-element/lit-element.js';
+import { ActivityEditorContainerMixin } from '../mixins/d2l-activity-editor-container-mixin'
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 
-class QuizEditor extends EntityMixinLit(LocalizeMixin(LitElement)) {
+class QuizEditor extends ActivityEditorContainerMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
 
 	static get properties() {
 		return {
@@ -14,7 +15,6 @@ class QuizEditor extends EntityMixinLit(LocalizeMixin(LitElement)) {
 	}
 
 	render() {
-
 		return html`
 			<d2l-activity-editor
 				type="assignment"
