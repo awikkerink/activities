@@ -1,0 +1,52 @@
+{
+  "class": [
+    "collection",
+    "empty"
+  ],
+  "properties": {},
+  "links": [
+    {
+      "rel": [
+          "self"
+      ],
+      "href": "../data/base/activities-empty.json"
+    },
+    {
+      "rel": [
+        "https://activities.api.brightspace.com/rels/next-period"
+      ],
+      "href": "#"
+    },
+    {
+      "rel": [
+        "https://activities.api.brightspace.com/rels/previous-period"
+      ],
+      "href": "#"
+    },
+    {
+      "rel": [
+        "https://activities.api.brightspace.com/rels/overdue"
+      ],
+      "href": "../data/base/collection.json"
+    }
+  ],
+  "actions": [
+    {
+      "href": "../data/base/activities-empty.json",
+      "name": "select-custom-date-range",
+      "method": "GET",
+      "fields": [
+        {
+          "type": "text",
+          "name": "start",
+          "value": "2010-01-01T00:00:00.000Z"
+        },
+        {
+          "type": "text",
+          "name": "end",
+          "value": "2030-01-01T00:00:00.000Z"
+        }
+      ]
+    }
+  ]
+}
