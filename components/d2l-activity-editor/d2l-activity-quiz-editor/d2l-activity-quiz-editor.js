@@ -3,6 +3,16 @@ import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 
 class QuizEditor extends EntityMixinLit(LocalizeMixin(LitElement)) {
+
+	static get properties() {
+		return {
+			/**
+			* Set the WidthType on the template to constrain page width if necessary
+			*/
+			widthType: { type: String, attribute: 'width-type' }
+		};
+	}
+
 	render() {
 
 		return html`
