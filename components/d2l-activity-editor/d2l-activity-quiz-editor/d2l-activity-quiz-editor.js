@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit-element/lit-element.js';
+import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { ActivityEditorContainerMixin } from '../mixins/d2l-activity-editor-container-mixin'
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
@@ -12,6 +12,27 @@ class QuizEditor extends ActivityEditorContainerMixin(EntityMixinLit(LocalizeMix
 			*/
 			widthType: { type: String, attribute: 'width-type' }
 		};
+	}
+
+	static get styles() {
+		return css`
+			:host {
+				display: block;
+			}
+			:host([hidden]) {
+				display: none;
+			}
+			.d2l-activity-assignment-editor-primary-panel {
+				padding: 20px;
+			}
+			.d2l-activity-assignment-editor-secondary-panel {
+				padding: 10px;
+			}
+			div[slot="secondary"] {
+				background: var(--d2l-color-gypsum);
+				height: 100%;
+			}
+		`;
 	}
 
 	render() {
