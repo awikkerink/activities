@@ -1,7 +1,7 @@
 import '../d2l-activity-editor.js';
 import './d2l-activity-assignment-editor-detail.js';
 import './d2l-activity-assignment-editor-secondary.js';
-import './d2l-activity-assignment-editor-footer.js';
+import '../d2l-activity-editor-footer.js';
 import '@brightspace-ui/core/templates/primary-secondary/primary-secondary.js';
 import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/dialog/dialog-confirm.js';
@@ -219,12 +219,12 @@ class AssignmentEditor extends ActivityEditorContainerMixin(AsyncContainerMixin(
 						class="d2l-activity-assignment-editor-secondary-panel">
 					</d2l-activity-assignment-editor-secondary>
 				</div>
-				<d2l-activity-assignment-editor-footer
+				<d2l-activity-editor-footer
 					.href="${this.href}"
 					.token="${this.token}"
 					slot="footer"
-					class="d2l-activity-assignment-editor-footer">
-				</d2l-activity-assignment-editor-footer>
+					class="d2l-activity-editor-footer">
+				</d2l-activity-editor-footer>
 			</d2l-template-primary-secondary>
 		`;
 	}
