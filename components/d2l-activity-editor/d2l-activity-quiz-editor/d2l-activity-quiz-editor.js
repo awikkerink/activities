@@ -21,18 +21,27 @@ class QuizEditor extends ActivityEditorContainerMixin(EntityMixinLit(LocalizeMix
 				telemetryId="assignments"
 				.href=${this.href}
 				.token=${this.token}
-				?is-saving=${this.isSaving}
-			>
-				<d2l-template-primary-secondary slot="editor" width-type="${this.widthType}">
-				<slot name="editor-nav" slot="header"></slot>
-				<d2l-activity-editor-footer
-					.href="${this.href}"
-					.token="${this.token}"
-					slot="footer"
-					class="d2l-activity-editor-footer">
-				</d2l-activity-editor-footer>
-				</d2l-template-primary-secondary>
+				?is-saving=${this.isSaving}>
+
+				${this._editorTemplate}
+
 			</d2l-activity-editor>
+		`;
+	}
+
+	get _editorTemplate() {
+		return html`
+			<d2l-template-primary-secondary slot="editor" width-type="${this.widthType}">
+			<slot name="editor-nav" slot="header"></slot>
+			<div slot="secondary">
+			</div>
+			<d2l-activity-editor-footer
+				.href="${this.href}"
+				.token="${this.token}"
+				slot="footer"
+				class="d2l-activity-editor-footer">
+			</d2l-activity-editor-footer>
+			</d2l-template-primary-secondary>
 		`;
 	}
 }
