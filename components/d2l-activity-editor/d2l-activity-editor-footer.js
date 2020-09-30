@@ -3,7 +3,7 @@ import './d2l-activity-visibility-editor.js';
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
-import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin'
+import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SaveStatusMixin } from './save-status-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
