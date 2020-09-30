@@ -6,7 +6,7 @@ import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin'
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SaveStatusMixin } from './save-status-mixin.js';
-import { SkeletizeMixin } from './mixins/d2l-skeletize-mixin';
+import { SkeletizeMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 
 class ActivityEditorFooter extends SkeletizeMixin(AsyncContainerMixin(SaveStatusMixin(ActivityEditorMixin(RtlMixin(LocalizeActivityEditorMixin(LitElement)))))) {
 

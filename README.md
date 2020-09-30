@@ -51,7 +51,7 @@ Quick Eval should be pulled directly from `my-unassessed-activities`:
 
 ### Visual Difference Testing
 
-In order to do visual difference testing, you must generate the "golden" images first as the baseline to compare to.
+In order to do visual difference testing, you must generate the "golden" images first, as the baseline to compare to.
 
 #### Procedure for testing on a local developer machine:
 

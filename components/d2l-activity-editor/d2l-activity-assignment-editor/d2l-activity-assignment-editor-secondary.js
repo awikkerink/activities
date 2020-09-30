@@ -8,9 +8,9 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
-import { SkeletizeMixin } from '../mixins/d2l-skeletize-mixin';
+import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 
-class AssignmentEditorSecondary extends ActivityEditorFeaturesMixin(AsyncContainerMixin(SkeletizeMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(LitElement))))) {
+class AssignmentEditorSecondary extends ActivityEditorFeaturesMixin(AsyncContainerMixin(SkeletonMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(LitElement))))) {
 
 	static get properties() {
 		return {

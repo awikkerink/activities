@@ -3,10 +3,10 @@ import './d2l-activity-attachments-picker';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
-import { SkeletizeMixin } from '../mixins/d2l-skeletize-mixin';
+import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 import { shared as store } from './state/attachment-collections-store.js';
 
-class ActivityAttachmentsEditor extends ActivityEditorMixin(SkeletizeMixin(MobxLitElement)) {
+class ActivityAttachmentsEditor extends ActivityEditorMixin(SkeletonMixin(MobxLitElement)) {
 	static get properties() {
 		return {
 			_canAddAttachments: { type: Boolean },
