@@ -16,18 +16,6 @@ class QuizEditor extends ActivityEditorContainerMixin(EntityMixinLit(LocalizeMix
 
 	static get styles() {
 		return css`
-			:host {
-				display: block;
-			}
-			:host([hidden]) {
-				display: none;
-			}
-			.d2l-activity-assignment-editor-primary-panel {
-				padding: 20px;
-			}
-			.d2l-activity-assignment-editor-secondary-panel {
-				padding: 10px;
-			}
 			div[slot="secondary"] {
 				background: var(--d2l-color-gypsum);
 				height: 100%;
