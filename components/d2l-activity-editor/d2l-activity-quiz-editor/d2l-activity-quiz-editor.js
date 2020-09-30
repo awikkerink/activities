@@ -41,15 +41,14 @@ class QuizEditor extends ActivityEditorContainerMixin(EntityMixinLit(LocalizeMix
 	get _editorTemplate() {
 		return html`
 			<d2l-template-primary-secondary slot="editor" width-type="${this.widthType}">
-			<slot name="editor-nav" slot="header"></slot>
-			<div slot="secondary">
-			</div>
-			<d2l-activity-editor-footer
-				.href="${this.href}"
-				.token="${this.token}"
-				slot="footer"
-				class="d2l-activity-editor-footer">
-			</d2l-activity-editor-footer>
+				<slot name="editor-nav" slot="header"></slot>
+				<div slot="secondary"></div>
+				<d2l-activity-editor-footer
+					.href="${this.href}"
+					.token="${this.token}"
+					slot="footer"
+					class="d2l-activity-editor-footer">
+				</d2l-activity-editor-footer>
 			</d2l-template-primary-secondary>
 		`;
 	}
