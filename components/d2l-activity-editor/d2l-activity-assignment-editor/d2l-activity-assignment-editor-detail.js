@@ -1,4 +1,4 @@
-import 'd2l-inputs/d2l-input-text.js';
+import '@brightspace-ui/core/components/inputs/input-text.js';
 import 'd2l-tooltip/d2l-tooltip';
 import '../d2l-activity-due-date-editor.js';
 import '../d2l-activity-outcomes.js';
@@ -13,7 +13,6 @@ import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { shared as attachmentCollectionStore } from '../d2l-activity-attachments/state/attachment-collections-store.js';
 import { shared as attachmentStore } from '../d2l-activity-attachments/state/attachment-store.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
-import { ErrorHandlingMixin } from '../error-handling-mixin.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LinksInMessageProcessor } from '@d2l/d2l-attachment/helpers/links-in-message-processor.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
@@ -24,11 +23,10 @@ import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton
 import { shared as store } from './state/assignment-store.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
-class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(SkeletonMixin(SaveStatusMixin(LocalizeActivityAssignmentEditorMixin(RtlMixin(ActivityEditorMixin(MobxLitElement))))))) {
+class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatusMixin(LocalizeActivityAssignmentEditorMixin(RtlMixin(ActivityEditorMixin(MobxLitElement)))))) {
 
 	static get properties() {
 		return {
-			_nameError: { type: String },
 			_linksProcessor: { type: Object },
 			activityUsageHref: { type: String, attribute: 'activity-usage-href' },
 		};
@@ -94,23 +92,18 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 
 		return html`
 			<div id="assignment-name-container">
-				<div class="d2l-activity-label-container">
-					<label class="d2l-label-text d2l-skeletize" for="assignment-name">${this.localize('name')}*</label>
-				</div>
 				<d2l-input-text
+					?skeleton="${this.skeleton}"
 					id="assignment-name"
-					class="d2l-skeletize"
 					maxlength="128"
 					value="${name}"
 					@change="${this._saveOnChange('name')}"
 					@input="${this._saveNameOnInput}"
-					aria-label="${this.localize('name')}"
+					label="${this.localize('name')}"
+					required
 					?disabled="${!canEditName}"
-					aria-invalid="${this._nameError ? 'true' : ''}"
-					prevent-submit
-					novalidate>
+					prevent-submit>
 				</d2l-input-text>
-				${this._getNameTooltip()}
 			</div>
 
 			${canEditName ? /** This is a hack. US117892. Learning outcomes shouldn't show if the user lacks the Assignment Add/Edit Submission Folders permission.
@@ -190,19 +183,6 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 		});
 	}
 
-	_getNameTooltip() {
-		if (this._nameError) {
-			return html`
-				<d2l-tooltip
-					id="name-tooltip"
-					for="assignment-name"
-					position="bottom"
-					?showing="${this._nameError}">
-					${this._nameError}
-				</d2l-tooltip>
-			`;
-		}
-	}
 	_saveInstructions(value) {
 		store.getAssignment(this.href).setInstructions(value);
 		this._debounceJobs.value = Debouncer.debounce(
@@ -226,22 +206,12 @@ class AssignmentEditorDetail extends ErrorHandlingMixin(AsyncContainerMixin(Skel
 	}
 	_saveNameOnInput(e) {
 		const name = e.target.value;
-		const isNameEmpty = (name || '').trim().length === 0;
 
-		const errorProperty = '_nameError';
-		const emptyNameErrorLangterm = 'emptyNameError';
-		const tooltipId = 'name-tooltip';
-
-		if (isNameEmpty) {
-			this.setError(errorProperty, emptyNameErrorLangterm, tooltipId);
-		} else {
-			this.clearError(errorProperty);
-			this._debounceJobs.name = Debouncer.debounce(
-				this._debounceJobs.name,
-				timeOut.after(500),
-				() => this._saveName(name)
-			);
-		}
+		this._debounceJobs.name = Debouncer.debounce(
+			this._debounceJobs.name,
+			timeOut.after(500),
+			() => this._saveName(name)
+		);
 	}
 	_saveOnChange(jobName) {
 		this._debounceJobs[jobName] && this._debounceJobs[jobName].flush();
