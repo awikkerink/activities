@@ -92,10 +92,6 @@ class AssignmentEditor extends ActivityEditorContainerMixin(AsyncContainerMixin(
 			.d2l-activity-assignment-editor-secondary-panel {
 				padding: 10px;
 			}
-			div[slot="secondary"] {
-				background: var(--d2l-color-gypsum);
-				height: 100%;
-			}
 			.d2l-locked-alert {
 				align-items: baseline;
 				display: flex;
@@ -195,7 +191,7 @@ class AssignmentEditor extends ActivityEditorContainerMixin(AsyncContainerMixin(
 		const hasSubmissions = assignment && assignment.submissionAndCompletionProps.assignmentHasSubmissions;
 
 		return html`
-			<d2l-template-primary-secondary slot="editor" width-type="${this.widthType}">
+			<d2l-template-primary-secondary background-shading="secondary" slot="editor" width-type="${this.widthType}">
 				<slot name="editor-nav" slot="header"></slot>
 				<div slot="primary" class="d2l-activity-assignment-editor-primary-panel">
 					<d2l-alert type="error" ?hidden=${!this.isError}>${this.localize('assignmentSaveError')}</d2l-alert>
