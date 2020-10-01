@@ -14,7 +14,6 @@ class QuizEditor extends ActivityEditorContainerMixin(EntityMixinLit(LocalizeAct
 		};
 	}
 
-
 	render() {
 		return html`
 			<d2l-activity-editor
