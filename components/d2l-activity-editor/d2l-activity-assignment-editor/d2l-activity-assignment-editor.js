@@ -13,6 +13,7 @@ import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
+import { secondarySlotStyles } from '../shared-styles';
 import { shared as store } from './state/assignment-store.js';
 
 class AssignmentEditor extends ActivityEditorContainerMixin(AsyncContainerMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(ActivityEditorMixin(MobxLitElement))))) {
@@ -75,7 +76,7 @@ class AssignmentEditor extends ActivityEditorContainerMixin(AsyncContainerMixin(
 	}
 
 	static get styles() {
-		return css`
+		return [secondarySlotStyles, css`
 			:host {
 				display: block;
 			}
@@ -92,10 +93,6 @@ class AssignmentEditor extends ActivityEditorContainerMixin(AsyncContainerMixin(
 			.d2l-activity-assignment-editor-secondary-panel {
 				padding: 10px;
 			}
-			div[slot="secondary"] {
-				background: var(--d2l-color-gypsum);
-				height: 100%;
-			}
 			.d2l-locked-alert {
 				align-items: baseline;
 				display: flex;
@@ -107,7 +104,7 @@ class AssignmentEditor extends ActivityEditorContainerMixin(AsyncContainerMixin(
 				padding-left: 1rem;
 				padding-right: 0;
 			}
-		`;
+		`];
 	}
 
 	constructor() {

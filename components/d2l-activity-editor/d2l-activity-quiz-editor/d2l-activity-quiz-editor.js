@@ -1,9 +1,10 @@
-import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { html, LitElement } from 'lit-element/lit-element.js';
 import { ActivityEditorContainerMixin } from '../mixins/d2l-activity-editor-container-mixin';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { LocalizeActivityEditorMixin } from '../mixins/d2l-activity-editor-lang-mixin';
+import { secondarySlotStyles } from '../shared-styles';
 
-class QuizEditor extends ActivityEditorContainerMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
+class QuizEditor extends ActivityEditorContainerMixin(EntityMixinLit(LocalizeActivityEditorMixin(LitElement))) {
 
 	static get properties() {
 		return {
@@ -15,12 +16,7 @@ class QuizEditor extends ActivityEditorContainerMixin(EntityMixinLit(LocalizeMix
 	}
 
 	static get styles() {
-		return css`
-			div[slot="secondary"] {
-				background: var(--d2l-color-gypsum);
-				height: 100%;
-			}
-		`;
+		return secondarySlotStyles;
 	}
 
 	render() {
