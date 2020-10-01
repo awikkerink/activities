@@ -1,4 +1,4 @@
-import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { html, LitElement } from 'lit-element/lit-element.js';
 import { ActivityEditorContainerMixin } from '../mixins/d2l-activity-editor-container-mixin';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { LocalizeActivityAssignmentEditorMixin } from '../d2l-activity-assignment-editor/mixins/d2l-activity-assignment-lang-mixin';
@@ -12,15 +12,6 @@ class QuizEditor extends ActivityEditorContainerMixin(EntityMixinLit(LocalizeAct
 			*/
 			widthType: { type: String, attribute: 'width-type' }
 		};
-	}
-
-	static get styles() {
-		return css`
-			div[slot="secondary"] {
-				background: var(--d2l-color-gypsum);
-				height: 100%;
-			}
-		`;
 	}
 
 	render() {
@@ -45,7 +36,7 @@ class QuizEditor extends ActivityEditorContainerMixin(EntityMixinLit(LocalizeAct
 
 	get _editorTemplate() {
 		return html`
-			<d2l-template-primary-secondary slot="editor" width-type="${this.widthType}">
+			<d2l-template-primary-secondary background-shading="secondary" slot="editor" width-type="${this.widthType}">
 				<slot name="editor-nav" slot="header"></slot>
 				<div slot="secondary"></div>
 				<d2l-activity-editor-footer
