@@ -26,11 +26,6 @@ class QuizEditor extends ActivityEditorContainerMixin(EntityMixinLit(LocalizeAct
 				${this._editorTemplate}
 
 			</d2l-activity-editor>
-
-			<d2l-dialog-confirm title-text="${this.localize('discardChangesTitle')}" text=${this.localize('discardChangesQuestion')}>
-				<d2l-button slot="footer" primary dialog-action="confirm">${this.localize('yesLabel')}</d2l-button>
-				<d2l-button slot="footer" dialog-action="cancel">${this.localize('noLabel')}</d2l-button>
-			</d2l-dialog-confirm>
 		`;
 	}
 
