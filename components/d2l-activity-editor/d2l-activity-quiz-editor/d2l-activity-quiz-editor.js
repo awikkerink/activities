@@ -1,9 +1,9 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { ActivityEditorContainerMixin } from '../mixins/d2l-activity-editor-container-mixin';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { LocalizeActivityAssignmentEditorMixin } from '../d2l-activity-assignment-editor/mixins/d2l-activity-assignment-lang-mixin';
 
-class QuizEditor extends ActivityEditorContainerMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
+class QuizEditor extends ActivityEditorContainerMixin(EntityMixinLit(LocalizeActivityAssignmentEditorMixin(LitElement))) {
 
 	static get properties() {
 		return {
@@ -35,6 +35,11 @@ class QuizEditor extends ActivityEditorContainerMixin(EntityMixinLit(LocalizeMix
 				${this._editorTemplate}
 
 			</d2l-activity-editor>
+
+			<d2l-dialog-confirm title-text="${this.localize('discardChangesTitle')}" text=${this.localize('discardChangesQuestion')}>
+				<d2l-button slot="footer" primary dialog-action="confirm">${this.localize('yesLabel')}</d2l-button>
+				<d2l-button slot="footer" dialog-action="cancel">${this.localize('noLabel')}</d2l-button>
+			</d2l-dialog-confirm>
 		`;
 	}
 
