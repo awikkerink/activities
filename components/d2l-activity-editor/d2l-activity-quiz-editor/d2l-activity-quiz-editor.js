@@ -1,9 +1,8 @@
 import { html, LitElement } from 'lit-element/lit-element.js';
 import { ActivityEditorContainerMixin } from '../mixins/d2l-activity-editor-container-mixin';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
-import { LocalizeActivityEditorMixin } from '../mixins/d2l-activity-editor-lang-mixin';
 
-class QuizEditor extends ActivityEditorContainerMixin(EntityMixinLit(LocalizeActivityEditorMixin(LitElement))) {
+class QuizEditor extends ActivityEditorContainerMixin(EntityMixinLit(LitElement)) {
 
 	static get properties() {
 		return {
