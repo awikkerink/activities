@@ -1,17 +1,19 @@
 import '@brightspace-ui/core/components/icons/icon';
 import '@brightspace-ui/core/components/colors/colors';
 import './d2l-work-to-do-activity-collection';
+import './d2l-work-to-do-activity-list-header';
 
 import { Actions, Rels } from 'siren-sdk/src/hypermedia-constants';
 import { bodyCompactStyles, bodySmallStyles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html, LitElement } from 'lit-element/lit-element';
-import { constants } from '../constants';
+import { Constants } from './env';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { fetchEntity } from './state/fetch-entity';
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin';
 import { SimpleEntity } from 'siren-sdk/src/es6/SimpleEntity';
 import { UserEntity } from 'siren-sdk/src/users/UserEntity';
+import { nothing } from 'lit-html';
 
 class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 
@@ -109,7 +111,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 				<d2l-activity-collection
 					href=${ifDefined(this._overdueSource)}
 					token=${ifDefined(this.token)}
-					max-display=${constants.MaxWidgetDisplay}
+					max-display=${Constants.MaxWidgetDisplay}
 					@d2l-collection-changed=${this._handleOverdueCollectionChange}>
 				</d2l-activity-collection>
 			`;
@@ -119,11 +121,33 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 					href=${ifDefined(this._overdueSource)}
 					token=${ifDefined(this.token)}
 					max-display=${ifDefined(this._upcomingDisplayLimit)}
-					@d2l-collection-changed=${this._handleOverdueCollectionChange}>
+					@d2l-collection-changed=${this._handleUpcomingCollectionChange}>
 				</d2l-activity-collection>
 			`;
 
-		// TODO: Header Template Generation: Parent Portal vs Base - Need to setup widget in LMS to see what comes for free first
+		const overdueHeader = this._overdueCount > 0
+			? html `<d2l-work-to-do-list-header overdue count=${this._overdueCount}></d2l-work-to-do-list-header>`
+			: nothing;
+
+		const upcomingHeader = this._upcomingCount > 0
+			? html `<d2l-work-to-do-list-header count=${this._upcomingCount}></d2l-work-to-do-list-header>`
+			: nothing;
+
+		const overdueTemplate = html`
+			<div id="overdue-activities-content">
+				${overdueHeader}
+				${overdueCollection}
+			</div>
+		`;
+
+		const upcomingTemplate = this._overdueCount < Constants.MaxWidgetDisplay
+			? html`
+				<div id="upcoming-activities-content">
+					${upcomingHeader}
+					${upcomingCollection}
+				</div>`
+			: nothing;
+
 		return html`
 			<div class="d2l-work-to-do-header-container">
 				<h3 class="d2l-heading-2">${this.localize('my_work_to_do')}</h3>
@@ -131,8 +155,8 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 			</div>
 			<!-- Logic for view/state display required -->
 			<div class="d2l-work-to-do-body-container">
-				${overdueCollection}
-				${upcomingCollection}
+				${overdueTemplate}
+				${upcomingTemplate}
 			</div>
 		`;
 	}
@@ -142,7 +166,14 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 			throw new ReferenceError('_handleOverdueCollectionChange expects event to contain count field in details');
 		}
 		this._overdueCount = e.detail.count || 0;
-		this._upcomingDisplayLimit = Math.max((constants.MaxWidgetDisplay - this._overdueCount), 0);
+		this._upcomingDisplayLimit = Math.max((Constants.MaxWidgetDisplay - this._overdueCount), 0);
+	}
+
+	_handleUpcomingCollectionChange(e) {
+		if (!e || !e.detail || !e.detail.count) {
+			throw new ReferenceError('_handleOverdueCollectionChange expects event to contain count field in details');
+		}
+		this._upcomingCount = e.detail.count || 0;
 	}
 
 	_createActionUrl(action, parameters) {

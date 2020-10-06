@@ -1,3 +1,4 @@
+import '@brightspace-ui/core/components/button/button-icon';
 import '@brightspace-ui/core/components/colors/colors';
 import '@brightspace-ui/core/components/icons/icon';
 import '@brightspace-ui/core/components/list/list-item-content';
@@ -5,6 +6,7 @@ import '../d2l-activity-date/d2l-activity-date';
 import 'd2l-organizations/components/d2l-organization-name/d2l-organization-name';
 import 'd2l-organizations/components/d2l-organization-info/d2l-organization-info';
 
+import { bodyCompactStyles, bodySmallStyles, heading3Styles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
 import { ActivityAllowList } from './env';
@@ -14,13 +16,14 @@ import { ListItemMixin } from '@brightspace-ui/core/components/list/list-item-mi
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { nothing } from 'lit-html';
 
-class ActivityListPane extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
+class ActivityListCard extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
 
 	static get properties() {
 		return {
 			_hasDate: { type: Boolean },
 			_hasOrgCode: { type: Boolean },
 			_icon: { type: String },
+			_type: { type: String },
 			_organizationHref: { type: String },
 		};
 	}
@@ -28,30 +31,59 @@ class ActivityListPane extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitEle
 	static get styles() {
 		return [
 			super.styles,
+			bodyCompactStyles,
+			bodySmallStyles,
+			heading3Styles,
 			css`
 				:host {
+					border: solid 1px var(--d2l-color-gypsum);
+					border-radius: 6px;
 					display: block;
+					margin: 0.6rem 0;
+					padding: 0 1.2rem 0 2.1rem;
 				}
 				:host([hidden]) {
 					display: none;
 				}
+				:host([dir="rtl"]) {
+					padding: 0 2.1rem 0 1.2rem;
+				}
 				:hover #d2l-activity-icon,
-				:hover #d2l-organization-name {
+				:hover #content-top-container {
 					color: var(--d2l-color-celestine);
 				}
 				#d2l-activity-icon {
-					margin-top: 0.2rem;
+					height: 30px;
+					margin-right: 2.1rem;
+					margin-top: 0.3rem;
+					width: 30px;
 				}
-				#d2l-organization-name {
-					color: var(--d2l-color-ferrite);
+				:host([dir="rtl"]) #d2l-activity-icon {
+					margin-left: 2.1rem;
+					margin-right: 0;
 				}
 				#d2l-icon-bullet {
 					color: var(--d2l-color-tungsten);
 					margin-left: -0.15rem;
 					margin-right: -0.15rem;
 				}
-				#content-bottom-container {
-					color: var(--d2l-color-tungsten);
+				#content-top-container {
+					color: var(--d2l-color-ferrite);
+					margin-bottom: -0.1rem;
+				}
+				#content-supporting-info-container {
+					-webkit-box-orient: vertical;
+					color: var(--d2l-color-ferrite);
+					display: block;
+					display: -webkit-box;
+					-webkit-line-clamp: 2;
+					margin: 6px 0;
+					max-width: inherit;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
+				d2l-button-icon {
+					margin: auto 0;
 				}
 			`
 		];
@@ -82,6 +114,7 @@ class ActivityListPane extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitEle
 		this._hasDate = false;
 		this._hasOrgCode = false;
 		this._icon = ActivityAllowList.userAssignmentActivity.icon;
+		this._type = '';
 		this._setEntityType(ActivityUsageEntity);
 	}
 
@@ -96,11 +129,11 @@ class ActivityListPane extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitEle
 	_onActivityUsageChange(usage) {
 		this.actionHref = usage.userActivityUsageHref();
 		this._organizationHref = usage.organizationHref();
-		this._icon = this._getActivityIcon(usage._entity);
+		this._getActivityType(usage._entity);
 	}
 
 	render() {
-		const separatorTemplate = this._hasDate && this._hasOrgCode
+		const separatorTemplate = this._type && this._hasOrgCode
 			? html `<d2l-icon id="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
 			: nothing;
 
@@ -108,49 +141,56 @@ class ActivityListPane extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitEle
 			? html` <d2l-icon id="d2l-activity-icon" icon=${this._icon}></d2l-icon>`
 			: nothing;
 
+		const activityActionTemplate =
+			html `
+				<d2l-button-icon
+					description="Navigate to activity view"
+					icon="tier1:chevron-right"
+					text="To activity view">
+				</d2l-button-icon>
+			`;
+
 		return this._renderListItem({
 			illustration: activityIconTemplate,
 			content: html`
 				<d2l-list-item-content id="content">
 					<div id="content-top-container">
 						<d2l-organization-name
-							id="d2l-organization-name"
+							class="d2l-heading-3"
 							href="${ifDefined(this._organizationHref)}"
 							token="${ifDefined(this.token)}">
 						</d2l-organization-name>
 					</div>
-					<div id="content-bottom-container" slot="secondary">
-						<d2l-activity-date
-							href="${ifDefined(this.href)}"
-							token="${ifDefined(this.token)}"
-							@d2l-activity-date-changed=${this._handleActivityDateChange}>
-						</d2l-activity-date>
-						${separatorTemplate}
-					<d2l-organization-info
+					<div id="content-secondary-container" slot="secondary" class="d2l-body-small">
+						<d2l-organization-info
 							href="${ifDefined(this._organizationHref)}"
 							token="${ifDefined(this.token)}"
 							show-organization-code
 							@d2l-organization-accessible=${this._handleOrgInfoChange}>
 						</d2l-organization-info>
+						${separatorTemplate}
+						${this._type}
+					</div>
+					<div id="content-supporting-info-container" slot="supporting-info" class="d2l-body-compact">
+						Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 					</div>
 				</d2l-list-item-content>
 			`,
-			actions: nothing
+			actions: activityActionTemplate,
 		});
 	}
 
-	_getActivityIcon(entity) {
+	_getActivityType(entity) {
 		if (!entity || !entity.class) {
 			return;
 		}
 
 		for (const allowed in ActivityAllowList) {
 			if (entity.hasClass(ActivityAllowList[allowed].class)) {
-				return ActivityAllowList[allowed].icon;
+				this._icon = ActivityAllowList[allowed].icon;
+				this._type = ActivityAllowList[allowed].type;
 			}
 		}
-
-		return ActivityAllowList.userAssignmentActivity.icon;
 	}
 
 	_handleActivityDateChange(e) {
@@ -180,4 +220,4 @@ class ActivityListPane extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitEle
 		}
 	}
 }
-customElements.define('d2l-work-to-do-activity-list-pane', ActivityListPane);
+customElements.define('d2l-work-to-do-activity-list-card', ActivityListCard);

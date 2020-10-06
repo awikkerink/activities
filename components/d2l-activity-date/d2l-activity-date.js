@@ -2,8 +2,8 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { formatDate, formatTime } from '@brightspace-ui/intl/lib/dateTime.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
-import { ifDefined } from 'lit-html/directives/if-defined';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { nothing } from 'lit-html/lit-html';
 
 class D2LActivityDate extends EntityMixinLit(LocalizeMixin(LitElement)) {
 
@@ -19,10 +19,14 @@ class D2LActivityDate extends EntityMixinLit(LocalizeMixin(LitElement)) {
 		return [
 			css`
 				:host {
-					display: inline-block;
+					display: inline;
 				}
 				:host([hidden]) {
 					display: none;
+				}
+				.d2l-activity-date-text {
+					display: inline;
+					vertical-align: bottom;
 				}
 			`
 		];
@@ -71,11 +75,11 @@ class D2LActivityDate extends EntityMixinLit(LocalizeMixin(LitElement)) {
 	render() {
 		const str = this.setActivityDateString(this._date, this.format, this.includeTime);
 
-		return html`
-			<p id="d2l-activity-date">
-				${ifDefined(str)}
-			</p>
-		`;
+		const activityDateTemplate = str
+			? html `<div class="d2l-activity-date-text">${str}</div>`
+			: nothing;
+
+		return activityDateTemplate;
 	}
 
 	getActivityDate(usage) {
@@ -110,6 +114,15 @@ class D2LActivityDate extends EntityMixinLit(LocalizeMixin(LitElement)) {
 				'date', formatDate(date.date, { format: format }),
 			);
 		}
+
+		const eventDetails = {
+			bubbles: true,
+			composed: false,
+			detail: {
+				date: dateString.length > 0 && dateString
+			}
+		};
+		this.dispatchEvent(new CustomEvent('d2l-activity-date-changed', eventDetails));
 
 		return dateString;
 	}

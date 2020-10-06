@@ -10,6 +10,7 @@ import { ActivityUsageCollectionEntity } from 'siren-sdk/src/activities/Activity
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { Rels } from 'siren-sdk/src/hypermedia-constants.js';
+import { nothing } from 'lit-html';
 
 /**
 * @description Class representation of WorkToDoActivitiesCollection
@@ -29,30 +30,13 @@ class ActivityUsageCollection extends EntityMixinLit(LitElement) {
 			bodySmallStyles,
 			css`
 				:host {
-					display: block;
+					display: inline-block;
+					width: 100%;
 				}
 				:host([hidden]) {
 					display: none;
 				}
-				.d2l-overdue-collection-container {
-					background-color: var(--d2l-color-regolith);
-					display: flex;
-					justify-content: center;
-					padding-bottom: 72px;
-					padding-top: 72px;
-				}
-				.d2l-overdue-collection-header-container {
-					border-bottom: solid 1px var(--d2l-color-gypsum);
-					box-sizing: border-box;
-					height: 96px;
-					width: 100%;
-				}
-				.d2l-overdue-collection-body-container {
-					align-items: center;
-					display: flex;
-					justify-content: space-between;
-				}
-`
+			`
 		];
 	}
 
@@ -91,30 +75,26 @@ class ActivityUsageCollection extends EntityMixinLit(LitElement) {
 				count: this._count
 			}
 		};
-		this.dispatchEvent(new CustomEvent('d2l-overdue-collection-changed', eventDetails));
+		this.dispatchEvent(new CustomEvent('d2l-collection-changed', eventDetails));
 	}
 
 	render() {
 		if (!this._items || this._count === 0 || this.maxDisplay === 0) {
-			return html``;
+			return nothing;
 		}
 
-		const items = this._items.slice(0, this.maxDisplay).map(item =>
-			html`
-				<d2l-activity-list-pane
-					action-href=${ifDefined(item.usage.userActivityUsageHref())}
-					href=${ifDefined(item.usage._entity.getLinkByRel(Rels.Activities.activityUsage).href)}
-					token=${ifDefined(this.token)}>
-				</d2l-activity-list-pane>
-			`
-		);
+		const items = this._items
+			? this._items.slice(0, this.maxDisplay).map(item =>
+				html`
+					<d2l-work-to-do-activity-list-pane
+						href=${ifDefined(item.usage._entity.getLinkByRel(Rels.Activities.activityUsage).href)}
+						token=${ifDefined(this.token)}></d2l-work-to-do-activity-list-pane>
+				`)
+			: nothing;
 
 		return html`
-			<div class="d2l-overdue-collection-container">
-				<div class="d2l-overdue-collection-header-container">
-					<d2l-activity-list-header count=${this._count}></d2l-activity-list-header>
-				</div>
-				<div class="d2l-overdue-collection-body-container">
+			<div class="d2l-collection-container">
+				<div class="d2l-collection-body-container"></div>
 					<d2l-list separators="none">${items}</d2l-list>
 				</div>
 			</div>

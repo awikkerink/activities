@@ -5,37 +5,46 @@
 		<script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
 		<script type="module">
 			import '@brightspace-ui/core/components/demo/demo-page.js';
-			import '../../components/d2l-work-to-do/d2l-work-to-do-activity-list-pane.js';
+			import '../../components/d2l-work-to-do/d2l-work-to-do-activity-list-card.js';
 		</script>
-		<title>activity-list-pane</title>
+		<title>activity-list-card</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<meta charset="UTF-8">
+		<style>
+			d2l-demo-snippet {
+				max-width: fit-content;
+			}
+			d2l-code-view,
+			.d2l-code-view-code {
+				max-width: inherit;
+			}
+		</style>
 	</head>
 	<body>
-		<d2l-demo-page page-title="d2l-work-to-do-activity-list-pane demo">
+		<d2l-demo-page page-title="d2l-work-to-do-activity-list-card demo">
 			<a href="../index.html">Back to Main</a></li>
-			<h2>d2l-work-to-do-activity-list-pane</h2>
+			<h2>d2l-work-to-do-activity-list-card</h2>
 			<d2l-demo-snippet>
 				<d2l-list separators="none">
-					<d2l-work-to-do-activity-list-pane
+					<d2l-work-to-do-activity-list-card
 						href="../data/base/organization-activity-usage.json"
-						token="secret"></d2l-work-to-do-activity-list-pane>
+						token="secret"></d2l-work-to-do-activity-list-card>
 				</d2l-list>
 			</d2l-demo-snippet>
-			<h2>Basic List (no separators)</h2>
+			<h2>Basic List</h2>
 			<d2l-demo-snippet>
 				<template>
 					<d2l-list separators="none">
-						<d2l-work-to-do-activity-list-pane
+						<d2l-work-to-do-activity-list-card
 							href="../data/base/organization-activity-usage.json"
-							token="secret"></d2l-work-to-do-activity-list-pane>
-						<d2l-work-to-do-activity-list-pane
+							token="secret"></d2l-work-to-do-activity-list-card>
+						<d2l-work-to-do-activity-list-card
 							href="../data/base/organization-activity-usage.json"
-							token="secret"></d2l-work-to-do-activity-list-pane>
-						<d2l-work-to-do-activity-list-pane
+							token="secret"></d2l-work-to-do-activity-list-card>
+						<d2l-work-to-do-activity-list-card
 							href="../data/base/organization-activity-usage.json"
-							token="secret"></d2l-work-to-do-activity-list-pane>
+							token="secret"></d2l-work-to-do-activity-list-card>
 					</d2l-list>
 				</template>
 			</d2l-demo-snippet>
