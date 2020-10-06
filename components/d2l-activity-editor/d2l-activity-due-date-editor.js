@@ -19,12 +19,6 @@ class ActivityDueDateEditor extends SkeletonMixin(ActivityEditorMixin(LocalizeAc
 			:host([hidden]) {
 				display: none;
 			}
-			.d2l-activity-label-container {
-				margin-bottom: -1px; /* hacky: trying to be pixel perfect, we will replace it d2l-input-label soon */
-			}
-			.d2l-activity-label-container > label {
-				vertical-align: top;
-			}
 		`];
 	}
 
@@ -44,14 +38,10 @@ class ActivityDueDateEditor extends SkeletonMixin(ActivityEditorMixin(LocalizeAc
 		}
 
 		return html`
-		 	<div class="d2l-activity-label-container">
-				<label class="d2l-label-text d2l-skeletize">${this.localize('editor.dueDate')}</label>
-			</div>
-			<d2l-input-date-time
-				class="d2l-skeletize"
+		 	<d2l-input-date-time
+				?skeleton="${this.skeleton}"
 				id="due-date-input"
 				label="${this.localize('editor.dueDate')}"
-				label-hidden
 				time-default-value="endOfDay"
 				value="${dueDate}"
 				@change="${this._onDatetimeChanged}">
