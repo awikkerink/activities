@@ -54,7 +54,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 					margin-top: 20px;
 				}
 
-				div[id*="container"] > label.d2l-label-text {
+				div[id*="container"] > .d2l-label-text {
 					display: inline-block;
 					margin-bottom: 10px;
 				}
@@ -274,9 +274,9 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 
 		return html `
 		<div id="assignment-notification-email-container">
-			<label class="d2l-label-text" for="assignment-notification-email-container">
+			<div class="d2l-label-text">
 				${this.localize('hdrSubmissionNotificationEmail')}
-			</label>
+			</div>
 			<p class="d2l-body-small">
 				${this.localize('hlpSubmissionNotificationEmail')}
 			</p>

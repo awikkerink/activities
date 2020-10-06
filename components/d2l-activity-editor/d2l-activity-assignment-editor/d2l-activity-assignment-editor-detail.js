@@ -58,10 +58,7 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 					margin-right: 40px;
 				}
 				.d2l-activity-label-container {
-					margin-bottom: -1px; /* hacky: trying to be pixel perfect, we will replace it d2l-input-label soon */
-				}
-				.d2l-activity-label-container > label {
-					vertical-align: top;
+					margin-bottom: 8px;
 				}
 				:host([dir="rtl"]) #score-container {
 					margin-left: 40px;
@@ -119,8 +116,8 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 
 			<div id="score-and-duedate-container">
 				<div id="score-container">
-					<div class="d2l-activity-label-container">
-						<label class="d2l-label-text d2l-skeletize">${this.localize('scoreOutOf')}</label>
+					<div class="d2l-activity-label-container d2l-label-text d2l-skeletize">
+						${this.localize('scoreOutOf')}
 					</div>
 					<d2l-activity-score-editor
 						?skeleton="${this.skeleton}"
@@ -140,8 +137,8 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 			</div>
 
 			<div id="assignment-instructions-container">
-				<div class="d2l-activity-label-container">
-					<label class="d2l-label-text d2l-skeletize">${this.localize('instructions')}</label>
+				<div class="d2l-activity-label-container d2l-label-text d2l-skeletize">
+					${this.localize('instructions')}
 				</div>
 				<div class="d2l-skeletize">
 					<d2l-activity-text-editor
