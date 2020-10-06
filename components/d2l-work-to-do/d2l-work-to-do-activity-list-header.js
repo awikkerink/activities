@@ -4,7 +4,7 @@ import '@brightspace-ui/core/components/status-indicator/status-indicator';
 import { bodySmallStyles, heading4Styles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin';
-import { constants, config } from './env';
+import { Constants, Config } from './env';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime.js';
 
 /**
@@ -102,8 +102,8 @@ class ActivityListHeader extends LocalizeMixin(LitElement) {
 	}
 
 	get _statusString() {
-		if (this.count > constants.MaxActivityCount) {
-			return [constants.MaxActivityCount, '+'].join('');
+		if (this.count > Constants.MaxActivityCount) {
+			return [Constants.MaxActivityCount, '+'].join('');
 		}
 		return String(this.count);
 	}
@@ -114,7 +114,7 @@ class ActivityListHeader extends LocalizeMixin(LitElement) {
 		}
 
 		const now = new Date();
-		const endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + config.FUTURE_DAY_LIMIT, 23, 59, 59, 999);
+		const endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + Config.FUTURE_DAY_LIMIT, 23, 59, 59, 999);
 		const startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
 
 		const start = formatDate(startDate, { format: 'MMM d' });
