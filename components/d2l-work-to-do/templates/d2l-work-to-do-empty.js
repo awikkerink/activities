@@ -68,7 +68,7 @@ class EmptyView extends LocalizeMixin(LitElement) {
 			let translations;
 			switch (lang) {
 				case 'en':
-					translations = await import('../locales/en.js');
+					translations = await import('../lang/en.js');
 					break;
 			}
 
