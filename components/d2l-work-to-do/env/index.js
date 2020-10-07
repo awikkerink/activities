@@ -31,7 +31,7 @@ export const ActivityAllowList = {
 	},
 	userCourseOfferingActivity: {
 		class: Classes.activities.userCourseOfferingActivity,
-		icon: 'tier1:course',
+		icon: 'tier2:syllabus',
 		type: 'Course'
 	},
 	userDiscussionActivity: {

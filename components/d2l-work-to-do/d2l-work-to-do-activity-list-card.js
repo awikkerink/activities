@@ -36,27 +36,19 @@ class ActivityListCard extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitEle
 			heading3Styles,
 			css`
 				:host {
-					border: solid 1px var(--d2l-color-gypsum);
-					border-radius: 6px;
 					display: block;
-					margin: 0.6rem 0;
-					padding: 0 1.2rem 0 2.1rem;
+					padding: 0 2.1rem 0 2.1rem;
 				}
 				:host([hidden]) {
 					display: none;
-				}
-				:host([dir="rtl"]) {
-					padding: 0 2.1rem 0 1.2rem;
 				}
 				:hover #d2l-activity-icon,
 				:hover #content-top-container {
 					color: var(--d2l-color-celestine);
 				}
 				#d2l-activity-icon {
-					height: 30px;
 					margin-right: 2.1rem;
 					margin-top: 0.3rem;
-					width: 30px;
 				}
 				:host([dir="rtl"]) #d2l-activity-icon {
 					margin-left: 2.1rem;
@@ -141,15 +133,6 @@ class ActivityListCard extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitEle
 			? html` <d2l-icon id="d2l-activity-icon" icon=${this._icon}></d2l-icon>`
 			: nothing;
 
-		const activityActionTemplate =
-			html `
-				<d2l-button-icon
-					description="Navigate to activity view"
-					icon="tier1:chevron-right"
-					text="To activity view">
-				</d2l-button-icon>
-			`;
-
 		return this._renderListItem({
 			illustration: activityIconTemplate,
 			content: html`
@@ -176,7 +159,7 @@ class ActivityListCard extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitEle
 					</div>
 				</d2l-list-item-content>
 			`,
-			actions: activityActionTemplate,
+			actions: nothing,
 		});
 	}
 
