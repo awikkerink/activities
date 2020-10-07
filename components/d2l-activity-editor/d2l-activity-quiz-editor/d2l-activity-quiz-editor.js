@@ -13,11 +13,17 @@ class QuizEditor extends ActivityEditorContainerMixin(EntityMixinLit(LitElement)
 		};
 	}
 
+	constructor() {
+		super();
+		this.type = 'quiz';
+		this.telemetryId = 'quiz';
+	}
+
 	render() {
 		return html`
 			<d2l-activity-editor
-				type="assignment"
-				telemetryId="assignments"
+				type="${this.type}"
+				telemetryId="${this.telemetryId}"
 				.href=${this.href}
 				.token=${this.token}
 				?is-saving=${this.isSaving}>
