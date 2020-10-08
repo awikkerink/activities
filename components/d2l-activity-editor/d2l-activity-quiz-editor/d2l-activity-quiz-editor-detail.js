@@ -10,12 +10,11 @@ import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
-import { LocalizeActivityAssignmentEditorMixin } from '../d2l-activity-assignment-editor/mixins/d2l-activity-assignment-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 
-class QuizEditorDetail extends AsyncContainerMixin(SkeletonMixin(LocalizeActivityAssignmentEditorMixin(RtlMixin(ActivityEditorMixin(MobxLitElement))))) {
+class QuizEditorDetail extends AsyncContainerMixin(SkeletonMixin((RtlMixin(ActivityEditorMixin(MobxLitElement))))) {
 
 	static get properties() {
 		return {
@@ -70,7 +69,6 @@ class QuizEditorDetail extends AsyncContainerMixin(SkeletonMixin(LocalizeActivit
 				maxlength="128"
 				value="${name}"
 				@input="${this._saveNameOnInput}"
-				label="${this.localize('name')}"
 				required
 				?disabled="${!canEditName}"
 				prevent-submit>
