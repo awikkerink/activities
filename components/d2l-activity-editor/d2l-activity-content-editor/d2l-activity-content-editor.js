@@ -1,6 +1,6 @@
 import '../d2l-activity-editor.js';
+import '../d2l-activity-editor-footer.js';
 import './d2l-activity-content-editor-detail.js';
-import './d2l-activity-content-editor-footer.js';
 import './d2l-activity-content-editor-secondary.js';
 import '@brightspace-ui/core/templates/primary-secondary/primary-secondary.js';
 import '@brightspace-ui/core/components/colors/colors.js';
@@ -28,7 +28,6 @@ class ContentEditor extends ActivityEditorContainerMixin(RtlMixin(ActivityEditor
 				display: block;
 			}
 			div[slot="primary"] {
-				height: calc(100% - 2 * var(--d2l-primary-padding));
 				padding: var(--d2l-primary-padding);
 			}
 			div[slot="secondary"] {
@@ -48,8 +47,8 @@ class ContentEditor extends ActivityEditorContainerMixin(RtlMixin(ActivityEditor
 
 	constructor() {
 		super(store);
-		// Override the 'scroll' property set by the page to remove the unnecessary scrollbar
-		document.body.style.overflow = 'hidden';
+		// Only show the scrollbar when necessary
+		document.body.style.overflow = 'auto';
 	}
 
 	render() {
@@ -101,13 +100,12 @@ class ContentEditor extends ActivityEditorContainerMixin(RtlMixin(ActivityEditor
 					>
 					</d2l-activity-content-editor-secondary>
 				</div>
-				<div slot="footer">
-					<d2l-activity-content-editor-footer
-						.href="${this.href}"
-						.token="${this.token}"
-					>
-					</d2l-activity-content-editor-footer>
-				</div>
+				<d2l-activity-editor-footer
+					.href="${this.href}"
+					.token="${this.token}"
+					slot="footer"
+				>
+				</d2l-activity-editor-footer>
 			</d2l-template-primary-secondary>
 		`;
 	}

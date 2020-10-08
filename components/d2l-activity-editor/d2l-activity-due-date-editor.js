@@ -5,11 +5,11 @@ import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
-import { SkeletizeMixin } from './mixins/d2l-skeletize-mixin';
+import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 
 import { shared as store } from './state/activity-store.js';
 
-class ActivityDueDateEditor extends SkeletizeMixin(ActivityEditorMixin(LocalizeActivityEditorMixin(MobxLitElement))) {
+class ActivityDueDateEditor extends SkeletonMixin(ActivityEditorMixin(LocalizeActivityEditorMixin(MobxLitElement))) {
 
 	static get styles() {
 		return [
@@ -18,12 +18,6 @@ class ActivityDueDateEditor extends SkeletizeMixin(ActivityEditorMixin(LocalizeA
 			css`
 			:host([hidden]) {
 				display: none;
-			}
-			.d2l-activity-label-container {
-				margin-bottom: -1px; /* hacky: trying to be pixel perfect, we will replace it d2l-input-label soon */
-			}
-			.d2l-activity-label-container > label {
-				vertical-align: top;
 			}
 		`];
 	}
@@ -44,14 +38,10 @@ class ActivityDueDateEditor extends SkeletizeMixin(ActivityEditorMixin(LocalizeA
 		}
 
 		return html`
-		 	<div class="d2l-activity-label-container">
-				<label class="d2l-label-text d2l-skeletize">${this.localize('editor.dueDate')}</label>
-			</div>
-			<d2l-input-date-time
-				class="d2l-skeletize"
+		 	<d2l-input-date-time
+				?skeleton="${this.skeleton}"
 				id="due-date-input"
 				label="${this.localize('editor.dueDate')}"
-				label-hidden
 				time-default-value="endOfDay"
 				value="${dueDate}"
 				@change="${this._onDatetimeChanged}">

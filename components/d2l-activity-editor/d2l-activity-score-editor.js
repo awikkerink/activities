@@ -18,11 +18,11 @@ import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
-import { SkeletizeMixin } from './mixins/d2l-skeletize-mixin';
+import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 
 import { shared as store } from './state/activity-store.js';
 
-class ActivityScoreEditor extends SkeletizeMixin(ActivityEditorMixin(LocalizeActivityEditorMixin(RtlMixin(MobxLitElement)))) {
+class ActivityScoreEditor extends SkeletonMixin(ActivityEditorMixin(LocalizeActivityEditorMixin(RtlMixin(MobxLitElement)))) {
 
 	static get properties() {
 		return {
@@ -296,7 +296,12 @@ class ActivityScoreEditor extends SkeletizeMixin(ActivityEditorMixin(LocalizeAct
 		}
 	}
 	_onScoreOutOfChanged() {
-		const scoreAndGrade = store.get(this.href).scoreAndGrade;
+		const activity = store.get(this.href);
+		if (activity === undefined) {
+			return;
+		}
+
+		const scoreAndGrade = activity.scoreAndGrade;
 		const scoreOutOf = this.shadowRoot.querySelector('#score-out-of').value;
 		if (scoreOutOf === scoreAndGrade.scoreOutOf) {
 			return;

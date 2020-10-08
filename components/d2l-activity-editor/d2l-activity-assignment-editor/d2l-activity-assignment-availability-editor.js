@@ -12,10 +12,10 @@ import { summarizerHeaderStyles, summarizerSummaryStyles } from './activity-summ
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
-import { SkeletizeMixin } from '../mixins/d2l-skeletize-mixin';
+import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 import { shared as store } from '../state/activity-store.js';
 
-class ActivityAssignmentAvailabilityEditor extends SkeletizeMixin(ActivityEditorFeaturesMixin(LocalizeActivityAssignmentEditorMixin(ActivityEditorMixin(MobxLitElement)))) {
+class ActivityAssignmentAvailabilityEditor extends SkeletonMixin(ActivityEditorFeaturesMixin(LocalizeActivityAssignmentEditorMixin(ActivityEditorMixin(MobxLitElement)))) {
 
 	static get properties() {
 

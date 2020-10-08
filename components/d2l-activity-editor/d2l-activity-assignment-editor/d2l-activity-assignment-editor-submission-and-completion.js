@@ -15,10 +15,10 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
-import { SkeletizeMixin } from '../mixins/d2l-skeletize-mixin';
+import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 import { shared as store } from './state/assignment-store.js';
 
-class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletizeMixin(ActivityEditorFeaturesMixin(ActivityEditorMixin(ErrorHandlingMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement)))))) {
+class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(ActivityEditorFeaturesMixin(ActivityEditorMixin(ErrorHandlingMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement)))))) {
 
 	static get properties() {
 
@@ -54,7 +54,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletizeMixin(Act
 					margin-top: 20px;
 				}
 
-				div[id*="container"] > label.d2l-label-text {
+				div[id*="container"] > .d2l-label-text {
 					display: inline-block;
 					margin-bottom: 10px;
 				}
@@ -274,9 +274,9 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletizeMixin(Act
 
 		return html `
 		<div id="assignment-notification-email-container">
-			<label class="d2l-label-text" for="assignment-notification-email-container">
+			<div class="d2l-label-text">
 				${this.localize('hdrSubmissionNotificationEmail')}
-			</label>
+			</div>
 			<p class="d2l-body-small">
 				${this.localize('hlpSubmissionNotificationEmail')}
 			</p>

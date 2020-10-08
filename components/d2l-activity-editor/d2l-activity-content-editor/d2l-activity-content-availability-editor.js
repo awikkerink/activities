@@ -6,8 +6,9 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { summarizerHeaderStyles, summarizerSummaryStyles } from '../d2l-activity-assignment-editor/activity-summarizer-styles.js';
 import { LocalizeActivityEditorMixin } from '../mixins/d2l-activity-editor-lang-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
+import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 
-class ContentAvailabilityEditor extends LocalizeActivityEditorMixin(RtlMixin(LitElement)) {
+class ContentAvailabilityEditor extends SkeletonMixin(LocalizeActivityEditorMixin(RtlMixin(LitElement))) {
 
 	static get properties() {
 
@@ -20,6 +21,7 @@ class ContentAvailabilityEditor extends LocalizeActivityEditorMixin(RtlMixin(Lit
 
 	static get styles() {
 		return [
+			super.styles,
 			bodySmallStyles,
 			heading3Styles,
 			heading4Styles,
@@ -60,11 +62,13 @@ class ContentAvailabilityEditor extends LocalizeActivityEditorMixin(RtlMixin(Lit
 				flex
 				header-border
 				?opened=${this._isOpened()}
+				?disabled="${this.skeleton}"
+				?no-icons="${this.skeleton}"
 				@d2l-labs-accordion-collapse-state-changed=${this._onAccordionStateChange}>
-				<h3 class="d2l-heading-3 d2l-activity-summarizer-header" slot="header">
+				<h3 class="d2l-heading-3 d2l-activity-summarizer-header d2l-skeletize" slot="header">
 					${this.localize('content.availabilityHeader')}
 				</h3>
-				<ul class="d2l-body-small d2l-activity-summarizer-summary" slot="summary">
+				<ul class="d2l-body-small d2l-activity-summarizer-summary d2l-skeletize" slot="summary">
 					<li>${this._renderAvailabilityDatesSummary()}</li>
 				</ul>
 				${this._renderAvailabilityDatesEditor()}
