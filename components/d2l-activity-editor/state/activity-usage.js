@@ -38,6 +38,7 @@ export class ActivityUsage {
 		this.dates = new ActivityDates(entity);
 		this.scoreAndGrade = new ActivityScoreGrade(entity, this.token);
 		this.associationsHref = entity.getDirectRubricAssociationsHref();
+		this.specializationHref = entity.specializationHref();
 
 		await Promise.all([
 			this._loadSpecialAccess(entity),
@@ -218,6 +219,7 @@ decorate(ActivityUsage, {
 	dates: observable,
 	associationsHref: observable,
 	alignmentsHref: observable,
+	specializationHref: observable,
 	canUpdateAlignments: observable,
 	competenciesHref: observable,
 	associatedCompetenciesCount: observable,

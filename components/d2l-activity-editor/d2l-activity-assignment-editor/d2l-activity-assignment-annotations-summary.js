@@ -2,7 +2,7 @@ import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { html } from 'lit-element/lit-element.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
-import { assignments as store } from './state/assignment-store.js';
+import { shared as store } from './state/assignment-store.js';
 
 class ActivityAssignmentAnnotationsSummary
 	extends ActivityEditorMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement)) {

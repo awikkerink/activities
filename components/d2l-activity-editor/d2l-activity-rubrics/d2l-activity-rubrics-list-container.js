@@ -238,7 +238,7 @@ class ActivityRubricsListContainer extends ActivityEditorFeaturesMixin(ActivityE
 	}
 	_renderDefaultScoringRubric(entity) {
 
-		const assignment = assignmentStore.getAssignment(this.assignmentHref);
+		const assignment = assignmentStore.get(this.assignmentHref);
 		const shouldRender = this._isMilestoneEnabled(Milestones.M3DefaultScoringRubric);
 
 		if (!entity || !assignment || !shouldRender) {
@@ -285,7 +285,7 @@ class ActivityRubricsListContainer extends ActivityEditorFeaturesMixin(ActivityE
 	}
 
 	_saveDefaultScoringRubricOnChange(event) {
-		const assignment = assignmentStore.getAssignment(this.assignmentHref);
+		const assignment = assignmentStore.get(this.assignmentHref);
 
 		if (!assignment) {
 			return;

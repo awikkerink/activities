@@ -51,7 +51,8 @@ describe('Activity Usage', function() {
 			associatedCompetenciesCount: () => associatedCompetenciesCount,
 			unevaluatedCompetenciesCount: () => unevaluatedCompetenciesCount,
 			competenciesDialogUrl: () => competenciesDialogUrl,
-			specialAccessHref: () => null
+			specialAccessHref: () => null,
+			specializationHref: () => null
 		};
 	}
 

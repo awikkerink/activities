@@ -6,7 +6,7 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
-import { assignments as store } from './state/assignment-store.js';
+import { shared as store } from './state/assignment-store.js';
 
 class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement))) {
 
