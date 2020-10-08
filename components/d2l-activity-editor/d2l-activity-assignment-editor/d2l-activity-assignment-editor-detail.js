@@ -73,6 +73,7 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 		this._debounceJobs = {};
 		this._linksProcessor = new LinksInMessageProcessor();
 		this.skeleton = true;
+		this.saveOrder = 2000;
 	}
 
 	render() {
