@@ -39,10 +39,6 @@ class QuizEditorDetail extends AsyncContainerMixin(SkeletonMixin(LocalizeActivit
 				.d2l-activity-label-container {
 					margin-bottom: 8px;
 				}
-				:host([dir="rtl"]) #score-container {
-					margin-left: 40px;
-					margin-right: 0;
-				}
 				d2l-alert {
 					margin-bottom: 10px;
 					max-width: 100%;
