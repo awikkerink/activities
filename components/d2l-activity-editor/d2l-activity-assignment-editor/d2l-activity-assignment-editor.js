@@ -12,7 +12,7 @@ import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
-import { shared as store } from './state/assignment-store.js';
+import { shared as store } from '../state/activity-store.js';
 
 class AssignmentEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(ActivityEditorMixin(MobxLitElement)))) {
 
@@ -118,19 +118,15 @@ class AssignmentEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityAssi
 	updated(changedProperties) {
 		super.updated(changedProperties);
 
-		if ((changedProperties.has('href') || changedProperties.has('token')) &&
-			this.href && this.token) {
-			super._fetch(() => store.fetchActivity(this.href, this.token));
-		}
 		if (changedProperties.has('asyncState')) {
 			this.skeleton = this.asyncState !== asyncStates.complete;
 		}
 	}
 
 	get _editorTemplate() {
-		const activity = store.getActivity(this.href);
+		const activity = store.get(this.href);
 		const {
-			assignmentHref
+			specializationHref
 		} = activity || {};
 
 		return html`
@@ -138,13 +134,13 @@ class AssignmentEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityAssi
 			<div slot="primary" class="d2l-activity-assignment-editor-primary-panel">
 				<d2l-activity-assignment-editor-detail
 					activity-usage-href=${this.href}
-					.href="${assignmentHref}"
+					.href="${specializationHref}"
 					.token="${this.token}">
 				</d2l-activity-assignment-editor-detail>
 			</div>
 			<div slot="secondary">
 				<d2l-activity-assignment-editor-secondary
-					.href="${assignmentHref}"
+					.href="${specializationHref}"
 					.token="${this.token}"
 					activity-usage-href="${this.href}">
 				</d2l-activity-assignment-editor-secondary>

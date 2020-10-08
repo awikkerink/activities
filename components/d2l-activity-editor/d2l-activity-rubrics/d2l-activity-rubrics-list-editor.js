@@ -55,7 +55,7 @@ class ActivityRubricsListEditor extends ActivityEditorFeaturesMixin(ActivityEdit
 	render() {
 
 		const entity = store.get(this.href);
-		const assignment = assignmentStore.getAssignment(this.assignmentHref);
+		const assignment = assignmentStore.get(this.assignmentHref);
 
 		if (!entity || !assignment) {
 			return html``;
@@ -80,7 +80,7 @@ class ActivityRubricsListEditor extends ActivityEditorFeaturesMixin(ActivityEdit
 
 		if (m3FeatureFlagEnabled) {
 			const entity = store.get(this.href);
-			const assignment = assignmentStore.getAssignment(this.assignmentHref);
+			const assignment = assignmentStore.get(this.assignmentHref);
 
 			if (!entity || !assignment) {
 				return;
