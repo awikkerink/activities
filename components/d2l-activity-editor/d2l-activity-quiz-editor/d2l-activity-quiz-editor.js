@@ -1,7 +1,10 @@
-import { html, LitElement } from 'lit-element/lit-element.js';
-import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
-
-class QuizEditor extends EntityMixinLit(LitElement) {
+import './d2l-activity-quiz-editor-detail.js';
+import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
+import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
+import { html } from 'lit-element/lit-element.js';
+import { MobxLitElement } from '@adobe/lit-mobx';
+import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
+class QuizEditor extends AsyncContainerMixin(RtlMixin(ActivityEditorMixin(MobxLitElement))) {
 
 	static get properties() {
 		return {
@@ -42,7 +45,13 @@ class QuizEditor extends EntityMixinLit(LitElement) {
 	get _editorTemplate() {
 		return html`
 			<slot name="editor-nav" slot="header"></slot>
-			<div slot="primary"></div>
+			<div slot="primary">
+				<d2l-activity-quiz-editor-detail
+					activity-usage-href=${this.href}
+					.href="${this.href}"
+					.token="${this.token}">
+				</d2l-activity-quiz-editor-detail>
+			</div>
 			<div slot="secondary"></div>
 		`;
 	}
