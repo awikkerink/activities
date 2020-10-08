@@ -14,7 +14,6 @@ import { LocalizeActivityAssignmentEditorMixin } from '../d2l-activity-assignmen
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
-import { shared as store } from '../d2l-activity-assignment-editor/state/assignment-store.js';
 
 class QuizEditorDetail extends AsyncContainerMixin(SkeletonMixin(LocalizeActivityAssignmentEditorMixin(RtlMixin(ActivityEditorMixin(MobxLitElement))))) {
 
@@ -56,7 +55,7 @@ class QuizEditorDetail extends AsyncContainerMixin(SkeletonMixin(LocalizeActivit
 	}
 
 	render() {
-		const quiz = store.getAssignment(this.href);
+		const quiz = {}; // TODO: implement new store function
 
 		const {
 			name,
