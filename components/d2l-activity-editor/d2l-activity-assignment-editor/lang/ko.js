@@ -38,10 +38,6 @@ export default {
 	"assignmentSaveError": "과제가 저장되지 않았습니다. 빨간색으로 표시된 필드를 수정하십시오.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
 	"folderTypeNoGroups": "그룹이 없습니다. 그룹 도구에서 새 그룹을 만듭니다.", // Folder type no groups
 	"folderTypeCreateGroups": "그룹 도구에서 새 그룹을 만듭니다.", // Folder type create groups
-	"discardChangesTitle": "변경 사항을 제거하시겠습니까?", // Discard Changes User Prompt
-	"discardChangesQuestion": "이 변경 사항을 제거하시겠습니까?", // Discard Changes User Prompt
-	"yesLabel": "예",
-	"noLabel": "아니요",
 	"filesSubmissionLimit": "제출당 허용되는 파일 수",
 	"UnlimitedFilesPerSubmission": "제한 없음",
 	"OneFilePerSubmission": "파일 1개",

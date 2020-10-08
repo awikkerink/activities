@@ -40,8 +40,6 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 		});
 	}
 
-	async cancelCreate() {}
-
 	get saveCompleteEvent() {
 		return new CustomEvent('d2l-activity-editor-save-complete', {
 			bubbles: true,
@@ -72,11 +70,18 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 		}
 
 		if (this.isNew) {
-			await this.cancelCreate();
+			await this._cancelCreate();
 		}
 
 		this.dispatchEvent(this.cancelCompleteEvent);
 	}
+
+	async _cancelCreate() {
+		return Promise.all(
+			Array.from(this._editors).map(editor => editor.cancelCreate())
+		);
+	}
+
 	async _focusOnInvalid() {
 		const isAriaInvalid = node => node.getAttribute('aria-invalid') === 'true' && node.getClientRects().length > 0 && !this._hasSkipAlertAncestor(node);
 		for (const editor of this._editors) {

@@ -38,10 +38,6 @@ export default {
 	"assignmentSaveError": "Ihre Übung wurde nicht gespeichert. Korrigieren Sie die rot umrandeten Felder.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
 	"folderTypeNoGroups": "Es sind keine Gruppen vorhanden. Erstellen Sie neue Gruppen im Gruppen-Tool.", // Folder type no groups
 	"folderTypeCreateGroups": "Erstellen Sie neue Gruppen im Gruppen-Tool.", // Folder type create groups
-	"discardChangesTitle": "Änderungen verwerfen?", // Discard Changes User Prompt
-	"discardChangesQuestion": "Möchten Sie Ihre Änderungen wirklich verwerfen?", // Discard Changes User Prompt
-	"yesLabel": "Ja",
-	"noLabel": "Nein",
 	"filesSubmissionLimit": "Zulässige Dateien pro Abgabe",
 	"UnlimitedFilesPerSubmission": "Unbegrenzt",
 	"OneFilePerSubmission": "Eine Datei",

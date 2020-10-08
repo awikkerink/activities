@@ -38,10 +38,6 @@ export default {
 	"assignmentSaveError": "Uw opdracht is niet opgeslagen. Corrigeer de rood omlijnde velden.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
 	"folderTypeNoGroups": "Er bestaan geen groepen. Maak nieuwe groepen aan in de Groepen-tool.", // Folder type no groups
 	"folderTypeCreateGroups": "Maak nieuwe groepen aan in de Groepen-tool.", // Folder type create groups
-	"discardChangesTitle": "Wijzigingen verwijderen?", // Discard Changes User Prompt
-	"discardChangesQuestion": "Weet u zeker dat u uw wijzigingen wilt verwijderen?", // Discard Changes User Prompt
-	"yesLabel": "Ja",
-	"noLabel": "Nee",
 	"filesSubmissionLimit": "Bestanden toegestaan per indiening",
 	"UnlimitedFilesPerSubmission": "Onbeperkt",
 	"OneFilePerSubmission": "Eén bestand",

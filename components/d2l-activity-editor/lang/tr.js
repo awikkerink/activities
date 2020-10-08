@@ -70,6 +70,10 @@ export default {
 	"editor.noUsersWithSpecialAccess": "Kullanıcı yok", // text label when there are no users with special access
 	"editor.specialAccessDialogTitle": "Özel Erişimi Yönet", // Dialog title
 	"editor.specialAccessHidden": "Özel erişim ile gizlendi", // Warning label that the activity is restricted but is being hidden from all users by special access rules
+	"editor.discardChangesTitle": "Değişiklikler atılsın mı?", // Discard Changes User Prompt
+	"editor.discardChangesQuestion": "Değişiklerinizi atmak istediğinizden emin misiniz?", // Discard Changes User Prompt
+	"editor.yesLabel": "Evet",
+	"editor.noLabel": "Hayır",
 
 	"rubrics.btnAddRubric": "Rubrik ekle", //text for add rubric button
 	"rubrics.btnCreateNew": "Yeni Oluştur", //Text for create new dropdown

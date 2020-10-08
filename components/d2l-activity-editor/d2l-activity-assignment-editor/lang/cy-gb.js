@@ -38,10 +38,6 @@ export default {
 	"assignmentSaveError": "Ni chadwyd eich aseiniad. Cywirwch y meysydd a amlinellir mewn coch.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
 	"folderTypeNoGroups": "Nid oes unrhyw grwpiau’n bodoli. Creu grwpiau newydd yn yr offeryn Grwpiau.", // Folder type no groups
 	"folderTypeCreateGroups": "Creu grwpiau newydd yn yr offeryn Grwpiau.", // Folder type create groups
-	"discardChangesTitle": "Dileu newidiadau?", // Discard Changes User Prompt
-	"discardChangesQuestion": "Ydych chi\'n siŵr eich bod chi eisiau dileu\'ch newidiadau?", // Discard Changes User Prompt
-	"yesLabel": "Ie",
-	"noLabel": "Na",
 	"filesSubmissionLimit": "Ffeiliau a Ganiateir Fesul Cyflwyniad",
 	"UnlimitedFilesPerSubmission": "Anghyfyngedig",
 	"OneFilePerSubmission": "Un Ffeil",

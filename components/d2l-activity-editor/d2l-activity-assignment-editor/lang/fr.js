@@ -38,10 +38,6 @@ export default {
 	"assignmentSaveError": "Votre travail n\'était pas enregistré. Veuillez corriger les champs indiqués en rouge.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
 	"folderTypeNoGroups": "Aucun groupe n\'existe. Créez des groupes dans l\'outil Groupes.", // Folder type no groups
 	"folderTypeCreateGroups": "Créez des groupes dans l\'outil Groupes.", // Folder type create groups
-	"discardChangesTitle": "Abandonner les modifications?", // Discard Changes User Prompt
-	"discardChangesQuestion": "Êtes-vous certain de vouloir abandonner vos modifications?", // Discard Changes User Prompt
-	"yesLabel": "Oui",
-	"noLabel": "Non",
 	"filesSubmissionLimit": "Fichiers autorisés par soumission",
 	"UnlimitedFilesPerSubmission": "Illimité",
 	"OneFilePerSubmission": "Un seul fichier",

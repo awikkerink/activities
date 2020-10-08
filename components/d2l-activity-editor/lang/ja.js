@@ -70,6 +70,10 @@ export default {
 	"editor.noUsersWithSpecialAccess": "ユーザーはいません", // text label when there are no users with special access
 	"editor.specialAccessDialogTitle": "特殊なアクセスの管理", // Dialog title
 	"editor.specialAccessHidden": "特殊なアクセスで非表示", // Warning label that the activity is restricted but is being hidden from all users by special access rules
+	"editor.discardChangesTitle": "変更を破棄しますか？", // Discard Changes User Prompt
+	"editor.discardChangesQuestion": "この変更を破棄してもよろしいですか？", // Discard Changes User Prompt
+	"editor.yesLabel": "はい",
+	"editor.noLabel": "いいえ",
 
 	"rubrics.btnAddRubric": "注釈の追加", //text for add rubric button
 	"rubrics.btnCreateNew": "新規作成", //Text for create new dropdown

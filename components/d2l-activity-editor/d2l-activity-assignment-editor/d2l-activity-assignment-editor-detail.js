@@ -180,6 +180,29 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 		});
 	}
 
+	async cancelCreate() {
+		const assignment = store.getAssignment(this.href);
+		return assignment && assignment.cancelCreate();
+	}
+
+	hasPendingChanges() {
+		const assignment = store.getAssignment(this.href);
+		if (!assignment) {
+			return false;
+		}
+
+		return assignment.dirty;
+	}
+
+	async save() {
+		const assignment = store.getAssignment(this.href);
+		if (!assignment) {
+			return;
+		}
+
+		await assignment.save();
+	}
+
 	_saveInstructions(value) {
 		store.getAssignment(this.href).setInstructions(value);
 		this._debounceJobs.value = Debouncer.debounce(

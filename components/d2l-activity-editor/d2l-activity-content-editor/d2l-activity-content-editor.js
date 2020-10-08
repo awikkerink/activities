@@ -5,35 +5,28 @@ import './d2l-activity-content-editor-secondary.js';
 import '@brightspace-ui/core/templates/primary-secondary/primary-secondary.js';
 import '@brightspace-ui/core/components/colors/colors.js';
 import { css, html } from 'lit-element/lit-element.js';
-import { ActivityEditorContainerMixin } from '../mixins/d2l-activity-editor-container-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { shared as activityStore } from '../state/activity-store.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { shared as store } from './state/content-store.js';
 
-class ContentEditor extends ActivityEditorContainerMixin(RtlMixin(ActivityEditorMixin(MobxLitElement))) {
+class ContentEditor extends RtlMixin(ActivityEditorMixin(MobxLitElement)) {
 
 	static get properties() {
 		return {
-			widthType: { type: String, attribute: 'width-type' }
+			widthType: { type: String, attribute: 'width-type' },
+			/**
+			 * Is Creating New
+			 */
+			isNew: { type: Boolean }
 		};
 	}
 
 	static get styles() {
 		return css`
 			:host {
-				--d2l-primary-padding: 20px;
-				--d2l-secondary-padding: 10px;
 				display: block;
-			}
-			div[slot="primary"] {
-				padding: var(--d2l-primary-padding);
-			}
-			div[slot="secondary"] {
-				background: var(--d2l-color-gypsum);
-				height: calc(100% - 2 * var(--d2l-secondary-padding));
-				padding: var(--d2l-secondary-padding);
 			}
 			d2l-icon {
 				padding-right: 1rem;
@@ -58,6 +51,9 @@ class ContentEditor extends ActivityEditorContainerMixin(RtlMixin(ActivityEditor
 				telemetryId="content"
 				.href=${this.href}
 				.token=${this.token}
+				width-type="${this.widthType}"
+				error-term=""
+				?isnew="${this.isNew}"
 			>
 				${this._editorTemplate}
 			</d2l-activity-editor>
@@ -84,29 +80,21 @@ class ContentEditor extends ActivityEditorContainerMixin(RtlMixin(ActivityEditor
 
 	get _editorTemplate() {
 		return html`
-			<d2l-template-primary-secondary slot="editor" width-type="${this.widthType}">
-				<slot name="editor-nav" slot="header"></slot>
-				<div slot="primary">
-					<d2l-activity-content-editor-detail
-						.href="${this.href}"
-						.token="${this.token}"
-					>
-					</d2l-activity-content-editor-detail>
-				</div>
-				<div slot="secondary">
-					<d2l-activity-content-editor-secondary
-						.href="${this.href}"
-						.token="${this.token}"
-					>
-					</d2l-activity-content-editor-secondary>
-				</div>
-				<d2l-activity-editor-footer
+			<slot name="editor-nav" slot="header"></slot>
+			<div slot="primary">
+				<d2l-activity-content-editor-detail
 					.href="${this.href}"
 					.token="${this.token}"
-					slot="footer"
 				>
-				</d2l-activity-editor-footer>
-			</d2l-template-primary-secondary>
+				</d2l-activity-content-editor-detail>
+			</div>
+			<div slot="secondary">
+				<d2l-activity-content-editor-secondary
+					.href="${this.href}"
+					.token="${this.token}"
+				>
+				</d2l-activity-content-editor-secondary>
+			</div>
 		`;
 	}
 }

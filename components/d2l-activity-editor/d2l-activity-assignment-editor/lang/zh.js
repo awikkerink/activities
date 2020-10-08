@@ -38,10 +38,6 @@ export default {
 	"assignmentSaveError": "您的作业未保存。请更正以红色标出的字段。", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
 	"folderTypeNoGroups": "没有任何组。在组工具中创建新组。", // Folder type no groups
 	"folderTypeCreateGroups": "在组工具中创建新组。", // Folder type create groups
-	"discardChangesTitle": "放弃更改？", // Discard Changes User Prompt
-	"discardChangesQuestion": "是否确定要放弃您所做的更改？", // Discard Changes User Prompt
-	"yesLabel": "是",
-	"noLabel": "否",
 	"filesSubmissionLimit": "每次提交允许的文件",
 	"UnlimitedFilesPerSubmission": "无限制",
 	"OneFilePerSubmission": "一个文件",

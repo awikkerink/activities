@@ -70,6 +70,10 @@ export default {
 	"editor.noUsersWithSpecialAccess": "No users", // text label when there are no users with special access
 	"editor.specialAccessDialogTitle": "특별 접근 관리", // Dialog title
 	"editor.specialAccessHidden": "Hidden by special access", // Warning label that the activity is restricted but is being hidden from all users by special access rules
+	"editor.discardChangesTitle": "변경 사항을 제거하시겠습니까?", // Discard Changes User Prompt
+	"editor.discardChangesQuestion": "이 변경 사항을 제거하시겠습니까?", // Discard Changes User Prompt
+	"editor.yesLabel": "예",
+	"editor.noLabel": "아니요",
 
 	"rubrics.btnAddRubric": "루브릭 추가", //text for add rubric button
 	"rubrics.btnCreateNew": "새로 만들기", //Text for create new dropdown

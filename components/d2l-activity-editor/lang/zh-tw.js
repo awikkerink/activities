@@ -70,6 +70,10 @@ export default {
 	"editor.noUsersWithSpecialAccess": "沒有使用者", // text label when there are no users with special access
 	"editor.specialAccessDialogTitle": "管理特殊存取權限", // Dialog title
 	"editor.specialAccessHidden": "由特殊存取權限隱藏", // Warning label that the activity is restricted but is being hidden from all users by special access rules
+	"editor.discardChangesTitle": "捨棄變更？", // Discard Changes User Prompt
+	"editor.discardChangesQuestion": "確定要捨棄您的變更？", // Discard Changes User Prompt
+	"editor.yesLabel": "是",
+	"editor.noLabel": "否",
 
 	"rubrics.btnAddRubric": "新增量規", //text for add rubric button
 	"rubrics.btnCreateNew": "建立新的", //Text for create new dropdown

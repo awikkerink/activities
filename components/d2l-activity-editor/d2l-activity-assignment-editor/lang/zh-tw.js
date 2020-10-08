@@ -38,10 +38,6 @@ export default {
 	"assignmentSaveError": "您的作業未儲存。請修正以紅色顯示的欄位。", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
 	"folderTypeNoGroups": "尚無群組。在「群組」工具中建立新群組。", // Folder type no groups
 	"folderTypeCreateGroups": "在「群組」工具中建立新群組。", // Folder type create groups
-	"discardChangesTitle": "捨棄變更？", // Discard Changes User Prompt
-	"discardChangesQuestion": "確定要捨棄您的變更？", // Discard Changes User Prompt
-	"yesLabel": "是",
-	"noLabel": "否",
 	"filesSubmissionLimit": "每個交件匣提交允許的檔案數",
 	"UnlimitedFilesPerSubmission": "無限制",
 	"OneFilePerSubmission": "一個檔案",

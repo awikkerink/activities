@@ -38,10 +38,6 @@ export default {
 	"assignmentSaveError": "لم يتم حفظ الفرض. يُرجى تصحيح الحقول الموضّحة باللون الأحمر.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
 	"folderTypeNoGroups": "لا تتوفر أي مجموعة. أنشئ مجموعات جديدة باستخدام أداة المجموعات.", // Folder type no groups
 	"folderTypeCreateGroups": "أنشئ مجموعات جديدة باستخدام أداة المجموعات.", // Folder type create groups
-	"discardChangesTitle": "هل تريد تجاهل التغييرات؟", // Discard Changes User Prompt
-	"discardChangesQuestion": "هل تريد بالتأكيد تجاهل التغييرات التي أجريتها؟", // Discard Changes User Prompt
-	"yesLabel": "نعم",
-	"noLabel": "لا",
 	"filesSubmissionLimit": "الملفات المسموح بها لكل إرسال",
 	"UnlimitedFilesPerSubmission": "غير محدودة",
 	"OneFilePerSubmission": "ملف واحد",
