@@ -70,6 +70,10 @@ export default {
 	"editor.noUsersWithSpecialAccess": "Ingen brugere", // text label when there are no users with special access
 	"editor.specialAccessDialogTitle": "Administrer særlig adgang", // Dialog title
 	"editor.specialAccessHidden": "Skjult af særlig adgang", // Warning label that the activity is restricted but is being hidden from all users by special access rules
+	"editor.discardChangesTitle": "Slet ændringer?", // Discard Changes User Prompt
+	"editor.discardChangesQuestion": "Er du sikker på, at du vil slette dine ændringer?", // Discard Changes User Prompt
+	"editor.yesLabel": "Ja",
+	"editor.noLabel": "Nej",
 
 	"rubrics.btnAddRubric": "Tilføj rubrik", //text for add rubric button
 	"rubrics.btnCreateNew": "Opret ny", //Text for create new dropdown

@@ -70,6 +70,10 @@ export default {
 	"editor.noUsersWithSpecialAccess": "Inga användare", // text label when there are no users with special access
 	"editor.specialAccessDialogTitle": "Hantera särskild behörighet", // Dialog title
 	"editor.specialAccessHidden": "Dold av särskild behörighet", // Warning label that the activity is restricted but is being hidden from all users by special access rules
+	"editor.discardChangesTitle": "Vill du ignorera ändringarna?", // Discard Changes User Prompt
+	"editor.discardChangesQuestion": "Är du säker på att du vill ignorera dina ändringar?", // Discard Changes User Prompt
+	"editor.yesLabel": "Ja",
+	"editor.noLabel": "Nej",
 
 	"rubrics.btnAddRubric": "Lägg till rubricering", //text for add rubric button
 	"rubrics.btnCreateNew": "Skapa ny", //Text for create new dropdown

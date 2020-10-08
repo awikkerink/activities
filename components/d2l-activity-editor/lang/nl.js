@@ -70,6 +70,10 @@ export default {
 	"editor.noUsersWithSpecialAccess": "No users", // text label when there are no users with special access
 	"editor.specialAccessDialogTitle": "Speciale toegang beheren", // Dialog title
 	"editor.specialAccessHidden": "Hidden by special access", // Warning label that the activity is restricted but is being hidden from all users by special access rules
+	"editor.discardChangesTitle": "Wijzigingen verwijderen?", // Discard Changes User Prompt
+	"editor.discardChangesQuestion": "Weet u zeker dat u uw wijzigingen wilt verwijderen?", // Discard Changes User Prompt
+	"editor.yesLabel": "Ja",
+	"editor.noLabel": "Nee",
 
 	"rubrics.btnAddRubric": "Rubric toevoegen", //text for add rubric button
 	"rubrics.btnCreateNew": "Nieuwe maken", //Text for create new dropdown

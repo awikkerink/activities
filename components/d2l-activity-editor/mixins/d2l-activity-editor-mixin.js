@@ -68,6 +68,9 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 			this.store && this._fetch(() => this.store.fetch(this.href, this.token));
 		}
 	}
+
+	async cancelCreate() { }
+
 	hasPendingChanges() {
 		return false;
 	}

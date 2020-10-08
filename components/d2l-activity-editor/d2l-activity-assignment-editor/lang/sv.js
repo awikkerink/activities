@@ -38,10 +38,6 @@ export default {
 	"assignmentSaveError": "Ditt uppdrag sparades inte. Korrigera de fält som är markerade med rött.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
 	"folderTypeNoGroups": "Det finns inga grupper. Skapa nya grupper i gruppverktyget.", // Folder type no groups
 	"folderTypeCreateGroups": "Skapa nya grupper i gruppverktyget.", // Folder type create groups
-	"discardChangesTitle": "Vill du ignorera ändringarna?", // Discard Changes User Prompt
-	"discardChangesQuestion": "Är du säker på att du vill ignorera dina ändringar?", // Discard Changes User Prompt
-	"yesLabel": "Ja",
-	"noLabel": "Nej",
 	"filesSubmissionLimit": "Tillåtna filer per inlämning",
 	"UnlimitedFilesPerSubmission": "Obegränsad",
 	"OneFilePerSubmission": "En fil",

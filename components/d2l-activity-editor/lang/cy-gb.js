@@ -70,6 +70,10 @@ export default {
 	"editor.noUsersWithSpecialAccess": "Dim Defnyddwyr", // text label when there are no users with special access
 	"editor.specialAccessDialogTitle": "Rheoli Mynediad Arbennig", // Dialog title
 	"editor.specialAccessHidden": "Cudd gan fynediad arbennig", // Warning label that the activity is restricted but is being hidden from all users by special access rules
+	"editor.discardChangesTitle": "Dileu newidiadau?", // Discard Changes User Prompt
+	"editor.discardChangesQuestion": "Ydych chi\'n siŵr eich bod chi eisiau dileu\'ch newidiadau?", // Discard Changes User Prompt
+	"editor.yesLabel": "Ie",
+	"editor.noLabel": "Na",
 
 	"rubrics.btnAddRubric": "Ychwanegu cyfeireb", //text for add rubric button
 	"rubrics.btnCreateNew": "Creu Un Newydd", //Text for create new dropdown

@@ -38,10 +38,6 @@ export default {
 	"assignmentSaveError": "No se guardó la asignación. Corrija los campos marcados en color rojo.", // Error message to inform the user that there was a problem saving the assignment, instructing them to correct invalid fields
 	"folderTypeNoGroups": "No existen grupos. Cree nuevos grupos en la herramienta Grupos.", // Folder type no groups
 	"folderTypeCreateGroups": "Cree nuevos grupos en la herramienta Grupos.", // Folder type create groups
-	"discardChangesTitle": "¿Desea descartar los cambios?", // Discard Changes User Prompt
-	"discardChangesQuestion": "¿Está seguro de que desea descartar los cambios?", // Discard Changes User Prompt
-	"yesLabel": "Sí",
-	"noLabel": "No",
 	"filesSubmissionLimit": "Archivos permitidos por envío",
 	"UnlimitedFilesPerSubmission": "Ilimitado",
 	"OneFilePerSubmission": "Un archivo",

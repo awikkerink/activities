@@ -70,6 +70,10 @@ export default {
 	"editor.noUsersWithSpecialAccess": "Keine Benutzer", // text label when there are no users with special access
 	"editor.specialAccessDialogTitle": "Beschränkten Zugriff verwalten", // Dialog title
 	"editor.specialAccessHidden": "Durch beschränkten Zugriff ausgeblendet", // Warning label that the activity is restricted but is being hidden from all users by special access rules
+	"editor.discardChangesTitle": "Änderungen verwerfen?", // Discard Changes User Prompt
+	"editor.discardChangesQuestion": "Möchten Sie Ihre Änderungen wirklich verwerfen?", // Discard Changes User Prompt
+	"editor.yesLabel": "Ja",
+	"editor.noLabel": "Nein",
 
 	"rubrics.btnAddRubric": "Bewertungsschema hinzufügen", //text for add rubric button
 	"rubrics.btnCreateNew": "Neu erstellen", //Text for create new dropdown

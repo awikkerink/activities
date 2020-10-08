@@ -73,6 +73,7 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 		this._debounceJobs = {};
 		this._linksProcessor = new LinksInMessageProcessor();
 		this.skeleton = true;
+		this.saveOrder = 2000;
 	}
 
 	render() {
@@ -178,6 +179,29 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 		links.forEach(element => {
 			collection.addAttachment(attachmentStore.createLink(element.name, element.url));
 		});
+	}
+
+	async cancelCreate() {
+		const assignment = store.getAssignment(this.href);
+		return assignment && assignment.cancelCreate();
+	}
+
+	hasPendingChanges() {
+		const assignment = store.getAssignment(this.href);
+		if (!assignment) {
+			return false;
+		}
+
+		return assignment.dirty;
+	}
+
+	async save() {
+		const assignment = store.getAssignment(this.href);
+		if (!assignment) {
+			return;
+		}
+
+		await assignment.save();
 	}
 
 	_saveInstructions(value) {

@@ -70,6 +70,10 @@ export default {
 	"editor.noUsersWithSpecialAccess": "ما من مستخدمين", // text label when there are no users with special access
 	"editor.specialAccessDialogTitle": "إدارة الوصول الخاص", // Dialog title
 	"editor.specialAccessHidden": "تم الإخفاء بواسطة الوصول الخاص", // Warning label that the activity is restricted but is being hidden from all users by special access rules
+	"editor.discardChangesTitle": "هل تريد تجاهل التغييرات؟", // Discard Changes User Prompt
+	"editor.discardChangesQuestion": "هل تريد بالتأكيد تجاهل التغييرات التي أجريتها؟", // Discard Changes User Prompt
+	"editor.yesLabel": "نعم",
+	"editor.noLabel": "لا",
 
 	"rubrics.btnAddRubric": "إضافة آلية تقييم", //text for add rubric button
 	"rubrics.btnCreateNew": "إنشاء جديد", //Text for create new dropdown
