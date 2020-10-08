@@ -39,14 +39,6 @@ class QuizEditorDetail extends AsyncContainerMixin(SkeletonMixin(LocalizeActivit
 				.d2l-activity-label-container {
 					margin-bottom: 8px;
 				}
-				d2l-alert {
-					margin-bottom: 10px;
-					max-width: 100%;
-				}
-				.d2l-locked-alert {
-					align-items: baseline;
-					display: flex;
-				}
 				d2l-icon {
 					padding-right: 1rem;
 				}
@@ -60,7 +52,6 @@ class QuizEditorDetail extends AsyncContainerMixin(SkeletonMixin(LocalizeActivit
 
 	constructor() {
 		super();
-		this._debounceJobs = {};
 		this.skeleton = false;
 	}
 
@@ -72,29 +63,19 @@ class QuizEditorDetail extends AsyncContainerMixin(SkeletonMixin(LocalizeActivit
 			canEditName,
 		} = quiz || {};
 
-		const hasSubmissions = false;
-
 		return html`
-			<d2l-alert ?hidden=${!hasSubmissions}>
-				<div class="d2l-locked-alert">
-					<d2l-icon icon="tier1:lock-locked"></d2l-icon>
-					<div>${this.localize('assignmentLocked')}</div>
-				</div>
-			</d2l-alert>
 			<div id="assignment-name-container">
-				<d2l-input-text
-					?skeleton="${this.skeleton}"
-					id="assignment-name"
-					maxlength="128"
-					value="${name}"
-					@input="${this._saveNameOnInput}"
-					label="${this.localize('name')}"
-					required
-					?disabled="${!canEditName}"
-					prevent-submit>
-				</d2l-input-text>
-			</div>
-
+			<d2l-input-text
+				?skeleton="${this.skeleton}"
+				id="assignment-name"
+				maxlength="128"
+				value="${name}"
+				@input="${this._saveNameOnInput}"
+				label="${this.localize('name')}"
+				required
+				?disabled="${!canEditName}"
+				prevent-submit>
+			</d2l-input-text>
 		`;
 	}
 
