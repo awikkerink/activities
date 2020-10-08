@@ -64,6 +64,21 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 					margin-left: 40px;
 					margin-right: 0;
 				}
+				d2l-alert {
+					margin-bottom: 10px;
+					max-width: 100%;
+				}
+				.d2l-locked-alert {
+					align-items: baseline;
+					display: flex;
+				}
+				d2l-icon {
+					padding-right: 1rem;
+				}
+				:host([dir="rtl"]) d2l-icon {
+					padding-left: 1rem;
+					padding-right: 0;
+				}
 			`
 		];
 	}
@@ -88,7 +103,15 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 			instructionsRichTextEditorConfig,
 		} = assignment || {};
 
+		const hasSubmissions = assignment && assignment.submissionAndCompletionProps.assignmentHasSubmissions;
+
 		return html`
+			<d2l-alert ?hidden=${!hasSubmissions}>
+				<div class="d2l-locked-alert">
+					<d2l-icon icon="tier1:lock-locked"></d2l-icon>
+					<div>${this.localize('assignmentLocked')}</div>
+				</div>
+			</d2l-alert>
 			<div id="assignment-name-container">
 				<d2l-input-text
 					?skeleton="${this.skeleton}"
@@ -156,7 +179,8 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 				<d2l-activity-attachments-editor
 					?skeleton="${this.skeleton}"
 					href="${attachmentsHref}"
-					.token="${this.token}">
+					.token="${this.token}"
+					@d2l-request-provider="${this._onRequestProvider}">
 				</d2l-activity-attachments-editor>
 			</div>
 		`;
@@ -202,6 +226,18 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 		}
 
 		await assignment.save();
+	}
+
+	_onRequestProvider(e) {
+		// Provides orgUnitId for d2l-labs-attachment
+		// https://github.com/Brightspace/attachment/blob/74a66e85f03790aa9f4e6ec5025cd3c62cfb5264/mixins/attachment-mixin.js#L19
+		if (e.detail.key === 'd2l-provider-org-unit-id') {
+			const assignment = store.getAssignment(this.href);
+			const richTextEditorConfig = assignment && assignment.instructionsRichTextEditorConfig;
+			e.detail.provider = richTextEditorConfig && richTextEditorConfig.properties && richTextEditorConfig.properties.orgUnit && richTextEditorConfig.properties.orgUnit.OrgUnitId;
+			e.stopPropagation();
+			return;
+		}
 	}
 
 	_saveInstructions(value) {

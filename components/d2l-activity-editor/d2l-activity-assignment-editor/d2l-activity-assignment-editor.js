@@ -85,21 +85,6 @@ class AssignmentEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityAssi
 			:host([hidden]) {
 				display: none;
 			}
-			d2l-alert {
-				margin-bottom: 10px;
-				max-width: 100%;
-			}
-			.d2l-locked-alert {
-				align-items: baseline;
-				display: flex;
-			}
-			d2l-icon {
-				padding-right: 1rem;
-			}
-			:host([dir="rtl"]) d2l-icon {
-				padding-left: 1rem;
-				padding-right: 0;
-			}
 		`;
 	}
 
@@ -148,18 +133,9 @@ class AssignmentEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityAssi
 			assignmentHref
 		} = activity || {};
 
-		const assignment = store.getAssignment(assignmentHref);
-		const hasSubmissions = assignment && assignment.submissionAndCompletionProps.assignmentHasSubmissions;
-
 		return html`
 			<slot name="editor-nav" slot="header"></slot>
 			<div slot="primary" class="d2l-activity-assignment-editor-primary-panel">
-				<d2l-alert ?hidden=${!hasSubmissions}>
-					<div class="d2l-locked-alert">
-						<d2l-icon icon="tier1:lock-locked"></d2l-icon>
-						<div>${this.localize('assignmentLocked')}</div>
-					</div>
-				</d2l-alert>
 				<d2l-activity-assignment-editor-detail
 					activity-usage-href=${this.href}
 					.href="${assignmentHref}"
@@ -241,17 +217,6 @@ class AssignmentEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityAssi
 
 		if (e.detail.key === 'd2l-provider-browse-outcomes-text') {
 			e.detail.provider = this.browseOutcomesText;
-			e.stopPropagation();
-			return;
-		}
-
-		// Provides orgUnitId for d2l-labs-attachment
-		// https://github.com/Brightspace/attachment/blob/74a66e85f03790aa9f4e6ec5025cd3c62cfb5264/mixins/attachment-mixin.js#L19
-		if (e.detail.key === 'd2l-provider-org-unit-id') {
-			const activity = store.getActivity(this.href);
-			const assignment = activity && store.getAssignment(activity.assignmentHref);
-			const richTextEditorConfig = assignment && assignment.instructionsRichTextEditorConfig;
-			e.detail.provider = richTextEditorConfig && richTextEditorConfig.properties && richTextEditorConfig.properties.orgUnit && richTextEditorConfig.properties.orgUnit.OrgUnitId;
 			e.stopPropagation();
 			return;
 		}
