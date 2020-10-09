@@ -56,7 +56,6 @@ class D2LActivityDate extends EntityMixinLit(LocalizeMixin(LitElement)) {
 		super();
 		this.format = 'MMMM d';
 		this.includeTime = false;
-		this._dateString = '';
 		this._setEntityType(ActivityUsageEntity);
 	}
 
@@ -64,67 +63,41 @@ class D2LActivityDate extends EntityMixinLit(LocalizeMixin(LitElement)) {
 		if (this._entityHasChanged(entity)) {
 			this._onActivityUsageChange(entity);
 			super._entity = entity;
-			this.requestUpdate();
 		}
 	}
 
 	_onActivityUsageChange(usage) {
-		this._date = this.getActivityDate(usage);
+		this._date = this._getActivityDate(usage);
 	}
 
 	render() {
-		const str = this.setActivityDateString(this._date, this.format, this.includeTime);
+		const stringFactory = (date, format, includeTime) => {
+			const type = includeTime ? `${date.type}Timed` : date.type;
+			return this.localize(
+				type,
+				'date', formatDate(date.date, { format: format }),
+				'time', includeTime && formatTime(date.date));
+		};
 
-		const activityDateTemplate = str
-			? html `<div class="d2l-activity-date-text">${str}</div>`
+		return this._date
+			? html `
+				<div class="d2l-activity-date-text">
+					${stringFactory(this._date, this.format, this.includeTime)}
+				</div>`
 			: nothing;
-
-		return activityDateTemplate;
 	}
 
-	getActivityDate(usage) {
+	_getActivityDate(usage) {
 		const date = {};
-		const dueDate = usage && usage.dueDate();
-		const endDate = usage && usage.endDate();
-		date.date = dueDate || endDate;
+		date.date = usage
+			&& usage.dueDate()
+			|| usage.endDate();
 
-		if (!date.date) {
-			return;
-		}
+		if (!date.date) return;
 
-		date.date === endDate ? date.type = 'endDate' : date.type = 'dueDate';
+		date.type = usage.dueDate() ? 'dueDate' : 'endDate';
 		date.date = new Date(date.date);
 		return date;
-	}
-
-	setActivityDateString(date, format, includeTime) {
-		if (!date) return;
-
-		let dateString;
-		if (includeTime) {
-			date.type = [date.type, 'Timed'].join('');
-			dateString = this.localize(
-				date.type,
-				'date', formatDate(date.date, { format: format }),
-				'time', formatTime(date.date)
-			);
-		} else {
-			dateString = this.localize(
-				date.type,
-				'date', formatDate(date.date, { format: format }),
-			);
-		}
-
-		const eventDetails = {
-			bubbles: true,
-			composed: false,
-			detail: {
-				date: dateString.length > 0 && dateString
-			}
-		};
-		this.dispatchEvent(new CustomEvent('d2l-activity-date-changed', eventDetails));
-
-		return dateString;
 	}
 }
 customElements.define('d2l-activity-date', D2LActivityDate);
