@@ -84,7 +84,7 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 	}
 
 	constructor() {
-		super();
+		super(store);
 		this._debounceJobs = {};
 		this._linksProcessor = new LinksInMessageProcessor();
 		this.skeleton = true;
@@ -92,7 +92,7 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 	}
 
 	render() {
-		const assignment = store.getAssignment(this.href);
+		const assignment = store.get(this.href);
 
 		const {
 			name,
@@ -188,16 +188,12 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 	updated(changedProperties) {
 		super.updated(changedProperties);
 
-		if ((changedProperties.has('href') || changedProperties.has('token')) &&
-			this.href && this.token) {
-			super._fetch(() => store.fetchAssignment(this.href, this.token));
-		}
 		if (changedProperties.has('asyncState')) {
 			this.skeleton = this.asyncState !== asyncStates.complete;
 		}
 	}
 	addLinks(links) {
-		const attachmentsHref = store.getAssignment(this.href).attachmentsHref;
+		const attachmentsHref = store.get(this.href).attachmentsHref;
 		const collection = attachmentCollectionStore.get(attachmentsHref);
 		links = links || [];
 		links.forEach(element => {
@@ -206,12 +202,12 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 	}
 
 	async cancelCreate() {
-		const assignment = store.getAssignment(this.href);
+		const assignment = store.get(this.href);
 		return assignment && assignment.cancelCreate();
 	}
 
 	hasPendingChanges() {
-		const assignment = store.getAssignment(this.href);
+		const assignment = store.get(this.href);
 		if (!assignment) {
 			return false;
 		}
@@ -220,7 +216,7 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 	}
 
 	async save() {
-		const assignment = store.getAssignment(this.href);
+		const assignment = store.get(this.href);
 		if (!assignment) {
 			return;
 		}
@@ -232,7 +228,7 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 		// Provides orgUnitId for d2l-labs-attachment
 		// https://github.com/Brightspace/attachment/blob/74a66e85f03790aa9f4e6ec5025cd3c62cfb5264/mixins/attachment-mixin.js#L19
 		if (e.detail.key === 'd2l-provider-org-unit-id') {
-			const assignment = store.getAssignment(this.href);
+			const assignment = store.get(this.href);
 			const richTextEditorConfig = assignment && assignment.instructionsRichTextEditorConfig;
 			e.detail.provider = richTextEditorConfig && richTextEditorConfig.properties && richTextEditorConfig.properties.orgUnit && richTextEditorConfig.properties.orgUnit.OrgUnitId;
 			e.stopPropagation();
@@ -241,7 +237,7 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 	}
 
 	_saveInstructions(value) {
-		store.getAssignment(this.href).setInstructions(value);
+		store.get(this.href).setInstructions(value);
 		this._debounceJobs.value = Debouncer.debounce(
 			this._debounceJobs.value,
 			timeOut.after(2000),
@@ -259,7 +255,7 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 		);
 	}
 	_saveName(value) {
-		store.getAssignment(this.href).setName(value);
+		store.get(this.href).setName(value);
 	}
 	_saveNameOnInput(e) {
 		const name = e.target.value;

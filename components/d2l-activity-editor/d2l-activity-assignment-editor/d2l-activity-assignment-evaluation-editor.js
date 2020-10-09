@@ -65,7 +65,7 @@ class ActivityAssignmentEvaluationEditor extends SkeletonMixin(ActivityEditorFea
 	}
 
 	render() {
-		const assignment = store.getAssignment(this.href) || {};
+		const assignment = store.get(this.href) || {};
 		const activity = activityStore.get(this.activityUsageHref) || {};
 
 		return html`

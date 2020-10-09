@@ -83,7 +83,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	}
 
 	render() {
-		const assignment = store.getAssignment(this.href);
+		const assignment = store.get(this.href);
 		return html`
 			<d2l-labs-accordion-collapse
 				class="accordion"
@@ -171,7 +171,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	}
 
 	_onNotificationEmailChanged(e) {
-		const assignment = store.getAssignment(this.href);
+		const assignment = store.get(this.href);
 		const data = e.target.value;
 		assignment && assignment.setNotificationEmail(data);
 	}
@@ -413,21 +413,21 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		`;
 	}
 	_saveCompletionTypeOnChange(event) {
-		store.getAssignment(this.href).setCompletionType(event.target.value);
+		store.get(this.href).setCompletionType(event.target.value);
 	}
 
 	_saveSubmissionTypeOnChange(event) {
-		store.getAssignment(this.href).setSubmissionType(event.target.value);
+		store.get(this.href).setSubmissionType(event.target.value);
 	}
 
 	_setfilesSubmisisonLimit(e) {
-		const assignment = store.getAssignment(this.href);
+		const assignment = store.get(this.href);
 		const data = e.target.value;
 		assignment && assignment.setFilesSubmissionLimit(data);
 	}
 
 	_setSubmisisonsRule(e) {
-		const assignment = store.getAssignment(this.href);
+		const assignment = store.get(this.href);
 		const data = e.target.value;
 		assignment &&
 		assignment.submissionAndCompletionProps &&
