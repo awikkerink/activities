@@ -4,6 +4,8 @@ import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container
 import { html } from 'lit-element/lit-element.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
+import { shared as store } from '../state/activity-store.js';
+
 class QuizEditor extends AsyncContainerMixin(RtlMixin(ActivityEditorMixin(MobxLitElement))) {
 
 	static get properties() {
@@ -35,7 +37,6 @@ class QuizEditor extends AsyncContainerMixin(RtlMixin(ActivityEditorMixin(MobxLi
 				width-type="${this.widthType}"
 				error-term=""
 				?isnew="${this.isNew}">
-
 				${this._editorTemplate}
 
 			</d2l-activity-editor>
@@ -43,12 +44,17 @@ class QuizEditor extends AsyncContainerMixin(RtlMixin(ActivityEditorMixin(MobxLi
 	}
 
 	get _editorTemplate() {
+		const activity = store.get(this.href);
+		const {
+			specializationHref
+		} = activity || {};
+
 		return html`
 			<slot name="editor-nav" slot="header"></slot>
 			<div slot="primary">
 				<d2l-activity-quiz-editor-detail
 					activity-usage-href=${this.href}
-					.href="${this.href}"
+					.href="${specializationHref}"
 					.token="${this.token}">
 				</d2l-activity-quiz-editor-detail>
 			</div>
