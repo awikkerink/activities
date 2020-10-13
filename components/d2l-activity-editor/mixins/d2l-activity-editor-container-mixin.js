@@ -94,6 +94,19 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 		}
 		return false;
 	}
+
+	_groupBy(target, property) {
+		return target.reduce((acc, obj) => {
+			const key = obj[property];
+			if (!acc[key]) {
+				acc[key] = [];
+			}
+			// Add object to list for given key's value
+			acc[key].push(obj);
+			return acc;
+		}, {});
+	}
+
 	_hasSkipAlertAncestor(node) {
 		return null !== findComposedAncestor(node, elm => elm && elm.hasAttribute && elm.hasAttribute('skip-alert'));
 	}
@@ -107,37 +120,15 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 		this.isSaving = true;
 		this.markSaveStart(this.type, this.telemetryId);
 
-		const orderedEditors = Array.from(this._editors).sort((a, b) => a.saveOrder - b.saveOrder);
+		const groupedEditors = this._groupBy(Array.from(this._editors), 'saveOrder');
+		const orderedEditors = Object.entries(groupedEditors).sort((a, b) => a[0] - b[0]).reduce((acc, obj) => [...acc, obj[1]], []);
 
-		const validations = [];
-		for (const editor of orderedEditors) {
-			validations.push(editor.validate());
-		}
-
-		try {
-			await Promise.all(validations);
-		} catch (e) {
-			// Server-side validation error
-		}
-
-		// Catch both client- and server-side validation errors
-		const isInvalid = await this._focusOnInvalid();
-		if (isInvalid) {
-			this.isError = true;
-			this.isSaving = false;
+		const valid = await this._validate(orderedEditors);
+		if (!valid) {
 			return;
 		}
 
-		for (const editor of orderedEditors) {
-			// TODO - Once we decide how we want to handle errors we may want to add error handling logic
-			// to the save
-			try {
-				await editor.save();
-			} catch (error) {
-				this.isSaving = false;
-				throw error;
-			}
-		}
+		await this._saveEditors(orderedEditors);
 
 		this.isError = false;
 		this.dispatchEvent(this.saveCompleteEvent);
@@ -145,4 +136,46 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 		this.logSaveEvent(this.href, this.type, this.telemetryId);
 	}
 
+	async _saveEditors(orderedEditors) {
+		for (const editorGroup of orderedEditors) {
+			// TODO - Once we decide how we want to handle errors we may want to add error handling logic
+			// to the save
+
+			const saves = [];
+			for (const editor of editorGroup) {
+				saves.push(editor.save());
+			}
+
+			try {
+				await Promise.all(saves);
+			} catch (error) {
+				this.isSaving = false;
+				throw error;
+			}
+		}
+	}
+
+	async _validate(orderedEditors) {
+		for (const editorGroup of orderedEditors) {
+			const validations = [];
+			for (const editor of editorGroup) {
+				validations.push(editor.validate());
+			}
+
+			try {
+				await Promise.all(validations);
+			} catch (e) {
+				// Server-side validation error
+			}
+		}
+
+		// Catch both client- and server-side validation errors
+		const isInvalid = await this._focusOnInvalid();
+		if (isInvalid) {
+			this.isError = true;
+			this.isSaving = false;
+			return false;
+		}
+		return true;
+	}
 };

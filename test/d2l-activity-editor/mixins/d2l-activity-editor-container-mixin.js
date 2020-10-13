@@ -6,12 +6,45 @@ const container = defineCE(
 	}
 );
 
+let saveCount = 0;
+
 const editor = defineCE(
 	class extends HTMLElement {
+
+		constructor() {
+			super();
+			this.saveOrder = 1;
+		}
+
 		hasPendingChanges() {
 			this.hasPendingChangesCalled = true;
 		}
 		save() {
+			saveCount += 1;
+			this.saveCount = saveCount;
+			this.saveCalled = true;
+		}
+
+		validate() {
+			this.validateCalled = true;
+		}
+
+	}
+);
+
+const editor2 = defineCE(
+	class extends HTMLElement {
+		constructor() {
+			super();
+			this.saveOrder = 2;
+		}
+
+		hasPendingChanges() {
+			this.hasPendingChangesCalled = true;
+		}
+		save() {
+			saveCount += 1;
+			this.saveCount = saveCount;
 			this.saveCalled = true;
 		}
 
@@ -57,6 +90,9 @@ const cancelEvent = new CustomEvent('d2l-activity-editor-cancel', {
 });
 
 describe('d2l-activity-editor-container-mixin', function() {
+	this.beforeEach(() => {
+		saveCount = 0;
+	});
 
 	it('handles save', async() => {
 		const el = await fixture(`<${container}><${editor}></${editor}></${container}`);
@@ -97,5 +133,29 @@ describe('d2l-activity-editor-container-mixin', function() {
 
 		expect(childEditor.validateCalled, 'validateCalled with unsuccessful validation').to.be.true;
 		expect(childEditor.saveCalled, 'saveCalled after unsuccessful validation').to.be.undefined;
+	});
+
+	it('handles save order', async() => {
+		const el = await fixture(`<${container}><${editor2}></${editor2}><${editor}></${editor}></${container}`);
+
+		const childEditor2 = el.firstElementChild;
+
+		childEditor2.dispatchEvent(connectedEvent(childEditor2));
+
+		const childEditor1 = childEditor2.nextElementSibling;
+
+		childEditor1.dispatchEvent(connectedEvent(childEditor1));
+
+		childEditor2.dispatchEvent(saveEvent);
+
+		await nextFrame();
+
+		expect(childEditor2.validateCalled, 'editor2: validateCalled with successful validation').to.be.true;
+		expect(childEditor2.saveCalled, 'editor2: saveCalled after successful validation').to.be.true;
+		expect(childEditor2.saveCount, 'editor2: should be saved second').to.equal(2);
+
+		expect(childEditor1.validateCalled, 'editor1: validateCalled with successful validation').to.be.true;
+		expect(childEditor1.saveCalled, 'editor1: saveCalled after successful validation').to.be.true;
+		expect(childEditor1.saveCount, 'editor1: should be saved first').to.equal(1);
 	});
 });

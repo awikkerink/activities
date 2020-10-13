@@ -12,6 +12,7 @@ export class Assignment {
 	constructor(href, token) {
 		this.href = href;
 		this.token = token;
+		this._saving = null;
 	}
 
 	cancelCreate() {
@@ -104,7 +105,15 @@ export class Assignment {
 		if (!this._entity) {
 			return;
 		}
-		await this._entity.save(this._makeAssignmentData());
+
+		if (this._saving) {
+			return this._saving;
+		}
+
+		this._saving = this._entity.save(this._makeAssignmentData());
+		await this._saving;
+		this._saving = null;
+
 		await this.fetch();
 	}
 	setAnnotationToolsAvailable(value) {
