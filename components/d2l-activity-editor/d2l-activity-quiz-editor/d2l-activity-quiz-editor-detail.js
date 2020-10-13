@@ -13,6 +13,7 @@ import { labelStyles } from '@brightspace-ui/core/components/typography/styles.j
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
+import { shared as store } from './state/quiz-store';
 
 class QuizEditorDetail extends AsyncContainerMixin(SkeletonMixin((RtlMixin(ActivityEditorMixin(MobxLitElement))))) {
 
@@ -49,12 +50,12 @@ class QuizEditorDetail extends AsyncContainerMixin(SkeletonMixin((RtlMixin(Activ
 	}
 
 	constructor() {
-		super();
+		super(store);
 		this.skeleton = false;
 	}
 
 	render() {
-		const quiz = {}; // TODO: implement new store function
+		const quiz = store.get(this.href);
 
 		const {
 			name,
