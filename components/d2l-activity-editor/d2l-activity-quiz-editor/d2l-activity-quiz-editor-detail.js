@@ -13,9 +13,9 @@ import { labelStyles } from '@brightspace-ui/core/components/typography/styles.j
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
-import { shared as store } from './state/quiz-store';
+import { shared as store } from './state/quiz-store.js';
 
-class QuizEditorDetail extends AsyncContainerMixin(SkeletonMixin((RtlMixin(ActivityEditorMixin(MobxLitElement))))) {
+class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonMixin(RtlMixin(MobxLitElement)))) {
 
 	static get properties() {
 		return {
