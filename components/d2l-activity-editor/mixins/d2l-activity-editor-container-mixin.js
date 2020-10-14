@@ -112,7 +112,6 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 	}
 	_registerEditor(e) {
 		this._editors.add(e.detail.editor);
-		console.log("registering", e.detail.editor)
 		e.detail.container = this;
 		e.stopPropagation();
 	}
