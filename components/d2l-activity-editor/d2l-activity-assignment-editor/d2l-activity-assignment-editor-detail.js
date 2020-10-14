@@ -116,7 +116,7 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 				<d2l-input-text
 					?skeleton="${this.skeleton}"
 					id="assignment-name"
-					maxlength="128"
+					maxlength="256"
 					value="${name}"
 					@change="${this._saveOnChange('name')}"
 					@input="${this._saveNameOnInput}"
