@@ -8,6 +8,7 @@ export class Quiz {
 	constructor(href, token) {
 		this.href = href;
 		this.token = token;
+		this._saving = null;
 	}
 
 	get dirty() {
