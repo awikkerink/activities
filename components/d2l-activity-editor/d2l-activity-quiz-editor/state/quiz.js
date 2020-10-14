@@ -21,7 +21,6 @@ export class Quiz {
 				remove: () => { },
 			});
 			this.load(entity);
-			console.log({ entity });
 		}
 		return this;
 	}
