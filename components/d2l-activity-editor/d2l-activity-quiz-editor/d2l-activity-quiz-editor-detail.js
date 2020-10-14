@@ -68,7 +68,7 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 				<d2l-input-text
 					?skeleton="${this.skeleton}"
 					id="quiz-name"
-					maxlength="128"
+					maxlength="256"
 					value="${name}"
 					@input="${this._setName}"
 					required
