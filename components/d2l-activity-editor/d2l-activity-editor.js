@@ -14,7 +14,6 @@ class ActivityEditor extends ActivityEditorContainerMixin(ActivityEditorTelemetr
 
 	static get properties() {
 		return {
-			isSaving: { type: Boolean, attribute: 'is-saving' },
 			widthType: { type: String, attribute: 'width-type' },
 			errorTerm: { type: String, attribute: 'error-term' },
 			_backdropShown: { type: Boolean }
@@ -48,7 +47,6 @@ class ActivityEditor extends ActivityEditorContainerMixin(ActivityEditorTelemetr
 	constructor() {
 		super();
 
-		this.isSaving = false;
 		this._backdropShown = false;
 	}
 

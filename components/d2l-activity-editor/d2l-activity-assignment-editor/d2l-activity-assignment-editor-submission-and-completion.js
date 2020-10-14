@@ -77,6 +77,11 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		];
 	}
 
+	constructor() {
+		super(store);
+		this.saveOrder = 2000;
+	}
+
 	connectedCallback() {
 		super.connectedCallback();
 		this._m4EmailNotificationEnabled = this._isMilestoneEnabled(Milestones.M4EmailSubmission);
@@ -108,6 +113,15 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 				${this._renderAssignmentSubmissionNotificationEmail(assignment)}
 			</d2l-labs-accordion-collapse>
 		`;
+	}
+
+	async save() {
+		const assignment = store.get(this.href);
+		if (!assignment) {
+			return;
+		}
+
+		await assignment.save();
 	}
 
 	_checkNotificationEmail(e) {
