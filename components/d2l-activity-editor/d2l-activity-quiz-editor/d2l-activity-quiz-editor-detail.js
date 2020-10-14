@@ -52,6 +52,7 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 	constructor() {
 		super(store);
 		this.skeleton = false;
+		this.saveOrder = 2000;
 	}
 
 	render() {
