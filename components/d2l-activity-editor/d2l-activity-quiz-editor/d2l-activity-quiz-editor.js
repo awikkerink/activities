@@ -35,7 +35,7 @@ class QuizEditor extends AsyncContainerMixin(RtlMixin(ActivityEditorMixin(MobxLi
 				.href=${this.href}
 				.token=${this.token}
 				width-type="${this.widthType}"
-				error-term="Broken quiz"
+				error-term=""
 				?isnew="${this.isNew}">
 				${this._editorTemplate}
 
