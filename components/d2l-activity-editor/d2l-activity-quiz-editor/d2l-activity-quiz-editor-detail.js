@@ -70,7 +70,7 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 					id="quiz-name"
 					maxlength="128"
 					value="${name}"
-					@input="${this._saveName}"
+					@input="${this._setName}"
 					required
 					?disabled="${!canEditName}"
 					prevent-submit>
@@ -90,7 +90,7 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 		console.log("Saving... quiz")
 	}
 
-	async _saveName(e) {
+	async _setName(e) {
 		store.get(this.href).setName(e.target.value);
 	}
 }
