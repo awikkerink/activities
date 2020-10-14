@@ -63,16 +63,16 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 		} = quiz || {};
 
 		return html`
-			<div id="assignment-name-container">
-			<d2l-input-text
-				?skeleton="${this.skeleton}"
-				id="assignment-name"
-				maxlength="128"
-				value="${name}"
-				@input="${this._saveNameOnInput}"
-				required
-				?disabled="${!canEditName}"
-				prevent-submit>
+			<div id="quiz-name-container">
+				<d2l-input-text
+					?skeleton="${this.skeleton}"
+					id="quiz-name"
+					maxlength="128"
+					value="${name}"
+					@input="${this._saveName}"
+					required
+					?disabled="${!canEditName}"
+					prevent-submit>
 			</d2l-input-text>
 		`;
 	}
@@ -85,5 +85,12 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 		}
 	}
 
+	async save() {
+		console.log("Saving... quiz")
+	}
+
+	async _saveName(e) {
+		store.get(this.href).setName(e.target.value);
+	}
 }
 customElements.define('d2l-activity-quiz-editor-detail', QuizEditorDetail);

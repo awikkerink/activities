@@ -43,4 +43,5 @@ decorate(Quiz, {
 	// actions
 	load: action,
 	setName: action,
+	save: action,
 });
