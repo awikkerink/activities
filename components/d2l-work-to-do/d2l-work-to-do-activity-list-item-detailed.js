@@ -16,15 +16,14 @@ import { ListItemMixin } from '@brightspace-ui/core/components/list/list-item-mi
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { nothing } from 'lit-html';
 
-class ActivityListCard extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
+class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
 
 	static get properties() {
 		return {
-			_hasDate: { type: Boolean },
 			_hasOrgCode: { type: Boolean },
 			_icon: { type: String },
-			_type: { type: String },
 			_organizationHref: { type: String },
+			_type: { type: String },
 		};
 	}
 
@@ -114,7 +113,6 @@ class ActivityListCard extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitEle
 		if (this._entityHasChanged(entity)) {
 			this._onActivityUsageChange(entity);
 			super._entity = entity;
-			this.requestUpdate();
 		}
 	}
 
@@ -125,9 +123,41 @@ class ActivityListCard extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitEle
 	}
 
 	render() {
-		const separatorTemplate = this._type && this._hasOrgCode
-			? html `<d2l-icon id="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
-			: nothing;
+		const secondaryTemplateFactory = (href, token, orgHref) => {
+			if (!href || !token || !orgHref) {
+				return nothing;
+			}
+
+			const orgCodeTemplate = html`
+				<d2l-organization-info
+					href="${orgHref}"
+					.token="${token}"
+					show-organization-code
+					@d2l-organization-accessible=${(e) => _handleOrgInfoChange(e)}>
+				</d2l-organization-info>`;
+
+			// TODO If you need to go deeper into the tree, just use siren-sdk to do so -> events can lead to race conditions
+			const _handleOrgInfoChange = (e) => {
+				this._hasOrgCode = !e || !e.detail || !e.detail.organization || !e.detail.organization.code
+					? false
+					: e.detail.organization.code && e.detail.organization.code.length > 0 ? true : false;
+
+				if (this._hasOrgCode) {
+					this.shadowRoot.querySelector('d2l-organization-info')
+						.shadowRoot.querySelector('.d2l-organization-code')
+						.style.textTransform = 'none';
+				}
+			};
+
+			const separatorTemplate = this._type && this._hasOrgCode
+				? html `<d2l-icon id="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
+				: nothing;
+
+			return html`
+				${orgCodeTemplate}
+				${separatorTemplate}
+				${this._type}`;
+		};
 
 		const activityIconTemplate = this._icon
 			? html` <d2l-icon id="d2l-activity-icon" icon=${this._icon}></d2l-icon>`
@@ -141,25 +171,17 @@ class ActivityListCard extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitEle
 						<d2l-organization-name
 							class="d2l-heading-3"
 							href="${ifDefined(this._organizationHref)}"
-							token="${ifDefined(this.token)}">
+							.token="${ifDefined(this.token)}">
 						</d2l-organization-name>
 					</div>
 					<div id="content-secondary-container" slot="secondary" class="d2l-body-small">
-						<d2l-organization-info
-							href="${ifDefined(this._organizationHref)}"
-							token="${ifDefined(this.token)}"
-							show-organization-code
-							@d2l-organization-accessible=${this._handleOrgInfoChange}>
-						</d2l-organization-info>
-						${separatorTemplate}
-						${this._type}
+						${secondaryTemplateFactory(this.href, this.token, this._organizationHref)}
 					</div>
 					<div id="content-supporting-info-container" slot="supporting-info" class="d2l-body-compact">
 						Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 					</div>
 				</d2l-list-item-content>
 			`,
-			actions: nothing,
 		});
 	}
 
@@ -175,32 +197,5 @@ class ActivityListCard extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitEle
 			}
 		}
 	}
-
-	_handleActivityDateChange(e) {
-		if (!e || !e.detail || !e.detail.date) {
-			this._hasDate = false;
-			return;
-		}
-		this._hasDate = e.detail.date && e.detail.date.length > 0 ;
-	}
-
-	_handleOrgInfoChange(e) {
-		if (!e || !e.detail || !e.detail.organization || !e.detail.organization.code) {
-			this._hasOrgCode = false;
-			return;
-		}
-		this._hasOrgCode = e.detail.organization.code && e.detail.organization.code.length > 0 ;
-
-		// Override Org Code's text-transform
-		if (this._hasOrgCode) {
-			const orgInfo = this.shadowRoot.querySelector('d2l-organization-info');
-			if (orgInfo) {
-				const orgCodeClass = orgInfo.shadowRoot.querySelector('.d2l-organization-code');
-				if (orgCodeClass) {
-					orgCodeClass.style.textTransform = 'none';
-				}
-			}
-		}
-	}
 }
-customElements.define('d2l-work-to-do-activity-list-card', ActivityListCard);
+customElements.define('d2l-work-to-do-activity-list-item-detailed', ActivityListItemDetailed);

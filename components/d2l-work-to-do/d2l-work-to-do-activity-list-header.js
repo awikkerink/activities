@@ -14,7 +14,9 @@ class ActivityListHeader extends LocalizeMixin(LitElement) {
 
 	static get properties() {
 		return {
+			/** Total count for activity usage entities that match the subcategory header range. */
 			count: { type: Number, attribute: 'count' },
+			/** Represents if corresponding entities are overdue or upcoming */
 			isOverdue: { type: Boolean, attribute: 'overdue' },
 		};
 	}
@@ -36,10 +38,8 @@ class ActivityListHeader extends LocalizeMixin(LitElement) {
 				}
 				#status {
 					background-color: var(--d2l-color-carnelian-minus-1);
-					border-color: var(--d2l-color-carnelian-minus-1);
+					border: 1px solid var(--d2l-color-carnelian-minus-1);
 					border-radius: 0.6rem;
-					border-style: solid;
-					border-width: 1px;
 					color: white;
 					display: inline-block;
 					font-size: 0.6rem;
@@ -79,10 +79,8 @@ class ActivityListHeader extends LocalizeMixin(LitElement) {
 
 	constructor() {
 		super();
-		/** Represents if corresponding entities are overdue or upcoming */
-		this.isOverdue = false;
-		/** Total count for activity usage entities that match the subcategory header range. */
 		this.count = 0;
+		this.isOverdue = false;
 	}
 
 	render() {
@@ -102,10 +100,9 @@ class ActivityListHeader extends LocalizeMixin(LitElement) {
 	}
 
 	get _statusString() {
-		if (this.count > Constants.MaxActivityCount) {
-			return [Constants.MaxActivityCount, '+'].join('');
-		}
-		return String(this.count);
+		return this.count > Constants.MaxActivityCount
+			? `${Constants.MaxActivityCount}+`
+			: `${this.count}`;
 	}
 
 	get _headerText() {

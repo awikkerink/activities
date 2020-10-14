@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" href="/node_modules/@brightspace-ui/core/components/demo/styles.css" type="text/css">
+		<script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+		<script type="module">
+			import '@brightspace-ui/core/components/demo/demo-page.js';
+			import '../../components/d2l-work-to-do/templates/d2l-work-to-do-empty.js';
+		</script>
+		<title>Work to Do Empty View</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<meta charset="UTF-8">
+	</head>
+	<body>
+		<d2l-demo-page page-title="d2l-work-to-do-empty demo">
+			<a href="../index.html">Back to Main</a></li>
+			<h2>d2l-work-to-do-empty</h2>
+			<d2l-demo-snippet>
+				<d2l-work-to-do-empty></d2l-work-to-do-empty>
+			</d2l-demo-snippet>
+			<d2l-demo-snippet>
+				<d2l-work-to-do-empty no-activities></d2l-work-to-do-empty>
+			</d2l-demo-snippet>
+			<d2l-demo-snippet>
+				<d2l-work-to-do-empty no-activities discover-active></d2l-work-to-do-empty>
+			</d2l-demo-snippet>
+		</d2l-demo-page>
+	</body>
+</html>

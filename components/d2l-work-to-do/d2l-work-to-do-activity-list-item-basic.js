@@ -14,7 +14,7 @@ import { ListItemMixin } from '@brightspace-ui/core/components/list/list-item-mi
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { nothing } from 'lit-html';
 
-class ActivityListPane extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
+class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
 
 	static get properties() {
 		return {
@@ -89,20 +89,53 @@ class ActivityListPane extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitEle
 		if (this._entityHasChanged(entity)) {
 			this._onActivityUsageChange(entity);
 			super._entity = entity;
-			this.requestUpdate();
 		}
 	}
 
 	_onActivityUsageChange(usage) {
 		this.actionHref = usage.userActivityUsageHref();
-		this._organizationHref = usage.organizationHref();
+		this._hasDate = usage.dueDate() || usage.endDate() ? true : false;
 		this._icon = this._getActivityIcon(usage._entity);
+		this._organizationHref = usage.organizationHref();
 	}
 
 	render() {
-		const separatorTemplate = this._hasDate && this._hasOrgCode
-			? html `<d2l-icon id="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
-			: nothing;
+		const secondaryTemplateFactory = (href, token, orgHref) => {
+			if (!href || !token || !orgHref) {
+				return nothing;
+			}
+			const dateTemplate = html`<d2l-activity-date href="${href}" token="${token}"></d2l-activity-date>`;
+
+			const orgCodeTemplate = html`
+				<d2l-organization-info
+					href="${orgHref}"
+					.token="${token}"
+					show-organization-code
+					@d2l-organization-accessible=${(e) => _handleOrgInfoChange(e)}>
+				</d2l-organization-info>`;
+
+			// TODO If you need to go deeper into the tree, just use siren-sdk to do so -> events can lead to race conditions
+			const _handleOrgInfoChange = (e) => {
+				this._hasOrgCode = !e || !e.detail || !e.detail.organization || !e.detail.organization.code
+					? false
+					: e.detail.organization.code && e.detail.organization.code.length > 0 ? true : false;
+
+				if (this._hasOrgCode) {
+					this.shadowRoot.querySelector('d2l-organization-info')
+						.shadowRoot.querySelector('.d2l-organization-code')
+						.style.textTransform = 'none';
+				}
+			};
+
+			const separatorTemplate = this._hasDate && this._hasOrgCode
+				? html `<d2l-icon id="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
+				: nothing;
+
+			return html`
+				${dateTemplate}
+				${separatorTemplate}
+				${orgCodeTemplate}`;
+		};
 
 		const activityIconTemplate = this._icon
 			? html` <d2l-icon id="d2l-activity-icon" icon=${this._icon}></d2l-icon>`
@@ -116,26 +149,14 @@ class ActivityListPane extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitEle
 						<d2l-organization-name
 							id="d2l-organization-name"
 							href="${ifDefined(this._organizationHref)}"
-							token="${ifDefined(this.token)}">
+							.token="${ifDefined(this.token)}">
 						</d2l-organization-name>
 					</div>
 					<div id="content-bottom-container" slot="secondary">
-						<d2l-activity-date
-							href="${ifDefined(this.href)}"
-							token="${ifDefined(this.token)}"
-							@d2l-activity-date-changed=${this._handleActivityDateChange}>
-						</d2l-activity-date>
-						${separatorTemplate}
-					<d2l-organization-info
-							href="${ifDefined(this._organizationHref)}"
-							token="${ifDefined(this.token)}"
-							show-organization-code
-							@d2l-organization-accessible=${this._handleOrgInfoChange}>
-						</d2l-organization-info>
+						${secondaryTemplateFactory(this.href, this.token, this._organizationHref)}
 					</div>
 				</d2l-list-item-content>
-			`,
-			actions: nothing
+			`
 		});
 	}
 
@@ -152,32 +173,5 @@ class ActivityListPane extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitEle
 
 		return ActivityAllowList.userAssignmentActivity.icon;
 	}
-
-	_handleActivityDateChange(e) {
-		if (!e || !e.detail || !e.detail.date) {
-			this._hasDate = false;
-			return;
-		}
-		this._hasDate = e.detail.date && e.detail.date.length > 0 ;
-	}
-
-	_handleOrgInfoChange(e) {
-		if (!e || !e.detail || !e.detail.organization || !e.detail.organization.code) {
-			this._hasOrgCode = false;
-			return;
-		}
-		this._hasOrgCode = e.detail.organization.code && e.detail.organization.code.length > 0 ;
-
-		// Override Org Code's text-transform
-		if (this._hasOrgCode) {
-			const orgInfo = this.shadowRoot.querySelector('d2l-organization-info');
-			if (orgInfo) {
-				const orgCodeClass = orgInfo.shadowRoot.querySelector('.d2l-organization-code');
-				if (orgCodeClass) {
-					orgCodeClass.style.textTransform = 'none';
-				}
-			}
-		}
-	}
 }
-customElements.define('d2l-work-to-do-activity-list-pane', ActivityListPane);
+customElements.define('d2l-work-to-do-activity-list-item-basic', ActivityListItemBasic);

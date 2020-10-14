@@ -24,10 +24,6 @@ class D2LActivityDate extends EntityMixinLit(LocalizeMixin(LitElement)) {
 				:host([hidden]) {
 					display: none;
 				}
-				.d2l-activity-date-text {
-					display: inline;
-					vertical-align: bottom;
-				}
 			`
 		];
 	}
@@ -80,10 +76,7 @@ class D2LActivityDate extends EntityMixinLit(LocalizeMixin(LitElement)) {
 		};
 
 		return this._date
-			? html `
-				<div class="d2l-activity-date-text">
-					${stringFactory(this._date, this.format, this.includeTime)}
-				</div>`
+			? html `${stringFactory(this._date, this.format, this.includeTime)}`
 			: nothing;
 	}
 

@@ -2,15 +2,14 @@ import '@brightspace-ui/core/components/colors/colors';
 import '@brightspace-ui/core/components/list/list';
 import '@brightspace-ui/core/components/list/list-item';
 import './d2l-work-to-do-activity-list-header';
-import './d2l-work-to-do-activity-list-pane';
+import './d2l-work-to-do-activity-list-item-basic';
 
-import { bodyCompactStyles, bodySmallStyles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { ActivityUsageCollectionEntity } from 'siren-sdk/src/activities/ActivityUsageCollectionEntity';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { ifDefined } from 'lit-html/directives/if-defined';
-import { Rels } from 'siren-sdk/src/hypermedia-constants.js';
 import { nothing } from 'lit-html';
+import { repeat } from 'lit-html/directives/repeat';
 
 /**
 * @description Class representation of WorkToDoActivitiesCollection
@@ -26,8 +25,6 @@ class ActivityUsageCollection extends EntityMixinLit(LitElement) {
 
 	static get styles() {
 		return [
-			bodyCompactStyles,
-			bodySmallStyles,
 			css`
 				:host {
 					display: inline-block;
@@ -42,7 +39,6 @@ class ActivityUsageCollection extends EntityMixinLit(LitElement) {
 
 	constructor() {
 		super();
-		this._count = 0;
 		this._items = [];
 		this._setEntityType(ActivityUsageCollectionEntity);
 	}
@@ -59,38 +55,32 @@ class ActivityUsageCollection extends EntityMixinLit(LitElement) {
 	 * @param {ActivityUsageCollectionEntity} collection Current target collection entity
 	 */
 	_onActivityUsageCollectionChanged(collection) {
-		collection.onItemsChange(item => {
-			item.onActivityUsageChange(usage => {
-				usage.onOrganizationChange(organization => {
-					const newItem = { usage, organization };
-					this._items = [...this._items, newItem];
+		collection.subEntitiesLoaded().then(
+			collection.onItemsChange((item, i) => {
+				item.onActivityUsageChange(usage => {
+					this._items[i] = { usage };
+					this._items = [...this._items];
 				});
-			});
-		});
-		this._count = collection._items().length || 0;
-		const eventDetails = {
-			bubbles: true,
-			composed: false,
-			detail: {
-				count: this._count
-			}
-		};
-		this.dispatchEvent(new CustomEvent('d2l-collection-changed', eventDetails));
+			}),
+		);
+
 	}
 
 	render() {
-		if (!this._items || this._count === 0 || this.maxDisplay === 0) {
+		if (!this._items || this.maxDisplay === 0) {
 			return nothing;
 		}
 
-		const items = this._items
-			? this._items.slice(0, this.maxDisplay).map(item =>
+		const items = repeat(
+			this._items.slice(0, this.maxDisplay),
+			item => item.usage,
+			item =>
 				html`
-					<d2l-work-to-do-activity-list-pane
-						href=${ifDefined(item.usage._entity.getLinkByRel(Rels.Activities.activityUsage).href)}
-						token=${ifDefined(this.token)}></d2l-work-to-do-activity-list-pane>
-				`)
-			: nothing;
+					<d2l-work-to-do-activity-list-item-basic
+						href=${ifDefined(item.usage.self())}
+						.token=${ifDefined(this.token)}></d2l-work-to-do-activity-list-item-basic>
+				`
+		);
 
 		return html`
 			<div class="d2l-collection-container">

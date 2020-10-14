@@ -5,9 +5,7 @@ import '@brightspace-ui/core/components/button/button.js';
 import { bodyStandardStyles, heading3Styles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
-
-const ICON_T3_SEARCH = 'tier3:search';
-const ICON_T3_COMPLETE = 'tier3:course-progress-complete';
+import { nothing } from 'lit-html/lit-html';
 
 class EmptyView extends LocalizeMixin(LitElement) {
 
@@ -24,42 +22,40 @@ class EmptyView extends LocalizeMixin(LitElement) {
 			bodyStandardStyles,
 			css`
 				:host {
-					display: inline-block;
+					display: block;
+					margin-left: auto;
+					margin-right: auto;
 				}
 				:host([hidden]) {
 					display: none;
 				}
-				:host([dir=rtl]) .d2l-activity-details {
-					margin-left: 0;
-					margin-right: 0.6rem;
-				}
 				.d2l-icon-container {
-					margin: 24px auto;
-					position: relative;
-					width: 100px; /* Need to update for actual max-min media query */
-				}
-				d2l-icon {
-					height: 100%;
-					width: 100%;
+					display: flex;
+					justify-content: center;
+					margin: 1.6rem auto 0 auto;
 				}
 				.d2l-header-text-container,
 				.d2l-body-text-container {
 					display: block;
 					text-align: center;
-					width: 15.5rem;
+					width: 16.5rem;
 				}
 				.d2l-header-text-container {
-					margin: 12px auto 6px auto;
+					margin: 1.2rem auto 0.3rem auto;
 				}
 				.d2l-body-text-container {
-					margin: 0 auto 18px auto;
+					margin: 0 auto 0.9rem auto;
 				}
 				.d2l-button-container {
 					display: flex;
 					justify-content: center;
 					width: 100%;
 				}
-`
+				d2l-icon {
+					height: 100px;
+					width: 100px;
+				}
+			`
 		];
 	}
 
@@ -85,56 +81,57 @@ class EmptyView extends LocalizeMixin(LitElement) {
 
 	constructor() {
 		super();
-
 		this.discoverActive = false;
 		this.noActivities = false;
+		this._workHref = 'https://www.google.ca';
+		this._discoverHref = 'https://www.d2l.ca';
 	}
 
 	render() {
 		// TODO: Nav to discover & learning
-		const buttonTemplate = this.noActivities ?
-			html `
-				<d2l-button ?hidden="${!this.discoverActive}" primary>
-					${this.localize('go_to_discover')}
-				</d2l-button>`
-			: html `
-				<d2l-button primary>
-					${this.localize('view_all_learning')}
-				</d2l-button>
-			`;
+
+		const textTemplateFactory = (discoverActive, noActivities) => {
+			if (!noActivities) {
+				return html`${this.localize('activitiesAvailable')}`;
+			}
+			return discoverActive
+				? html`${this.localize('noActivitiesDiscoverActive')}`
+				: html`${this.localize('noActivitiesDiscoverInactive')}`;
+		};
+
+		const buttonTemplateFactory = (discoverActive, noActivities) => {
+			if (!noActivities) {
+				return html `
+					<d2l-button
+						primary
+						@click=${() => window.location.href = this._workHref}>
+						${this.localize('viewAllWork')}
+					</d2l-button>`;
+			}
+			return discoverActive
+				? html`
+					<d2l-button
+						primary
+						@click=${() => window.location.href = this._discoverHref}>
+						${this.localize('goToDiscover')}
+					</d2l-button>`
+				: nothing;
+		};
 
 		return html`
-			<div class="container">
-				<div class="icon-container">
-					<d2l-icon ?hidden="${this.noActivities}" icon="${ICON_T3_COMPLETE}"></d2l-icon>
-					<d2l-icon ?hidden="${!this.noActivities}" icon="${ICON_T3_SEARCH}"></d2l-icon>
-				</div>
-				<p class="d2l-heading-3 header-text-container">
-					${this.displayHeader}
-				</p>
-				<p class="d2l-body-standard body-text-container">
-					${this.displayBody}
-				</p>
-				<div class="button-container">
-					${buttonTemplate}
-				</div>
+			<div class="d2l-icon-container">
+				<d2l-icon icon="tier3:search"></d2l-icon>
+			</div>
+			<div class="d2l-heading-3 d2l-header-text-container">
+				${this.localize('nothingHere')}
+			</div>
+			<div class="d2l-body-standard d2l-body-text-container">
+				${textTemplateFactory(this.discoverActive, this.noActivities)}
+			</div>
+			<div class="d2l-button-container">
+				${buttonTemplateFactory(this.discoverActive, this.noActivities)}
 			</div>
 		`;
 	}
-
-	get displayBody() {
-		if (!this.noActivities) {
-			return this.localize('activities_available');
-		} else if (this.discoverActive) {
-			return this.localize('no_activities_discover_active');
-		} else {
-			return this.localize('no_activities_discover_inactive');
-		}
-	}
-
-	get displayHeader() {
-		return this.noActivities ? this.localize('theres_nothing_here') : this.localize('all_done');
-	}
-
 }
-customElements.define('empty-view', EmptyView);
+customElements.define('d2l-work-to-do-empty', EmptyView);
