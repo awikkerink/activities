@@ -23,7 +23,7 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 				type: String,
 				reflect: true,
 				converter: (value) => {
-					return (value === 'undefined') ? '' : value;
+					return (value === 'undefined') ?  '' : value;
 				}
 			},
 			/**
@@ -45,7 +45,6 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 	}
 
 	connectedCallback() {
-		debugger;
 		if (super.connectedCallback) {
 			super.connectedCallback();
 		}
@@ -75,9 +74,9 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 	hasPendingChanges() {
 		return false;
 	}
-	async save() { }
+	async save() {}
 
-	async validate() { }
+	async validate() {}
 
 	_dispatchActivityEditorEvent() {
 		const event = new CustomEvent('d2l-activity-editor-connected', {
