@@ -8,7 +8,7 @@ import '../d2l-activity-attachments/d2l-activity-attachments-editor.js';
 
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
-import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
+import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
@@ -75,6 +75,14 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 				prevent-submit>
 			</d2l-input-text>
 		`;
+	}
+
+	updated(changedProperties) {
+		super.updated(changedProperties);
+
+		if (changedProperties.has('asyncState')) {
+			this.skeleton = this.asyncState !== asyncStates.complete;
+		}
 	}
 
 }
