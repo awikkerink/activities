@@ -3,7 +3,7 @@ import '../d2l-activity-availability-dates-editor.js';
 import '@brightspace-ui-labs/accordion/accordion-collapse.js';
 import { bodySmallStyles, heading3Styles, heading4Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { summarizerHeaderStyles, summarizerSummaryStyles } from '../d2l-activity-assignment-editor/activity-summarizer-styles.js';
+import { summarizerHeaderStyles, summarizerSummaryStyles } from '../activity-summarizer-styles.js';
 import { LocalizeActivityEditorMixin } from '../mixins/d2l-activity-editor-lang-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';

@@ -11,7 +11,7 @@ import './d2l-assignment-turnitin-summary.js';
 import { ActivityEditorFeaturesMixin, Milestones } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { bodySmallStyles, heading3Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
-import { summarizerHeaderStyles, summarizerSummaryStyles } from './activity-summarizer-styles.js';
+import { summarizerHeaderStyles, summarizerSummaryStyles } from '../activity-summarizer-styles.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { shared as activityStore } from '../state/activity-store.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';

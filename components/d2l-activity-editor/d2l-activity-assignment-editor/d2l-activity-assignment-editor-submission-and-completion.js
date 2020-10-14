@@ -7,7 +7,7 @@ import './d2l-activity-submission-email-notification-summary.js';
 import { ActivityEditorFeaturesMixin, Milestones } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { bodyCompactStyles, bodySmallStyles, heading3Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
-import { summarizerHeaderStyles, summarizerSummaryStyles } from './activity-summarizer-styles.js';
+import { summarizerHeaderStyles, summarizerSummaryStyles } from '../activity-summarizer-styles.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { ErrorHandlingMixin } from '../error-handling-mixin.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
