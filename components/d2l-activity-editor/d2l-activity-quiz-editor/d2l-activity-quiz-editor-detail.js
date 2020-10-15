@@ -87,7 +87,12 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 	}
 
 	async save() {
-		console.log("Saving... quiz")
+		const quiz = store.get(this.href);
+		if (!quiz) {
+			return;
+		}
+
+		await quiz.save();
 	}
 
 	async _setName(e) {
