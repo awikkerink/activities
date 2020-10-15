@@ -68,13 +68,11 @@ class ActivityAssignmentEvaluationEditor extends SkeletonMixin(ActivityEditorFea
 				<span slot="header">
 					${this.localize('evaluationAndFeedback')}
 				</span>
-				<span slot="summary-items">
-					${this._m2Enabled ? html`<li>${this._renderRubricsSummary()}</li>` : null}
-					${this._m3CompetenciesEnabled && activity.canEditCompetencies ? html`<li>${this._renderCompetenciesSummary()}</li>` : null}
-					${this._m2Enabled ? html`<li>${this._renderAnnotationsSummary()}</li>` : null}
-					${this._m2Enabled ? html`<li>${this._renderAnonymousMarkingSummary()}</li>` : null}
-					${this._m2Enabled && assignment.canEditTurnitin ? html`<li>${this._renderTurnitinSummary()}</li>` : null}
-				</span>
+				${this._m2Enabled ? html`<li slot="summary-items">${this._renderRubricsSummary()}</li>` : null}
+				${this._m3CompetenciesEnabled && activity.canEditCompetencies ? html`<li slot="summary-items">${this._renderCompetenciesSummary()}</li>` : null}
+				${this._m2Enabled ? html`<li slot="summary-items">${this._renderAnnotationsSummary()}</li>` : null}
+				${this._m2Enabled ? html`<li slot="summary-items">${this._renderAnonymousMarkingSummary()}</li>` : null}
+				${this._m2Enabled && assignment.canEditTurnitin ? html`<li slot="summary-items">${this._renderTurnitinSummary()}</li>` : null}
 				<div class="d2l-editors" slot="components">
 					${this._m2Enabled ? html`${this._renderRubricsCollectionEditor()}` : null}
 					${this._m3CompetenciesEnabled && activity.canEditCompetencies ? this._renderCompetenciesOpener() : null}

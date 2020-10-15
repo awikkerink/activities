@@ -8,7 +8,7 @@ class ActivityAccordionCollapse extends SkeletonMixin(LitElement) {
 	static get properties() {
 
 		return {
-			hasErrors: { type: Boolean, attribute: 'has-errors'},
+			hasErrors: { type: Boolean, attribute: 'has-errors' },
 			_opened: { type: Boolean }
 		};
 	}
@@ -86,13 +86,14 @@ class ActivityAccordionCollapse extends SkeletonMixin(LitElement) {
 				?disabled="${this.skeleton}"
 				?no-icons="${this.skeleton}"
 				@d2l-labs-accordion-collapse-state-changed=${this._onAccordionStateChange}>
+
 				<h3 class="d2l-heading-3 d2l-activity-summarizer-header d2l-skeletize" slot="header">
 					<slot name="header"></slot>
 				</h3>
 				<ul class="d2l-body-small d2l-activity-summarizer-summary d2l-skeletize" slot="summary">
 					<slot name="summary-items"></slot>
 				</ul>
-				<slot name="components"</slot>
+				<slot name="components"></slot>
 			</d2l-labs-accordion-collapse>
 		`;
 	}

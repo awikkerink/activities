@@ -90,12 +90,10 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 				<span slot="header">
 					${this.localize('submissionCompletionAndCategorization')}
 				</span>
-				<span slot="summary-items">
-					<li>${this._renderAssignmentTypeSummary()}</li>
-					<li>${this._renderAssignmentSubmissionTypeSummary(assignment)}</li>
-					<li>${this._renderAssignmentCompletionTypeSummary()}</li>
-					<li>${this._renderSubmissionEmailNotificationSummary(assignment)}</li>
-				</span>
+				<li slot="summary-items">${this._renderAssignmentTypeSummary()}</li>
+				<li slot="summary-items">${this._renderAssignmentSubmissionTypeSummary(assignment)}</li>
+				<li slot="summary-items">${this._renderAssignmentCompletionTypeSummary()}</li>
+				<li slot="summary-items">${this._renderSubmissionEmailNotificationSummary(assignment)}</li>
 				<span slot="components">
 					${this._renderAssignmentType()}
 					${this._renderAssignmentSubmissionType(assignment)}

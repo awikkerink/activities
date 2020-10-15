@@ -6,9 +6,9 @@ import '../d2l-activity-special-access-editor.js';
 import '../d2l-activity-special-access-summary.js';
 import '../d2l-activity-accordion-collapse.js';
 import { ActivityEditorFeaturesMixin, Milestones } from '../mixins/d2l-activity-editor-features-mixin.js';
-import { heading4Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
+import { heading4Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
@@ -55,10 +55,6 @@ class ActivityAssignmentAvailabilityEditor extends SkeletonMixin(ActivityEditorF
 		];
 	}
 
-	constructor() {
-		super();
-	}
-
 	connectedCallback() {
 		super.connectedCallback();
 
@@ -72,11 +68,9 @@ class ActivityAssignmentAvailabilityEditor extends SkeletonMixin(ActivityEditorF
 				<span slot="header">
 					${this.localize('hdrAvailability')}
 				</span>
-				<span slot="summary-items">
-					<li>${this._renderAvailabilityDatesSummary()}</li>
-					<li>${this._renderReleaseConditionSummary()}</li>
-					<li>${this._renderSpecialAccessSummary()}</li>
-				</span>
+				<li slot="summary-items">${this._renderAvailabilityDatesSummary()}</li>
+				<li slot="summary-items">${this._renderReleaseConditionSummary()}</li>
+				<li slot="summary-items">${this._renderSpecialAccessSummary()}</li>
 				<span slot="components">
 					${this._renderAvailabilityDatesEditor()}
 					${this._renderReleaseConditionEditor()}

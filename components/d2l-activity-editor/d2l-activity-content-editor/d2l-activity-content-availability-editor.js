@@ -39,19 +39,13 @@ class ContentAvailabilityEditor extends SkeletonMixin(LocalizeActivityEditorMixi
 		];
 	}
 
-	constructor() {
-		super();
-	}
-
 	render() {
 		return html`
 			<d2l-activity-accordion-collapse>
 				<span slot="header">
 					${this.localize('content.availabilityHeader')}
 				</span>
-				<span slot="summary-items">
-					<li>${this._renderAvailabilityDatesSummary()}</li>
-				</span>
+				<li slot="summary-items">${this._renderAvailabilityDatesSummary()}</li>
 				<span slot="components">
 					${this._renderAvailabilityDatesEditor()}
 				</span>
