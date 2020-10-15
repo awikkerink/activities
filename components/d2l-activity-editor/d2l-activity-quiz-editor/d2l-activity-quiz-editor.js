@@ -1,4 +1,5 @@
 import './d2l-activity-quiz-editor-detail.js';
+import '../d2l-activity-editor.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { html } from 'lit-element/lit-element.js';
