@@ -45,23 +45,12 @@ export class Quiz {
 			return this._saving;
 		}
 
-		this._saving = this._entity.save(this._makeQuizData());
+		// TODO: This method should handle saving all updated fields instead of hardcoding it just to save the quiz name
+		this._saving = this._entity.setName(this.name);
 		await this._saving;
 		this._saving = null;
 
 		await this.fetch();
-	}
-
-	_makeQuizData() {
-		/*
-		NOTE: if you add fields here, please make sure you update the corresponding equals method in siren-sdk.
-			 The cancel workflow is making use of that to detect changes.
-		*/
-		const data = {
-			name: this.name,
-		};
-
-		return data;
 	}
 }
 
