@@ -114,10 +114,18 @@ class ActivityListHeader extends LocalizeMixin(LitElement) {
 		const endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + Config.FUTURE_DAY_LIMIT, 23, 59, 59, 999);
 		const startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
 
-		const start = formatDate(startDate, { format: 'MMM d' });
-		const end = formatDate(endDate, { format: 'MMM d' });
+		const startDay = formatDate(startDate, { format: 'd' });
+		const startMonth = formatDate(startDate, { format: 'MMM' });
+		const endDay = formatDate(endDate, { format: 'd' });
+		const endMonth = formatDate(endDate, { format: 'MMM' });
 
-		return this.localize('dateHeader', 'start', start, 'end', end);
+		return this.localize(
+			'dateHeader',
+			'startMonth', startMonth,
+			'startDay', startDay,
+			'endMonth', endMonth,
+			'endDay', endDay
+		);
 	}
 }
 customElements.define('d2l-work-to-do-activity-list-header', ActivityListHeader);

@@ -76,7 +76,7 @@
   "links":[
     {
       "rel": ["self"],
-      "href": "../data/base/whoami.json"
+      "href": "./data/base/whoami.json"
     }, {
       "rel": ["https://discussions.api.brightspace.com/rels/my-subscriptions"],
       "href": "#"
@@ -85,10 +85,10 @@
       "href": "#"
     }, {
       "rel": ["https://activities.api.brightspace.com/rels/my-activities"],
-      "href": "../data/base/collection.json"
+      "href": "./data/base/collection.json"
     }, {
       "rel": ["https://activities.api.brightspace.com/rels/my-activities#empty"],
-      "href": "../data/base/empty-activities.json"
+      "href": "./data/base/empty-activities.json"
     }
   ]
 }

@@ -55,15 +55,19 @@ class ActivityUsageCollection extends EntityMixinLit(LitElement) {
 	 * @param {ActivityUsageCollectionEntity} collection Current target collection entity
 	 */
 	_onActivityUsageCollectionChanged(collection) {
-		collection.subEntitiesLoaded().then(
-			collection.onItemsChange((item, i) => {
-				item.onActivityUsageChange(usage => {
-					this._items[i] = { usage };
-					this._items = [...this._items];
-				});
-			}),
-		);
+		const items = [];
 
+		collection.onItemsChange((item, i) => {
+			item.onActivityUsageChange(usage => {
+				usage.onOrganizationChange((organization) => {
+					items[i] = { usage, organization };
+				});
+			});
+		});
+
+		collection.subEntitiesLoaded().then(() => {
+			this._items = items;
+		});
 	}
 
 	render() {
