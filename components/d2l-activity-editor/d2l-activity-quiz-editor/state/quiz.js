@@ -41,7 +41,7 @@ export class Quiz {
 			return this._saving;
 		}
 
-		// TODO: This method should handle saving all updated fields instead of hardcoding it just to save the quiz name
+		// TODO: This method should handle saving all updated fields instead of just the quiz name
 		this._saving = this._entity.setName(this.name);
 		await this._saving;
 		this._saving = null;
