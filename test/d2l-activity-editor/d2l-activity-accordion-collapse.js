@@ -1,5 +1,5 @@
 import '../../components/d2l-activity-editor/d2l-activity-accordion-collapse.js';
-import { fixture, html, oneEvent, waitUntil } from '@open-wc/testing';
+import { fixture, html, oneEvent } from '@open-wc/testing';
 
 describe('d2l-activity-accordion-collapse', function() {
 
