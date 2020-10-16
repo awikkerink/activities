@@ -32,10 +32,6 @@ export class Quiz {
 		this.canEditName = entity.canEditName();
 	}
 
-	setName(value) {
-		this.name = value;
-	}
-
 	async save() {
 		if (!this._entity) {
 			return;
@@ -51,6 +47,10 @@ export class Quiz {
 		this._saving = null;
 
 		await this.fetch();
+	}
+
+	setName(value) {
+		this.name = value;
 	}
 }
 
