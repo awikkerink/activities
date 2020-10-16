@@ -35,6 +35,12 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 					display: none;
 				}
 				:host > div,
+				d2l-activity-outcomes,
+				#score-container,
+				#duedate-container {
+					padding-bottom: 20px;
+				}
+				:host > div,
 				.d2l-activity-label-container {
 					margin-bottom: 8px;
 				}
@@ -45,6 +51,8 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 					padding-left: 1rem;
 					padding-right: 0;
 				}
+
+
 			`
 		];
 	}
@@ -75,6 +83,16 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 					?disabled="${!canEditName}"
 					prevent-submit>
 			</d2l-input-text>
+			</div>
+
+			<div id="score-and-duedate-container">
+				<div id="duedate-container">
+					<d2l-activity-due-date-editor
+						?skeleton="${this.skeleton}"
+						.href="${this.activityUsageHref}"
+						.token="${this.token}">
+					</d2l-activity-due-date-editor>
+				</div>
 		`;
 	}
 
