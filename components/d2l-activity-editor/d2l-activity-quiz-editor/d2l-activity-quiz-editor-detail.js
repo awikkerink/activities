@@ -10,12 +10,13 @@ import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/as
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
+import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 import { shared as store } from './state/quiz-store.js';
 
-class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonMixin(RtlMixin(MobxLitElement)))) {
+class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonMixin(LocalizeActivityQuizEditorMixin(RtlMixin(MobxLitElement))))) {
 
 	static get properties() {
 		return {
@@ -59,7 +60,7 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 
 	constructor() {
 		super(store);
-		this.skeleton = false;
+		this.skeleton = true;
 		this.saveOrder = 2000;
 	}
 
@@ -79,6 +80,7 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 					maxlength="256"
 					value="${name}"
 					@input="${this._setName}"
+					label="${this.localize('name')}"
 					required
 					?disabled="${!canEditName}"
 					prevent-submit>
