@@ -26,11 +26,13 @@ describe('d2l-activity-accordion-collapse', function() {
 
 	it('handles click event', async() => {
 		const el = await loadComponent();
-		await waitUntil(() => el.shouldUpdate([]), 'Waiting for render');
 		expect(el.shadowRoot.querySelector('d2l-labs-accordion-collapse').getAttribute('_state')).to.equal('closed');
 
-		setTimeout(() => el.shadowRoot.querySelector('d2l-labs-accordion-collapse').click());
-		await oneEvent(el, 'd2l-labs-accordion-collapse-state-changed');
-		expect(el.shadowRoot.querySelector('d2l-labs-accordion-collapse').getAttribute('_state')).to.equal('opened');
+		const accordion = el.shadowRoot.querySelector('d2l-labs-accordion-collapse');
+		const link = accordion.shadowRoot.querySelector('#trigger');
+		setTimeout(() => link.click());
+
+		await oneEvent(accordion, 'd2l-labs-accordion-collapse-state-changed');
+		expect(el.shadowRoot.querySelector('d2l-labs-accordion-collapse').getAttribute('_state')).to.equal('opening');
 	});
 });
