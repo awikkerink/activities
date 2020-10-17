@@ -98,7 +98,7 @@ class ActivityEditor extends ActivityEditorContainerMixin(ActivityEditorTelemetr
 	hasPendingChanges() {
 		const activity = store.get(this.href);
 		if (activity) {
-			return activity.dirty();
+			return activity.dirty(this.type);
 		}
 		return false;
 	}

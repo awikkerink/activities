@@ -16,7 +16,11 @@ export class ActivityUsage {
 		this.token = token;
 	}
 
-	async dirty() {
+	async dirty(activityType = '') {
+		if (activityType === 'quiz') {
+			return !this._entity.equals(this._makeUsageData());
+		}
+
 		return !this._entity.equals(this._makeUsageData()) || await this._alignmentsDirty();
 	}
 	async fetch() {
