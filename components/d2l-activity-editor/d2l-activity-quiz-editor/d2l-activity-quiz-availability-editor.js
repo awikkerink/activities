@@ -39,8 +39,7 @@ class ActivityQuizAvailabilityEditor extends SkeletonMixin(ActivityEditorFeature
 	render() {
 		return html`
 			<d2l-activity-accordion-collapse
-				?has-errors=${this._errorInAccordion()}
-				?skeleton="${this.skeleton}">
+				?has-errors=${this._errorInAccordion()}>
 
 				<span slot="header">
 					TODO: add localized hdrAvailability

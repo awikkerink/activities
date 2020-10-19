@@ -1,4 +1,5 @@
 import './d2l-activity-quiz-editor-detail.js';
+import './d2l-activity-quiz-editor-secondary.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { html } from 'lit-element/lit-element.js';
@@ -52,7 +53,13 @@ class QuizEditor extends AsyncContainerMixin(RtlMixin(ActivityEditorMixin(MobxLi
 					.token="${this.token}">
 				</d2l-activity-quiz-editor-detail>
 			</div>
-			<div slot="secondary"></div>
+			<div slot="secondary">
+				<d2l-activity-quiz-editor-secondary
+					.href="${this.href}"
+					.token="${this.token}"
+					activity-usage-href="${this.href}">
+				</d2l-activity-quiz-editor-secondary>
+			</div>
 		`;
 	}
 }
