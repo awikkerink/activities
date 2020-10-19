@@ -2,11 +2,13 @@ import '../d2l-activity-accordion-collapse.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorFeaturesMixin } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
+import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
+import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 import { shared as store } from '../state/activity-store.js';
 
-class ActivityQuizAvailabilityEditor extends SkeletonMixin(ActivityEditorFeaturesMixin(ActivityEditorMixin(MobxLitElement))) {
+class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivityQuizEditorMixin(SkeletonMixin(ActivityEditorFeaturesMixin(ActivityEditorMixin(MobxLitElement))))) {
 
 	static get properties() {
 
@@ -42,7 +44,7 @@ class ActivityQuizAvailabilityEditor extends SkeletonMixin(ActivityEditorFeature
 				?has-errors=${this._errorInAccordion()}>
 
 				<span slot="header">
-					TODO: add localized hdrAvailability
+					${this.localize('hdrAvailability')}
 				</span>
 			</d2l-activity-accordion-collapse>
 		`;
