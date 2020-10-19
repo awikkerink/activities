@@ -64,7 +64,10 @@ class ActivityAssignmentAvailabilityEditor extends SkeletonMixin(ActivityEditorF
 
 	render() {
 		return html`
-			<d2l-activity-accordion-collapse ?has-errors=${this._errorInAccordion()}>
+			<d2l-activity-accordion-collapse
+				?has-errors=${this._errorInAccordion()}
+				?skeleton="${this.skeleton}">
+
 				<span slot="header">
 					${this.localize('hdrAvailability')}
 				</span>

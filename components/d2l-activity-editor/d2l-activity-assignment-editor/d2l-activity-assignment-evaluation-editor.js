@@ -64,7 +64,7 @@ class ActivityAssignmentEvaluationEditor extends SkeletonMixin(ActivityEditorFea
 		const activity = activityStore.get(this.activityUsageHref) || {};
 
 		return html`
-			<d2l-activity-accordion-collapse>
+			<d2l-activity-accordion-collapse ?skeleton="${this.skeleton}">
 				<span slot="header">
 					${this.localize('evaluationAndFeedback')}
 				</span>

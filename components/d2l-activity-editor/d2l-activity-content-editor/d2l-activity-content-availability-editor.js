@@ -41,7 +41,7 @@ class ContentAvailabilityEditor extends SkeletonMixin(LocalizeActivityEditorMixi
 
 	render() {
 		return html`
-			<d2l-activity-accordion-collapse>
+			<d2l-activity-accordion-collapse ?skeleton="${this.skeleton}">
 				<span slot="header">
 					${this.localize('content.availabilityHeader')}
 				</span>

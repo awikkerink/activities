@@ -86,7 +86,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	render() {
 		const assignment = store.get(this.href);
 		return html`
-			<d2l-activity-accordion-collapse>
+			<d2l-activity-accordion-collapse ?skeleton="${this.skeleton}">
 				<span slot="header">
 					${this.localize('submissionCompletionAndCategorization')}
 				</span>
