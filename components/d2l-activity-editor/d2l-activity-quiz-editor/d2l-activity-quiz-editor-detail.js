@@ -61,7 +61,6 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 	constructor() {
 		super(store);
 		this.skeleton = true;
-		this.saveOrder = 2000;
 	}
 
 	render() {
@@ -104,6 +103,15 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 		if (changedProperties.has('asyncState')) {
 			this.skeleton = this.asyncState !== asyncStates.complete;
 		}
+	}
+
+	hasPendingChanges() {
+		const quiz = store.get(this.href);
+		if (!quiz) {
+			return false;
+		}
+
+		return quiz.dirty;
 	}
 
 	async save() {
