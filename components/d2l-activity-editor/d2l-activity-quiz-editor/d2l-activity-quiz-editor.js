@@ -25,9 +25,9 @@ class QuizEditor extends AsyncContainerMixin(RtlMixin(ActivityEditorMixin(MobxLi
 	constructor() {
 		super();
 
-		const telemtrySourceId = 'quiz';
+		const telemetrySourceId = 'quiz';
 
-		this.type = telemtrySourceId;
+		this.type = telemetrySourceId;
 		this.telemetryId = 'quiz';
 	}
 
