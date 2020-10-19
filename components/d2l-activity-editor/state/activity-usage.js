@@ -17,6 +17,7 @@ export class ActivityUsage {
 	}
 
 	async dirty(activityType = '') {
+		// alignments are not supported at the quiz level
 		if (activityType === 'quiz') {
 			return !this._entity.equals(this._makeUsageData());
 		}
