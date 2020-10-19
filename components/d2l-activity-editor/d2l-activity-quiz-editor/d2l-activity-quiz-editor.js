@@ -26,7 +26,10 @@ class QuizEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityQuizEditor
 
 	constructor() {
 		super();
-		this.type = 'quiz';
+
+		const telemetrySourceId = 'quiz';
+
+		this.type = telemetrySourceId;
 		this.telemetryId = 'quiz';
 	}
 

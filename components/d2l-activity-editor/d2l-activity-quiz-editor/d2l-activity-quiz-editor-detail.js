@@ -87,6 +87,15 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 		}
 	}
 
+	hasPendingChanges() {
+		const quiz = store.get(this.href);
+		if (!quiz) {
+			return false;
+		}
+
+		return quiz.dirty;
+	}
+
 	async save() {
 		const quiz = store.get(this.href);
 		if (!quiz) {
