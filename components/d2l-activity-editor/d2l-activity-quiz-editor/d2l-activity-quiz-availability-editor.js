@@ -1,4 +1,6 @@
 import '../d2l-activity-accordion-collapse.js';
+import '../d2l-activity-availability-dates-editor.js';
+import '../d2l-activity-availability-dates-summary.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorFeaturesMixin } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
@@ -41,10 +43,15 @@ class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivit
 	render() {
 		return html`
 			<d2l-activity-accordion-collapse
-				?has-errors=${this._errorInAccordion()}>
+				?has-errors=${this._errorInAccordion()}
+				?skeleton="${this.skeleton}">
 
 				<span slot="header">
 					${this.localize('hdrAvailability')}
+				</span>
+				<li slot="summary-items">${this._renderAvailabilityDatesSummary()}</li>
+				<span slot="components">
+					${this._renderAvailabilityDatesEditor()}
 				</span>
 			</d2l-activity-accordion-collapse>
 		`;
@@ -57,6 +64,28 @@ class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivit
 		}
 
 		return !!(activity.dates.endDateErrorTerm || activity.dates.startDateErrorTerm);
+	}
+
+	_renderAvailabilityDatesEditor() {
+
+		return html`
+			<div class="d2l-editor">
+				<d2l-activity-availability-dates-editor
+					href="${this.href}"
+					.token="${this.token}">
+				</d2l-activity-availability-dates-editor>
+			</div>
+		`;
+	}
+
+	_renderAvailabilityDatesSummary() {
+
+		return html`
+			<d2l-activity-availability-dates-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-availability-dates-summary>
+		`;
 	}
 }
 
