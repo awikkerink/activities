@@ -1,0 +1,94 @@
+{
+  "class":[
+    "user",
+    "discover-manager"
+  ],
+  "entities":[
+    {
+      "class": [
+        "display",
+        "name"
+      ],
+      "rel": [
+        "https://api.brightspace.com/rels/display-name"
+      ],
+      "properties": {
+        "name": "Displayname Realperson"
+		  }
+    },
+    {
+      "class": [
+        "first",
+        "name"
+      ],
+      "rel": [
+        "https://api.brightspace.com/rels/first-name"
+      ],
+      "properties": {
+        "name": "Displayname"
+      }
+    },
+    {
+      "class": [
+        "last",
+        "name"
+      ],
+      "rel": [
+        "https://api.brightspace.com/rels/last-name"
+      ],
+      "properties": {
+        "name": "Realperson"
+		  }
+    },
+    {
+      "class": [
+        "profile"
+      ],
+      "rel": [
+        "https://api.brightspace.com/rels/user-profile"
+      ],
+      "entities": [
+        {
+          "class": [
+            "file",
+            "image",
+            "default-image"
+          ],
+          "rel": ["https://api.brightspace.com/rels/profile-image"],
+          "links": [
+            {
+              "rel": ["alternate"],
+              "href": "#"
+            },
+            {
+              "rel": ["preview", "https://api.brightspace.com/rels/thumbnail#small"],
+              "href": "#"
+            },
+            {
+              "rel": ["preview", "https://api.brightspace.com/rels/thumbnail#regular"],
+              "href": "#"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "links":[
+    {
+      "rel": ["self"],
+      "href": "./data/base/whoami.json"
+    }, {
+      "rel": ["https://discussions.api.brightspace.com/rels/my-subscriptions"],
+      "href": "#"
+    }, {
+      "rel": ["https://api.brightspace.com/rels/my-enrollments"],
+      "href": "#"
+    }, {
+      "rel": ["https://activities.api.brightspace.com/rels/my-activities"],
+      "href": "./data/base/collection.json"
+    }, {
+      "rel": ["https://activities.api.brightspace.com/rels/my-activities#empty"],
+      "href": "./data/base/empty-activities.json"
+    }
+  ]
+}
