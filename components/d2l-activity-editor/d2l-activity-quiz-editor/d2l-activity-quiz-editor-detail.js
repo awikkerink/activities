@@ -41,7 +41,6 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 				#duedate-container {
 					padding-bottom: 20px;
 				}
-				:host > div,
 				.d2l-activity-label-container {
 					margin-bottom: 8px;
 				}
