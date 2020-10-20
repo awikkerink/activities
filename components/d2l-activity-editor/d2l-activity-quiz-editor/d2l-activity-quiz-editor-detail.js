@@ -37,7 +37,6 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 				}
 				:host > div,
 				d2l-activity-outcomes,
-				#score-container,
 				#duedate-container {
 					padding-bottom: 20px;
 				}
