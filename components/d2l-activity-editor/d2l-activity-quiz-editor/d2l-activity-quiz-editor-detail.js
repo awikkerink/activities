@@ -87,8 +87,8 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 						?skeleton="${this.skeleton}"
 						.href="${this.activityUsageHref}"
 						.token="${this.token}">
-					</d2l-activity-due-date-editor>
-				</div>
+				</d2l-activity-due-date-editor>
+			</div>
 		`;
 	}
 
