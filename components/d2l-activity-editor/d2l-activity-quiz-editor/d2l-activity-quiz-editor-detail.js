@@ -52,8 +52,6 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 					padding-left: 1rem;
 					padding-right: 0;
 				}
-
-
 			`
 		];
 	}
