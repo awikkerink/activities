@@ -78,7 +78,7 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 					required
 					?disabled="${!canEditName}"
 					prevent-submit>
-			</d2l-input-text>
+				</d2l-input-text>
 			</div>
 
 			<div id="score-and-duedate-container">
@@ -87,7 +87,8 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 						?skeleton="${this.skeleton}"
 						.href="${this.activityUsageHref}"
 						.token="${this.token}">
-				</d2l-activity-due-date-editor>
+					</d2l-activity-due-date-editor>
+				</div>
 			</div>
 		`;
 	}
