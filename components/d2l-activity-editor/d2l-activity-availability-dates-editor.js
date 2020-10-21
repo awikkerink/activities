@@ -9,6 +9,14 @@ import { shared as store } from './state/activity-store.js';
 
 class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeActivityEditorMixin(MobxLitElement))) {
 
+	static get properties() {
+		return {
+			'startDateDefaultTime': {
+				type: String
+			}
+		};
+	}
+
 	static get styles() {
 		return [labelStyles, css`
 			:host([hidden]) {
@@ -41,7 +49,7 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeActiv
 			<d2l-input-date-time
 				id="start-date-input"
 				label="${this.localize('editor.startDate')}"
-				time-default-value="00:00:00"
+				time-default-value=${this.startDateDefaultTime || 'endOfDay'}
 				value="${startDate}"
 				@change="${this._onStartDatetimeChanged}">
 			</d2l-input-date-time>
@@ -53,7 +61,7 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeActiv
 			<d2l-input-date-time
 				id="end-date-input"
 				label="${this.localize('editor.endDate')}"
-				time-default-value="00:00:00"
+				time-default-value="endOfDay"
 				value="${endDate}"
 				@change="${this._onEndDatetimeChanged}">
 			</d2l-input-date-time>
