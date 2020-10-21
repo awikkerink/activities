@@ -41,7 +41,7 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeActiv
 			<d2l-input-date-time
 				id="start-date-input"
 				label="${this.localize('editor.startDate')}"
-				time-default-value="endOfDay"
+				time-default-value="00:00:00"
 				value="${startDate}"
 				@change="${this._onStartDatetimeChanged}">
 			</d2l-input-date-time>
@@ -53,7 +53,7 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeActiv
 			<d2l-input-date-time
 				id="end-date-input"
 				label="${this.localize('editor.endDate')}"
-				time-default-value="endOfDay"
+				time-default-value="00:00:00"
 				value="${endDate}"
 				@change="${this._onEndDatetimeChanged}">
 			</d2l-input-date-time>

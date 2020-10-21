@@ -42,7 +42,7 @@ class ActivityDueDateEditor extends SkeletonMixin(ActivityEditorMixin(LocalizeAc
 				?skeleton="${this.skeleton}"
 				id="due-date-input"
 				label="${this.localize('editor.dueDate')}"
-				time-default-value="endOfDay"
+				time-default-value="00:00:00"
 				value="${dueDate}"
 				@change="${this._onDatetimeChanged}">
 			</d2l-input-date-time>
