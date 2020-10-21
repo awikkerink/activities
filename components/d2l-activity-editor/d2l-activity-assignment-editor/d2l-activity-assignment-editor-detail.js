@@ -129,14 +129,14 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 								and so it cannot be plugged into Dropbox to check Assignment permissions.
 				*/ html`
 					<d2l-activity-outcomes
-						class="editor-layout-section"
+						class="d2l-editor-layout-section"
 						href="${this.activityUsageHref}"
 						.token="${this.token}">
 					</d2l-activity-outcomes>
 				` : null}
 
 			<div id="score-and-duedate-container">
-				<div id="score-container" class="editor-layout-section">
+				<div id="score-container" class="d2l-editor-layout-section">
 					<div class="d2l-activity-label-container d2l-label-text d2l-skeletize">
 						${this.localize('scoreOutOf')}
 					</div>
@@ -148,7 +148,7 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 					</d2l-activity-score-editor>
 				</div>
 
-				<div id="duedate-container" class="editor-layout-section">
+				<div id="duedate-container" class="d2l-editor-layout-section">
 					<d2l-activity-due-date-editor
 						?skeleton="${this.skeleton}"
 						.href="${this.activityUsageHref}"

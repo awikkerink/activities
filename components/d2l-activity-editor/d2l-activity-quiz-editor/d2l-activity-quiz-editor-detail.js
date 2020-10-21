@@ -80,7 +80,7 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 			</div>
 
 			<div id="score-and-duedate-container">
-				<div id="duedate-container" class="editor-layout-section">
+				<div id="duedate-container" class="d2l-editor-layout-section">
 					<d2l-activity-due-date-editor
 						?skeleton="${this.skeleton}"
 						.href="${this.activityUsageHref}"
