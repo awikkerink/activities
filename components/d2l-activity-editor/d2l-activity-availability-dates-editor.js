@@ -11,7 +11,7 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeActiv
 
 	static get properties() {
 		/*
-			Used to set the start time if something other than endOfDay is required. This is likely a temporary solution as eventually assignments will also adopt this default start time and it will no longer need to be dynamic.
+			Used to set the start time if something other than endOfDay is required. This is likely a temporary solution as eventually assignments will also adopt 12am as it's default start time and it will no longer need to be dynamic.
 		 */
 		return {
 			'startDateDefaultTime': {
