@@ -13,6 +13,7 @@ import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { shared as attachmentCollectionStore } from '../d2l-activity-attachments/state/attachment-collections-store.js';
 import { shared as attachmentStore } from '../d2l-activity-attachments/state/attachment-store.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
+import { editorLayoutStyles } from '../styles/activity-editor-styles';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LinksInMessageProcessor } from '@d2l/d2l-attachment/helpers/links-in-message-processor.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
@@ -36,18 +37,13 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 		return [
 			super.styles,
 			labelStyles,
+			editorLayoutStyles,
 			css`
 				:host {
 					display: block;
 				}
 				:host([hidden]) {
 					display: none;
-				}
-				:host > div,
-				d2l-activity-outcomes,
-				#score-container,
-				#duedate-container {
-					padding-bottom: 20px;
 				}
 				#score-and-duedate-container {
 					display: flex;
@@ -133,13 +129,14 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 								and so it cannot be plugged into Dropbox to check Assignment permissions.
 				*/ html`
 					<d2l-activity-outcomes
+						class="editor-layout-section"
 						href="${this.activityUsageHref}"
 						.token="${this.token}">
 					</d2l-activity-outcomes>
 				` : null}
 
 			<div id="score-and-duedate-container">
-				<div id="score-container">
+				<div id="score-container" class="editor-layout-section">
 					<div class="d2l-activity-label-container d2l-label-text d2l-skeletize">
 						${this.localize('scoreOutOf')}
 					</div>
@@ -151,7 +148,7 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 					</d2l-activity-score-editor>
 				</div>
 
-				<div id="duedate-container">
+				<div id="duedate-container" class="editor-layout-section">
 					<d2l-activity-due-date-editor
 						?skeleton="${this.skeleton}"
 						.href="${this.activityUsageHref}"

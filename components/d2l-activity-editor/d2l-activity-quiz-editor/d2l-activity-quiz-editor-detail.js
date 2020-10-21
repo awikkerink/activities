@@ -9,6 +9,7 @@ import '../d2l-activity-attachments/d2l-activity-attachments-editor.js';
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
+import { editorLayoutStyles } from '../styles/activity-editor-styles';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -28,16 +29,13 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 		return [
 			super.styles,
 			labelStyles,
+			editorLayoutStyles,
 			css`
 				:host {
 					display: block;
 				}
 				:host([hidden]) {
 					display: none;
-				}
-				:host > div,
-				#duedate-container {
-					padding-bottom: 20px;
 				}
 				.d2l-activity-label-container {
 					margin-bottom: 8px;
@@ -82,7 +80,7 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 			</div>
 
 			<div id="score-and-duedate-container">
-				<div id="duedate-container">
+				<div id="duedate-container" class="editor-layout-section">
 					<d2l-activity-due-date-editor
 						?skeleton="${this.skeleton}"
 						.href="${this.activityUsageHref}"
