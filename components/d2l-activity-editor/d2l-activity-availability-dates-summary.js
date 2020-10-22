@@ -1,5 +1,6 @@
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime.js';
+import { getDateFromISODateTime } from '@brightspace-ui/core/helpers/dateTime.js';
 import { html } from 'lit-element/lit-element';
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -57,7 +58,7 @@ class ActivityAvailabilityDatesSummary
 			return null;
 		}
 
-		const date = new Date(suspiciousString);
+		const date = getDateFromISODateTime(suspiciousString);
 
 		if (isNaN(date.getTime())) {
 			return null;
