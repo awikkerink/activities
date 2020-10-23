@@ -7,6 +7,7 @@ import '../d2l-activity-special-access-summary.js';
 import '../d2l-activity-accordion-collapse.js';
 import { ActivityEditorFeaturesMixin, Milestones } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { css, html } from 'lit-element/lit-element.js';
+import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { heading4Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
@@ -31,15 +32,8 @@ class ActivityAssignmentAvailabilityEditor extends SkeletonMixin(ActivityEditorF
 		return [
 			super.styles,
 			heading4Styles,
+			accordionStyles,
 			css`
-				:host {
-					display: block;
-				}
-
-				:host([hidden]) {
-					display: none;
-				}
-
 				.d2l-editor {
 					margin: 1rem 0;
 				}

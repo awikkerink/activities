@@ -11,6 +11,7 @@ import './d2l-assignment-turnitin-summary.js';
 import '../d2l-activity-accordion-collapse.js';
 import { ActivityEditorFeaturesMixin, Milestones } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { css, html } from 'lit-element/lit-element.js';
+import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { shared as activityStore } from '../state/activity-store.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
@@ -35,15 +36,8 @@ class ActivityAssignmentEvaluationEditor extends SkeletonMixin(ActivityEditorFea
 
 		return [
 			super.styles,
+			accordionStyles,
 			css`
-				:host {
-					display: block;
-				}
-
-				:host([hidden]) {
-					display: none;
-				}
-
 				.d2l-editors > *:not(:first-child) {
 					display: block;
 					margin-top: 1rem;
