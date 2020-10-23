@@ -1,4 +1,5 @@
 import './d2l-activity-quiz-availability-editor.js';
+import './d2l-activity-quiz-timing-and-display-editor';
 import '@brightspace-ui/core/components/colors/colors.js';
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
@@ -53,8 +54,13 @@ class QuizEditorSecondary extends ActivityEditorFeaturesMixin(AsyncContainerMixi
 			</d2l-activity-quiz-availability-editor>
 		`;
 
+		const timingAndDisplayAccordion = html`
+			<d2l-activity-quiz-timing-and-display-editor></d2l-activity-quiz-timing-and-display-editor>
+		`;
+
 		return html`
 			${availabilityAccordian}
+			${timingAndDisplayAccordion}
 		`;
 
 	}
