@@ -9,7 +9,6 @@ import { html } from 'lit-element/lit-element.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
-import { shared as store } from '../state/activity-store.js';
 
 class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeActivityQuizEditorMixin(SkeletonMixin(ActivityEditorFeaturesMixin(ActivityEditorMixin(MobxLitElement))))) {
 
@@ -48,11 +47,6 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 	}
 	// Returns true if any error states relevant to this accordion are set
 	_errorInAccordion() {
-		const activity = store.get(this.href);
-		if (!activity || !activity.dates) {
-			return false;
-		}
-
 		return false; // Todo: implement error handling
 	}
 }
