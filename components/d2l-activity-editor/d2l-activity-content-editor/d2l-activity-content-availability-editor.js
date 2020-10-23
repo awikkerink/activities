@@ -2,6 +2,7 @@ import '../d2l-activity-availability-dates-summary.js';
 import '../d2l-activity-availability-dates-editor.js';
 import '../d2l-activity-accordion-collapse.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { accordionStyles } from '../styles/accordion-styles';
 import { LocalizeActivityEditorMixin } from '../mixins/d2l-activity-editor-lang-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
@@ -19,15 +20,8 @@ class ContentAvailabilityEditor extends SkeletonMixin(LocalizeActivityEditorMixi
 	static get styles() {
 		return [
 			super.styles,
+			accordionStyles,
 			css`
-				:host {
-					display: block;
-				}
-
-				:host([hidden]) {
-					display: none;
-				}
-
 				.d2l-editor {
 					margin: 1rem 0;
 				}
