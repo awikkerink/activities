@@ -30,6 +30,7 @@ export class Quiz {
 		this._entity = entity;
 		this.name = entity.name();
 		this.canEditName = entity.canEditName();
+		this.canEditHints = entity.canEditHints();
 	}
 
 	async save() {
@@ -69,6 +70,7 @@ decorate(Quiz, {
 	// props
 	name: observable,
 	canEditName: observable,
+	canEditHints: observable,
 	// actions
 	load: action,
 	setName: action,
