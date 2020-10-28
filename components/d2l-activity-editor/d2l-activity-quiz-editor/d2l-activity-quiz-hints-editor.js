@@ -23,7 +23,7 @@ class ActivityQuizHintsEditor
 			}
 
 			d2l-input-checkbox {
-				margin-top: 0.5rem;
+
 				padding-right: 1rem;
 			}
 
@@ -52,6 +52,11 @@ class ActivityQuizHintsEditor
 			<label class="d2l-label-text">
 				${this.localize('displayTools')}
 			</label>
+
+			<d2l-input-checkbox-spacer
+				class="d2l-body-small">
+			</d2l-input-checkbox-spacer>
+
 			<d2l-input-checkbox
 				ariaLabel="${this.localize('hintsToolDescription')}"
 				?disabled="${!entity.canEditHints}">
