@@ -31,6 +31,7 @@ export class Quiz {
 		this.name = entity.name();
 		this.canEditName = entity.canEditName();
 		this.canEditHints = entity.canEditHints();
+		this.hintsToolEnabled = entity.getHintsToolEnabled();
 	}
 
 	async save() {
@@ -48,6 +49,10 @@ export class Quiz {
 		this._saving = null;
 
 		await this.fetch();
+	}
+
+	setHintsToolEnabled(isHintsEnabled) {
+		this.hintsToolEnabled = isHintsEnabled;
 	}
 
 	setName(value) {
@@ -71,8 +76,10 @@ decorate(Quiz, {
 	name: observable,
 	canEditName: observable,
 	canEditHints: observable,
+	hintsToolEnabled: observable,
 	// actions
 	load: action,
 	setName: action,
+	setHintsToolEnabled: action,
 	save: action,
 });
