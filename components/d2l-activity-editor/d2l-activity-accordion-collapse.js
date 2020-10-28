@@ -67,10 +67,6 @@ class ActivityAccordionCollapse extends SkeletonMixin(LitElement) {
 		];
 	}
 
-	constructor() {
-		super();
-	}
-
 	connectedCallback() {
 		super.connectedCallback();
 	}
