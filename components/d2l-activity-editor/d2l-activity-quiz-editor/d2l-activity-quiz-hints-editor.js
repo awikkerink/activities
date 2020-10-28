@@ -47,7 +47,6 @@ class ActivityQuizHintsEditor
 			return html``;
 		}
 
-
 		return html`
 			<label class="d2l-label-text">
 				${this.localize('displayTools')}
