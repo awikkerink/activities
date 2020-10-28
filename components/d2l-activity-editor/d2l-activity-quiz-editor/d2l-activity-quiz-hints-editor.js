@@ -47,27 +47,18 @@ class ActivityQuizHintsEditor
 			return html``;
 		}
 
-		entity.allowHints = true; // TODO: add this to store
 
 		return html`
 			<label class="d2l-label-text">
 				${this.localize('displayTools')}
 			</label>
 			<d2l-input-checkbox
-				@change="${this._toggleAnnotationToolsAvailability}"
-				?checked="${entity.annotationToolsAvailable}"
 				ariaLabel="${this.localize('hintsToolDescription')}"
-				?disabled="${!entity.allowHints}">
+				?disabled="${!entity.canEditHints}">
 				${this.localize('hintsToolDescription')}
 			</d2l-input-checkbox>
 		`;
 	}
-	_toggleAnnotationToolsAvailability(event) {
-
-		const entity = store.get(this.href);
-		entity.setAnnotationToolsAvailable(event.target.checked);
-	}
-
 }
 
 customElements.define(
