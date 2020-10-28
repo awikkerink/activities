@@ -8,8 +8,7 @@ class ActivityAccordionCollapse extends SkeletonMixin(LitElement) {
 	static get properties() {
 
 		return {
-			hasErrors: { type: Boolean, attribute: 'has-errors' },
-			_opened: { type: Boolean }
+			hasErrors: { type: Boolean, attribute: 'has-errors' }
 		};
 	}
 
@@ -70,7 +69,6 @@ class ActivityAccordionCollapse extends SkeletonMixin(LitElement) {
 
 	constructor() {
 		super();
-		this._opened = false;
 	}
 
 	connectedCallback() {
@@ -82,10 +80,9 @@ class ActivityAccordionCollapse extends SkeletonMixin(LitElement) {
 			<d2l-labs-accordion-collapse
 				flex
 				header-border
-				?opened=${this._isOpened()}
+				?opened=${this.hasErrors}
 				?disabled="${this.skeleton}"
-				?no-icons="${this.skeleton}"
-				@d2l-labs-accordion-collapse-state-changed=${this._onAccordionStateChange}>
+				?no-icons="${this.skeleton}">
 
 				<h3 class="d2l-heading-3 d2l-activity-summarizer-header d2l-skeletize" slot="header">
 					<slot name="header"></slot>
@@ -96,13 +93,6 @@ class ActivityAccordionCollapse extends SkeletonMixin(LitElement) {
 				<slot name="components"></slot>
 			</d2l-labs-accordion-collapse>
 		`;
-	}
-
-	_isOpened() {
-		return this._opened || this.hasErrors;
-	}
-	_onAccordionStateChange(e) {
-		this._opened = e.detail.opened;
 	}
 }
 
