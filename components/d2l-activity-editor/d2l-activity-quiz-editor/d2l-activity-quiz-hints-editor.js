@@ -58,11 +58,18 @@ class ActivityQuizHintsEditor
 			</d2l-input-checkbox-spacer>
 
 			<d2l-input-checkbox
+				?checked="${entity.hintsToolEnabled}"
+				@change="${this._setHintsEnabled}"
 				ariaLabel="${this.localize('hintsToolDescription')}"
 				?disabled="${!entity.canEditHints}">
 				${this.localize('hintsToolDescription')}
 			</d2l-input-checkbox>
 		`;
+	}
+
+	_setHintsEnabled(event) {
+		const entity = store.get(this.href);
+		entity.setHintsToolEnabled(event.target.checked);
 	}
 }
 
