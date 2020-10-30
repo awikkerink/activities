@@ -30,6 +30,7 @@ class ActivityListHeader extends LocalizeMixin(LitElement) {
 					border-bottom: 1px solid var(--d2l-color-mica);
 					display: flex;
 					justify-content: space-between;
+					margin-bottom: 1px;
 					padding-bottom: 0.3rem;
 
 				}
@@ -111,7 +112,7 @@ class ActivityListHeader extends LocalizeMixin(LitElement) {
 		}
 
 		const now = new Date();
-		const endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + Config.FUTURE_DAY_LIMIT, 23, 59, 59, 999);
+		const endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + (Config.UpcomingWeekLimit * 7), 23, 59, 59, 999);
 		const startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
 
 		const startDay = formatDate(startDate, { format: 'd' });

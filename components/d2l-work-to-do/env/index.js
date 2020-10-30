@@ -2,15 +2,16 @@
 import { Classes } from 'siren-sdk/src/hypermedia-constants';
 
 export const Config = {
-	PAST_WEEK_LIMIT: 6,
-	FUTURE_DAY_LIMIT: 14,
+	OverdueWeekLimit: 6,
+	UpcomingWeekLimit: 14,
 };
 
 export const Constants = {
 	APINamespace: 'api.dev.brightspace.com',
 	DaysPerWeek: 7,
+	MaxDays: 365,
 	MaxActivityCount: 99,
-	MaxWidgetDisplay: 6
+	MaxWidgetDisplay: 6,
 };
 
 export const ActivityAllowList = {

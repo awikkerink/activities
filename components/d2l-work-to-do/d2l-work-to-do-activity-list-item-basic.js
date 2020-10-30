@@ -30,7 +30,8 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 			super.styles,
 			css`
 				:host {
-					display: block;
+					display: inline-block;
+					margin-bottom: -0.55rem;
 				}
 				:host([hidden]) {
 					display: none;
@@ -40,7 +41,8 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 					color: var(--d2l-color-celestine);
 				}
 				#d2l-activity-icon {
-					margin-top: 0.2rem;
+					margin-right: 0.7rem;
+					margin-top: 0.3rem;
 				}
 				#d2l-organization-name {
 					color: var(--d2l-color-ferrite);
@@ -104,7 +106,7 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 			if (!href || !token || !orgHref) {
 				return nothing;
 			}
-			const dateTemplate = html`<d2l-activity-date href="${href}" token="${token}"></d2l-activity-date>`;
+			const dateTemplate = html`<d2l-activity-date href="${href}" token="${token}" format="MMM d"></d2l-activity-date>`;
 
 			const orgCodeTemplate = html`
 				<d2l-organization-info

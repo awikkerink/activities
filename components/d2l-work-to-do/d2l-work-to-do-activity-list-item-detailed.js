@@ -7,13 +7,13 @@ import 'd2l-organizations/components/d2l-organization-name/d2l-organization-name
 import 'd2l-organizations/components/d2l-organization-info/d2l-organization-info';
 
 import { bodyCompactStyles, bodySmallStyles, heading3Styles } from '@brightspace-ui/core/components/typography/styles';
-import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { css, html, LitElement } from 'lit-element/lit-element';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
 import { ActivityAllowList } from './env';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { ListItemMixin } from '@brightspace-ui/core/components/list/list-item-mixin';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin';
 import { nothing } from 'lit-html';
 
 class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
