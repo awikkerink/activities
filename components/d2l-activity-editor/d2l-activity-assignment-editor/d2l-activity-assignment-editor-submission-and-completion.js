@@ -7,6 +7,7 @@ import './d2l-activity-submission-email-notification-summary.js';
 import { ActivityEditorFeaturesMixin, Milestones } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { bodyCompactStyles, bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
+import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { ErrorHandlingMixin } from '../error-handling-mixin.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
@@ -37,6 +38,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 			labelStyles,
 			radioStyles,
 			selectStyles,
+			accordionStyles,
 			css`
 				:host {
 					display: block;
@@ -140,7 +142,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	}
 	_getNotificationEmailTooltip() {
 		if (this._notificationEmailError) {
-			return html `
+			return html`
 				<d2l-tooltip id="notification-email-tooltip" for="notification-email" state="error" align="start" offset="10">
 					${this._notificationEmailError}
 				</d2l-tooltip>
@@ -221,7 +223,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		if (!assignment ||
 			!assignment.submissionAndCompletionProps ||
 			!assignment.submissionAndCompletionProps.showFilesSubmissionLimit) {
-			return html ``;
+			return html``;
 		}
 
 		const unlimitedFilesPerSubmissionText = this.localize('UnlimitedFilesPerSubmission');
@@ -274,10 +276,10 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 
 	_renderAssignmentSubmissionNotificationEmail(assignment) {
 		if (!this._m4EmailNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
-			return html ``;
+			return html``;
 		}
 
-		return html `
+		return html`
 		<div id="assignment-notification-email-container">
 			<div class="d2l-label-text">
 				${this.localize('hdrSubmissionNotificationEmail')}
@@ -308,7 +310,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		if (!assignment ||
 			!assignment.submissionAndCompletionProps ||
 			!assignment.submissionAndCompletionProps.showSubmissionsRule) {
-			return html ``;
+			return html``;
 		}
 
 		let submissionsRuleContent;
@@ -325,14 +327,14 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 						>
 						${x.title}
 					</label>
-				`) }
+				`)}
 			`;
 		} else {
 			const found = assignment.submissionAndCompletionProps.submissionsRuleOptions.find(x => assignment.submissionAndCompletionProps.submissionsRule === x.value);
 			submissionsRuleContent = html`<div class="d2l-body-compact">${found.title}</div>`;
 		}
 
-		return html `
+		return html`
 			<div id="assignment-submissions-rule-container">
 				<label class="d2l-label-text" for="assignment-submissions-rule-container">
 					${this.localize('submissionsRule')}
@@ -386,7 +388,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		return html``;
 	}
 	_renderAssignmentType() {
-		return html `
+		return html`
 			<div id="assignment-type-container">
 				<label class="d2l-label-text">
 					${this.localize('txtAssignmentType')}
@@ -408,7 +410,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	}
 	_renderSubmissionEmailNotificationSummary(assignment) {
 		if (!this._m4EmailNotificationEnabled || !assignment || !assignment.showNotificationEmail) {
-			return html ``;
+			return html``;
 		}
 		return html`
 			<d2l-activity-submission-email-notification-summary
@@ -435,8 +437,8 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		const assignment = store.get(this.href);
 		const data = e.target.value;
 		assignment &&
-		assignment.submissionAndCompletionProps &&
-		assignment.submissionAndCompletionProps.setSubmissionsRule(data);
+			assignment.submissionAndCompletionProps &&
+			assignment.submissionAndCompletionProps.setSubmissionsRule(data);
 	}
 
 }
