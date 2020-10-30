@@ -17,6 +17,7 @@ export class Quiz {
 
 	async fetch() {
 		const sirenEntity = await fetchEntity(this.href, this.token);
+
 		if (sirenEntity) {
 			const entity = new QuizEntity(sirenEntity, this.token, {
 				remove: () => { },
@@ -43,8 +44,8 @@ export class Quiz {
 			return this._saving;
 		}
 
-		// TODO: This method should handle saving all updated fields instead of just the quiz name
-		this._saving = this._entity.setName(this.name);
+		this._saving = this._entity.save(this._makeQuizData());
+
 		await this._saving;
 		this._saving = null;
 
@@ -64,7 +65,8 @@ export class Quiz {
 					 The cancel workflow is making use of that to detect changes.
 		*/
 		const data = {
-			name: this.name
+			name: this.name,
+			allowHints: this.hintsToolEnabled
 		};
 
 		return data;
