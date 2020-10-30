@@ -176,11 +176,6 @@ describe('d2l-activity-assignment-editor-evaluation-editor', function() {
 			expect(summary.length).to.equal(4);
 		});
 
-		it('initializes as closed', async() => {
-			const el = await loadComponent();
-			expect(el.shadowRoot.querySelector('d2l-activity-accordion-collapse')._opened).to.be.false;
-		});
-
 		it('handles click event', async() => {
 			const el = await loadComponent();
 			//TODO: make this check if accordion opens/closes? (maybe out of scope?)
