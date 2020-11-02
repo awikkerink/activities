@@ -56,7 +56,7 @@ class QuizEditorSecondary extends ActivityEditorFeaturesMixin(AsyncContainerMixi
 
 		const timingAndDisplayAccordion = html`
 			<d2l-activity-quiz-timing-and-display-editor
-				.href="${this.activityUsageHref}"
+				.href="${this.href}"
 				.token="${this.token}"
 				?skeleton="${this.skeleton}">
 			</d2l-activity-quiz-timing-and-display-editor>
