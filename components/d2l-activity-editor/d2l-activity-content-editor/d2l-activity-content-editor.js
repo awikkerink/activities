@@ -7,19 +7,19 @@ import '@brightspace-ui/core/components/colors/colors.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { shared as activityStore } from '../state/activity-store.js';
+import { LocalizeActivityEditorMixin } from '../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { shared as store } from './state/content-store.js';
 
-class ContentEditor extends RtlMixin(ActivityEditorMixin(MobxLitElement)) {
+class ContentEditor extends LocalizeActivityEditorMixin(RtlMixin(ActivityEditorMixin(MobxLitElement))) {
 
 	static get properties() {
 		return {
 			widthType: { type: String, attribute: 'width-type' },
-			/**
-			 * Is Creating New
-			 */
-			isNew: { type: Boolean }
+			isNew: { type: Boolean },
+			cancelHref: { type: String },
+			saveHref: { type: String }
 		};
 	}
 
@@ -44,6 +44,17 @@ class ContentEditor extends RtlMixin(ActivityEditorMixin(MobxLitElement)) {
 		document.body.style.overflow = 'auto';
 	}
 
+	connectedCallback() {
+		super.connectedCallback();
+		this.addEventListener('d2l-activity-editor-save-complete', this._redirectOnSaveComplete);
+		this.addEventListener('d2l-activity-editor-cancel-complete', this._redirectOnCancelComplete);
+	}
+	disconnectedCallback() {
+		this.removeEventListener('d2l-activity-editor-save-complete', this._redirectOnSaveComplete);
+		this.removeEventListener('d2l-activity-editor-cancel-complete', this._redirectOnCancelComplete);
+		super.disconnectedCallback();
+	}
+
 	render() {
 		return html`
 			<d2l-activity-editor
@@ -52,7 +63,7 @@ class ContentEditor extends RtlMixin(ActivityEditorMixin(MobxLitElement)) {
 				.href=${this.href}
 				.token=${this.token}
 				width-type="${this.widthType}"
-				error-term=""
+				error-term="${this.localize('content.saveError')}"
 				?isnew="${this.isNew}"
 			>
 				${this._editorTemplate}
@@ -66,16 +77,6 @@ class ContentEditor extends RtlMixin(ActivityEditorMixin(MobxLitElement)) {
 			super._fetch(() => store.fetchContentActivity(this.href, this.token));
 			super._fetch(() => activityStore.fetch(this.href, this.token));
 		}
-	}
-
-	hasPendingChanges() {
-		// TODO
-		return false;
-	}
-
-	async save() {
-		// TODO
-		return;
 	}
 
 	get _editorTemplate() {
@@ -96,6 +97,18 @@ class ContentEditor extends RtlMixin(ActivityEditorMixin(MobxLitElement)) {
 				</d2l-activity-content-editor-secondary>
 			</div>
 		`;
+	}
+
+	_redirectOnCancelComplete() {
+		if (this.cancelHref) {
+			window.location.href = this.cancelHref;
+		}
+	}
+
+	_redirectOnSaveComplete() {
+		if (this.saveHref) {
+			window.location.href = this.saveHref;
+		}
 	}
 }
 customElements.define('d2l-activity-content-editor', ContentEditor);

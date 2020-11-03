@@ -2,9 +2,9 @@ import 'd2l-inputs/d2l-input-text.js';
 import 'd2l-tooltip/d2l-tooltip';
 import '../d2l-activity-html-editor';
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
+import { CONTENT_TYPES, ContentEntity } from 'siren-sdk/src/activities/content/ContentEntity.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
-import { ContentEntity } from 'siren-sdk/src/activities/content/ContentEntity.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ErrorHandlingMixin } from '../error-handling-mixin.js';
@@ -15,7 +15,7 @@ import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton
 import { shared as store } from './state/content-store.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
-const TITLE_DEBOUNCE_TIMEOUT = 500;
+const DEBOUNCE_TIMEOUT = 500;
 const TITLE_MAX_LENGTH = 150;
 
 class ContentEditorDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlingMixin(LocalizeActivityEditorMixin(EntityMixinLit(RtlMixin(ActivityEditorMixin(MobxLitElement))))))) {
@@ -48,11 +48,13 @@ class ContentEditorDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 		this._debounceJobs = {};
 		this._setEntityType(ContentEntity);
 		this.skeleton = true;
+		this.saveOrder = 2000;
 	}
 
 	render() {
 		const contentEntity = store.getContentActivity(this.href);
-		const title = contentEntity ? contentEntity.title : '';
+		const title = contentEntity && contentEntity.entityType === CONTENT_TYPES.module ? contentEntity.moduleTitle : '';
+		const descriptionRichText = contentEntity && contentEntity.entityType === CONTENT_TYPES.module ? contentEntity.moduleDescriptionRichText : '';
 
 		return html`
 			<div id="content-title-container">
@@ -73,11 +75,11 @@ class ContentEditorDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 			</div>
 			<div id="content-description-container">
 				<label class="d2l-label-text d2l-skeletize" for="content-description">${this.localize('content.description')}</label>
-				<!-- TODO: insert existing description value should one exist -->
 				<div class="d2l-skeletize">
 					<d2l-activity-html-editor
 						id='content-description'
 						ariaLabel="content-description"
+						.value="${descriptionRichText}"
 						@d2l-activity-html-editor-change="${this._onRichtextChange}"
 						.richtextEditorConfig="${{}}"
 					>
@@ -93,10 +95,35 @@ class ContentEditorDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 		}
 	}
 
+	cancelCreate() {
+		const contentEntity = store.getContentActivity(this.href);
+		return contentEntity && contentEntity.cancelCreate();
+	}
+
+	hasPendingChanges() {
+		const contentEntity = store.getContentActivity(this.href);
+		if (!contentEntity) {
+			return false;
+		}
+		return contentEntity.dirty;
+	}
+
+	async save() {
+		const contentEntity = store.getContentActivity(this.href);
+		if (!contentEntity) {
+			return;
+		}
+
+		await contentEntity.save();
+	}
+
 	_onRichtextChange(e) {
-		// TODO - properly handle description content
-		// eslint-disable-next-line no-unused-vars
-		const content = e.detail.content;
+		const descriptionRichText = e.detail.content;
+		this._debounceJobs.description = Debouncer.debounce(
+			this._debounceJobs.description,
+			timeOut.after(DEBOUNCE_TIMEOUT),
+			() => this._saveDescription(descriptionRichText)
+		);
 	}
 
 	_renderTitleTooltip() {
@@ -113,12 +140,24 @@ class ContentEditorDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 		}
 	}
 
+	_saveDescription(richText) {
+		const contentEntity = store.getContentActivity(this.href);
+		if (!contentEntity) {
+			return;
+		}
+		contentEntity.setDescription(richText);
+	}
+
 	_saveOnChange(jobName) {
 		this._debounceJobs[jobName] && this._debounceJobs[jobName].flush();
 	}
 
 	_saveTitle(value) {
-		store.getContentActivity(this.href).setTitle(value);
+		const contentEntity = store.getContentActivity(this.href);
+		if (!contentEntity) {
+			return;
+		}
+		contentEntity.setTitle(value);
 	}
 
 	_saveTitleOnInput(e) {
@@ -131,7 +170,7 @@ class ContentEditorDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 			this.clearError('_titleError');
 			this._debounceJobs.title = Debouncer.debounce(
 				this._debounceJobs.title,
-				timeOut.after(TITLE_DEBOUNCE_TIMEOUT),
+				timeOut.after(DEBOUNCE_TIMEOUT),
 				() => this._saveTitle(title)
 			);
 		}
