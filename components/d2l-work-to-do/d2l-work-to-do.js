@@ -25,19 +25,20 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 
 	static get properties() {
 		return {
+			/** Represents current session's discovery tool access */
 			_discoverActive: { type: Boolean },
+			/** ActivityUsageCollection with time: 0 -> 52[weeks] */
 			_maxCollection: { type: Object },
-			_maxCount: { type: Number },
+			/** Represents load state of _maxCollection entity */
 			_maxLoaded: { type: Boolean },
+			/** ActivityUsageCollection with time: (- OverdueWeekLimit) -> 0 */
 			_overdueCollection: { type: Object },
-			_overdueCount: { type: Number },
-			_overdueDisplayLimit: { type: Number },
+			/** Represents load state of _overdueCollection entity */
 			_overdueLoaded: { type: Boolean },
+			/** ActivityUsageCollection with time: 0 -> UpcomingWeekLimit */
 			_upcomingCollection: { type: Object },
-			_upcomingCount: { type: Number },
-			_upcomingDisplayLimit: { type: Number },
+			/** Represents load state of _upcomingCollection entity */
 			_upcomingLoaded: { type: Boolean },
-			_state: { type: String }
 		};
 	}
 
@@ -186,8 +187,8 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 		};
 
 		/** Empty state templates */
-		const emptyViewTextTemplate = (discoverActive, noActivities) => {
-			if (!noActivities) {
+		const emptyViewTextTemplate = (discoverActive, hasActivities) => {
+			if (hasActivities) {
 				return html`${this.localize('activitiesAvailable')}`;
 			}
 
@@ -196,8 +197,8 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 				: html`${this.localize('noActivitiesDiscoverInactive')}`;
 		};
 
-		const emptyViewButtonTemplate = (discoverActive, noActivities) => {
-			if (!noActivities) {
+		const emptyViewButtonTemplate = (discoverActive, hasActivities) => {
+			if (hasActivities) {
 				return html `
 					<d2l-button
 						primary
@@ -230,10 +231,10 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 						${this.localize('nothingHere')}
 					</div>
 					<div class="d2l-body-standard d2l-empty-body-text-container">
-						${emptyViewTextTemplate(this._discoverActive, !this._maxCount)}
+						${emptyViewTextTemplate(this._discoverActive, this._maxCount)}
 					</div>
 					<div class="d2l-empty-button-container">
-						${emptyViewButtonTemplate(this._discoverActive, !this._maxCount)}
+						${emptyViewButtonTemplate(this._discoverActive, this._maxCount)}
 					</div>
 				</div>
 			`;
@@ -296,7 +297,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 			} else if (this._maxLoaded) {
 				return 'empty';
 			} else {
-				return 'loading'; // need some form of skeleton approach when generally loading
+				return 'loading'; // Either templates need skeleton functionality or loading is a template
 			}
 		}
 

@@ -3,7 +3,7 @@ import { Classes } from 'siren-sdk/src/hypermedia-constants';
 
 export const Config = {
 	OverdueWeekLimit: 6,
-	UpcomingWeekLimit: 14,
+	UpcomingWeekLimit: 2,
 };
 
 export const Constants = {
