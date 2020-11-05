@@ -1,6 +1,7 @@
 import '../d2l-activity-accordion-collapse.js';
 import '../d2l-activity-availability-dates-editor.js';
 import '../d2l-activity-availability-dates-summary.js';
+import './d2l-activity-quiz-hints-editor';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorFeaturesMixin } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
@@ -42,12 +43,25 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 					${this.localize('hdrTimingAndDisplay')}
 				</span>
 
+				<div class="d2l-editors" slot="components">
+					${this._renderHintsEditor()}
+				</div>
+
 			</d2l-activity-accordion-collapse>
 		`;
 	}
 	// Returns true if any error states relevant to this accordion are set
 	_errorInAccordion() {
 		return false; // Todo: implement error handling
+	}
+
+	_renderHintsEditor() {
+		return html`
+		<d2l-activity-quiz-hints-editor
+			href="${this.href}"
+			.token="${this.token}">
+		</d2l-activity-quiz-hints-editor>
+	`;
 	}
 }
 

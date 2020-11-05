@@ -17,6 +17,7 @@ export class Quiz {
 
 	async fetch() {
 		const sirenEntity = await fetchEntity(this.href, this.token);
+
 		if (sirenEntity) {
 			const entity = new QuizEntity(sirenEntity, this.token, {
 				remove: () => { },
@@ -30,6 +31,8 @@ export class Quiz {
 		this._entity = entity;
 		this.name = entity.name();
 		this.canEditName = entity.canEditName();
+		this.canEditHints = entity.canEditHints();
+		this.hintsToolEnabled = entity.getHintsToolEnabled();
 	}
 
 	async save() {
@@ -41,12 +44,16 @@ export class Quiz {
 			return this._saving;
 		}
 
-		// TODO: This method should handle saving all updated fields instead of just the quiz name
-		this._saving = this._entity.setName(this.name);
+		this._saving = this._entity.save(this._makeQuizData());
+
 		await this._saving;
 		this._saving = null;
 
 		await this.fetch();
+	}
+
+	setHintsToolEnabled(isHintsEnabled) {
+		this.hintsToolEnabled = isHintsEnabled;
 	}
 
 	setName(value) {
@@ -58,7 +65,8 @@ export class Quiz {
 					 The cancel workflow is making use of that to detect changes.
 		*/
 		const data = {
-			name: this.name
+			name: this.name,
+			allowHints: this.hintsToolEnabled
 		};
 
 		return data;
@@ -69,8 +77,11 @@ decorate(Quiz, {
 	// props
 	name: observable,
 	canEditName: observable,
+	canEditHints: observable,
+	hintsToolEnabled: observable,
 	// actions
 	load: action,
 	setName: action,
+	setHintsToolEnabled: action,
 	save: action,
 });
