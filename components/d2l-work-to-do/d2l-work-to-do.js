@@ -29,16 +29,10 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 			_discoverActive: { type: Boolean },
 			/** ActivityUsageCollection with time: 0 -> 52[weeks] */
 			_maxCollection: { type: Object },
-			/** Represents load state of _maxCollection entity */
-			_maxLoaded: { type: Boolean },
-			/** ActivityUsageCollection with time: (- OverdueWeekLimit) -> 0 */
+			/** ActivityUsageCollection with time: (OverdueWeekLimit) -> 0 */
 			_overdueCollection: { type: Object },
-			/** Represents load state of _overdueCollection entity */
-			_overdueLoaded: { type: Boolean },
 			/** ActivityUsageCollection with time: 0 -> UpcomingWeekLimit */
 			_upcomingCollection: { type: Object },
-			/** Represents load state of _upcomingCollection entity */
-			_upcomingLoaded: { type: Boolean },
 		};
 	}
 
@@ -110,11 +104,11 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 	constructor() {
 		super();
 		this._discoverActive = false;
-		this._emptyEntity = {};
-		this._maxLoaded = false;
+		this._emptyEntity = undefined;
+		this._maxCollection = undefined;
+		this._overdueCollection = undefined;
 		this._overdueDisplayLimit = Constants.MaxWidgetDisplay;
-		this._overdueLoaded = false;
-		this._upcomingLoaded = false;
+		this._upcomingCollection = undefined;
 		this._viewAllSource = 'http://www.d2l.com';  // TODO: Update to actual tool location
 		this._setEntityType(UserEntity);
 	}
@@ -172,7 +166,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 		};
 
 		const activitiesViewTemplate = () => {
-			if (!this._overdueLoaded || !this._upcomingLoaded) {
+			if (!this._overdueCollection || !this._upcomingCollection) {
 				return nothing;
 			}
 			return html`
@@ -218,7 +212,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 		};
 
 		const emptyViewTemplate = () => {
-			if (!this._maxLoaded) {
+			if (!this._maxCollection) {
 				return nothing;
 			}
 
@@ -267,34 +261,34 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 	}
 
 	get _maxCount() {
-		return this._maxLoaded
+		return this._maxCollection && this._maxCollection.hasSubEntityByRel(Rels.Activities.userActivityUsage)
 			? this._maxCollection.getSubEntitiesByRel(Rels.Activities.userActivityUsage).length
 			: 0;
 	}
 
 	get _overdueCount() {
-		return this._overdueLoaded
+		return this._overdueCollection && this._overdueCollection.hasSubEntityByRel(Rels.Activities.userActivityUsage)
 			? this._overdueCollection.getSubEntitiesByRel(Rels.Activities.userActivityUsage).length
 			: 0;
 	}
 
 	get _upcomingCount() {
-		return this._upcomingLoaded
+		return this._upcomingCollection && this._upcomingCollection.hasSubEntityByRel(Rels.Activities.userActivityUsage)
 			? this._upcomingCollection.getSubEntitiesByRel(Rels.Activities.userActivityUsage).length
 			: 0;
 	}
 
 	get _upcomingDisplayLimit() {
 		return this._overdueCount
-			? Math.max((Constants.MaxWidgetDisplay - this._overdueCount), 0)
+			? Math.max((Constants.MaxWidgetDisplay - this._overdueCount - 1), 0)  // Subtract one to account for additional header space
 			: Constants.MaxWidgetDisplay;
 	}
 
 	get _state() {
-		if (this._overdueLoaded && this._upcomingLoaded) {
+		if (this._overdueCollection && this._upcomingCollection) {
 			if (this._overdueCount || this._upcomingCount) {
 				return 'activity';
-			} else if (this._maxLoaded) {
+			} else if (this._maxCollection) {
 				return 'empty';
 			} else {
 				return 'loading'; // Either templates need skeleton functionality or loading is a template
@@ -329,7 +323,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 
 	/**
 	 * Load collection of overdue activities.
-	 * Will set collection, loadState of overdue activities
+	 * Will set collection of overdue activities
 	 * @async
 	 * @param {SimpleEntity} entity - Empty-activities domain endpoint response
 	 */
@@ -342,13 +336,12 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 		await fetchEntity(source, this.token)
 			.then((sirenEntity) => {
 				this._overdueCollection = sirenEntity;
-				this._overdueLoaded = true;
 			});
 	}
 
 	/**
 	 * Load collection of upcoming activities from present time until 'forwardLimit'.
-	 * Will set collection, loadState of upcoming activities
+	 * Will set collection of upcoming activities
 	 * @async
 	 * @param {SimpleEntity} entity - 'Empty' Activities domain endpoint response
 	 * @param {Number} [forwardLimit] - [Default: Config.UpcomingWeekLimit * 7] Number of days into future to look for activities
@@ -374,10 +367,8 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 			.then((sirenEntity) => {
 				if (!isMax) {
 					this._upcomingCollection = sirenEntity;
-					this._upcomingLoaded = true;
 				} else {
 					this._maxCollection = sirenEntity;
-					this._maxLoaded = true;
 				}
 			});
 	}

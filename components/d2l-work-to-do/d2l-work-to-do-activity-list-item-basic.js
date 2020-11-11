@@ -17,8 +17,11 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 
 	static get properties() {
 		return {
+			/** entity used for crawling instance properties (e.g. name) */
 			_activity: { type: Object },
+			/** entity associated with ActivityUsageEntity's organization */
 			_organization: { type: Object },
+			/** List of component relevant information related to activityType */
 			_props: { type: Object },
 		};
 	}
@@ -81,6 +84,9 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 
 	constructor() {
 		super();
+		this._activity = undefined;
+		this._organization = undefined;
+		this._props = undefined;
 		this._setEntityType(ActivityUsageEntity);
 	}
 
@@ -91,6 +97,10 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 		}
 	}
 
+	/**
+	 * Update component's data to match new entry point entity
+	 * @param {ActivityUsageEntity} usage Current target usage entity
+	 */
 	_onActivityUsageChange(usage) {
 		this._usage = usage;
 		this._loadActivity();
@@ -129,24 +139,27 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 		});
 	}
 
-	set actionHref(href) {
+	set actionHref(href) {  // Require setter function as list-mixin initializes value
 		const oldVal = this._actionHref;
 		this._actionHref = href;
 		this.requestUpdate('actionHref', oldVal);
 	}
 
+	/** Link to activity instance for user navigation to complete/work on activity */
 	get actionHref() {
 		return this._activity && this._activity.hasLinkByType('text/html')
 			? this._activity.getLinkByType('text/html').href
 			: '';
 	}
 
+	/** Due or end date of activity */
 	get _date() {
 		return this._usage
 			? this._usage.dueDate() || this._usage.endDate()
 			: '';
 	}
 
+	/** String associated with icon catalogue for provided activity type */
 	get _icon() {
 		return this._props
 			? this._props.icon
@@ -154,18 +167,24 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 
 	}
 
+	/** Specific name of the activity */
 	get _name() {
 		return this._activity && this._activity.hasProperty('name')
 			? this._activity.properties.name
 			: this._props ? this._props.type : '';
 	}
 
+	/** Organization code of the activity's associated organization */
 	get _orgCode() {
 		return this._organization && this._organization.hasProperty('code')
 			? this._organization.properties.code
 			: '';
 	}
 
+	/**
+	 * Load usage's associated activity entity.
+	 * @async
+	 */
 	async _loadActivity() {
 		const entity = this._usage._entity;
 		if (!entity || !entity.class) {
@@ -191,6 +210,10 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 		}
 	}
 
+	/**
+	 * Load usage's organization entity.
+	 * @async
+	 */
 	async _loadOrganization() {
 		const organizationHref = this._usage.organizationHref();
 		if (organizationHref) {
