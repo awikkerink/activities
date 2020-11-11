@@ -2,26 +2,24 @@ import '@brightspace-ui/core/components/colors/colors';
 import '@brightspace-ui/core/components/icons/icon';
 import '@brightspace-ui/core/components/list/list-item-content';
 import '../d2l-activity-date/d2l-activity-date';
-import 'd2l-organizations/components/d2l-organization-name/d2l-organization-name';
 import 'd2l-organizations/components/d2l-organization-info/d2l-organization-info';
 
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
 import { ActivityAllowList } from './env';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
-import { ifDefined } from 'lit-html/directives/if-defined';
 import { ListItemMixin } from '@brightspace-ui/core/components/list/list-item-mixin';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { nothing } from 'lit-html';
+import { fetchEntity } from './state/fetch-entity';
 
 class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
 
 	static get properties() {
 		return {
-			_hasDate: { type: Boolean },
-			_hasOrgCode: { type: Boolean },
-			_icon: { type: String },
-			_organizationHref: { type: String },
+			_activity: { type: Object },
+			_organization: { type: Object },
+			_props: { type: Object },
 		};
 	}
 
@@ -36,14 +34,14 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 					display: none;
 				}
 				:hover #d2l-activity-icon,
-				:hover #d2l-organization-name {
+				:hover #content-top-container {
 					color: var(--d2l-color-celestine);
 				}
 				#d2l-activity-icon {
 					margin-right: 0.7rem;
 					margin-top: 0.3rem;
 				}
-				#d2l-organization-name {
+				#content-top-container {
 					color: var(--d2l-color-ferrite);
 				}
 				#d2l-icon-bullet {
@@ -83,9 +81,6 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 
 	constructor() {
 		super();
-		this._hasDate = false;
-		this._hasOrgCode = false;
-		this._icon = ActivityAllowList.userAssignmentActivity.icon;
 		this._setEntityType(ActivityUsageEntity);
 	}
 
@@ -97,85 +92,113 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 	}
 
 	_onActivityUsageChange(usage) {
-		this.actionHref = usage.userActivityUsageHref();
-		this._hasDate = usage.dueDate() || usage.endDate() ? true : false;
-		this._icon = this._getActivityIcon(usage._entity);
-		this._organizationHref = usage.organizationHref();
+		this._usage = usage;
+		this._loadActivity();
+		this._loadOrganization();
 	}
 
 	render() {
-		const secondaryTemplateFactory = (href, token, orgHref) => {
-			if (!href || !token || !orgHref) {
-				return nothing;
-			}
-			const dateTemplate = html`<d2l-activity-date href="${href}" .token="${token}" format="MMM d"></d2l-activity-date>`;
+		if (!this.href || !this.token) {
+			return nothing;
+		}
 
-			const orgCodeTemplate = html`
-				<d2l-organization-info
-					href="${orgHref}"
-					.token="${token}"
-					show-organization-code
-					@d2l-organization-accessible=${(e) => _handleOrgInfoChange(e)}>
-				</d2l-organization-info>`;
+		const iconTemplate = this._icon
+			? html `<d2l-icon id="d2l-activity-icon" icon=${this._icon}></d2l-icon>`
+			: nothing;
 
-			// TODO If you need to go deeper into the tree, just use siren-sdk to do so -> events can lead to race conditions
-			const _handleOrgInfoChange = (e) => {
-				this._hasOrgCode = !e || !e.detail || !e.detail.organization || !e.detail.organization.code
-					? false
-					: e.detail.organization.code && e.detail.organization.code.length > 0 ? true : false;
+		const dateTemplate = html `<d2l-activity-date href="${this.href}" .token="${this.token}" format="MMM d"></d2l-activity-date>`;
 
-				if (this._hasOrgCode) {
-					this.shadowRoot.querySelector('d2l-organization-info')
-						.shadowRoot.querySelector('.d2l-organization-code')
-						.style.textTransform = 'none';
-				}
-			};
-
-			const separatorTemplate = this._hasDate && this._hasOrgCode
-				? html `<d2l-icon id="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
-				: nothing;
-
-			return html`
-				${dateTemplate}
-				${separatorTemplate}
-				${orgCodeTemplate}`;
-		};
-
-		const activityIconTemplate = this._icon
-			? html` <d2l-icon id="d2l-activity-icon" icon=${this._icon}></d2l-icon>`
+		const separatorTemplate = !!this._date && !!this._orgCode
+			? html `<d2l-icon id="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
 			: nothing;
 
 		return this._renderListItem({
-			illustration: activityIconTemplate,
+			illustration: iconTemplate,
 			content: html`
 				<d2l-list-item-content id="content">
 					<div id="content-top-container">
-						<d2l-organization-name
-							id="d2l-organization-name"
-							href="${ifDefined(this._organizationHref)}"
-							.token="${ifDefined(this.token)}">
-						</d2l-organization-name>
+						${this._name}
 					</div>
 					<div id="content-bottom-container" slot="secondary">
-						${secondaryTemplateFactory(this.href, this.token, this._organizationHref)}
+						${dateTemplate}
+						${separatorTemplate}
+						${this._orgCode}
 					</div>
 				</d2l-list-item-content>
 			`
 		});
 	}
 
-	_getActivityIcon(entity) {
+	set actionHref(href) {
+		const oldVal = this._actionHref;
+		this._actionHref = href;
+		this.requestUpdate('actionHref', oldVal);
+	}
+
+	get actionHref() {
+		return this._activity && this._activity.hasLinkByType('text/html')
+			? this._activity.getLinkByType('text/html').href
+			: '';
+	}
+
+	get _date() {
+		return this._usage
+			? this._usage.dueDate() || this._usage.endDate()
+			: '';
+	}
+
+	get _icon() {
+		return this._props
+			? this._props.icon
+			: ActivityAllowList.userAssignmentActivity.icon;
+
+	}
+
+	get _name() {
+		return this._activity && this._activity.hasProperty('name')
+			? this._activity.properties.name
+			: this._props ? this._props.type : '';
+	}
+
+	get _orgCode() {
+		return this._organization && this._organization.hasProperty('code')
+			? this._organization.properties.code
+			: '';
+	}
+
+	async _loadActivity() {
+		const entity = this._usage._entity;
 		if (!entity || !entity.class) {
 			return;
 		}
 
 		for (const allowed in ActivityAllowList) {
 			if (entity.hasClass(ActivityAllowList[allowed].class)) {
-				return ActivityAllowList[allowed].icon;
+				this._props = ActivityAllowList[allowed];
+				const source = (
+					entity.hasLinkByRel(ActivityAllowList[allowed].rel)
+					&& entity.getLinkByRel(ActivityAllowList[allowed].rel)
+					|| {}).href;
+				if (source) {
+					await fetchEntity(source, this.token)
+						.then((sirenEntity) => {
+							if (sirenEntity) {
+								this._activity = sirenEntity;
+							}
+						});
+				}
 			}
 		}
+	}
 
-		return ActivityAllowList.userAssignmentActivity.icon;
+	async _loadOrganization() {
+		const organizationHref = this._usage.organizationHref();
+		if (organizationHref) {
+			await fetchEntity(organizationHref, this.token)
+				.then((organization) => {
+					this._organization = organization;
+				});
+		}
 	}
 }
 customElements.define('d2l-work-to-do-activity-list-item-basic', ActivityListItemBasic);
