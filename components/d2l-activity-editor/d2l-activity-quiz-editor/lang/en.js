@@ -6,5 +6,6 @@ export default {
 	"hdrAvailability": "Availability Dates & Conditions", // availability header
 	"hdrTimingAndDisplay": "Timing & Display", // timing/display header
 	"displayTools": "Display", // Title for display tools
-	"hintsToolDescription": "Allow hints" // decription for hints tool
+	"hintsToolDescription": "Allow hints", // decription for hints tool
+	"hintsAllowedSummary": "Hints allowed" // summary text when hints are enabled
 };
