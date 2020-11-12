@@ -1,7 +1,8 @@
 import '../d2l-activity-accordion-collapse.js';
 import '../d2l-activity-availability-dates-editor.js';
 import '../d2l-activity-availability-dates-summary.js';
-import './d2l-activity-quiz-hints-editor';
+import './d2l-activity-quiz-hints-editor.js';
+import './d2l-activity-quiz-hints-summary.js';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorFeaturesMixin } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
@@ -43,6 +44,8 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 					${this.localize('hdrTimingAndDisplay')}
 				</span>
 
+				<li slot="summary-items">${this._renderAllowHintsSummary()}</li>
+
 				<div class="d2l-editors" slot="components">
 					${this._renderHintsEditor()}
 				</div>
@@ -55,13 +58,22 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 		return false; // Todo: implement error handling
 	}
 
+	_renderAllowHintsSummary() {
+		return html`
+			<d2l-activity-quiz-hints-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-hints-summary>
+		`;
+	}
+
 	_renderHintsEditor() {
 		return html`
-		<d2l-activity-quiz-hints-editor
-			href="${this.href}"
-			.token="${this.token}">
-		</d2l-activity-quiz-hints-editor>
-	`;
+			<d2l-activity-quiz-hints-editor
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-hints-editor>
+		`;
 	}
 }
 
