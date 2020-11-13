@@ -1,8 +1,4 @@
 import '../d2l-activity-accordion-collapse.js';
-import '../d2l-activity-availability-dates-editor.js';
-import '../d2l-activity-availability-dates-summary.js';
-import './d2l-activity-quiz-hints-editor.js';
-import './d2l-activity-quiz-hints-summary.js';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorFeaturesMixin } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
