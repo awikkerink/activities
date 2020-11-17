@@ -9,5 +9,6 @@ export default {
 	"displayTools": "Display", // Title for display tools
 	"hintsToolDescription": "Allow hints", // description for allow hints
 	"hintsAllowedSummary": "Hints allowed", // summary text when hints are enabled
-	"disableRightClickDescription": "Disable right click" // description for disable right click
+	"disableRightClickDescription": "Disable right click", // description for disable right click
+	"disableRightClickSummary": "Right clicks disabled" // summary text when right clicks are disabled
 };
