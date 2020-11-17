@@ -7,6 +7,7 @@ export default {
 	"hdrTimingAndDisplay": "Timing & Display", // timing/display accordion header
 	"hdrAttemptsAndCompletion": "Attempts & Completion", //attempts/completion accordion header
 	"displayTools": "Display", // Title for display tools
-	"hintsToolDescription": "Allow hints", // decription for hints tool
-	"hintsAllowedSummary": "Hints allowed" // summary text when hints are enabled
+	"hintsToolDescription": "Allow hints", // description for allow hints
+	"hintsAllowedSummary": "Hints allowed", // summary text when hints are enabled
+	"disableRightClickDescription": "Disable right click" // description for disable right click
 };

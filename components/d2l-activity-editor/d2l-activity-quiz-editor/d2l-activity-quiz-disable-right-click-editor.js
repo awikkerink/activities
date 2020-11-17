@@ -5,7 +5,7 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { shared as store } from './state/quiz-store';
 
-class ActivityQuizHintsEditor
+class ActivityQuizDisableRightClickEditor
 	extends ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
 
 	static get styles() {
@@ -33,12 +33,10 @@ class ActivityQuizHintsEditor
 	}
 
 	constructor() {
-
 		super(store);
 	}
 
 	render() {
-
 		const entity = store.get(this.href);
 		if (!entity) {
 			return html``;
@@ -50,22 +48,22 @@ class ActivityQuizHintsEditor
 			</d2l-input-checkbox-spacer>
 
 			<d2l-input-checkbox
-				?checked="${entity.hintsToolEnabled}"
-				@change="${this._setHintsEnabled}"
-				ariaLabel="${this.localize('hintsToolDescription')}"
-				?disabled="${!entity.canEditHints}">
-				${this.localize('hintsToolDescription')}
+				?checked="${entity.isDisableRightClickEnabled}"
+				@change="${this._setDisableRightClick}"
+				ariaLabel="${this.localize('disableRightClickDescription')}"
+				?disabled="${!entity.canEditDisableRightClick}">
+				${this.localize('disableRightClickDescription')}
 			</d2l-input-checkbox>
 		`;
 	}
 
-	_setHintsEnabled(event) {
+	_setDisableRightClick(event) {
 		const entity = store.get(this.href);
-		entity.setHintsToolEnabled(event.target.checked);
+		entity.setDisableRightClick(event.target.checked);
 	}
 }
 
 customElements.define(
-	'd2l-activity-quiz-hints-editor',
-	ActivityQuizHintsEditor
+	'd2l-activity-quiz-disable-right-click-editor',
+	ActivityQuizDisableRightClickEditor
 );
