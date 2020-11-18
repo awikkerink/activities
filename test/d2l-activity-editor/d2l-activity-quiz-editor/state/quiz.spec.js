@@ -1,7 +1,7 @@
-import { Quiz } from '../../../../components/d2l-activity-editor/d2l-activity-quiz-editor/state/quiz.js';
-import { QuizEntity } from 'siren-sdk/src/activities/quizzes/QuizEntity.js';
 import { expect } from 'chai';
 import { fetchEntity } from '../../../../components/d2l-activity-editor/state/fetch-entity.js';
+import { Quiz } from '../../../../components/d2l-activity-editor/d2l-activity-quiz-editor/state/quiz.js';
+import { QuizEntity } from 'siren-sdk/src/activities/quizzes/QuizEntity.js';
 import sinon from 'sinon';
 
 jest.mock('siren-sdk/src/activities/quizzes/QuizEntity.js');
