@@ -15,10 +15,10 @@ export class Content {
 		this.moduleDescriptionRichText = '';
 	}
 
-	cancelCreate() {
-		// This is the function that is called when cancelling the creation of a NEW content item
-		// TODO - add functionality to delete created activity
-		return;
+	async cancelCreate() {
+		if (this.entityType === CONTENT_TYPES.module) {
+			await this._contentModule.deleteModule();
+		}
 	}
 
 	get dirty() {

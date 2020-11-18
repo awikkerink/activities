@@ -111,9 +111,13 @@ class ContentEditorDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 		}
 	}
 
-	cancelCreate() {
+	async cancelCreate() {
 		const contentEntity = store.getContentActivity(this.href);
-		return contentEntity && contentEntity.cancelCreate();
+		if (!contentEntity) {
+			return;
+		}
+
+		await contentEntity.cancelCreate();
 	}
 
 	hasPendingChanges() {
