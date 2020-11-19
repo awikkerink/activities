@@ -33,6 +33,8 @@ export class Quiz {
 		this.canEditName = entity.canEditName();
 		this.canEditHints = entity.canEditHints();
 		this.hintsToolEnabled = entity.getHintsToolEnabled();
+		this.canEditDisableRightClick = entity.canEditDisableRightClick();
+		this.isDisableRightClickEnabled = entity.isDisableRightClickEnabled();
 	}
 
 	async save() {
@@ -52,6 +54,10 @@ export class Quiz {
 		await this.fetch();
 	}
 
+	setDisableRightClick(value) {
+		this.isDisableRightClickEnabled = value;
+	}
+
 	setHintsToolEnabled(isHintsEnabled) {
 		this.hintsToolEnabled = isHintsEnabled;
 	}
@@ -66,7 +72,8 @@ export class Quiz {
 		*/
 		const data = {
 			name: this.name,
-			allowHints: this.hintsToolEnabled
+			allowHints: this.hintsToolEnabled,
+			disableRightClick: this.isDisableRightClickEnabled
 		};
 
 		return data;
@@ -78,10 +85,13 @@ decorate(Quiz, {
 	name: observable,
 	canEditName: observable,
 	canEditHints: observable,
+	canEditDisableRightClick: observable,
 	hintsToolEnabled: observable,
+	isDisableRightClickEnabled: observable,
 	// actions
 	load: action,
 	setName: action,
 	setHintsToolEnabled: action,
+	setDisableRightClick: action,
 	save: action,
 });
