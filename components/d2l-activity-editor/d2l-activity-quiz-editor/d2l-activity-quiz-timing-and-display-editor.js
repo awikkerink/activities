@@ -2,6 +2,7 @@ import '../d2l-activity-accordion-collapse.js';
 import '../d2l-activity-availability-dates-editor.js';
 import '../d2l-activity-availability-dates-summary.js';
 import './d2l-activity-quiz-disable-right-click-editor.js';
+import './d2l-activity-quiz-disable-right-click-summary.js';
 import './d2l-activity-quiz-hints-editor.js';
 import './d2l-activity-quiz-hints-summary.js';
 import { accordionStyles } from '../styles/accordion-styles';
@@ -48,6 +49,7 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 				</span>
 
 				<li slot="summary-items">${this._renderAllowHintsSummary()}</li>
+				<li slot="summary-items">${this._renderDisableRightClickSummary()}</li>
 
 				<div class="d2l-editors" slot="components">
 					<label class="d2l-label-text">
@@ -80,6 +82,15 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 				href="${this.href}"
 				.token="${this.token}">
 			</d2l-activity-quiz-disable-right-click-editor>
+		`;
+	}
+
+	_renderDisableRightClickSummary() {
+		return html`
+			<d2l-activity-quiz-disable-right-click-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-disable-right-click-summary>
 		`;
 	}
 
