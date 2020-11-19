@@ -86,7 +86,7 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(R
 		`;
 	}
 	_alignmentTagsEmptyChanged(e) {
-		this._hasAlignments = !!e.detail.entities?.length;
+		this._hasAlignments = !!(e.detail.entities && e.detail.entities.length);
 		this.requestUpdate();
 	}
 	_closeDialog() {
