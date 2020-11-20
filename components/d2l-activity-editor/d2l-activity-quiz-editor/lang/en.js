@@ -8,5 +8,7 @@ export default {
 	"hdrAttemptsAndCompletion": "Attempts & Completion", //attempts/completion accordion header
 	"displayTools": "Display", // Title for display tools
 	"hintsToolDescription": "Allow hints", // decription for hints tool
-	"hintsAllowedSummary": "Hints allowed" // summary text when hints are enabled
+	"hintsAllowedSummary": "Hints allowed", // summary text when hints are enabled,
+	"passwordLabel": "Password", // Lable for the quiz password text input field
+
 };
