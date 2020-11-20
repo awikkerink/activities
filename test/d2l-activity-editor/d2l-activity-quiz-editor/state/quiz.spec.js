@@ -74,4 +74,12 @@ describe('Quiz', function() {
 		expect(quiz.name).to.equal('No Homework');
 	});
 
+	it('setPassword', async() => {
+		const quiz = new Quiz('http://quiz/1', 'token');
+		await quiz.fetch();
+		quiz.setPassword('super-secret-passord');
+
+		expect(quiz.isDisableRightClickEnabled).to.equal('super-secret-passord');
+	});
+
 });
