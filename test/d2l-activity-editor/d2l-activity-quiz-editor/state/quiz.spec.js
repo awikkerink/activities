@@ -27,7 +27,9 @@ describe('Quiz', function() {
 				canEditHints: () => true,
 				getHintsToolEnabled: () => false,
 				canEditDisableRightClick: () => true,
-				isDisableRightClickEnabled: () => false
+				isDisableRightClickEnabled: () => false,
+				password: () => 'hello',
+				canEditPassword: () => true
 			};
 		});
 
