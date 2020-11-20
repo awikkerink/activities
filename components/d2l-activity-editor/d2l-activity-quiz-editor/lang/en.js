@@ -7,8 +7,9 @@ export default {
 	"hdrTimingAndDisplay": "Timing & Display", // timing/display accordion header
 	"hdrAttemptsAndCompletion": "Attempts & Completion", //attempts/completion accordion header
 	"displayTools": "Display", // Title for display tools
-	"hintsToolDescription": "Allow hints", // description for allow hints
-	"hintsAllowedSummary": "Hints allowed", // summary text when hints are enabled
+	"hintsToolDescription": "Allow hints", // decription for hints tool
+	"hintsAllowedSummary": "Hints allowed", // summary text when hints are enabled,
+	"passwordLabel": "Password", // Label for the quiz password text input field
 	"disableRightClickDescription": "Disable right click", // description for disable right click
 	"disableRightClickSummary": "Right clicks disabled" // summary text when right clicks are disabled
 };

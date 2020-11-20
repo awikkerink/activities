@@ -49,7 +49,8 @@ class QuizEditorSecondary extends ActivityEditorFeaturesMixin(AsyncContainerMixi
 	render() {
 		const availabilityAccordian = html`
 			<d2l-activity-quiz-availability-editor
-				.href="${this.activityUsageHref}"
+				.activityUsageHref="${this.activityUsageHref}"
+				.href="${this.href}"
 				.token="${this.token}"
 				?skeleton="${this.skeleton}">
 			</d2l-activity-quiz-availability-editor>

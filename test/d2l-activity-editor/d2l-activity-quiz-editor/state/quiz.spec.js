@@ -27,7 +27,9 @@ describe('Quiz', function() {
 				canEditHints: () => true,
 				getHintsToolEnabled: () => false,
 				canEditDisableRightClick: () => true,
-				isDisableRightClickEnabled: () => false
+				isDisableRightClickEnabled: () => false,
+				password: () => 'hello',
+				canEditPassword: () => true
 			};
 		});
 
@@ -72,6 +74,17 @@ describe('Quiz', function() {
 		quiz.setName('No Homework');
 
 		expect(quiz.name).to.equal('No Homework');
+	});
+
+	it('setPassword', async() => {
+		const quiz = new Quiz('http://quiz/1', 'token');
+		await quiz.fetch();
+
+		const password = 'super-secret-password';
+
+		quiz.setPassword(password);
+
+		expect(quiz.password).to.equal(password);
 	});
 
 });

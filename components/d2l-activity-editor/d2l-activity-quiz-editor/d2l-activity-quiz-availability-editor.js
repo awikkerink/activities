@@ -1,6 +1,7 @@
 import '../d2l-activity-accordion-collapse.js';
 import '../d2l-activity-availability-dates-editor.js';
 import '../d2l-activity-availability-dates-summary.js';
+import './d2l-activity-quiz-password-editor.js';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorFeaturesMixin } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
@@ -16,6 +17,7 @@ class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivit
 	static get properties() {
 
 		return {
+			activityUsageHref: { type: String },
 			href: { type: String },
 			token: { type: Object }
 		};
@@ -45,13 +47,14 @@ class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivit
 				<li slot="summary-items">${this._renderAvailabilityDatesSummary()}</li>
 				<span slot="components">
 					${this._renderAvailabilityDatesEditor()}
+					${this._renderPasswordEditor()}
 				</span>
 			</d2l-activity-accordion-collapse>
 		`;
 	}
 	// Returns true if any error states relevant to this accordion are set
 	_errorInAccordion() {
-		const activity = store.get(this.href);
+		const activity = store.get(this.activityUsageHref);
 		if (!activity || !activity.dates) {
 			return false;
 		}
@@ -64,7 +67,7 @@ class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivit
 		return html`
 			<div class="d2l-editor">
 				<d2l-activity-availability-dates-editor
-					href="${this.href}"
+					href="${this.activityUsageHref}"
 					.token="${this.token}"
 					startDateDefaultTime="00:00:00">
 				</d2l-activity-availability-dates-editor>
@@ -76,11 +79,22 @@ class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivit
 
 		return html`
 			<d2l-activity-availability-dates-summary
-				href="${this.href}"
+				href="${this.activityUsageHref}"
 				.token="${this.token}">
 			</d2l-activity-availability-dates-summary>
 		`;
 	}
+
+	_renderPasswordEditor() {
+
+		return html`
+			<d2l-activity-quiz-password-editor
+				.href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-password-editor>
+		`;
+	}
+
 }
 
 customElements.define(

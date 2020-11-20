@@ -1,6 +1,4 @@
 import '../d2l-activity-accordion-collapse.js';
-import '../d2l-activity-availability-dates-editor.js';
-import '../d2l-activity-availability-dates-summary.js';
 import './d2l-activity-quiz-disable-right-click-editor.js';
 import './d2l-activity-quiz-disable-right-click-summary.js';
 import './d2l-activity-quiz-hints-editor.js';
