@@ -33,6 +33,8 @@ export class Quiz {
 		this.canEditName = entity.canEditName();
 		this.canEditHints = entity.canEditHints();
 		this.hintsToolEnabled = entity.getHintsToolEnabled();
+		this.password = entity.password();
+		this.canEditPassword = entity.canEditPassword();
 	}
 
 	async save() {
@@ -60,13 +62,18 @@ export class Quiz {
 		this.name = value;
 	}
 
+	setPassword(value) {
+		this.password = value;
+	}
+
 	_makeQuizData() {
 		/* NOTE: if you add fields here, please make sure you update the corresponding equals method in siren-sdk.
 					 The cancel workflow is making use of that to detect changes.
 		*/
 		const data = {
 			name: this.name,
-			allowHints: this.hintsToolEnabled
+			allowHints: this.hintsToolEnabled,
+			password: this.password
 		};
 
 		return data;
@@ -79,9 +86,11 @@ decorate(Quiz, {
 	canEditName: observable,
 	canEditHints: observable,
 	hintsToolEnabled: observable,
+	password: observable,
 	// actions
 	load: action,
 	setName: action,
 	setHintsToolEnabled: action,
+	setPassword: action,
 	save: action,
 });
