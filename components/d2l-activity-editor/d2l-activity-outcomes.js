@@ -1,6 +1,6 @@
 import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
-import 'd2l-activity-alignments/d2l-select-outcomes.js';
+import 'd2l-activity-alignments/d2l-select-outcomes-hierarchical.js';
 import { ActivityEditorFeaturesMixin, Milestones } from './mixins/d2l-activity-editor-features-mixin.js';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
@@ -14,8 +14,9 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(R
 	static get properties() {
 		return {
 			hidden: { type: Boolean, reflect: true },
-			deferredSave: { type: Boolean },
-			hideIndirectAlignments: { type: Boolean },
+			deferredSave: { type: Boolean, attribute: 'deferred-save' },
+			hideIndirectAlignments: { type: Boolean, attribute: 'hide-indirect-alignments' },
+			alignButtonText: { type: String, attribute: 'align-button-text' },
 			_featureEnabled: { type: Boolean },
 			_opened: { type: Boolean },
 			_outcomesTerm: { type: String },
@@ -36,7 +37,7 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(R
 
 	constructor() {
 		super(store);
-		this.deferredSave = true;
+		this.deferredSave = false;
 		this.hideIndirectAlignments = true;
 	}
 
@@ -56,10 +57,11 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(R
 		}
 
 		const {
-			canUpdateAlignments
+			canUpdateAlignments,
+			alignmentsHref
 		} = activity;
 
-		if (!canUpdateAlignments && !this._hasAlignments) {
+		if (!canUpdateAlignments && !this._hasAlignments || this._hasAlignments === undefined) {
 			this.hidden = true;
 		} else {
 			this.hidden = false;
@@ -73,18 +75,18 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(R
 				title-text="${this._browseOutcomesText}"
 				?opened="${this._opened}"
 				@d2l-dialog-close="${this._closeDialog}">
-				<d2l-select-outcomes
-					href="${this.href}"
+				<d2l-select-outcomes-hierarchical
+					href="${alignmentsHref}"
 					.token="${this.token}"
-					?deferred-save="${this.deferredSave}"
+					.alignButtonText="${this.alignButtonText}"
 					@d2l-alignment-list-added="${this._onDialogAdd}"
 					@d2l-alignment-list-cancelled="${this._onDialogCancel}">
-				</d2l-select-outcomes>
+				</d2l-select-outcomes-hierarchical>
 			</d2l-dialog>` : null}
 		`;
 	}
 	_alignmentTagsEmptyChanged(e) {
-		this._hasAlignments = !e.detail.value;
+		this._hasAlignments = !!(e.detail.entities && e.detail.entities.length);
 		this.requestUpdate();
 	}
 	_closeDialog() {
@@ -113,10 +115,6 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(R
 		// react to outcomes selector dialog being closed via cancel
 	}
 
-	_onOutcomeTagDeleted() {
-		// react to an outcomes tag being deleted
-	}
-
 	_openDialog() {
 		this._opened = true;
 	}
@@ -137,9 +135,8 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(R
 				?deferred-save="${this.deferredSave}"
 				?hide-indirect-alignments="${this.hideIndirectAlignments}"
 				browse-outcomes-text="${this._browseOutcomesText}"
-				@d2l-activity-alignment-outcomes-updated="${this._onOutcomeTagDeleted}"
+				@d2l-activity-alignment-outcomes-updated="${this._alignmentTagsEmptyChanged}"
 				@d2l-activity-alignment-tags-update="${this._openDialog}"
-				@empty-changed="${this._alignmentTagsEmptyChanged}"
 				?read-only=${!this._hasAlignments}>
 			</d2l-activity-alignment-tags>`;
 	}
