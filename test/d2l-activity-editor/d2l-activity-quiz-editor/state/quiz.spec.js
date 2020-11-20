@@ -81,7 +81,7 @@ describe('Quiz', function() {
 		await quiz.fetch();
 		quiz.setPassword('super-secret-passord');
 
-		expect(quiz.isDisableRightClickEnabled).to.equal('super-secret-passord');
+		expect(quiz.password).to.equal('super-secret-passord');
 	});
 
 });
