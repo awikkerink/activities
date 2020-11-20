@@ -10,5 +10,6 @@ export default {
 	"hintsToolDescription": "Allow hints", // decription for hints tool
 	"hintsAllowedSummary": "Hints allowed", // summary text when hints are enabled,
 	"passwordLabel": "Password", // Lable for the quiz password text input field
-
+	"disableRightClickDescription": "Disable right click", // description for disable right click
+	"disableRightClickSummary": "Right clicks disabled" // summary text when right clicks are disabled
 };
