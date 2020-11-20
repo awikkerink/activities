@@ -44,7 +44,7 @@ export async function fetchSubmissionCount(activityUsageEntity, token) {
 
 	const evaluationStatusEntity = await fetch(evalStatusLink, token);
 
-	return evaluationStatusEntity.properties.completed || 0;
+	return evaluationStatusEntity.properties.newsubmissions + evaluationStatusEntity.properties.resubmissions;
 }
 
 export function determineIcon(au) {
