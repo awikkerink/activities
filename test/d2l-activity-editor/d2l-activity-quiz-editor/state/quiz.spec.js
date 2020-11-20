@@ -79,9 +79,12 @@ describe('Quiz', function() {
 	it('setPassword', async() => {
 		const quiz = new Quiz('http://quiz/1', 'token');
 		await quiz.fetch();
-		quiz.setPassword('super-secret-passord');
 
-		expect(quiz.password).to.equal('super-secret-passord');
+		const password = 'super-secret-password';
+
+		quiz.setPassword(password);
+
+		expect(quiz.password).to.equal(password);
 	});
 
 });
