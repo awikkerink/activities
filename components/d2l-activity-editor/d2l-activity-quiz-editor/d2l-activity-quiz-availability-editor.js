@@ -1,6 +1,7 @@
 import '../d2l-activity-accordion-collapse.js';
 import '../d2l-activity-availability-dates-editor.js';
 import '../d2l-activity-availability-dates-summary.js';
+import './d2l-activity-quiz-password-summary';
 import './d2l-activity-quiz-password-editor.js';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorFeaturesMixin } from '../mixins/d2l-activity-editor-features-mixin.js';
@@ -44,7 +45,10 @@ class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivit
 				<span slot="header">
 					${this.localize('hdrAvailability')}
 				</span>
+
 				<li slot="summary-items">${this._renderAvailabilityDatesSummary()}</li>
+				<li slot="summary-items">${this._renderPasswordSummary()}</li>
+
 				<span slot="components">
 					${this._renderAvailabilityDatesEditor()}
 					${this._renderPasswordEditor()}
@@ -92,6 +96,15 @@ class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivit
 				.href="${this.href}"
 				.token="${this.token}">
 			</d2l-activity-quiz-password-editor>
+		`;
+	}
+
+	_renderPasswordSummary() {
+		return html`
+			<d2l-activity-quiz-password-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-password-summary>
 		`;
 	}
 
