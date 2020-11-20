@@ -95,6 +95,7 @@ decorate(Quiz, {
 	canEditDisableRightClick: observable,
 	hintsToolEnabled: observable,
 	password: observable,
+	canEditPassword: observable,
 	isDisableRightClickEnabled: observable,
 	// actions
 	load: action,
