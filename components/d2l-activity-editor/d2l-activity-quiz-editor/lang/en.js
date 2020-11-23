@@ -11,5 +11,6 @@ export default {
 	"hintsAllowedSummary": "Hints allowed", // summary text when hints are enabled,
 	"passwordLabel": "Password", // Label for the quiz password text input field
 	"disableRightClickDescription": "Disable right click", // description for disable right click
-	"disableRightClickSummary": "Right clicks disabled" // summary text when right clicks are disabled
+	"disableRightClickSummary": "Right clicks disabled", // summary text when right clicks are disabled
+	"disablePagerAndAlertsDescription": "Block alerts and communication during quiz attempts",
 };
