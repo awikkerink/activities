@@ -6,7 +6,7 @@ import './d2l-work-to-do-activity-list-item-basic';
 import './d2l-work-to-do-activity-list-item-detailed';
 
 import { Actions, Rels } from 'siren-sdk/src/hypermedia-constants';
-import { bodyStandardStyles, heading3Styles } from '@brightspace-ui/core/components/typography/styles';
+import { bodyStandardStyles, heading1Styles, heading3Styles, heading4Styles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { Config, Constants } from './env';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
@@ -39,7 +39,9 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 	static get styles() {
 		return [
 			bodyStandardStyles,
+			heading1Styles,
 			heading3Styles,
+			heading4Styles,
 			css`
 				:host {
 					display: block;
@@ -77,6 +79,9 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 					height: 100px;
 					width: 100px;
 				}
+				.d2l-work-to-do-fullscreen-title {
+					padding: 0 2rem;
+				}
 			`
 		];
 	}
@@ -103,6 +108,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 
 	constructor() {
 		super();
+		this.fullscreen = false;
 		this._discoverActive = false;
 		this._emptyEntity = undefined;
 		this._maxCollection = undefined;
@@ -237,8 +243,61 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 		/** Error state template */
 		const errorTemplate = nothing;
 
-		/** Full-view state templates */
-		const fullPageTemplate = nothing;
+		/** Fullscreen state templates */
+		const fullscreenCollectionTemplate = (collection, displayLimit, isOverdue) => {
+			if (!collection || displayLimit === 0) {
+				return nothing;
+			}
+
+			const activities = collection.getSubEntitiesByRel(Rels.Activities.userActivityUsage);
+			if (activities.length === 0) {
+				return nothing;
+			}
+
+			let prevDate = new Date(0, 0, 0, 0);
+
+			const groupedByDate = activities.slice(0, displayLimit).map((activity) => {
+				const activityDate = activity.hasSubEntityByClass('due-date')
+					? new Date(activity.getSubEntityByClass('due-date').properties.date)
+					: new Date(activity.getSubEntityByClass('end-date').properties.date);
+
+				const newDay = activityDate > prevDate;
+				prevDate = newDay
+					? new Date(activityDate.getFullYear(), activityDate.getMonth(), activityDate.getDate(), 23, 59, 59, 999)
+					: prevDate;
+
+				return html`
+					<d2l-work-to-do-activity-list-item-detailed
+						href=${ifDefined(activity.getLinkByRel('self').href)}
+						.token=${ifDefined(this.token)}
+						?include-date=${newDay}></d2l-work-to-do-activity-list-item-detailed>
+				`;
+			});
+
+			return html`
+				<div class="d2l-activity-collection">
+					<d2l-work-to-do-activity-list-header ?overdue=${isOverdue} count=${activities.length} fullscreen></d2l-work-to-do-activity-list-header>
+					<d2l-list>${groupedByDate}</d2l-list>
+				</div>
+			`;
+		};
+
+		const fullscreenTemplate = () => {
+			if (!this._overdueCollection || !this._upcomingCollection) {
+				return nothing;
+			}
+			return html`
+				<div class="d2l-work-to-do-fullscreen-container">
+					<div class="d2l-heading-1 d2l-work-to-do-fullscreen-title">${this.localize('myWorkToDo')}</div>
+					<div class="d2l-overdue-collection-fullscreen">
+						${fullscreenCollectionTemplate(this._overdueCollection, this._overdueDisplayLimit, true)}
+					</div>
+					<div class="d2l-upcoming-collection-fullscreen">
+						${fullscreenCollectionTemplate(this._upcomingCollection, this._upcomingDisplayLimit, false)}
+					</div>
+				</div>
+			`;
+		};
 
 		/** Loading state template */
 		const loadingTemplate = nothing;
@@ -251,8 +310,8 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 				return emptyViewTemplate();
 			case 'error':
 				return errorTemplate; // TODO: Create error template
-			case 'full-page':
-				return fullPageTemplate; // TODO: Create full page template
+			case 'fullscreen':
+				return fullscreenTemplate();
 			case 'loading':
 				return loadingTemplate; // TODO: Create loading template (or infuse skeletons)
 			default:
@@ -287,7 +346,9 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 	get _state() {
 		if (this._overdueCollection && this._upcomingCollection) {
 			if (this._overdueCount || this._upcomingCount) {
-				return 'activity';
+				return this.fullscreen
+					? 'fullscreen'
+					: 'activity';
 			} else if (this._maxCollection) {
 				return 'empty';
 			} else {
