@@ -3,10 +3,11 @@ import '@brightspace-ui/core/components/icons/icon';
 import '@brightspace-ui/core/components/list/list-item-content';
 import '../d2l-activity-date/d2l-activity-date';
 
-import { bodyCompactStyles, bodySmallStyles, bodyStandardStyles } from '@brightspace-ui/core/components/typography/styles';
+import { bodyCompactStyles, bodySmallStyles, bodyStandardStyles, heading3Styles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
 import { ActivityAllowList } from './env';
+import { classMap } from 'lit-html/directives/class-map.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { ListItemMixin } from '@brightspace-ui/core/components/list/list-item-mixin';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin';
@@ -17,6 +18,8 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 
 	static get properties() {
 		return {
+			/** Indicates whether the component should render the due/end date of the related activity */
+			includeDate: { type: Boolean, attribute: 'include-date' },
 			/** entity used for crawling instance properties (e.g. name) */
 			_activity: { type: Object },
 			/** entity associated with ActivityUsageEntity's organization */
@@ -32,6 +35,7 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 			bodyCompactStyles,
 			bodySmallStyles,
 			bodyStandardStyles,
+			heading3Styles,
 			css`
 				:host {
 					display: block;
@@ -40,43 +44,52 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 				:host([hidden]) {
 					display: none;
 				}
-				:hover #d2l-activity-icon,
-				:hover #content-top-container {
-					color: var(--d2l-color-celestine);
+				.d2l-activity-icon-container {
+					padding: 0.7rem 0.7rem 0 0.25rem;
 				}
-				#d2l-activity-icon {
-					margin-right: 2.1rem;
-					margin-top: 0.9rem;
+				:host([dir="rtl"]) .d2l-activity-icon-container {
+					padding: 0.7rem 0.25rem 0 0.7rem;
 				}
-				:host([dir="rtl"]) #d2l-activity-icon {
-					margin-left: 2.1rem;
-					margin-right: 0;
-				}
-				#content-top-container {
+				.d2l-activity-name-container {
 					color: var(--d2l-color-ferrite);
 					margin: 0.6rem 0 0 0;
+				}
+				.d2l-activity-icon-container.d2l-hovering,
+				.d2l-activity-icon-container.d2l-focusing,
+				.d2l-activity-name-container.d2l-hovering,
+				.d2l-activity-name-container.d2l-focusing {
+					--d2l-list-item-content-text-decoration: underline;
+					color: var(--d2l-color-celestine);
 				}
 				#d2l-icon-bullet {
 					color: var(--d2l-color-tungsten);
 					margin-left: -0.15rem;
 					margin-right: -0.15rem;
 				}
-				#content-bottom-container {
+				.d2l-content-secondary-container {
 					color: var(--d2l-color-tungsten);
+					margin-bottom: 0.3rem;
 				}
-				#content-supporting-info-container {
+				.d2l-content-secondary-container-no-description {
+					margin-bottom: 0.6rem;
+				}
+				.d2l-content-supporting-info-container {
 					-webkit-box-orient: vertical;
 					color: var(--d2l-color-ferrite);
 					display: block;
 					display: -webkit-box;
 					-webkit-line-clamp: 2;
-					margin: 0.3rem 0 0.6rem 0;
+					margin-bottom: 0.6rem;
 					max-width: inherit;
 					overflow: hidden;
 					text-overflow: ellipsis;
 				}
 				[slot="content"] {
-					padding: 0.3rem 0;
+					padding: 0;
+				}
+				.d2l-activity-date-container {
+					margin: 0;
+					padding: 1rem 0 0.1rem 0;
 				}
 			`
 		];
@@ -132,32 +145,79 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 			return nothing;
 		}
 
+		const iconClasses = {
+			'd2l-activity-icon-container': true,
+			'd2l-focusing': this._focusingLink,
+			'd2l-hovering': this._hoveringLink
+		};
+
+		const nameClasses = {
+			'd2l-body-standard': true,
+			'd2l-activity-name-container': true,
+			'd2l-focusing': this._focusingLink,
+			'd2l-hovering': this._hoveringLink
+		};
+
+		const secondaryClasses = {
+			'd2l-body-small': true,
+			'd2l-content-secondary-container': true,
+			'd2l-content-secondary-container-no-description': !this._description
+		};
+
+		const supportingClasses = {
+			'd2l-body-compact': true,
+			'd2l-content-supporting-info-container': true,
+		};
+
+		const dateTemplate = this.includeDate
+			? html `
+				<div class="d2l-activity-date-container">
+					<d2l-activity-date
+						class="d2l-heading-3"
+						href=${this.href}
+						.token=${this.token}
+						format="dddd, MMMM d"
+						date-only>
+					</d2l-activity-date>
+				</div>`
+			: nothing;
+
 		const iconTemplate = this._icon
-			? html `<d2l-icon id="d2l-activity-icon" icon=${this._icon}></d2l-icon>`
+			? html `<d2l-icon class=${classMap(iconClasses)} icon=${this._icon}></d2l-icon>`
 			: nothing;
 
 		const separatorTemplate = !!this._type && !!this._orgName
 			? html `<d2l-icon id="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
 			: nothing;
 
-		return this._renderListItem({
+		const descriptionTemplate = this._description
+			? html`
+				<div id="content-supporting-info-container" slot="supporting-info" class=${classMap(supportingClasses)}>
+					${this._description}
+				</div>`
+			: nothing;
+
+		const listItemTemplate = this._renderListItem({
 			illustration: iconTemplate,
 			content: html`
 				<d2l-list-item-content id="content">
-					<div id="content-top-container" class="d2l-body-standard">
+					<div class=${classMap(nameClasses)}>
 						${this._name}
 					</div>
-					<div id="content-secondary-container" slot="secondary" class="d2l-body-small">
+					<div class=${classMap(secondaryClasses)} slot="secondary">
 						${this._type}
 						${separatorTemplate}
 						${this._orgName}
 					</div>
-					<div id="content-supporting-info-container" slot="supporting-info" class="d2l-body-compact">
-						${this._description}
-					</div>
+					${descriptionTemplate}
 				</d2l-list-item-content>
 			`
 		});
+
+		return html`
+			${dateTemplate}
+			${listItemTemplate}
+		`;
 	}
 
 	set actionHref(href) {  // Require setter function as list-mixin initializes value
