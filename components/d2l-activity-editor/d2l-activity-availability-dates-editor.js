@@ -27,8 +27,8 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeActiv
 			}
 			:host {
 				display: flex;
-				justify-content: flex;
 				flex-direction: column;
+				justify-content: flex;
 			}
 			#start-date-input {
 				padding-bottom: 20px;
