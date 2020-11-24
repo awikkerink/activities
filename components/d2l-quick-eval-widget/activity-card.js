@@ -31,7 +31,7 @@ export class QuickEvalWidgetActivityCard extends LitElement {
 				<d2l-list-item-content>
 					<d2l-link href="${this.evaluateAllHref}">${this.activityName}</d2l-link>
 					<p class="d2l-body-compact d2l-body-small">${this.courseName + '\t\u2022\t' + this.dueDate}</p>
-					<p class="d2l-body-compact d2l-body-small">Submissions: ${this.submissionCount}</p>
+					${ this.submissionCount ? html`<p class="d2l-body-compact d2l-body-small">Submissions: ${this.submissionCount}</p>` : html`` }
 				<d2l-list-item-content>
 			</d2l-list-item>`;
 	}

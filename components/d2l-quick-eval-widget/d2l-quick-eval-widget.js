@@ -6,6 +6,7 @@ import { fetchActivities, fetchActivityName, fetchCourseName, getDueDate, fetchS
 import './activity-card';
 import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 export class QuickEvalWidget extends SkeletonMixin(LitElement) {
 	static get properties() {
@@ -60,7 +61,12 @@ export class QuickEvalWidget extends SkeletonMixin(LitElement) {
 			const courseName = await fetchCourseName(au, token);
 			const rawDueDate = getDueDate(au);
 			const dueDate = rawDueDate ? formatDateTime(new Date(rawDueDate)) : 'No due date';
-			const submissionCount = await fetchSubmissionCount(au, token);
+
+			let submissionCount = await fetchSubmissionCount(au, token);
+			// don't display submissionCounts of zero
+			if (submissionCount === 0) {
+				submissionCount = undefined;
+			}
 			const icon = determineIcon(au);
 			const evaluateAllHref = await fetchEvaluateAllHref(au, token);
 
@@ -81,7 +87,7 @@ export class QuickEvalWidget extends SkeletonMixin(LitElement) {
 					activityName="${a.activityName}"
 					courseName="${a.courseName}"
 					dueDate="${a.dueDate}"
-					submissionCount="${a.submissionCount}"
+					submissionCount="${ifDefined(a.submissionCount)}"
 					icon="${a.icon}"
 					evaluateAllHref="${a.evaluateAllHref}"
 				></d2l-quick-eval-widget-activity-card>`;
