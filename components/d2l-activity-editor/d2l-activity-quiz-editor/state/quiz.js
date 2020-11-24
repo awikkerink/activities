@@ -57,7 +57,7 @@ export class Quiz {
 
 		await this.fetch();
 	}
-	setDisablePagerAndAlertsToolEnabled(isEnabled) {
+	setDisablePagerAndAlertsTool(isEnabled) {
 		this.isDisablePagerAndAlertsEnabled = isEnabled;
 	}
 
@@ -111,6 +111,6 @@ decorate(Quiz, {
 	setHintsToolEnabled: action,
 	setPassword: action,
 	setDisableRightClick: action,
-	setDisablePagerAndAlertsToolEnabled: action,
+	setDisablePagerAndAlertsTool: action,
 	save: action,
 });

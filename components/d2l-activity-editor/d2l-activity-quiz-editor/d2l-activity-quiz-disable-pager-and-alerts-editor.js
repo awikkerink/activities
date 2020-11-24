@@ -49,7 +49,7 @@ class ActivityQuizDisablePagerAndAlertsEditor
 
 			<d2l-input-checkbox
 				?checked="${entity.isDisablePagerAndAlertsEnabled}"
-				@change="${this._setDisablePagerAndAlertsToolEnabled}"
+				@change="${this._setDisablePagerAndAlertsTool}"
 				ariaLabel="${this.localize('disablePagerAndAlertsDescription')}"
 				?disabled="${!entity.canEditDisablePagerAndAlerts}">
 				${this.localize('disablePagerAndAlertsDescription')}
@@ -57,9 +57,9 @@ class ActivityQuizDisablePagerAndAlertsEditor
 		`;
 	}
 
-	_setDisablePagerAndAlertsToolEnabled(event) {
+	_setDisablePagerAndAlertsTool(event) {
 		const entity = store.get(this.href);
-		entity.setDisablePagerAndAlertsToolEnabled(event.target.checked);
+		entity.setDisablePagerAndAlertsTool(event.target.checked);
 	}
 }
 
