@@ -12,5 +12,5 @@ export default {
 	"passwordLabel": "Password", // Label for the quiz password text input field
 	"disableRightClickDescription": "Disable right click", // description for disable right click
 	"disableRightClickSummary": "Right clicks disabled", // summary text when right clicks are disabled
-	"disablePagerAndAlertsDescription": "Block alerts and communication during quiz attempts",
+	"disablePagerAndAlertsDescription": "Block alerts and communication during quiz attempts", // description for disable pager and alerts / block communications during a quiz
 };
