@@ -37,6 +37,7 @@ export class QuickEvalWidget extends SkeletonMixin(LitElement) {
 			}
 			.d2l-quick-eval-widget-heading {
 				margin-bottom: 0.5rem;
+				margin-top: 0.5rem;
 			}
 			.d2l-quick-eval-widget-list {
 				margin-top: 0.5rem;
