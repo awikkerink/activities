@@ -18,7 +18,15 @@ export class QuickEvalWidget extends SkeletonMixin(LitElement) {
 				type: String
 			},
 			activities: { type: Array },
-			count: { type: Number }
+			count: { type: Number },
+			toggleHref: {
+				attribute: 'toggle-href',
+				type: String
+			},
+			toggleState: {
+				attribute: 'toggle-state',
+				type: String
+			},
 		};
 	}
 
@@ -60,7 +68,7 @@ export class QuickEvalWidget extends SkeletonMixin(LitElement) {
 			const activityName = await fetchActivityName(au, token);
 			const courseName = await fetchCourseName(au, token);
 			const rawDueDate = getDueDate(au);
-			const dueDate = rawDueDate ? formatDateTime(new Date(rawDueDate)) : 'No due date';
+			const dueDate = rawDueDate ? 'Due: ' + formatDateTime(new Date(rawDueDate), { format: 'medium' }) : 'No due date';
 
 			let submissionCount = await fetchSubmissionCount(au, token);
 			// don't display submissionCounts of zero
