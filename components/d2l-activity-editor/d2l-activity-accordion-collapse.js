@@ -49,19 +49,19 @@ class ActivityAccordionCollapse extends SkeletonMixin(LitElement) {
 					padding: 0;
 				}
 
-				ul.d2l-activity-summarizer-summary > li {
-					margin-bottom: 8px;
-				}
-
-				ul.d2l-activity-summarizer-summary > li:last-child {
-					margin-bottom: 0;
-				}
-
 				:host([skeleton]) .d2l-activity-summarizer-summary.d2l-skeletize::before {
 					width: 60%;
 				}
 				:host([skeleton]) .d2l-activity-summarizer-summary.d2l-skeletize {
 					height: 1rem;
+				}
+
+				::slotted(li) {
+					margin-bottom: 8px;
+				}
+
+				::slotted(li:last-of-type) {
+					margin-bottom: 0;
 				}
 			`
 		];
