@@ -29,7 +29,7 @@
     "@babel/core": "^7.8.3",
     "@babel/polyfill": "^7.0.0",
     "@babel/preset-env": "^7.8.3",
-    "@brightspace-ui/stylelint-config": "^0.0.1",
+    "@brightspace-ui/stylelint-config": "^0.0.3",
     "@brightspace-ui/visual-diff": "^1.0.1",
     "@open-wc/testing": "^2.5.1",
     "@open-wc/testing-karma": "^4.0.5",
@@ -68,7 +68,7 @@
     "wct-mocha": "^1.0.1",
     "whatwg-fetch": "^3.0.0"
   },
-  "version": "3.53.119",
+  "version": "3.53.120",
   "resolutions": {
     "inherits": "2.0.3",
     "samsam": "1.1.3",
