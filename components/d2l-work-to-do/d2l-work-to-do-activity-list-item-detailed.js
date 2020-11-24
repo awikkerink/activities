@@ -186,7 +186,7 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 			? html `<d2l-icon class=${classMap(iconClasses)} icon=${this._icon}></d2l-icon>`
 			: nothing;
 
-		const separatorTemplate = !!this._type && !!this._orgName
+		const separatorTemplate = this._type && (this._orgName || this._orgCode)
 			? html `<d2l-icon id="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
 			: nothing;
 
@@ -207,7 +207,7 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 					<div class=${classMap(secondaryClasses)} slot="secondary">
 						${this._type}
 						${separatorTemplate}
-						${this._orgName}
+						${this._orgName || this._orgCode}
 					</div>
 					${descriptionTemplate}
 				</d2l-list-item-content>
@@ -259,6 +259,13 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 		return this._activity && this._activity.hasProperty('name')
 			? this._activity.properties.name
 			: this._props ? this._props.type : '';
+	}
+
+	/** Organization code of the activity's associated organization */
+	get _orgCode() {
+		return this._organization && this._organization.hasProperty('code')
+			? this._organization.properties.code
+			: '';
 	}
 
 	/** Name of the activity's associated organization */

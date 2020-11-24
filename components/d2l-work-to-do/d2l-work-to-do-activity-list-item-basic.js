@@ -117,7 +117,7 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 
 		const dateTemplate = html `<d2l-activity-date href="${this.href}" .token="${this.token}" format="MMM d"></d2l-activity-date>`;
 
-		const separatorTemplate = !!this._date && !!this._orgCode
+		const separatorTemplate = this._date && (this._orgName || this._orgCode)
 			? html `<d2l-icon id="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
 			: nothing;
 
@@ -131,7 +131,7 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 					<div id="content-bottom-container" slot="secondary">
 						${dateTemplate}
 						${separatorTemplate}
-						${this._orgCode}
+						${this._orgName || this._orgCode}
 					</div>
 				</d2l-list-item-content>
 			`
@@ -177,6 +177,13 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 	get _orgCode() {
 		return this._organization && this._organization.hasProperty('code')
 			? this._organization.properties.code
+			: '';
+	}
+
+	/** Name of the activity's associated organization */
+	get _orgName() {
+		return this._organization && this._organization.hasProperty('name')
+			? this._organization.properties.name
 			: '';
 	}
 
