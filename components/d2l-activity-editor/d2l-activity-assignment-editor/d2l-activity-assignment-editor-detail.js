@@ -131,7 +131,8 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 					<d2l-activity-outcomes
 						class="d2l-editor-layout-section"
 						href="${this.activityUsageHref}"
-						.token="${this.token}">
+						.token="${this.token}"
+						align-button-text="${this.localize('btnSave')}">
 					</d2l-activity-outcomes>
 				` : null}
 

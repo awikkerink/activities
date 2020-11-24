@@ -3,7 +3,7 @@ import { ActivityDates } from './activity-dates.js';
 import { ActivityScoreGrade } from './activity-score-grade.js';
 import { ActivitySpecialAccess } from './activity-special-access.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
-import { AlignmentsCollectionEntity } from 'siren-sdk/src/alignments/AlignmentsCollectionEntity.js';
+import { AlignmentsHierarchicalEntity } from 'siren-sdk/src/alignments/AlignmentsHierarchicalEntity.js';
 import { CompetenciesEntity } from 'siren-sdk/src/competencies/CompetenciesEntity.js';
 import { fetchEntity } from '../state/fetch-entity.js';
 
@@ -17,7 +17,7 @@ export class ActivityUsage {
 	}
 
 	async dirty() {
-		return !this._entity.equals(this._makeUsageData()) || await this._alignmentsDirty();
+		return !this._entity.equals(this._makeUsageData());
 	}
 	async fetch() {
 		const sirenEntity = await fetchEntity(this.href, this.token);
@@ -66,19 +66,11 @@ export class ActivityUsage {
 			return;
 		}
 
-		await this.saveAlignments();
-
 		await this.scoreAndGrade.primeGradeSave();
 
 		await this._entity.save(this._makeUsageData());
 
 		await this.fetch();
-	}
-	async saveAlignments() {
-		if (this.alignmentsHref && this.canUpdateAlignments) {
-			const alignmentsCollection = new AlignmentsCollectionEntity(await fetchEntity(this.alignmentsHref, this.token), this.token);
-			return alignmentsCollection.save();
-		}
 	}
 	setAlignmentsHref(value) {
 		this.alignmentsHref = value;
@@ -133,14 +125,6 @@ export class ActivityUsage {
 			throw new Error('Activity Usage validation failed');
 		}
 	}
-	async _alignmentsDirty() {
-		if (!this.alignmentsHref || !this.canUpdateAlignments) {
-			return false;
-		}
-
-		const alignmentsCollection = new AlignmentsCollectionEntity(await fetchEntity(this.alignmentsHref, this.token), this.token);
-		return alignmentsCollection.hasSubmitAction();
-	}
 	async _loadCompetencyOutcomes(entity) {
 		/**
 		 * Legacy Competencies
@@ -156,7 +140,7 @@ export class ActivityUsage {
 		 * Learning Outcomes
 		 * Href will be available if outcomes tool is enabled.
 		*/
-		this.alignmentsHref = this.competenciesHref ? null : entity.alignmentsHref();
+		this.alignmentsHref = this.competenciesHref ? null : entity.alignmentsHierarchicalHref();
 		this.canUpdateAlignments = false;
 
 		if (this.competenciesHref) {
@@ -170,8 +154,8 @@ export class ActivityUsage {
 		const alignmentsEntity = await fetchEntity(this.alignmentsHref, this.token);
 
 		runInAction(() => {
-			const alignmentsCollection = new AlignmentsCollectionEntity(alignmentsEntity);
-			this.canUpdateAlignments = alignmentsCollection.canUpdateAlignments();
+			const alignmentsHierarchical = new AlignmentsHierarchicalEntity(alignmentsEntity);
+			this.canUpdateAlignments = alignmentsHierarchical.canUpdateAlignments();
 		});
 	}
 

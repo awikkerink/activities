@@ -14,7 +14,7 @@ import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin';
 import { nothing } from 'lit-html';
 import { fetchEntity } from './state/fetch-entity';
 
-class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
+class ActivityListItemDetailed extends ListItemLinkMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
 
 	static get properties() {
 		return {
