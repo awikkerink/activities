@@ -1,4 +1,5 @@
 import '../d2l-activity-accordion-collapse.js';
+import './d2l-activity-quiz-disable-pager-and-alerts-editor.js';
 import './d2l-activity-quiz-disable-right-click-editor.js';
 import './d2l-activity-quiz-disable-right-click-summary.js';
 import './d2l-activity-quiz-hints-editor.js';
@@ -55,6 +56,7 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 					</label>
 					${this._renderHintsEditor()}
 					${this._renderDisableRightClickEditor()}
+					${this._renderDisablePagerAndAlertsEditor()}
 				</div>
 
 			</d2l-activity-accordion-collapse>
@@ -71,6 +73,15 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 				href="${this.href}"
 				.token="${this.token}">
 			</d2l-activity-quiz-hints-summary>
+		`;
+	}
+
+	_renderDisablePagerAndAlertsEditor() {
+		return html`
+			<d2l-activity-quiz-disable-pager-and-alerts
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-disable-pager-and-alerts>
 		`;
 	}
 
@@ -100,6 +111,7 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 			</d2l-activity-quiz-hints-editor>
 		`;
 	}
+
 }
 
 customElements.define(

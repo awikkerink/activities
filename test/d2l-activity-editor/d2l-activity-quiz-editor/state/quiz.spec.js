@@ -28,6 +28,8 @@ describe('Quiz', function() {
 				getHintsToolEnabled: () => false,
 				canEditDisableRightClick: () => true,
 				isDisableRightClickEnabled: () => false,
+				canEditDisablePagerAndAlerts: () => true,
+				isDisablePagerAndAlertsEnabled: () => false,
 				password: () => 'hello',
 				canEditPassword: () => true
 			};
@@ -46,10 +48,20 @@ describe('Quiz', function() {
 		expect(quiz.hintsToolEnabled).to.equal(false);
 		expect(quiz.canEditDisableRightClick).to.equal(true);
 		expect(quiz.isDisableRightClickEnabled).to.equal(false);
+		expect(quiz.canEditDisablePagerAndAlerts).to.equal(true);
+		expect(quiz.isDisablePagerAndAlertsEnabled).to.equal(false);
 
 		expect(fetchEntity.mock.calls.length).to.equal(1);
 		expect(QuizEntity.mock.calls[0][0]).to.equal(sirenEntity);
 		expect(QuizEntity.mock.calls[0][1]).to.equal('token');
+	});
+
+	it('setDisablePagerAndAlerts', async() => {
+		const quiz = new Quiz('http://quiz/1', 'token');
+		await quiz.fetch();
+		quiz.setDisablePagerAndAlertsTool(true);
+
+		expect(quiz.isDisablePagerAndAlertsEnabled).to.equal(true);
 	});
 
 	it('setDisableRightClick', async() => {
