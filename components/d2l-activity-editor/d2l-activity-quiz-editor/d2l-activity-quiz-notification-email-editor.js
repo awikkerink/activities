@@ -35,17 +35,15 @@ class ActivityQuizNotificationEmailEditor
 		}
 
 		return html`
-			<div id="assignment-notification-email-container">
-				<d2l-input-text
-					label="${this.localize('emailNotificationDescription')}"
-					value="${entity.notificationEmail}"
-					maxlength="1024"
-					?disabled="${!entity.canEditNotificationEmail}"
-					@change="${this._onNotificationEmailChanged}"
-					skip-alert
-					novalidate
-				></d2l-input-text>
-			</div>
+			<d2l-input-text
+				label="${this.localize('emailNotificationDescription')}"
+				value="${entity.notificationEmail}"
+				maxlength="1024"
+				?disabled="${!entity.canEditNotificationEmail}"
+				@change="${this._onNotificationEmailChanged}"
+				skip-alert
+				novalidate>
+			</d2l-input-text>
 		`;
 	}
 
