@@ -39,6 +39,8 @@ export class Quiz {
 		this.isDisableRightClickEnabled = entity.isDisableRightClickEnabled();
 		this.canEditDisablePagerAndAlerts = entity.canEditDisablePagerAndAlerts();
 		this.isDisablePagerAndAlertsEnabled = entity.isDisablePagerAndAlertsEnabled();
+		this.canEditNotificationEmail = entity.canEditNotificationEmail();
+		this.notificationEmail = entity.notificationEmail();
 	}
 
 	async save() {
@@ -73,6 +75,10 @@ export class Quiz {
 		this.name = value;
 	}
 
+	setNotificationEmail(value) {
+		this.notificationEmail = value;
+	}
+
 	setPassword(value) {
 		this.password = value;
 	}
@@ -86,7 +92,8 @@ export class Quiz {
 			allowHints: this.hintsToolEnabled,
 			password: this.password,
 			disableRightClick: this.isDisableRightClickEnabled,
-			disablePagerAndAlerts: this.isDisablePagerAndAlertsEnabled
+			disablePagerAndAlerts: this.isDisablePagerAndAlertsEnabled,
+			notificationEmail: this.notificationEmail
 		};
 
 		return data;
@@ -105,6 +112,8 @@ decorate(Quiz, {
 	canEditPassword: observable,
 	isDisableRightClickEnabled: observable,
 	isDisablePagerAndAlertsEnabled: observable,
+	canEditNotificationEmail: observable,
+	notificationEmail: observable,
 	// actions
 	load: action,
 	setName: action,
@@ -112,5 +121,6 @@ decorate(Quiz, {
 	setPassword: action,
 	setDisableRightClick: action,
 	setDisablePagerAndAlertsTool: action,
+	setNotificationEmail: action,
 	save: action,
 });
