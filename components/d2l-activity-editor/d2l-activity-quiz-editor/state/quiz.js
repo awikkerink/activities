@@ -75,12 +75,12 @@ export class Quiz {
 		this.name = value;
 	}
 
-	setPassword(value) {
-		this.password = value;
-	}
-
 	setNotificationEmail(value) {
 		this.notificationEmail = value;
+	}
+
+	setPassword(value) {
+		this.password = value;
 	}
 
 	_makeQuizData() {

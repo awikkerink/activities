@@ -102,7 +102,7 @@ describe('Quiz', function() {
 		expect(quiz.password).to.equal(password);
 	});
 
-	it('setPassword', async() => {
+	it('setNotificationEmail', async() => {
 		const quiz = new Quiz('http://quiz/1', 'token');
 		await quiz.fetch();
 
