@@ -1,5 +1,6 @@
-import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
+import { checkboxStyles } from '../styles/checkbox-styles.js';
+import { html } from 'lit-element/lit-element.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -13,25 +14,7 @@ class ActivityAssignmentAnnotationsEditor
 
 		return [
 			labelStyles,
-			css`
-			:host {
-				display: block;
-			}
-
-			:host([hidden]) {
-				display: none;
-			}
-
-			d2l-input-checkbox {
-				margin: 0;
-				padding-right: 1rem;
-			}
-
-			:host([dir="rtl"]) d2l-input-checkbox {
-				padding-left: 1rem;
-				padding-right: 0;
-			}
-			`
+			checkboxStyles
 		];
 	}
 
