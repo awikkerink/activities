@@ -1,7 +1,7 @@
 import { ActivitySpecialAccessEntity } from 'siren-sdk/src/activities/ActivitySpecialAccessEntity.js';
 import { ActivityUsage } from '../../../components/d2l-activity-editor/state/activity-usage.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity.js';
-import { AlignmentsCollectionEntity } from 'siren-sdk/src/alignments/AlignmentsCollectionEntity.js';
+import { AlignmentsHierarchicalEntity } from 'siren-sdk/src/alignments/AlignmentsHierarchicalEntity.js';
 import { CompetenciesEntity } from 'siren-sdk/src/competencies/CompetenciesEntity.js';
 import { expect } from 'chai';
 import { fetchEntity } from '../../../components/d2l-activity-editor/state/fetch-entity.js';
@@ -11,7 +11,7 @@ import { when } from 'mobx';
 
 jest.mock('siren-sdk/src/activities/ActivitySpecialAccessEntity.js');
 jest.mock('siren-sdk/src/activities/ActivityUsageEntity.js');
-jest.mock('siren-sdk/src/alignments/AlignmentsCollectionEntity.js');
+jest.mock('siren-sdk/src/alignments/AlignmentsHierarchicalEntity.js');
 jest.mock('siren-sdk/src/competencies/CompetenciesEntity.js');
 jest.mock('siren-sdk/src/activities/GradeCandidateCollectionEntity.js');
 jest.mock('../../../components/d2l-activity-editor/state/fetch-entity.js');
@@ -46,7 +46,7 @@ describe('Activity Usage', function() {
 			getDirectRubricAssociationsHref: () => undefined,
 			newGradeCandidatesHref: () => undefined,
 			isNewGradeCandidate: () => false,
-			alignmentsHref: () => alignmentsHref,
+			alignmentsHierarchicalHref: () => alignmentsHref,
 			competenciesHref: () => competenciesHref,
 			associatedCompetenciesCount: () => associatedCompetenciesCount,
 			unevaluatedCompetenciesCount: () => unevaluatedCompetenciesCount,
@@ -60,7 +60,7 @@ describe('Activity Usage', function() {
 		sinon.restore();
 		ActivitySpecialAccessEntity.mockClear();
 		ActivityUsageEntity.mockClear();
-		AlignmentsCollectionEntity.mockClear();
+		AlignmentsHierarchicalEntity.mockClear();
 		GradeCandidateCollectionEntity.mockClear();
 		fetchEntity.mockClear();
 	});
@@ -75,11 +75,9 @@ describe('Activity Usage', function() {
 				return defaultEntityMock();
 			});
 
-			AlignmentsCollectionEntity.mockImplementation(() => {
+			AlignmentsHierarchicalEntity.mockImplementation(() => {
 				return {
-					getAlignments: () => [],
-					canUpdateAlignments: () => true,
-					save: () => Promise.resolve()
+					canUpdateAlignments: () => true
 				};
 			});
 

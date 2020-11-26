@@ -33,6 +33,12 @@ export class Quiz {
 		this.canEditName = entity.canEditName();
 		this.canEditHints = entity.canEditHints();
 		this.hintsToolEnabled = entity.getHintsToolEnabled();
+		this.password = entity.password();
+		this.canEditPassword = entity.canEditPassword();
+		this.canEditDisableRightClick = entity.canEditDisableRightClick();
+		this.isDisableRightClickEnabled = entity.isDisableRightClickEnabled();
+		this.canEditDisablePagerAndAlerts = entity.canEditDisablePagerAndAlerts();
+		this.isDisablePagerAndAlertsEnabled = entity.isDisablePagerAndAlertsEnabled();
 	}
 
 	async save() {
@@ -51,6 +57,13 @@ export class Quiz {
 
 		await this.fetch();
 	}
+	setDisablePagerAndAlertsTool(isEnabled) {
+		this.isDisablePagerAndAlertsEnabled = isEnabled;
+	}
+
+	setDisableRightClick(value) {
+		this.isDisableRightClickEnabled = value;
+	}
 
 	setHintsToolEnabled(isHintsEnabled) {
 		this.hintsToolEnabled = isHintsEnabled;
@@ -60,13 +73,20 @@ export class Quiz {
 		this.name = value;
 	}
 
+	setPassword(value) {
+		this.password = value;
+	}
+
 	_makeQuizData() {
 		/* NOTE: if you add fields here, please make sure you update the corresponding equals method in siren-sdk.
 					 The cancel workflow is making use of that to detect changes.
 		*/
 		const data = {
 			name: this.name,
-			allowHints: this.hintsToolEnabled
+			allowHints: this.hintsToolEnabled,
+			password: this.password,
+			disableRightClick: this.isDisableRightClickEnabled,
+			disablePagerAndAlerts: this.isDisablePagerAndAlertsEnabled
 		};
 
 		return data;
@@ -78,10 +98,19 @@ decorate(Quiz, {
 	name: observable,
 	canEditName: observable,
 	canEditHints: observable,
+	canEditDisableRightClick: observable,
+	canEditDisablePagerAndAlerts: observable,
 	hintsToolEnabled: observable,
+	password: observable,
+	canEditPassword: observable,
+	isDisableRightClickEnabled: observable,
+	isDisablePagerAndAlertsEnabled: observable,
 	// actions
 	load: action,
 	setName: action,
 	setHintsToolEnabled: action,
+	setPassword: action,
+	setDisableRightClick: action,
+	setDisablePagerAndAlertsTool: action,
 	save: action,
 });
