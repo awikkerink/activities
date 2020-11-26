@@ -10,6 +10,7 @@ export const checkboxStyles = css`
 	}
 
 	d2l-input-checkbox {
+		margin: 0;
 		padding-right: 1rem;
 	}
 

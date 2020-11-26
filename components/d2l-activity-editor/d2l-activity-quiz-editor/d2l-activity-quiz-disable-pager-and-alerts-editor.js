@@ -1,5 +1,5 @@
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
-import { checkboxStyles } from '../styles/checkbox-styles';
+import { checkboxStyles } from '../styles/checkbox-styles.js';
 import { html } from 'lit-element/lit-element.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
