@@ -5,11 +5,11 @@ import './d2l-activity-quiz-disable-right-click-editor.js';
 import './d2l-activity-quiz-disable-right-click-summary.js';
 import './d2l-activity-quiz-hints-editor.js';
 import './d2l-activity-quiz-hints-summary.js';
+import { css, html } from 'lit-element/lit-element.js';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorFeaturesMixin } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
-import { html } from 'lit-element/lit-element.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -30,7 +30,12 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 		return [
 			super.styles,
 			accordionStyles,
-			labelStyles
+			labelStyles,
+			css`
+				.d2l-editors:not(:first-of-type) {
+					margin-top: 20px;
+				}
+			`,
 		];
 	}
 
