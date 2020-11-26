@@ -5,7 +5,7 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { shared as store } from './state/assignment-store.js';
 
-class SubmissionEmailNotificationSummary extends ActivityEditorMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement))) {
+class AssignmentSubmissionEmailNotificationSummary extends ActivityEditorMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement))) {
 
 	static get styles() {
 		return css`
@@ -33,6 +33,6 @@ class SubmissionEmailNotificationSummary extends ActivityEditorMixin(RtlMixin(Lo
 }
 
 customElements.define(
-	'd2l-activity-submission-email-notification-summary',
-	SubmissionEmailNotificationSummary
+	'd2l-activity-assignment-submission-email-notification-summary',
+	AssignmentSubmissionEmailNotificationSummary
 );
