@@ -52,6 +52,12 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 
 				<div class="d2l-editors" slot="components">
 					<label class="d2l-label-text">
+						${this.localize('pagingTools')}
+					</label>
+				</div>
+
+				<div class="d2l-editors" slot="components">
+					<label class="d2l-label-text">
 						${this.localize('displayTools')}
 					</label>
 					${this._renderHintsEditor()}
