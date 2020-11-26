@@ -1,5 +1,6 @@
 import '../d2l-activity-accordion-collapse.js';
 import './d2l-activity-quiz-disable-pager-and-alerts-editor.js';
+import './d2l-activity-quiz-prevent-moving-backwards-editor.js';
 import './d2l-activity-quiz-disable-right-click-editor.js';
 import './d2l-activity-quiz-disable-right-click-summary.js';
 import './d2l-activity-quiz-hints-editor.js';
@@ -54,6 +55,7 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 					<label class="d2l-label-text">
 						${this.localize('pagingTools')}
 					</label>
+					${this._renderPreventMovingBackwardsEditor()}
 				</div>
 
 				<div class="d2l-editors" slot="components">
@@ -116,6 +118,15 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 				.token="${this.token}">
 			</d2l-activity-quiz-hints-editor>
 		`;
+	}
+
+	_renderPreventMovingBackwardsEditor() {
+		return html`
+			<d2l-activity-quiz-prevent-moving-backwards-editor
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-prevent-moving-backwards-editor>
+	`;
 	}
 
 }
