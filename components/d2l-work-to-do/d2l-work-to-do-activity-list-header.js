@@ -47,7 +47,7 @@ class ActivityListHeader extends LocalizeMixin(LitElement) {
 				.d2l-activity-list-header-fullscreen {
 					display: flex;
 					justify-content: space-between;
-					padding: 0 2.1rem;
+					padding-bottom: 0;
 				}
 				.d2l-activity-list-counter {
 					background-color: var(--d2l-color-carnelian-minus-1);

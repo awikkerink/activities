@@ -4,10 +4,10 @@ import '@brightspace-ui/core/components/list/list-item-content';
 import '../d2l-activity-date/d2l-activity-date';
 
 import { bodyCompactStyles, bodySmallStyles, bodyStandardStyles, heading3Styles } from '@brightspace-ui/core/components/typography/styles';
-import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { css, html, LitElement } from 'lit-element/lit-element';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
 import { ActivityAllowList } from './env';
-import { classMap } from 'lit-html/directives/class-map.js';
+import { classMap } from 'lit-html/directives/class-map';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { ListItemMixin } from '@brightspace-ui/core/components/list/list-item-mixin';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin';
@@ -39,10 +39,13 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 			css`
 				:host {
 					display: block;
-					padding: 0 2.1rem;
 				}
 				:host([hidden]) {
 					display: none;
+				}
+				.d2l-activity-date-container {
+					margin: 0;
+					padding: 1rem 0 0.1rem 0;
 				}
 				.d2l-activity-icon-container {
 					padding: 0.7rem 0.7rem 0 0.25rem;
@@ -53,6 +56,9 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 				.d2l-activity-name-container {
 					color: var(--d2l-color-ferrite);
 					margin: 0.6rem 0 0 0;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
 				}
 				.d2l-activity-icon-container.d2l-hovering,
 				.d2l-activity-icon-container.d2l-focusing,
@@ -61,19 +67,22 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 					--d2l-list-item-content-text-decoration: underline;
 					color: var(--d2l-color-celestine);
 				}
-				#d2l-icon-bullet {
+				.d2l-icon-bullet {
 					color: var(--d2l-color-tungsten);
 					margin-left: -0.15rem;
 					margin-right: -0.15rem;
 				}
-				.d2l-content-secondary-container {
+				.d2l-secondary-content-container {
 					color: var(--d2l-color-tungsten);
 					margin-bottom: 0.3rem;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
 				}
-				.d2l-content-secondary-container-no-description {
+				.d2l-secondary-content-container-no-description {
 					margin-bottom: 0.6rem;
 				}
-				.d2l-content-supporting-info-container {
+				.d2l-supporting-info-content-container {
 					-webkit-box-orient: vertical;
 					color: var(--d2l-color-ferrite);
 					display: block;
@@ -87,9 +96,8 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 				[slot="content"] {
 					padding: 0;
 				}
-				.d2l-activity-date-container {
-					margin: 0;
-					padding: 1rem 0 0.1rem 0;
+				d2l-list-item-generic-layout {
+					background: transparent;
 				}
 			`
 		];
@@ -160,13 +168,13 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 
 		const secondaryClasses = {
 			'd2l-body-small': true,
-			'd2l-content-secondary-container': true,
-			'd2l-content-secondary-container-no-description': !this._description
+			'd2l-secondary-content-container': true,
+			'd2l-secondary-content-container-no-description': !this._description
 		};
 
 		const supportingClasses = {
 			'd2l-body-compact': true,
-			'd2l-content-supporting-info-container': true,
+			'd2l-supporting-info-content-container': true,
 		};
 
 		const dateTemplate = this.includeDate
@@ -187,7 +195,7 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 			: nothing;
 
 		const separatorTemplate = this._type && (this._orgName || this._orgCode)
-			? html `<d2l-icon id="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
+			? html `<d2l-icon class="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
 			: nothing;
 
 		const descriptionTemplate = this._description
@@ -228,6 +236,10 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 
 	/** Link to activity instance for user navigation to complete/work on activity */
 	get actionHref() {
+		if (!this._started) {
+			return '';
+		}
+
 		return this._activity && this._activity.hasLinkByType('text/html')
 			? this._activity.getLinkByType('text/html').href
 			: '';
@@ -273,6 +285,13 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 		return this._organization && this._organization.hasProperty('name')
 			? this._organization.properties.name
 			: '';
+	}
+
+	/** Indicates if activity start date is in the past */
+	get _started() {
+		return this._usage && this._usage.startDate()
+			? new Date(this._usage.startDate()) < new Date()
+			: true;
 	}
 
 	get _type() {

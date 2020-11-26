@@ -49,6 +49,19 @@
           }
       },
       {
+        "class": [
+            "start-date",
+            "date"
+        ],
+        "rel": [
+            "https://api.brightspace.com/rels/date"
+        ],
+        "properties": {
+            "date": "2019-08-03T13:30:00.000Z",
+            "localizedDate": "2019-08-03T09:30:00.000"
+        }
+    },
+      {
           "class": [
               "completion",
               "incomplete"

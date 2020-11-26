@@ -3,9 +3,10 @@ import '@brightspace-ui/core/components/icons/icon';
 import '@brightspace-ui/core/components/list/list-item-content';
 import '../d2l-activity-date/d2l-activity-date';
 
-import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { css, html, LitElement } from 'lit-element/lit-element';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
 import { ActivityAllowList } from './env';
+import { classMap } from 'lit-html/directives/class-map';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { ListItemMixin } from '@brightspace-ui/core/components/list/list-item-mixin';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin';
@@ -35,27 +36,37 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 				:host([hidden]) {
 					display: none;
 				}
-				:hover #d2l-activity-icon,
-				:hover #content-top-container {
+				.d2l-activity-icon-container {
+					padding: 0.15rem 0 0 0;
+				}
+				.d2l-activity-name-container {
+					color: var(--d2l-color-ferrite);
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
+				.d2l-activity-icon-container.d2l-hovering,
+				.d2l-activity-icon-container.d2l-focusing,
+				.d2l-activity-name-container.d2l-hovering,
+				.d2l-activity-name-container.d2l-focusing {
 					color: var(--d2l-color-celestine);
 				}
-				#d2l-activity-icon {
-					margin-right: 0.7rem;
-					margin-top: 0.3rem;
-				}
-				#content-top-container {
-					color: var(--d2l-color-ferrite);
-				}
-				#d2l-icon-bullet {
+				.d2l-icon-bullet {
 					color: var(--d2l-color-tungsten);
 					margin-left: -0.15rem;
 					margin-right: -0.15rem;
 				}
-				#content-bottom-container {
+				.d2l-secondary-content-container {
 					color: var(--d2l-color-tungsten);
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
 				}
 				[slot="content"] {
 					padding: 0.3rem 0;
+				}
+				d2l-list-item-generic-layout {
+					background: transparent;
 				}
 			`
 		];
@@ -111,24 +122,36 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 			return nothing;
 		}
 
+		const iconClasses = {
+			'd2l-activity-icon-container': true,
+			'd2l-focusing': this._focusingLink,
+			'd2l-hovering': this._hoveringLink
+		};
+
+		const nameClasses = {
+			'd2l-activity-name-container': true,
+			'd2l-focusing': this._focusingLink,
+			'd2l-hovering': this._hoveringLink
+		};
+
 		const iconTemplate = this._icon
-			? html `<d2l-icon id="d2l-activity-icon" icon=${this._icon}></d2l-icon>`
+			? html `<d2l-icon class=${classMap(iconClasses)} icon=${this._icon}></d2l-icon>`
 			: nothing;
 
 		const dateTemplate = html `<d2l-activity-date href="${this.href}" .token="${this.token}" format="MMM d"></d2l-activity-date>`;
 
 		const separatorTemplate = this._date && (this._orgName || this._orgCode)
-			? html `<d2l-icon id="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
+			? html `<d2l-icon class="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
 			: nothing;
 
 		return this._renderListItem({
 			illustration: iconTemplate,
 			content: html`
 				<d2l-list-item-content id="content">
-					<div id="content-top-container">
+					<div class=${classMap(nameClasses)}>
 						${this._name}
 					</div>
-					<div id="content-bottom-container" slot="secondary">
+					<div class="d2l-secondary-content-container" slot="secondary">
 						${dateTemplate}
 						${separatorTemplate}
 						${this._orgName || this._orgCode}
@@ -146,6 +169,10 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 
 	/** Link to activity instance for user navigation to complete/work on activity */
 	get actionHref() {
+		if (!this._started) {
+			return '';
+		}
+
 		return this._activity && this._activity.hasLinkByType('text/html')
 			? this._activity.getLinkByType('text/html').href
 			: '';
@@ -156,6 +183,13 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 		return this._usage
 			? this._usage.dueDate() || this._usage.endDate()
 			: '';
+	}
+
+	/** Indicates if activity start date is in the past */
+	get _started() {
+		return this._usage && this._usage.startDate()
+			? new Date(this._usage.startDate()) < new Date()
+			: true;
 	}
 
 	/** String associated with icon catalogue for provided activity type */

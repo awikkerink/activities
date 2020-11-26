@@ -49,7 +49,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 				:host([hidden]) {
 					display: none;
 				}
-				#empty-template {
+				.d2l-empty-template {
 					margin-left: auto;
 					margin-right: auto;
 				}
@@ -79,8 +79,12 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 					height: 100px;
 					width: 100px;
 				}
-				.d2l-work-to-do-fullscreen-title {
+				.d2l-work-to-do-fullscreen-container {
+					background-image: linear-gradient(to bottom, #f9fbff, #ffffff);
 					padding: 0 2rem;
+				}
+				d2l-button {
+					padding: 1.8rem 0;
 				}
 			`
 		];
@@ -164,9 +168,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 			return html`
 				<div class="d2l-activity-collection">
 					<d2l-work-to-do-activity-list-header ?overdue=${isOverdue} count=${activities.length}></d2l-work-to-do-activity-list-header>
-					<div class="d2l-activity-collection-content"></div>
-						<d2l-list separators="none">${items}</d2l-list>
-					</div>
+					<d2l-list separators="none">${items}</d2l-list>
 				</div>
 			`;
 		};
@@ -223,7 +225,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 			}
 
 			return html`
-				<div id='empty-template'>
+				<div class="d2l-empty-template">
 					<div class="d2l-empty-icon-container">
 						<d2l-icon id="empty-icon" icon="tier3:search"></d2l-icon>
 					</div>
@@ -275,15 +277,25 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 			});
 
 			return html`
-				<div class="d2l-activity-collection">
+				<div class="d2l-activity-collection-container-fullscreen">
 					<d2l-work-to-do-activity-list-header ?overdue=${isOverdue} count=${activities.length} fullscreen></d2l-work-to-do-activity-list-header>
 					<d2l-list>${groupedByDate}</d2l-list>
 				</div>
 			`;
 		};
 
+		const loadButtonTemplate = this._moreAvail
+			? html`
+				<d2l-button
+					class="d2l-load-more-button"
+					description=${this.localize('loadMoreDescription')}
+					@click=${() => (this._handleLoadMoreClicked())}>
+					${this.localize('loadMore')}
+				</d2l-button>`
+			: nothing;
+
 		const fullscreenTemplate = () => {
-			if (!this._overdueCollection || !this._upcomingCollection) {
+			if (!this._overdueCollection || !this._upcomingCollection || !this._maxCollection) {
 				return nothing;
 			}
 			return html`
@@ -295,6 +307,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 					<div class="d2l-upcoming-collection-fullscreen">
 						${fullscreenCollectionTemplate(this._upcomingCollection, this._upcomingDisplayLimit, false)}
 					</div>
+					${loadButtonTemplate}
 				</div>
 			`;
 		};
@@ -317,6 +330,12 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 			default:
 				return activitiesViewTemplate();
 		}
+	}
+
+	get _moreAvail() {
+		// Logic is waiting on paging capability from activities service
+		// For now just forcing on so we can see the button
+		return true;
 	}
 
 	get _maxCount() {
@@ -383,6 +402,16 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 	}
 
 	/**
+	 * Add to display limit so next page of activities renders for user
+	 * Load next page of activities into memory in anticipation for next request
+	 */
+	_handleLoadMoreClicked() {
+		// Nothing here right now - blocked on US120246
+		// eslint-disable-next-line no-console
+		console.log('I am an empty block of code, please complete me.');
+	}
+
+	/**
 	 * Load collection of overdue activities.
 	 * Will set collection of overdue activities
 	 * @async
@@ -403,6 +432,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 	/**
 	 * Load collection of upcoming activities from present time until 'forwardLimit'.
 	 * Will set collection of upcoming activities
+	 * @note This is going to need to be updated whenever the pagination on the backend gets solved So that it requests in a cache friendly way and can interact with bookmarks
 	 * @async
 	 * @param {SimpleEntity} entity - 'Empty' Activities domain endpoint response
 	 * @param {Number} [forwardLimit] - [Default: Config.UpcomingWeekLimit * 7] Number of days into future to look for activities
