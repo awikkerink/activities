@@ -32,6 +32,8 @@ describe('Quiz', function() {
 				isDisablePagerAndAlertsEnabled: () => false,
 				password: () => 'hello',
 				canEditPassword: () => true,
+				canEditPreventMovingBackwards: () => true,
+				isPreventMovingBackwardsEnabled: () => false,
 				canEditNotificationEmail: () => true,
 				notificationEmail: () => 'hello@d2l.com'
 			};
@@ -52,12 +54,13 @@ describe('Quiz', function() {
 		expect(quiz.isDisableRightClickEnabled).to.equal(false);
 		expect(quiz.canEditDisablePagerAndAlerts).to.equal(true);
 		expect(quiz.isDisablePagerAndAlertsEnabled).to.equal(false);
+		expect(quiz.canEditPreventMovingBackwards).to.equal(true);
+		expect(quiz.isPreventMovingBackwardsEnabled).to.equal(false);
 		expect(quiz.canEditNotificationEmail).to.equal(true);
 		expect(quiz.notificationEmail).to.equal('hello@d2l.com');
-
-		expect(fetchEntity.mock.calls.length).to.equal(1);
 		expect(QuizEntity.mock.calls[0][0]).to.equal(sirenEntity);
 		expect(QuizEntity.mock.calls[0][1]).to.equal('token');
+		expect(fetchEntity.mock.calls.length).to.equal(1);
 	});
 
 	it('setDisablePagerAndAlerts', async() => {
@@ -100,6 +103,14 @@ describe('Quiz', function() {
 		quiz.setPassword(password);
 
 		expect(quiz.password).to.equal(password);
+	});
+
+	it('setPreventMovingBackwards', async() => {
+		const quiz = new Quiz('http://quiz/1', 'token');
+		await quiz.fetch();
+		quiz.setPreventMovingBackwards(true);
+
+		expect(quiz.isPreventMovingBackwardsEnabled).to.equal(true);
 	});
 
 	it('setNotificationEmail', async() => {

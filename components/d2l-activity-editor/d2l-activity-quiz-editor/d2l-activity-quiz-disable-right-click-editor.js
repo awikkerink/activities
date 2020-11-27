@@ -10,7 +10,6 @@ class ActivityQuizDisableRightClickEditor
 	extends ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
 
 	static get styles() {
-
 		return checkboxStyles;
 	}
 

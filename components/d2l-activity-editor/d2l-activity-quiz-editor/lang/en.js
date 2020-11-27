@@ -13,6 +13,8 @@ export default {
 	"passwordSummary": "Password protected", // summary text when quiz has a password
 	"disableRightClickDescription": "Disable right click", // description for disable right click
 	"disableRightClickSummary": "Right clicks disabled", // summary text when right clicks are disabled
+	"pagingTools": "Paging", // Title for paging tools
+	"preventMovingBackwardsDescription": "Prevent going back to previous pages",
 	"disablePagerAndAlertsDescription": "Block alerts and communication during quiz attempts", // description for disable pager and alerts / block communications during a quiz
 	"disablePagerAndAlertsSummary": "Alerts and communication blocked", // summary text when pager and alerts / communications are disabled
 	"emailNotificationDescription": "Email Notification", // description for email notification
