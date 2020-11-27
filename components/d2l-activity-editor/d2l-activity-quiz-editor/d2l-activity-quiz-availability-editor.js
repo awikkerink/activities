@@ -91,6 +91,25 @@ class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivit
 		`;
 	}
 
+	_renderPasswordEditor() {
+
+		return html`
+			<d2l-activity-quiz-password-editor
+				.href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-password-editor>
+		`;
+	}
+
+	_renderPasswordSummary() {
+		return html`
+			<d2l-activity-quiz-password-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-password-summary>
+		`;
+	}
+
 	_renderReleaseConditionEditor() {
 		const activity = store.get(this.activityUsageHref);
 		if (!activity || !activity.canEditReleaseConditions) {
@@ -108,25 +127,6 @@ class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivit
 					.token="${this.token}">
 				</d2l-activity-usage-conditions-editor>
 			</div>
-		`;
-	}
-
-	_renderPasswordEditor() {
-
-		return html`
-			<d2l-activity-quiz-password-editor
-				.href="${this.href}"
-				.token="${this.token}">
-			</d2l-activity-quiz-password-editor>
-		`;
-	}
-
-	_renderPasswordSummary() {
-		return html`
-			<d2l-activity-quiz-password-summary
-				href="${this.href}"
-				.token="${this.token}">
-			</d2l-activity-quiz-password-summary>
 		`;
 	}
 
