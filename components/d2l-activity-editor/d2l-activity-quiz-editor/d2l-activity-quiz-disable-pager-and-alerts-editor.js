@@ -45,6 +45,6 @@ class ActivityQuizDisablePagerAndAlertsEditor
 }
 
 customElements.define(
-	'd2l-activity-quiz-disable-pager-and-alerts-editor',
+	'd2l-activity-quiz-disable-pager-and-alerts',
 	ActivityQuizDisablePagerAndAlertsEditor
 );

@@ -24,8 +24,6 @@ describe('Quiz', function() {
 			return {
 				name: () => 'Homework 101',
 				canEditName: () => true,
-				canEditShuffle: () => true,
-				isShuffleEnabled: () => false,
 				canEditHints: () => true,
 				getHintsToolEnabled: () => false,
 				canEditDisableRightClick: () => true,
