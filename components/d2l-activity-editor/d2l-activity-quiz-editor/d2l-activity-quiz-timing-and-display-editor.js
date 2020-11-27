@@ -93,10 +93,10 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 
 	_renderDisablePagerAndAlertsEditor() {
 		return html`
-			<d2l-activity-quiz-disable-pager-and-alerts
+			<d2l-activity-quiz-disable-pager-and-alerts-editor
 				href="${this.href}"
 				.token="${this.token}">
-			</d2l-activity-quiz-disable-pager-and-alerts>
+			</d2l-activity-quiz-disable-pager-and-alerts-editor>
 		`;
 	}
 
