@@ -31,7 +31,9 @@ describe('Quiz', function() {
 				canEditDisablePagerAndAlerts: () => true,
 				isDisablePagerAndAlertsEnabled: () => false,
 				password: () => 'hello',
-				canEditPassword: () => true
+				canEditPassword: () => true,
+				canEditPreventMovingBackwards: () => true,
+				isPreventMovingBackwardsEnabled: () => false,
 			};
 		});
 
@@ -50,6 +52,8 @@ describe('Quiz', function() {
 		expect(quiz.isDisableRightClickEnabled).to.equal(false);
 		expect(quiz.canEditDisablePagerAndAlerts).to.equal(true);
 		expect(quiz.isDisablePagerAndAlertsEnabled).to.equal(false);
+		expect(quiz.canEditPreventMovingBackwards).to.equal(true);
+		expect(quiz.isPreventMovingBackwardsEnabled).to.equal(false);
 
 		expect(fetchEntity.mock.calls.length).to.equal(1);
 		expect(QuizEntity.mock.calls[0][0]).to.equal(sirenEntity);
@@ -97,6 +101,14 @@ describe('Quiz', function() {
 		quiz.setPassword(password);
 
 		expect(quiz.password).to.equal(password);
+	});
+
+	it('setPreventMovingBackwards', async() => {
+		const quiz = new Quiz('http://quiz/1', 'token');
+		await quiz.fetch();
+		quiz.setPreventMovingBackwards(true);
+
+		expect(quiz.isPreventMovingBackwardsEnabled).to.equal(true);
 	});
 
 });
