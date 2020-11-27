@@ -39,6 +39,9 @@ export class Quiz {
 		this.isDisableRightClickEnabled = entity.isDisableRightClickEnabled();
 		this.canEditDisablePagerAndAlerts = entity.canEditDisablePagerAndAlerts();
 		this.isDisablePagerAndAlertsEnabled = entity.isDisablePagerAndAlertsEnabled();
+		this.isPreventMovingBackwardsEnabled = entity.isPreventMovingBackwardsEnabled();
+		this.canEditPreventMovingBackwards = entity.canEditPreventMovingBackwards();
+
 	}
 
 	async save() {
@@ -77,6 +80,10 @@ export class Quiz {
 		this.password = value;
 	}
 
+	setPreventMovingBackwards(value) {
+		this.isPreventMovingBackwardsEnabled = value;
+	}
+
 	_makeQuizData() {
 		/* NOTE: if you add fields here, please make sure you update the corresponding equals method in siren-sdk.
 					 The cancel workflow is making use of that to detect changes.
@@ -86,7 +93,8 @@ export class Quiz {
 			allowHints: this.hintsToolEnabled,
 			password: this.password,
 			disableRightClick: this.isDisableRightClickEnabled,
-			disablePagerAndAlerts: this.isDisablePagerAndAlertsEnabled
+			disablePagerAndAlerts: this.isDisablePagerAndAlertsEnabled,
+			preventMovingBackwards: this.isPreventMovingBackwardsEnabled
 		};
 
 		return data;
@@ -99,6 +107,7 @@ decorate(Quiz, {
 	canEditName: observable,
 	canEditHints: observable,
 	canEditDisableRightClick: observable,
+	canEditPreventMovingBackwards: observable,
 	canEditDisablePagerAndAlerts: observable,
 	hintsToolEnabled: observable,
 	password: observable,
@@ -112,5 +121,6 @@ decorate(Quiz, {
 	setPassword: action,
 	setDisableRightClick: action,
 	setDisablePagerAndAlertsTool: action,
+	setPreventMovingBackwards: action,
 	save: action,
 });
