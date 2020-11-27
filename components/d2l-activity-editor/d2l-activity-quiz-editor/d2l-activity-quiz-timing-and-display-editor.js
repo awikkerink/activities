@@ -6,6 +6,7 @@ import './d2l-activity-quiz-disable-right-click-editor.js';
 import './d2l-activity-quiz-disable-right-click-summary.js';
 import './d2l-activity-quiz-hints-editor.js';
 import './d2l-activity-quiz-hints-summary.js';
+import './d2l-activity-quiz-shuffle-editor.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorFeaturesMixin } from '../mixins/d2l-activity-editor-features-mixin.js';
@@ -66,6 +67,10 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 				</div>
 
 				<div class="d2l-editors" slot="components">
+					<label class="d2l-label-text">
+						${this.localize('subHdrShuffleQuiz')}
+					</label>
+					${this._renderShuffleEditor()}
 					<label class="d2l-label-text">
 						${this.localize('displayTools')}
 					</label>
@@ -138,11 +143,20 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 
 	_renderPreventMovingBackwardsEditor() {
 		return html`
-			<d2l-activity-quiz-prevent-moving-backwards-editor
+				<d2l-activity-quiz-prevent-moving-backwards-editor
+					href="${this.href}"
+					.token="${this.token}">
+				</d2l-activity-quiz-prevent-moving-backwards-editor>
+		`;
+	}
+
+	_renderShuffleEditor() {
+		return html`
+			<d2l-activity-quiz-shuffle-editor
 				href="${this.href}"
 				.token="${this.token}">
-			</d2l-activity-quiz-prevent-moving-backwards-editor>
-	`;
+			</d2l-activity-quiz-shuffle-editor>
+		`;
 	}
 
 }
