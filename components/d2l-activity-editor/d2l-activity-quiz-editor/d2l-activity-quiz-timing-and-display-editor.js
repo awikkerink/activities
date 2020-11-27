@@ -1,6 +1,7 @@
 import '../d2l-activity-accordion-collapse.js';
 import './d2l-activity-quiz-disable-pager-and-alerts-editor.js';
 import './d2l-activity-quiz-prevent-moving-backwards-editor.js';
+import './d2l-activity-quiz-prevent-moving-backwards-summary.js';
 import './d2l-activity-quiz-disable-pager-and-alerts-summary.js';
 import './d2l-activity-quiz-disable-right-click-editor.js';
 import './d2l-activity-quiz-disable-right-click-summary.js';
@@ -57,6 +58,7 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 				<li slot="summary-items">${this._renderAllowHintsSummary()}</li>
 				<li slot="summary-items">${this._renderDisableRightClickSummary()}</li>
 				<li slot="summary-items">${this._renderDisablePagerAndAlertsSummary()}</li>
+				<li slot="summary-items">${this._renderPreventMovingBackwardsSummary()}</li>
 
 				<div class="d2l-editors" slot="components">
 					<label class="d2l-label-text">
@@ -142,6 +144,15 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 				href="${this.href}"
 				.token="${this.token}">
 			</d2l-activity-quiz-prevent-moving-backwards-editor>
+	`;
+	}
+
+	_renderPreventMovingBackwardsSummary() {
+		return html`
+			<d2l-activity-quiz-prevent-moving-backwards-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-prevent-moving-backwards-summary>
 	`;
 	}
 

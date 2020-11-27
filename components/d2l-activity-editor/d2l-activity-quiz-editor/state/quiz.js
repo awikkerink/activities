@@ -120,6 +120,7 @@ decorate(Quiz, {
 	canEditPassword: observable,
 	isDisableRightClickEnabled: observable,
 	isDisablePagerAndAlertsEnabled: observable,
+	isPreventMovingBackwardsEnabled: observable,
 	canEditNotificationEmail: observable,
 	notificationEmail: observable,
 	// actions
