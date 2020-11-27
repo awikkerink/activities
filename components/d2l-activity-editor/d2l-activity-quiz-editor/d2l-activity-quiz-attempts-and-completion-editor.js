@@ -57,6 +57,12 @@ class ActivityQuizAttemptsAndCompletionEditor extends AsyncContainerMixin(Locali
 		return false; // Todo: implement error handling
 	}
 
+	_onNotificationEmailChanged(event) {
+		const entity = store.get(this.href);
+		const data = event.detail.value;
+		entity.setNotificationEmail(data);
+	}
+
 	_renderNotificationEmailEditor() {
 		const entity = store.get(this.href);
 
@@ -69,12 +75,6 @@ class ActivityQuizAttemptsAndCompletionEditor extends AsyncContainerMixin(Locali
 				@activity-notification-email-changed="${this._onNotificationEmailChanged}">
 			</d2l-activity-notification-email-editor>
 		`;
-	}
-
-	_onNotificationEmailChanged(event) {
-		const entity = store.get(this.href);
-		const data = event.detail.value;
-		entity.setNotificationEmail(data);
 	}
 
 	_renderNotificationEmailSummary() {
