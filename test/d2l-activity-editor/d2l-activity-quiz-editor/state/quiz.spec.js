@@ -34,6 +34,8 @@ describe('Quiz', function() {
 				canEditPassword: () => true,
 				canEditPreventMovingBackwards: () => true,
 				isPreventMovingBackwardsEnabled: () => false,
+				canEditNotificationEmail: () => true,
+				notificationEmail: () => 'hello@d2l.com'
 			};
 		});
 
@@ -54,10 +56,11 @@ describe('Quiz', function() {
 		expect(quiz.isDisablePagerAndAlertsEnabled).to.equal(false);
 		expect(quiz.canEditPreventMovingBackwards).to.equal(true);
 		expect(quiz.isPreventMovingBackwardsEnabled).to.equal(false);
-
-		expect(fetchEntity.mock.calls.length).to.equal(1);
+		expect(quiz.canEditNotificationEmail).to.equal(true);
+		expect(quiz.notificationEmail).to.equal('hello@d2l.com');
 		expect(QuizEntity.mock.calls[0][0]).to.equal(sirenEntity);
 		expect(QuizEntity.mock.calls[0][1]).to.equal('token');
+		expect(fetchEntity.mock.calls.length).to.equal(1);
 	});
 
 	it('setDisablePagerAndAlerts', async() => {
@@ -97,7 +100,6 @@ describe('Quiz', function() {
 		await quiz.fetch();
 
 		const password = 'super-secret-password';
-
 		quiz.setPassword(password);
 
 		expect(quiz.password).to.equal(password);
@@ -109,6 +111,16 @@ describe('Quiz', function() {
 		quiz.setPreventMovingBackwards(true);
 
 		expect(quiz.isPreventMovingBackwardsEnabled).to.equal(true);
+	});
+
+	it('setNotificationEmail', async() => {
+		const quiz = new Quiz('http://quiz/1', 'token');
+		await quiz.fetch();
+
+		const notificationEmail = 'modified@email.com';
+		quiz.setNotificationEmail(notificationEmail);
+
+		expect(quiz.notificationEmail).to.equal(notificationEmail);
 	});
 
 });

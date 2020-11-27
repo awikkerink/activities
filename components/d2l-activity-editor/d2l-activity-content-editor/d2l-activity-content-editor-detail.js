@@ -11,6 +11,7 @@ import { shared as activityStore } from '../state/activity-store.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ErrorHandlingMixin } from '../error-handling-mixin.js';
+import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityEditorMixin } from '../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
@@ -34,6 +35,7 @@ class ContentEditorDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 	static get styles() {
 		return  [
 			super.styles,
+			labelStyles,
 			css`
 				:host {
 					display: block;
@@ -43,6 +45,9 @@ class ContentEditorDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 				}
 				:host > div {
 					padding-bottom: 20px;
+				}
+				.d2l-activity-label-container {
+					margin-bottom: 7px;
 				}
 			`
 		];
@@ -73,13 +78,13 @@ class ContentEditorDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 
 		return html`
 			<div id="content-title-container">
-				<label class="d2l-label-text d2l-skeletize" for="content-title">${this.localize('content.name')}*</label>
 				<d2l-input-text
 					id="content-title"
 					maxlength="${TITLE_MAX_LENGTH}"
 					value="${title}"
 					@change="${this._saveOnChange('title')}"
 					@input="${this._saveTitleOnInput}"
+					label="${this.localize('content.name')} *"
 					aria-invalid="${this._titleError ? 'true' : ''}"
 					prevent-submit
 					novalidate
@@ -90,7 +95,9 @@ class ContentEditorDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 			</div>
 			${this._renderDueDate()}
 			<div id="content-description-container">
-				<label class="d2l-label-text d2l-skeletize" for="content-description">${this.localize('content.description')}</label>
+				<div class="d2l-activity-label-container d2l-label-text d2l-skeletize">
+					${this.localize('content.description')}
+				</div>
 				<div class="d2l-skeletize">
 					<d2l-activity-html-editor
 						.ariaLabel="content-description"

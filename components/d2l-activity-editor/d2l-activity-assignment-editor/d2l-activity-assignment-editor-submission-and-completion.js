@@ -1,9 +1,9 @@
 import 'd2l-inputs/d2l-input-text.js';
 
 import '../d2l-activity-accordion-collapse.js';
+import './d2l-activity-assignment-submission-email-notification-summary.js';
 import './d2l-activity-assignment-type-editor.js';
 import './d2l-activity-assignment-type-summary.js';
-import './d2l-activity-submission-email-notification-summary.js';
 import { ActivityEditorFeaturesMixin, Milestones } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { bodyCompactStyles, bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
@@ -413,10 +413,10 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 			return html``;
 		}
 		return html`
-			<d2l-activity-submission-email-notification-summary
+			<d2l-activity-assignment-submission-email-notification-summary
 				href="${this.href}"
 				.token="${this.token}">
-			</d2l-activity-submission-email-notification-summary>
+			</d2l-activity-assignment-submission-email-notification-summary>
 		`;
 	}
 	_saveCompletionTypeOnChange(event) {

@@ -1,4 +1,6 @@
 import '../d2l-activity-accordion-collapse.js';
+import './d2l-activity-quiz-notification-email-editor.js';
+import './d2l-activity-quiz-notification-email-summary.js';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorFeaturesMixin } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
@@ -40,12 +42,36 @@ class ActivityQuizAttemptsAndCompletionEditor extends AsyncContainerMixin(Locali
 					${this.localize('hdrAttemptsAndCompletion')}
 				</span>
 
+				<li slot="summary-items">${this._renderNotificationEmailSummary()}</li>
+
+				<div class="d2l-editors" slot="components">
+					${this._renderNotificationEmailEditor()}
+				</div>
+
 			</d2l-activity-accordion-collapse>
 		`;
 	}
 	// Returns true if any error states relevant to this accordion are set
 	_errorInAccordion() {
 		return false; // Todo: implement error handling
+	}
+
+	_renderNotificationEmailEditor() {
+		return html`
+			<d2l-activity-quiz-notification-email-editor
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-notification-email-editor>
+		`;
+	}
+
+	_renderNotificationEmailSummary() {
+		return html`
+			<d2l-activity-quiz-notification-email-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-notification-email-summary>
+		`;
 	}
 }
 
