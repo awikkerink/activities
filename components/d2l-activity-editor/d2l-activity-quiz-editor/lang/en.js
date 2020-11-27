@@ -6,7 +6,9 @@ export default {
 	"hdrAvailability": "Availability Dates & Conditions", // availability header
 	"hdrTimingAndDisplay": "Timing & Display", // timing/display accordion header
 	"hdrAttemptsAndCompletion": "Attempts & Completion", //attempts/completion accordion header
+	"subHdrShuffleQuiz": "Shuffle Quiz",// Title for shuffle quiz tool(s)
 	"displayTools": "Display", // Title for display tools
+	"shuffleDescription": "Shuffle questions and sections within the quiz. Does not cascade to sub-sections.", // description for question shuffling behavior
 	"hintsToolDescription": "Allow hints", // decription for hints tool
 	"hintsAllowedSummary": "Hints allowed", // summary text when hints are enabled,
 	"passwordLabel": "Password", // Label for the quiz password text input field
