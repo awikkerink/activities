@@ -19,4 +19,5 @@ export default {
 	"disablePagerAndAlertsSummary": "Alerts and communication blocked", // summary text when pager and alerts / communications are disabled
 	"emailNotificationDescription": "Email Notification", // description for email notification
 	"emailNotificationSummary": "Attempt notification by email", // summary for email notification
+	"preventMovingBackwardsSummary": "Paging limitations" // summary for prevent moving backwards checkbox
 };
