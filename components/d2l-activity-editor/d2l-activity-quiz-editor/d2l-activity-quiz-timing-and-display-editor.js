@@ -152,6 +152,15 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 		`;
 	}
 
+	_renderPreventMovingBackwardsSummary() {
+		return html`
+			<d2l-activity-quiz-prevent-moving-backwards-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-prevent-moving-backwards-summary>
+		`;
+	}
+
 	_renderShuffleEditor() {
 		return html`
 			<d2l-activity-quiz-shuffle-editor
@@ -159,15 +168,6 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 				.token="${this.token}">
 			</d2l-activity-quiz-shuffle-editor>
 		`;
-	}
-
-	_renderPreventMovingBackwardsSummary() {
-		return html`
-			<d2l-activity-quiz-prevent-moving-backwards-summary
-				href="${this.href}"
-				.token="${this.token}">
-			</d2l-activity-quiz-prevent-moving-backwards-summary>
-	`;
 	}
 
 }
