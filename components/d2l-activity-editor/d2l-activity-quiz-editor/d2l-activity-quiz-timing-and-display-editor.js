@@ -8,6 +8,7 @@ import './d2l-activity-quiz-disable-right-click-summary.js';
 import './d2l-activity-quiz-hints-editor.js';
 import './d2l-activity-quiz-hints-summary.js';
 import './d2l-activity-quiz-shuffle-editor.js';
+import './d2l-activity-quiz-shuffle-summary.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorFeaturesMixin } from '../mixins/d2l-activity-editor-features-mixin.js';
@@ -59,6 +60,7 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 				// the summary text order is specific and should only be changed if required in a story
 
 				<li slot="summary-items">${this._renderPreventMovingBackwardsSummary()}</li>
+				<li slot="summary-items">${this._renderShuffleSummary()}</li>
 				<li slot="summary-items">${this._renderAllowHintsSummary()}</li>
 				<li slot="summary-items">${this._renderDisableRightClickSummary()}</li>
 				<li slot="summary-items">${this._renderDisablePagerAndAlertsSummary()}</li>
@@ -172,6 +174,14 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 		`;
 	}
 
+	_renderShuffleSummary() {
+		return html`
+			<d2l-activity-quiz-shuffle-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-shuffle-summary>
+		`;
+	}
 }
 
 customElements.define(
