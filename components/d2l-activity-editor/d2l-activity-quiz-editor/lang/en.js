@@ -6,17 +6,17 @@ export default {
 	"hdrAvailability": "Availability Dates & Conditions", // availability header
 	"hdrTimingAndDisplay": "Timing & Display", // timing/display accordion header
 	"hdrAttemptsAndCompletion": "Attempts & Completion", //attempts/completion accordion header
+	"subHdrPagingTools": "Paging", // Title for paging tools
 	"subHdrShuffleQuiz": "Shuffle Quiz",// Title for shuffle quiz tool(s)
-	"displayTools": "Display", // Title for display tools
+	"subHdrDisplayTools": "Display", // Title for display tools
 	"shuffleDescription": "Shuffle questions and sections within the quiz. Does not cascade to sub-sections.", // description for question shuffling behavior
-	"shuffeleSummary": "Shuffle questions", // summary text for shuffle quiz questions
+	"shuffleSummary": "Shuffle questions", // summary text for shuffle quiz questions
 	"hintsToolDescription": "Allow hints", // decription for hints tool
 	"hintsAllowedSummary": "Hints allowed", // summary text when hints are enabled,
 	"passwordLabel": "Password", // Label for the quiz password text input field
 	"passwordSummary": "Password protected", // summary text when quiz has a password
 	"disableRightClickDescription": "Disable right click", // description for disable right click
 	"disableRightClickSummary": "Right clicks disabled", // summary text when right clicks are disabled
-	"pagingTools": "Paging", // Title for paging tools
 	"preventMovingBackwardsDescription": "Prevent going back to previous pages",
 	"disablePagerAndAlertsDescription": "Block alerts and communication during quiz attempts", // description for disable pager and alerts / block communications during a quiz
 	"disablePagerAndAlertsSummary": "Alerts and communication blocked", // summary text when pager and alerts / communications are disabled

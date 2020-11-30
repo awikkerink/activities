@@ -67,7 +67,7 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 
 				<div class="d2l-editors" slot="components">
 					<label class="d2l-label-text">
-						${this.localize('pagingTools')}
+						${this.localize('subHdrPagingTools')}
 					</label>
 					${this._renderPreventMovingBackwardsEditor()}
 				</div>
@@ -77,8 +77,11 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 						${this.localize('subHdrShuffleQuiz')}
 					</label>
 					${this._renderShuffleEditor()}
+				</div>
+
+				<div class="d2l-editors" slot="components">
 					<label class="d2l-label-text">
-						${this.localize('displayTools')}
+						${this.localize('subHdrDisplayTools')}
 					</label>
 					${this._renderHintsEditor()}
 					${this._renderDisableRightClickEditor()}
