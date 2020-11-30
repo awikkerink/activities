@@ -56,10 +56,12 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 					${this.localize('hdrTimingAndDisplay')}
 				</span>
 
+				// the summary text order is specific and should only be changed if required in a story
+
+				<li slot="summary-items">${this._renderPreventMovingBackwardsSummary()}</li>
 				<li slot="summary-items">${this._renderAllowHintsSummary()}</li>
 				<li slot="summary-items">${this._renderDisableRightClickSummary()}</li>
 				<li slot="summary-items">${this._renderDisablePagerAndAlertsSummary()}</li>
-				<li slot="summary-items">${this._renderPreventMovingBackwardsSummary()}</li>
 
 				<div class="d2l-editors" slot="components">
 					<label class="d2l-label-text">
