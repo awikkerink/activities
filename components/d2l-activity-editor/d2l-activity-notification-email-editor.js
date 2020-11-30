@@ -50,7 +50,7 @@ class ActivityNotificationEmailEditor
 
 	render() {
 		return html`
-			<div class="d2l-label-text">
+			<div id="notification-email-editor-label" class="d2l-label-text">
 				${this.localize('editor.notificationEmailLabel')}
 			</div>
 			<slot name="description"></slot>
