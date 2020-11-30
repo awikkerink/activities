@@ -157,12 +157,11 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 			const items = repeat(
 				activities.slice(0, displayLimit),
 				item => item.links,
-				item =>
-					html`
-						<d2l-work-to-do-activity-list-item-basic
-							href=${ifDefined(item.getLinkByRel('self').href)}
-							.token=${ifDefined(this.token)}></d2l-work-to-do-activity-list-item-basic>
-					`
+				item => html`
+					<d2l-work-to-do-activity-list-item-basic
+						href=${ifDefined(item.getLinkByRel('self').href)}
+						.token=${ifDefined(this.token)}></d2l-work-to-do-activity-list-item-basic>
+				`
 			);
 
 			return html`

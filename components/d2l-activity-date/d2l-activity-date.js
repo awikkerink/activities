@@ -90,8 +90,7 @@ class D2LActivityDate extends EntityMixinLit(LocalizeMixin(LitElement)) {
 
 	get _date() {
 		const dateString = this._usage
-			&& this._usage.dueDate()
-			|| this._usage.endDate();
+			&& (this._usage.dueDate() || this._usage.endDate());
 
 		return dateString ? new Date(dateString) : dateString;
 	}

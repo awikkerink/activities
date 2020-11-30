@@ -19,10 +19,10 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 		return {
 			/** entity used for crawling instance properties (e.g. name) */
 			_activity: { type: Object },
+			/** List of component relevant information related to activityType */
+			_activityProperties: { type: Object },
 			/** entity associated with ActivityUsageEntity's organization */
 			_organization: { type: Object },
-			/** List of component relevant information related to activityType */
-			_props: { type: Object },
 		};
 	}
 
@@ -95,8 +95,8 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 	constructor() {
 		super();
 		this._activity = undefined;
+		this._activityProperties = undefined;
 		this._organization = undefined;
-		this._props = undefined;
 		this._setEntityType(ActivityUsageEntity);
 	}
 
@@ -194,8 +194,8 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 
 	/** String associated with icon catalogue for provided activity type */
 	get _icon() {
-		return this._props
-			? this._props.icon
+		return this._activityProperties
+			? this._activityProperties.icon
 			: ActivityAllowList.userAssignmentActivity.icon;
 
 	}
@@ -204,7 +204,7 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 	get _name() {
 		return this._activity && this._activity.hasProperty('name')
 			? this._activity.properties.name
-			: this._props ? this._props.type : '';
+			: this._activityProperties ? this._activityProperties.type : '';
 	}
 
 	/** Organization code of the activity's associated organization */
@@ -233,7 +233,7 @@ class ActivityListItemBasic extends ListItemMixin(EntityMixinLit(LocalizeMixin(L
 
 		for (const allowed in ActivityAllowList) {
 			if (entity.hasClass(ActivityAllowList[allowed].class)) {
-				this._props = ActivityAllowList[allowed];
+				this._activityProperties = ActivityAllowList[allowed];
 				const source = (
 					entity.hasLinkByRel(ActivityAllowList[allowed].rel)
 					&& entity.getLinkByRel(ActivityAllowList[allowed].rel)
