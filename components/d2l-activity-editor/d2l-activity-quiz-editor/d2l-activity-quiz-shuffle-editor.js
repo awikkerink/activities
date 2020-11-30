@@ -6,10 +6,11 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { shared as store } from './state/quiz-store';
 
-class ActivityQuizDisablePagerAndAlertsEditor
+class ActivityQuizShuffleEditor
 	extends ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
 
 	static get styles() {
+
 		return checkboxStyles;
 	}
 
@@ -18,33 +19,33 @@ class ActivityQuizDisablePagerAndAlertsEditor
 	}
 
 	render() {
-
 		const entity = store.get(this.href);
 		if (!entity) {
 			return html``;
 		}
+
 		return html`
 			<d2l-input-checkbox-spacer
 				class="d2l-body-small">
 			</d2l-input-checkbox-spacer>
 
 			<d2l-input-checkbox
-				?checked="${entity.isDisablePagerAndAlertsEnabled}"
-				@change="${this._setDisablePagerAndAlertsTool}"
-				ariaLabel="${this.localize('disablePagerAndAlertsDescription')}"
-				?disabled="${!entity.canEditDisablePagerAndAlerts}">
-				${this.localize('disablePagerAndAlertsDescription')}
+				?checked="${entity.isShuffleEnabled}"
+				@change="${this._setShuffle}"
+				ariaLabel="${this.localize('shuffleDescription')}"
+				?disabled="${!entity.canEditShuffle}">
+				${this.localize('shuffleDescription')}
 			</d2l-input-checkbox>
 		`;
 	}
 
-	_setDisablePagerAndAlertsTool(event) {
+	_setShuffle(event) {
 		const entity = store.get(this.href);
-		entity.setDisablePagerAndAlertsTool(event.target.checked);
+		entity.setShuffle(event.target.checked);
 	}
 }
 
 customElements.define(
-	'd2l-activity-quiz-disable-pager-and-alerts-editor',
-	ActivityQuizDisablePagerAndAlertsEditor
+	'd2l-activity-quiz-shuffle-editor',
+	ActivityQuizShuffleEditor
 );

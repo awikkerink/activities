@@ -31,6 +31,8 @@ export class Quiz {
 		this._entity = entity;
 		this.name = entity.name();
 		this.canEditName = entity.canEditName();
+		this.canEditShuffle =  entity.canEditShuffle();
+		this.isShuffleEnabled = entity.isShuffleEnabled();
 		this.canEditHints = entity.canEditHints();
 		this.hintsToolEnabled = entity.getHintsToolEnabled();
 		this.password = entity.password();
@@ -61,6 +63,7 @@ export class Quiz {
 
 		await this.fetch();
 	}
+
 	setDisablePagerAndAlertsTool(isEnabled) {
 		this.isDisablePagerAndAlertsEnabled = isEnabled;
 	}
@@ -89,6 +92,10 @@ export class Quiz {
 		this.isPreventMovingBackwardsEnabled = value;
 	}
 
+	setShuffle(isEnabled) {
+		this.shuffleEnabled = isEnabled;
+	}
+
 	_makeQuizData() {
 		/* NOTE: if you add fields here, please make sure you update the corresponding equals method in siren-sdk.
 					 The cancel workflow is making use of that to detect changes.
@@ -96,6 +103,7 @@ export class Quiz {
 		const data = {
 			name: this.name,
 			allowHints: this.hintsToolEnabled,
+			shuffle: this.shuffleEnabled,
 			password: this.password,
 			disableRightClick: this.isDisableRightClickEnabled,
 			disablePagerAndAlerts: this.isDisablePagerAndAlertsEnabled,
@@ -111,10 +119,12 @@ decorate(Quiz, {
 	// props
 	name: observable,
 	canEditName: observable,
+	canEditShuffle: observable,
 	canEditHints: observable,
 	canEditDisableRightClick: observable,
 	canEditPreventMovingBackwards: observable,
 	canEditDisablePagerAndAlerts: observable,
+	isShuffleEnabled: observable,
 	hintsToolEnabled: observable,
 	password: observable,
 	canEditPassword: observable,
@@ -126,6 +136,7 @@ decorate(Quiz, {
 	// actions
 	load: action,
 	setName: action,
+	setShuffle: action,
 	setHintsToolEnabled: action,
 	setPassword: action,
 	setDisableRightClick: action,
