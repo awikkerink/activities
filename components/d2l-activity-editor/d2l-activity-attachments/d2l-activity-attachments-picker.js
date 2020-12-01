@@ -1,9 +1,3 @@
-import '@brightspace-ui/core/components/button/button';
-import '@brightspace-ui/core/components/colors/colors';
-import '@brightspace-ui/core/components/dropdown/dropdown';
-import '@brightspace-ui/core/components/dropdown/dropdown-menu';
-import '@brightspace-ui/core/components/tooltip/tooltip';
-import '@brightspace-ui/core/components/menu/menu';
 import './d2l-activity-attachments-picker-presentational.js';
 
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
