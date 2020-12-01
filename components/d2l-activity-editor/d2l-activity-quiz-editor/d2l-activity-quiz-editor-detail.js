@@ -5,7 +5,7 @@ import '../d2l-activity-outcomes.js';
 import '../d2l-activity-score-editor.js';
 import '../d2l-activity-text-editor.js';
 import '../d2l-activity-attachments/d2l-activity-attachments-editor.js';
-import '../d2l-activity-quiz-divider';
+import '../d2l-activity-quiz-editor/d2l-activity-quiz-divider';
 
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { css, html } from 'lit-element/lit-element.js';
@@ -49,11 +49,13 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 					padding-right: 0;
 				}
 				d2l-button-subtle {
+					/* to override the padding added by d2l-button-subtle */
 					left: 0.6rem;
 					position: relative;
 					right: 0;
 				}
 				:host([dir="rtl"]) d2l-button-subtle {
+					/* to override the padding added by d2l-button-subtle */
 					left: 0;
 					position: relative;
 					right: 0.6rem;

@@ -1,6 +1,6 @@
 import '@brightspace-ui/core/components/button/button-subtle.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
-import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
+import { LocalizeActivityEditorMixin } from '../mixins/d2l-activity-editor-lang-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 
@@ -20,6 +20,7 @@ class ActivityQuizDivider extends SkeletonMixin(RtlMixin(LocalizeActivityEditorM
 				height: 3rem;
 				justify-content: center;
 				margin-left: -20px;
+				/* to override the 40px of padding added by .d2l-primary-panel */
 				width: calc(100% + 40px);
 			}
 			:host([dir="rtl"]) .d2l-activity-divider {
