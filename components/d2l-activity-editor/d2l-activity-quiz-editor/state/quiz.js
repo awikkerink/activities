@@ -93,7 +93,7 @@ export class Quiz {
 	}
 
 	setShuffle(isEnabled) {
-		this.shuffleEnabled = isEnabled;
+		this.isShuffleEnabled = isEnabled;
 	}
 
 	_makeQuizData() {
@@ -103,7 +103,7 @@ export class Quiz {
 		const data = {
 			name: this.name,
 			allowHints: this.hintsToolEnabled,
-			shuffle: this.shuffleEnabled,
+			shuffle: this.isShuffleEnabled,
 			password: this.password,
 			disableRightClick: this.isDisableRightClickEnabled,
 			disablePagerAndAlerts: this.isDisablePagerAndAlertsEnabled,

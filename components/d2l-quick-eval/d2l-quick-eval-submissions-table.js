@@ -39,6 +39,8 @@ class D2LQuickEvalSubmissionsTable extends QuickEvalLogging(QuickEvalLocalize(Po
 				}
 				d2l-td.d2l-username-column {
 					font-size: 0.8rem;
+					overflow: hidden;
+					text-overflow: ellipsis;
 				}
 				.d2l-user-badge-image {
 					display: inline-block;

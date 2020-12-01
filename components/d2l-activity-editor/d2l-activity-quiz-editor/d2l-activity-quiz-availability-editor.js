@@ -1,6 +1,8 @@
 import '../d2l-activity-accordion-collapse.js';
 import '../d2l-activity-availability-dates-editor.js';
 import '../d2l-activity-availability-dates-summary.js';
+import '../d2l-activity-usage-conditions-editor.js';
+import '../d2l-activity-usage-conditions-summary.js';
 import './d2l-activity-quiz-password-summary';
 import './d2l-activity-quiz-password-editor.js';
 import { accordionStyles } from '../styles/accordion-styles';
@@ -51,6 +53,7 @@ class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivit
 
 				<span slot="components">
 					${this._renderAvailabilityDatesEditor()}
+					${this._renderReleaseConditionEditor()}
 					${this._renderPasswordEditor()}
 				</span>
 			</d2l-activity-accordion-collapse>
@@ -104,6 +107,26 @@ class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivit
 				href="${this.href}"
 				.token="${this.token}">
 			</d2l-activity-quiz-password-summary>
+		`;
+	}
+
+	_renderReleaseConditionEditor() {
+		const activity = store.get(this.activityUsageHref);
+		if (!activity || !activity.canEditReleaseConditions) {
+			return html``;
+		}
+
+		return html`
+			<div class="d2l-editor">
+				<h3 class="d2l-heading-4">
+					${this.localize('hdrReleaseConditions')}
+				</h3>
+				<d2l-activity-usage-conditions-editor
+					description="${this.localize('hlpReleaseConditions')}"
+					href="${this.activityUsageHref}"
+					.token="${this.token}">
+				</d2l-activity-usage-conditions-editor>
+			</div>
 		`;
 	}
 
