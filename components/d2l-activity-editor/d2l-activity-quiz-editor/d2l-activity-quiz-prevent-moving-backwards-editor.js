@@ -6,7 +6,7 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { shared as store } from './state/quiz-store';
 
-class ActivityQuizHintsEditor
+class ActivityPreventMovingBackwardsEditor
 	extends ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
 
 	static get styles() {
@@ -14,12 +14,10 @@ class ActivityQuizHintsEditor
 	}
 
 	constructor() {
-
 		super(store);
 	}
 
 	render() {
-
 		const entity = store.get(this.href);
 		if (!entity) {
 			return html``;
@@ -31,22 +29,22 @@ class ActivityQuizHintsEditor
 			</d2l-input-checkbox-spacer>
 
 			<d2l-input-checkbox
-				?checked="${entity.hintsToolEnabled}"
-				@change="${this._setHintsEnabled}"
-				ariaLabel="${this.localize('hintsToolDescription')}"
-				?disabled="${!entity.canEditHints}">
-				${this.localize('hintsToolDescription')}
+				?checked="${entity.isPreventMovingBackwardsEnabled}"
+				@change="${this._setPreventMovingBackwards}"
+				ariaLabel="${this.localize('preventMovingBackwardsDescription')}"
+				?disabled="${!entity.canEditPreventMovingBackwards}">
+				${this.localize('preventMovingBackwardsDescription')}
 			</d2l-input-checkbox>
 		`;
 	}
 
-	_setHintsEnabled(event) {
+	_setPreventMovingBackwards(event) {
 		const entity = store.get(this.href);
-		entity.setHintsToolEnabled(event.target.checked);
+		entity.setPreventMovingBackwards(event.target.checked);
 	}
 }
 
 customElements.define(
-	'd2l-activity-quiz-hints-editor',
-	ActivityQuizHintsEditor
+	'd2l-activity-quiz-prevent-moving-backwards-editor',
+	ActivityPreventMovingBackwardsEditor
 );
