@@ -5,7 +5,7 @@ import '../d2l-activity-outcomes.js';
 import '../d2l-activity-score-editor.js';
 import '../d2l-activity-text-editor.js';
 import '../d2l-activity-attachments/d2l-activity-attachments-editor.js';
-import '../d2l-activity-quiz-divider';
+import '../d2l-activity-quiz-editor/d2l-activity-quiz-divider';
 
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { css, html } from 'lit-element/lit-element.js';
