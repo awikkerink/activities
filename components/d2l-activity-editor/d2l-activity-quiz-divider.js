@@ -11,26 +11,26 @@ class ActivityQuizDivider extends RtlMixin(LocalizeActivityEditorMixin(LitElemen
 				display: none;
 			}
 			.d2l-activity-divider {
-				margin-left: -20px;
-				width: calc(100% + 40px);
-				height: 3rem;
+				align-items: center;
 				background-color: var(--d2l-color-regolith);
 				border: 1px var(--d2l-color-mica);
 				border-style: solid none;
 				display: flex;
-				align-items: center;
+				height: 3rem;
 				justify-content: center;
+				margin-left: -20px;
+				width: calc(100% + 40px);
 			}
 			:host([dir="rtl"]) .d2l-activity-divider {
 				margin-left: 0;
 				margin-right: -20px;
 			}
 			.d2l-divider-container {
-				width: inherit;
+				align-items: center;
 				display: flex;
 				justify-content: space-between;
-				align-items: center;
 				padding: 0 20px;
+				width: inherit;
 			}
 		`;
 	}
