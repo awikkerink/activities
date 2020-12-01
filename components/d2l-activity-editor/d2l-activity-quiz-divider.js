@@ -1,11 +1,9 @@
 import '@brightspace-ui/core/components/button/button-subtle.js';
-import { css, html } from 'lit-element/lit-element';
-import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin';
+import { css, html, LitElement } from 'lit-element/lit-element';
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
-import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 
-class ActivityQuizDivider extends ActivityEditorMixin(RtlMixin(LocalizeActivityEditorMixin(MobxLitElement))) {
+class ActivityQuizDivider extends RtlMixin(LocalizeActivityEditorMixin(LitElement)) {
 
 	static get styles() {
 		return css`
