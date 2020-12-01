@@ -49,11 +49,13 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 					padding-right: 0;
 				}
 				d2l-button-subtle {
+					/* to override the padding added by d2l-button-subtle */
 					left: 0.6rem;
 					position: relative;
 					right: 0;
 				}
 				:host([dir="rtl"]) d2l-button-subtle {
+					/* to override the padding added by d2l-button-subtle */
 					left: 0;
 					position: relative;
 					right: 0.6rem;

@@ -19,7 +19,8 @@ class ActivityQuizDivider extends RtlMixin(LocalizeActivityEditorMixin(LitElemen
 				height: 3rem;
 				justify-content: center;
 				margin-left: -20px;
-				width: calc(100% + 40px); // to override the 20px of padding added by .d2l-primary-panel
+				/* to override the 40px of padding added by .d2l-primary-panel */
+				width: calc(100% + 40px);
 			}
 			:host([dir="rtl"]) .d2l-activity-divider {
 				margin-left: 0;
