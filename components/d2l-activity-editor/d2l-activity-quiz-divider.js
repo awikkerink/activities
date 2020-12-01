@@ -2,11 +2,12 @@ import '@brightspace-ui/core/components/button/button-subtle.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
+import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 
-class ActivityQuizDivider extends RtlMixin(LocalizeActivityEditorMixin(LitElement)) {
+class ActivityQuizDivider extends SkeletonMixin(RtlMixin(LocalizeActivityEditorMixin(LitElement))) {
 
 	static get styles() {
-		return css`
+		return [super.styles, css`
 			:host([hidden]) {
 				display: none;
 			}
@@ -32,12 +33,17 @@ class ActivityQuizDivider extends RtlMixin(LocalizeActivityEditorMixin(LitElemen
 				padding: 0 20px;
 				width: inherit;
 			}
-		`;
+		`];
+	}
+
+	constructor() {
+		super();
+		this.skeleton = true;
 	}
 
 	render() {
 		return html`
-			<div class="d2l-activity-divider">
+			<div class="d2l-activity-divider d2l-skeletize">
 				<div class="d2l-divider-container">
 					<slot name="header"></slot>
 					<slot name="action"></slot>

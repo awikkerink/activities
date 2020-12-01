@@ -101,7 +101,8 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 			</div>
 
 
-			<d2l-activity-quiz-divider>
+			<d2l-activity-quiz-divider
+				?skeleton="${this.skeleton}">
 				<h4 slot="header">${this.localize('dividerHeader')}</h4>
 				<d2l-button-subtle
 					text=${this.localize('previewLabel')}
