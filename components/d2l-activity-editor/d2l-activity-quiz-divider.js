@@ -36,11 +36,6 @@ class ActivityQuizDivider extends SkeletonMixin(RtlMixin(LocalizeActivityEditorM
 		`];
 	}
 
-	constructor() {
-		super();
-		this.skeleton = true;
-	}
-
 	render() {
 		return html`
 			<div class="d2l-activity-divider d2l-skeletize">
