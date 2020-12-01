@@ -22,6 +22,8 @@ export default {
 	"disablePagerAndAlertsSummary": "Alerts and communication blocked", // summary text when pager and alerts / communications are disabled
 	"emailNotificationSummary": "Attempt notification by email", // summary for email notification
 	"preventMovingBackwardsSummary": "Paging limitations", // summary for prevent moving backwards checkbox
+	"dividerHeader": "Questions", // The header that is displayed on the divider
+	"previewLabel": "Preview", // The label text for the preview button
 	"hdrReleaseConditions": "Release Conditions", // release conditions heading
 	"hlpReleaseConditions": "Users are not able to access or view the quiz unless they meet the release conditions." // release conditions help
 
