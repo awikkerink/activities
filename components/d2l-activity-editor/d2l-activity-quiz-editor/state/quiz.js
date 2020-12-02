@@ -31,7 +31,7 @@ export class Quiz {
 		this._entity = entity;
 		this.name = entity.name();
 		this.canEditName = entity.canEditName();
-		this.canEditShuffle =  entity.canEditShuffle();
+		this.canEditShuffle = entity.canEditShuffle();
 		this.isShuffleEnabled = entity.isShuffleEnabled();
 		this.canEditHints = entity.canEditHints();
 		this.hintsToolEnabled = entity.getHintsToolEnabled();
@@ -45,6 +45,7 @@ export class Quiz {
 		this.canEditPreventMovingBackwards = entity.canEditPreventMovingBackwards();
 		this.canEditNotificationEmail = entity.canEditNotificationEmail();
 		this.notificationEmail = entity.notificationEmail();
+		this.previewHref = entity.previewHref();
 	}
 
 	async save() {
@@ -133,6 +134,7 @@ decorate(Quiz, {
 	isPreventMovingBackwardsEnabled: observable,
 	canEditNotificationEmail: observable,
 	notificationEmail: observable,
+	previewHref: observable,
 	// actions
 	load: action,
 	setName: action,

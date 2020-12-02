@@ -109,6 +109,7 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 				<d2l-button-subtle
 					text=${this.localize('previewLabel')}
 					slot="action"
+					@click="${this._openPreview}"
 					icon="tier1:preview">
 				</d2l-button-subtle>
 			</d2l-activity-quiz-divider>
@@ -139,6 +140,15 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 		}
 
 		await quiz.save();
+	}
+
+	_openPreview() {
+		const quiz = store.get(this.href);
+		if (!quiz || !quiz.previewHref) {
+			return;
+		}
+
+		window.open(quiz.previewHref);
 	}
 
 	async _setName(e) {

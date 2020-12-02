@@ -36,6 +36,7 @@ describe('Quiz', function() {
 				isDisablePagerAndAlertsEnabled: () => false,
 				canEditNotificationEmail: () => true,
 				notificationEmail: () => 'hello@d2l.com',
+				previewHref: () => 'http://test.desire2learn.d2l/d2l/lms/quizzing/user/quiz_summary.d2l?ou=6606&qi=46&isprv=1&fromQB=1&bp=1',
 				canEditPassword: () => true,
 				password: () => 'hello'
 			};
@@ -65,6 +66,7 @@ describe('Quiz', function() {
 		expect(QuizEntity.mock.calls[0][0]).to.equal(sirenEntity);
 		expect(QuizEntity.mock.calls[0][1]).to.equal('token');
 		expect(fetchEntity.mock.calls.length).to.equal(1);
+		expect(quiz.previewHref).to.equal('http://test.desire2learn.d2l/d2l/lms/quizzing/user/quiz_summary.d2l?ou=6606&qi=46&isprv=1&fromQB=1&bp=1');
 	});
 
 	it('setName', async() => {
