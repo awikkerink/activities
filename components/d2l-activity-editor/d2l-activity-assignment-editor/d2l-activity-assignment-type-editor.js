@@ -45,7 +45,7 @@ class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 
 				.d2l-info-text {
 					margin: 0.1rem 0 0 0;
-					padding-left: 1.7rem;
+					padding-left: 1.8rem;
 				}
 
 				.d2l-info-text-flush-left {
