@@ -24,6 +24,8 @@ describe('Quiz', function() {
 			return {
 				name: () => 'Homework 101',
 				canEditName: () => true,
+				canEditPreventMovingBackwards: () => true,
+				isPreventMovingBackwardsEnabled: () => false,
 				canEditShuffle: () => true,
 				isShuffleEnabled: () => false,
 				canEditHints: () => true,
@@ -32,13 +34,11 @@ describe('Quiz', function() {
 				isDisableRightClickEnabled: () => false,
 				canEditDisablePagerAndAlerts: () => true,
 				isDisablePagerAndAlertsEnabled: () => false,
-				password: () => 'hello',
-				canEditPassword: () => true,
-				canEditPreventMovingBackwards: () => true,
-				isPreventMovingBackwardsEnabled: () => false,
 				canEditNotificationEmail: () => true,
 				notificationEmail: () => 'hello@d2l.com',
-				previewHref: () => 'http://test.desire2learn.d2l/d2l/lms/quizzing/user/quiz_summary.d2l?ou=6606&qi=46&isprv=1&fromQB=1&bp=1'
+				previewHref: () => 'http://test.desire2learn.d2l/d2l/lms/quizzing/user/quiz_summary.d2l?ou=6606&qi=46&isprv=1&fromQB=1&bp=1',
+				canEditPassword: () => true,
+				password: () => 'hello'
 			};
 		});
 
@@ -51,6 +51,8 @@ describe('Quiz', function() {
 
 		expect(quiz.name).to.equal('Homework 101');
 		expect(quiz.canEditName).to.equal(true);
+		expect(quiz.canEditShuffle).to.equal(true);
+		expect(quiz.isShuffleEnabled).to.equal(false);
 		expect(quiz.canEditHints).to.equal(true);
 		expect(quiz.hintsToolEnabled).to.equal(false);
 		expect(quiz.canEditDisableRightClick).to.equal(true);
@@ -65,6 +67,38 @@ describe('Quiz', function() {
 		expect(QuizEntity.mock.calls[0][1]).to.equal('token');
 		expect(fetchEntity.mock.calls.length).to.equal(1);
 		expect(quiz.previewHref).to.equal('http://test.desire2learn.d2l/d2l/lms/quizzing/user/quiz_summary.d2l?ou=6606&qi=46&isprv=1&fromQB=1&bp=1');
+	});
+
+	it('setName', async() => {
+		const quiz = new Quiz('http://quiz/1', 'token');
+		await quiz.fetch();
+		quiz.setName('No Homework');
+
+		expect(quiz.name).to.equal('No Homework');
+	});
+
+	it('setPreventMovingBackwards', async() => {
+		const quiz = new Quiz('http://quiz/1', 'token');
+		await quiz.fetch();
+		quiz.setPreventMovingBackwards(true);
+
+		expect(quiz.isPreventMovingBackwardsEnabled).to.equal(true);
+	});
+
+	it('setShuffle', async() => {
+		const quiz = new Quiz('http://quiz/1', 'token');
+		await quiz.fetch();
+		quiz.setShuffle(true);
+
+		expect(quiz.isShuffleEnabled).to.equal(true);
+	});
+
+	it('setHintsToolEnabled', async() => {
+		const quiz = new Quiz('http://quiz/1', 'token');
+		await quiz.fetch();
+		quiz.setHintsToolEnabled(true);
+
+		expect(quiz.hintsToolEnabled).to.equal(true);
 	});
 
 	it('setDisablePagerAndAlerts', async() => {
@@ -83,20 +117,14 @@ describe('Quiz', function() {
 		expect(quiz.isDisableRightClickEnabled).to.equal(true);
 	});
 
-	it('setHintsToolEnabled', async() => {
+	it('setNotificationEmail', async() => {
 		const quiz = new Quiz('http://quiz/1', 'token');
 		await quiz.fetch();
-		quiz.setHintsToolEnabled(true);
 
-		expect(quiz.hintsToolEnabled).to.equal(true);
-	});
+		const notificationEmail = 'modified@email.com';
+		quiz.setNotificationEmail(notificationEmail);
 
-	it('setName', async() => {
-		const quiz = new Quiz('http://quiz/1', 'token');
-		await quiz.fetch();
-		quiz.setName('No Homework');
-
-		expect(quiz.name).to.equal('No Homework');
+		expect(quiz.notificationEmail).to.equal(notificationEmail);
 	});
 
 	it('setPassword', async() => {
@@ -108,23 +136,4 @@ describe('Quiz', function() {
 
 		expect(quiz.password).to.equal(password);
 	});
-
-	it('setPreventMovingBackwards', async() => {
-		const quiz = new Quiz('http://quiz/1', 'token');
-		await quiz.fetch();
-		quiz.setPreventMovingBackwards(true);
-
-		expect(quiz.isPreventMovingBackwardsEnabled).to.equal(true);
-	});
-
-	it('setNotificationEmail', async() => {
-		const quiz = new Quiz('http://quiz/1', 'token');
-		await quiz.fetch();
-
-		const notificationEmail = 'modified@email.com';
-		quiz.setNotificationEmail(notificationEmail);
-
-		expect(quiz.notificationEmail).to.equal(notificationEmail);
-	});
-
 });
