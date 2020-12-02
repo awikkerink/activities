@@ -1,17 +1,18 @@
 import '@brightspace-ui/core/components/colors/colors';
 import '@brightspace-ui/core/components/status-indicator/status-indicator';
 
-import { bodySmallStyles, heading2Styles, heading3Styles, heading4Styles } from '@brightspace-ui/core/components/typography/styles';
+import { heading2Styles, heading3Styles, heading4Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { Constants, Config } from './env';
-import { classMap } from 'lit-html/directives/class-map.js';
+import { classMap } from 'lit-html/directives/class-map';
+import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin';
-import { formatDate } from '@brightspace-ui/intl/lib/dateTime.js';
+import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin';
 
 /**
  * Provides Title and Count for associated activity usage list
  */
-class ActivityListHeader extends LocalizeMixin(LitElement) {
+class ActivityListHeader extends SkeletonMixin(LocalizeMixin(LitElement)) {
 
 	static get properties() {
 		return {
@@ -26,10 +27,10 @@ class ActivityListHeader extends LocalizeMixin(LitElement) {
 
 	static get styles() {
 		return [
-			bodySmallStyles,
 			heading2Styles,
 			heading3Styles,
 			heading4Styles,
+			labelStyles,
 			css`
 				:host {
 					display: block;
@@ -57,12 +58,12 @@ class ActivityListHeader extends LocalizeMixin(LitElement) {
 					display: inline-block;
 					height: fit-content;
 					line-height: 1;
-					padding: 0.1rem 0.25rem 0.1rem 0.25rem;
+					padding: 0.2rem 0.35rem 0.2rem 0.35rem;
 					vertical-align: middle;
 				}
 				.d2l-activity-list-counter-fullscreen {
 					border-radius: 0.8rem;
-					padding: 0.15rem 0.35rem 0.15rem 0.35rem;
+					padding: 0.25rem 0.45rem 0.25rem 0.45rem;
 				}
 				.d2l-body-small,
 				.d2l-heading-2,
@@ -102,9 +103,21 @@ class ActivityListHeader extends LocalizeMixin(LitElement) {
 	}
 
 	render() {
-		const containerClasses = { 'd2l-activity-list-header-container-widget': !this.fullscreen, 'd2l-activity-list-header-fullscreen': this.fullscreen };
-		const messageClasses = { 'd2l-activity-list-header-content': true, 'd2l-heading-4': !this.fullscreen, 'd2l-heading-2': this.fullscreen };
-		const counterClasses = { 'd2l-activity-list-counter': true, 'd2l-activity-list-counter-fullscreen': this.fullscreen, 'd2l-body-small': !this.fullscreen, 'd2l-heading-3': this.fullscreen };
+		const containerClasses = {
+			'd2l-activity-list-header-container-widget': !this.fullscreen,
+			'd2l-activity-list-header-fullscreen': this.fullscreen
+		};
+		const messageClasses = {
+			'd2l-activity-list-header-content': true,
+			'd2l-heading-4': !this.fullscreen,
+			'd2l-heading-2': this.fullscreen
+		};
+		const counterClasses = {
+			'd2l-activity-list-counter': true,
+			'd2l-activity-list-counter-fullscreen': this.fullscreen,
+			'd2l-label-text': !this.fullscreen,
+			'd2l-heading-3': this.fullscreen
+		};
 
 		const messageTemplate = html`
 			<div class=${classMap(messageClasses)}>

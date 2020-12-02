@@ -3,7 +3,7 @@ import '@brightspace-ui/core/components/icons/icon';
 import '@brightspace-ui/core/components/list/list-item-content';
 import '../d2l-activity-date/d2l-activity-date';
 
-import { bodyCompactStyles, bodySmallStyles, bodyStandardStyles, heading3Styles } from '@brightspace-ui/core/components/typography/styles';
+import { bodyCompactStyles, bodySmallStyles, bodyStandardStyles, heading4Styles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
 import { ActivityAllowList } from './env';
@@ -35,7 +35,7 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 			bodyCompactStyles,
 			bodySmallStyles,
 			bodyStandardStyles,
-			heading3Styles,
+			heading4Styles,
 			css`
 				:host {
 					display: block;
@@ -48,10 +48,10 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 					padding: 1rem 0 0.1rem 0;
 				}
 				.d2l-activity-icon-container {
-					padding: 0.7rem 0.7rem 0 0.25rem;
+					padding: 0.8rem 0 0 0.25rem;
 				}
 				:host([dir="rtl"]) .d2l-activity-icon-container {
-					padding: 0.7rem 0.25rem 0 0.7rem;
+					padding: 0.8rem 0.25rem 0 0;
 				}
 				.d2l-activity-name-container {
 					color: var(--d2l-color-ferrite);
@@ -181,7 +181,7 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 			? html `
 				<div class="d2l-activity-date-container">
 					<d2l-activity-date
-						class="d2l-heading-3"
+						class="d2l-heading-4"
 						href=${this.href}
 						.token=${this.token}
 						format="dddd, MMMM d"
