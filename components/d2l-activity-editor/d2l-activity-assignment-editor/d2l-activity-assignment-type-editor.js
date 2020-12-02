@@ -48,6 +48,10 @@ class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 					padding-left: 1.7rem;
 				}
 
+				.d2l-info-text-flush-left {
+					margin: 0.5rem 0 0 0;
+				}
+
 				.d2l-individual-type {
 					margin: 0 0 0.5rem 0;
 				}
@@ -78,6 +82,7 @@ class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 		return html`
 			<div ?hidden=${canEditAssignmentType} id="read-only-assignment-type-container">
 				<div class="d2l-body-compact">${folderTypeText}</div>
+				<p slot="description" class="d2l-info-text-flush-left d2l-body-small">${infoText}</p>
 				<div class="d2l-body-compact">${groupTypeText}</div>
 			</div>
 
@@ -143,12 +148,12 @@ class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 		const isIndividualAssignmentType = assignment.assignmentTypeProps.isIndividualAssignmentType;
 		const hasSubmissions = assignment.submissionAndCompletionProps.assignmentHasSubmissions;
 
-		if (!hasSubmissions && isIndividualAssignmentType && assignment.assignmentTypeProps.groupCategories.length === 0) {
-			return this.localize('folderTypeNoGroups');
+		if (!hasSubmissions &&  isIndividualAssignmentType && assignment.assignmentTypeProps.groupCategories.length === 0) {
+			return this.localize('folderTypeNoGroups'); // this only displays below the 'Individual Assignment' text
 		}
 
 		if (!hasSubmissions && !isIndividualAssignmentType) {
-			return this.localize('folderTypeCreateGroups');
+			return this.localize('folderTypeCreateGroups'); // this only displays below the 'Group Assignment' text
 		}
 
 		return;
