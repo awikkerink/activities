@@ -269,7 +269,7 @@ class ActivityConditionsEditor
 		}
 	}
 	_renderAddCondition(entity) {
-		if(!this.canEdit) {
+		if (!this.canEdit) {
 			return html``;
 		}
 
