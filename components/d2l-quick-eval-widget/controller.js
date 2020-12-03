@@ -1,4 +1,5 @@
 import 'd2l-polymer-siren-behaviors/store/entity-store.js';
+import 'd2l-fetch/d2l-fetch.js';
 
 async function fetch(href, token) {
 	return (await window.D2L.Siren.EntityStore.fetch(href, token)).entity;
@@ -66,4 +67,21 @@ export async function fetchEvaluateAllHref(activityUsageEntity, token) {
 	const evaluationStatusEntity = await fetch(evalStatusLink, token);
 
 	return evaluationStatusEntity.getSubEntityByRel('https://assessments.api.brightspace.com/rels/assess-all-application').properties.path;
+}
+
+export async function setToggleState(href, toggleState) {
+	const data = { toggleState: toggleState };
+
+	return await window.d2lfetch.fetch(
+		new Request(
+			href,
+			{
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(data)
+			}
+		)
+	);
 }

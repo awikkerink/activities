@@ -1,8 +1,8 @@
 import { css, html, LitElement } from 'lit-element';
-import '@brightspace-ui/core/components/link/link.js';
+import { linkStyles } from '@brightspace-ui/core/components/link/link.js';
 import '@brightspace-ui/core/components/list/list.js';
 import { heading2Styles, bodyCompactStyles } from '@brightspace-ui/core/components/typography/styles.js';
-import { fetchActivities, fetchActivityName, fetchCourseName, getDueDate, fetchSubmissionCount, determineIcon, fetchEvaluateAllHref } from './controller.js';
+import { fetchActivities, fetchActivityName, fetchCourseName, getDueDate, fetchSubmissionCount, determineIcon, fetchEvaluateAllHref, setToggleState } from './controller.js';
 import './activity-card';
 import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
@@ -31,7 +31,7 @@ export class QuickEvalWidget extends SkeletonMixin(LitElement) {
 	}
 
 	static get styles() {
-		return [ super.styles, bodyCompactStyles, heading2Styles, css`
+		return [ super.styles, linkStyles, bodyCompactStyles, heading2Styles, css`
 			hr {
 				margin: 0;
 			}
@@ -90,6 +90,14 @@ export class QuickEvalWidget extends SkeletonMixin(LitElement) {
 		}));
 	}
 
+	async handleViewAll() {
+		try {
+			await setToggleState(this.toggleHref, this.toggleState);
+		} finally {
+			window.location = this.quickEvalHref;
+		}
+	}
+
 	render() {
 		const listItems = this.activities.map(a => {
 			return html`<d2l-quick-eval-widget-activity-card
@@ -114,7 +122,7 @@ export class QuickEvalWidget extends SkeletonMixin(LitElement) {
 			<div class="d2l-heading-2 d2l-quick-eval-widget-heading">Evaluations To Do</div>
 			<hr>
 			${ this.skeleton ? loading : loaded }
-			<d2l-link class="d2l-body-compact" href="${this.quickEvalHref}">View All</d2l-link>
+			<div @click="${this.handleViewAll}" class="d2l-link d2l-body-compact" href="${this.quickEvalHref}">View All</div>
 		`;
 	}
 }
