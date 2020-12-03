@@ -9,12 +9,13 @@ import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntit
 import { ActivityAllowList } from './env';
 import { classMap } from 'lit-html/directives/class-map';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
+import { fetchEntity } from './state/fetch-entity';
 import { ListItemMixin } from '@brightspace-ui/core/components/list/list-item-mixin';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin';
 import { nothing } from 'lit-html';
-import { fetchEntity } from './state/fetch-entity';
+import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin';
 
-class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixin(LitElement))) {
+class ActivityListItemDetailed extends ListItemMixin(SkeletonMixin(EntityMixinLit(LocalizeMixin(LitElement)))) {
 
 	static get properties() {
 		return {
@@ -45,13 +46,23 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 				}
 				.d2l-activity-date-container {
 					margin: 0;
-					padding: 1rem 0 0.1rem 0;
+					padding: 0 0 0.1rem 0;
+				}
+				:host([skeleton]) .d2l-activity-date-container {
+					height: 1.2rem;
+					margin: 0 0 0.3rem 0;
+					padding: 0;
 				}
 				.d2l-activity-icon-container {
 					padding: 0.8rem 0 0 0.25rem;
 				}
 				:host([dir="rtl"]) .d2l-activity-icon-container {
 					padding: 0.8rem 0.25rem 0 0;
+				}
+				:host([skeleton]) .d2l-activity-icon-container.d2l-skeletize {
+					margin-top: 0.8rem;
+					padding: 0.2rem;
+
 				}
 				.d2l-activity-name-container {
 					color: var(--d2l-color-ferrite);
@@ -153,33 +164,45 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 			return nothing;
 		}
 
+		const dateClasses = {
+			'd2l-activity-date-container': true,
+			'd2l-skeletize': true,
+			'd2l-skeletize-30': true
+		};
+
 		const iconClasses = {
 			'd2l-activity-icon-container': true,
 			'd2l-focusing': this._focusingLink,
-			'd2l-hovering': this._hoveringLink
+			'd2l-hovering': this._hoveringLink,
+			'd2l-skeletize': true
 		};
 
 		const nameClasses = {
 			'd2l-body-standard': true,
 			'd2l-activity-name-container': true,
 			'd2l-focusing': this._focusingLink,
-			'd2l-hovering': this._hoveringLink
+			'd2l-hovering': this._hoveringLink,
+			'd2l-skeletize': true,
+			'd2l-skeletize-30': true
 		};
 
 		const secondaryClasses = {
 			'd2l-body-small': true,
 			'd2l-secondary-content-container': true,
-			'd2l-secondary-content-container-no-description': !this._description
+			'd2l-secondary-content-container-no-description': !this._description,
+			'd2l-skeletize': true,
+			'd2l-skeletize-35': true
 		};
 
 		const supportingClasses = {
 			'd2l-body-compact': true,
 			'd2l-supporting-info-content-container': true,
+			'd2l-skeletize-paragraph-2': true
 		};
 
 		const dateTemplate = this.includeDate
 			? html `
-				<div class="d2l-activity-date-container">
+				<div class=${classMap(dateClasses)}>
 					<d2l-activity-date
 						class="d2l-heading-4"
 						href=${this.href}
@@ -194,7 +217,7 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 			? html `<d2l-icon class=${classMap(iconClasses)} icon=${this._icon}></d2l-icon>`
 			: nothing;
 
-		const separatorTemplate = this._type && (this._orgName || this._orgCode)
+		const separatorTemplate = !this.skeleton && this._type && (this._orgName || this._orgCode)
 			? html `<d2l-icon class="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
 			: nothing;
 
@@ -236,7 +259,7 @@ class ActivityListItemDetailed extends ListItemMixin(EntityMixinLit(LocalizeMixi
 
 	/** Link to activity instance for user navigation to complete/work on activity */
 	get actionHref() {
-		if (!this._started) {
+		if (!this._started || this.skeleton) {
 			return '';
 		}
 

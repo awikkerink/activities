@@ -14,7 +14,7 @@ import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin';
 import { nothing } from 'lit-html';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin';
 
-class ActivityListItemBasic extends SkeletonMixin(ListItemMixin(EntityMixinLit(LocalizeMixin(LitElement)))) {
+class ActivityListItemBasic extends ListItemMixin(SkeletonMixin(EntityMixinLit(LocalizeMixin(LitElement)))) {
 
 	static get properties() {
 		return {
@@ -38,13 +38,7 @@ class ActivityListItemBasic extends SkeletonMixin(ListItemMixin(EntityMixinLit(L
 					display: none;
 				}
 				.d2l-activity-icon-container {
-					display: inline-block;
-					flex-grow: 0;
-					flex-shrink: 0;
-					margin: 0.35rem 0.6rem 0 0;
-				}
-				:host([dir="rtl"]) .d2l-activity-icon-container {
-					margin: 0.6rem 0 0 0.6rem;
+					padding-top: 0.2rem;
 				}
 				:host([skeleton]) .d2l-activity-icon-container.d2l-skeletize {
 					padding: 0.2rem 0.1rem;
@@ -59,8 +53,8 @@ class ActivityListItemBasic extends SkeletonMixin(ListItemMixin(EntityMixinLit(L
 				.d2l-activity-icon-container.d2l-focusing,
 				.d2l-activity-name-container.d2l-hovering,
 				.d2l-activity-name-container.d2l-focusing {
+					--d2l-list-item-content-text-decoration: underline;
 					color: var(--d2l-color-celestine);
-					text-decoration: underline;
 				}
 				.d2l-icon-bullet {
 					color: var(--d2l-color-tungsten);
@@ -74,7 +68,6 @@ class ActivityListItemBasic extends SkeletonMixin(ListItemMixin(EntityMixinLit(L
 					white-space: nowrap;
 				}
 				[slot="content"] {
-					display: flex;
 					padding: 0.1rem 0;
 				}
 				d2l-list-item-generic-layout {
@@ -146,13 +139,13 @@ class ActivityListItemBasic extends SkeletonMixin(ListItemMixin(EntityMixinLit(L
 			'd2l-focusing': this._focusingLink,
 			'd2l-hovering': this._hoveringLink,
 			'd2l-skeletize': true,
-			'd2l-skeletize-50': true
+			'd2l-skeletize-60': true
 		};
 
 		const secondaryClasses = {
-			'd2l-secondary-content-container' : true,
-			'd2l-skeletize' : true,
-			'd2l-skeletize-65' : true,
+			'd2l-secondary-content-container': true,
+			'd2l-skeletize': true,
+			'd2l-skeletize-75': true,
 		};
 
 		const iconTemplate = this._icon
@@ -161,7 +154,7 @@ class ActivityListItemBasic extends SkeletonMixin(ListItemMixin(EntityMixinLit(L
 
 		const dateTemplate = html `<d2l-activity-date href="${this.href}" .token="${this.token}" format="MMM d"></d2l-activity-date>`;
 
-		const separatorTemplate = this._date && (this._orgName || this._orgCode)
+		const separatorTemplate = !this.skeletize && this._date && (this._orgName || this._orgCode)
 			? html `<d2l-icon class="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
 			: nothing;
 
@@ -182,7 +175,7 @@ class ActivityListItemBasic extends SkeletonMixin(ListItemMixin(EntityMixinLit(L
 		});
 	}
 
-	set actionHref(href) {  // Require setter function as list-mixin initializes value
+	set actionHref(href) {  // This is a hack - Garbage setter function since list-mixin initializes value
 		const oldVal = this._actionHref;
 		this._actionHref = href;
 		this.requestUpdate('actionHref', oldVal);
@@ -190,7 +183,7 @@ class ActivityListItemBasic extends SkeletonMixin(ListItemMixin(EntityMixinLit(L
 
 	/** Link to activity instance for user navigation to complete/work on activity */
 	get actionHref() {
-		if (!this._started) {
+		if (!this._started || this.skeleton) {
 			return '';
 		}
 
