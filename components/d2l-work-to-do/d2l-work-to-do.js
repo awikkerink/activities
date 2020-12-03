@@ -112,7 +112,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 
 	constructor() {
 		super();
-		this.fullscreen = false;
+		this.fullscreen = true;
 		this._discoverActive = false;
 		this._emptyEntity = undefined;
 		this._maxCollection = undefined;
@@ -393,11 +393,26 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 				.then((emptyEntity) => {
 					if (emptyEntity) {
 						this._loadOverdue(emptyEntity);
-						this._loadUpcoming(emptyEntity);
-						this._loadUpcoming(emptyEntity, Constants.MaxDays);
+						this._upcomingCollectionFake(emptyEntity);
+                		this._maxCollectionFake(emptyEntity);
 					}
 				});
 		}
+	}
+
+	async _upcomingCollectionFake(entity) {
+		const source = entity.getLinkByRel('faker').href;
+		await fetchEntity(source, this.token)
+			.then((sirenEntity) => {
+				this._upcomingCollection = sirenEntity;
+			});
+	}
+	async _maxCollectionFake(entity) {
+		const source = entity.getLinkByRel('faker').href;
+		await fetchEntity(source, this.token)
+			.then((sirenEntity) => {
+				this._maxCollection = sirenEntity;
+			});
 	}
 
 	/**
