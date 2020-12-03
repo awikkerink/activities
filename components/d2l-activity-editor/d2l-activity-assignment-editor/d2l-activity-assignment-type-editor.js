@@ -82,7 +82,7 @@ class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 		return html`
 			<div ?hidden=${canEditAssignmentType} id="read-only-assignment-type-container">
 				<div class="d2l-body-compact">${folderTypeText}</div>
-				<p slot="description" class="d2l-info-text-flush-left d2l-body-small">${infoText}</p>
+				<p class="d2l-info-text-flush-left d2l-body-small">${infoText}</p>
 				<div class="d2l-body-compact">${groupTypeText}</div>
 			</div>
 
