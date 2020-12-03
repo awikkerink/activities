@@ -46,6 +46,7 @@ export class Quiz {
 		this.canEditNotificationEmail = entity.canEditNotificationEmail();
 		this.notificationEmail = entity.notificationEmail();
 		this.previewHref = entity.previewHref();
+		this.canPreviewQuiz = entity.canPreviewQuiz();
 	}
 
 	async save() {
@@ -135,6 +136,7 @@ decorate(Quiz, {
 	canEditNotificationEmail: observable,
 	notificationEmail: observable,
 	previewHref: observable,
+	canPreviewQuiz: observable,
 	// actions
 	load: action,
 	setName: action,
