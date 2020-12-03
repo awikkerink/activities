@@ -1,6 +1,10 @@
 import '@brightspace-ui/core/components/button/button';
 import '@brightspace-ui/core/components/icons/icon';
 import '@brightspace-ui/core/components/link/link';
+// import '@webcomponents/webcomponentsjs/webcomponents-bundle';
+import '../../bower_components/d2l-navigation/d2l-navigation-immersive';
+import '../../bower_components/d2l-navigation/d2l-navigation-button';
+import '../../bower_components/d2l-navigation/d2l-navigation-button-close';
 import './d2l-work-to-do-activity-list-header';
 import './d2l-work-to-do-activity-list-item-basic';
 import './d2l-work-to-do-activity-list-item-detailed';
@@ -17,6 +21,12 @@ import { performSirenAction } from 'siren-sdk/src/es6/SirenAction';
 import { UserEntity } from 'siren-sdk/src/users/UserEntity';
 import { repeat } from 'lit-html/directives/repeat';
 import { nothing } from 'lit-html';
+/*
+
+		<!-- <script src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script> -->
+		<script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+		<link rel="import" href="/bower_components/d2l-navigation/d2l-navigation-immersive.js">
+*/
 
 /**
  * @classdesc Class representation of Work to Do widget component
@@ -276,6 +286,16 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 			});
 
 			return html`
+				<d2l-navigation-immersive back-link-href="https://www.d2l.com" back-link-text="Back to D2L">
+					<div class="d2l-typography d2l-body-standard" slot="middle">
+						<p>Immersive Navigation</p>
+					</div>
+					<div slot="right">
+						<d2l-navigation-button text="A button">One Button</d2l-navigation-button>
+						<d2l-navigation-button-close></d2l-navigation-button-close>
+						<d2l-navigation-button text="Another button">Two Button</d2l-navigation-button>
+					</div>
+				</d2l-navigation-immersive>
 				<div class="d2l-activity-collection-container-fullscreen">
 					<d2l-work-to-do-activity-list-header ?overdue=${isOverdue} count=${activities.length} fullscreen></d2l-work-to-do-activity-list-header>
 					<d2l-list>${groupedByDate}</d2l-list>
@@ -394,7 +414,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 					if (emptyEntity) {
 						this._loadOverdue(emptyEntity);
 						this._upcomingCollectionFake(emptyEntity);
-                		this._maxCollectionFake(emptyEntity);
+						this._maxCollectionFake(emptyEntity);
 					}
 				});
 		}
