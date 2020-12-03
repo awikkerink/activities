@@ -75,6 +75,7 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 		const {
 			name,
 			canEditName,
+			canPreviewQuiz
 		} = quiz || {};
 
 		return html`
@@ -110,6 +111,7 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 					text=${this.localize('previewLabel')}
 					slot="action"
 					@click="${this._openPreview}"
+					?disabled="${!canPreviewQuiz}"
 					icon="tier1:preview">
 				</d2l-button-subtle>
 			</d2l-activity-quiz-divider>
