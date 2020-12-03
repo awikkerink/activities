@@ -86,6 +86,15 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 				d2l-button {
 					padding: 1.8rem 0;
 				}
+				.d2l-activity-collection d2l-list d2l-work-to-do-activity-list-item-basic:first-of-type {
+					margin-top: 0.3rem;
+				}
+				.d2l-activity-collection d2l-list d2l-work-to-do-activity-list-item-basic:last-of-type {
+					margin-bottom: 0.3rem;
+				}
+				.d2l-activity-collection-container-fullscreen d2l-list d2l-work-to-do-activity-list-item-detailed:last-of-type {
+					margin-bottom: 1.5rem;
+				}
 			`
 		];
 	}
