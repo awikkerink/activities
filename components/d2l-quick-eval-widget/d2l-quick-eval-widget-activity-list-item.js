@@ -6,7 +6,7 @@ import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/link/link.js';
 import '../d2l-subtitle/d2l-subtitle.js';
 
-export class QuickEvalWidgetActivityCard extends LitElement {
+export class QuickEvalWidgetActivityListItem extends LitElement {
 	static get properties() {
 		return {
 			activityName: { type: String },
@@ -37,4 +37,4 @@ export class QuickEvalWidgetActivityCard extends LitElement {
 	}
 }
 
-customElements.define('d2l-quick-eval-widget-activity-card', QuickEvalWidgetActivityCard);
+customElements.define('d2l-quick-eval-widget-activity-list-item', QuickEvalWidgetActivityListItem);

@@ -2,8 +2,8 @@ import { css, html, LitElement } from 'lit-element';
 import { linkStyles } from '@brightspace-ui/core/components/link/link.js';
 import '@brightspace-ui/core/components/list/list.js';
 import { heading2Styles, bodyCompactStyles } from '@brightspace-ui/core/components/typography/styles.js';
-import { fetchActivities, fetchActivityName, fetchCourseName, getDueDate, fetchSubmissionCount, determineIcon, fetchEvaluateAllHref, setToggleState } from './controller.js';
-import './activity-card';
+import { fetchActivities, fetchActivityName, fetchCourseName, getDueDate, fetchSubmissionCount, determineIcon, fetchEvaluateAllHref, setToggleState } from './d2l-quick-eval-widget-controller.js';
+import './d2l-quick-eval-widget-activity-list-item';
 import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
@@ -100,14 +100,14 @@ export class QuickEvalWidget extends SkeletonMixin(LitElement) {
 
 	render() {
 		const listItems = this.activities.map(a => {
-			return html`<d2l-quick-eval-widget-activity-card
+			return html`<d2l-quick-eval-widget-activity-list-item
 					activityName="${a.activityName}"
 					courseName="${a.courseName}"
 					dueDate="${a.dueDate}"
 					submissionCount="${ifDefined(a.submissionCount)}"
 					icon="${a.icon}"
 					evaluateAllHref="${a.evaluateAllHref}"
-				></d2l-quick-eval-widget-activity-card>`;
+				></d2l-quick-eval-widget-activity-list-item>`;
 		});
 
 		const loaded = html`<d2l-list class="d2l-quick-eval-widget-list" separators="none">${listItems}</d2l-list>`;
