@@ -126,10 +126,6 @@ class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivit
 	}
 
 	_renderReleaseConditionEditor() {
-		const activity = store.get(this.activityUsageHref);
-		if (!activity || !activity.canEditReleaseConditions) {
-			return html``;
-		}
 
 		return html`
 			<div class="d2l-editor">
