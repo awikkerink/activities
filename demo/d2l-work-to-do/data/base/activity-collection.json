@@ -110,15 +110,15 @@
         "entities": [
             {
                 "class": [
-                    "end-date",
+                    "due-date",
                     "date"
                 ],
                 "rel": [
                     "https://api.brightspace.com/rels/date"
                 ],
                 "properties": {
-                    "date": "2013-11-04T21:33:21.000Z",
-                    "localizedDate": "2013-11-04T17:33:21.000"
+                  "date": "2013-10-01T21:30:00.000Z",
+                  "localizedDate": "2013-10-01T17:30:00.000"
                 }
             },
             {

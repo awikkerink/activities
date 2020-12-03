@@ -58,7 +58,7 @@ class ActivityListHeader extends SkeletonMixin(LocalizeMixin(LitElement)) {
 					display: inline-block;
 					height: fit-content;
 					line-height: 1;
-					padding: 0.2rem 0.35rem 0.2rem 0.35rem;
+					padding: 0.15rem 0.3rem;
 					vertical-align: middle;
 				}
 				.d2l-activity-list-counter-fullscreen {

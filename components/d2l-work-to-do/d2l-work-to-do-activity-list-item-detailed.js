@@ -45,7 +45,7 @@ class ActivityListItemDetailed extends ListItemMixin(SkeletonMixin(EntityMixinLi
 					display: none;
 				}
 				.d2l-activity-date-container {
-					margin: 0;
+					margin: 1rem 0 0 0;
 					padding: 0 0 0.1rem 0;
 				}
 				:host([skeleton]) .d2l-activity-date-container {
