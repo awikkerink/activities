@@ -269,15 +269,10 @@ class ActivityConditionsEditor
 		}
 	}
 	_renderAddCondition(entity) {
-		if (!this.canEdit) {
-			return html``;
-		}
 
 		const { canAttachExisting, canCreateNew } = entity;
 
-		if (!canAttachExisting && !canCreateNew) {
-			return html``;
-		}
+		const canEditAny = this.canEdit && (canAttachExisting || canCreateNew);
 
 		let attachExistingTemplate;
 		if (canAttachExisting) {
@@ -301,14 +296,15 @@ class ActivityConditionsEditor
 
 		return html`
 			<d2l-dropdown-button-subtle
-				text="${this.localize('editor.btnAddReleaseCondition')}">
+				text="${this.localize('editor.btnAddReleaseCondition')}"
+				?disabled="${!this.canEditAny}">
 				<d2l-dropdown-menu>
 					<d2l-menu label="${this.localize('editor.btnAddReleaseCondition')}">
 						${createNewTemplate}
 						${attachExistingTemplate}
 					</d2l-menu>
 				</d2l-dropdown-menu>
-			</d2l-dropdown>
+			</d2l-dropdown-button-subtle>
 		`;
 	}
 	_renderCondition({ key, title }) {
