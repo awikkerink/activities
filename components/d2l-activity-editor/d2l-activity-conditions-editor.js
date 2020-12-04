@@ -20,7 +20,8 @@ class ActivityConditionsEditor
 	static get properties() {
 
 		return {
-			description: { type: String }
+			description: { type: String },
+			canEdit: { type: Boolean, attribute: 'can-edit' }
 		};
 	}
 
@@ -101,6 +102,7 @@ class ActivityConditionsEditor
 
 	constructor() {
 		super(store);
+		this.canEdit = false;
 	}
 
 	render() {
@@ -267,6 +269,9 @@ class ActivityConditionsEditor
 		}
 	}
 	_renderAddCondition(entity) {
+		if (!this.canEdit) {
+			return html``;
+		}
 
 		const { canAttachExisting, canCreateNew } = entity;
 
@@ -322,7 +327,7 @@ class ActivityConditionsEditor
 						.innerHTML="${title}">
 					</span>
 				</span>
-				<span class="d2l-list-item-deleter">
+				<span class="d2l-list-item-deleter" ?hidden="${!this.canEdit}">
 					<d2l-button-icon
 						text="${this.localize('editor.btnRemoveCondition')}"
 						icon="tier1:close-default"
@@ -388,6 +393,7 @@ class ActivityConditionsEditor
 				<select
 					class="d2l-input-select"
 					id="operator"
+					?disabled="${!this.canEdit}"
 					@change="${this._setOperator}">
 					${operators.map(this._renderOperator, this)}
 				</select>

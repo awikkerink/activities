@@ -28,6 +28,7 @@ class ActivityUsageConditionsEditor extends ActivityEditorMixin(MobxLitElement) 
 		return html`
 			<d2l-activity-conditions-editor
 				description="${this.description}"
+				?can-edit="${entity.canEditReleaseConditions}"
 				href="${entity.conditionsHref}"
 				.token="${this.token}">
 			</d2l-activity-conditions-editor>
