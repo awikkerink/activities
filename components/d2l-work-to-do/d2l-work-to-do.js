@@ -320,8 +320,31 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 			`;
 		};
 
-		/** Loading state template */
-		const loadingTemplate = nothing;
+		/** Loading State Skeleton templates */
+		const basicSkeleton = html`
+			<d2l-work-to-do-activity-list-header skeleton></d2l-work-to-do-activity-list-header>
+			<d2l-list separators="none">
+				<d2l-work-to-do-activity-list-item-basic skeleton href=' ' token=' '></d2l-work-to-do-activity-list-item-basic>
+				<d2l-work-to-do-activity-list-item-basic skeleton href=' ' token=' '></d2l-work-to-do-activity-list-item-basic>
+				<d2l-work-to-do-activity-list-item-basic skeleton href=' ' token=' '></d2l-work-to-do-activity-list-item-basic>
+			</d2l-list>
+		`;
+
+		const detailedSkeleton = html`
+			<d2l-work-to-do-activity-list-header skeleton fullscreen></d2l-work-to-do-activity-list-header>
+			<d2l-list separators="none">
+				<d2l-work-to-do-activity-list-item-detailed skeleton href=' ' token=' '></d2l-work-to-do-activity-list-item-detailed>
+				<d2l-work-to-do-activity-list-item-detailed skeleton href=' ' token=' '></d2l-work-to-do-activity-list-item-detailed>
+				<d2l-work-to-do-activity-list-item-detailed skeleton href=' ' token=' '></d2l-work-to-do-activity-list-item-detailed>
+			</d2l-list>
+			<div class="d2l-load-more-button-skeleton d2l-skeletize"></div>
+		`;
+
+		const loadingTemplate = () => {
+			return this.fullscreen
+				? detailedSkeleton
+				: basicSkeleton;
+		};
 
 		/** Main render function logic */
 		switch (this._state) {
@@ -334,7 +357,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 			case 'fullscreen':
 				return fullscreenTemplate();
 			case 'loading':
-				return loadingTemplate; // TODO: Create loading template (or infuse skeletons)
+				return loadingTemplate();
 			default:
 				return activitiesViewTemplate();
 		}
@@ -379,10 +402,9 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 			} else if (this._maxCollection) {
 				return 'empty';
 			} else {
-				return 'loading'; // Either templates need skeleton functionality or loading is a template
+				return 'loading';
 			}
 		}
-
 		return 'loading';
 	}
 

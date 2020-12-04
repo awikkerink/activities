@@ -40,8 +40,9 @@ class ActivityListItemBasic extends ListItemMixin(SkeletonMixin(EntityMixinLit(L
 				.d2l-activity-icon-container {
 					padding-top: 0.2rem;
 				}
-				:host([skeleton]) .d2l-activity-icon-container.d2l-skeletize {
-					padding: 0.2rem 0.1rem;
+				:host([skeleton]) .d2l-activity-icon-container {
+					height: 1.3rem;
+					width: 1.2rem;
 				}
 				.d2l-activity-name-container {
 					color: var(--d2l-color-ferrite);
@@ -72,6 +73,19 @@ class ActivityListItemBasic extends ListItemMixin(SkeletonMixin(EntityMixinLit(L
 				}
 				d2l-list-item-generic-layout {
 					background: transparent;
+				}
+				#content {
+					width: 100%;
+				}
+				:host([skeleton]) .d2l-activity-name-container {
+					bottom: 0.2rem;
+					height: 1.2rem;
+					top: 0.1rem;
+				}
+				:host([skeleton]) .d2l-secondary-content-container {
+					bottom: 0.1rem;
+					height: 0.9rem;
+					top: 0.1rem;
 				}
 			`
 		];
@@ -148,18 +162,19 @@ class ActivityListItemBasic extends ListItemMixin(SkeletonMixin(EntityMixinLit(L
 			'd2l-skeletize-75': true,
 		};
 
-		const iconTemplate = this._icon
-			? html `<d2l-icon class=${classMap(iconClasses)} icon=${this._icon}></d2l-icon>`
-			: nothing;
-
-		const dateTemplate = html `<d2l-activity-date href="${this.href}" .token="${this.token}" format="MMM d"></d2l-activity-date>`;
+		const dateTemplate = html `<d2l-activity-date href="${this.href}" .token="${this.token}" format="MMM d" ?hidden=${this.skeleton}></d2l-activity-date>`;
 
 		const separatorTemplate = !this.skeletize && this._date && (this._orgName || this._orgCode)
 			? html `<d2l-icon class="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
 			: nothing;
 
 		return this._renderListItem({
-			illustration: iconTemplate,
+			illustration: html`
+				<d2l-icon
+					class=${classMap(iconClasses)}
+					?skeleton=${this.skeleton}
+					icon=${this._icon}>
+				</d2l-icon>`,
 			content: html`
 				<d2l-list-item-content id="content">
 					<div class=${classMap(nameClasses)}>
@@ -194,7 +209,7 @@ class ActivityListItemBasic extends ListItemMixin(SkeletonMixin(EntityMixinLit(L
 
 	/** Due or end date of activity */
 	get _date() {
-		return this._usage
+		return this._usage && !this.skeleton
 			? this._usage.dueDate() || this._usage.endDate()
 			: '';
 	}
@@ -208,29 +223,29 @@ class ActivityListItemBasic extends ListItemMixin(SkeletonMixin(EntityMixinLit(L
 
 	/** String associated with icon catalogue for provided activity type */
 	get _icon() {
-		return this._activityProperties
+		return this._activityProperties && !this.skeleton
 			? this._activityProperties.icon
-			: ActivityAllowList.userAssignmentActivity.icon;
+			: '';
 
 	}
 
 	/** Specific name of the activity */
 	get _name() {
-		return this._activity && this._activity.hasProperty('name')
+		return this._activity && this._activity.hasProperty('name') && !this.skeleton
 			? this._activity.properties.name
-			: this._activityProperties ? this._activityProperties.type : '';
+			: this._activityProperties && !this.skeleton ? this._activityProperties.type : '';
 	}
 
 	/** Organization code of the activity's associated organization */
 	get _orgCode() {
-		return this._organization && this._organization.hasProperty('code')
+		return this._organization && this._organization.hasProperty('code') && !this.skeleton
 			? this._organization.properties.code
 			: '';
 	}
 
 	/** Name of the activity's associated organization */
 	get _orgName() {
-		return this._organization && this._organization.hasProperty('name')
+		return this._organization && this._organization.hasProperty('name') && !this.skeleton
 			? this._organization.properties.name
 			: '';
 	}
@@ -240,10 +255,11 @@ class ActivityListItemBasic extends ListItemMixin(SkeletonMixin(EntityMixinLit(L
 	 * @async
 	 */
 	async _loadActivity() {
-		const entity = this._usage._entity;
-		if (!entity || !entity.class) {
+		if (!this._usage || !this._usage._entity || !this._usage._entity.class) {
 			return;
 		}
+
+		const entity = this._usage._entity;
 
 		for (const allowed in ActivityAllowList) {
 			if (entity.hasClass(ActivityAllowList[allowed].class)) {
@@ -269,6 +285,8 @@ class ActivityListItemBasic extends ListItemMixin(SkeletonMixin(EntityMixinLit(L
 	 * @async
 	 */
 	async _loadOrganization() {
+		if (!this._usage) return;
+
 		const organizationHref = this._usage.organizationHref();
 		if (organizationHref) {
 			await fetchEntity(organizationHref, this.token)

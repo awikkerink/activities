@@ -27,6 +27,7 @@ class ActivityListHeader extends SkeletonMixin(LocalizeMixin(LitElement)) {
 
 	static get styles() {
 		return [
+			super.styles,
 			heading2Styles,
 			heading3Styles,
 			heading4Styles,
@@ -44,6 +45,23 @@ class ActivityListHeader extends SkeletonMixin(LocalizeMixin(LitElement)) {
 					justify-content: space-between;
 					margin-bottom: 1px;
 					padding-bottom: 0.3rem;
+				}
+				:host([skeleton]) .d2l-activity-list-header-container-widget {
+					border-bottom: 1px transparent;
+					padding: 0.2rem 0;
+				}
+				:host([skeleton]) .d2l-activity-list-header-content.d2l-heading-2 {
+					width: 30%;
+				}
+				:host([skeleton]) .d2l-activity-list-header-content.d2l-heading-4 {
+					width: 50%;
+				}
+				:host([skeleton]) .d2l-activity-list-counter {
+					min-height: 0.8rem;
+					width: 5%;
+				}
+				:host([skeleton]) .d2l-activity-list-counter.d2l-heading-3 {
+					max-width: 2rem;
 				}
 				.d2l-activity-list-header-fullscreen {
 					display: flex;
@@ -110,13 +128,15 @@ class ActivityListHeader extends SkeletonMixin(LocalizeMixin(LitElement)) {
 		const messageClasses = {
 			'd2l-activity-list-header-content': true,
 			'd2l-heading-4': !this.fullscreen,
-			'd2l-heading-2': this.fullscreen
+			'd2l-heading-2': this.fullscreen,
+			'd2l-skeletize': true,
 		};
 		const counterClasses = {
 			'd2l-activity-list-counter': true,
 			'd2l-activity-list-counter-fullscreen': this.fullscreen,
 			'd2l-label-text': !this.fullscreen,
-			'd2l-heading-3': this.fullscreen
+			'd2l-heading-3': this.fullscreen,
+			'd2l-skeletize': true
 		};
 
 		const messageTemplate = html`
@@ -138,6 +158,9 @@ class ActivityListHeader extends SkeletonMixin(LocalizeMixin(LitElement)) {
 	}
 
 	get _counterString() {
+		if (this.skeleton) {
+			return '';
+		}
 		return this.fullscreen
 			? `${this.count}`
 			: this.count > Constants.MaxActivityCount
@@ -146,6 +169,9 @@ class ActivityListHeader extends SkeletonMixin(LocalizeMixin(LitElement)) {
 	}
 
 	get _message() {
+		if (this.skeleton) {
+			return '';
+		}
 		if (this.isOverdue) {
 			return this.localize('overdue');
 		}

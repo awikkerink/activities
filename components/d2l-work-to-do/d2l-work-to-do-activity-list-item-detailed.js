@@ -50,7 +50,7 @@ class ActivityListItemDetailed extends ListItemMixin(SkeletonMixin(EntityMixinLi
 				}
 				:host([skeleton]) .d2l-activity-date-container {
 					height: 1.2rem;
-					margin: 0 0 0.3rem 0;
+					margin: 1rem 0 0.3rem 0;
 					padding: 0;
 				}
 				.d2l-activity-icon-container {
@@ -58,11 +58,6 @@ class ActivityListItemDetailed extends ListItemMixin(SkeletonMixin(EntityMixinLi
 				}
 				:host([dir="rtl"]) .d2l-activity-icon-container {
 					padding: 0.8rem 0.25rem 0 0;
-				}
-				:host([skeleton]) .d2l-activity-icon-container.d2l-skeletize {
-					margin-top: 0.8rem;
-					padding: 0.2rem;
-
 				}
 				.d2l-activity-name-container {
 					color: var(--d2l-color-ferrite);
@@ -109,6 +104,28 @@ class ActivityListItemDetailed extends ListItemMixin(SkeletonMixin(EntityMixinLi
 				}
 				d2l-list-item-generic-layout {
 					background: transparent;
+				}
+				#content {
+					width: 100%;
+				}
+				:host([skeleton]) .d2l-activity-icon-container.d2l-skeletize {
+					height: 1.5rem;
+					margin-top: 0.8rem;
+					padding-top: 0;
+					width: 1.2rem;
+				}
+				:host([skeleton]) .d2l-activity-name-container {
+					height: 1.4rem;
+				}
+				:host([skeleton]) .d2l-secondary-content-container {
+					bottom: 0.15rem;
+					height: 1rem;
+					top: 0.1rem;
+				}
+				:host([skeleton]) .d2l-supporting-info-content-container {
+					bottom: 0.1rem;
+					height: 2rem;
+					top: 0.1rem;
 				}
 			`
 		];
@@ -167,7 +184,7 @@ class ActivityListItemDetailed extends ListItemMixin(SkeletonMixin(EntityMixinLi
 		const dateClasses = {
 			'd2l-activity-date-container': true,
 			'd2l-skeletize': true,
-			'd2l-skeletize-30': true
+			'd2l-skeletize-20': true
 		};
 
 		const iconClasses = {
@@ -206,6 +223,7 @@ class ActivityListItemDetailed extends ListItemMixin(SkeletonMixin(EntityMixinLi
 					<d2l-activity-date
 						class="d2l-heading-4"
 						href=${this.href}
+						?hidden=${this.skeleton}
 						.token=${this.token}
 						format="dddd, MMMM d"
 						date-only>
@@ -213,23 +231,17 @@ class ActivityListItemDetailed extends ListItemMixin(SkeletonMixin(EntityMixinLi
 				</div>`
 			: nothing;
 
-		const iconTemplate = this._icon
-			? html `<d2l-icon class=${classMap(iconClasses)} icon=${this._icon}></d2l-icon>`
-			: nothing;
-
 		const separatorTemplate = !this.skeleton && this._type && (this._orgName || this._orgCode)
 			? html `<d2l-icon class="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
 			: nothing;
 
-		const descriptionTemplate = this._description
-			? html`
-				<div id="content-supporting-info-container" slot="supporting-info" class=${classMap(supportingClasses)}>
-					${this._description}
-				</div>`
-			: nothing;
-
 		const listItemTemplate = this._renderListItem({
-			illustration: iconTemplate,
+			illustration: html`
+				<d2l-icon
+					class=${classMap(iconClasses)}
+					?skeleton=${this.skeleton}
+					icon=${this._icon}>
+				</d2l-icon>`,
 			content: html`
 				<d2l-list-item-content id="content">
 					<div class=${classMap(nameClasses)}>
@@ -240,7 +252,9 @@ class ActivityListItemDetailed extends ListItemMixin(SkeletonMixin(EntityMixinLi
 						${separatorTemplate}
 						${this._orgName || this._orgCode}
 					</div>
-					${descriptionTemplate}
+					<div id="content-supporting-info-container" slot="supporting-info" class=${classMap(supportingClasses)}>
+						${this._description}
+					</div>
 				</d2l-list-item-content>
 			`
 		});
@@ -270,42 +284,42 @@ class ActivityListItemDetailed extends ListItemMixin(SkeletonMixin(EntityMixinLi
 
 	/** Due or end date of activity */
 	get _date() {
-		return this._usage
+		return this._usage && !this.skeleton
 			? this._usage.dueDate() || this._usage.endDate()
 			: '';
 	}
 
 	get _description() {
-		return this._activity && this._activity.hasProperty('description')
+		return this._activity && this._activity.hasProperty('description') && !this.skeleton
 			? this._activity.properties.description
 			: '';
 	}
 
 	/** String associated with icon catalogue for provided activity type */
 	get _icon() {
-		return this._activityProperties
+		return this._activityProperties && !this.skeleton
 			? this._activityProperties.icon
-			: ActivityAllowList.userAssignmentActivity.icon;
+			: '';
 
 	}
 
 	/** Specific name of the activity */
 	get _name() {
-		return this._activity && this._activity.hasProperty('name')
+		return this._activity && this._activity.hasProperty('name') && !this.skeleton
 			? this._activity.properties.name
-			: this._activityProperties ? this._activityProperties.type : '';
+			: this._activityProperties && !this.skeleton ? this._activityProperties.type : '';
 	}
 
 	/** Organization code of the activity's associated organization */
 	get _orgCode() {
-		return this._organization && this._organization.hasProperty('code')
+		return this._organization && this._organization.hasProperty('code') && !this.skeleton
 			? this._organization.properties.code
 			: '';
 	}
 
 	/** Name of the activity's associated organization */
 	get _orgName() {
-		return this._organization && this._organization.hasProperty('name')
+		return this._organization && this._organization.hasProperty('name') && !this.skeleton
 			? this._organization.properties.name
 			: '';
 	}
@@ -318,7 +332,7 @@ class ActivityListItemDetailed extends ListItemMixin(SkeletonMixin(EntityMixinLi
 	}
 
 	get _type() {
-		return this._activityProperties
+		return this._activityProperties && !this.skeleton
 			? this._activityProperties.type
 			: '';
 	}
@@ -328,10 +342,11 @@ class ActivityListItemDetailed extends ListItemMixin(SkeletonMixin(EntityMixinLi
 	 * @async
 	 */
 	async _loadActivity() {
-		const entity = this._usage._entity;
-		if (!entity || !entity.class) {
+		if (!this._usage || !this._usage._entity || !this._usage._entity.class) {
 			return;
 		}
+
+		const entity = this._usage._entity;
 
 		for (const allowed in ActivityAllowList) {
 			if (entity.hasClass(ActivityAllowList[allowed].class)) {
@@ -357,6 +372,8 @@ class ActivityListItemDetailed extends ListItemMixin(SkeletonMixin(EntityMixinLi
 	 * @async
 	 */
 	async _loadOrganization() {
+		if (!this._usage) return;
+
 		const organizationHref = this._usage.organizationHref();
 		if (organizationHref) {
 			await fetchEntity(organizationHref, this.token)
