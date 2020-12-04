@@ -297,7 +297,7 @@ class ActivityConditionsEditor
 		return html`
 			<d2l-dropdown-button-subtle
 				text="${this.localize('editor.btnAddReleaseCondition')}"
-				?disabled="${!this.canEditAny}">
+				?disabled="${!canEditAny}">
 				<d2l-dropdown-menu>
 					<d2l-menu label="${this.localize('editor.btnAddReleaseCondition')}">
 						${createNewTemplate}
