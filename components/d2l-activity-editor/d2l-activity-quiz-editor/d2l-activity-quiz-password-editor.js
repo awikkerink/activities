@@ -16,14 +16,6 @@ class ActivityQuizPasswordEditor
 		};
 	}
 
-	static get styles() {
-		return css`
-			#quiz-password {
-				padding-top: 20px;
-			}
-		`;
-	}
-
 	constructor() {
 		super(store);
 	}
@@ -38,7 +30,6 @@ class ActivityQuizPasswordEditor
 		return html`
 			<d2l-input-text
 				?skeleton="${this.skeleton}"
-				id="quiz-password"
 				maxlength="20"
 				value="${entity.password}"
 				@input="${this._setPassword}"

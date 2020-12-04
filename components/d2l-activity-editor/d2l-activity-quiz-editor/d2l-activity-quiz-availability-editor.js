@@ -109,10 +109,12 @@ class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivit
 	_renderPasswordEditor() {
 
 		return html`
-			<d2l-activity-quiz-password-editor
-				.href="${this.href}"
-				.token="${this.token}">
-			</d2l-activity-quiz-password-editor>
+			<div class="d2l-editor">
+				<d2l-activity-quiz-password-editor
+					.href="${this.href}"
+					.token="${this.token}">
+				</d2l-activity-quiz-password-editor>
+			</div>
 		`;
 	}
 
