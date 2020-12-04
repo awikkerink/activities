@@ -54,7 +54,6 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(R
 	render() {
 		const activity = store.get(this.href);
 		if (!activity || !this._featureEnabled) {
-			this.hidden = true;
 			return html``;
 		}
 
@@ -62,12 +61,6 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(R
 			canUpdateAlignments,
 			alignmentsHref
 		} = activity;
-
-		if (!canUpdateAlignments && !this._hasAlignments || this._hasAlignments === undefined) {
-			this.hidden = true;
-		} else {
-			this.hidden = false;
-		}
 
 		return html`
 			${this._renderTags()}
