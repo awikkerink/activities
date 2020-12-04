@@ -1,5 +1,5 @@
-import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
+import { html } from 'lit-element/lit-element.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
@@ -16,14 +16,6 @@ class ActivityQuizPasswordEditor
 		};
 	}
 
-	static get styles() {
-		return css`
-			#quiz-password {
-				padding-top: 20px;
-			}
-		`;
-	}
-
 	constructor() {
 		super(store);
 	}
@@ -38,7 +30,6 @@ class ActivityQuizPasswordEditor
 		return html`
 			<d2l-input-text
 				?skeleton="${this.skeleton}"
-				id="quiz-password"
 				maxlength="20"
 				value="${entity.password}"
 				@input="${this._setPassword}"
