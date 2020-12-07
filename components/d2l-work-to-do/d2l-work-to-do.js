@@ -143,7 +143,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 		}
 	}
 
-	updated(changedProperties){
+	updated(changedProperties) {
 		changedProperties.forEach((oldValue, propName) => {
 			switch (propName) {
         		case 'options': this._optionsChanged(this.options);
