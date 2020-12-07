@@ -33,6 +33,8 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 			_overdueCollection: { type: Object },
 			/** ActivityUsageCollection with time: 0 -> UpcomingWeekLimit */
 			_upcomingCollection: { type: Object },
+			/** Represents current session's render options */
+			options: { type: String },
 		};
 	}
 
@@ -128,6 +130,8 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 		this._overdueCollection = undefined;
 		this._overdueDisplayLimit = Constants.MaxWidgetDisplay;
 		this._upcomingCollection = undefined;
+		this._overdueWeekLimit = Config.OverdueWeekLimit;
+		this._upcomingWeekLimit = Config.UpcomingWeekLimit;
 		this._viewAllSource = 'http://www.d2l.com';  // TODO: Update to actual tool location
 		this._setEntityType(UserEntity);
 	}
@@ -137,6 +141,23 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 			this._onEntityChanged(entity);
 			super._entity = entity;
 		}
+	}
+
+	updated(changedProperties){
+		changedProperties.forEach((oldValue, propName) => {
+			switch (propName) {
+        		case 'options': this._optionsChanged(this.options);
+					break;
+			}
+		});
+	}
+
+	_optionsChanged(newOptions) {
+		const options = JSON.parse(newOptions);
+		this.fullscreen = options.fullscreen;
+		this._overdueWeekLimit = options.overdueWeekLimit;
+		this._upcomingWeekLimit = options.upcomingWeekLimit;
+		window.D2L.options = options;
 	}
 
 	/**
