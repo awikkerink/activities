@@ -146,7 +146,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 	updated(changedProperties) {
 		changedProperties.forEach((oldValue, propName) => {
 			switch (propName) {
-        		case 'options': this._optionsChanged(this.options);
+				case 'options': this._optionsChanged(this.options);
 					break;
 			}
 		});
@@ -155,9 +155,11 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 	_optionsChanged(newOptions) {
 		const options = JSON.parse(newOptions);
 		this.fullscreen = options.fullscreen;
-		this._overdueWeekLimit = options.overdueWeekLimit;
-		this._upcomingWeekLimit = options.upcomingWeekLimit;
-		window.D2L.options = options;
+		this._overdueWeekLimit = (options.overdueWeekLimit !== undefined) ?
+			options.overdueWeekLimit : this._overdueWeekLimit;
+		this._upcomingWeekLimit = (options.upcomingWeekLimit !== undefined) ?
+			options.upcomingWeekLimit : this._upcomingWeekLimit;
+		window.D2L.workToDoOptions = options;
 	}
 
 	/**

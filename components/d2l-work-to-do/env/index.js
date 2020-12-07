@@ -66,16 +66,16 @@ export const ActivityAllowList = {
 };
 
 export function getUpcomingWeekLimit() {
-	if (window.D2L && window.D2L.options && window.D2L.options.upcomingWeekLimit) {
-		return window.D2L.options.upcomingWeekLimit;
+	if (window.D2L && window.D2L.workToDoOptions && window.D2L.workToDoOptions.upcomingWeekLimit) {
+		return window.D2L.workToDoOptions.upcomingWeekLimit;
 	} else {
 		return Config.UpcomingWeekLimit;
 	}
 }
 
 export function getOverdueWeekLimit() {
-	if (window.D2L && window.D2L.options && window.D2L.options.overdueWeekLimit) {
-		return window.D2L.options.overdueWeekLimit;
+	if (window.D2L && window.D2L.workToDoOptions && window.D2L.workToDoOptions.overdueWeekLimit) {
+		return window.D2L.workToDoOptions.overdueWeekLimit;
 	} else {
 		return Config.OverdueWeekLimit;
 	}
