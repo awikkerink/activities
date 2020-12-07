@@ -389,7 +389,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 
 	get _upcomingDisplayLimit() {
 		return this._overdueCount
-			? Math.max((Constants.MaxWidgetDisplay - this._overdueCount - 1), 0)  // Subtract one to account for additional header space
+			? Math.max((Constants.MaxWidgetDisplay - this._overdueCount), 0)
 			: Constants.MaxWidgetDisplay;
 	}
 
@@ -401,8 +401,6 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 					: 'activity';
 			} else if (this._maxCollection) {
 				return 'empty';
-			} else {
-				return 'loading';
 			}
 		}
 		return 'loading';

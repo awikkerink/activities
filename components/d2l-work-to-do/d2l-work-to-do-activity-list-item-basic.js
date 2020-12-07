@@ -233,7 +233,9 @@ class ActivityListItemBasic extends ListItemMixin(SkeletonMixin(EntityMixinLit(L
 	get _name() {
 		return this._activity && this._activity.hasProperty('name') && !this.skeleton
 			? this._activity.properties.name
-			: this._activityProperties && !this.skeleton ? this._activityProperties.type : '';
+			: this._activityProperties && !this.skeleton
+				? this.localize(this._activityProperties.type)
+				: '';
 	}
 
 	/** Organization code of the activity's associated organization */
