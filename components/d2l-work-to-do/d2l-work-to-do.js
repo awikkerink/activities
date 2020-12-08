@@ -130,6 +130,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 		this._overdueDisplayLimit = Constants.MaxWidgetDisplay;
 		this._upcomingCollection = undefined;
 		this._viewAllSource = 'http://www.d2l.com';  // TODO: Update to actual tool location
+		this._backLinkHref = 'http://d2l.com';
 		this._setEntityType(UserEntity);
 	}
 
@@ -288,7 +289,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 			const immersiveNav = (isFullscreen) => {
 				return isFullscreen
 					? html`
-						<d2l-navigation-immersive back-link-href="https://www.d2l.com" back-link-text="Back to D2L">
+						<d2l-navigation-immersive back-link-href="_backLinkHref" back-link-text="Back to D2L">
 							<div class="d2l-typography d2l-body-standard" slot="middle">
 								<p>${this.localize('myWorkToDo')}</p>
 							</div>
