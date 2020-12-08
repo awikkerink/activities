@@ -35,6 +35,7 @@ describe('Quiz', function() {
 				canEditDisablePagerAndAlerts: () => true,
 				isDisablePagerAndAlertsEnabled: () => false,
 				isAutoSetGradedEnabled: () => false,
+				canEditAutoSetGraded: () => true,
 				canEditNotificationEmail: () => true,
 				notificationEmail: () => 'hello@d2l.com',
 				previewHref: () => 'http://test.desire2learn.d2l/d2l/lms/quizzing/user/quiz_summary.d2l?ou=6606&qi=46&isprv=1&fromQB=1&bp=1',
