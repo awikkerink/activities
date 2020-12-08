@@ -285,17 +285,19 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 				`;
 			});
 
+			const immersiveNav = (isFullscreen) => {
+				return isFullscreen
+					? html`
+						<d2l-navigation-immersive back-link-href="https://www.d2l.com" back-link-text="Back to D2L">
+							<div class="d2l-typography d2l-body-standard" slot="middle">
+								<p>${this.localize('myWorkToDo')}</p>
+							</div>
+						</d2l-navigation-immersive>`
+					: nothing;
+			};
+
 			return html`
-				<d2l-navigation-immersive back-link-href="https://www.d2l.com" back-link-text="Back to D2L">
-					<div class="d2l-typography d2l-body-standard" slot="middle">
-						<p>Immersive Navigation</p>
-					</div>
-					<div slot="right">
-						<d2l-navigation-button text="A button">One Button</d2l-navigation-button>
-						<d2l-navigation-button-close></d2l-navigation-button-close>
-						<d2l-navigation-button text="Another button">Two Button</d2l-navigation-button>
-					</div>
-				</d2l-navigation-immersive>
+				${immersiveNav(this.fullscreen)}
 				<div class="d2l-activity-collection-container-fullscreen">
 					<d2l-work-to-do-activity-list-header ?overdue=${isOverdue} count=${activities.length} fullscreen></d2l-work-to-do-activity-list-header>
 					<d2l-list>${groupedByDate}</d2l-list>
