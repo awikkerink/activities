@@ -27,14 +27,18 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 		return {
 			/** Represents current session's discovery tool access */
 			_discoverActive: { type: Boolean },
+			/** Represents current session's render mode */
+			_fullscreen: { type: Boolean, attribute: 'data-fullscreen' },
 			/** ActivityUsageCollection with time: 0 -> 52[weeks] */
 			_maxCollection: { type: Object },
 			/** ActivityUsageCollection with time: (OverdueWeekLimit) -> 0 */
 			_overdueCollection: { type: Object },
+			/** Represents current session's OverdueWeekLimit */
+			_overdueWeekLimit: { type: Number, attribute: 'data-overdue-week-limit' },
 			/** ActivityUsageCollection with time: 0 -> UpcomingWeekLimit */
 			_upcomingCollection: { type: Object },
-			/** Represents current session's render options */
-			options: { type: String },
+			/** Represents current session's UpcomingWeekLimit */
+			_upcomingWeekLimit: { type: Number, attribute: 'data-upcoming-week-limit' }
 		};
 	}
 
@@ -143,23 +147,27 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 		}
 	}
 
-	updated(changedProperties) {
-		changedProperties.forEach((oldValue, propName) => {
-			switch (propName) {
-				case 'options': this._optionsChanged(this.options);
-					break;
-			}
-		});
-	}
+	attributeChangedCallback(name, oldval, newval) {
+		if(!window.D2L.workToDoOptions) {
+			window.D2L.workToDoOptions = {};
+		}
 
-	_optionsChanged(newOptions) {
-		const options = JSON.parse(newOptions);
-		this.fullscreen = options.fullscreen;
-		this._overdueWeekLimit = (options.overdueWeekLimit !== undefined) ?
-			options.overdueWeekLimit : this._overdueWeekLimit;
-		this._upcomingWeekLimit = (options.upcomingWeekLimit !== undefined) ?
-			options.upcomingWeekLimit : this._upcomingWeekLimit;
-		window.D2L.workToDoOptions = options;
+		switch (name) {
+			case 'data-fullscreen':
+				this.fullscreen = Boolean(newval.toLowerCase());
+				window.D2L.workToDoOptions.fullscreen = this.fullscreen;
+				break;
+			case 'data-upcoming-week-limit':
+				this._upcomingWeekLimit = parseInt(newval);
+				window.D2L.workToDoOptions.upcomingWeekLimit = this._upcomingWeekLimit;
+				break;
+			case 'data-overdue-week-limit':
+				this._overdueWeekLimit = parseInt(newval);
+				window.D2L.workToDoOptions.overdueWeekLimit = this._overdueWeekLimit;
+				break;
+		}
+
+		super.attributeChangedCallback(name, oldval, newval);
 	}
 
 	/**
