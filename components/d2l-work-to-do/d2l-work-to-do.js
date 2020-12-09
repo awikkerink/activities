@@ -148,7 +148,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 	}
 
 	attributeChangedCallback(name, oldval, newval) {
-		if(!window.D2L.workToDoOptions) {
+		if (!window.D2L.workToDoOptions) {
 			window.D2L.workToDoOptions = {};
 		}
 
