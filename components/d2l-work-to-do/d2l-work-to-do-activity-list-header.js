@@ -39,34 +39,20 @@ class ActivityListHeader extends SkeletonMixin(LocalizeMixin(LitElement)) {
 				:host([hidden]) {
 					display: none;
 				}
-				.d2l-activity-list-header-container-widget {
+				.d2l-activity-list-header-basic {
 					border-bottom: 1px solid var(--d2l-color-mica);
 					display: flex;
 					justify-content: space-between;
 					margin-bottom: 1px;
 					padding-bottom: 0.3rem;
 				}
-				:host([skeleton]) .d2l-activity-list-header-container-widget {
-					border-bottom: 1px transparent;
-					padding: 0.2rem 0;
-				}
-				:host([skeleton]) .d2l-activity-list-header-content.d2l-heading-2 {
-					width: 30%;
-				}
-				:host([skeleton]) .d2l-activity-list-header-content.d2l-heading-4 {
-					width: 50%;
-				}
-				:host([skeleton]) .d2l-activity-list-counter {
-					min-height: 0.8rem;
-					width: 5%;
-				}
-				:host([skeleton]) .d2l-activity-list-counter.d2l-heading-3 {
-					max-width: 2rem;
-				}
-				.d2l-activity-list-header-fullscreen {
+				.d2l-activity-list-header-detailed {
 					display: flex;
 					justify-content: space-between;
 					padding-bottom: 0;
+				}
+				.d2l-activity-list-header-message {
+					width: 80%;
 				}
 				.d2l-activity-list-counter {
 					background-color: var(--d2l-color-carnelian-minus-1);
@@ -79,7 +65,7 @@ class ActivityListHeader extends SkeletonMixin(LocalizeMixin(LitElement)) {
 					padding: 0.15rem 0.3rem;
 					vertical-align: middle;
 				}
-				.d2l-activity-list-counter-fullscreen {
+				.d2l-activity-list-counter.d2l-heading-3 {
 					border-radius: 0.8rem;
 					padding: 0.25rem 0.45rem 0.25rem 0.45rem;
 				}
@@ -88,6 +74,13 @@ class ActivityListHeader extends SkeletonMixin(LocalizeMixin(LitElement)) {
 				.d2l-heading-3,
 				.d2l-heading-4 {
 					margin: auto 0;
+				}
+				:host([skeleton]) .d2l-activity-list-header-basic,
+				:host([skeleton]) .d2l-activity-list-counter {
+					border-color: transparent;
+				}
+				:host([skeleton]) .d2l-activity-list-counter-container {
+					min-width: 2rem;
 				}
 			`
 		];
@@ -122,21 +115,27 @@ class ActivityListHeader extends SkeletonMixin(LocalizeMixin(LitElement)) {
 
 	render() {
 		const containerClasses = {
-			'd2l-activity-list-header-container-widget': !this.fullscreen,
-			'd2l-activity-list-header-fullscreen': this.fullscreen
+			'd2l-activity-list-header-basic': !this.fullscreen,
+			'd2l-activity-list-header-detailed': this.fullscreen
 		};
 		const messageClasses = {
-			'd2l-activity-list-header-content': true,
+			'd2l-activity-list-header-message': true,
 			'd2l-heading-4': !this.fullscreen,
+			'd2l-heading-2': this.fullscreen,
+			'd2l-skeletize': true,
+			'd2l-skeletize-65': !this.fullscreen,
+			'd2l-skeletize-35': this.fullscreen
+		};
+		const counterContainerClasses = {
+			'd2l-activity-list-counter-container': true,
+			'd2l-heading-3': !this.fullscreen,
 			'd2l-heading-2': this.fullscreen,
 			'd2l-skeletize': true,
 		};
 		const counterClasses = {
 			'd2l-activity-list-counter': true,
-			'd2l-activity-list-counter-fullscreen': this.fullscreen,
 			'd2l-label-text': !this.fullscreen,
 			'd2l-heading-3': this.fullscreen,
-			'd2l-skeletize': true
 		};
 
 		const messageTemplate = html`
@@ -145,8 +144,10 @@ class ActivityListHeader extends SkeletonMixin(LocalizeMixin(LitElement)) {
 			</div>`;
 
 		const counterTemplate = html`
-			<div class=${classMap(counterClasses)}>
-				${this._counterString}
+			<div class=${classMap(counterContainerClasses)}>
+				<div class=${classMap(counterClasses)}>
+					${this._counterString}
+				</div>
 			</div>`;
 
 		return html`
