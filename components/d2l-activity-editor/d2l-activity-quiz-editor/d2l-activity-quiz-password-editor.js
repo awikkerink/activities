@@ -33,8 +33,8 @@ class ActivityQuizPasswordEditor
 				}
 
 				#password-input {
-					margin-top: 10px;
 					margin-bottom: 2px;
+					margin-top: 10px;
 				}
 
 				#password-editor-label {
