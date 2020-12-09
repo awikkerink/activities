@@ -1,7 +1,7 @@
 import '@brightspace-ui/core/components/button/button';
 import '@brightspace-ui/core/components/icons/icon';
 import '@brightspace-ui/core/components/link/link';
-// import '@webcomponents/webcomponentsjs/webcomponents-bundle';
+import '@webcomponents/webcomponentsjs/webcomponents-loader';
 import '../../bower_components/d2l-navigation/d2l-navigation-immersive';
 import '../../bower_components/d2l-navigation/d2l-navigation-button';
 import '../../bower_components/d2l-navigation/d2l-navigation-button-close';
@@ -21,12 +21,6 @@ import { performSirenAction } from 'siren-sdk/src/es6/SirenAction';
 import { UserEntity } from 'siren-sdk/src/users/UserEntity';
 import { repeat } from 'lit-html/directives/repeat';
 import { nothing } from 'lit-html';
-/*
-
-		<!-- <script src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script> -->
-		<script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-		<link rel="import" href="/bower_components/d2l-navigation/d2l-navigation-immersive.js">
-*/
 
 /**
  * @classdesc Class representation of Work to Do widget component
