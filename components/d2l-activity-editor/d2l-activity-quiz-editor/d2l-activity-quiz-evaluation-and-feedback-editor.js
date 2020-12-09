@@ -1,5 +1,6 @@
 import '../d2l-activity-accordion-collapse.js';
 import './d2l-activity-quiz-auto-set-graded-editor.js';
+import './d2l-activity-quiz-auto-set-graded-summary.js';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorFeaturesMixin } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
@@ -44,6 +45,10 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 					${this.localize('hdrEvaluationAndFeedback')}
 				</span>
 
+				// the summary text is in a specific order and should only be changed if required in a story
+
+				<li slot="summary-items">${this._renderAutoSetGradedSummary()}</li>
+
 				<div class="d2l-editors" slot="components">
 					<label class="d2l-label-text">
 						${this.localize('subHdrAutomaticGrades')}
@@ -66,6 +71,15 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 			.token="${this.token}">
 		</d2l-activity-quiz-auto-set-graded-editor>
 	`;
+	}
+
+	_renderAutoSetGradedSummary() {
+		return html`
+			<d2l-activity-quiz-auto-set-graded-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-auto-set-graded-summary>
+		`;
 	}
 }
 
