@@ -38,6 +38,10 @@ class ActivityNotificationEmailEditor
 				#notification-email-tooltip {
 					z-index: auto;
 				}
+
+				#notification-email-editor-label {
+					margin-bottom: 10px;
+				}
 			`
 		];
 	}
