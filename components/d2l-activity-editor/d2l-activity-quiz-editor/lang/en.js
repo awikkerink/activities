@@ -29,5 +29,6 @@ export default {
 	"hdrEvaluationAndFeedback": "Evaluation & Feedback", // evaluation/feedback accordion header
 	"subHdrAutomaticGrades": "Automatic Grade", // Title for automatic grade tool
 	"autoSetGradedDescription": "Allow attempt to be set as graded immediately upon completion", // description for automatic grade checkbox
-	"autoSetGradedSummary": "Automatically grade" // summary for auto set graded checkbox
+	"autoSetGradedSummary": "Automatically grade", // summary for auto set graded checkbox
+	"passwordDescription": "Only users who enter this password will be granted access to write this quiz."
 };
