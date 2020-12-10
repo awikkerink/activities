@@ -3,8 +3,8 @@ import '@brightspace-ui/core/components/status-indicator/status-indicator';
 
 import { heading2Styles, heading3Styles, heading4Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html, LitElement } from 'lit-element/lit-element';
-import { Constants, Config } from './env';
-import { classMap } from 'lit-html/directives/class-map';
+import { Constants, getUpcomingWeekLimit } from './env';
+import { classMap } from 'lit-html/directives/class-map.js';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin';
@@ -181,7 +181,7 @@ class ActivityListHeader extends SkeletonMixin(LocalizeMixin(LitElement)) {
 		}
 
 		const now = new Date();
-		const endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + (Config.UpcomingWeekLimit * 7), 23, 59, 59, 999);
+		const endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + (getUpcomingWeekLimit() * 7), 23, 59, 59, 999);
 		const startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
 
 		const startDay = formatDate(startDate, { format: 'd' });
