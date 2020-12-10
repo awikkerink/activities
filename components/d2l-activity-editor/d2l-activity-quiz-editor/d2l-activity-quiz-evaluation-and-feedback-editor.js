@@ -3,12 +3,12 @@ import './d2l-activity-quiz-auto-set-graded-editor.js';
 import './d2l-activity-quiz-auto-set-graded-summary.js';
 import '@brightspace-ui/core/components/button/button-icon.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
+import { css, html } from 'lit-element/lit-element.js';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorFeaturesMixin } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
-import { html } from 'lit-element/lit-element.js';
-import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
+import { heading4Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
@@ -29,7 +29,12 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 		return [
 			super.styles,
 			accordionStyles,
-			labelStyles,
+			heading4Styles,
+			css`
+				.d2l-heading-4 {
+					display: inline;
+				}
+			`
 		];
 	}
 
@@ -88,9 +93,9 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 		return html`
 			<div>
 				<span>
-					<label class="d2l-label-text">
+					<h3 class="d2l-heading-4">
 						${this.localize('subHdrAutomaticGrades')}
-					</label>
+					</h3>
 				</span>
 				<span>
 					<d2l-button-icon
