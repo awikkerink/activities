@@ -2,10 +2,10 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { formatDate, formatTime } from '@brightspace-ui/intl/lib/dateTime.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { LocalizeActivityDateMixin } from './localization';
 import { nothing } from 'lit-html/lit-html';
 
-class D2LActivityDate extends EntityMixinLit(LocalizeMixin(LitElement)) {
+class D2LActivityDate extends EntityMixinLit(LocalizeActivityDateMixin(LitElement)) {
 
 	static get properties() {
 		return {

@@ -6,13 +6,13 @@ import { css, html, LitElement } from 'lit-element/lit-element';
 import { Constants, Config } from './env';
 import { classMap } from 'lit-html/directives/class-map';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin';
+import { LocalizeWorkToDoMixin } from './localization';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin';
 
 /**
  * Provides Title and Count for associated activity usage list
  */
-class ActivityListHeader extends SkeletonMixin(LocalizeMixin(LitElement)) {
+class ActivityListHeader extends SkeletonMixin(LocalizeWorkToDoMixin(LitElement)) {
 
 	static get properties() {
 		return {
