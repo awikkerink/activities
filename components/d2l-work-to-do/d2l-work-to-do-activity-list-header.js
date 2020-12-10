@@ -111,7 +111,6 @@ class ActivityListHeader extends SkeletonMixin(LocalizeMixin(LitElement)) {
 		this.count = 0;
 		this.fullscreen = false;
 		this.isOverdue = false;
-
 	}
 
 	render() {
