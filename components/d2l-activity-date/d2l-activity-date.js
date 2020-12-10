@@ -33,26 +33,6 @@ class D2LActivityDate extends EntityMixinLit(LocalizeActivityDateMixin(LitElemen
 		];
 	}
 
-	static async getLocalizeResources(langs) {
-		for await (const lang of langs) {
-			let translations;
-			switch (lang) {
-				case 'en':
-					translations = await import('./lang/en');
-					break;
-			}
-
-			if (translations && translations.val) {
-				return {
-					language: lang,
-					resources: translations.val
-				};
-			}
-		}
-
-		return null;
-	}
-
 	constructor() {
 		super();
 		this.dateOnly = false;
