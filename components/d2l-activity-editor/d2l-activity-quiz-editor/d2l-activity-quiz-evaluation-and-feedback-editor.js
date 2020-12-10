@@ -20,7 +20,7 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 		return {
 			href: { type: String },
 			token: { type: Object },
-			_isDialogOpen: { type: Boolean }
+			_opened: { type: Boolean }
 		};
 	}
 
@@ -35,7 +35,7 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 
 	constructor() {
 		super();
-		this._isDialogOpen = false;
+		this._opened = false;
 	}
 
 	render() {
@@ -67,6 +67,14 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 		return false; // Todo: implement error handling
 	}
 
+	_handleClose() {
+		this._opened = false;
+	}
+
+	_open() {
+		this._opened = true;
+	}
+
 	_renderAutomaticGradesEditor() {
 		return html`
 			<d2l-activity-quiz-auto-set-graded-editor
@@ -88,7 +96,7 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 					<d2l-button-icon
 						text="${this.localize('autoSetGradedAccessibleHelpText')}"
 						icon="tier1:help"
-						@click="${this._setIsDialogOpen}">
+						@click="${this._open}">
 					</d2l-button-icon>
 				</span>
 			</div>
@@ -105,8 +113,8 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 	_renderDialog() {
 		return html`
 			<d2l-dialog
-				?opened="${this._isDialogOpen}"
-				@d2l-dialog-close="${this._setClosed}"
+				?opened="${this._opened}"
+				@d2l-dialog-close="${this._handleClose}"
 				title-text="${this.localize('autoSetGradedHelpDialogTitle')}">
 					<div>
 						<p>${this.localize('autoSetGradedHelpDialogParagraph1')}</p>
@@ -121,12 +129,6 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 					</d2l-button>
 			</d2l-dialog>
 		`;
-	}
-
-	_setIsDialogOpen(e) {
-		const isDialogOpen = e.target && e.target.type && e.target.type !== 'd2l-dialog-close';
-
-		this._isDialogOpen = isDialogOpen;
 	}
 
 }
