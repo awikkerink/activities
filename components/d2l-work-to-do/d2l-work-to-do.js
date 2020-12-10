@@ -2,9 +2,9 @@ import '@brightspace-ui/core/components/button/button';
 import '@brightspace-ui/core/components/icons/icon';
 import '@brightspace-ui/core/components/link/link';
 import '@webcomponents/webcomponentsjs/webcomponents-loader';
-import '../../bower_components/d2l-navigation/d2l-navigation-immersive';
-import '../../bower_components/d2l-navigation/d2l-navigation-button';
-import '../../bower_components/d2l-navigation/d2l-navigation-button-close';
+import 'd2l-navigation/d2l-navigation-immersive';
+import 'd2l-navigation/d2l-navigation-button';
+import 'd2l-navigation/d2l-navigation-button-close';
 import './d2l-work-to-do-activity-list-header';
 import './d2l-work-to-do-activity-list-item-basic';
 import './d2l-work-to-do-activity-list-item-detailed';
@@ -126,6 +126,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 		this._viewAllSource = 'http://www.d2l.com';  // TODO: Update to actual tool location
 		this._backLinkHref = 'http://d2l.com';
 		this._setEntityType(UserEntity);
+		console.log('constructed with new d2l-nav');
 	}
 
 	set _entity(entity) {
@@ -283,7 +284,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 			const immersiveNav = (isFullscreen) => {
 				return isFullscreen
 					? html`
-						<d2l-navigation-immersive back-link-href="_backLinkHref" back-link-text="Back to D2L">
+						<d2l-navigation-immersive back-link-href="${this._backLinkHref}" back-link-text="Back to D2L">
 							<div class="d2l-typography d2l-body-standard" slot="middle">
 								<p>${this.localize('myWorkToDo')}</p>
 							</div>
