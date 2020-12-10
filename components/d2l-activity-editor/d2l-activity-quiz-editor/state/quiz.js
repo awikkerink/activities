@@ -68,6 +68,10 @@ export class Quiz {
 		await this.fetch();
 	}
 
+	delete() {
+		return this._entity.delete();
+	}
+
 	setAutoSetGraded(isEnabled) {
 		this.isAutoSetGradedEnabled = isEnabled;
 	}
@@ -158,4 +162,5 @@ decorate(Quiz, {
 	setNotificationEmail: action,
 	setAutoSetGraded: action,
 	save: action,
+	delete: action
 });

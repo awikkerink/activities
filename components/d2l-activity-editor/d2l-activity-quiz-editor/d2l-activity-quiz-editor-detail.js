@@ -144,6 +144,11 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 		await quiz.save();
 	}
 
+	async cancelCreate() {
+		const quiz = store.get(this.href);
+		return quiz && quiz.delete();
+	}
+
 	_openPreview() {
 		const quiz = store.get(this.href);
 		if (!quiz || !quiz.previewHref) {
