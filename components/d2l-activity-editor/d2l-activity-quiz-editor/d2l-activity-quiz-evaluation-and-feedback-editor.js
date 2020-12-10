@@ -127,9 +127,6 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 		`;
 	}
 
-	_setClosed() {
-		this.isDialogOpen = false;
-	}
 	_setIsDialogOpen(e) {
 		const isDialogOpen = e.target && e.target.type && e.target.type !== 'd2l-dialog-close';
 
