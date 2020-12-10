@@ -38,10 +38,6 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 		this._isDialogOpen = false;
 	}
 
-	connectedCallback() {
-		super.connectedCallback();
-	}
-
 	render() {
 		return html`
 			<d2l-activity-accordion-collapse
