@@ -11,6 +11,10 @@ export class Quiz {
 		this._saving = null;
 	}
 
+	delete() {
+		return this._entity.delete();
+	}
+
 	get dirty() {
 		return !this._entity.equals(this._makeQuizData());
 	}
@@ -66,10 +70,6 @@ export class Quiz {
 		this._saving = null;
 
 		await this.fetch();
-	}
-
-	delete() {
-		return this._entity.delete();
 	}
 
 	setAutoSetGraded(isEnabled) {
