@@ -68,6 +68,7 @@ class D2LActivityDate extends EntityMixinLit(LocalizeActivityDateMixin(LitElemen
 		return html`${template}`;
 	}
 
+	// TODO - Deal with other types of date sub-entities (start, issue) - Likely requires new attributes for user to pass in order to indicate desired type
 	get _date() {
 		const dateString = this._usage
 			&& (this._usage.dueDate() || this._usage.endDate());
