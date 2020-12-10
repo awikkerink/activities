@@ -70,11 +70,11 @@ class AssignmentTypeEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 			return html``;
 		}
 
-		const isIndividualType = assignment.assignmentTypeProps.isIndividualAssignmentType;
 		const infoText = this._getInformationText(assignment);
+		const isIndividualType = assignment.assignmentTypeProps.isIndividualAssignmentType;
 		const canEditAssignmentType = assignment.assignmentTypeProps.canEditAssignmentType;
 		const groupTypeDisabled = assignment.assignmentTypeProps.isGroupAssignmentTypeDisabled;
-		const folderTypeText =	isIndividualType ? this.localize('txtIndividual') : this.localize('txtGroup');
+		const folderTypeText = isIndividualType ? this.localize('txtIndividual') : this.localize('txtGroup');
 		const groupTypeText = !isIndividualType && assignment.assignmentTypeProps.selectedGroupCategoryName
 			? this.localize('txtGroupCategoryWithName', 'groupCategory', assignment.assignmentTypeProps.selectedGroupCategoryName)
 			: '';
