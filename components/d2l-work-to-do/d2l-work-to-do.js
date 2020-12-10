@@ -154,16 +154,16 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 
 		switch (name) {
 			case 'data-fullscreen':
-				this.fullscreen = Boolean(newval.toLowerCase());
+				this.fullscreen = (newval.toLowerCase() === 'true');
 				window.D2L.workToDoOptions.fullscreen = this.fullscreen;
 				break;
-			case 'data-upcoming-week-limit':
-				this._upcomingWeekLimit = parseInt(newval);
-				window.D2L.workToDoOptions.upcomingWeekLimit = this._upcomingWeekLimit;
-				break;
 			case 'data-overdue-week-limit':
-				this._overdueWeekLimit = parseInt(newval);
+				this._overdueWeekLimit = (parseInt(newval) < 0) ? Config.OverdueWeekLimit : parseInt(newval);
 				window.D2L.workToDoOptions.overdueWeekLimit = this._overdueWeekLimit;
+				break;
+			case 'data-upcoming-week-limit':
+				this._upcomingWeekLimit = (parseInt(newval) < 0) ? Config.UpcomingWeekLimit : parseInt(newval);
+				window.D2L.workToDoOptions.upcomingWeekLimit = this._upcomingWeekLimit;
 				break;
 		}
 
