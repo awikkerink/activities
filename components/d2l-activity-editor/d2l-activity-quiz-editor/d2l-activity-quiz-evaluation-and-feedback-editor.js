@@ -20,7 +20,7 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 		return {
 			href: { type: String },
 			token: { type: Object },
-			isDialogOpen: { type: Boolean }
+			_isDialogOpen: { type: Boolean }
 		};
 	}
 
@@ -35,7 +35,7 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 
 	constructor() {
 		super();
-		this.isDialogOpen = false;
+		this._isDialogOpen = false;
 	}
 
 	connectedCallback() {
@@ -109,7 +109,7 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 	_renderDialog() {
 		return html`
 			<d2l-dialog
-				?opened="${this.isDialogOpen}"
+				?opened="${this._isDialogOpen}"
 				@d2l-dialog-close="${this._setClosed}"
 				title-text="${this.localize('autoSetGradedHelpDialogTitle')}">
 					<div>
@@ -130,7 +130,7 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 	_setIsDialogOpen(e) {
 		const isDialogOpen = e.target && e.target.type && e.target.type !== 'd2l-dialog-close';
 
-		this.isDialogOpen = isDialogOpen;
+		this._isDialogOpen = isDialogOpen;
 	}
 
 }
