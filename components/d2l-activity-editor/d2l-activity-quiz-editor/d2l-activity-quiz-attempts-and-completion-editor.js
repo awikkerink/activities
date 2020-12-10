@@ -1,11 +1,12 @@
 import '../d2l-activity-accordion-collapse.js';
 import '../d2l-activity-notification-email-editor.js';
 import './d2l-activity-quiz-notification-email-summary.js';
+import { css, html } from 'lit-element/lit-element.js';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorFeaturesMixin } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
-import { html } from 'lit-element/lit-element.js';
+import { bodySmallStyles } from '@brightspace-ui/core/components/typography/styles';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
@@ -25,7 +26,13 @@ class ActivityQuizAttemptsAndCompletionEditor extends AsyncContainerMixin(Locali
 
 		return [
 			super.styles,
-			accordionStyles
+			accordionStyles,
+			bodySmallStyles,
+			css`
+				#notification-email-editor-description {
+					margin-top: 10px;
+				}
+			`
 		];
 	}
 
@@ -73,6 +80,9 @@ class ActivityQuizAttemptsAndCompletionEditor extends AsyncContainerMixin(Locali
 				value="${entity.notificationEmail}"
 				?disabled="${!entity.canEditNotificationEmail}"
 				@activity-notification-email-changed="${this._onNotificationEmailChanged}">
+				<p slot="description" id="notification-email-editor-description" class="d2l-body-small">
+					${this.localize('hlpSubmissionNotificationEmail')}
+				</p>
 			</d2l-activity-notification-email-editor>
 		`;
 	}
