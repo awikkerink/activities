@@ -251,7 +251,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 					value="${assignment.notificationEmail}"
 					?disabled="${!assignment.canEditNotificationEmail}"
 					@activity-notification-email-changed="${this._onNotificationEmailChanged}">
-					<p slot="description" id="notification-email-editor-description">
+					<p slot="description">
 						${this.localize('hlpSubmissionNotificationEmail')}
 					</p>
 				</d2l-activity-notification-email-editor>

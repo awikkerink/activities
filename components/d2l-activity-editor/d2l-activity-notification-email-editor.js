@@ -40,7 +40,7 @@ class ActivityNotificationEmailEditor
 					z-index: auto;
 				}
 
-				::slotted(#notification-email-editor-description) {
+				::slotted(p[slot=description]) {
 					margin-top: 10px;
 				}
 			`

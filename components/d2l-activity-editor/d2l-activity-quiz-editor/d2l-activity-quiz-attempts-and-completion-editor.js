@@ -75,7 +75,7 @@ class ActivityQuizAttemptsAndCompletionEditor extends AsyncContainerMixin(Locali
 				value="${entity.notificationEmail}"
 				?disabled="${!entity.canEditNotificationEmail}"
 				@activity-notification-email-changed="${this._onNotificationEmailChanged}">
-				<p slot="description" id="notification-email-editor-description">
+				<p slot="description">
 					${this.localize('hlpSubmissionNotificationEmail')}
 				</p>
 			</d2l-activity-notification-email-editor>
