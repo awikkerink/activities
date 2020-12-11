@@ -31,7 +31,7 @@ export default {
 	"autoSetGradedDescription": "Allow attempt to be set as graded immediately upon completion", // description for automatic grade checkbox
 	"autoSetGradedSummary": "Automatically grade", // summary for auto set graded checkbox
 	"passwordDescription": "Only users who enter this password will be granted access to write this quiz.", // description for password input
-	"autoSetGradedAccessibleHelpText": "Information: Automatic Grade", // accessible help text for autoSetGraded question mark button
+	"autoSetGradedAccessibleHelpText": "Get help on - Automatic Grade", // accessible help text for autoSetGraded question mark button
 	"autoSetGradedHelpDialogTitle": "Information: Automatic Grade", // title that appears when the autoSetGraded help dialog is rendered
 	"autoSetGradedHelpDialogConfirmationText": "OK", // title that appears on the autoSetGraded help dialog confirmation button
 	"autoSetGradedHelpDialogParagraph1": "When this setting is turned on users can see their score as soon as they submit their attempt. The score displayed is only what the system can auto-grade.", // content for paragraph 1 of autoSetGraded help dialog
