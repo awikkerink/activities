@@ -59,10 +59,6 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 				.d2l-input-radio-label {
 					margin-bottom: 10px;
 				}
-
-				#notification-email-editor-description {
-					margin-top: 10px;
-				}
 			`
 		];
 	}
@@ -255,7 +251,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 					value="${assignment.notificationEmail}"
 					?disabled="${!assignment.canEditNotificationEmail}"
 					@activity-notification-email-changed="${this._onNotificationEmailChanged}">
-					<p slot="description" id="notification-email-editor-description" class="d2l-body-small">
+					<p slot="description" id="notification-email-editor-description">
 						${this.localize('hlpSubmissionNotificationEmail')}
 					</p>
 				</d2l-activity-notification-email-editor>

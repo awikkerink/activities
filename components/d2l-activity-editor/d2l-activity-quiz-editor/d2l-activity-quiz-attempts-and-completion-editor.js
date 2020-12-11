@@ -27,12 +27,7 @@ class ActivityQuizAttemptsAndCompletionEditor extends AsyncContainerMixin(Locali
 		return [
 			super.styles,
 			accordionStyles,
-			bodySmallStyles,
-			css`
-				#notification-email-editor-description {
-					margin-top: 10px;
-				}
-			`
+			bodySmallStyles
 		];
 	}
 
@@ -80,7 +75,7 @@ class ActivityQuizAttemptsAndCompletionEditor extends AsyncContainerMixin(Locali
 				value="${entity.notificationEmail}"
 				?disabled="${!entity.canEditNotificationEmail}"
 				@activity-notification-email-changed="${this._onNotificationEmailChanged}">
-				<p slot="description" id="notification-email-editor-description" class="d2l-body-small">
+				<p slot="description" id="notification-email-editor-description">
 					${this.localize('hlpSubmissionNotificationEmail')}
 				</p>
 			</d2l-activity-notification-email-editor>
