@@ -38,11 +38,6 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 		];
 	}
 
-	constructor() {
-		super();
-		this._opened = false;
-	}
-
 	render() {
 		return html`
 			<d2l-activity-accordion-collapse
@@ -93,7 +88,7 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 					<d2l-button-icon
 						text="${this.localize('autoSetGradedAccessibleHelpText')}"
 						icon="tier1:help"
-						@click="${this._open}">
+						@click="${this.open}">
 					</d2l-button-icon>
 				</span>
 			</div>
@@ -110,8 +105,8 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 	_renderDialog() {
 		return html`
 			<d2l-dialog
-				?opened="${this._opened}"
-				@d2l-dialog-close="${this._handleClose}"
+				?opened="${this.opened}"
+				@d2l-dialog-close="${this.handleClose}"
 				title-text="${this.localize('autoSetGradedHelpDialogTitle')}">
 					<div>
 						<p>${this.localize('autoSetGradedHelpDialogParagraph1')}</p>

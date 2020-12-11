@@ -2,20 +2,20 @@ export const ActivityEditorDialogMixin = superclass => class extends superclass 
 
 	static get properties() {
 		return {
-			_opened: { type: Boolean }
+			opened: { type: Boolean }
 		};
 	}
 
 	constructor() {
 		super();
-		this._opened = false;
+		this.opened = false;
 	}
 
-	_handleClose() {
-		this._opened = false;
+	handleClose() {
+		this.opened = false;
 	}
 
-	_open() {
-		this._opened = true;
+	open() {
+		this.opened = true;
 	}
 };
