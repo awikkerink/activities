@@ -9,6 +9,8 @@ const editor = defineCE(
 describe('d2l-activity-editor-dialog-mixin', function() {
 	it('handles opening a dialog', async() => {
 		const el = await fixture(`<${editor}></${editor}>`);
+		el.opened = false;
+
 		el.open();
 
 		expect(el.opened).to.be.true;
@@ -16,6 +18,8 @@ describe('d2l-activity-editor-dialog-mixin', function() {
 
 	it('handles closing a dialog', async() => {
 		const el = await fixture(`<${editor}></${editor}>`);
+		el.opened = true;
+
 		el.handleClose();
 
 		expect(el.opened).to.be.false;
