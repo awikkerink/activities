@@ -141,9 +141,8 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeMixin(LitElement)) {
 		this._overdueWeekLimit = Config.OverdueWeekLimit;
 		this._upcomingWeekLimit = Config.UpcomingWeekLimit;
 		this._viewAllSource = 'http://www.d2l.com';  // TODO: Update to actual tool location
-		this._backLinkHref = 'http://d2l.com';
+		this._backLinkHref = window.D2L.workToDoOptions.href;
 		this._setEntityType(UserEntity);
-		console.log('constructed with new d2l-nav');
 	}
 
 	set _entity(entity) {
