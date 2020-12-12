@@ -5,7 +5,6 @@ import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorFeaturesMixin } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
-import { bodySmallStyles } from '@brightspace-ui/core/components/typography/styles';
 import { html } from 'lit-element/lit-element.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -26,8 +25,7 @@ class ActivityQuizAttemptsAndCompletionEditor extends AsyncContainerMixin(Locali
 
 		return [
 			super.styles,
-			accordionStyles,
-			bodySmallStyles
+			accordionStyles
 		];
 	}
 
