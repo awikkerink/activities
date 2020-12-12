@@ -37,4 +37,5 @@ export default {
 	"autoSetGradedHelpDialogParagraph1": "When this setting is turned on users can see their score as soon as they submit their attempt. The score displayed is only what the system can auto-grade.", // content for paragraph 1 of autoSetGraded help dialog
 	"autoSetGradedHelpDialogParagraph2": "This setting must be turned on for grades to be automatically sent to the grade book, and for the default submission view to be released to users when they complete an attempt.", // content for paragraph 2 of autoSetGraded help dialog
 	"autoSetGradedHelpDialogParagraph3": "Note: Written Response questions will be marked as 0 until manually graded.", // content for paragraph 3 of autoSetGraded help dialog
+	"hlpSubmissionNotificationEmail": "Enter an email or multiple emails separated by a comma, to receive notifications when a quiz is attempted."
 };
