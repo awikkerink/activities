@@ -33,8 +33,12 @@ export default {
 	"passwordDescription": "Only users who enter this password will be granted access to write this quiz.", // description for password input
 	"autoSetGradedAccessibleHelpText": "Get help on - Automatic Grade", // accessible help text for autoSetGraded question mark button
 	"autoSetGradedHelpDialogTitle": "Information: Automatic Grade", // title that appears when the autoSetGraded help dialog is rendered
-	"autoSetGradedHelpDialogConfirmationText": "OK", // title that appears on the autoSetGraded help dialog confirmation button
+	"autoSetGradedHelpDialogConfirmationText": "OK", // copy that appears on the autoSetGraded help dialog confirmation button
 	"autoSetGradedHelpDialogParagraph1": "When this setting is turned on users can see their score as soon as they submit their attempt. The score displayed is only what the system can auto-grade.", // content for paragraph 1 of autoSetGraded help dialog
 	"autoSetGradedHelpDialogParagraph2": "This setting must be turned on for grades to be automatically sent to the grade book, and for the default submission view to be released to users when they complete an attempt.", // content for paragraph 2 of autoSetGraded help dialog
 	"autoSetGradedHelpDialogParagraph3": "Note: Written Response questions will be marked as 0 until manually graded.", // content for paragraph 3 of autoSetGraded help dialog
+	"disableAlertsHelpDialogTitle": "Information: Disable Email, Instant Messages and Alerts", // title that appears when the disable alerts help dialog is rendered
+	"disableAlertsHelpDialogContent": "If you turn on this option, learners cannot access the Brightspace Email, Instant Messages, or their alerts if they have a quiz attempt in progress.", // content that appears when the disable alerts help dialog is rendered
+	"disableAlertsHelpDialogConfirmationText": "OK", // copy that appears on the disable alerts help dialog confirmation button
+	"disableAlertsAccessibleHelpText": "Get help on - Disable Email, Instant Messages and alerts" // accessible help text for disable alerts question mark button
 };
