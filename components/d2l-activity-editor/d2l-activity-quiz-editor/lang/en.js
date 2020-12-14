@@ -18,8 +18,8 @@ export default {
 	"disableRightClickDescription": "Disable right click", // description for disable right click
 	"disableRightClickSummary": "Right clicks disabled", // summary text when right clicks are disabled
 	"preventMovingBackwardsDescription": "Prevent going back to previous pages",
-	"disablePagerAndAlertsDescription": "Block alerts and communication during quiz attempts", // description for disable pager and alerts / block communications during a quiz
-	"disablePagerAndAlertsSummary": "Alerts and communication blocked", // summary text when pager and alerts / communications are disabled
+	"disablePagerAndAlertsDescription": "Disable Email, Instant Messages and alerts", // description for blocking communications / disable pager and alerts during a quiz
+	"disablePagerAndAlertsSummary": "Alerts and communication blocked", // summary text when communications / pager and alerts are disabled
 	"emailNotificationSummary": "Attempt notification by email", // summary for email notification
 	"preventMovingBackwardsSummary": "Paging limitations", // summary for prevent moving backwards checkbox
 	"dividerHeader": "Questions", // The header that is displayed on the divider
@@ -31,6 +31,7 @@ export default {
 	"autoSetGradedDescription": "Allow attempt to be set as graded immediately upon completion", // description for automatic grade checkbox
 	"autoSetGradedSummary": "Automatically grade", // summary for auto set graded checkbox
 	"passwordDescription": "Only users who enter this password will be granted access to write this quiz.", // description for password input
+	"hlpSubmissionNotificationEmail": "Enter an email or multiple emails separated by a comma, to receive notifications when a quiz is attempted.", // description for email notification input
 	"autoSetGradedAccessibleHelpText": "Get help on - Automatic Grade", // accessible help text for autoSetGraded question mark button
 	"autoSetGradedHelpDialogTitle": "Information: Automatic Grade", // title that appears when the autoSetGraded help dialog is rendered
 	"autoSetGradedHelpDialogConfirmationText": "OK", // copy that appears on the autoSetGraded help dialog confirmation button
