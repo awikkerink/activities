@@ -41,5 +41,6 @@ export default {
 	"disableAlertsHelpDialogTitle": "Information: Disable Email, Instant Messages and Alerts", // title that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogContent": "If you turn on this option, learners cannot access the Brightspace Email, Instant Messages, or their alerts if they have a quiz attempt in progress.", // content that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogConfirmationText": "OK", // copy that appears on the disable alerts help dialog confirmation button
-	"disableAlertsAccessibleHelpText": "Get help on - Disable Email, Instant Messages and alerts" // accessible help text for disable alerts question mark button
+	"disableAlertsAccessibleHelpText": "Get help on - Disable Email, Instant Messages and alerts", // accessible help text for disable alerts question mark button
+	"disableRightClickAccessibleHelpText": "Get help on - Disable Right Click" // accessible help text for disable right click question mark button
 };
