@@ -34,6 +34,11 @@ class ActivityQuizDisableRightClickEditor
 				ariaLabel="${this.localize('disableRightClickDescription')}"
 				?disabled="${!entity.canEditDisableRightClick}">
 				${this.localize('disableRightClickDescription')}
+				<d2l-button-icon
+					text="${this.localize('disableRightClickAccessibleHelpText')}"
+					icon="tier1:help"
+					@click="${this.open}">
+				</d2l-button-icon>
 			</d2l-input-checkbox>
 		`;
 	}
