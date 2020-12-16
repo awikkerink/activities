@@ -15,8 +15,8 @@ class ActivityQuizDisableRightClickEditor
 			checkboxStyles,
 			css`
 				.d2l-input-checkbox-help-container {
+					align-items: flex-start;
 					display: flex;
-					align-itmes: flex-start;
 				}
 
 				.d2l-input-checkbox-help {
