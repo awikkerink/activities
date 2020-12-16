@@ -58,6 +58,8 @@ class ActivityQuizDisableRightClickEditor
 					@click="${this.open}">
 				</d2l-button-icon>
 			</div>
+
+			${this._renderDialog()}
 		`;
 		// return html `
 		//  	<d2l-input-checkbox-spacer
@@ -77,6 +79,24 @@ class ActivityQuizDisableRightClickEditor
 		// 		</d2l-button-icon>
 		// 	</d2l-input-checkbox>
 		// `;
+	}
+
+	_renderDialog() {
+		return html`
+			<d2l-dialog
+				?opened="${this.opened}"
+				@d2l-dialog-close="${this.handleClose}"
+				title-text="${this.localize('disableRightClickHelpDialogTitle')}">
+					<p>${this.localize('disableRightClickHelpDialogParagraph1')}</p>
+					<p>${this.localize('disableRightClickHelpDialogParagraph2')}</p>
+					<d2l-button
+						data-dialog-action="done"
+						slot="footer"
+						primary>
+						${this.localize('disableRightClickHelpDialogConfirmationText')}
+					</d2l-button>
+			</d2l-dialog>
+		`;
 	}
 
 	_setDisableRightClick(event) {
