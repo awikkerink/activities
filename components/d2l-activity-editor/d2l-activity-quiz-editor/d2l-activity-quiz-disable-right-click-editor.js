@@ -20,8 +20,8 @@ class ActivityQuizDisableRightClickEditor
 				}
 
 				.d2l-input-checkbox-help {
-					margin: auto 0;
-					padding-right: 0.4em;
+					margin: auto 0.4em auto 0;
+					padding: 0;
 				}
 			`
 		];
