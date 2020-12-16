@@ -17,4 +17,12 @@ export const checkboxStyles = css`
 		padding-left: 1rem;
 		padding-right: 0;
 	}
+
+	.d2l-input-checkbox-text {
+		display: inline-block;
+		font-size: 0.8rem;
+		font-weight: 400;
+		vertical-align: top;
+		white-space: normal;
+	}
 `;
