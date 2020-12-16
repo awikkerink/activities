@@ -36,46 +36,46 @@ class ActivityQuizDisableRightClickEditor
 			return html``;
 		}
 
-		// return html`
-		// 	<d2l-input-checkbox-spacer
-		// 		class="d2l-body-small">
-		// 	</d2l-input-checkbox-spacer>
-
-		// 	<div class="d2l-input-checkbox-help-container">
-		// 		<d2l-input-checkbox
-		// 			class="d2l-input-checkbox-help"
-		// 			?checked="${entity.isDisableRightClickEnabled}"
-		// 			@change="${this._setDisableRightClick}"
-		// 			ariaLabel="${this.localize('disableRightClickDescription')}"
-		// 			?disabled="${!entity.canEditDisableRightClick}">
-		// 			${this.localize('disableRightClickDescription')}
-		// 		</d2l-input-checkbox>
-
-		// 		<d2l-button-icon
-		// 			text="${this.localize('disableRightClickAccessibleHelpText')}"
-		// 			icon="tier1:help"
-		// 			@click="${this.open}">
-		// 		</d2l-button-icon>
-		// 	</div>
-		// `;
-		return html `
-		 	<d2l-input-checkbox-spacer
-		 		class="d2l-body-small">
+		return html`
+			<d2l-input-checkbox-spacer
+				class="d2l-body-small">
 			</d2l-input-checkbox-spacer>
-			 
-			<d2l-input-checkbox
-				?checked="${entity.isDisableRightClickEnabled}"
-				@change="${this._setDisableRightClick}"
-				ariaLabel="${this.localize('disableRightClickDescription')}"
-				?disabled="${!entity.canEditDisableRightClick}">
-				${this.localize('disableRightClickDescription')}
+
+			<div class="d2l-input-checkbox-help-container">
+				<d2l-input-checkbox
+					class="d2l-input-checkbox-help"
+					?checked="${entity.isDisableRightClickEnabled}"
+					@change="${this._setDisableRightClick}"
+					ariaLabel="${this.localize('disableRightClickDescription')}"
+					?disabled="${!entity.canEditDisableRightClick}">
+					${this.localize('disableRightClickDescription')}
+				</d2l-input-checkbox>
+
 				<d2l-button-icon
 					text="${this.localize('disableRightClickAccessibleHelpText')}"
 					icon="tier1:help"
 					@click="${this.open}">
 				</d2l-button-icon>
-			</d2l-input-checkbox>
+			</div>
 		`;
+		// return html `
+		//  	<d2l-input-checkbox-spacer
+		//  		class="d2l-body-small">
+		// 	</d2l-input-checkbox-spacer>
+			 
+		// 	<d2l-input-checkbox
+		// 		?checked="${entity.isDisableRightClickEnabled}"
+		// 		@change="${this._setDisableRightClick}"
+		// 		ariaLabel="${this.localize('disableRightClickDescription')}"
+		// 		?disabled="${!entity.canEditDisableRightClick}">
+		// 		${this.localize('disableRightClickDescription')}
+		// 		<d2l-button-icon
+		// 			text="${this.localize('disableRightClickAccessibleHelpText')}"
+		// 			icon="tier1:help"
+		// 			@click="${this.open}">
+		// 		</d2l-button-icon>
+		// 	</d2l-input-checkbox>
+		// `;
 	}
 
 	_setDisableRightClick(event) {
