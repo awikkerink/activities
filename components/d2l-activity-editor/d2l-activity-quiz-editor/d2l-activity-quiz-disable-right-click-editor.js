@@ -61,24 +61,6 @@ class ActivityQuizDisableRightClickEditor
 
 			${this._renderDialog()}
 		`;
-		// return html `
-		//  	<d2l-input-checkbox-spacer
-		//  		class="d2l-body-small">
-		// 	</d2l-input-checkbox-spacer>
-			 
-		// 	<d2l-input-checkbox
-		// 		?checked="${entity.isDisableRightClickEnabled}"
-		// 		@change="${this._setDisableRightClick}"
-		// 		ariaLabel="${this.localize('disableRightClickDescription')}"
-		// 		?disabled="${!entity.canEditDisableRightClick}">
-		// 		${this.localize('disableRightClickDescription')}
-		// 		<d2l-button-icon
-		// 			text="${this.localize('disableRightClickAccessibleHelpText')}"
-		// 			icon="tier1:help"
-		// 			@click="${this.open}">
-		// 		</d2l-button-icon>
-		// 	</d2l-input-checkbox>
-		// `;
 	}
 
 	_renderDialog() {
