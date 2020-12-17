@@ -81,7 +81,7 @@ describe('Attachment', function() {
 			expect(link.deleted).to.be.false;
 		});
 
-		it('initializes with urn', () => {
+		it('initializes with d2lrn', () => {
 			const link = new LinkAttachment('http://attachment/1', 'token');
 			link.initLink('Google Canada', 'http://google.ca', 'd2l:brightspace:foo:::bar:car');
 
