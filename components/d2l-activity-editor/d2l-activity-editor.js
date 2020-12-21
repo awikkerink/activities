@@ -39,6 +39,7 @@ class ActivityEditor extends ActivityEditorContainerMixin(ActivityEditorTelemetr
 				padding: 20px;
 			}
 			.d2l-secondary-panel {
+				overflow: hidden;
 				padding: 10px;
 			}
 			.d2l-secondary-scroll {
