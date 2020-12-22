@@ -20,7 +20,8 @@ class ActivityConditionsEditor
 	static get properties() {
 
 		return {
-			description: { type: String }
+			description: { type: String },
+			canEdit: { type: Boolean, attribute: 'can-edit' }
 		};
 	}
 
@@ -101,6 +102,7 @@ class ActivityConditionsEditor
 
 	constructor() {
 		super(store);
+		this.canEdit = false;
 	}
 
 	render() {
@@ -117,6 +119,16 @@ class ActivityConditionsEditor
 			${this._renderAddCondition(entity)}
 		`;
 	}
+
+	hasPendingChanges() {
+		const entity = store.get(this.href);
+		if (!entity) {
+			return false;
+		}
+
+		return entity.dirty;
+	}
+
 	async save() {
 
 		const entity = store.get(this.href);
@@ -270,9 +282,7 @@ class ActivityConditionsEditor
 
 		const { canAttachExisting, canCreateNew } = entity;
 
-		if (!canAttachExisting && !canCreateNew) {
-			return html``;
-		}
+		const canEditAny = this.canEdit && (canAttachExisting || canCreateNew);
 
 		let attachExistingTemplate;
 		if (canAttachExisting) {
@@ -296,14 +306,15 @@ class ActivityConditionsEditor
 
 		return html`
 			<d2l-dropdown-button-subtle
-				text="${this.localize('editor.btnAddReleaseCondition')}">
+				text="${this.localize('editor.btnAddReleaseCondition')}"
+				?disabled="${!canEditAny}">
 				<d2l-dropdown-menu>
 					<d2l-menu label="${this.localize('editor.btnAddReleaseCondition')}">
 						${createNewTemplate}
 						${attachExistingTemplate}
 					</d2l-menu>
 				</d2l-dropdown-menu>
-			</d2l-dropdown>
+			</d2l-dropdown-button-subtle>
 		`;
 	}
 	_renderCondition({ key, title }) {
@@ -322,7 +333,7 @@ class ActivityConditionsEditor
 						.innerHTML="${title}">
 					</span>
 				</span>
-				<span class="d2l-list-item-deleter">
+				<span class="d2l-list-item-deleter" ?hidden="${!this.canEdit}">
 					<d2l-button-icon
 						text="${this.localize('editor.btnRemoveCondition')}"
 						icon="tier1:close-default"
@@ -388,6 +399,7 @@ class ActivityConditionsEditor
 				<select
 					class="d2l-input-select"
 					id="operator"
+					?disabled="${!this.canEdit}"
 					@change="${this._setOperator}">
 					${operators.map(this._renderOperator, this)}
 				</select>
