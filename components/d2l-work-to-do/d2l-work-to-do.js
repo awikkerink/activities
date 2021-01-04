@@ -434,7 +434,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 					if (emptyEntity) {
 						this._loadOverdue(emptyEntity);
 						this._upcomingCollectionFake(emptyEntity);
-                		this._maxCollectionFake(emptyEntity);
+						this._maxCollectionFake(emptyEntity);
 					}
 				});
 		}
@@ -442,16 +442,21 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 
 	async _upcomingCollectionFake(entity) {
 		const source = entity.getLinkByRel('faker').href;
-		await fetchEntity(source, this.token)
-			.then((sirenEntity) => {
+		await fetchEntity(source, this.token).then((sirenEntity) => {
+			window.setTimeout(() => {
+				console.log('got upcoming sirenEntity: ', sirenEntity);
 				this._upcomingCollection = sirenEntity;
-			});
+			}, 3000);
+		});
 	}
 	async _maxCollectionFake(entity) {
 		const source = entity.getLinkByRel('faker').href;
 		await fetchEntity(source, this.token)
 			.then((sirenEntity) => {
-				this._maxCollection = sirenEntity;
+				window.setTimeout(()=>{
+					console.log('got max sirenEntity: ', sirenEntity);
+					this._maxCollection = sirenEntity;
+				}, 3000);
 			});
 	}
 
@@ -510,6 +515,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 		];
 		performSirenAction(this.token, action, fields, true)
 			.then((sirenEntity) => {
+				console.log('got sirenEntity: ', sirenEntity);
 				if (!isMax) {
 					this._upcomingCollection = sirenEntity;
 				} else {

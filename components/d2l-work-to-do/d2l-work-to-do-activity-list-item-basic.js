@@ -108,6 +108,7 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 		this._activityProperties = undefined;
 		this._organization = undefined;
 		this._setEntityType(ActivityUsageEntity);
+		this._firstLoad = false;
 	}
 
 	set _entity(entity) {
@@ -155,7 +156,8 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 
 		const dateTemplate = html `<d2l-activity-date href="${this.href}" .token="${this.token}" format="MMM d" ?hidden=${this.skeleton}></d2l-activity-date>`;
 
-		const separatorTemplate = !this.skeletize && this._date && (this._orgName || this._orgCode)
+		// should this be skeleton, not skeletize?
+		const separatorTemplate = !this.skeleton && this._date && (this._orgName || this._orgCode)
 			? html `<d2l-icon class="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
 			: nothing;
 
@@ -225,10 +227,12 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 	}
 
 	/** Specific name of the activity */
+	// wait until activity.properties has loaded before activityProperties is used as a fallback
 	get _name() {
 		return this._activity && this._activity.hasProperty('name') && !this.skeleton
 			? this._activity.properties.name
-			: this._activityProperties && !this.skeleton
+			: this._activityProperties && !this.skeleton && this._firstLoad
+			// only show the type if we've already looked for/loaded the name and determined it's not there
 				? this.localize(this._activityProperties.type)
 				: '';
 	}
@@ -262,6 +266,8 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 		for (const allowed in allowList) {
 			if (entity.hasClass(allowList[allowed].class)) {
 				this._activityProperties = allowList[allowed];
+				console.log('_activityProperties: ', this._activityProperties);
+				// problem: _activityProperties here loads before _activity does (later on)
 				const source = (
 					entity.hasLinkByRel(allowList[allowed].rel)
 					&& entity.getLinkByRel(allowList[allowed].rel)
@@ -272,6 +278,8 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 							if (sirenEntity) {
 								this._activity = sirenEntity;
 							}
+						}).finally(()=>{
+							this._firstLoad = true;
 						});
 				}
 			}
