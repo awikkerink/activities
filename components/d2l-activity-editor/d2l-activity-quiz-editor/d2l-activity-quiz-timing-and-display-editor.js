@@ -67,6 +67,17 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 
 				<div class="d2l-editors" slot="components">
 					<label class="d2l-label-text">
+						${this.localize('subHdrTimingTools')}
+					</label>
+					<d2l-button-subtle 
+						text=${this.localize('manageTiming')}
+						>
+					</d2l-button-subtle>
+					${this._renderManageTimingContainer()}
+				</div>
+
+				<div class="d2l-editors" slot="components">
+					<label class="d2l-label-text">
 						${this.localize('subHdrPagingTools')}
 					</label>
 					${this._renderPreventMovingBackwardsEditor()}
@@ -149,6 +160,13 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 			</d2l-activity-quiz-hints-editor>
 		`;
 	}
+	_renderManageTimingContainer() {
+		return html`
+			<d2l-activity-quiz-manage-timing-container 
+				href="${this.href}"
+				.token="${this.token}">
+		</d2l-activity-quiz-manage-timing-container>`;
+	}
 
 	_renderPreventMovingBackwardsEditor() {
 		return html`
@@ -164,6 +182,8 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 			<d2l-activity-quiz-prevent-moving-backwards-summary
 				href="${this.href}"
 				.token="${this.token}">
+				<p slot="one">Include me in slot</p>
+				<p slot="two">Text for slot two</p>
 			</d2l-activity-quiz-prevent-moving-backwards-summary>
 		`;
 	}
@@ -185,6 +205,7 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 			</d2l-activity-quiz-shuffle-summary>
 		`;
 	}
+
 }
 
 customElements.define(

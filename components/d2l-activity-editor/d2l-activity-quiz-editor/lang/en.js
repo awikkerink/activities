@@ -5,6 +5,8 @@ export default {
 	"quizSaveError": "Your quiz wasn't saved. Please correct the outlined fields.", // Error message to inform the user that there was a problem saving the quiz, instructing them to correct invalid fields
 	"hdrAvailability": "Availability Dates & Conditions", // availability header
 	"hdrTimingAndDisplay": "Timing & Display", // timing/display accordion header
+	"subHdrTimingTools": "Timing", // Title for timing tools
+	"manageTiming": "Manage Timing", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "Attempts & Completion", //attempts/completion accordion header
 	"subHdrPagingTools": "Paging", // Title for paging tools
 	"subHdrShuffleQuiz": "Shuffle Quiz",// Title for shuffle quiz tool(s)
