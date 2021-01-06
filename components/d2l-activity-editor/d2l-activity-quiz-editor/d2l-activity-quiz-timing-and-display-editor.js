@@ -9,6 +9,7 @@ import './d2l-activity-quiz-hints-editor.js';
 import './d2l-activity-quiz-hints-summary.js';
 import './d2l-activity-quiz-shuffle-editor.js';
 import './d2l-activity-quiz-shuffle-summary.js';
+import './d2l-activity-quiz-manage-timing-container';
 import { css, html } from 'lit-element/lit-element.js';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorFeaturesMixin } from '../mixins/d2l-activity-editor-features-mixin.js';
@@ -69,8 +70,10 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 					<label class="d2l-label-text">
 						${this.localize('subHdrTimingTools')}
 					</label>
+					<div class="placeholder-for-summarizer"></div> 
 					<d2l-button-subtle 
 						text=${this.localize('manageTiming')}
+						@click="${this._openDialog}"
 						>
 					</d2l-button-subtle>
 					${this._renderManageTimingContainer()}
@@ -105,6 +108,20 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 	// Returns true if any error states relevant to this accordion are set
 	_errorInAccordion() {
 		return false; // Todo: implement error handling
+	}
+
+	_openDialog() {
+		const dialog = this.shadowRoot.querySelector('d2l-activity-quiz-manage-timing-container').shadowRoot.querySelector('#quiz-manage-timing-dialog');
+		if (dialog) {
+			dialog.opened = true;
+		}
+		// TODO: incorporate read-only permission
+		// Once entity is ready, check for presence `update-timing type` action. If user does not have permission, disable primary Add button
+		const hasPermission = true;
+		if (!hasPermission) {
+			dialog.querySelector('d2l-button[primary]').disabled = true;
+		}
+
 	}
 
 	_renderAllowHintsSummary() {
@@ -182,8 +199,6 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 			<d2l-activity-quiz-prevent-moving-backwards-summary
 				href="${this.href}"
 				.token="${this.token}">
-				<p slot="one">Include me in slot</p>
-				<p slot="two">Text for slot two</p>
 			</d2l-activity-quiz-prevent-moving-backwards-summary>
 		`;
 	}
