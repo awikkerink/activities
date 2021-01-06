@@ -41,6 +41,10 @@ class ActivityNotificationEmailEditor
 				}
 
 				::slotted(p[slot=description]) {
+					color: var(--d2l-color-tungsten);
+					font-size: 0.7rem;
+					font-weight: 400;
+					line-height: 1rem;
 					margin-top: 10px;
 				}
 			`
