@@ -22,8 +22,8 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(LocalizeActi
 		return html`
 		<div>
 			<d2l-dialog id="quiz-manage-timing-dialog" ?opened=${this.isDialogOpen} title-text=${this.localize('subHdrTimingTools')}>
-				<d2l-button slot="footer" primary data-dialog-action="ok">${this.localize('btnOk')}</d2l-button>
-				<d2l-button slot="footer" data-dialog-action>${this.localize('btnCancel')}</d2l-button>
+				<d2l-button slot="footer" primary data-dialog-action="ok">${this.localize('manageTimingDialogConfirmationText')}</d2l-button>
+				<d2l-button slot="footer" data-dialog-action>${this.localize('manageTimingDialogCancelText')}</d2l-button>
 			</d2l-dialog>
 		</div>
     `;
