@@ -115,13 +115,6 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 		if (dialog) {
 			dialog.opened = true;
 		}
-		// TODO: incorporate read-only permission
-		// Once entity is ready, check for presence `update-timing type` action. If user does not have permission, disable primary Add button
-		const hasPermission = true;
-		if (!hasPermission) {
-			dialog.querySelector('d2l-button[primary]').disabled = true;
-		}
-
 	}
 
 	_renderAllowHintsSummary() {
