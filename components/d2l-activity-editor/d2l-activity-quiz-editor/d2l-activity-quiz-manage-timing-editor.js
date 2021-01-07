@@ -8,6 +8,7 @@ import { labelStyles } from '@brightspace-ui/core/components/typography/styles.j
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
+import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 	LocalizeActivityQuizEditorMixin(
@@ -21,6 +22,7 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 			super.styles,
 			labelStyles,
 			radioStyles,
+			selectStyles,
 			css`
 				d2l-input-checkbox {
 					margin-top: 0.9rem;
@@ -73,17 +75,20 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 	}
 
 	_renderExtendedDeadline() {
+		const deadlineOptions = ['1', '5', '10', '15', '30', '45', '60', '120'];
 		return html`
 			<div class="d2l-extended-deadline-container">
-				<d2l-input-number
-					label="Extended Deadline"
-					title="Extended Deadline"
-					value="1"
-				>
-					<label class="d2l-input-number-label" slot="after"
+				<label class="d2l-label-text">Extended Deadline</label>
+				<div>
+					<select class="d2l-input-select">
+						${deadlineOptions.map(
+		(min) => html`<option>${min}</option>`
+	)}
+					</select>
+					<label class="d2l-input-number-label"
 						>minute(s) after the Grace Period ends</label
 					>
-				</d2l-input-number>
+				</div>
 			</div>
 		`;
 	}
@@ -98,6 +103,8 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 						title="minutes(s)"
 						?label-hidden=${hidden}
 						value="120"
+						min="1"
+						max="9999"
 					>
 						<label class="d2l-input-number-label" slot="after"
 							>minute(s)</label
@@ -117,7 +124,7 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 			'Prevent the learner from making further changes',
 			'Allow the learner to continue working, but automatically score the attempt as zero after an extended deadline.',
 		];
-		const showExtendedDeadline = false;
+		const showExtendedDeadline = true;
 		return html`
 			<div class="d2l-time-menu-container">
 				<div class="d2l-time-enforcement-input-container">
@@ -125,6 +132,8 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 						label="Time Limit"
 						title="Time Limit"
 						value="120"
+						min="1"
+						max="9999"
 						><label class="d2l-input-number-label" slot="after"
 							>minute(s)</label
 						></d2l-input-number
@@ -134,6 +143,7 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 						label="Grace Period"
 						title="Time Limit"
 						value="5"
+						min="1"
 						><label class="d2l-input-number-label" slot="after"
 							>minute(s) before flagged as exceeded time
 							limit</label
@@ -154,16 +164,16 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 				${timeEnforcmentLabels.map(
 		(label, i) =>
 			html`<label class="d2l-input-radio-label"
-										><input
-											type="radio"
-											name="exceededTimeBehaviour"
-											?checked=${i === 0}
-										/>${label}</label
-									>`
+							><input
+								type="radio"
+								name="exceededTimeBehaviour"
+								?checked=${i === 0}
+							/>${label}</label
+						>`
 	)}
 				${showExtendedDeadline
 		? html`${this._renderExtendedDeadline()}`
-		: null }
+		: null}
 			</div>
 		`;
 	}
