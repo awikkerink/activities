@@ -55,8 +55,8 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 					font-style: italic;
 				}
 				.d2l-extended-deadline-container {
-					margin-right: 1.7rem;
 					margin-left: 1.7rem;
+					margin-right: 1.7rem;
 				}
 			`,
 		];
