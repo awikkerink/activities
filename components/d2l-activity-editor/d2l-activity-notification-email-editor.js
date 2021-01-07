@@ -41,10 +41,6 @@ class ActivityNotificationEmailEditor
 				}
 
 				::slotted(p[slot=description]) {
-					color: var(--d2l-color-tungsten);
-					font-size: 0.7rem;
-					font-weight: 400;
-					line-height: 1rem;
 					margin-top: 10px;
 				}
 			`
@@ -56,7 +52,9 @@ class ActivityNotificationEmailEditor
 			<div id="notification-email-editor-label" class="d2l-label-text">
 				${this.localize('editor.notificationEmailLabel')}
 			</div>
-			<slot name="description" class="d2l-body-small"></slot>
+			<div class="d2l-body-small">
+				<slot name="description"></slot>
+			</div>
 
 			<d2l-input-text
 				id="notification-email"
