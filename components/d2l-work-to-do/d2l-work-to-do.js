@@ -5,6 +5,11 @@ import './d2l-work-to-do-activity-list-header';
 import './d2l-work-to-do-activity-list-item-basic';
 import './d2l-work-to-do-activity-list-item-detailed';
 
+import '@webcomponents/webcomponentsjs/webcomponents-loader';
+import 'd2l-navigation/d2l-navigation-immersive';
+import 'd2l-navigation/d2l-navigation-button';
+import 'd2l-navigation/d2l-navigation-button-close';
+
 import { Actions, Rels } from 'siren-sdk/src/hypermedia-constants';
 import { bodyStandardStyles, heading1Styles, heading3Styles, heading4Styles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html, LitElement } from 'lit-element/lit-element';
@@ -164,6 +169,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 			return;
 		}
 		this._getCollections(user._entity);
+		this._getHomeHref();
 	}
 
 	render() {
@@ -300,7 +306,19 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 				`;
 			});
 
+			const immersiveNav = (isFullscreen) => {
+				return isFullscreen
+					? html`
+						<d2l-navigation-immersive back-link-href="${this._homeLinkHref}" back-link-text="${this.localize('backToD2L')}">
+							<div class="d2l-typography d2l-body-standard" slot="middle">
+								<p>${this.localize('myWorkToDo')}</p>
+							</div>
+						</d2l-navigation-immersive>`
+					: nothing;
+			};
+
 			return html`
+				${immersiveNav(this.fullscreen)}
 				<div class="d2l-activity-collection-container-fullscreen">
 					<d2l-work-to-do-activity-list-header ?overdue=${isOverdue} count=${activities.length} fullscreen></d2l-work-to-do-activity-list-header>
 					<d2l-list>${groupedByDate}</d2l-list>
@@ -506,6 +524,12 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 					this._maxCollection = sirenEntity;
 				}
 			});
+	}
+
+	_getHomeHref() {
+		// TODO: this is a default (and kind of a hacky way to get to it),
+		// ideally we want to get the user's homepage from their profile
+		this._homeLinkHref = window.location.href.substring(0, window.location.href.indexOf('/d2l/') + 5) + 'home';
 	}
 }
 customElements.define('d2l-work-to-do', WorkToDoWidget);
