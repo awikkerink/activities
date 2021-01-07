@@ -111,6 +111,10 @@ export class Quiz {
 		this.isShuffleEnabled = isEnabled;
 	}
 
+	setDescription(value) {
+		this.description = value;
+	}
+
 	_makeQuizData() {
 		/* NOTE: if you add fields here, please make sure you update the corresponding equals method in siren-sdk.
 					 The cancel workflow is making use of that to detect changes.
@@ -124,7 +128,8 @@ export class Quiz {
 			disablePagerAndAlerts: this.isDisablePagerAndAlertsEnabled,
 			preventMovingBackwards: this.isPreventMovingBackwardsEnabled,
 			notificationEmail: this.notificationEmail,
-			autoSetGraded: this.isAutoSetGradedEnabled
+			autoSetGraded: this.isAutoSetGradedEnabled,
+			description: this.description
 		};
 
 		return data;
@@ -153,6 +158,9 @@ decorate(Quiz, {
 	previewHref: observable,
 	canPreviewQuiz: observable,
 	isAutoSetGradedEnabled: observable,
+	description: observable,
+	canEditDescription: observable,
+	descriptionRichTextEditorConfig: observable,
 	// actions
 	load: action,
 	setName: action,
@@ -164,6 +172,7 @@ decorate(Quiz, {
 	setPreventMovingBackwards: action,
 	setNotificationEmail: action,
 	setAutoSetGraded: action,
+	setDescription: action,
 	save: action,
 	delete: action
 });

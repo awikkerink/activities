@@ -135,8 +135,8 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 		`;
 	}
 
-	_saveDescriptionOnChange() {
-
+	_saveDescriptionOnChange(e) {
+		store.get(this.href).setDescription(e.detail.content);
 	}
 
 	updated(changedProperties) {
@@ -157,7 +157,7 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 		if (!quiz) {
 			return false;
 		}
-
+		
 		return quiz.dirty;
 	}
 
