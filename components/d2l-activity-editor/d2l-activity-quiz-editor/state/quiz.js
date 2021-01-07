@@ -53,6 +53,9 @@ export class Quiz {
 		this.canPreviewQuiz = entity.canPreviewQuiz();
 		this.isAutoSetGradedEnabled = entity.isAutoSetGradedEnabled();
 		this.canEditAutoSetGraded = entity.canEditAutoSetGraded();
+		this.description = entity.canEditDescription() ? entity.descriptionEditorHtml() : entity.descriptionHtml();
+		this.canEditDescription = entity.canEditDescription();
+		this.descriptionRichTextEditorConfig = entity.descriptionRichTextEditorConfig();
 	}
 
 	async save() {
