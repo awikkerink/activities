@@ -54,6 +54,10 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 					font-size: 0.8rem;
 					font-style: italic;
 				}
+				.d2l-extended-deadline-container {
+					margin-right: 1.7rem;
+					margin-left: 1.7rem;
+				}
 			`,
 		];
 	}
@@ -63,8 +67,24 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 		return html`
 			${this._renderTimeEnforcementOptions()}
 			${timeEnforced
-		? html`${this._renderRecommendedTimeLimitMenu()}`
-		: html`${this._renderTimeEnforcedMenu()}`}
+		? html`${this._renderTimeEnforcedMenu()}`
+		: html`${this._renderRecommendedTimeLimitMenu()}`}
+		`;
+	}
+
+	_renderExtendedDeadline() {
+		return html`
+			<div class="d2l-extended-deadline-container">
+				<d2l-input-number
+					label="Extended Deadline"
+					title="Extended Deadline"
+					value="1"
+				>
+					<label class="d2l-input-number-label" slot="after"
+						>minute(s) after the Grace Period ends</label
+					>
+				</d2l-input-number>
+			</div>
 		`;
 	}
 
@@ -79,7 +99,9 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 						?label-hidden=${hidden}
 						value="120"
 					>
-						<label class="d2l-input-number-label" slot="after">minute(s)</label>
+						<label class="d2l-input-number-label" slot="after"
+							>minute(s)</label
+						>
 					</d2l-input-number>
 				</div>
 				<label class="d2l-italic-label"
@@ -95,39 +117,53 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 			'Prevent the learner from making further changes',
 			'Allow the learner to continue working, but automatically score the attempt as zero after an extended deadline.',
 		];
+		const showExtendedDeadline = false;
 		return html`
 			<div class="d2l-time-menu-container">
 				<div class="d2l-time-enforcement-input-container">
-					<d2l-input-number label="Time Limit" title="Time Limit" value="120"
+					<d2l-input-number
+						label="Time Limit"
+						title="Time Limit"
+						value="120"
 						><label class="d2l-input-number-label" slot="after"
 							>minute(s)</label
 						></d2l-input-number
 					>
 
-					<d2l-input-number label="Grace Period" title="Time Limit" value="5"
+					<d2l-input-number
+						label="Grace Period"
+						title="Time Limit"
+						value="5"
 						><label class="d2l-input-number-label" slot="after"
-							>minute(s) before flagged as exceeded time limit</label
+							>minute(s) before flagged as exceeded time
+							limit</label
 						></d2l-input-number
 					>
 				</div>
 
-				<label class="d2l-label-text">Exceeded Time Limit Behaviour</label>
+				<label class="d2l-label-text"
+					>Exceeded Time Limit Behaviour</label
+				>
 				<div>
 					<label class="d2l-italic-label"
-						>After the grace period, flag the quiz attempt as exceeded time
-						limit and,</label
+						>After the grace period, flag the quiz attempt as
+						exceeded time limit and,</label
 					>
 				</div>
+
 				${timeEnforcmentLabels.map(
 		(label, i) =>
 			html`<label class="d2l-input-radio-label"
-							><input
-								type="radio"
-								name="exceededTimeBehaviour"
-								?checked=${i === 0}
-							/>${label}</label
-						>`
+										><input
+											type="radio"
+											name="exceededTimeBehaviour"
+											?checked=${i === 0}
+										/>${label}</label
+									>`
 	)}
+				${showExtendedDeadline
+		? html`${this._renderExtendedDeadline()}`
+		: null }
 			</div>
 		`;
 	}
