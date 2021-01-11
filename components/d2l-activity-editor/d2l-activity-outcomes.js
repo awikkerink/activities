@@ -57,14 +57,14 @@ class ActivityOutcomes extends ActivityEditorFeaturesMixin(ActivityEditorMixin(R
 			return html``;
 		}
 
-		if (!this._hasAlignments) {
-			this.hidden = true;
-		}
-
 		const {
 			canUpdateAlignments,
 			alignmentsHref
 		} = activity;
+
+		if (!this._hasAlignments && !canUpdateAlignments) {
+			this.hidden = true;
+		}
 
 		return html`
 			${this._renderTags()}
