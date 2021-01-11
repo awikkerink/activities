@@ -4,22 +4,14 @@ import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin';
 import { html } from 'lit-element/lit-element';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
-import { shared as store } from './state/quiz-store';
+import { sharedTiming as store } from './state/quiz-store';
 
 class ActivityQuizManageTimingContainer extends ActivityEditorMixin(LocalizeActivityQuizEditorMixin(MobxLitElement)) {
 	constructor() {
-
 		super(store);
-
 	}
-	render() {
-		// TODO: complete check when entity is ready
-		// const entity = store.get(this.href);
-		// if (!entity) {
-		// 	return html``;
-		// }
-		// entity.canEditTiming();
 
+	render() {
 		return html`
 		<div>
 			<d2l-dialog id="quiz-manage-timing-dialog" ?opened=${this.isDialogOpen} width=800 title-text=${this.localize('subHdrTimingTools') }>
@@ -30,20 +22,15 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(LocalizeActi
 		</div>
     `;
 	}
-	// TODO: when entity is ready, check for presence `update-timing type` action. If user does not have permission, disable primary Add button
-	_canEditTiming() {
-		return true;
-	}
 
 	_renderQuizTimingEditor() {
 		return html`
-		<d2l-activity-quiz-manage-timing-editor 
+		<d2l-activity-quiz-manage-timing-editor
 				href="${this.href}"
 				.token="${this.token}">
 		</d2l-activity-quiz-manage-timing-editor>
 		`;
 	}
-
 }
 
 customElements.define(

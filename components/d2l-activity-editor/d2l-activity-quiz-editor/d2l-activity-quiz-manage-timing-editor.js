@@ -10,6 +10,8 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
+import { sharedTiming as store } from './state/quiz-store';
+
 class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 	LocalizeActivityQuizEditorMixin(
 		SkeletonMixin(
@@ -62,6 +64,10 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 				}
 			`,
 		];
+	}
+
+	constructor() {
+		super(store);
 	}
 
 	render() {
@@ -178,21 +184,38 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 		`;
 	}
 	_renderTimeEnforcementOptions() {
-		const radioLabels = ['Recommended Time Limit', 'Enforced Time Limit'];
-		return html`
+		const entity = store.get(this.href);
+		if (!entity) {
+			return html``;
+		}
+
+		const {
+			canEditTiming,
+			timingTypes
+		} = entity || {};
+
+		return canEditTiming ? html`
 			<div class="d2l-timing-option-container">
-				${radioLabels.map(
-		(label, i) =>
+				${timingTypes.map(
+		(type) =>
 			html`<label class="d2l-input-radio-label"
 							><input
 								type="radio"
 								name="timeEnforcement"
-								?checked=${i === 0}
-							/>${label}</label
+								?checked=${type.selected}
+								@change="${this._setTimingType}"
+								value="${type.value}"
+							/>${type.title}</label
 						>`
 	)}
 			</div>
-		`;
+		` : html``;
+	}
+
+	_setTimingType(e) {
+		const entity = store.get(this.href);
+		const data = e.target.value;
+		entity && entity.setTimingType(data);
 	}
 }
 

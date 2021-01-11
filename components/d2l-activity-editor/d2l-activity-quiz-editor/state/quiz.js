@@ -1,6 +1,7 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { fetchEntity } from '../../state/fetch-entity.js';
 import { QuizEntity } from 'siren-sdk/src/activities/quizzes/QuizEntity.js';
+import { QuizTiming } from './quiz-timing.js';
 
 configureMobx({ enforceActions: 'observed' });
 
@@ -53,6 +54,7 @@ export class Quiz {
 		this.canPreviewQuiz = entity.canPreviewQuiz();
 		this.isAutoSetGradedEnabled = entity.isAutoSetGradedEnabled();
 		this.canEditAutoSetGraded = entity.canEditAutoSetGraded();
+		this.timingHref = entity.timingHref();
 	}
 
 	async save() {
@@ -150,6 +152,7 @@ decorate(Quiz, {
 	previewHref: observable,
 	canPreviewQuiz: observable,
 	isAutoSetGradedEnabled: observable,
+	timingHref: observable,
 	// actions
 	load: action,
 	setName: action,

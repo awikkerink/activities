@@ -19,6 +19,7 @@ import { labelStyles } from '@brightspace-ui/core/components/typography/styles.j
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
+import { shared as store } from './state/quiz-store';
 
 class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeActivityQuizEditorMixin(SkeletonMixin(ActivityEditorFeaturesMixin(ActivityEditorMixin(MobxLitElement))))) {
 
@@ -49,6 +50,15 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 	}
 
 	render() {
+		const entity = store.get(this.href);
+		if (!entity) {
+			return html``;
+		}
+
+		const {
+			timingHref
+		} = entity || {};
+
 		return html`
 			<d2l-activity-accordion-collapse
 				?has-errors=${this._errorInAccordion()}
@@ -76,7 +86,7 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 						@click="${this._openDialog}"
 						>
 					</d2l-button-subtle>
-					${this._renderManageTimingContainer()}
+					${this._renderManageTimingContainer(timingHref)}
 				</div>
 
 				<div class="d2l-editors" slot="components">
@@ -170,12 +180,13 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 			</d2l-activity-quiz-hints-editor>
 		`;
 	}
-	_renderManageTimingContainer() {
+	_renderManageTimingContainer(timingHref) {
 		return html`
-			<d2l-activity-quiz-manage-timing-container 
-				href="${this.href}"
+			<d2l-activity-quiz-manage-timing-container
+				href="${timingHref}"
 				.token="${this.token}">
-		</d2l-activity-quiz-manage-timing-container>`;
+			</d2l-activity-quiz-manage-timing-container>
+		`;
 	}
 
 	_renderPreventMovingBackwardsEditor() {
