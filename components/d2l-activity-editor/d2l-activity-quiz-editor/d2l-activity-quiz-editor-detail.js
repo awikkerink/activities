@@ -108,7 +108,7 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 
 			<div id="quiz-description-container">
 				<div class="d2l-activity-label-container d2l-label-text d2l-skeletize">
-					${this.localize('description')}  
+					${this.localize('description')}
 				</div>
 				<div class="d2l-skeletize">
 					<d2l-activity-text-editor
@@ -119,7 +119,7 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 						?disabled="${!canEditDescription}">
 					</d2l-activity-text-editor>
 				</div>
-			</div>	
+			</div>
 
 			<d2l-activity-quiz-divider
 				?skeleton="${this.skeleton}">
@@ -133,10 +133,6 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 				</d2l-button-subtle>
 			</d2l-activity-quiz-divider>
 		`;
-	}
-
-	_saveDescriptionOnChange(e) {
-		store.get(this.href).setDescription(e.detail.content);
 	}
 
 	updated(changedProperties) {
@@ -157,7 +153,7 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 		if (!quiz) {
 			return false;
 		}
-		
+
 		return quiz.dirty;
 	}
 
@@ -177,6 +173,10 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 		}
 
 		window.open(quiz.previewHref);
+	}
+
+	_saveDescriptionOnChange(e) {
+		store.get(this.href).setDescription(e.detail.content);
 	}
 
 	async _setName(e) {

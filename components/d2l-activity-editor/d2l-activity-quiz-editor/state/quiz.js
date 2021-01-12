@@ -79,6 +79,10 @@ export class Quiz {
 		this.isAutoSetGradedEnabled = isEnabled;
 	}
 
+	setDescription(value) {
+		this.description = value;
+	}
+
 	setDisablePagerAndAlertsTool(isEnabled) {
 		this.isDisablePagerAndAlertsEnabled = isEnabled;
 	}
@@ -109,10 +113,6 @@ export class Quiz {
 
 	setShuffle(isEnabled) {
 		this.isShuffleEnabled = isEnabled;
-	}
-
-	setDescription(value) {
-		this.description = value;
 	}
 
 	_makeQuizData() {
