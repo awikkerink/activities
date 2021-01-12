@@ -60,6 +60,9 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 					position: relative;
 					right: 0.6rem;
 				}
+				#score-and-duedate-container {
+					padding-bottom: 0;
+				}
 			`
 		];
 	}
