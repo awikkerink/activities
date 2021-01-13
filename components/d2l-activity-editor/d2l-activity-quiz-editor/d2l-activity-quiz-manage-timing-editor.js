@@ -12,13 +12,7 @@ import { selectStyles } from '@brightspace-ui/core/components/inputs/input-selec
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 import { sharedTiming as store } from './state/quiz-store';
 
-class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
-	LocalizeActivityQuizEditorMixin(
-		SkeletonMixin(
-			ActivityEditorFeaturesMixin(ActivityEditorMixin(MobxLitElement))
-		)
-	)
-) {
+class ActivityQuizManageTimingEditor extends AsyncContainerMixin(LocalizeActivityQuizEditorMixin(SkeletonMixin(ActivityEditorFeaturesMixin(ActivityEditorMixin(MobxLitElement))))) {
 	static get styles() {
 		return [
 			super.styles,
@@ -68,12 +62,18 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 	}
 
 	render() {
-		const timeEnforced = false;
+		const entity = store.get(this.href);
+		if (!entity) {
+			return html``;
+		}
+
+		const {
+			isTimingEnforced,
+		} = entity || {};
+
 		return html`
 			${this._renderTimeEnforcementOptions()}
-			${timeEnforced
-		? html`${this._renderTimeEnforcedMenu()}`
-		: html`${this._renderRecommendedTimeLimitMenu()}`}
+			${isTimingEnforced ? html`${this._renderTimeEnforcedMenu()}` : html`${this._renderRecommendedTimeLimitMenu()}`}
 		`;
 	}
 
@@ -86,13 +86,12 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 		const {
 			extendedDeadlineOptions,
 		} = entity || {};
-
 		return html`
 			<div class="d2l-time-menu-container">
 				<label class="d2l-label-text">${this.localize('extendedDeadline')}</label>
 				<div>
 					<select class="d2l-input-select">
-						${extendedDeadlineOptions.map((option) => html`<option>${option.value}</option>`)}
+						${extendedDeadlineOptions.map((option) => html`<option value=${option.value} ?selected=${option.selected}>${option.value}</option>`)}
 					</select>
 					<label class='d2l-input-number-label'>
 						${this.localize('extendedDeadlineInputLabel')}
@@ -110,11 +109,10 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 
 		const {
 			showClock,
-			recommendedTimeProperties
+			showClockTitle,
+			recommendedTimeLimit
 		} = entity || {};
 		// TODO: remove constant min/max
-		const recommendedTimeLimit = { ...recommendedTimeProperties, min: '1', max: '9999' };
-
 		const hidden = true;
 		return html`
 			<div class="d2l-time-menu-container">
@@ -123,15 +121,15 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 							label=${this.localize('minutesLabel')}
 							title=${this.localize('minutesLabel')}
 							?label-hidden=${hidden}
-							value=${recommendedTimeLimit.timeLimit}
-							min=${recommendedTimeLimit.min}
-							max=${recommendedTimeLimit.max}>
+							value=${recommendedTimeLimit}
+							min=1
+							max=9999>
 							<label class="d2l-input-number-label" slot="after">${this.localize('minutesLabel')}</label>
 						</d2l-input-number>
 					</div>
 					<div>
 						<label class="d2l-italic-label">${this.localize('showClockLabel')}</label>
-						<d2l-input-checkbox ?checked=${showClock.value}>${showClock.title}</d2l-input-checkbox>
+						<d2l-input-checkbox ?checked=${showClock}>${showClockTitle}</d2l-input-checkbox>
 					</div>
 				</div>
 			</div>
@@ -145,13 +143,14 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 
 		const {
 			submissionLateType,
-			enforcedTimeProperties
+			enforcedTimeLimit,
+			enforcedGraceLimit
 		} = entity || {};
 
 		const timeEnforcementLabels = [];
 		// TODO: remove constant min/max
-		const timeLimit = { ...enforcedTimeProperties.timeLimit, value: '120', min:'1', max: '9999', slot: this.localize('minutesLabel') };
-		const graceLimit = { ...enforcedTimeProperties.graceLimit, value: '5', min:'1', max:'999,999,999,999,999', slot: this.localize('minutesBeforeFlaggedLabel') };
+		const timeLimit = { ...enforcedTimeLimit, min:'1', max: '9999', slot: this.localize('minutesLabel') };
+		const graceLimit = { ...enforcedGraceLimit, min:'1', max:'999,999,999,999,999', slot: this.localize('minutesBeforeFlaggedLabel') };
 		timeEnforcementLabels.push(timeLimit);
 		timeEnforcementLabels.push(graceLimit);
 

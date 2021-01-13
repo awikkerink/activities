@@ -30,12 +30,15 @@ export class QuizTiming {
 	load(entity) {
 		this._entity = entity;
 		this.canEditTiming = entity.canEditTiming();
+		this.isTimingEnforced = entity.isTimingEnforced();
 		this.timingTypes = entity.timingTypes();
 		this.submissionLateType = entity.submissionLateType();
-		this.enforcedTimeProperties = entity.enforcedTimeProperties();
+		this.enforcedTimeLimit = entity.enforcedTimeLimit();
+		this.enforcedGraceLimit = entity.enforcedGraceLimit();
 		this.extendedDeadlineOptions = entity.extendedDeadlineOptions();
 		this.showClock = entity.showClock();
-		this.recommendedTimeProperties = entity.recommendedTimeProperties();
+		this.showClockTitle = entity.showClockTitle();
+		this.recommendedTimeLimit = entity.recommendedTimeLimit();
 	}
 
 	setTimingType(data) {
@@ -56,12 +59,15 @@ decorate(QuizTiming, {
 	// props
 	name: observable,
 	canEditTiming: observable,
+	isTimingEnforced: observable,
 	timingTypes: observable,
 	submissionLateType: observable,
-	enforcedTimeProperties: observable,
+	enforcedTimeLimit: observable,
+	enforcedGraceLimit: observable,
 	extendedDeadlineOptions: observable,
 	showClock: observable,
-	recommendedTimeProperties: observable,
+	showClockTitle: observable,
+	recommendedTimeLimit: observable,
 	// actions
 	load: action,
 	setTimingType: action
