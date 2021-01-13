@@ -43,7 +43,8 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 					margin-right: 0.2rem;
 				}
 				.d2l-time-menu-container {
-					margin: 1rem;
+					margin-left: 1.7rem;
+					margin-right: 1.7rem;
 				}
 				.d2l-time-enforcement-input-container {
 					display: flex;
@@ -58,10 +59,6 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 					font-size: 0.8rem;
 					font-style: italic;
 				}
-				.d2l-extended-deadline-container {
-					margin-left: 1.7rem;
-					margin-right: 1.7rem;
-				}
 			`,
 		];
 	}
@@ -71,7 +68,7 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 	}
 
 	render() {
-		const timeEnforced = true;
+		const timeEnforced = false;
 		return html`
 			${this._renderTimeEnforcementOptions()}
 			${timeEnforced
@@ -81,105 +78,120 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 	}
 
 	_renderExtendedDeadline() {
-		const deadlineOptions = ['1', '5', '10', '15', '30', '45', '60', '120'];
+		const entity = store.get(this.href);
+		if (!entity) {
+			return html``;
+		}
+
+		const {
+			extendedDeadlineOptions,
+		} = entity || {};
+
 		return html`
-			<div class="d2l-extended-deadline-container">
-				<label class="d2l-label-text">Extended Deadline</label>
+			<div class="d2l-time-menu-container">
+				<label class="d2l-label-text">${this.localize('extendedDeadline')}</label>
 				<div>
 					<select class="d2l-input-select">
-						${deadlineOptions.map(
-		(min) => html`<option>${min}</option>`
-	)}
+						${extendedDeadlineOptions.map((option) => html`<option>${option.value}</option>`)}
 					</select>
-					<label class="d2l-input-number-label"
-						>minute(s) after the Grace Period ends</label
-					>
+					<label class='d2l-input-number-label'>
+						${this.localize('extendedDeadlineInputLabel')}
+					</label>
 				</div>
 			</div>
 		`;
 	}
 
 	_renderRecommendedTimeLimitMenu() {
+		const entity = store.get(this.href);
+		if (!entity) {
+			return html``;
+		}
+
+		const {
+			showClock,
+			recommendedTimeProperties
+		} = entity || {};
+		// TODO: remove constant min/max
+		const recommendedTimeLimit = { ...recommendedTimeProperties, min: '1', max: '9999' };
+
 		const hidden = true;
 		return html`
 			<div class="d2l-time-menu-container">
 				<div class="d2l-time-enforcement-input-container">
 					<d2l-input-number
-						label="minute(s)"
-						title="minutes(s)"
-						?label-hidden=${hidden}
-						value="120"
-						min="1"
-						max="9999"
-					>
-						<label class="d2l-input-number-label" slot="after"
-							>minute(s)</label
-						>
-					</d2l-input-number>
+							label=${this.localize('minutesLabel')}
+							title=${this.localize('minutesLabel')}
+							?label-hidden=${hidden}
+							value=${recommendedTimeLimit.timeLimit}
+							min=${recommendedTimeLimit.min}
+							max=${recommendedTimeLimit.max}>
+							<label class="d2l-input-number-label" slot="after">${this.localize('minutesLabel')}</label>
+						</d2l-input-number>
+					</div>
+					<div>
+						<label class="d2l-italic-label">${this.localize('showClockLabel')}</label>
+						<d2l-input-checkbox ?checked=${showClock.value}>${showClock.title}</d2l-input-checkbox>
+					</div>
 				</div>
-				<label class="d2l-italic-label"
-					>Will be displayed before the quiz starts</label
-				>
-				<d2l-input-checkbox>Show clock</d2l-input-checkbox>
 			</div>
 		`;
 	}
 	_renderTimeEnforcedMenu() {
-		const timeEnforcmentLabels = [
-			'Allow the learner to continue working',
-			'Prevent the learner from making further changes',
-			'Allow the learner to continue working, but automatically score the attempt as zero after an extended deadline.',
-		];
+		const entity = store.get(this.href);
+		if (!entity) {
+			return html``;
+		}
+
+		const {
+			submissionLateType,
+			enforcedTimeProperties
+		} = entity || {};
+
+		const timeEnforcementLabels = [];
+		// TODO: remove constant min/max
+		const timeLimit = { ...enforcedTimeProperties.timeLimit, value: '120', min:'1', max: '9999', slot: this.localize('minutesLabel') };
+		const graceLimit = { ...enforcedTimeProperties.graceLimit, value: '5', min:'1', max:'999,999,999,999,999', slot: this.localize('minutesBeforeFlaggedLabel') };
+		timeEnforcementLabels.push(timeLimit);
+		timeEnforcementLabels.push(graceLimit);
+
 		const showExtendedDeadline = true;
+
 		return html`
 			<div class="d2l-time-menu-container">
 				<div class="d2l-time-enforcement-input-container">
+					${timeEnforcementLabels.map((type) => html`
 					<d2l-input-number
-						label="Time Limit"
-						title="Time Limit"
-						value="120"
-						min="1"
-						max="9999"
-						><label class="d2l-input-number-label" slot="after"
-							>minute(s)</label
-						></d2l-input-number
-					>
-
-					<d2l-input-number
-						label="Grace Period"
-						title="Time Limit"
-						value="5"
-						min="1"
-						><label class="d2l-input-number-label" slot="after"
-							>minute(s) before flagged as exceeded time
-							limit</label
-						></d2l-input-number
-					>
+						label=${type.title}
+						title=${type.title}
+						value=${type.value}
+						min=${type.min}
+						max=${type.max}>
+						<label
+							class='d2l-input-number-label'
+							slot='after'>${type.slot}
+						</label>
+					</d2l-input-number>`)}
 				</div>
 
 				<label class="d2l-label-text"
-					>Exceeded Time Limit Behaviour</label
+					>${this.localize('subHdrExceededTimeLimitBehaviour')}</label
 				>
 				<div>
 					<label class="d2l-italic-label"
-						>After the grace period, flag the quiz attempt as
-						exceeded time limit and,</label
+						>${this.localize('exceededTimeLimitBehaviourPrefix')}</label
 					>
 				</div>
-
-				${timeEnforcmentLabels.map(
-		(label, i) =>
-			html`<label class="d2l-input-radio-label"
-							><input
-								type="radio"
-								name="exceededTimeBehaviour"
-								?checked=${i === 0}
-							/>${label}</label
-						>`
-	)}
-				${showExtendedDeadline
-		? html`${this._renderExtendedDeadline()}`
-		: null}
+	 			<!-- TODO: add @change for input -->
+				${submissionLateType.map((type) => html`
+				<label class="d2l-input-radio-label"
+					><input
+						type="radio"
+						name="exceededTimeBehaviour"
+						?checked=${type.selected}
+						.value=${type.value}
+					/>${type.title}</label>`)}
+				${showExtendedDeadline ? html`${this._renderExtendedDeadline()}` : null}
 			</div>
 		`;
 	}
@@ -196,20 +208,17 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(
 
 		return canEditTiming ? html`
 			<div class="d2l-timing-option-container">
-				${timingTypes.map(
-		(type) =>
-			html`<label class="d2l-input-radio-label"
-							><input
-								type="radio"
-								name="timeEnforcement"
-								?checked=${type.selected}
-								@change="${this._setTimingType}"
-								value="${type.value}"
-							/>${type.title}</label
-						>`
-	)}
+				${timingTypes.map((type) => html`
+				<label class="d2l-input-radio-label"
+					><input
+						type="radio"
+						name="timeEnforcement"
+						?checked=${type.selected}
+						@change="${this._setTimingType}"
+						.value=${type.value}
+					/>${type.title}</label>`)}
 			</div>
-		` : html``;
+			` : html``;
 	}
 
 	_setTimingType(e) {

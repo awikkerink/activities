@@ -28,14 +28,19 @@ export class QuizTiming {
 	}
 
 	load(entity) {
-        this._entity = entity;
-        this.canEditTiming = entity.canEditTiming();
-        this.timingTypes = entity.timingTypes();
-    }
+		this._entity = entity;
+		this.canEditTiming = entity.canEditTiming();
+		this.timingTypes = entity.timingTypes();
+		this.submissionLateType = entity.submissionLateType();
+		this.enforcedTimeProperties = entity.enforcedTimeProperties();
+		this.extendedDeadlineOptions = entity.extendedDeadlineOptions();
+		this.showClock = entity.showClock();
+		this.recommendedTimeProperties = entity.recommendedTimeProperties();
+	}
 
-    setTimingType(data) {
-        this._entity.setTimingType(data);
-    }
+	setTimingType(data) {
+		this._entity.setTimingType(data);
+	}
 
 	_makeQuizData() {
 		/* NOTE: if you add fields here, please make sure you update the corresponding equals method in siren-sdk.
@@ -49,10 +54,15 @@ export class QuizTiming {
 
 decorate(QuizTiming, {
 	// props
-    name: observable,
-    canEditTiming: observable,
-    timingTypes: observable,
+	name: observable,
+	canEditTiming: observable,
+	timingTypes: observable,
+	submissionLateType: observable,
+	enforcedTimeProperties: observable,
+	extendedDeadlineOptions: observable,
+	showClock: observable,
+	recommendedTimeProperties: observable,
 	// actions
-    load: action,
-    setTimingType: action
+	load: action,
+	setTimingType: action
 });
