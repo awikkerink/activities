@@ -13,7 +13,7 @@ import 'd2l-navigation/d2l-navigation-button-close';
 import { Actions, Rels } from 'siren-sdk/src/hypermedia-constants';
 import { bodyStandardStyles, heading1Styles, heading3Styles, heading4Styles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html, LitElement } from 'lit-element/lit-element';
-import { Config, Constants } from './env';
+import { Config, Constants, getOverdueWeekLimit, getUpcomingWeekLimit } from './env';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { fetchEntity } from './state/fetch-entity';
 import { ifDefined } from 'lit-html/directives/if-defined';
@@ -181,13 +181,8 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 	render() {
 
 		/** Activity state templates */
-		const collectionTemplate = (collection, displayLimit, isOverdue) => {
-			if (!collection || displayLimit === 0) {
-				return nothing;
-			}
-
-			const activities = collection.getSubEntitiesByRel(Rels.Activities.userActivityUsage);
-			if (activities.length === 0) {
+		const collectionTemplate = (activities, displayLimit, isOverdue) => {
+			if (!activities || activities.length === 0 || displayLimit === 0) {
 				return nothing;
 			}
 
@@ -215,10 +210,10 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 			}
 			return html`
 				<div class="d2l-overdue-list">
-					${collectionTemplate(this._overdueCollection, this._overdueDisplayLimit, true)}
+					${collectionTemplate(this._overdueActivities, this._overdueDisplayLimit, true)}
 				</div>
 				<div class="d2l-upcoming-list">
-					${collectionTemplate(this._upcomingCollection, this._upcomingDisplayLimit, false)}
+					${collectionTemplate(this._upcomingActivities, this._upcomingDisplayLimit, false)}
 				</div>
 				<d2l-link aria-label="${this.localize('fullViewLink')}" href="${this._viewAllSource}" small ?hidden=${!this._viewAllSource}>${this.localize('fullViewLink')}</d2l-link>
 			`;
@@ -443,6 +438,23 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 		return 'loading';
 	}
 
+	_getFilteredOverdueActivities(collection) {
+		let activities = collection.getSubEntitiesByRel(Rels.Activities.userActivityUsage);
+
+		const cutOffDate = new Date();
+		cutOffDate.setDate(cutOffDate.getDate() - (getOverdueWeekLimit() * 7));
+
+		activities = activities.filter((activity) => {
+			const activityDate = activity.hasSubEntityByClass('due-date')
+				? new Date(activity.getSubEntityByClass('due-date').properties.date)
+				: new Date(activity.getSubEntityByClass('end-date').properties.date);
+
+			return activityDate.getTime() >= cutOffDate.getTime();
+		});
+
+		return activities;
+	}
+
 	/**
 	 * Get collections of overdue, upcoming and max range ActivityUsageCollectionEntities
 	 * @async
@@ -495,8 +507,8 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 		const source = entity.getLinkByRel(Rels.Activities.overdue).href;
 		await fetchEntity(source, this.token)
 			.then((sirenEntity) => {
+				this._overdueActivities = this._getFilteredOverdueActivities(sirenEntity);
 				this._overdueCollection = sirenEntity;
-				this._overdueActivities = this._overdueCollection.getSubEntitiesByRel(Rels.Activities.userActivityUsage);
 			});
 	}
 
@@ -516,7 +528,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 		}
 
 		const isMax = !!forwardLimit;
-		forwardLimit = forwardLimit ? forwardLimit : (Config.UpcomingWeekLimit * 7);
+		forwardLimit = forwardLimit ? forwardLimit : (getUpcomingWeekLimit() * 7);
 
 		const now = new Date();
 		const end = new Date(now.getFullYear(), now.getMonth(), now.getDate() + forwardLimit, 23, 59, 59, 999).toISOString();
@@ -530,11 +542,13 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 		];
 		performSirenAction(this.token, action, fields, true)
 			.then((sirenEntity) => {
-				if (!isMax) {
-					this._upcomingCollection = sirenEntity;
-					this._upcomingActivities = sirenEntity.getSubEntitiesByRel(Rels.Activities.userActivityUsage);
-				} else {
-					this._maxCollection = sirenEntity;
+				if (sirenEntity) {
+					if (!isMax) {
+						this._upcomingActivities = sirenEntity.getSubEntitiesByRel(Rels.Activities.userActivityUsage);
+						this._upcomingCollection = sirenEntity;
+					} else {
+						this._maxCollection = sirenEntity;
+					}
 				}
 			});
 	}
