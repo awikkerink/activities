@@ -57,5 +57,6 @@ export default {
 	"extendedDeadlineInputLabel": "minute(s) after the Grace Period ends",  //label for Timing dialog extended deadline select slot
 	"subHdrExceededTimeLimitBehaviour": "Exceeded Time Limit Behaviour", // Title for submission late type options,
 	"exceededTimeLimitBehaviourPrefix": "After the grace period, flag the quiz attempt as exceeded time limit and,", // label for submission label type options
-	"showClockLabel": "Will be displayed before the quiz starts" // Label for show clock checkbox
+	"showClockLabel": "Will be displayed before the quiz starts", // Label for show clock checkbox
+	"description": "Description", // Description label for the Description text input box
 };

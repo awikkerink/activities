@@ -1,7 +1,6 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { fetchEntity } from '../../state/fetch-entity.js';
 import { QuizEntity } from 'siren-sdk/src/activities/quizzes/QuizEntity.js';
-import { QuizTiming } from './quiz-timing.js';
 
 configureMobx({ enforceActions: 'observed' });
 
@@ -55,6 +54,9 @@ export class Quiz {
 		this.isAutoSetGradedEnabled = entity.isAutoSetGradedEnabled();
 		this.canEditAutoSetGraded = entity.canEditAutoSetGraded();
 		this.timingHref = entity.timingHref();
+		this.description = entity.canEditDescription() ? entity.descriptionEditorHtml() : entity.descriptionHtml();
+		this.canEditDescription = entity.canEditDescription();
+		this.descriptionRichTextEditorConfig = entity.descriptionRichTextEditorConfig();
 	}
 
 	async save() {
@@ -76,6 +78,10 @@ export class Quiz {
 
 	setAutoSetGraded(isEnabled) {
 		this.isAutoSetGradedEnabled = isEnabled;
+	}
+
+	setDescription(value) {
+		this.description = value;
 	}
 
 	setDisablePagerAndAlertsTool(isEnabled) {
@@ -123,7 +129,8 @@ export class Quiz {
 			disablePagerAndAlerts: this.isDisablePagerAndAlertsEnabled,
 			preventMovingBackwards: this.isPreventMovingBackwardsEnabled,
 			notificationEmail: this.notificationEmail,
-			autoSetGraded: this.isAutoSetGradedEnabled
+			autoSetGraded: this.isAutoSetGradedEnabled,
+			description: this.description
 		};
 
 		return data;
@@ -153,6 +160,9 @@ decorate(Quiz, {
 	canPreviewQuiz: observable,
 	isAutoSetGradedEnabled: observable,
 	timingHref: observable,
+	description: observable,
+	canEditDescription: observable,
+	descriptionRichTextEditorConfig: observable,
 	// actions
 	load: action,
 	setName: action,
@@ -164,6 +174,7 @@ decorate(Quiz, {
 	setPreventMovingBackwards: action,
 	setNotificationEmail: action,
 	setAutoSetGraded: action,
+	setDescription: action,
 	save: action,
 	delete: action
 });
