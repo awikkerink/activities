@@ -19,7 +19,9 @@ class ContentEditor extends LocalizeActivityEditorMixin(RtlMixin(ActivityEditorM
 			widthType: { type: String, attribute: 'width-type' },
 			isNew: { type: Boolean },
 			cancelHref: { type: String },
-			saveHref: { type: String }
+			saveHref: { type: String },
+			unfurlEndpoint: { type: String },
+			trustedSitesEndpoint: { type: String },
 		};
 	}
 
@@ -62,6 +64,9 @@ class ContentEditor extends LocalizeActivityEditorMixin(RtlMixin(ActivityEditorM
 				telemetryId="content"
 				.href=${this.href}
 				.token=${this.token}
+				unfurlEndpoint="${this.unfurlEndpoint}"
+				trustedSitesEndpoint="${this.trustedSitesEndpoint}"
+				@d2l-request-provider="${this._onRequestProvider}"
 				width-type="${this.widthType}"
 				error-term="${this.localize('content.saveError')}"
 				?isnew="${this.isNew}"
@@ -97,6 +102,55 @@ class ContentEditor extends LocalizeActivityEditorMixin(RtlMixin(ActivityEditorM
 				</d2l-activity-content-editor-secondary>
 			</div>
 		`;
+	}
+
+	_onRequestProvider(e) {
+		// Provides unfurl API endpoint for d2l-labs-attachment component
+		// https://github.com/Brightspace/attachment/blob/e44cab1f0cecc55dd93acf59212fabc6872c0bd3/components/attachment.js#L110
+		if (e.detail.key === 'd2l-provider-unfurl-api-endpoint') {
+			e.detail.provider = () => this.unfurlEndpoint;
+			e.stopPropagation();
+			return;	
+		}
+
+		// Provides function to validate if a URL is trusted for d2l-labs-attachment
+		// https://github.com/Brightspace/attachment/blob/e44cab1f0cecc55dd93acf59212fabc6872c0bd3/components/attachment.js#L115
+		if (e.detail.key === 'd2l-provider-trusted-site-fn') {
+			e.detail.provider = () => url => {
+				const origin = new URL(url).origin;
+				const unfilteredContent = `<iframe src="${origin}"></iframe>`;
+
+				return new Promise((resolve, reject) => {
+					const params = {
+						filterMode: 1, // strict mode for html filtering. Refer to D2L.LP.TextProcessing.FilterModes
+						html: unfilteredContent
+					};
+					const options = {
+						success: resolve,
+						failure: reject
+					};
+					D2L.LP.Web.UI.Rpc.Connect(
+						D2L.LP.Web.UI.Rpc.Verbs.POST,
+						new D2L.LP.Web.Http.UrlLocation(this.trustedSitesEndpoint),
+						params,
+						options
+					);
+				}).then(filteredContent => {
+					const matchSrc = function(str) {
+						// excludes matching query string as filterHtml may modify the query string
+						return str.match(/src=["']([^?"']+)/i);
+					};
+					const unfilteredMatch = matchSrc(unfilteredContent);
+					const unfilteredSrc = unfilteredMatch && unfilteredMatch.length === 2 && unfilteredMatch[1];
+
+					const filteredMatch = matchSrc(filteredContent);
+					const filteredSrc = filteredMatch && filteredMatch.length === 2 && filteredMatch[1];
+
+					return unfilteredSrc === filteredSrc;
+				});
+			};
+			e.stopPropagation();
+		}
 	}
 
 	_redirectOnCancelComplete() {
