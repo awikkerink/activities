@@ -111,7 +111,7 @@ class ContentEditor extends LocalizeActivityEditorMixin(RtlMixin(ActivityEditorM
 		if (e.detail.key === 'd2l-provider-unfurl-api-endpoint') {
 			e.detail.provider = () => this.unfurlEndpoint;
 			e.stopPropagation();
-			return;	
+			return;
 		}
 
 		// Provides function to validate if a URL is trusted for d2l-labs-attachment

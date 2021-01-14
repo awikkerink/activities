@@ -41,15 +41,15 @@ class ContentWebLinkUrlPreview extends SkeletonMixin(LocalizeActivityEditorMixin
 	}
 
 	render() {
-		let attachment = {};
+		const attachment = {};
 		if (this.entity) {
 			this.skeleton = false;
 			attachment.id = this.entity.href,
 			attachment.name = this.entity.title,
-			attachment.url = 'https://www.youtube.com/watch?v=nvv31RlqvBY' //this.entity.link
+			attachment.url = 'https://www.youtube.com/watch?v=nvv31RlqvBY'; //this.entity.link
 		}
 
-        return html`
+		return html`
 			<d2l-labs-attachment
 				.attachmentId="${attachment.id}"
 				.attachment="${attachment}"
