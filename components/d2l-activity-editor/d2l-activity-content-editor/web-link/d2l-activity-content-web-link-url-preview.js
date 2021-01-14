@@ -44,9 +44,9 @@ class ContentWebLinkUrlPreview extends SkeletonMixin(LocalizeActivityEditorMixin
 		const attachment = {};
 		if (this.entity) {
 			this.skeleton = false;
-			attachment.id = this.entity.href,
-			attachment.name = this.entity.title,
-			attachment.url = 'https://www.youtube.com/watch?v=nvv31RlqvBY'; //this.entity.link
+			attachment.id = this.entity.href;
+			attachment.name = this.entity.title;
+			attachment.url = this.entity.link;
 		}
 
 		return html`
