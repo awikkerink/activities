@@ -36,9 +36,26 @@ export class QuizTiming {
 		this.enforcedTimeLimit = entity.enforcedTimeLimit();
 		this.enforcedGraceLimit = entity.enforcedGraceLimit();
 		this.extendedDeadlineOptions = entity.extendedDeadlineOptions();
+		this.isAutomaticZero = entity.isAutomaticZero();
 		this.showClock = entity.showClock();
 		this.showClockTitle = entity.showClockTitle();
 		this.recommendedTimeLimit = entity.recommendedTimeLimit();
+	}
+
+	setExceededTimeLimitBehaviour(data) {
+		this._entity.setExceededTimeLimitBehaviour(data);
+	}
+
+	setExtendedDeadline(data) {
+		this._entity.setExtendedDeadline(data);
+	}
+
+	setGracePeriod(data) {
+		this._entity.setGracePeriod(data);
+	}
+
+	setTimeLimit(data) {
+		this._entity.setTimeLimit(data);
 	}
 
 	setTimingType(data) {
@@ -65,10 +82,15 @@ decorate(QuizTiming, {
 	enforcedTimeLimit: observable,
 	enforcedGraceLimit: observable,
 	extendedDeadlineOptions: observable,
+	isAutomaticZero: observable,
 	showClock: observable,
 	showClockTitle: observable,
 	recommendedTimeLimit: observable,
 	// actions
 	load: action,
-	setTimingType: action
+	setTimingType: action,
+	setExceededTimeLimitBehaviour: action,
+	setGracePeriod: action,
+	setTimeLimit: action,
+	setExtendedDeadline: action
 });
