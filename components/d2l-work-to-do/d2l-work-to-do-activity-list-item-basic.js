@@ -62,11 +62,10 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 					text-overflow: ellipsis;
 					white-space: nowrap;
 				}
-				.d2l-activity-icon-container.d2l-hovering,
-				.d2l-activity-icon-container.d2l-focusing,
-				.d2l-activity-name-container.d2l-hovering,
-				.d2l-activity-name-container.d2l-focusing {
-					--d2l-list-item-content-text-decoration: underline;
+				.d2l-hovering .d2l-activity-icon-container.d2l-has-action,
+				.d2l-focusing .d2l-activity-icon-container.d2l-has-action,
+				.d2l-hovering .d2l-activity-name-container.d2l-has-action,
+				.d2l-focusing .d2l-activity-name-container.d2l-has-action {
 					color: var(--d2l-color-celestine);
 				}
 				.d2l-icon-bullet {
@@ -84,7 +83,7 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 					padding: 0.1rem 0;
 				}
 				d2l-list-item-generic-layout {
-					background: transparent;
+					background: transparent !important; /* !important is temporary until the actionHref attribute reflection is fixed */
 				}
 				#content {
 					width: 100%;
@@ -138,6 +137,7 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 			'd2l-focusing': this._focusingLink,
 			'd2l-hovering': this._hoveringLink,
 			'd2l-skeletize': true,
+			'd2l-has-action': this.actionHref,
 		};
 
 		const nameClasses = {
@@ -145,7 +145,8 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 			'd2l-focusing': this._focusingLink,
 			'd2l-hovering': this._hoveringLink,
 			'd2l-skeletize': true,
-			'd2l-skeletize-60': true
+			'd2l-skeletize-60': true,
+			'd2l-has-action': this.actionHref,
 		};
 
 		const secondaryClasses = {
