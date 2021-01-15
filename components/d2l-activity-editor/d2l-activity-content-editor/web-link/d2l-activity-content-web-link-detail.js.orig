@@ -1,6 +1,9 @@
 import '../shared-components/d2l-activity-content-editor-title.js';
+<<<<<<< HEAD
 import './d2l-activity-content-web-link-url-preview.js';
+=======
 import './d2l-activity-content-editor-link.js';
+>>>>>>> origin/master
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../../mixins/d2l-activity-editor-mixin.js';
@@ -61,17 +64,18 @@ class ContentWebLinkDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandli
 			>
 			</d2l-activity-content-editor-title>
 			<slot name="due-date"></slot>
-
+<<<<<<< HEAD
+			<d2l-activity-content-web-link-url-preview
+				.entity=${webLinkEntity}
+			>
+			</d2l-activity-content-web-link-url-preview>
+=======
 			<d2l-activity-content-editor-link
 				.entity=${webLinkEntity}
 				.onSave=${this.saveLink}
 			>
 			</d2l-activity-content-editor-link>
-
-			<d2l-activity-content-web-link-url-preview
-				.entity=${webLinkEntity}
-			>
-			</d2l-activity-content-web-link-url-preview>
+>>>>>>> origin/master
 		`;
 	}
 
