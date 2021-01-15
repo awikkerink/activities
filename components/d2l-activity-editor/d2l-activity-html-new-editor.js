@@ -1,6 +1,5 @@
 import '@brightspace-ui/htmleditor/htmleditor.js';
-import { css, html, LitElement } from 'lit-element/lit-element.js';
-import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles';
+import { html, LitElement } from 'lit-element/lit-element.js';
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
 
 class ActivityHtmlNewEditor extends LocalizeActivityEditorMixin(LitElement) {
@@ -12,8 +11,6 @@ class ActivityHtmlNewEditor extends LocalizeActivityEditorMixin(LitElement) {
 			disabled: { type: Boolean }
 		};
 	}
-
-
 
 	render() {
 		return html`
