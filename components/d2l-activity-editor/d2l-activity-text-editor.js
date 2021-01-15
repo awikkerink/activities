@@ -1,6 +1,4 @@
 import 'd2l-inputs/d2l-input-textarea';
-//import './d2l-activity-html-editor';
-//import './d2l-activity-html-new-editor';
 import { html, LitElement } from 'lit-element/lit-element';
 
 class ActivityTextEditor extends LitElement {
@@ -15,10 +13,6 @@ class ActivityTextEditor extends LitElement {
 		};
 	}
 
-	firstUpdated() {
-		import('./d2l-activity-html-editor');
-		import('./d2l-activity-html-new-editor');
-	}
 	render() {
 		const editorEvent = new CustomEvent('d2l-request-provider', {
 			detail: { key: 'd2l-provider-html-editor-enabled' },
@@ -42,6 +36,7 @@ class ActivityTextEditor extends LitElement {
 
 		if (htmlEditorEnabled) {
 			if (htmlNewEditorEnabled) {
+				import('./d2l-activity-html-new-editor');
 				return html`
 					<d2l-activity-html-new-editor
 						value="${this.value}"
@@ -51,6 +46,7 @@ class ActivityTextEditor extends LitElement {
 					</d2l-activity-html-new-editor>
 				`;
 			} else {
+				import('./d2l-activity-html-editor');
 				return html`
 					<d2l-activity-html-editor
 						ariaLabel="${this.ariaLabel}"

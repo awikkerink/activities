@@ -38,6 +38,9 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 				:host([hidden]) {
 					display: none;
 				}
+				:host([skeleton]) .d2l-skeletize::before {
+					z-index: 2;
+				}
 				.d2l-activity-label-container {
 					margin-bottom: 8px;
 				}

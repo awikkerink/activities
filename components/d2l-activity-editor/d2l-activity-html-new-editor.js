@@ -13,17 +13,7 @@ class ActivityHtmlNewEditor extends LocalizeActivityEditorMixin(LitElement) {
 		};
 	}
 
-	static get styles() {
-		return [ inputStyles, css`
-			:host {
-				display: flex;
-				width: 100%;
-			}
-			:host([hidden]) {
-				display: none;
-			}
-		`];
-	}
+
 
 	render() {
 		return html`
@@ -32,6 +22,7 @@ class ActivityHtmlNewEditor extends LocalizeActivityEditorMixin(LitElement) {
 				title="${this.ariaLabel}"
 				?disabled="${this.disabled}"
 				type="inline"
+				height="7rem"
 				@d2l-htmleditor-blur="${this._onContentChange}">
 			</d2l-htmleditor>
 		`;
