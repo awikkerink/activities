@@ -28,9 +28,6 @@ class ContentWebLinkUrlPreview extends SkeletonMixin(LocalizeActivityEditorMixin
 				:host > div {
 					padding-bottom: 20px;
 				}
-				.d2l-activity-label-container {
-					margin-bottom: 7px;
-				}
 			`
 		];
 	}
