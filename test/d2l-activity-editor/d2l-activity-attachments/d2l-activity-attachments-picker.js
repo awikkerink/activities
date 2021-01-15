@@ -18,16 +18,19 @@ describe('d2l-activity-attachments-picker', function() {
 		collection.setCanRecordAudio(true);
 		store.put(href, collection);
 
+		await setTimeout(1000); // debug tests, see if el will exist by using a magic wait
 		el = await fixture(html`
 			<d2l-activity-attachments-picker href=${href} token="token"></d2l-activity-attachments-picker>
 		`);
+		// eslint-disable-next-line no-console
+		console.log(el);
 	});
 
 	afterEach(() => {
 		store.clear();
 	});
 
-	describe.skip('all picker buttons enabled', () => {
+	describe('all picker buttons enabled', () => {
 		it('passes accessibility test', async() => {
 			await expect(el).to.be.accessible();
 		});
@@ -38,7 +41,7 @@ describe('d2l-activity-attachments-picker', function() {
 		});
 	});
 
-	describe.skip('file button disabled', () => {
+	describe('file button disabled', () => {
 		beforeEach(async() => {
 			collection.setCanAddFile(false);
 			await elementUpdated(el);
