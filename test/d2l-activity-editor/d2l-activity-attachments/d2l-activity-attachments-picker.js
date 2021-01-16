@@ -18,12 +18,9 @@ describe('d2l-activity-attachments-picker', function() {
 		collection.setCanRecordAudio(true);
 		store.put(href, collection);
 
-		await aTimeout(1000); // debug tests, see if el will exist by using a magic wait
 		el = await fixture(html`
-			<d2l-activity-attachments-picker href=${href} token="token"></d2l-activity-attachments-picker>
+			<d2l-activity-attachments-picker skeleton="false" href=${href} token="token"></d2l-activity-attachments-picker>
 		`);
-		// eslint-disable-next-line no-console
-		await console.log('El:', el);
 	});
 
 	afterEach(() => {
@@ -34,11 +31,12 @@ describe('d2l-activity-attachments-picker', function() {
 		it('passes accessibility test', async() => {
 			await expect(el).to.be.accessible();
 		});
-
 		it('renders buttons', async() => {
+			// eslint-disable-next-line no-console
+			console.log('El:', el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational'));
 			expect(el).to.not.be.null;
-			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div').querySelectorAll('d2l-button-icon').length).to.equal(8);
-			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div').querySelectorAll('d2l-button-subtle').length).to.equal(2);
+			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div > div').querySelectorAll('d2l-button-icon').length).to.equal(8);
+			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div > div').querySelectorAll('d2l-button-subtle').length).to.equal(2);
 		});
 	});
 
@@ -53,7 +51,9 @@ describe('d2l-activity-attachments-picker', function() {
 		});
 
 		it('hides file button', async() => {
-			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div').querySelector('d2l-button-icon#add-file-button')).to.have.attr('hidden');
+			// eslint-disable-next-line no-console
+			console.log('El:', el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational'));
+			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div > div').querySelector('d2l-button-icon#add-file-button')).to.have.attr('hidden');
 		});
 	});
 
