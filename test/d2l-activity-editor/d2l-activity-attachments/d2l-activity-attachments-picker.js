@@ -1,5 +1,5 @@
 import '../../../components/d2l-activity-editor/d2l-activity-attachments/d2l-activity-attachments-editor.js';
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html, aTimeout } from '@open-wc/testing';
 import { AttachmentCollection } from '../../../components/d2l-activity-editor/d2l-activity-attachments/state/attachment-collection.js';
 import { shared as store } from '../../../components/d2l-activity-editor/d2l-activity-attachments/state/attachment-collections-store.js';
 
@@ -18,7 +18,7 @@ describe('d2l-activity-attachments-picker', function() {
 		collection.setCanRecordAudio(true);
 		store.put(href, collection);
 
-		await setTimeout(1000); // debug tests, see if el will exist by using a magic wait
+		await aTimeout(1000); // debug tests, see if el will exist by using a magic wait
 		el = await fixture(html`
 			<d2l-activity-attachments-picker href=${href} token="token"></d2l-activity-attachments-picker>
 		`);
