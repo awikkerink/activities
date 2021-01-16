@@ -19,7 +19,7 @@ describe('d2l-activity-attachments-picker', function() {
 		store.put(href, collection);
 
 		el = await fixture(html`
-			<d2l-activity-attachments-picker skeleton="false" href=${href} token="token"></d2l-activity-attachments-picker>
+			<d2l-activity-attachments-picker href=${href} token="token"></d2l-activity-attachments-picker>
 		`);
 	});
 
