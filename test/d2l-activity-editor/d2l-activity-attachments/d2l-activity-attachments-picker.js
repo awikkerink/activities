@@ -34,10 +34,9 @@ describe('d2l-activity-attachments-picker', function() {
 		it('renders buttons', async() => {
 			expect(el, 'picker').to.not.be.null;
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational'), 'picker-presentational').to.not.be.null;
-			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div')).to.not.be.null;
-			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div > div')).to.exist;
-			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div > div').querySelectorAll('d2l-button-icon').length).to.equal(8);
-			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div > div').querySelectorAll('d2l-button-subtle').length).to.equal(2);
+			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div.d2l-button-container'), '.d2l-button-container').to.not.be.null;
+			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div.d2l-button-container').querySelectorAll('d2l-button-icon').length, '5 attachements').to.equal(5);
+			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div.d2l-button-container-right').querySelectorAll('d2l-button-subtle').length, 'audio & video btns').to.equal(2);
 		});
 	});
 
@@ -54,7 +53,7 @@ describe('d2l-activity-attachments-picker', function() {
 		it('hides file button', async() => {
 			expect(el, 'picker').to.not.be.null;
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational'), 'picker-presentational').to.not.be.null;
-			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('d2l-button-icon#add-file-button')).to.have.attr('hidden');
+			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div.d2l-button-container').querySelector('d2l-button-icon#add-file-button')).to.have.attr('hidden');
 		});
 	});
 
