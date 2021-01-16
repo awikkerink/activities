@@ -32,12 +32,12 @@ describe('d2l-activity-attachments-picker', function() {
 			await expect(el).to.be.accessible();
 		});
 		it('renders buttons', async() => {
-			const a = el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.innerHTML;
+			const a = el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot;
 			expect(el, 'picker').to.not.be.null;
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational'), 'picker-presentational').to.not.be.null;
 
 			if (el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div.d2l-button-container') === null) {
-				expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelectorAll('div').length, `there should be > 2 divs + \n ${a}`).to.equal(2);
+				expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelectorAll('div').length, `there should be > 2 divs ${a}`).to.equal(2);
 			}
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div.d2l-button-container').querySelectorAll('d2l-button-icon').length, '5 attachements').to.equal(5);
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div.d2l-button-container-right').querySelectorAll('d2l-button-subtle').length, 'audio & video btns').to.equal(2);
@@ -58,7 +58,7 @@ describe('d2l-activity-attachments-picker', function() {
 			const a = el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.innerHTML;
 			expect(el, 'picker').to.not.be.null;
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational'), 'picker-presentational').to.not.be.null;
-			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelectorAll('div').length, `there should be > 2 divs + \n ${a}`).to.equal(2);
+			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelectorAll('div').length, `there should be > 2 divs ${a}`).to.equal(2);
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div.d2l-button-container').querySelector('d2l-button-icon#add-file-button')).to.have.attr('hidden');
 		});
 	});
