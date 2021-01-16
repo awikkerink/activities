@@ -23,7 +23,7 @@ describe('d2l-activity-attachments-picker', function() {
 			<d2l-activity-attachments-picker href=${href} token="token"></d2l-activity-attachments-picker>
 		`);
 		// eslint-disable-next-line no-console
-		console.log(el);
+		await console.log('El:', el);
 	});
 
 	afterEach(() => {
@@ -36,8 +36,9 @@ describe('d2l-activity-attachments-picker', function() {
 		});
 
 		it('renders buttons', async() => {
-			expect(await el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelectorAll('d2l-button-icon').length).to.equal(8);
-			expect(await el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelectorAll('d2l-button-subtle').length).to.equal(2);
+			expect(el).to.not.be.null;
+			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div').querySelectorAll('d2l-button-icon').length).to.equal(8);
+			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div').querySelectorAll('d2l-button-subtle').length).to.equal(2);
 		});
 	});
 
@@ -52,7 +53,7 @@ describe('d2l-activity-attachments-picker', function() {
 		});
 
 		it('hides file button', async() => {
-			expect(await el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('d2l-button-icon#add-file-button')).to.have.attr('hidden');
+			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div').querySelector('d2l-button-icon#add-file-button')).to.have.attr('hidden');
 		});
 	});
 
