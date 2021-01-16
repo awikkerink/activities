@@ -32,7 +32,7 @@ describe('d2l-activity-attachments-picker', function() {
 			await expect(el).to.be.accessible();
 		});
 		it('renders buttons', async() => {
-			const a = el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot;
+			const a = el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.innerHTML.toString();
 			expect(el, 'picker').to.not.be.null;
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational'), 'picker-presentational').to.not.be.null;
 
@@ -55,7 +55,7 @@ describe('d2l-activity-attachments-picker', function() {
 		});
 
 		it('hides file button', async() => {
-			const a = el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.innerHTML;
+			const a = el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.innerHTML.toString();
 			expect(el, 'picker').to.not.be.null;
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational'), 'picker-presentational').to.not.be.null;
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelectorAll('div').length, `there should be > 2 divs ${a}`).to.equal(2);
