@@ -32,9 +32,9 @@ describe('d2l-activity-attachments-picker', function() {
 			await expect(el).to.be.accessible();
 		});
 		it('renders buttons', async() => {
-			// eslint-disable-next-line no-console
-			console.log('El:', el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational'));
 			expect(el).to.not.be.null;
+			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational')).to.not.be.null;
+			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div')).to.not.be.null;
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div > div').querySelectorAll('d2l-button-icon').length).to.equal(8);
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div > div').querySelectorAll('d2l-button-subtle').length).to.equal(2);
 		});
@@ -51,9 +51,9 @@ describe('d2l-activity-attachments-picker', function() {
 		});
 
 		it('hides file button', async() => {
-			// eslint-disable-next-line no-console
-			console.log('El:', el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational'));
-			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div > div').querySelector('d2l-button-icon#add-file-button')).to.have.attr('hidden');
+			expect(el).to.not.be.null;
+			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational')).to.not.be.null;
+			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('d2l-button-icon#add-file-button')).to.have.attr('hidden');
 		});
 	});
 
