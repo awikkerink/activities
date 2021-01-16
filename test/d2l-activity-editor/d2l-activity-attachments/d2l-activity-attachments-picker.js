@@ -32,7 +32,7 @@ describe('d2l-activity-attachments-picker', function() {
 			await expect(el).to.be.accessible();
 		});
 		it('renders buttons', async() => {
-			const a = el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.innerHTML.toString();
+			const a = el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.innerHTML;
 			expect(el, 'picker').to.not.be.null;
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational'), 'picker-presentational').to.not.be.null;
 
@@ -55,10 +55,10 @@ describe('d2l-activity-attachments-picker', function() {
 		});
 
 		it('hides file button', async() => {
-			const a = el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.innerHTML.toString();
+			const a = el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').innerHTML;
 			expect(el, 'picker').to.not.be.null;
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational'), 'picker-presentational').to.not.be.null;
-			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelectorAll('div').length, `there should be > 2 divs ${a}`).to.equal(2);
+			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelectorAll('div').length, `there should be > 2 divs ${a}`).to.be.greaterThan(2);
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div.d2l-button-container').querySelector('d2l-button-icon#add-file-button')).to.have.attr('hidden');
 		});
 	});
