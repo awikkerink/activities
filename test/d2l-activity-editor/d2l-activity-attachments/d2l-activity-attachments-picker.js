@@ -19,7 +19,7 @@ describe('d2l-activity-attachments-picker', function() {
 		store.put(href, collection);
 
 		el = await fixture(html`
-			<d2l-activity-attachments-picker href=${href} token="token"></d2l-activity-attachments-picker>
+			<d2l-activity-attachments-picker skeleton="false" href=${href} token="token"></d2l-activity-attachments-picker>
 		`);
 	});
 
@@ -32,9 +32,10 @@ describe('d2l-activity-attachments-picker', function() {
 			await expect(el).to.be.accessible();
 		});
 		it('renders buttons', async() => {
-			expect(el).to.not.be.null;
-			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational')).to.not.be.null;
+			expect(el, 'picker').to.not.be.null;
+			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational'), 'picker-presentational').to.not.be.null;
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div')).to.not.be.null;
+			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div > div')).to.exist;
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div > div').querySelectorAll('d2l-button-icon').length).to.equal(8);
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('div > div').querySelectorAll('d2l-button-subtle').length).to.equal(2);
 		});
@@ -51,8 +52,8 @@ describe('d2l-activity-attachments-picker', function() {
 		});
 
 		it('hides file button', async() => {
-			expect(el).to.not.be.null;
-			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational')).to.not.be.null;
+			expect(el, 'picker').to.not.be.null;
+			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational'), 'picker-presentational').to.not.be.null;
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('d2l-button-icon#add-file-button')).to.have.attr('hidden');
 		});
 	});
