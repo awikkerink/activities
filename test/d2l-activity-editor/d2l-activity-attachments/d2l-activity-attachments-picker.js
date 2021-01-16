@@ -7,7 +7,7 @@ describe('d2l-activity-attachments-picker', function() {
 
 	let el, href, collection;
 
-	beforeEach(async () => {
+	beforeEach(async() => {
 		href = 'http://activity/1';
 		collection = new AttachmentCollection(href, 'token');
 		collection.setCanAddFile(true);
@@ -31,27 +31,27 @@ describe('d2l-activity-attachments-picker', function() {
 	});
 
 	describe('all picker buttons enabled', () => {
-		it('passes accessibility test', async () => {
+		it('passes accessibility test', async() => {
 			await expect(el).to.be.accessible();
 		});
 
-		it('renders buttons', async () => {
+		it('renders buttons', async() => {
 			expect(await el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelectorAll('d2l-button-icon').length).to.equal(8);
 			expect(await el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelectorAll('d2l-button-subtle').length).to.equal(2);
 		});
 	});
 
 	describe('file button disabled', () => {
-		beforeEach(async () => {
+		beforeEach(async() => {
 			collection.setCanAddFile(false);
 			await elementUpdated(el);
 		});
 
-		it('passes accessibility test', async () => {
+		it('passes accessibility test', async() => {
 			await expect(el).to.be.accessible();
 		});
 
-		it('hides file button', async () => {
+		it('hides file button', async() => {
 			expect(await el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('d2l-button-icon#add-file-button')).to.have.attr('hidden');
 		});
 	});
