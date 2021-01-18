@@ -32,33 +32,9 @@ class AssignmentEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityAssi
 			 */
 			trustedSitesEndpoint: { type: String },
 			/**
-			* based on the LaunchDarkly flag face-assignments-milestone-2
-			*/
-			milestoneTwoEnabled: { type: Boolean },
-			/**
-			* based on the LaunchDarkly flag face-assignments-milestone-3-competencies
-			*/
-			milestoneThreeCompetenciesEnabled: { type: Boolean },
-			/**
 			* based on the LaunchDarkly flag face-assignments-milestone-3-default-scoring-rubric
 			*/
 			milestoneThreeDefaultScoringRubricEnabled: { type: Boolean },
-			/**
-			* based on the LaunchDarkly flag face-assignments-milestone-3-outcomes
-			*/
-			milestoneThreeOutcomesEnabled: { type: Boolean },
-			/**
-			* based on the LaunchDarkly flag face-assignments-milestone-3-release-conditions
-			*/
-			milestoneThreeReleaseConditionsEnabled: { type: Boolean },
-			/**
-			* based on the LaunchDarkly flag face-assignments-milestone-3-special-access
-			*/
-			milestoneThreeSpecialAccessEnabled: { type: Boolean },
-			/**
-			* based on the LaunchDarkly flag face-assignments-milestone-4-email-submission
-			*/
-			milestoneFourEmailSubmissionEnabled: { type: Boolean },
 			/**
 			* based on the config variable d2l.Languages.Terminology.LearningOutcomes
 			*/
@@ -156,44 +132,8 @@ class AssignmentEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityAssi
 			return;
 		}
 
-		if (e.detail.key === 'd2l-milestone-two') {
-			e.detail.provider = this.milestoneTwoEnabled;
-			e.stopPropagation();
-			return;
-		}
-
-		if (e.detail.key === 'd2l-milestone-three-competencies') {
-			e.detail.provider = this.milestoneThreeCompetenciesEnabled;
-			e.stopPropagation();
-			return;
-		}
-
 		if (e.detail.key === 'd2l-milestone-three-default-scoring-rubric') {
 			e.detail.provider = this.milestoneThreeDefaultScoringRubricEnabled;
-			e.stopPropagation();
-			return;
-		}
-
-		if (e.detail.key === 'd2l-milestone-three-outcomes') {
-			e.detail.provider = this.milestoneThreeOutcomesEnabled;
-			e.stopPropagation();
-			return;
-		}
-
-		if (e.detail.key === 'd2l-milestone-three-release-conditions') {
-			e.detail.provider = this.milestoneThreeReleaseConditionsEnabled;
-			e.stopPropagation();
-			return;
-		}
-
-		if (e.detail.key === 'd2l-milestone-three-special-access') {
-			e.detail.provider = this.milestoneThreeSpecialAccessEnabled;
-			e.stopPropagation();
-			return;
-		}
-
-		if (e.detail.key === 'd2l-milestone-four-email-submission') {
-			e.detail.provider = this.milestoneFourEmailSubmissionEnabled;
 			e.stopPropagation();
 			return;
 		}
