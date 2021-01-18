@@ -24,6 +24,10 @@ class AssignmentEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityAssi
 			 */
 			htmlEditorEnabled: { type: Boolean },
 			/**
+			 * True if the new html editor config is on
+			 */
+			htmlNewEditorEnabled: { type: Boolean },
+			/**
 			 * API endpoint for attachment unfurling service
 			 */
 			unfurlEndpoint: { type: String },
@@ -128,8 +132,8 @@ class AssignmentEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityAssi
 			return;
 		}
 
-		if (e.detail.key === 'd2l-milestone-three-default-scoring-rubric') {
-			e.detail.provider = this.milestoneThreeDefaultScoringRubricEnabled;
+		if (e.detail.key === 'd2l-provider-html-new-editor-enabled') {
+			e.detail.provider = this.htmlNewEditorEnabled;
 			e.stopPropagation();
 			return;
 		}
