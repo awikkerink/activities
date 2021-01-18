@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const VisualDiff = require('@brightspace-ui/visual-diff');
 
-describe('d2l-quick-eval-activities-list', function() {
+describe.skip('d2l-quick-eval-activities-list', function() {
 
 	const visualDiff = new VisualDiff('activities-list', __dirname);
 
@@ -17,7 +17,7 @@ describe('d2l-quick-eval-activities-list', function() {
 
 	after(() => browser.close());
 
-	it.skip ('basic', async function() {
+	it ('basic', async function() {
 		const rect = await visualDiff.getRect(page, '#basic');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
