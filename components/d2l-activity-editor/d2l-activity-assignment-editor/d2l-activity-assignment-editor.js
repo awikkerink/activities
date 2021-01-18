@@ -32,10 +32,6 @@ class AssignmentEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityAssi
 			 */
 			trustedSitesEndpoint: { type: String },
 			/**
-			* based on the LaunchDarkly flag face-assignments-milestone-3-default-scoring-rubric
-			*/
-			milestoneThreeDefaultScoringRubricEnabled: { type: Boolean },
-			/**
 			* based on the config variable d2l.Languages.Terminology.LearningOutcomes
 			*/
 			outcomesTerm: { type: String },
