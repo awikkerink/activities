@@ -17,7 +17,7 @@ describe('d2l-quick-eval-activities-list', function() {
 
 	after(() => browser.close());
 
-	it ('basic', async function() {
+	it.skip ('basic', async function() {
 		const rect = await visualDiff.getRect(page, '#basic');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
