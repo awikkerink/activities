@@ -129,5 +129,6 @@ export default {
 	"content.emptyLinkField": "Link is required.", //Error message shown on link tooltip when the link is empty
 	"content.invalidLink": "Please enter a valid URL.", //Error message shown on link tooltip when the link is not formatted correctly
 	"content.notHttps": "Only links using \"https\" can be embedded.", //Error message shown on link tooltip when https is not used for embedded links
-	"content.noEmbed": "That site cannot be embedded." //Error message shown on link tooltip when the link cannot be embedded
+	"content.noEmbed": "That site cannot be embedded.", //Error message shown on link tooltip when the link cannot be embedded
+	"content.previewLabel": "Preview", // The label text for the link preview
 };
