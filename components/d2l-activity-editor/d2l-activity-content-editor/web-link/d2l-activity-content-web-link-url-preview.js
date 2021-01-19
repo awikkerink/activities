@@ -39,10 +39,10 @@ class ContentWebLinkUrlPreview extends SkeletonMixin(LocalizeActivityEditorMixin
 
 	render() {
 		const attachment = {};
-    if (!this.entity || !this.entity.link) {
-      return html``;
-    }
-		
+		if (!this.entity || !this.entity.link) {
+			return html``;
+		}
+
 		this.skeleton = false;
 		attachment.id = this.entity.href;
 		attachment.name = this.entity.title;
