@@ -47,6 +47,7 @@ class ContentWebLinkUrlPreview extends SkeletonMixin(LocalizeActivityEditorMixin
 		}
 
 		return html`
+			<label class="d2l-label-text">${this.localize('content.previewLabel')}</label>
 			<d2l-labs-attachment
 				.attachmentId="${attachment.id}"
 				.attachment="${attachment}"
