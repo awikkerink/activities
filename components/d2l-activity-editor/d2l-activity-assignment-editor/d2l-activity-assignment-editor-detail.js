@@ -171,7 +171,7 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 						.richtextEditorConfig="${instructionsRichTextEditorConfig}"
 						@d2l-activity-text-editor-change="${this._saveInstructionsOnChange}"
 						ariaLabel="${this.localize('instructions')}"
-						?disabled="${canEditInstructions === null ? false : !canEditInstructions}">
+						?disabled="${canEditInstructions === undefined ? false : !canEditInstructions}">
 					</d2l-activity-text-editor>
 				</div>
 			</div>
