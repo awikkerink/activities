@@ -122,7 +122,7 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 						.richtextEditorConfig="${descriptionRichTextEditorConfig}"
 						@d2l-activity-text-editor-change="${this._saveDescriptionOnChange}"
 						ariaLabel="${this.localize('description')}"
-						?disabled="${!canEditDescription}">
+						?disabled="${canEditDescription === null ? false : !canEditDescription}">
 					</d2l-activity-text-editor>
 				</div>
 			</div>
