@@ -43,8 +43,6 @@ class ContentEditor extends LocalizeActivityEditorMixin(RtlMixin(ActivityEditorM
 
 	constructor() {
 		super(store);
-		// Only show the scrollbar when necessary
-		document.body.style.overflow = 'auto';
 	}
 
 	connectedCallback() {
