@@ -3,5 +3,3 @@ export const ContentEditorConstants = Object.freeze({
 	TITLE_MAX_LENGTH: 150,
 	LINK_MAX_LENGTH: 1024
 });
-
-export const defaultPlaceholderLink = 'https://weblinks.api.brightspace.com/default-new-weblink';
