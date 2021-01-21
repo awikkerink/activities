@@ -22,13 +22,17 @@ describe('d2l-activity-attachments-picker', function() {
 		el = await fixture(html`
 			<d2l-activity-attachments-picker href=${href} token="token"></d2l-activity-attachments-picker>
 		`);
+		await waitUntil(
+			() => el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('d2l-attachments-picker-container'),
+			'Element did not render children',
+		);
 	});
 
 	afterEach(() => {
 		store.clear();
 	});
 
-	describe.skip('all picker buttons enabled', () => {
+	describe('all picker buttons enabled', () => {
 		it('passes accessibility test', async() => {
 			await expect(el).to.be.accessible();
 		});
@@ -50,10 +54,6 @@ describe('d2l-activity-attachments-picker', function() {
 		});
 
 		it('hides file button', async() => {
-			await waitUntil(
-				() => el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('d2l-button-icon#add-file-button'),
-				'Element did not render children',
-			);
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('d2l-button-icon#add-file-button')).to.have.attr('hidden');
 		});
 	});
