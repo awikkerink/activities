@@ -16,7 +16,8 @@ class ActivityHtmlNewEditor extends LocalizeActivityEditorMixin(LitElement) {
 		return html`
 			<d2l-htmleditor
 				html="${this.value}"
-				title="${this.ariaLabel}"
+				label="${this.ariaLabel}"
+				label-hidden
 				?disabled="${this.disabled}"
 				type="inline"
 				height="7rem"
