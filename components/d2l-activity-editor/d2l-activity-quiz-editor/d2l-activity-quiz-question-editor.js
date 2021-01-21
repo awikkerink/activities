@@ -20,6 +20,6 @@ const componentClass = class extends LitElement {
 			<d2l-activity-editor-main href="${this.href}" .token="${this.token}"></d2l-activity-editor-main>
 		`;
 	}
-}
+};
 
 customElements.define('d2l-activity-quiz-question-editor', componentClass);
