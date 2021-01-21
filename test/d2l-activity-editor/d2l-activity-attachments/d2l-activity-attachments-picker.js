@@ -22,11 +22,6 @@ describe('d2l-activity-attachments-picker', function() {
 		el = await fixture(html`
 			<d2l-activity-attachments-picker href=${href} token="token"></d2l-activity-attachments-picker>
 		`);
-		await waitUntil(
-			() => el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('d2l-attachments-picker-container'),
-			'Element did not render children',
-			{ timeout: 30000 }
-		);
 	});
 
 	afterEach(() => {
@@ -39,6 +34,10 @@ describe('d2l-activity-attachments-picker', function() {
 		});
 
 		it('renders buttons', async() => {
+			await waitUntil(
+				() => el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('d2l-attachments-picker-container'),
+				'Element did not render children'
+			);
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelectorAll('d2l-button-icon').length).to.equal(8);
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelectorAll('d2l-button-subtle').length).to.equal(2);
 		});
@@ -55,6 +54,10 @@ describe('d2l-activity-attachments-picker', function() {
 		});
 
 		it('hides file button', async() => {
+			await waitUntil(
+				() => el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('d2l-attachments-picker-container'),
+				'Element did not render children'
+			);
 			expect(el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('d2l-button-icon#add-file-button')).to.have.attr('hidden');
 		});
 	});
