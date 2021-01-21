@@ -2,6 +2,7 @@ import '../../../components/d2l-activity-editor/d2l-activity-attachments/d2l-act
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { AttachmentCollection } from '../../../components/d2l-activity-editor/d2l-activity-attachments/state/attachment-collection.js';
 import { shared as store } from '../../../components/d2l-activity-editor/d2l-activity-attachments/state/attachment-collections-store.js';
+import { waitUntil } from '@open-wc/testing-helpers';
 
 describe('d2l-activity-attachments-picker', function() {
 
@@ -21,13 +22,17 @@ describe('d2l-activity-attachments-picker', function() {
 		el = await fixture(html`
 			<d2l-activity-attachments-picker href=${href} token="token"></d2l-activity-attachments-picker>
 		`);
+		await waitUntil(
+			() => el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('.d2l-attachments-picker-container'),
+			'Element did not render children'
+		);
 	});
 
 	afterEach(() => {
 		store.clear();
 	});
 
-	describe.skip('all picker buttons enabled', () => {
+	describe('all picker buttons enabled', () => {
 		it('passes accessibility test', async() => {
 			await expect(el).to.be.accessible();
 		});
@@ -38,7 +43,7 @@ describe('d2l-activity-attachments-picker', function() {
 		});
 	});
 
-	describe.skip('file button disabled', () => {
+	describe('file button disabled', () => {
 		beforeEach(async() => {
 			collection.setCanAddFile(false);
 			await elementUpdated(el);
