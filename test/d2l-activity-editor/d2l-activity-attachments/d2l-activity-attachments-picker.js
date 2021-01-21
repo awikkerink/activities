@@ -25,6 +25,7 @@ describe('d2l-activity-attachments-picker', function() {
 		await waitUntil(
 			() => el.shadowRoot.querySelector('d2l-activity-attachments-picker-presentational').shadowRoot.querySelector('d2l-attachments-picker-container'),
 			'Element did not render children',
+			{ timeout: 30000 }
 		);
 	});
 
