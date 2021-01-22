@@ -198,11 +198,12 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 		if (!this._started || this.skeleton) {
 			return '';
 		}
-		if (this._activity && this._activity.hasLinkByRel('alternate')) {
-			return this._activity.getLinkByRel('alternate').href;
-		}
-		else if (this.evaluateAllHref) {
+
+		if (this.evaluateAllHref) {
 			return this.evaluateAllHref;
+		}
+		else if (this._activity && this._activity.hasLinkByRel('alternate')) {
+			return this._activity.getLinkByRel('alternate').href;
 		}
 		else {
 			return '';
