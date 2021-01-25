@@ -49,15 +49,13 @@ class ContentWebLinkUrlPreview extends SkeletonMixin(LocalizeActivityEditorMixin
 		attachment.url = this.entity.link;
 
 		return html`
-      <label class="d2l-label-text">${this.localize('content.previewLabel')}</label>
-      <div class="d2l-skeletize">
-        <d2l-labs-attachment
-          ?hidden="${this.skeleton}"
-          .attachmentId="${attachment.id}"
-          .attachment="${attachment}"
-        >
-        </d2l-labs-attachment>
-      </div>
+	    <label class="d2l-label-text">${this.localize('content.previewLabel')}</label>
+		<d2l-labs-attachment
+			?hidden="${this.skeleton}"
+			.attachmentId="${attachment.id}"
+			.attachment="${attachment}"
+		>
+		</d2l-labs-attachment>
 		`;
 	}
 }
