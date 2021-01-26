@@ -39,20 +39,23 @@ class ContentWebLinkUrlPreview extends SkeletonMixin(LocalizeActivityEditorMixin
 
 	render() {
 		const attachment = {};
-		if (this.entity) {
-			this.skeleton = false;
-			attachment.id = this.entity.href;
-			attachment.name = this.entity.title;
-			attachment.url = this.entity.link;
+		if (!this.entity || !this.entity.link) {
+			return html``;
 		}
 
+		this.skeleton = false;
+		attachment.id = this.entity.href;
+		attachment.name = this.entity.title;
+		attachment.url = this.entity.link;
+
 		return html`
-			<label class="d2l-label-text">${this.localize('content.previewLabel')}</label>
-			<d2l-labs-attachment
-				.attachmentId="${attachment.id}"
-				.attachment="${attachment}"
-			>
-			</d2l-labs-attachment>
+	    <label class="d2l-label-text">${this.localize('content.previewLabel')}</label>
+		<d2l-labs-attachment
+			?hidden="${this.skeleton}"
+			.attachmentId="${attachment.id}"
+			.attachment="${attachment}"
+		>
+		</d2l-labs-attachment>
 		`;
 	}
 }
