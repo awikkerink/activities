@@ -50,6 +50,7 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 					display: none;
 				}
 				.d2l-activity-icon-container {
+					border-radius: 0 !important;
 					padding-top: 0.2rem;
 				}
 				:host([skeleton]) .d2l-activity-icon-container {
@@ -164,7 +165,7 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 		return this._renderListItem({
 			illustration: this.submissionCount ? html`
 					<d2l-quick-eval-widget-submission-icon style="overflow: visible;"
-						class="class=${classMap(iconClasses)}"
+						class="${classMap(iconClasses)}"
 						icon=${this._icon}
 						submission-count=${this.submissionCount > 99 ? '99+' : this.submissionCount}>
 					</d2l-quick-eval-widget-submission-icon>` :
