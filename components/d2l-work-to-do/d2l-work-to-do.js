@@ -539,6 +539,18 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 		}
 	}
 
+	// !TODO Further investigate defect DE42208 to remove need for retry
+	async _performSirenActionWithRetry(token, action, fields, immediate, maxRetries = 0, error = null)  {
+		if (maxRetries > -1) {
+			return performSirenAction(token, action, fields, immediate)
+				.catch((error) => {
+					return this._performSirenActionWithRetry(token, action, fields, immediate, maxRetries - 1, error);
+				});
+		}
+
+		return Promise.reject(error);
+	}
+
 	/**
 	 * Load collection of overdue activities.
 	 * Will set collection of overdue activities
@@ -553,8 +565,10 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 		const source = entity.getLinkByRel(Rels.Activities.overdue).href;
 		await fetchEntity(source, this.token)
 			.then((sirenEntity) => {
-				this._overdueActivities = this._getFilteredOverdueActivities(sirenEntity);
-				this._overdueCollection = sirenEntity;
+				if (sirenEntity) {
+					this._overdueActivities = this._getFilteredOverdueActivities(sirenEntity);
+					this._overdueCollection = sirenEntity;
+				}
 			});
 	}
 
@@ -595,7 +609,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 			}
 			return acc;
 		}, []);
-		performSirenAction(this.token, action, fields, true)
+		this._performSirenActionWithRetry(this.token, action, fields, true, 1)
 			.then((sirenEntity) => {
 				if (sirenEntity) {
 					if (!isMax) {
