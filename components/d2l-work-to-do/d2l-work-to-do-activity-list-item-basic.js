@@ -124,8 +124,18 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 	 */
 	_onActivityUsageChange(usage) {
 		this._usage = usage;
-		this._loadActivity();
-		this._loadOrganization();
+		Promise.all([
+			this._loadActivity(),
+			this._loadOrganization()
+		]).finally(() => this._onDataLoaded());
+	}
+
+	/**
+	 * Fire data-loaded event to tell the main component we are ready to render.
+	 */
+	_onDataLoaded() {
+		const event = new CustomEvent('data-loaded');
+		this.dispatchEvent(event);
 	}
 
 	render() {
@@ -289,6 +299,8 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 				if (foundEntity) {
 					this._activity = foundEntity;
 				}
+
+				break;
 			}
 		}
 	}
