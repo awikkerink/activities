@@ -297,9 +297,15 @@ class ActivityListItemDetailed extends ListItemLinkMixin(SkeletonMixin(EntityMix
 	}
 
 	get _description() {
-		return this._activity && this._activity.hasProperty('description') && !this.skeleton
-			? this._activity.properties.description
-			: '';
+		if (this._activity && !this.skeleton) {
+			if (this._activity.hasSubEntityByClass('description')) {
+				return this._activity.getSubEntityByClass('description').properties
+				&& this._activity.getSubEntityByClass('description').properties.text;
+			} else if (this._activity.properties.instructionsText) {
+				return this._activity.properties.instructionsText;
+			}
+		}
+		return '';
 	}
 
 	/** String associated with icon catalogue for provided activity type */
@@ -376,7 +382,6 @@ class ActivityListItemDetailed extends ListItemLinkMixin(SkeletonMixin(EntityMix
 		}
 
 		const entity = this._usage._entity;
-
 		for (const allowed in ActivityAllowList) {
 			if (entity.hasClass(ActivityAllowList[allowed].class)) {
 				this._activityProperties = ActivityAllowList[allowed];
