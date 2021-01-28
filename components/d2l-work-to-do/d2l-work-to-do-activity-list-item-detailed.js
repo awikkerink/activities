@@ -14,6 +14,7 @@ import { ListItemLinkMixin } from '@brightspace-ui/core/components/list/list-ite
 import { LocalizeWorkToDoMixin } from './localization';
 import { nothing } from 'lit-html';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin';
+import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 
 class ActivityListItemDetailed extends ListItemLinkMixin(SkeletonMixin(EntityMixinLit(LocalizeWorkToDoMixin(LitElement)))) {
 
@@ -98,6 +99,12 @@ class ActivityListItemDetailed extends ListItemLinkMixin(SkeletonMixin(EntityMix
 					max-width: inherit;
 					overflow: hidden;
 					text-overflow: ellipsis;
+				}
+				.d2l-status-container {
+					display: inline;
+					margin-bottom: 0.5rem;
+					margin-right: 0.2rem;
+					margin-top: -0.5rem;
 				}
 				[slot="content"] {
 					padding: 0;
@@ -206,7 +213,7 @@ class ActivityListItemDetailed extends ListItemLinkMixin(SkeletonMixin(EntityMix
 		const supportingClasses = {
 			'd2l-body-compact': true,
 			'd2l-supporting-info-content-container': true,
-			'd2l-skeletize-paragraph-2': true
+			'd2l-skeletize-paragraph-2': true,
 		};
 
 		const dateTemplate = this.includeDate
@@ -227,6 +234,13 @@ class ActivityListItemDetailed extends ListItemLinkMixin(SkeletonMixin(EntityMix
 			? html `<d2l-icon class="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
 			: nothing;
 
+		const startDateTemplate = !this.skeleton && !this._started
+			? html `
+			<div class="d2l-status-container">
+				<d2l-status-indicator state="none" text="${this._startDateFormatted}"></d2l-status-indicator>
+			</div>`
+			: nothing;
+
 		const listItemTemplate = this._renderListItem({
 			illustration: html`
 				<d2l-icon
@@ -240,6 +254,7 @@ class ActivityListItemDetailed extends ListItemLinkMixin(SkeletonMixin(EntityMix
 						${this._name}
 					</div>
 					<div class=${classMap(secondaryClasses)} slot="secondary">
+						${startDateTemplate}
 						${this._type}
 						${separatorTemplate}
 						${this._orgName || this._orgCode}
@@ -329,6 +344,14 @@ class ActivityListItemDetailed extends ListItemLinkMixin(SkeletonMixin(EntityMix
 		return this._usage && this._usage.startDate()
 			? new Date(this._usage.startDate()) < new Date()
 			: true;
+	}
+
+	/** Start Date formatted like (Short month) (Day) e.g. "Aug 15" */
+	get _startDateFormatted() {
+		return this.localize('StartsWithDate', 'startDate',
+			this._usage && this._usage.startDate()
+				? formatDate(new Date(this._usage.startDate()), { format: 'shortMonthDay' })
+				: '');
 	}
 
 	get _type() {

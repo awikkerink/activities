@@ -1,6 +1,7 @@
 import '@brightspace-ui/core/components/colors/colors';
 import '@brightspace-ui/core/components/icons/icon';
 import '@brightspace-ui/core/components/list/list-item-content';
+import '@brightspace-ui/core/components/status-indicator/status-indicator.js';
 import '../d2l-activity-date/d2l-activity-date';
 import '../d2l-quick-eval-widget/d2l-quick-eval-widget-submission-icon';
 
@@ -15,6 +16,7 @@ import { LocalizeWorkToDoMixin } from './localization';
 import { nothing } from 'lit-html';
 import { QuickEvalActivityAllowList } from '../d2l-quick-eval-widget/env';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin';
+import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 
 class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinLit(LocalizeWorkToDoMixin(LitElement)))) {
 
@@ -79,6 +81,10 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 					overflow: hidden;
 					text-overflow: ellipsis;
 					white-space: nowrap;
+				}
+				.d2l-status-container {
+					margin-bottom: 0.1rem;
+					margin-top: 0.1rem;
 				}
 				[slot="content"] {
 					padding: 0.1rem 0;
@@ -168,8 +174,15 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 
 		const dateTemplate = html `<d2l-activity-date href="${this.href}" .token="${this.token}" format="MMM d" ?hidden=${this.skeleton}></d2l-activity-date>`;
 
-		const separatorTemplate = !this.skeletize && this._date && (this._orgName || this._orgCode)
+		const separatorTemplate = !this.skeleton && this._date && (this._orgName || this._orgCode)
 			? html `<d2l-icon class="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
+			: nothing;
+
+		const startDateTemplate = !this.skeleton && !this._started
+			? html `
+			<div class="d2l-status-container">
+				<d2l-status-indicator state="none" text="${this._startDateFormatted}"></d2l-status-indicator>
+			</div>`
 			: nothing;
 
 		return this._renderListItem({
@@ -194,6 +207,7 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 						${dateTemplate}
 						${separatorTemplate}
 						${this._orgName || this._orgCode}
+						${startDateTemplate}
 					</div>
 				</d2l-list-item-content>
 			`
@@ -238,6 +252,14 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 		return this._usage && this._usage.startDate()
 			? new Date(this._usage.startDate()) < new Date()
 			: true;
+	}
+
+	/** Start Date formatted like (Short month) (Day) e.g. "Aug 15" */
+	get _startDateFormatted() {
+		return this.localize('StartsWithDate', 'startDate',
+			this._usage && this._usage.startDate()
+				? formatDate(new Date(this._usage.startDate()), { format: 'shortMonthDay' })
+				: '');
 	}
 
 	/** String associated with icon catalogue for provided activity type */
