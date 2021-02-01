@@ -54,5 +54,7 @@ export default {
 	"description": "Description", // Description label for the Description text input box,
 	"btnOpenIpRestrictionDialog": "Manage IP restrictions", // Button text for opening IP restriction dialog
 	"hdrIpRestrictionDialog": "IP Restrictions (IPv4)", // timing/display accordion header
-	"ipRestrictionLabel": "IP Restrictions" // Label for IP restrictions editor
+	"ipRestrictionLabel": "IP Restrictions", // Label for IP restrictions editor
+	"textIsDisplayedPart1": "Fields cannot be toggled off in the new quiz creation experience.", // First sentence of alert warning that text fields will be visible
+	"textIsDisplayedSingularPart2": "The {field} field appears to learners when the quiz is saved." // Second sentence of alert warning that text fields will be visible, when there is only one field
 };
