@@ -104,7 +104,7 @@ class ContentEditorLink extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 
 	validate() {
 		this.clearError('_linkError');
-		this._saveLink();
+		this._saveLink(null);
 	}
 
 	_renderLinkTooltip() {
@@ -125,10 +125,11 @@ class ContentEditorLink extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 		`;
 	}
 
-	_saveLink() {
+	_saveLink(inputEvent = null) {
+		const isSubmitting = inputEvent === null;
 		const link = this.shadowRoot.getElementById('content-link').value;
 		const isExternalResource = this.shadowRoot.getElementById('open-new-tab').checked;
-		const invalidWeblinkError = getWeblinkError(link, isExternalResource);
+		const invalidWeblinkError = getWeblinkError(link, isExternalResource, isSubmitting);
 
 		this._debounceJobs.link = Debouncer.debounce(
 			this._debounceJobs.link,

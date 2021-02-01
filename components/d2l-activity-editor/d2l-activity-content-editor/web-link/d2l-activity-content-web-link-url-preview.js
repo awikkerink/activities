@@ -39,6 +39,7 @@ class ContentWebLinkUrlPreview extends SkeletonMixin(LocalizeActivityEditorMixin
 
 	render() {
 		const attachment = {};
+
 		if (!this.entity || !this.entity.link) {
 			return html``;
 		}
