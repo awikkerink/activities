@@ -143,8 +143,6 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(LocalizeActivit
 		timeEnforcementLabels.push(timeLimit);
 		timeEnforcementLabels.push(graceLimit);
 
-		const showExtendedDeadline = true;
-
 		return html`
 			<div class="d2l-time-menu-container">
 				<div class="d2l-time-enforcement-input-container">
@@ -177,7 +175,7 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(LocalizeActivit
 						.value=${type.value} />
 					${type.title}
 				</label>`)}
-				${showExtendedDeadline ? html`${this._renderExtendedDeadline(entity)}` : null}
+				${this._renderExtendedDeadline(entity)}
 			</div>
 		`;
 	}
