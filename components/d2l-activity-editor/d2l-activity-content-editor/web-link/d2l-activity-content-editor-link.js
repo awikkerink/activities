@@ -3,6 +3,7 @@ import 'd2l-tooltip/d2l-tooltip';
 import '@brightspace-ui/core/components/button/button-subtle.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../../mixins/d2l-activity-editor-mixin.js';
+import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { ContentEditorConstants } from '../constants';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { ErrorHandlingMixin } from '../../error-handling-mixin.js';
@@ -48,6 +49,7 @@ class ContentEditorLink extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 		super();
 		this._debounceJobs = {};
 		this.skeleton = true;
+		this.saveOrder = 3000;
 	}
 
 	render() {
@@ -103,8 +105,12 @@ class ContentEditorLink extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 	}
 
 	validate() {
+		const link = this.shadowRoot.getElementById('content-link').value;
+		const isExternalResource = this.shadowRoot.getElementById('open-new-tab').checked;
+		const invalidWeblinkError = getWeblinkError(link, isExternalResource, true);
+
 		this.clearError('_linkError');
-		this._saveLink(null);
+		this.setError('_linkError', invalidWeblinkError, 'link-tooltip');
 	}
 
 	_renderLinkTooltip() {
@@ -125,11 +131,10 @@ class ContentEditorLink extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 		`;
 	}
 
-	_saveLink(inputEvent = null) {
-		const isSubmitting = inputEvent === null;
+	_saveLink() {
 		const link = this.shadowRoot.getElementById('content-link').value;
 		const isExternalResource = this.shadowRoot.getElementById('open-new-tab').checked;
-		const invalidWeblinkError = getWeblinkError(link, isExternalResource, isSubmitting);
+		const invalidWeblinkError = getWeblinkError(link, isExternalResource);
 
 		this._debounceJobs.link = Debouncer.debounce(
 			this._debounceJobs.link,
