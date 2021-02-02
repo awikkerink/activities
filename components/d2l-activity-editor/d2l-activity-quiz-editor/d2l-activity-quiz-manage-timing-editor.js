@@ -2,6 +2,7 @@ import '@brightspace-ui/core/components/inputs/input-number.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
+import { inputLabelStyles } from '@brightspace-ui/core/components/inputs/input-label-styles.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -14,6 +15,7 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(LocalizeActivit
 	static get styles() {
 		return [
 			super.styles,
+			inputLabelStyles,
 			labelStyles,
 			radioStyles,
 			selectStyles,
@@ -70,83 +72,64 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(LocalizeActivit
 		} = entity || {};
 
 		return html`
-			${this._renderTimeEnforcementOptions()}
-			${isTimingEnforced ? html`${this._renderTimeEnforcedMenu()}` : html`${this._renderRecommendedTimeLimitMenu()}`}
+			${this._renderTimeEnforcementOptions(entity)}
+			${isTimingEnforced ? html`${this._renderTimeEnforcedMenu(entity)}` : html`${this._renderRecommendedTimeLimitMenu(entity)}`}
 		`;
 	}
 
-	_renderExtendedDeadline() {
-		const entity = store.get(this.href);
-		if (!entity) {
-			return html``;
-		}
-
+	_renderExtendedDeadline(entity) {
 		const {
 			extendedDeadlineOptions,
 			isAutomaticZero
 		} = entity || {};
+
 		return isAutomaticZero ? html`
-		<div class="d2l-time-menu-container">
-			<label>
-				<span class="d2l-input-label">
-					${this.localize('extendedDeadlineLabel')}
-				</span>
-			</label>
-			<select class="d2l-input-select" @change=${this._setExtendedDeadline}>
-				${extendedDeadlineOptions.map((option) => html`
-					<option value=${option.value}
-							?selected=${option.selected}>
-							${option.value}
-					</option>`)}
-			</select>
-			<label>
-				<span class='d2l-input-number-label'>${this.localize('extendedDeadlineInputLabel')}</span>
-			</label>
-		</div> ` : null;
+			<div class="d2l-time-menu-container">
+				<label>
+					<span class="d2l-input-label">${this.localize('extendedDeadlineLabel')}</span>
+				</label>
+				<select class="d2l-input-select" @change=${this._setExtendedDeadline}>
+					${extendedDeadlineOptions.map((option) => html`
+					<option value=${option.value} ?selected=${option.selected}>${option.value}</option>`)}
+				</select>
+				<label>
+					<span class='d2l-input-number-label'>${this.localize('extendedDeadlineInputLabel')}</span>
+				</label>
+			</div> ` : null;
 	}
 
-	_renderRecommendedTimeLimitMenu() {
-		const entity = store.get(this.href);
-		if (!entity) {
-			return html``;
-		}
-
+	_renderRecommendedTimeLimitMenu(entity) {
 		const {
 			showClock,
-			showClockTitle,
 			recommendedTimeLimit
 		} = entity || {};
 		// TODO: remove constant min/max
-		const hidden = true;
+		const hideMinutesLabel = true;
 		return html`
 			<div class="d2l-time-menu-container">
 				<div class="d2l-time-enforcement-input-container">
 					<d2l-input-number
-							label=${this.localize('minutesLabel')}
-							title=${this.localize('minutesLabel')}
-							?label-hidden=${hidden}
-							value=${recommendedTimeLimit}
-							min=1
-							max=9999
-							@change=${this._setTimeLimit}>
-							<label slot="after">
-								<span class="d2l-input-number-label">${this.localize('minutesLabel')}</span>
-							</label>
+						label=${this.localize('minutesLabel')}
+						title=${this.localize('minutesLabel')}
+						?label-hidden=${hideMinutesLabel}
+						value=${recommendedTimeLimit}
+						min=1
+						max=9999
+						@change=${this._setTimeLimit}>
+						<label slot="after">
+							<span class="d2l-input-number-label">${this.localize('minutesLabel')}</span>
+						</label>
 						</d2l-input-number>
+					</div>
+					<label>
+						<span class="d2l-italic-label">${this.localize('showClockLabel')}</span>
+					</label>
+					<d2l-input-checkbox ?checked=${showClock}>${this.localize('showClockTitle')}</d2l-input-checkbox>
 				</div>
-				<label>
-					<span class="d2l-italic-label">${this.localize('showClockLabel')}</span>
-				</label>
-				<d2l-input-checkbox ?checked=${showClock}>${showClockTitle}</d2l-input-checkbox>
 			</div>
 		`;
 	}
-	_renderTimeEnforcedMenu() {
-		const entity = store.get(this.href);
-		if (!entity) {
-			return html``;
-		}
-
+	_renderTimeEnforcedMenu(entity) {
 		const {
 			submissionLateType,
 			enforcedTimeLimit,
@@ -178,7 +161,6 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(LocalizeActivit
 						</label>
 					</d2l-input-number>`)}
 				</div>
-
 				<label>
 					<span class='d2l-input-label'>${this.localize('subHdrExceededTimeLimitBehaviour')}</span>
 				</label>
@@ -192,18 +174,14 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(LocalizeActivit
 						name="exceededTimeBehaviour"
 						?checked=${type.selected}
 						@change=${this._setExceededTimeLimitBehaviour}
-						.value=${type.value}
-					/>${type.title}</label>`)}
-				${showExtendedDeadline ? html`${this._renderExtendedDeadline()}` : null}
+						.value=${type.value} />
+					${type.title}
+				</label>`)}
+				${showExtendedDeadline ? html`${this._renderExtendedDeadline(entity)}` : null}
 			</div>
 		`;
 	}
-	_renderTimeEnforcementOptions() {
-		const entity = store.get(this.href);
-		if (!entity) {
-			return html``;
-		}
-
+	_renderTimeEnforcementOptions(entity) {
 		const {
 			canEditTiming,
 			timingTypes
@@ -218,10 +196,10 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(LocalizeActivit
 						name="timeEnforcement"
 						?checked=${type.selected}
 						@change=${this._setTimingType}
-						.value=${type.value}
-					/>${type.title}</label>`)}
-			</div>
-			` : html``;
+						.value=${type.value} />
+					${type.title}
+				</label>`)}
+			</div>` : null;
 	}
 
 	_setExceededTimeLimitBehaviour(e) {

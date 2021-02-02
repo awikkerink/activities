@@ -38,7 +38,6 @@ export class QuizTiming {
 		this.extendedDeadlineOptions = entity.extendedDeadlineOptions();
 		this.isAutomaticZero = entity.isAutomaticZero();
 		this.showClock = entity.showClock();
-		this.showClockTitle = entity.showClockTitle();
 		this.recommendedTimeLimit = entity.recommendedTimeLimit();
 	}
 
@@ -84,7 +83,6 @@ decorate(QuizTiming, {
 	extendedDeadlineOptions: observable,
 	isAutomaticZero: observable,
 	showClock: observable,
-	showClockTitle: observable,
 	recommendedTimeLimit: observable,
 	// actions
 	load: action,
