@@ -133,6 +133,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 		this._overdueWeekLimit = Config.OverdueWeekLimit;
 		this._upcomingWeekLimit = Config.UpcomingWeekLimit;
 		this._upcomingActivities = [];
+		this._totalUpcomingActivities = undefined;
 		this._overdueActivities = [];
 		this._viewAllSource = undefined;
 		this._setEntityType(UserEntity);
@@ -182,7 +183,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 			return;
 		}
 		this._getCollections(user._entity);
-		this._getHomeHref();
+		this._updateHomeHref();
 	}
 
 	render() {
@@ -207,7 +208,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 
 			return html`
 				<div class="d2l-activity-collection">
-					<d2l-work-to-do-activity-list-header ?skeleton=${this._initialLoad} ?overdue=${isOverdue} count=${activities.length}></d2l-work-to-do-activity-list-header>
+					<d2l-work-to-do-activity-list-header ?skeleton=${this._initialLoad} ?overdue=${isOverdue} count=${isOverdue ? activities.length : this._totalUpcomingActivities}></d2l-work-to-do-activity-list-header>
 					<d2l-list separators="none">${items}</d2l-list>
 				</div>
 			`;
@@ -332,7 +333,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 
 			return html`
 				<div class="d2l-activity-collection-container-fullscreen">
-					<d2l-work-to-do-activity-list-header ?skeleton=${this._initialLoad} ?overdue=${isOverdue} count=${activities.length} fullscreen></d2l-work-to-do-activity-list-header>
+					<d2l-work-to-do-activity-list-header ?skeleton=${this._initialLoad} ?overdue=${isOverdue} count=${isOverdue ? activities.length : this._totalUpcomingActivities} fullscreen></d2l-work-to-do-activity-list-header>
 					<d2l-list>${groupedByDate}</d2l-list>
 				</div>
 			`;
@@ -539,6 +540,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 				if (upcomingCollection) {
 					this._upcomingCollection = upcomingCollection;
 					this._upcomingActivities = upcomingCollection.getSubEntitiesByRel(Rels.Activities.userActivityUsage);
+					this._totalUpcomingActivities = upcomingCollection.hasProperty('pagingTotalResults') && upcomingCollection.properties.pagingTotalResults || this._upcomingActivities.length;
 				}
 				if (maxCollection) {
 					this._maxCollection = maxCollection;
@@ -641,10 +643,18 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 		return await this._performSirenActionWithRetry(this.token, action, fields, true, 1);
 	}
 
-	_getHomeHref() {
-		// TODO: this is a default (and kind of a hacky way to get to it),
-		// ideally we want to get the user's homepage from their profile
-		this._homeLinkHref = window.location.href.substring(0, window.location.href.indexOf('/d2l/') + 5) + 'home';
+	_updateHomeHref() {
+
+		if (this.fullscreen) {
+			const prevPage = sessionStorage.getItem(Constants.HomepageSessionStorageKey);
+			if (prevPage && (new URL(prevPage)).hostname === window.location.hostname) {
+				this._homeLinkHref = prevPage;
+			} else {
+				this._homeLinkHref = '/';
+			}
+		} else {
+			sessionStorage.setItem(Constants.HomepageSessionStorageKey, window.location.href);
+		}
 	}
 }
 customElements.define('d2l-work-to-do', WorkToDoWidget);
