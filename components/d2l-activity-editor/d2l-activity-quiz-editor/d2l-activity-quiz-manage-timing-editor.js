@@ -156,13 +156,13 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(LocalizeActivit
 						min=${type.min}
 						max=${type.max}
 						@change=${type.change}>
-						<label slot='after'>
-							<span class='d2l-input-number-label'>${type.slot}</span>
+						<label slot="after">
+							<span class="d2l-input-number-label">${type.slot}</span>
 						</label>
 					</d2l-input-number>`)}
 				</div>
 				<label>
-					<span class='d2l-input-label'>${this.localize('subHdrExceededTimeLimitBehaviour')}</span>
+					<span class="d2l-input-label">${this.localize('subHdrExceededTimeLimitBehaviour')}</span>
 				</label>
 				<label>
 					<span class="d2l-italic-label">${this.localize('exceededTimeLimitBehaviourPrefix')}</span>
