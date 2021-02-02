@@ -1,4 +1,4 @@
-import { ContentLTILink } from './content-web-link.js';
+import { ContentLTILink } from './content-lti-link.js';
 import { ObjectStore } from '../../../state/object-store.js';
 
 export class ContentLTILinkStore {
