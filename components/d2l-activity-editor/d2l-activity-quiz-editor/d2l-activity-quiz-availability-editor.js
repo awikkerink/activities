@@ -5,9 +5,9 @@ import '../d2l-activity-usage-conditions-editor.js';
 import '../d2l-activity-usage-conditions-summary.js';
 import './d2l-activity-quiz-password-summary';
 import './d2l-activity-quiz-password-editor.js';
+import './d2l-activity-quiz-ip-restriction-editor';
 import { css, html } from 'lit-element/lit-element.js';
 import { accordionStyles } from '../styles/accordion-styles';
-import { ActivityEditorFeaturesMixin } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { heading4Styles } from '@brightspace-ui/core/components/typography/styles.js';
@@ -16,7 +16,7 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 import { shared as store } from '../state/activity-store.js';
 
-class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivityQuizEditorMixin(SkeletonMixin(ActivityEditorFeaturesMixin(ActivityEditorMixin(MobxLitElement))))) {
+class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivityQuizEditorMixin(SkeletonMixin(ActivityEditorMixin(MobxLitElement)))) {
 
 	static get properties() {
 
@@ -71,6 +71,7 @@ class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivit
 					${this._renderAvailabilityDatesEditor()}
 					${this._renderReleaseConditionEditor()}
 					${this._renderPasswordEditor()}
+					${this._renderIpRestrictionEditor()}
 				</span>
 			</d2l-activity-accordion-collapse>
 		`;
@@ -104,6 +105,16 @@ class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivit
 				href="${this.activityUsageHref}"
 				.token="${this.token}">
 			</d2l-activity-availability-dates-summary>
+		`;
+	}
+
+	_renderIpRestrictionEditor() {
+
+		return html`
+			<d2l-activity-quiz-ip-restriction-editor
+				.href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-ip-restriction-editor>
 		`;
 	}
 

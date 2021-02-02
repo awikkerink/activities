@@ -1,4 +1,6 @@
+import '@brightspace-ui/core/components/alert/alert.js';
 import '@brightspace-ui/core/components/inputs/input-text.js';
+import '@brightspace-hmc/foundation-components/components/activity/editor/d2l-activity-editor-main.js';
 import 'd2l-tooltip/d2l-tooltip';
 import '../d2l-activity-due-date-editor.js';
 import '../d2l-activity-outcomes.js';
@@ -6,16 +8,20 @@ import '../d2l-activity-score-editor.js';
 import '../d2l-activity-text-editor.js';
 import '../d2l-activity-attachments/d2l-activity-attachments-editor.js';
 import '../d2l-activity-quiz-editor/d2l-activity-quiz-divider';
+import './d2l-activity-quiz-question-editor.js';
 
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
-import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
+import { css } from 'lit-element/lit-element.js';
 import { editorLayoutStyles } from '../styles/activity-editor-styles';
+import { html } from '@brightspace-hmc/foundation-engine/framework/lit/hypermedia-components.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
+
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
+
 import { shared as store } from './state/quiz-store.js';
 
 class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonMixin(LocalizeActivityQuizEditorMixin(RtlMixin(MobxLitElement))))) {
@@ -37,6 +43,9 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 				}
 				:host([hidden]) {
 					display: none;
+				}
+				:host([skeleton]) .d2l-skeletize::before {
+					z-index: 2;
 				}
 				.d2l-activity-label-container {
 					margin-bottom: 8px;
@@ -63,6 +72,9 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 				#score-and-duedate-container {
 					padding-bottom: 0;
 				}
+				d2l-alert {
+					margin-bottom: 10px;
+				}
 			`
 		];
 	}
@@ -81,10 +93,17 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 			canPreviewQuiz,
 			description,
 			canEditDescription,
-			descriptionRichTextEditorConfig
+			descriptionRichTextEditorConfig,
+			descriptionIsDisplayed
 		} = quiz || {};
 
+		const descriptionLang = this.localize('description');
+
 		return html`
+		<d2l-alert has-close-button ?hidden=${this.skeleton || descriptionIsDisplayed}>
+			${this.localize('textIsDisplayedPart1')}
+			${this.localize('textIsDisplayedSingularPart2', 'field', descriptionLang)}
+		</d2l-alert>
 			<div id="quiz-name-container">
 				<d2l-input-text
 					?skeleton="${this.skeleton}"
@@ -111,15 +130,15 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 
 			<div id="quiz-description-container">
 				<div class="d2l-activity-label-container d2l-label-text d2l-skeletize">
-					${this.localize('description')}
+					${descriptionLang}
 				</div>
 				<div class="d2l-skeletize">
 					<d2l-activity-text-editor
 						.value="${description}"
 						.richtextEditorConfig="${descriptionRichTextEditorConfig}"
 						@d2l-activity-text-editor-change="${this._saveDescriptionOnChange}"
-						ariaLabel="${this.localize('description')}"
-						?disabled="${!canEditDescription}">
+						ariaLabel="${descriptionLang}"
+						?disabled="${canEditDescription === undefined ? false : !canEditDescription}">
 					</d2l-activity-text-editor>
 				</div>
 			</div>
@@ -135,6 +154,9 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 					icon="tier1:preview">
 				</d2l-button-subtle>
 			</d2l-activity-quiz-divider>
+
+			<d2l-activity-quiz-question-editor href="${this.activityUsageHref}" .token="${this.token}">
+			</d2l-activity-quiz-question-editor>
 		`;
 	}
 

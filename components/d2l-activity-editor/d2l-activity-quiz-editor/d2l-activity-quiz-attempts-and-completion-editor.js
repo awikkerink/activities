@@ -1,17 +1,17 @@
 import '../d2l-activity-accordion-collapse.js';
 import '../d2l-activity-notification-email-editor.js';
 import './d2l-activity-quiz-notification-email-summary.js';
+import './d2l-activity-quiz-manage-attempts-editor';
+import { css, html } from 'lit-element/lit-element.js';
 import { accordionStyles } from '../styles/accordion-styles';
-import { ActivityEditorFeaturesMixin } from '../mixins/d2l-activity-editor-features-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
-import { html } from 'lit-element/lit-element.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 import { shared as store } from './state/quiz-store';
 
-class ActivityQuizAttemptsAndCompletionEditor extends AsyncContainerMixin(LocalizeActivityQuizEditorMixin(SkeletonMixin(ActivityEditorFeaturesMixin(ActivityEditorMixin(MobxLitElement))))) {
+class ActivityQuizAttemptsAndCompletionEditor extends AsyncContainerMixin(LocalizeActivityQuizEditorMixin(SkeletonMixin(ActivityEditorMixin(MobxLitElement)))) {
 
 	static get properties() {
 
@@ -25,7 +25,12 @@ class ActivityQuizAttemptsAndCompletionEditor extends AsyncContainerMixin(Locali
 
 		return [
 			super.styles,
-			accordionStyles
+			accordionStyles,
+			css`
+				.d2l-editors:not(:first-of-type) {
+					margin-top: 20px;
+				}
+			`,
 		];
 	}
 
@@ -46,6 +51,10 @@ class ActivityQuizAttemptsAndCompletionEditor extends AsyncContainerMixin(Locali
 				<li slot="summary-items">${this._renderNotificationEmailSummary()}</li>
 
 				<div class="d2l-editors" slot="components">
+					${this._renderManageAttemptsEditor()}
+				</div>
+
+				<div class="d2l-editors" slot="components">
 					${this._renderNotificationEmailEditor()}
 				</div>
 
@@ -61,6 +70,14 @@ class ActivityQuizAttemptsAndCompletionEditor extends AsyncContainerMixin(Locali
 		const entity = store.get(this.href);
 		const data = event.detail.value;
 		entity.setNotificationEmail(data);
+	}
+
+	_renderManageAttemptsEditor() {
+		return html`
+			<d2l-activity-quiz-manage-attempts-editor
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-manage-attempts-editor>`;
 	}
 
 	_renderNotificationEmailEditor() {

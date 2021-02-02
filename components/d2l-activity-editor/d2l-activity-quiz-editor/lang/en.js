@@ -59,4 +59,14 @@ export default {
 	"exceededTimeLimitBehaviourPrefix": "After the grace period, flag the quiz attempt as exceeded time limit and,", // label for submission label type options
 	"showClockLabel": "Will be displayed before the quiz starts", // Label for show clock checkbox
 	"description": "Description", // Description label for the Description text input box
+	"description": "Description", // Description label for the Description text input box,
+	"btnOpenIpRestrictionDialog": "Manage IP restrictions", // Button text for opening IP restriction dialog
+	"hdrIpRestrictionDialog": "IP Restrictions (IPv4)", // timing/display accordion header
+	"ipRestrictionLabel": "IP Restrictions", // Label for IP restrictions editor
+	"manageAttemptsDialogConfirmationText": "OK", // copy that appears on the Attempts dialog confirmation button
+	"manageAttemptsDialogCancelText": "Cancel", // copy that appears on the Attempts dialog cancel button
+	"subHdrAttemptsTools": "Attempts", // Title for attempts tools
+	"manageAttempts": "Manage Attempts", // Label for button to launch attempts dialog
+	"textIsDisplayedPart1": "Fields cannot be toggled off in the new quiz creation experience.", // First sentence of alert warning that text fields will be visible
+	"textIsDisplayedSingularPart2": "The {field} field appears to learners when the quiz is saved." // Second sentence of alert warning that text fields will be visible, when there is only one field
 };
