@@ -182,7 +182,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 			return;
 		}
 		this._getCollections(user._entity);
-		this._getHomeHref();
+		this._updateHomeHref();
 	}
 
 	render() {
@@ -641,10 +641,18 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 		return await this._performSirenActionWithRetry(this.token, action, fields, true, 1);
 	}
 
-	_getHomeHref() {
-		// TODO: this is a default (and kind of a hacky way to get to it),
-		// ideally we want to get the user's homepage from their profile
-		this._homeLinkHref = window.location.href.substring(0, window.location.href.indexOf('/d2l/') + 5) + 'home';
+	_updateHomeHref() {
+
+		if (this.fullscreen) {
+			const prevPage = sessionStorage.getItem(Constants.HomepageSessionStorageKey);
+			if (prevPage && (new URL(prevPage)).hostname === window.location.hostname) {
+				this._homeLinkHref = prevPage;
+			} else {
+				this._homeLinkHref = '/';
+			}
+		} else {
+			sessionStorage.setItem(Constants.HomepageSessionStorageKey, window.location.href);
+		}
 	}
 }
 customElements.define('d2l-work-to-do', WorkToDoWidget);
