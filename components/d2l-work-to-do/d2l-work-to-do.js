@@ -18,16 +18,17 @@ import { Config, Constants, getOverdueWeekLimit, getUpcomingWeekLimit } from './
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
 import { fetchEntity } from './state/fetch-entity';
 import { ifDefined } from 'lit-html/directives/if-defined';
-import { LocalizeWorkToDoMixin } from './localization';
+import { LocalizeWorkToDoMixin } from './mixins/d2l-work-to-do-localization-mixin';
 import { performSirenAction } from 'siren-sdk/src/es6/SirenAction';
 import { UserEntity } from 'siren-sdk/src/users/UserEntity';
+import { WorkToDoTelemetryMixin } from './mixins/d2l-work-to-do-telemetry-mixin';
 import { repeat } from 'lit-html/directives/repeat';
 import { nothing } from 'lit-html';
 
 /**
  * @classdesc Class representation of Work to Do widget component
  */
-class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
+class WorkToDoWidget extends EntityMixinLit(WorkToDoTelemetryMixin(LocalizeWorkToDoMixin(LitElement))) {
 
 	static get properties() {
 		return {
@@ -50,7 +51,9 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 			/** individual items within upcomingCollection + subsequent pages once the UI has them */
 			_upcomingActivities: { type: Array },
 			/** keeps track of the sub items being loaded, so we can show all data at once and not a partial activity */
-			_initialLoad: { type: Boolean }
+			_initialLoad: { type: Boolean },
+			/** Represents telemetry endpoint to publish events to */
+			_telemetryEndpoint: { type: String, attribute: 'data-telemetry-endpoint' }
 		};
 	}
 
@@ -139,6 +142,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 		this._setEntityType(UserEntity);
 		this._initialLoad = true;
 		this._loadedElements = [];
+		this._telemetryEndpoint = undefined;
 	}
 
 	set _entity(entity) {
@@ -161,6 +165,10 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 			case 'data-overdue-week-limit':
 				this._overdueWeekLimit = (parseInt(newval) < 0) ? Config.OverdueWeekLimit : parseInt(newval);
 				window.D2L.workToDoOptions.overdueWeekLimit = this._overdueWeekLimit;
+				break;
+			case 'data-telemetry-endpoint':
+				this._telemetryEndpoint = newval;
+				window.D2L.workToDoOptions.telemetryEndpoint = this._telemetryEndpoint;
 				break;
 			case 'data-upcoming-week-limit':
 				this._upcomingWeekLimit = (parseInt(newval) < 0) ? Config.UpcomingWeekLimit : parseInt(newval);
@@ -492,6 +500,7 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 			if (this._loadedElements.length === expectedLoadedActivities) {
 				this._initialLoad = false;
 				this._loadedElements = [];
+				this.markAndLogWidgetLoaded(this.fullscreen);
 			}
 		}
 	}
@@ -557,9 +566,12 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 		if (!this._upcomingCollection.hasLinkByRel(Rels.Activities.nextPage)) return;
 
 		const upcomingSource = this._upcomingCollection.getLinkByRel(Rels.Activities.nextPage).href;
+		const startMark = this.markLoadMoreStart();
 		const upcomingNextPage = await fetchEntity(upcomingSource, this.token, true);
 		if (upcomingNextPage && upcomingNextPage.hasSubEntityByRel(Rels.Activities.userActivityUsage)) {
-			this._upcomingActivities = this._upcomingActivities.concat(upcomingNextPage.getSubEntitiesByRel(Rels.Activities.userActivityUsage));
+			const nextActivities = upcomingNextPage.getSubEntitiesByRel(Rels.Activities.userActivityUsage);
+			this.markAndLogLoadMoreEnd(startMark, nextActivities.length);
+			this._upcomingActivities = this._upcomingActivities.concat(nextActivities);
 			this._upcomingCollection = upcomingNextPage; // moves "next page" forward every time this succeeds
 		}
 	}
@@ -588,9 +600,11 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 		}
 
 		const source = entity.getLinkByRel(Rels.Activities.overdue).href;
+		const startMark = this.markLoadOverdueStart();
 		await fetchEntity(source, this.token)
 			.then((sirenEntity) => {
 				if (sirenEntity) {
+					this.markLoadOverdueEnd(startMark, sirenEntity.getSubEntitiesByRel(Rels.Activities.userActivityUsage).length);
 					this._overdueActivities = this._getFilteredOverdueActivities(sirenEntity);
 					this._overdueCollection = sirenEntity;
 				}
@@ -640,7 +654,13 @@ class WorkToDoWidget extends EntityMixinLit(LocalizeWorkToDoMixin(LitElement)) {
 			return acc;
 		}, []);
 
-		return await this._performSirenActionWithRetry(this.token, action, fields, true, 1);
+		const startMark = this.markLoadUpcomingStart();
+		const sirenEntity = await this._performSirenActionWithRetry(this.token, action, fields, true, 1);
+		if (sirenEntity) {
+			this.markLoadUpcomingEnd(startMark, sirenEntity.getSubEntitiesByRel(Rels.Activities.userActivityUsage).length);
+		}
+
+		return sirenEntity;
 	}
 
 	_updateHomeHref() {
