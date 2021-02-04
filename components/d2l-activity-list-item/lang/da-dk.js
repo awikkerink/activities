@@ -1,4 +1,4 @@
-{/* eslint quotes: 0 */
+/* eslint quotes: 0 */
 
 export default {
    "clickToViewActivity" : "Klik for at få vist aktivitet",
