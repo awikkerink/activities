@@ -1,71 +1,29 @@
-import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 import 'd2l-localize-behavior/d2l-localize-behavior.js';
-import { LangAr } from './lang/ar.js';
-import { LangDe } from './lang/de.js';
-import { LangEn } from './lang/en.js';
-import { LangEs } from './lang/es.js';
-import { LangFi } from './lang/fi.js';
-import { LangFr } from './lang/fr.js';
-import { LangJa } from './lang/ja.js';
-import { LangKo } from './lang/ko.js';
-import { LangNl } from './lang/nl.js';
-import { LangPt } from './lang/pt.js';
-import { LangSv } from './lang/sv.js';
-import { LangTr } from './lang/tr.js';
-import { LangZhtw } from './lang/zh-tw.js';
-import { LangZh } from './lang/zh.js';
-
-const LangImpl = (prefix, langObj, superClass) => class extends superClass {
-	constructor() {
-		super();
-		this[prefix] = langObj;
-	}
-};
-
-const LANGUAGES = ['ar', 'de', 'en', 'es', 'fi', 'fr', 'ja', 'ko', 'nl', 'pt', 'sv', 'tr', 'zh-tw', 'zh' ];
 
 /* @polymerMixin */
 const ActivityCardImpl = (superClass) => {
-	const langMixins = [
-		LangAr,
-		LangDe,
-		LangEn,
-		LangEs,
-		LangFi,
-		LangFr,
-		LangJa,
-		LangKo,
-		LangNl,
-		LangPt,
-		LangSv,
-		LangTr,
-		LangZhtw,
-		LangZh
-	];
-	let mixinLang = mixinBehaviors([D2L.PolymerBehaviors.LocalizeBehavior], superClass);
-	LANGUAGES.forEach((langPrefix, index)=> {
-		mixinLang = dedupingMixin(LangImpl.bind(null, langPrefix, langMixins[index])).call(null, mixinLang);
-	});
 
-	return class extends mixinLang {
+	return class extends mixinBehaviors([D2L.PolymerBehaviors.LocalizeBehavior], superClass) {
 		constructor() {
 			super();
 			this.resources = {
-				'en': this.en,
-				'ar': this.ar,
-				'de': this.de,
-				'es': this.es,
-				'fi': this.fi,
-				'fr': this.fr,
-				'ja': this.ja,
-				'ko': this.ko,
-				'nl': this.nl,
-				'pt': this.pt,
-				'sv': this.sv,
-				'tr': this.tr,
-				'zh': this.zh,
-				'zh-tw': this.zhtw
+				'en': import('./lang/en.js'),
+				'ar': import('./lang/ar.js'),
+				'da-dk': import('./lang/da-dk.js'),
+				'de': import('./lang/de.js'),
+				'es': import('./lang/es.js'),
+				'fi': import('./lang/fi.js'),
+				'fr': import('./lang/fr.js'),
+				'fr-fr': import('./lang/fr-fr.js'),
+				'ja': import('./lang/ja.js'),
+				'ko': import('./lang/ko.js'),
+				'nl': import('./lang/nl.js'),
+				'pt': import('./lang/pt.js'),
+				'sv': import('./lang/sv.js'),
+				'tr': import('./lang/tr.js'),
+				'zh': import('./lang/zh.js'),
+				'zh-tw': import('./lang/zh-tw.js')
 			};
 		}
 		static get properties() {
@@ -83,4 +41,4 @@ const ActivityCardImpl = (superClass) => {
 	};
 };
 
-export const ActivityCardLocalize = dedupingMixin(ActivityCardImpl);
+export const ActivityCardLocalize = ActivityCardImpl;

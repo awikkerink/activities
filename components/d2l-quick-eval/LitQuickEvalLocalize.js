@@ -6,52 +6,52 @@ export const LitQuickEvalLocalize = superclass => class extends LocalizeMixin(su
 		for (const lang of langs) {
 			switch (lang) {
 				case 'ar':
-					translations = (await import('./lang/ar.js')).LangAr;
+					translations = await import('./lang/ar.js');
 					break;
 				case 'da-dk':
-					translations = (await import('./lang/da-dk.js')).LangDadk;
+					translations = await import('./lang/da-dk.js');
 					break;
 				case 'de':
-					translations = (await import('./lang/de.js')).LangDe;
+					translations = await import('./lang/de.js');
 					break;
 				case 'en':
-					translations = (await import('./lang/en.js')).LangEn;
+					translations = await import('./lang/en.js');
 					break;
 				case 'es':
-					translations = (await import('./lang/es.js')).LangEs;
+					translations = await import('./lang/es.js');
 					break;
 				case 'fi':
-					translations = (await import('./lang/fi.js')).LangFi;
+					translations = await import('./lang/fi.js');
 					break;
 				case 'fr':
-					translations = (await import('./lang/fr.js')).LangFr;
+					translations = await import('./lang/fr.js');
 					break;
 				case 'fr-fr':
-					translations = (await import('./lang/fr-fr.js')).LangFrfr;
+					translations = await import('./lang/fr-fr.js');
 					break;
 				case 'ja':
-					translations = (await import('./lang/ja.js')).LangJa;
+					translations = await import('./lang/ja.js');
 					break;
 				case 'ko':
-					translations = (await import('./lang/ko.js')).LangKo;
+					translations = await import('./lang/ko.js');
 					break;
 				case 'nl':
-					translations = (await import('./lang/nl.js')).LangNl;
+					translations = await import('./lang/nl.js');
 					break;
 				case 'pt':
-					translations = (await import('./lang/pt.js')).LangPt;
+					translations = await import('./lang/pt.js');
 					break;
 				case 'sv':
-					translations = (await import('./lang/sv.js')).LangSv;
+					translations = await import('./lang/sv.js');
 					break;
 				case 'tr':
-					translations = (await import('./lang/tr.js')).LangTr;
+					translations = await import('./lang/tr.js');
 					break;
 				case 'zh-tw':
-					translations = (await import('./lang/zh-tw.js')).LangZhtw;
+					translations = await import('./lang/zh-tw.js');
 					break;
 				case 'zh':
-					translations = (await import('./lang/zh.js')).LangZh;
+					translations = await import('./lang/zh.js');
 					break;
 			}
 			if (translations) {
@@ -63,7 +63,7 @@ export const LitQuickEvalLocalize = superclass => class extends LocalizeMixin(su
 		}
 		return {
 			language: 'en',
-			resources: await import('./lang/en.js').LangEn
+			resources: await import('./lang/en.js')
 		};
 	}
 };
