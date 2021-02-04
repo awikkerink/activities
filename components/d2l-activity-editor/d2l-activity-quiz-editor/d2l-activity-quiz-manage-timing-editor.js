@@ -121,7 +121,7 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(LocalizeActivit
 				</div>
 					<label>
 						<span class="d2l-italic-label">${this.localize('showClockLabel')}</span>
-						<d2l-input-checkbox ?checked=${showClock}>${this.localize('showClockTitle')}</d2l-input-checkbox>
+						<d2l-input-checkbox ?checked=${showClock} @change=${this._toggleShowClock}>${this.localize('showClockTitle')}</d2l-input-checkbox>
 					</label>
 				</div>
 			</div>
@@ -221,6 +221,12 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(LocalizeActivit
 		const entity = store.get(this.href);
 		const data = e.target.value;
 		entity && entity.setTimingType(data);
+	}
+
+	_toggleShowClock(e) {
+		const entity = store.get(this.href);
+		const data = e.target.value;
+		entity && entity.toggleShowClock(data);
 	}
 }
 

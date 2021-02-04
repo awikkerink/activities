@@ -61,6 +61,10 @@ export class QuizTiming {
 		this._entity.setTimingType(data);
 	}
 
+	toggleShowClock(data) {
+		this._entity.toggleShowClock(data);
+	}
+
 	_makeQuizData() {
 		/* NOTE: if you add fields here, please make sure you update the corresponding equals method in siren-sdk.
 					 The cancel workflow is making use of that to detect changes.
@@ -90,5 +94,6 @@ decorate(QuizTiming, {
 	setExceededTimeLimitBehaviour: action,
 	setGracePeriod: action,
 	setTimeLimit: action,
-	setExtendedDeadline: action
+	setExtendedDeadline: action,
+	toggleShowClock: action
 });
