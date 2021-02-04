@@ -1,20 +1,20 @@
 import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 import 'd2l-localize-behavior/d2l-localize-behavior.js';
-import { LangAr } from './build/lang/ar.js';
-import { LangDe } from './build/lang/de.js';
-import { LangEn } from './build/lang/en.js';
-import { LangEs } from './build/lang/es.js';
-import { LangFi } from './build/lang/fi.js';
-import { LangFr } from './build/lang/fr.js';
-import { LangJa } from './build/lang/ja.js';
-import { LangKo } from './build/lang/ko.js';
-import { LangNl } from './build/lang/nl.js';
-import { LangPt } from './build/lang/pt.js';
-import { LangSv } from './build/lang/sv.js';
-import { LangTr } from './build/lang/tr.js';
-import { LangZhtw } from './build/lang/zh-tw.js';
-import { LangZh } from './build/lang/zh.js';
+import { LangAr } from './lang/ar.js';
+import { LangDe } from './lang/de.js';
+import { LangEn } from './lang/en.js';
+import { LangEs } from './lang/es.js';
+import { LangFi } from './lang/fi.js';
+import { LangFr } from './lang/fr.js';
+import { LangJa } from './lang/ja.js';
+import { LangKo } from './lang/ko.js';
+import { LangNl } from './lang/nl.js';
+import { LangPt } from './lang/pt.js';
+import { LangSv } from './lang/sv.js';
+import { LangTr } from './lang/tr.js';
+import { LangZhtw } from './lang/zh-tw.js';
+import { LangZh } from './lang/zh.js';
 
 const LangImpl = (prefix, langObj, superClass) => class extends superClass {
 	constructor() {
