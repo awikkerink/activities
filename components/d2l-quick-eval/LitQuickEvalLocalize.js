@@ -6,52 +6,52 @@ export const LitQuickEvalLocalize = superclass => class extends LocalizeMixin(su
 		for (const lang of langs) {
 			switch (lang) {
 				case 'ar':
-					translations = (await import('./build/lang/ar.js')).LangAr;
+					translations = (await import('./lang/ar.js')).LangAr;
 					break;
 				case 'da-dk':
-					translations = (await import('./build/lang/da-dk.js')).LangDadk;
+					translations = (await import('./lang/da-dk.js')).LangDadk;
 					break;
 				case 'de':
-					translations = (await import('./build/lang/de.js')).LangDe;
+					translations = (await import('./lang/de.js')).LangDe;
 					break;
 				case 'en':
-					translations = (await import('./build/lang/en.js')).LangEn;
+					translations = (await import('./lang/en.js')).LangEn;
 					break;
 				case 'es':
-					translations = (await import('./build/lang/es.js')).LangEs;
+					translations = (await import('./lang/es.js')).LangEs;
 					break;
 				case 'fi':
-					translations = (await import('./build/lang/fi.js')).LangFi;
+					translations = (await import('./lang/fi.js')).LangFi;
 					break;
 				case 'fr':
-					translations = (await import('./build/lang/fr.js')).LangFr;
+					translations = (await import('./lang/fr.js')).LangFr;
 					break;
 				case 'fr-fr':
-					translations = (await import('./build/lang/fr-fr.js')).LangFrfr;
+					translations = (await import('./lang/fr-fr.js')).LangFrfr;
 					break;
 				case 'ja':
-					translations = (await import('./build/lang/ja.js')).LangJa;
+					translations = (await import('./lang/ja.js')).LangJa;
 					break;
 				case 'ko':
-					translations = (await import('./build/lang/ko.js')).LangKo;
+					translations = (await import('./lang/ko.js')).LangKo;
 					break;
 				case 'nl':
-					translations = (await import('./build/lang/nl.js')).LangNl;
+					translations = (await import('./lang/nl.js')).LangNl;
 					break;
 				case 'pt':
-					translations = (await import('./build/lang/pt.js')).LangPt;
+					translations = (await import('./lang/pt.js')).LangPt;
 					break;
 				case 'sv':
-					translations = (await import('./build/lang/sv.js')).LangSv;
+					translations = (await import('./lang/sv.js')).LangSv;
 					break;
 				case 'tr':
-					translations = (await import('./build/lang/tr.js')).LangTr;
+					translations = (await import('./lang/tr.js')).LangTr;
 					break;
 				case 'zh-tw':
-					translations = (await import('./build/lang/zh-tw.js')).LangZhtw;
+					translations = (await import('./lang/zh-tw.js')).LangZhtw;
 					break;
 				case 'zh':
-					translations = (await import('./build/lang/zh.js')).LangZh;
+					translations = (await import('./lang/zh.js')).LangZh;
 					break;
 			}
 			if (translations) {
@@ -63,7 +63,7 @@ export const LitQuickEvalLocalize = superclass => class extends LocalizeMixin(su
 		}
 		return {
 			language: 'en',
-			resources: await import('./build/lang/en.js').LangEn
+			resources: await import('./lang/en.js').LangEn
 		};
 	}
 };
