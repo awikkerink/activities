@@ -12,7 +12,11 @@ export class Quiz {
 	}
 
 	delete() {
-		return this._entity.delete();
+		if (this._workingCopyEntity) {
+			return this._workingCopyEntity.delete();
+		} else {
+			return this._entity.delete();
+		}
 	}
 
 	get dirty() {
@@ -21,18 +25,27 @@ export class Quiz {
 
 	async fetch() {
 		const sirenEntity = await fetchEntity(this.href, this.token);
-
 		if (sirenEntity) {
 			const entity = new QuizEntity(sirenEntity, this.token, {
 				remove: () => { },
 			});
-			this.load(entity);
+
+			let workingCopyEntity = null;
+			const workingCopySirenEntity = await fetchEntity(entity.getCheckoutHref(), this.token);
+			if (workingCopySirenEntity) {
+				workingCopyEntity = new QuizEntity(workingCopySirenEntity, this.token, {
+					remove: () => { },
+				});
+			}
+
+			this.load(entity, workingCopyEntity);
 		}
 		return this;
 	}
 
-	load(entity) {
+	load(entity, workingCopyEntity) {
 		this._entity = entity;
+		this._workingCopyEntity = workingCopyEntity;
 		this.name = entity.name();
 		this.canEditName = entity.canEditName();
 		this.canEditShuffle = entity.canEditShuffle();
@@ -53,7 +66,7 @@ export class Quiz {
 		this.canPreviewQuiz = entity.canPreviewQuiz();
 		this.isAutoSetGradedEnabled = entity.isAutoSetGradedEnabled();
 		this.canEditAutoSetGraded = entity.canEditAutoSetGraded();
-		this.timingHref = entity.timingHref();
+		this.timingHref = (workingCopyEntity && workingCopyEntity.timingHref()) || entity.timingHref();
 		this.description = entity.canEditDescription() ? entity.descriptionEditorHtml() : entity.descriptionHtml();
 		this.canEditDescription = entity.canEditDescription();
 		this.descriptionIsDisplayed = entity.descriptionIsDisplayed();
@@ -117,6 +130,26 @@ export class Quiz {
 		this.isShuffleEnabled = isEnabled;
 	}
 
+	async fork() {
+		if (this._workingCopyEntity) {
+			const forkedSirenEntity = await this._workingCopyEntity.fork();
+			const forkedEntity = new QuizEntity(forkedSirenEntity, this.token, {
+				remove: () => { },
+			});
+			this.load(this._entity, forkedEntity);
+		}
+	}
+
+	async merge() {
+		if (this._workingCopyEntity) {
+			const updatedWorkingCopySirenEntity = await this._workingCopyEntity.merge();
+			const workingCopyEntity = new QuizEntity(updatedWorkingCopySirenEntity, this.token, {
+				remove: () => { },
+			});
+			this.load(this._entity, workingCopyEntity);
+		}
+	}
+
 	_makeQuizData() {
 		/* NOTE: if you add fields here, please make sure you update the corresponding equals method in siren-sdk.
 					 The cancel workflow is making use of that to detect changes.
@@ -178,5 +211,7 @@ decorate(Quiz, {
 	setAutoSetGraded: action,
 	setDescription: action,
 	save: action,
-	delete: action
+	delete: action,
+	fork: action,
+	merge: action
 });
