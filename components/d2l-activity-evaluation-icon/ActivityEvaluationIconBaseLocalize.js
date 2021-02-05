@@ -1,33 +1,56 @@
-import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 import 'd2l-localize-behavior/d2l-localize-behavior.js';
+import ar from './lang/ar.js';
+import cygb from './lang/cy-gb.js';
+import dadk from './lang/da-dk.js';
+import de from './lang/de.js';
+import en from './lang/en.js';
+import es from './lang/es.js';
+import eses from './lang/es-es.js';
+import fi from './lang/fi.js';
+import fr from './lang/fr.js';
+import frfr from './lang/fr-fr.js';
+import ja from './lang/ja.js';
+import ko from './lang/ko.js';
+import nl from './lang/nl.js';
+import pt from './lang/pt.js';
+import sv from './lang/sv.js';
+import tr from './lang/tr.js';
+import zh from './lang/zh.js';
+import zhtw from './lang/zh-tw.js';
 
-/* @polymerMixin */
+// eslint-disable-next-line sort-imports
+import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
+import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
+
 const ActivityEvaluationIconBaseLocalizeImpl = (superClass) => {
 
 	return class extends mixinBehaviors([D2L.PolymerBehaviors.LocalizeBehavior], superClass) {
-		constructor() {
-			super();
-			this.resources = {
-				'en': import('./lang/en.js'),
-				'ar': import('./lang/ar.js'),
-				'da-dk': import('./lang/da-dk.js'),
-				'de': import('./lang/de.js'),
-				'es': import('./lang/es.js'),
-				'fi': import('./lang/fi.js'),
-				'fr': import('./lang/fr.js'),
-				'fr-fr': import('./lang/fr-fr.js'),
-				'ja': import('./lang/ja.js'),
-				'ko': import('./lang/ko.js'),
-				'nl': import('./lang/nl.js'),
-				'pt': import('./lang/pt.js'),
-				'sv': import('./lang/sv.js'),
-				'tr': import('./lang/tr.js'),
-				'zh': import('./lang/zh.js'),
-				'zh-tw': import('./lang/zh-tw.js')
-			};
-		}
 		static get properties() {
 			return {
+				resources: {
+					value: function() {
+						return {
+							'en': en,
+							'ar': ar,
+							'cy-gb': cygb,
+							'da-dk': dadk,
+							'de': de,
+							'es': es,
+							'es-es': eses,
+							'fi': fi,
+							'fr': fr,
+							'fr-fr': frfr,
+							'ja': ja,
+							'ko': ko,
+							'nl': nl,
+							'pt': pt,
+							'sv': sv,
+							'tr': tr,
+							'zh': zh,
+							'zh-tw': zhtw
+						};
+					}
+				},
 				locale: {
 					type: String,
 					value: function() {
@@ -41,4 +64,4 @@ const ActivityEvaluationIconBaseLocalizeImpl = (superClass) => {
 	};
 };
 
-export const ActivityEvaluationIconBaseLocalize = ActivityEvaluationIconBaseLocalizeImpl;
+export const ActivityEvaluationIconBaseLocalize = dedupingMixin(ActivityEvaluationIconBaseLocalizeImpl);
