@@ -56,7 +56,7 @@ export class ContentLTILink {
 		this.title = value;
 	}
 
-	_makeWebLinkData() {
+	_makeLTILinkData() {
 		/* NOTE: if you add fields here, please make sure you update the corresponding equals method in siren-sdk.
 			The cancel workflow is making use of that to detect changes.
 		*/
