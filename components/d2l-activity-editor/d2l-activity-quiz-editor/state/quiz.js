@@ -58,6 +58,10 @@ export class Quiz {
 		this.canEditDescription = entity.canEditDescription();
 		this.descriptionIsDisplayed = entity.descriptionIsDisplayed();
 		this.descriptionRichTextEditorConfig = entity.descriptionRichTextEditorConfig();
+		this.header = entity.canEditHeader() ? entity.headerEditorHtml() : entity.headerHtml();
+		this.canEditHeader = entity.canEditHeader();
+		this.headerIsDisplayed = entity.headerIsDisplayed();
+		this.headerRichTextEditorConfig = entity.headerRichTextEditorConfig();
 	}
 
 	async save() {
@@ -91,6 +95,10 @@ export class Quiz {
 
 	setDisableRightClick(value) {
 		this.isDisableRightClickEnabled = value;
+	}
+
+	setHeader(value) {
+		this.header = value;
 	}
 
 	setHintsToolEnabled(isHintsEnabled) {
@@ -131,7 +139,8 @@ export class Quiz {
 			preventMovingBackwards: this.isPreventMovingBackwardsEnabled,
 			notificationEmail: this.notificationEmail,
 			autoSetGraded: this.isAutoSetGradedEnabled,
-			description: this.description
+			description: this.description,
+			header: this.header
 		};
 
 		return data;
@@ -165,6 +174,9 @@ decorate(Quiz, {
 	canEditDescription: observable,
 	descriptionIsDisplayed: observable,
 	descriptionRichTextEditorConfig: observable,
+	header: observable,
+	canEditHeader: observable,
+	headerRichTextEditorConfig: observable,
 	// actions
 	load: action,
 	setName: action,
@@ -177,6 +189,7 @@ decorate(Quiz, {
 	setNotificationEmail: action,
 	setAutoSetGraded: action,
 	setDescription: action,
+	setHeader: action,
 	save: action,
 	delete: action
 });

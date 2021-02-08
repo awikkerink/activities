@@ -47,6 +47,9 @@ describe('Quiz', function() {
 				canEditDescription: () => true,
 				descriptionIsDisplayed: () => true,
 				descriptionRichTextEditorConfig: () => {}
+				headerEditorHtml: () => 'This is an header',
+				canEditHeader: () => true,
+				headerRichTextEditorConfig: () => {}
 			};
 		});
 
@@ -80,6 +83,7 @@ describe('Quiz', function() {
 		expect(quiz.canPreviewQuiz).to.equal(true);
 		expect(quiz.description).to.equal('This is a description');
 		expect(quiz.descriptionIsDisplayed).to.equal(true);
+		expect(quiz.header).to.equal('This is an header');
 	});
 
 	it('setName', async() => {
@@ -166,5 +170,14 @@ describe('Quiz', function() {
 		quiz.setDescription('New description');
 
 		expect(quiz.description).to.equal('New description');
+	});
+
+	it('setHeader', async() => {
+		const quiz = new Quiz('http://quiz/1', 'token');
+		await quiz.fetch();
+
+		quiz.setHeader('New header');
+
+		expect(quiz.header).to.equal('New header');
 	});
 });
