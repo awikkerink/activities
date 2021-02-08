@@ -1,8 +1,8 @@
 import '../../../../components/d2l-activity-editor/d2l-activity-content-editor/lti-link/d2l-activity-content-lti-link-detail.js';
 import { expect, fixture, html } from '@open-wc/testing';
 import { ContentLTILink } from '../../../../components/d2l-activity-editor/d2l-activity-content-editor/lti-link/state/content-lti-link.js';
-import { runConstructor } from '@brightspace-ui/core/tools/constructor-test-helper.js';
 import { shared as ltiLinkStore } from '../../../../components/d2l-activity-editor/d2l-activity-content-editor/lti-link/state/content-lti-link-store.js';
+import { runConstructor } from '@brightspace-ui/core/tools/constructor-test-helper.js';
 
 describe('d2l-activity-content-lti-link-detail', function() {
 
