@@ -48,6 +48,7 @@ class ContentLTILinkDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandli
 				.onSave=${this.saveTitle}
 			>
 			</d2l-activity-content-editor-title>
+			<slot name="due-date"></slot>
 		`;
 	}
 
