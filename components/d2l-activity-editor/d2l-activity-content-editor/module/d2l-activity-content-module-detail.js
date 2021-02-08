@@ -23,7 +23,7 @@ class ContentModuleDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 		return  [
 			super.styles,
 			labelStyles,
-			activityContentEditorStyles
+			activityContentEditorStyles,
 			css`
 				.d2l-activity-label-container {
 					margin-bottom: 7px;
