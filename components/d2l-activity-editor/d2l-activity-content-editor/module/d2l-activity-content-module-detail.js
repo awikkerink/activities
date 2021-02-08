@@ -1,5 +1,6 @@
 import '../shared-components/d2l-activity-content-editor-title.js';
 import '../../d2l-activity-html-editor';
+import { activityContentEditorStyles } from '../shared-components/d2l-activity-content-editor-styles.js';
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../../mixins/d2l-activity-editor-mixin.js';
@@ -22,16 +23,8 @@ class ContentModuleDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 		return  [
 			super.styles,
 			labelStyles,
+			activityContentEditorStyles
 			css`
-				:host {
-					display: block;
-				}
-				:host([hidden]) {
-					display: none;
-				}
-				:host > div {
-					padding-bottom: 20px;
-				}
 				.d2l-activity-label-container {
 					margin-bottom: 7px;
 				}

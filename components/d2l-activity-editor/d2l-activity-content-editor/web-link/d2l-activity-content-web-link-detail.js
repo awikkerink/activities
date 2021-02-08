@@ -1,6 +1,7 @@
 import '../shared-components/d2l-activity-content-editor-title.js';
 import './d2l-activity-content-web-link-url-preview.js';
 import './d2l-activity-content-editor-link.js';
+import { activityContentEditorStyles } from '../shared-components/d2l-activity-content-editor-styles.js';
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../../mixins/d2l-activity-editor-mixin.js';
@@ -20,17 +21,7 @@ class ContentWebLinkDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandli
 		return  [
 			super.styles,
 			labelStyles,
-			css`
-				:host {
-					display: block;
-				}
-				:host([hidden]) {
-					display: none;
-				}
-				:host > div {
-					padding-bottom: 20px;
-				}
-			`
+			activityContentEditorStyles
 		];
 	}
 
