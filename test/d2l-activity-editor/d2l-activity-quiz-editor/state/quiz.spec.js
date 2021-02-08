@@ -46,8 +46,9 @@ describe('Quiz', function() {
 				descriptionEditorHtml: () => 'This is a description',
 				canEditDescription: () => true,
 				descriptionIsDisplayed: () => true,
-				descriptionRichTextEditorConfig: () => {}
+				descriptionRichTextEditorConfig: () => {},
 				headerEditorHtml: () => 'This is an header',
+				headerIsDisplayed: () => true,
 				canEditHeader: () => true,
 				headerRichTextEditorConfig: () => {}
 			};
