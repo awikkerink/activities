@@ -1,5 +1,5 @@
 import { ContentLTILink } from '../../../../components/d2l-activity-editor/d2l-activity-content-editor/lti-link/state/content-lti-link.js';
-import { ContentWebLinkEntity } from 'siren-sdk/src/activities/content/ContentLTILinkEntity.js';
+import { ContentLTILinkEntity } from 'siren-sdk/src/activities/content/ContentLTILinkEntity.js';
 import { expect } from 'chai';
 import { fetchEntity } from '../../../../components/d2l-activity-editor/state/fetch-entity.js';
 import sinon from 'sinon';
