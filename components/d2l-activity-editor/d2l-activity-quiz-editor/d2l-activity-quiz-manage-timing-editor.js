@@ -61,6 +61,15 @@ class ActivityQuizManageTimingEditor extends AsyncContainerMixin(LocalizeActivit
 		super(store);
 	}
 
+	updated(changedProperties) {
+		super.updated(changedProperties);
+
+		this.dispatchEvent(new CustomEvent('d2l-activity-quiz-manage-timing-editor-updated', {
+			bubbles: true,
+			composed: true
+		}));
+	}
+
 	render() {
 		const entity = store.get(this.href);
 		if (!entity) {

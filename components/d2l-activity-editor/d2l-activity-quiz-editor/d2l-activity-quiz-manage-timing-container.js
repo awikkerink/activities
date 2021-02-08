@@ -49,7 +49,8 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(LocalizeActi
 		return html`
 			<d2l-activity-quiz-manage-timing-dialog
 				href="${timingHref}"
-				.token="${this.token}">
+				.token="${this.token}"
+				@d2l-dialog-close="${this._onDialogClose}">
 			</d2l-activity-quiz-manage-timing-dialog>
 		`;
 	}
@@ -59,6 +60,14 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(LocalizeActi
 		if (!entity) return;
 		await entity.fork();
 		this.shadowRoot.querySelector('d2l-activity-quiz-manage-timing-dialog').openDialog(e);
+	}
+
+	_onDialogClose(e) {
+		if (e.detail.action === 'ok') {
+			const entity = store.get(this.href);
+			if (!entity) return;
+			entity.merge();
+		}
 	}
 }
 

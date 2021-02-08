@@ -82,6 +82,10 @@ export class Quiz {
 			return this._saving;
 		}
 
+		this._saving = this._workingCopyEntity && this._workingCopyEntity.checkin();
+		await this._saving;
+		this._saving = null;
+
 		this._saving = this._entity.save(this._makeQuizData());
 
 		await this._saving;

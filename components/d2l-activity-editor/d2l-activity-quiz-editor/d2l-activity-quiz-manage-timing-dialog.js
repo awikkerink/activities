@@ -38,11 +38,16 @@ class ActivityQuizManageTimingDialog extends ActivityEditorMixin(ActivityEditorD
 		this.open(e);
 	}
 
+	_resize() {
+		this.shadowRoot.querySelector('d2l-dialog').resize();
+	}
+
 	_renderQuizTimingEditor() {
 		return html`
 			<d2l-activity-quiz-manage-timing-editor
 				href="${this.href}"
-				.token="${this.token}">
+				.token="${this.token}"
+				@d2l-activity-quiz-manage-timing-editor-updated="${this._resize}">
 			</d2l-activity-quiz-manage-timing-editor>
 		`;
 	}
