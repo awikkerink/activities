@@ -83,5 +83,14 @@ export default {
 	"rioDialogTitle": "Information: Retake Incorrect Questions Only", // Title for RIO help dialog
 	"rioDialogParagraph": "When this setting is selected, learners who attempt a quiz more than once can only answer questions that were incorrect on the previous attempt. If you are using Automatic grading, Written Response questions will be marked as 0 and included in future attempts until they are graded manually.", // content for RIO dialog
 	"rioDialogConfirmationText": "OK", // copy that appears on the RIO help dialog confirmation button
-
+	"ipRestrictionDialogPart1": "Only learners coming from IP addresses that meet the defined restrictions can write the quiz.", // guidelines for IP restrictions dialog
+	"ipRestrictionDialogPart2": "To specify a range of accepted IP addresses, enter a value ranging from 0 to 255 in the IP Range Start and IP Range End fields, respectively.", // guidelines for IP restrictions dialog
+	"ipRestrictionDialogPart3": "To specify an individual accepted IP address, fill in just the IP Range Start.", // guidelines for IP restrictions dialog
+	"ipRestrictionDialogPart4": "Note: The IP Range Start value must be smaller than the IP Range End value.", // guidelines for IP restrictions dialog,
+	"btnIpRestrictionsDialogAdd": "Add", // text for IP restrictions dialog "Add" button
+	"btnIpRestrictionsDialogBtnCancel": "Cancel", // text for IP restrictions dialog "Cancel" button
+	"ipRestrictionsDialogAddNewRange": "Add new IP range", // text for IP restrictions dialog "Add new IP range" button
+	"ipRestrictionsTableStartRangeHdr": "IP Range Start", // text for IP restrictions table header start
+	"ipRestrictionsTableEndRangeHdr": "IP Range End", // text for IP restrictions table header end
+	"ipRestrictionsTableDeleteRangeHdr": "Delete" // text for IP restrictions table header delete
 };
