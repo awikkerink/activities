@@ -2,13 +2,23 @@ import './d2l-activity-quiz-manage-timing-editor.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
 import { ActivityEditorDialogMixin } from '../mixins/d2l-activity-editor-dialog-mixin';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin';
-import { html } from 'lit-element/lit-element';
+import { css, html } from 'lit-element/lit-element';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { sharedTiming as store } from './state/quiz-store';
 
 
 class ActivityQuizManageTimingDialog extends ActivityEditorMixin(ActivityEditorDialogMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
+	static get styles() {
+		return [
+			css`
+				#manage-timing-dialog-timing-editor {
+					height: 400px;
+				}
+			`,
+		];
+	}
+
 	constructor() {
 		super(store);
 	}
@@ -27,7 +37,7 @@ class ActivityQuizManageTimingDialog extends ActivityEditorMixin(ActivityEditorD
 				@d2l-dialog-close="${this.handleClose}"
 				width=800
 				title-text=${this.localize('subHdrTimingTools') }>
-					${this._renderQuizTimingEditor()}
+					<div id="manage-timing-dialog-timing-editor">${this._renderQuizTimingEditor()}</div>
 					<d2l-button slot="footer" primary data-dialog-action="ok">${this.localize('manageTimingDialogConfirmationText')}</d2l-button>
 					<d2l-button slot="footer" data-dialog-action>${this.localize('manageTimingDialogCancelText')}</d2l-button>
 			</d2l-dialog>
