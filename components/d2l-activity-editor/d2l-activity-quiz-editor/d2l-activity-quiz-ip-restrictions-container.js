@@ -16,8 +16,8 @@ class ActivityQuizIpRestrictionsContainer extends ActivityEditorMixin(LocalizeAc
 	static get styles() {
 		return css`
 				:host {
-					display: block;
 					border-bottom: solid 1px var(--d2l-color-gypsum);
+					display: block;
 				}
 				:host([hidden]) {
 					display: none;
