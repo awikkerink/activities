@@ -68,6 +68,7 @@ class ContentEditorDetail extends MobxLitElement {
 					.href="${contentActivityHref}"
 					.token="${this.token}"
 				>
+					${this._renderDueDate()}
 				</d2l-activity-content-lti-link-detail>
 			`;
 		}

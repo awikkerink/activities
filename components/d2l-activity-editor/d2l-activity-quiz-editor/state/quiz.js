@@ -62,6 +62,7 @@ export class Quiz {
 		this.canEditHeader = entity.canEditHeader();
 		this.headerIsDisplayed = entity.headerIsDisplayed();
 		this.headerRichTextEditorConfig = entity.headerRichTextEditorConfig();
+		this.ipRestrictionsHref = entity.ipRestrictionsHref();
 	}
 
 	async save() {
