@@ -20,7 +20,7 @@ export default {
 	"disableRightClickDescription": "Disable right click", // description for disable right click
 	"disableRightClickSummary": "Right clicks disabled", // summary text when right clicks are disabled
 	"preventMovingBackwardsDescription": "Prevent going back to previous pages",
-	"disablePagerAndAlertsDescription": "Disable Email, Instant Messages and alerts", // description for blocking communications / disable pager and alerts during a quiz
+	"disablePagerAndAlertsDescription": "Disable Email, Instant Messages and Alerts within Brightspace", // description for blocking communications / disable pager and alerts during a quiz
 	"disablePagerAndAlertsSummary": "Alerts and communication blocked", // summary text when communications / pager and alerts are disabled
 	"emailNotificationSummary": "Attempt notification by email", // summary for email notification
 	"preventMovingBackwardsSummary": "Paging limitations", // summary for prevent moving backwards checkbox
@@ -40,10 +40,10 @@ export default {
 	"autoSetGradedHelpDialogParagraph1": "When this setting is turned on users can see their score as soon as they submit their attempt. The score displayed is only what the system can auto-grade.", // content for paragraph 1 of autoSetGraded help dialog
 	"autoSetGradedHelpDialogParagraph2": "This setting must be turned on for grades to be automatically sent to the grade book, and for the default submission view to be released to users when they complete an attempt.", // content for paragraph 2 of autoSetGraded help dialog
 	"autoSetGradedHelpDialogParagraph3": "Note: Written Response questions will be marked as 0 until manually graded.", // content for paragraph 3 of autoSetGraded help dialog
-	"disableAlertsHelpDialogTitle": "Information: Disable Email, Instant Messages and Alerts", // title that appears when the disable alerts help dialog is rendered
+	"disableAlertsHelpDialogTitle": "Information: Disable Email, Instant Messages and Alerts within Brightspace", // title that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogContent": "If you turn on this option, learners cannot access the Brightspace Email, Instant Messages, or their alerts if they have a quiz attempt in progress.", // content that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogConfirmationText": "OK", // copy that appears on the disable alerts help dialog confirmation button
-	"disableAlertsAccessibleHelpText": "Get help on - Disable Email, Instant Messages and alerts", // accessible help text for disable alerts question mark button
+	"disableAlertsAccessibleHelpText": "Get help on - Disable Email, Instant Messages and Alerts within Brightspace", // accessible help text for disable alerts question mark button
 	"disableRightClickAccessibleHelpText": "Get help on - Disable Right Click", // accessible help text for disable right click question mark button
 	"disableRightClickHelpDialogTitle": "Information: Disable Right Click", // title that appears when the disable right click help dialog is rendered
 	"disableRightClickHelpDialogParagraph1": "This feature prohibits learners from printing quiz questions by right-clicking on a question while an attempt is in progress. But learners will still be able to screen capture the quiz through other technologies outside of the browser.", // content for paragraph 1 of disable right click help dialog
