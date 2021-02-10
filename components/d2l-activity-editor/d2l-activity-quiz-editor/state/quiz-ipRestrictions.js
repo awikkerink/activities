@@ -10,6 +10,7 @@ export class QuizIpRestrictions {
 		this.token = token;
 		this._saving = null;
 		this.ipRestrictions = [];
+		this.errors = [];
 	}
 
 	addRestriction() {
@@ -17,15 +18,23 @@ export class QuizIpRestrictions {
 	}
 
 	deleteIpRestriction(index) {
-		const restriction = this.ipRestrictions.splice(index, 1);
-		const isNew = restriction && restriction[0].id === undefined;
+		if (index === undefined) {
+			return;
+		}
+
+		const restriction = this.ipRestrictions.splice(index, 1)[0];
+		if (!restriction) {
+			return;
+		}
+
+		const isNew = restriction && restriction.id === undefined;
 
 		if (this.ipRestrictions.length === 0) {
 			this.ipRestrictions.push({ start: '', end: '' });
 		}
 
 		if (!isNew) {
-			this._entity.deleteIpRestriction(index);
+			this._entity.deleteIpRestriction(restriction.id);
 		}
 	}
 
@@ -66,8 +75,16 @@ export class QuizIpRestrictions {
 		});
 
 		if (errors && errors.length) {
-			//TODO: handle errors
+			this.setErrors(errors);
+
+			return;
 		}
+
+		await this.fetch();
+	}
+
+	setErrors(errors) {
+		this.errors = errors;
 	}
 
 	setIpRestriction(index, key, val) {
@@ -98,7 +115,7 @@ export class QuizIpRestrictions {
 
 			const { start, end, id } = restriction || {};
 
-			if (!start || !end) {
+			if (!start) {
 				continue;
 			}
 
@@ -122,8 +139,10 @@ decorate(QuizIpRestrictions, {
 	// props
 	canEditIpRestrictions: observable,
 	ipRestrictions: observable,
+	errors: observable,
 	// actions
 	load: action,
+	setErrors: action,
 	addRestriction: action,
 	setIpRestriction: action,
 	addIpRestriction: action,

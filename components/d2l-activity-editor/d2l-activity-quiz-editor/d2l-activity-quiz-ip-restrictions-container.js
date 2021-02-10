@@ -5,13 +5,28 @@ import 'd2l-table/d2l-th';
 import 'd2l-table/d2l-table-style.js';
 import 'd2l-table/d2l-tbody';
 import 'd2l-table/d2l-thead';
+import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin';
-import { html } from 'lit-element/lit-element';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { sharedIpRestrictions as store } from './state/quiz-store.js';
 
 class ActivityQuizIpRestrictionsContainer extends ActivityEditorMixin(LocalizeActivityQuizEditorMixin(MobxLitElement)) {
+
+	static get styles() {
+		return css`
+				:host {
+					border-bottom: solid 1px var(--d2l-color-gypsum);
+					display: block;
+				}
+				:host([hidden]) {
+					display: none;
+				}
+				d2l-button-subtle {
+					margin: 0.5rem 0;
+				}
+			`;
+	}
 
 	constructor() {
 		super(store);
@@ -39,17 +54,19 @@ class ActivityQuizIpRestrictionsContainer extends ActivityEditorMixin(LocalizeAc
 		}
 
 		entity.addRestriction();
-		this._sendResizeEvent();
 	}
 
-	_deleteIpRestriction(e, index) {
+	_deleteIpRestriction(_, index) {
 		const entity = store.get(this.href);
 		if (!entity) {
 			return;
 		}
 
+		if (entity.ipRestrictions.length > 1) {
+			this._sendResizeEvent();
+		}
+
 		entity.deleteIpRestriction(index);
-		this._sendResizeEvent();
 	}
 
 	_generateHandler(handler, rowindex) {
@@ -69,9 +86,12 @@ class ActivityQuizIpRestrictionsContainer extends ActivityEditorMixin(LocalizeAc
 
 	_renderActionButtons() {
 		return html`
-			<d2l-button @click=${this._addRow}>New</d2l-button>
-			<d2l-button @click=${this._saveRestrictions}>Add</d2l-button>
-			<d2l-button>Cancel</d2l-button>
+			<d2l-button-subtle
+				text=${this.localize('ipRestrictionsDialogAddNewRange')}
+				h-align="text"
+				icon="tier1:plus-default"
+				@click="${this._addRow}">
+			</d2l-button-subtle>
 		`;
 	}
 
@@ -88,9 +108,9 @@ class ActivityQuizIpRestrictionsContainer extends ActivityEditorMixin(LocalizeAc
 			<d2l-table id="ip-restrictions-table">
 			 	<d2l-thead>
 			 		<d2l-tr>
-			 			<d2l-th class="title">IP Range Start</d2l-th>
-			 			<d2l-th>IP Range End</d2l-th>
-			 			<d2l-th>Delete</d2l-th>
+			 			<d2l-th class="title">${this.localize('ipRestrictionsTableStartRangeHdr')}</d2l-th>
+			 			<d2l-th>${this.localize('ipRestrictionsTableEndRangeHdr')}</d2l-th>
+			 			<d2l-th>${this.localize('ipRestrictionsTableDeleteRangeHdr')}</d2l-th>
 			 		</d2l-tr>
 				</d2l-thead>
 				<d2l-tbody>
@@ -115,7 +135,7 @@ class ActivityQuizIpRestrictionsContainer extends ActivityEditorMixin(LocalizeAc
 			return html`
 				<d2l-tr>
 					<d2l-th>
-						<d2l-input-text @input="${this._generateHandler(this._handleChange, index)}" id="start" value="${start}" name="start"></d2l-input-text>
+						<d2l-input-text @input="${this._generateHandler(this._handleChange, index)}" value="${start}" id="start-range-${index}" name="start"></d2l-input-text>
 					</d2l-th>
 					<d2l-th>
 						<d2l-input-text @input="${this._generateHandler(this._handleChange, index)}" value="${end}" name="end"></d2l-input-text>
@@ -130,15 +150,6 @@ class ActivityQuizIpRestrictionsContainer extends ActivityEditorMixin(LocalizeAc
 				</d2l-tr>
 			`;
 		});
-	}
-
-	async _saveRestrictions() {
-		const entity = store.get(this.href);
-		if (!entity) {
-			return;
-		}
-
-		await entity.saveRestrictions();
 	}
 
 	_sendResizeEvent() {
