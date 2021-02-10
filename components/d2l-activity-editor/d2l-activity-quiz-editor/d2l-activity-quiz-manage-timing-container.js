@@ -7,7 +7,6 @@ import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { shared as store } from './state/quiz-store';
 
-
 class ActivityQuizManageTimingContainer extends ActivityEditorMixin(LocalizeActivityQuizEditorMixin(MobxLitElement)) {
 	static get styles() {
 		return [
@@ -15,23 +14,24 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(LocalizeActi
 		];
 	}
 
+	static get properties() {
+
+		return {
+			href: { type: String },
+			token: { type: Object },
+			workingCopyHref: { type: String }
+		};
+	}
+
 	constructor() {
 		super(store);
+		this.workingCopyHref = "";
 	}
 
 	render() {
-		const entity = store.get(this.href);
-		if (!entity) {
-			return html``;
-		}
-
-		const {
-			timingHref
-		} = entity || {};
-
 		return html`
 			${this._renderDialogOpener()}
-			${this._renderDialog(timingHref)}
+			${this._renderDialog()}
     	`;
 	}
 
@@ -43,31 +43,33 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(LocalizeActi
 		`;
 	}
 
-	_renderDialog(timingHref) {
-		if (!timingHref) return html``;
-
+	_renderDialog() {
 		return html`
 			<d2l-activity-quiz-manage-timing-dialog
-				href="${timingHref}"
+				href="${this.workingCopyHref}"
 				.token="${this.token}"
-				@d2l-dialog-close="${this._onDialogClose}">
+				@d2l-dialog-close="${this._closeDialog}">
 			</d2l-activity-quiz-manage-timing-dialog>
 		`;
+	}
+
+	async save() {
+		const entity = store.get(this.href);
+		if (!entity) return;
+		await entity.checkin();
 	}
 
 	async _openDialog(e) {
 		const entity = store.get(this.href);
 		if (!entity) return;
-		await entity.fork();
+
+		this.workingCopyHref = await entity.fork(store);
+
 		this.shadowRoot.querySelector('d2l-activity-quiz-manage-timing-dialog').openDialog(e);
 	}
 
-	_onDialogClose(e) {
-		if (e.detail.action === 'ok') {
-			const entity = store.get(this.href);
-			if (!entity) return;
-			entity.merge();
-		}
+	async _closeDialog(e) {
+		this.workingCopyHref = "";
 	}
 }
 

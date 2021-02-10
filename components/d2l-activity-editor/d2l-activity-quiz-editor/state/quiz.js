@@ -12,11 +12,7 @@ export class Quiz {
 	}
 
 	delete() {
-		if (this._workingCopyEntity) {
-			return this._workingCopyEntity.delete();
-		} else {
-			return this._entity.delete();
-		}
+		return this._entity.delete();
 	}
 
 	get dirty() {
@@ -30,22 +26,13 @@ export class Quiz {
 				remove: () => { },
 			});
 
-			let workingCopyEntity = null;
-			const workingCopySirenEntity = await fetchEntity(entity.getCheckoutHref(), this.token);
-			if (workingCopySirenEntity) {
-				workingCopyEntity = new QuizEntity(workingCopySirenEntity, this.token, {
-					remove: () => { },
-				});
-			}
-
-			this.load(entity, workingCopyEntity);
+			this.load(entity);
 		}
 		return this;
 	}
 
-	load(entity, workingCopyEntity) {
+	load(entity) {
 		this._entity = entity;
-		this._workingCopyEntity = workingCopyEntity;
 		this.name = entity.name();
 		this.canEditName = entity.canEditName();
 		this.canEditShuffle = entity.canEditShuffle();
@@ -66,11 +53,12 @@ export class Quiz {
 		this.canPreviewQuiz = entity.canPreviewQuiz();
 		this.isAutoSetGradedEnabled = entity.isAutoSetGradedEnabled();
 		this.canEditAutoSetGraded = entity.canEditAutoSetGraded();
-		this.timingHref = (workingCopyEntity && workingCopyEntity.timingHref()) || entity.timingHref();
+		this.timingHref = entity.timingHref();
 		this.description = entity.canEditDescription() ? entity.descriptionEditorHtml() : entity.descriptionHtml();
 		this.canEditDescription = entity.canEditDescription();
 		this.descriptionIsDisplayed = entity.descriptionIsDisplayed();
 		this.descriptionRichTextEditorConfig = entity.descriptionRichTextEditorConfig();
+		this.checkoutHref = entity.getCheckoutHref() || this.href;
 	}
 
 	async save() {
@@ -81,10 +69,6 @@ export class Quiz {
 		if (this._saving) {
 			return this._saving;
 		}
-
-		this._saving = this._workingCopyEntity && this._workingCopyEntity.checkin();
-		await this._saving;
-		this._saving = null;
 
 		this._saving = this._entity.save(this._makeQuizData());
 
@@ -134,24 +118,53 @@ export class Quiz {
 		this.isShuffleEnabled = isEnabled;
 	}
 
-	async fork() {
-		if (this._workingCopyEntity) {
-			const forkedSirenEntity = await this._workingCopyEntity.fork();
-			const forkedEntity = new QuizEntity(forkedSirenEntity, this.token, {
-				remove: () => { },
-			});
-			this.load(this._entity, forkedEntity);
-		}
+	async checkout(quizStore) {
+		const sirenEntity = await this._entity.checkout();
+		if (!sirenEntity) return this.href;
+
+		const href = sirenEntity.self();
+		const entity = new Quiz(href, this.token);
+		entity.load(sirenEntity);
+		quizStore.put(href, entity);
+
+		return href;
 	}
 
-	async merge() {
-		if (this._workingCopyEntity) {
-			const updatedWorkingCopySirenEntity = await this._workingCopyEntity.merge();
-			const workingCopyEntity = new QuizEntity(updatedWorkingCopySirenEntity, this.token, {
-				remove: () => { },
-			});
-			this.load(this._entity, workingCopyEntity);
+	async fork(quizStore) {
+		const sirenEntity = await this._entity.fork();
+		if (!sirenEntity) return this.href;
+
+		const href = sirenEntity.self();
+		const entity = new Quiz(href, this.token);
+		entity.load(sirenEntity);
+		quizStore.put(href, entity);
+
+		return href;
+	}
+
+	async merge(quizStore) {
+		const sirenEntity = await this._entity.merge();
+		if (!sirenEntity) return;
+
+		const href = sirenEntity.self();
+		const entity = new Quiz(href, this.token);
+		entity.load(sirenEntity);
+		quizStore.put(href, entity);
+	}
+
+	async checkin() {
+		if (!this._entity) {
+			return;
 		}
+
+		if (this._saving) {
+			return this._saving;
+		}
+
+		this._saving = this._entity.checkin();
+
+		await this._saving;
+		this._saving = null;
 	}
 
 	_makeQuizData() {
@@ -202,6 +215,7 @@ decorate(Quiz, {
 	canEditDescription: observable,
 	descriptionIsDisplayed: observable,
 	descriptionRichTextEditorConfig: observable,
+	checkoutHref: observable,
 	// actions
 	load: action,
 	setName: action,
@@ -216,6 +230,8 @@ decorate(Quiz, {
 	setDescription: action,
 	save: action,
 	delete: action,
+	checkout: action,
 	fork: action,
-	merge: action
+	merge: action,
+	checkin: action
 });
