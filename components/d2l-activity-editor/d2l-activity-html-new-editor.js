@@ -19,7 +19,6 @@ class ActivityHtmlNewEditor extends LocalizeActivityEditorMixin(LitElement) {
 				label="${this.ariaLabel}"
 				label-hidden
 				?disabled="${this.disabled}"
-				type="inline"
 				height="10rem"
 				@d2l-htmleditor-blur="${this._onContentChange}">
 			</d2l-htmleditor>
