@@ -1,7 +1,7 @@
 import 'd2l-inputs/d2l-input-text.js';
 import 'd2l-tooltip/d2l-tooltip';
 import '@brightspace-ui/core/components/button/button-subtle.js';
-import { activityContentEditorStyles } from './d2l-activity-content-editor-styles.js';
+import { activityContentEditorStyles } from '../shared-components/d2l-activity-content-editor-styles.js';
 import { ActivityEditorMixin } from '../../mixins/d2l-activity-editor-mixin.js';
 import { ErrorHandlingMixin } from '../../error-handling-mixin.js';
 import { html } from 'lit-element/lit-element.js';
@@ -12,7 +12,7 @@ import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 
-class ContentEditorLinkOptions extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivityEditorMixin(RtlMixin(ActivityEditorMixin(MobxLitElement))))) {
+class ContentEditorLtiLinkOptions extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivityEditorMixin(RtlMixin(ActivityEditorMixin(MobxLitElement))))) {
 
 	static get properties() {
 		return {
@@ -76,4 +76,4 @@ class ContentEditorLinkOptions extends SkeletonMixin(ErrorHandlingMixin(Localize
 		this.onSave(isExternalResource);
 	}
 }
-customElements.define('d2l-activity-content-editor-link-options', ContentEditorLinkOptions);
+customElements.define('d2l-activity-content-lti-link-options', ContentEditorLtiLinkOptions);
