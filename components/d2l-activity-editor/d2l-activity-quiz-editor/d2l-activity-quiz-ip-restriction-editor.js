@@ -1,5 +1,6 @@
 import '@brightspace-ui/core/components/button/button-subtle.js';
 import './d2l-activity-quiz-ip-restrictions-container.js';
+import './d2l-activity-quiz-ip-restrictions-help-dialog.js';
 import 'd2l-inputs/d2l-input-text.js';
 import { bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html } from 'lit-element/lit-element.js';
@@ -43,12 +44,8 @@ class ActivityQuizIpRestrictionEditor
 					margin: 1rem 0;
 				}
 
-				p:first-of-type {
-					margin-top: 0;
-				}
-
-				p:last-of-type {
-					margin-bottom: 1rem;
+				d2l-alert {
+					margin: 1rem 0;
 				}
 			`
 		];
@@ -87,7 +84,7 @@ class ActivityQuizIpRestrictionEditor
 				title-text="${this.localize('hdrIpRestrictionDialog')}">
 
 				${this._renderErrors()}
-				${this._renderHelpText()}
+				${this._renderHelpDialog()}
 				${this._renderIpRestrictionsContainer()}
 				${this._renderActionButtons()}
 
@@ -119,15 +116,25 @@ class ActivityQuizIpRestrictionEditor
 		if (!errors || !errors.length) {
 			return;
 		}
-		// TODO: add some error handling
+
+		return errors.map((error) => {
+
+			if (!error) {
+				error = this.localize('ipRestrictions500Error');
+			}
+
+			return html`
+				<d2l-alert type="warning">${error}</d2l-alert>
+			`;
+		});
 	}
 
-	_renderHelpText() {
+	_renderHelpDialog() {
 		return html`
-			<p class="d2l-body-compact">${this.localize('ipRestrictionDialogPart1')}</p>
-			<p class="d2l-body-compact">${this.localize('ipRestrictionDialogPart2')}</p>
-			<p class="d2l-body-compact">${this.localize('ipRestrictionDialogPart3')}</p>
-			<p class="d2l-body-compact">${this.localize('ipRestrictionDialogPart4')}</p>
+			<d2l-activity-quiz-ip-restrictions-help-dialog
+				href="${this.ipRestrictionsHref}"
+				.token="${this.token}">
+			</d2l-activity-quiz-ip-restrictions-help-dialog>
 		`;
 	}
 
@@ -154,7 +161,9 @@ class ActivityQuizIpRestrictionEditor
 
 		await entity.saveRestrictions();
 
-		this.handleClose();
+		if (!entity.errors && !entity.errors.length) {
+			this.handleClose();
+		}
 	}
 }
 
