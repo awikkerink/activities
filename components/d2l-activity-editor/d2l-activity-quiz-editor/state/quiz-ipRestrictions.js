@@ -4,6 +4,8 @@ import { QuizIpRestrictionsEntity } from 'siren-sdk/src/activities/quizzes/ipRes
 
 configureMobx({ enforceActions: 'observed' });
 
+const EMPTY_RESTRICTION = { start: '', end: '' };
+
 export class QuizIpRestrictions {
 	constructor(href, token) {
 		this.href = href;
@@ -14,7 +16,7 @@ export class QuizIpRestrictions {
 	}
 
 	addRestriction() {
-		this.ipRestrictions.push({ start: '', end: '' });
+		this.ipRestrictions.push(EMPTY_RESTRICTION);
 	}
 
 	deleteIpRestriction(index) {
@@ -30,7 +32,7 @@ export class QuizIpRestrictions {
 		const isNew = restriction && restriction.id === undefined;
 
 		if (this.ipRestrictions.length === 0) {
-			this.ipRestrictions.push({ start: '', end: '' });
+			this.ipRestrictions.push(EMPTY_RESTRICTION);
 		}
 
 		if (!isNew) {
@@ -57,6 +59,8 @@ export class QuizIpRestrictions {
 	}
 
 	async saveRestrictions() {
+		this.setErrors([]);
+
 		const restrictionsToSave = this._filterOldRestrictions();
 
 		if (!restrictionsToSave) {
@@ -70,12 +74,12 @@ export class QuizIpRestrictions {
 
 		results.forEach(res => {
 			if (res.status === 'rejected') {
-				errors.push(...res.reason.json.properties.errors);
+				errors.push(res);
 			}
 		});
 
 		if (errors && errors.length) {
-			this.setErrors(errors);
+			this._handleServerErrors(errors);
 
 			return;
 		}
@@ -132,6 +136,19 @@ export class QuizIpRestrictions {
 		}
 
 		return restrictionsToUpdate;
+	}
+
+	_handleServerErrors(errors) {
+		if (!errors || !errors.length) {
+			return;
+		}
+
+		errors.forEach((error) => {
+			if (error && error.reason && error.reason.json && error.reason.json.properties && error.reason.json.properties.errors) {
+				const { message } = error.reason.json.properties.errors[0];
+				this.setErrors([...this.errors, message ]);
+			}
+		});
 	}
 }
 
