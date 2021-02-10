@@ -72,7 +72,7 @@ class ContentEditorLtiLinkOptions extends SkeletonMixin(ErrorHandlingMixin(Local
 	}
 
 	_saveLinkOptions(e) {
-		const isExternalResource = e.target.value === 'newTab' ? true : false;
+		const isExternalResource = e.target.value === 'newTab';
 		this.onSave(isExternalResource);
 	}
 }
