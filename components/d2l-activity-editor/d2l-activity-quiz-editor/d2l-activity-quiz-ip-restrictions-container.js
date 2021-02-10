@@ -187,6 +187,7 @@ class ActivityQuizIpRestrictionsContainer extends ActivityEditorMixin(ActivityEd
 
 		if (isValid) {
 			entity.setErrors([]);
+			this._sendResizeEvent();
 		} else {
 			const errorMsg = this.localize('ipRestrictionsValidationError');
 			entity.setErrors([errorMsg]);
