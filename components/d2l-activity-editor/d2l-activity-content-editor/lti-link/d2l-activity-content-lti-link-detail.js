@@ -40,11 +40,8 @@ class ContentLTILinkDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandli
 
 	render() {
 		const ltiLinkEntity = ltiLinkStore.getContentLTILinkActivity(this.href);
-		let link = '';
-
 		if (ltiLinkEntity) {
 			this.skeleton = false;
-			link = ltiLinkEntity.link;
 		}
 
 		return html`
