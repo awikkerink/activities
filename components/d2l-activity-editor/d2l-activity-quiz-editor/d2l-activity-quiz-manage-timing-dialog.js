@@ -32,6 +32,16 @@ class ActivityQuizManageTimingDialog extends ActivityEditorMixin(ActivityEditorD
 		this.open(e);
 	}
 
+	async _closeDialog(e) {
+		const entity = store.get(this.href);
+		if (!entity) return;
+		if (e.detail.action === 'ok') {
+			await entity.checkin(store);
+		}
+
+		this.handleClose(e);
+	}
+
 	_renderDialog() {
 		return html`
 			<d2l-dialog
@@ -45,16 +55,6 @@ class ActivityQuizManageTimingDialog extends ActivityEditorMixin(ActivityEditorD
 					<d2l-button slot="footer" data-dialog-action>${this.localize('manageTimingDialogCancelText')}</d2l-button>
 			</d2l-dialog>
 		`;
-	}
-
-	async _closeDialog(e) {
-		const entity = store.get(this.href);
-		if (!entity) return;
-		if (e.detail.action === 'ok') {
-			await entity.checkin(store);
-		}
-
-		this.handleClose(e);
 	}
 
 	_renderQuizTimingEditor() {
