@@ -51,7 +51,7 @@ class ActivityQuizManageTimingDialog extends ActivityEditorMixin(ActivityEditorD
 		const entity = store.get(this.href);
 		if (!entity) return;
 		if (e.detail.action === 'ok') {
-			await entity.merge(store);
+			await entity.checkin(store);
 		}
 
 		this.handleClose(e);

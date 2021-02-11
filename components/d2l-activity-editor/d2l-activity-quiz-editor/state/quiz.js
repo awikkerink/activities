@@ -130,29 +130,7 @@ export class Quiz {
 		return href;
 	}
 
-	async fork(quizStore) {
-		const sirenEntity = await this._entity.fork();
-		if (!sirenEntity) return this.href;
-
-		const href = sirenEntity.self();
-		const entity = new Quiz(href, this.token);
-		entity.load(sirenEntity);
-		quizStore.put(href, entity);
-
-		return href;
-	}
-
-	async merge(quizStore) {
-		const sirenEntity = await this._entity.merge();
-		if (!sirenEntity) return;
-
-		const href = sirenEntity.self();
-		const entity = new Quiz(href, this.token);
-		entity.load(sirenEntity);
-		quizStore.put(href, entity);
-	}
-
-	async checkin() {
+	async checkin(quizStore) {
 		if (!this._entity) {
 			return;
 		}
@@ -162,8 +140,14 @@ export class Quiz {
 		}
 
 		this._saving = this._entity.checkin();
+		const sirenEntity = await this._saving;
+		if (!sirenEntity) return;
 
-		await this._saving;
+		const href = sirenEntity.self();
+		const entity = new Quiz(href, this.token);
+		entity.load(sirenEntity);
+		quizStore.put(href, entity);
+
 		this._saving = null;
 	}
 
@@ -231,7 +215,5 @@ decorate(Quiz, {
 	save: action,
 	delete: action,
 	checkout: action,
-	fork: action,
-	merge: action,
 	checkin: action
 });

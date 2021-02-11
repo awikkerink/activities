@@ -19,13 +19,13 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(LocalizeActi
 		return {
 			href: { type: String },
 			token: { type: Object },
-			workingCopyHref: { type: String }
+			checkedOutHref: { type: String }
 		};
 	}
 
 	constructor() {
 		super(store);
-		this.workingCopyHref = "";
+		this.checkedOutHref = "";
 	}
 
 	render() {
@@ -46,7 +46,7 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(LocalizeActi
 	_renderDialog() {
 		return html`
 			<d2l-activity-quiz-manage-timing-dialog
-				href="${this.workingCopyHref}"
+				href="${this.checkedOutHref}"
 				.token="${this.token}"
 				@d2l-dialog-close="${this._closeDialog}">
 			</d2l-activity-quiz-manage-timing-dialog>
@@ -56,20 +56,20 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(LocalizeActi
 	async save() {
 		const entity = store.get(this.href);
 		if (!entity) return;
-		await entity.checkin();
+		await entity.checkin(store);
 	}
 
 	async _openDialog(e) {
 		const entity = store.get(this.href);
 		if (!entity) return;
 
-		this.workingCopyHref = await entity.fork(store);
+		this.checkedOutHref = await entity.checkout(store);
 
 		this.shadowRoot.querySelector('d2l-activity-quiz-manage-timing-dialog').openDialog(e);
 	}
 
 	async _closeDialog(e) {
-		this.workingCopyHref = "";
+		this.checkedOutHref = "";
 	}
 }
 
