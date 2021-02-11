@@ -66,6 +66,39 @@ export class Quiz {
 		this.checkoutHref = entity.getCheckoutHref() || this.href;
 	}
 
+	async checkin(quizStore) {
+		if (!this._entity) {
+			return;
+		}
+
+		if (this._saving) {
+			return this._saving;
+		}
+
+		this._saving = this._entity.checkin();
+		const sirenEntity = await this._saving;
+		if (!sirenEntity) return;
+
+		const href = sirenEntity.self();
+		const entity = new Quiz(href, this.token);
+		entity.load(sirenEntity);
+		quizStore.put(href, entity);
+
+		this._saving = null;
+	}
+
+	async checkout(quizStore) {
+		const sirenEntity = await this._entity.checkout();
+		if (!sirenEntity) return this.href;
+
+		const href = sirenEntity.self();
+		const entity = new Quiz(href, this.token);
+		entity.load(sirenEntity);
+		quizStore.put(href, entity);
+
+		return href;
+	}
+
 	async save() {
 		if (!this._entity) {
 			return;
@@ -125,39 +158,6 @@ export class Quiz {
 
 	setShuffle(isEnabled) {
 		this.isShuffleEnabled = isEnabled;
-	}
-
-	async checkout(quizStore) {
-		const sirenEntity = await this._entity.checkout();
-		if (!sirenEntity) return this.href;
-
-		const href = sirenEntity.self();
-		const entity = new Quiz(href, this.token);
-		entity.load(sirenEntity);
-		quizStore.put(href, entity);
-
-		return href;
-	}
-
-	async checkin(quizStore) {
-		if (!this._entity) {
-			return;
-		}
-
-		if (this._saving) {
-			return this._saving;
-		}
-
-		this._saving = this._entity.checkin();
-		const sirenEntity = await this._saving;
-		if (!sirenEntity) return;
-
-		const href = sirenEntity.self();
-		const entity = new Quiz(href, this.token);
-		entity.load(sirenEntity);
-		quizStore.put(href, entity);
-
-		this._saving = null;
 	}
 
 	_makeQuizData() {

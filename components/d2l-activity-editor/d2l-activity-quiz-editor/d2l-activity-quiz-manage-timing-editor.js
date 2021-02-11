@@ -61,15 +61,6 @@ class ActivityQuizManageTimingEditor extends ActivityEditorMixin(LocalizeActivit
 		super(store);
 	}
 
-	updated(changedProperties) {
-		super.updated(changedProperties);
-
-		this.dispatchEvent(new CustomEvent('d2l-activity-quiz-manage-timing-editor-updated', {
-			bubbles: true,
-			composed: true
-		}));
-	}
-
 	render() {
 		const entity = store.get(this.href);
 		if (!entity) {
@@ -84,6 +75,15 @@ class ActivityQuizManageTimingEditor extends ActivityEditorMixin(LocalizeActivit
 			${this._renderTimeEnforcementOptions(entity)}
 			${isTimingEnforced ? html`${this._renderTimeEnforcedMenu(entity)}` : html`${this._renderRecommendedTimeLimitMenu(entity)}`}
 		`;
+	}
+
+	updated(changedProperties) {
+		super.updated(changedProperties);
+
+		this.dispatchEvent(new CustomEvent('d2l-activity-quiz-manage-timing-editor-updated', {
+			bubbles: true,
+			composed: true
+		}));
 	}
 
 	_isInputTimeInvalid(data, min, max) {

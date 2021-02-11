@@ -1,8 +1,8 @@
 import './d2l-activity-quiz-manage-timing-editor.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
+import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorDialogMixin } from '../mixins/d2l-activity-editor-dialog-mixin';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin';
-import { css, html } from 'lit-element/lit-element';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { shared as store } from './state/quiz-store';
@@ -28,6 +28,10 @@ class ActivityQuizManageTimingDialog extends ActivityEditorMixin(ActivityEditorD
     	`;
 	}
 
+	async openDialog(e) {
+		this.open(e);
+	}
+
 	_renderDialog() {
 		return html`
 			<d2l-dialog
@@ -43,10 +47,6 @@ class ActivityQuizManageTimingDialog extends ActivityEditorMixin(ActivityEditorD
 		`;
 	}
 
-	async openDialog(e) {
-		this.open(e);
-	}
-
 	async _closeDialog(e) {
 		const entity = store.get(this.href);
 		if (!entity) return;
@@ -55,10 +55,6 @@ class ActivityQuizManageTimingDialog extends ActivityEditorMixin(ActivityEditorD
 		}
 
 		this.handleClose(e);
-	}
-
-	_resize() {
-		this.shadowRoot.querySelector('d2l-dialog').resize();
 	}
 
 	_renderQuizTimingEditor() {
@@ -76,6 +72,10 @@ class ActivityQuizManageTimingDialog extends ActivityEditorMixin(ActivityEditorD
 				@d2l-activity-quiz-manage-timing-editor-updated="${this._resize}">
 			</d2l-activity-quiz-manage-timing-editor>
 		`;
+	}
+
+	_resize() {
+		this.shadowRoot.querySelector('d2l-dialog').resize();
 	}
 }
 
