@@ -204,6 +204,10 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 		store.get(this.href).setDescription(e.detail.content);
 	}
 
+	_saveHeaderOnChange(e) {
+		store.get(this.href).setHeader(e.detail.content);
+	}
+
 	async _setName(e) {
 		store.get(this.href).setName(e.target.value);
 	}
