@@ -12,7 +12,7 @@ class ActivityQuizManageTimingDialog extends ActivityEditorMixin(ActivityEditorD
 		return [
 			css`
 				#manage-timing-dialog-timing-editor {
-					height: 400px;
+					height: 500px;
 				}
 			`,
 		];
@@ -68,14 +68,9 @@ class ActivityQuizManageTimingDialog extends ActivityEditorMixin(ActivityEditorD
 		return html`
 			<d2l-activity-quiz-manage-timing-editor
 				href="${timingHref}"
-				.token="${this.token}"
-				@d2l-activity-quiz-manage-timing-editor-updated="${this._resize}">
+				.token="${this.token}">
 			</d2l-activity-quiz-manage-timing-editor>
 		`;
-	}
-
-	_resize() {
-		this.shadowRoot.querySelector('d2l-dialog').resize();
 	}
 }
 

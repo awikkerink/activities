@@ -77,15 +77,6 @@ class ActivityQuizManageTimingEditor extends ActivityEditorMixin(LocalizeActivit
 		`;
 	}
 
-	updated(changedProperties) {
-		super.updated(changedProperties);
-
-		this.dispatchEvent(new CustomEvent('d2l-activity-quiz-manage-timing-editor-updated', {
-			bubbles: true,
-			composed: true
-		}));
-	}
-
 	_isInputTimeInvalid(data, min, max) {
 		return data < min || data > max;
 	}
