@@ -48,7 +48,6 @@ export class QuizTiming {
 	}
 
 	async setExceededTimeLimitBehaviour(data) {
-		this.isAutomaticZero = data === "1";
 		await this._entity.setExceededTimeLimitBehaviour(data);
 		this.fetch();
 	}
@@ -69,7 +68,6 @@ export class QuizTiming {
 	}
 
 	async setTimingType(data) {
-		this.isTimingEnforced = data === "1";
 		await this._entity.setTimingType(data);
 		this.fetch();
 	}
