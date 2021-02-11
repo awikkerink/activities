@@ -8,12 +8,6 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { shared as store } from './state/quiz-store';
 
 class ActivityQuizManageTimingContainer extends ActivityEditorMixin(LocalizeActivityQuizEditorMixin(MobxLitElement)) {
-	static get styles() {
-		return [
-			labelStyles,
-		];
-	}
-
 	static get properties() {
 
 		return {
@@ -23,9 +17,15 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(LocalizeActi
 		};
 	}
 
+	static get styles() {
+		return [
+			labelStyles,
+		];
+	}
+
 	constructor() {
 		super(store);
-		this.checkedOutHref = "";
+		this.checkedOutHref = '';
 	}
 
 	render() {
@@ -35,12 +35,23 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(LocalizeActi
     	`;
 	}
 
-	_renderDialogOpener() {
-		return html`
-			<div id="manage-timing-editor-label" class="d2l-label-text">${this.localize('subHdrTimingTools')}</div>
-			<div class="placeholder-for-summarizer"></div>
-			<d2l-button-subtle text=${this.localize('manageTiming')} @click="${this._openDialog}" h-align="text"></d2l-button-subtle>
-		`;
+	async save() {
+		const entity = store.get(this.href);
+		if (!entity) return;
+		await entity.checkin(store);
+	}
+
+	async _closeDialog() {
+		this.checkedOutHref = '';
+	}
+
+	async _openDialog(e) {
+		const entity = store.get(this.href);
+		if (!entity) return;
+
+		this.checkedOutHref = await entity.checkout(store);
+
+		this.shadowRoot.querySelector('d2l-activity-quiz-manage-timing-dialog').openDialog(e);
 	}
 
 	_renderDialog() {
@@ -53,23 +64,12 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(LocalizeActi
 		`;
 	}
 
-	async save() {
-		const entity = store.get(this.href);
-		if (!entity) return;
-		await entity.checkin(store);
-	}
-
-	async _openDialog(e) {
-		const entity = store.get(this.href);
-		if (!entity) return;
-
-		this.checkedOutHref = await entity.checkout(store);
-
-		this.shadowRoot.querySelector('d2l-activity-quiz-manage-timing-dialog').openDialog(e);
-	}
-
-	async _closeDialog(e) {
-		this.checkedOutHref = "";
+	_renderDialogOpener() {
+		return html`
+			<div id="manage-timing-editor-label" class="d2l-label-text">${this.localize('subHdrTimingTools')}</div>
+			<div class="placeholder-for-summarizer"></div>
+			<d2l-button-subtle text=${this.localize('manageTiming')} @click="${this._openDialog}" h-align="text"></d2l-button-subtle>
+		`;
 	}
 }
 
