@@ -1,13 +1,14 @@
-import './d2l-activity-quiz-manage-timing-dialog.js';
+import './d2l-activity-quiz-manage-timing-editor.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
+import { css, html } from 'lit-element/lit-element';
+import { ActivityEditorDialogMixin } from '../mixins/d2l-activity-editor-dialog-mixin';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin';
-import { html } from 'lit-element/lit-element';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { shared as store } from './state/quiz-store';
 
-class ActivityQuizManageTimingContainer extends ActivityEditorMixin(LocalizeActivityQuizEditorMixin(MobxLitElement)) {
+class ActivityQuizManageTimingContainer extends ActivityEditorMixin(ActivityEditorDialogMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
 	static get properties() {
 
 		return {
@@ -20,6 +21,11 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(LocalizeActi
 	static get styles() {
 		return [
 			labelStyles,
+			css`
+				#manage-timing-dialog-timing-editor {
+					height: 500px;
+				}
+			`,
 		];
 	}
 
@@ -41,8 +47,15 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(LocalizeActi
 		await entity.checkin(store);
 	}
 
-	async _closeDialog() {
+	async _closeDialog(e) {
+		const entity = store.get(this.href);
+		if (!entity) return;
+		if (e.detail.action === 'ok') {
+			await entity.checkin(store);
+		}
+
 		this.checkedOutHref = '';
+		this.handleClose(e);
 	}
 
 	async _openDialog(e) {
@@ -51,16 +64,21 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(LocalizeActi
 
 		this.checkedOutHref = await entity.checkout(store);
 
-		this.shadowRoot.querySelector('d2l-activity-quiz-manage-timing-dialog').openDialog(e);
+		this.open(e);
 	}
 
 	_renderDialog() {
 		return html`
-			<d2l-activity-quiz-manage-timing-dialog
-				href="${this.checkedOutHref}"
-				.token="${this.token}"
-				@d2l-dialog-close="${this._closeDialog}">
-			</d2l-activity-quiz-manage-timing-dialog>
+			<d2l-dialog
+				id="quiz-manage-timing-dialog"
+				?opened="${this.opened}"
+				@d2l-dialog-close="${this._closeDialog}"
+				width=800
+				title-text=${this.localize('subHdrTimingTools') }>
+					<div id="manage-timing-dialog-timing-editor">${this._renderQuizTimingEditor()}</div>
+					<d2l-button slot="footer" primary data-dialog-action="ok">${this.localize('manageTimingDialogConfirmationText')}</d2l-button>
+					<d2l-button slot="footer" data-dialog-action>${this.localize('manageTimingDialogCancelText')}</d2l-button>
+			</d2l-dialog>
 		`;
 	}
 
@@ -69,6 +87,22 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(LocalizeActi
 			<div id="manage-timing-editor-label" class="d2l-label-text">${this.localize('subHdrTimingTools')}</div>
 			<div class="placeholder-for-summarizer"></div>
 			<d2l-button-subtle text=${this.localize('manageTiming')} @click="${this._openDialog}" h-align="text"></d2l-button-subtle>
+		`;
+	}
+
+	_renderQuizTimingEditor() {
+		const entity = store.get(this.checkedOutHref);
+		if (!entity) return html``;
+
+		const {
+			timingHref
+		} = entity || {};
+
+		return html`
+			<d2l-activity-quiz-manage-timing-editor
+				href="${timingHref}"
+				.token="${this.token}">
+			</d2l-activity-quiz-manage-timing-editor>
 		`;
 	}
 }
