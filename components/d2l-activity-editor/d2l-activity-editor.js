@@ -164,6 +164,20 @@ class ActivityEditor extends ActivityEditorContainerMixin(ActivityEditorTelemetr
 		}
 	}
 
+	_onRequestProvider(e) {
+		if (e.detail.key === 'd2l-provider-html-editor-enabled') {
+			e.detail.provider = this.htmlEditorEnabled;
+			e.stopPropagation();
+			return;
+		}
+
+		if (e.detail.key === 'd2l-provider-html-new-editor-enabled') {
+			e.detail.provider = this.htmlNewEditorEnabled;
+			e.stopPropagation();
+			return;
+		}
+	}
+
 	_onSaveComplete(e) {
 		if (e.detail.saveInPlace) {
 			this._saveToastVisible = true;
@@ -177,20 +191,6 @@ class ActivityEditor extends ActivityEditorContainerMixin(ActivityEditorTelemetr
 
 	_toggleBackdrop(show) {
 		this._backdropShown = show;
-	}
-
-	_onRequestProvider(e) {
-		if (e.detail.key === 'd2l-provider-html-editor-enabled') {
-			e.detail.provider = this.htmlEditorEnabled;
-			e.stopPropagation();
-			return;
-		}
-
-		if (e.detail.key === 'd2l-provider-html-new-editor-enabled') {
-			e.detail.provider = this.htmlNewEditorEnabled;
-			e.stopPropagation();
-			return;
-		}
 	}
 }
 customElements.define('d2l-activity-editor', ActivityEditor);
