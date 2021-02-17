@@ -51,7 +51,7 @@ describe('Quiz', function() {
 				headerIsDisplayed: () => true,
 				canEditHeader: () => true,
 				headerRichTextEditorConfig: () => {},
-				getCheckoutHref: () => ''
+				isBaseQuiz: () => true
 			};
 		});
 

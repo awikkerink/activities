@@ -165,6 +165,13 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 
 		if (changedProperties.has('asyncState')) {
 			this.skeleton = this.asyncState !== asyncStates.complete;
+
+			if (this.asyncState === asyncStates.complete) {
+				const quiz = store.get(this.href);
+				if (quiz) {
+					quiz.checkout(store);
+				}
+			}
 		}
 	}
 

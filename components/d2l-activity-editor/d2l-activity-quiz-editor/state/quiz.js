@@ -1,4 +1,4 @@
-import { action, configure as configureMobx, decorate, observable } from 'mobx';
+import { action, configure as configureMobx, decorate, observable, runInAction } from 'mobx';
 import { fetchEntity } from '../../state/fetch-entity.js';
 import { QuizEntity } from 'siren-sdk/src/activities/quizzes/QuizEntity.js';
 
@@ -33,13 +33,26 @@ export class Quiz {
 	}
 
 	async checkout(quizStore) {
-		const sirenEntity = await this._entity.checkout();
-		if (!sirenEntity) return this.href;
+		if (this.fixedCheckoutHref) {
+			return this.fixedCheckoutHref;
+		}
 
-		const href = sirenEntity.self();
-		const entity = new Quiz(href, this.token);
-		entity.load(sirenEntity);
-		quizStore.put(href, entity);
+		let href;
+		const sirenEntity = await this._entity.checkout();
+		if (sirenEntity) {
+			href = sirenEntity.self();
+			const entity = new Quiz(href, this.token);
+			entity.load(sirenEntity);
+			quizStore.put(href, entity);
+		} else {
+			href = this.href;
+		}
+
+		if (this._entity.isBaseQuiz()) {
+			runInAction(() => {
+				this.fixedCheckoutHref = href;
+			});
+		}
 
 		return href;
 	}
@@ -96,7 +109,7 @@ export class Quiz {
 		this.headerIsDisplayed = entity.headerIsDisplayed();
 		this.headerRichTextEditorConfig = entity.headerRichTextEditorConfig();
 		this.ipRestrictionsHref = entity.ipRestrictionsHref();
-		this.checkoutHref = entity.getCheckoutHref() || this.href;
+		this.fixedCheckoutHref = '';
 	}
 
 	async save() {
@@ -212,7 +225,7 @@ decorate(Quiz, {
 	header: observable,
 	canEditHeader: observable,
 	headerRichTextEditorConfig: observable,
-	checkoutHref: observable,
+	fixedCheckoutHref: observable,
 	// actions
 	load: action,
 	setName: action,

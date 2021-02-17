@@ -53,7 +53,7 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 		if (!entity) return html``;
 
 		const {
-			checkoutHref
+			fixedCheckoutHref
 		} = entity || {};
 
 		return html`
@@ -74,7 +74,7 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 				<li slot="summary-items">${this._renderDisablePagerAndAlertsSummary()}</li>
 
 				<div class="d2l-editors" slot="components">
-					${this._renderManageTimingContainer(checkoutHref)}
+					${this._renderManageTimingContainer(fixedCheckoutHref)}
 				</div>
 
 				<div class="d2l-editors" slot="components">
