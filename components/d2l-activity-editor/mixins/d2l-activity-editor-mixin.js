@@ -73,7 +73,7 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 					const entity = await this.store.fetch(this.href, this.token);
 					return entity && entity.checkout && entity.checkout(this.store);
 				} else {
-					this.store.fetch(this.href, this.token);
+					return this.store.fetch(this.href, this.token);
 				}
 			});
 		}
