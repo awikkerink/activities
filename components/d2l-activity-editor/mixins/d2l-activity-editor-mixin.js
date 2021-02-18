@@ -69,9 +69,11 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
 			this.store && this._fetch(async() => {
-				const entity = await this.store.fetch(this.href, this.token);
 				if (this.checkoutOnLoad) {
+					const entity = await this.store.fetch(this.href, this.token);
 					return entity && entity.checkout && entity.checkout(this.store);
+				} else {
+					this.store.fetch(this.href, this.token);
 				}
 			});
 		}
