@@ -34,6 +34,9 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 			 * Order in which the editor validation and saving occurs (lowest first)
 			 */
 			saveOrder: { attribute: 'save-order', reflect: true, type: Number },
+			checkoutOnLoad: {
+				type: Boolean
+			}
 		};
 	}
 
@@ -65,7 +68,12 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
-			this.store && this._fetch(() => this.store.fetch(this.href, this.token));
+			this.store && this._fetch(async() => {
+				const entity = await this.store.fetch(this.href, this.token);
+				if (this.checkoutOnLoad) {
+					return entity && entity.checkout && entity.checkout(this.store);
+				}
+			});
 		}
 	}
 

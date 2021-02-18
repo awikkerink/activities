@@ -12,8 +12,6 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(ActivityEdit
 	static get properties() {
 
 		return {
-			href: { type: String },
-			token: { type: Object },
 			checkedOutHref: { type: String }
 		};
 	}
@@ -32,6 +30,7 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(ActivityEdit
 	constructor() {
 		super(store);
 		this.checkedOutHref = '';
+		this.checkoutOnLoad = true;
 	}
 
 	render() {
@@ -42,14 +41,23 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(ActivityEdit
 	}
 
 	async save() {
-		const entity = store.get(this.href);
-		if (!entity) return;
-		await entity.checkin(store);
+		const quiz = store.get(this.href);
+		if (!quiz) return html``;
+
+		const {
+			fixedCheckoutHref
+		} = quiz || {};
+
+		const workingCopy = store.get(fixedCheckoutHref);
+		if (!workingCopy) return;
+
+		await workingCopy.checkin(store);
 	}
 
 	async _closeDialog(e) {
-		const entity = store.get(this.href);
+		const entity = store.get(this.checkedOutHref);
 		if (!entity) return;
+
 		if (e.detail.action === 'ok') {
 			await entity.checkin(store);
 		}
@@ -59,10 +67,17 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(ActivityEdit
 	}
 
 	async _openDialog(e) {
-		const entity = store.get(this.href);
-		if (!entity) return;
+		const quiz = store.get(this.href);
+		if (!quiz) return html``;
 
-		this.checkedOutHref = await entity.checkout(store);
+		const {
+			fixedCheckoutHref
+		} = quiz || {};
+
+		const workingCopy = store.get(fixedCheckoutHref);
+		if (!workingCopy) return;
+
+		this.checkedOutHref = await workingCopy.checkout(store);
 
 		this.open(e);
 	}
