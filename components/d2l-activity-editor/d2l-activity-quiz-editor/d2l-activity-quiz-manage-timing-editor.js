@@ -116,7 +116,7 @@ class ActivityQuizManageTimingEditor extends ActivityEditorMixin(LocalizeActivit
 						label=${this.localize('minutesLabel')}
 						title=${this.localize('minutesLabel')}
 						?label-hidden=${hideMinutesLabel}
-						value=${recommendedTimeLimit}
+						value=${recommendedTimeLimit.value}
 						min=${minRecommendedTimeLimit}
 						max=${maxRecommendedTimeLimit}
 						?required=${inputValueRequired}
