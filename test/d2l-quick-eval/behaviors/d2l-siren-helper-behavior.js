@@ -259,7 +259,7 @@
 						value: 'Y3Rpb24iOjB9'
 					}
 				];
-				const expectedEvalLink = url + '&cfi=filter~96W3siU29ydCI6eyJJ|sort~Y3Rpb24iOjB9';
+				const expectedEvalLink = url + '&cfi=filter~96W3siU29ydCI6eyJJ%7Csort~Y3Rpb24iOjB9';
 
 				const evalLink = component._buildRelativeUri(url, params);
 				assert.equal(evalLink, expectedEvalLink);
@@ -276,7 +276,7 @@
 						value: 'Y3Rpb24iOjB9'
 					}
 				];
-				const expectedEvalLink = url + '?cfi=filter~96W3siU29ydCI6eyJJ|sort~Y3Rpb24iOjB9';
+				const expectedEvalLink = url + '?cfi=filter~96W3siU29ydCI6eyJJ%7Csort~Y3Rpb24iOjB9';
 
 				const evalLink = component._buildRelativeUri(url, params);
 				assert.equal(evalLink, expectedEvalLink);
