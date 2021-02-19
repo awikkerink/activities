@@ -47,24 +47,29 @@ export class QuizTiming {
 		this.maxEnforcedGraceLimit = entity.maxEnforcedGraceLimit();
 	}
 
-	setExceededTimeLimitBehaviour(data) {
-		this._entity.setExceededTimeLimitBehaviour(data);
+	async setExceededTimeLimitBehaviour(data) {
+		await this._entity.setExceededTimeLimitBehaviour(data);
+		this.fetch();
 	}
 
-	setExtendedDeadline(data) {
-		this._entity.setExtendedDeadline(data);
+	async setExtendedDeadline(data) {
+		await this._entity.setExtendedDeadline(data);
+		this.fetch();
 	}
 
-	setGracePeriod(data) {
-		this._entity.setGracePeriod(data);
+	async setGracePeriod(data) {
+		await this._entity.setGracePeriod(data);
+		this.fetch();
 	}
 
-	setTimeLimit(data) {
-		this._entity.setTimeLimit(data);
+	async setTimeLimit(data) {
+		await this._entity.setTimeLimit(data);
+		this.fetch();
 	}
 
-	setTimingType(data) {
-		this._entity.setTimingType(data);
+	async setTimingType(data) {
+		await this._entity.setTimingType(data);
+		this.fetch();
 	}
 
 	_makeQuizData() {
