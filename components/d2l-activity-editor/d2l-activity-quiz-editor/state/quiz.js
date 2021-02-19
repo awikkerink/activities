@@ -33,7 +33,7 @@ export class Quiz {
 		this._saving = null;
 	}
 
-	async checkout(quizStore, forcedCheckout) {
+	checkout(quizStore, forcedCheckout) {
 		if (!forcedCheckout && this._checkedOut) {
 			return this._checkedOut;
 		}
