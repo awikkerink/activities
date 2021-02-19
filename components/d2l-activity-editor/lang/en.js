@@ -77,6 +77,7 @@ export default {
 	"editor.noLabel": "No",
 	"editor.notificationEmailLabel": "Notification Email", // Label for notification email input field
 	"editor.invalidNotificationEmailError": "Please enter a valid email address", // error shown on tooltip when notification email is invalid
+	"editor.gradeOutOf": "Grade Out Of", // ARIA label for the grade out of field, when creating/editing an activity
 
 	"rubrics.btnAddRubric": "Add rubric", //text for add rubric button
 	"rubrics.btnCreateNew": "Create New", //Text for create new dropdown
