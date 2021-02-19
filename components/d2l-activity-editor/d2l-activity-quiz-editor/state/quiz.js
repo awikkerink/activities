@@ -32,9 +32,9 @@ export class Quiz {
 		this._saving = null;
 	}
 
-	async checkout(quizStore) {
-		if (this.fixedCheckoutHref) {
-			return this.fixedCheckoutHref;
+	async checkout(quizStore, forceCheckout) {
+		if (!forceCheckout && this.checkedOutHref) {
+			return this.checkedOutHref;
 		}
 
 		let href;
@@ -48,11 +48,9 @@ export class Quiz {
 			href = this.href;
 		}
 
-		if (this._entity.isBaseQuiz()) {
-			runInAction(() => {
-				this.fixedCheckoutHref = href;
-			});
-		}
+		runInAction(() => {
+			this.checkedOutHref = href;
+		});
 
 		return href;
 	}
@@ -109,7 +107,7 @@ export class Quiz {
 		this.headerIsDisplayed = entity.headerIsDisplayed();
 		this.headerRichTextEditorConfig = entity.headerRichTextEditorConfig();
 		this.ipRestrictionsHref = entity.ipRestrictionsHref();
-		this.fixedCheckoutHref = '';
+		this.checkedOutHref = '';
 	}
 
 	async save() {
@@ -225,7 +223,7 @@ decorate(Quiz, {
 	header: observable,
 	canEditHeader: observable,
 	headerRichTextEditorConfig: observable,
-	fixedCheckoutHref: observable,
+	checkedOutHref: observable,
 	// actions
 	load: action,
 	setName: action,

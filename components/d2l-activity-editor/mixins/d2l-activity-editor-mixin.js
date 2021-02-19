@@ -36,6 +36,9 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 			saveOrder: { attribute: 'save-order', reflect: true, type: Number },
 			checkoutOnLoad: {
 				type: Boolean
+			},
+			checkedOutHref: {
+				type: String
 			}
 		};
 	}
@@ -71,7 +74,9 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 			this.store && this._fetch(async() => {
 				if (this.checkoutOnLoad) {
 					const entity = await this.store.fetch(this.href, this.token);
-					return entity && entity.checkout && entity.checkout(this.store);
+					if (entity && entity.checkout) {
+						this.checkedOutHref = await entity.checkout(this.store);
+					}
 				} else {
 					return this.store.fetch(this.href, this.token);
 				}
