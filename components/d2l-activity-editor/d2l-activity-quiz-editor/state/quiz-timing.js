@@ -1,7 +1,6 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { fetchEntity } from '../../state/fetch-entity.js';
 import { QuizTimingEntity } from 'siren-sdk/src/activities/quizzes/timing/QuizTimingEntity.js';
-import { Classes } from 'siren-sdk/src/hypermedia-constants';
 
 configureMobx({ enforceActions: 'observed' });
 
@@ -49,7 +48,7 @@ export class QuizTiming {
 	}
 
 	async setExceededTimeLimitBehaviour(data) {
-		this.isAutomaticZero = data === Classes.quizzes.timing.automaticZero;
+		this.isAutomaticZero = this._entity.isAutomaticZero(data);
 		await this._entity.setExceededTimeLimitBehaviour(data);
 		this.fetch();
 	}
@@ -70,7 +69,7 @@ export class QuizTiming {
 	}
 
 	async setTimingType(data) {
-		this.isTimingEnforced = data === Classes.quizzes.timing.enforced;
+		this.isTimingEnforced = this._entity.isTimingEnforced(data);
 		await this._entity.setTimingType(data);
 		this.fetch();
 	}
