@@ -243,7 +243,7 @@ class ActivityScoreEditor extends SkeletonMixin(ActivityEditorMixin(LocalizeActi
 							<d2l-dropdown-menu id="grade-dropdown" align="start" no-pointer vertical-offset="3px">
 								<d2l-menu label="${inGrades ? this.localize('editor.inGrades') : this.localize('editor.notInGrades')}">
 									<d2l-menu-item
-										text="${this.localize('editor.chooseFromGrades')}"
+										text="${this._createSelectboxGradeItemEnabled ? this.localize('editor.editLinkExisting') : this.localize('editor.chooseFromGrades')}"
 										@d2l-menu-item-select="${this._chooseFromGrades}"
 									></d2l-menu-item>
 									${this._addOrRemoveMenuItem()}
