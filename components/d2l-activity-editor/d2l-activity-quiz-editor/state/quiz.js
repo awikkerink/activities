@@ -9,6 +9,7 @@ export class Quiz {
 		this.href = href;
 		this.token = token;
 		this._saving = null;
+		this._checkedOut = null;
 	}
 
 	async checkin(quizStore) {
@@ -32,27 +33,31 @@ export class Quiz {
 		this._saving = null;
 	}
 
-	async checkout(quizStore, forceCheckout) {
-		if (!forceCheckout && this.checkedOutHref) {
-			return this.checkedOutHref;
+	async checkout(quizStore, forcedCheckout) {
+		if (!forcedCheckout && this._checkedOut) {
+			return this._checkedOut;
 		}
 
 		let href;
-		const sirenEntity = await this._entity.checkout();
-		if (sirenEntity) {
-			href = sirenEntity.self();
-			const entity = new Quiz(href, this.token);
-			entity.load(sirenEntity);
-			quizStore.put(href, entity);
-		} else {
-			href = this.href;
-		}
 
-		runInAction(() => {
-			this.checkedOutHref = href;
+		const p = new Promise(async(resolve) => {
+			const sirenEntity = await this._entity.checkout();
+			if (sirenEntity) {
+				href = sirenEntity.self();
+				const entity = new Quiz(href, this.token);
+				entity.load(sirenEntity);
+				quizStore.put(href, entity);
+			}
+			resolve(href);
 		});
 
-		return href;
+		runInAction(() => {
+			if (!forcedCheckout) {
+				this._checkedOut = p;
+			}
+		});
+
+		return p;
 	}
 
 	delete() {
@@ -107,7 +112,6 @@ export class Quiz {
 		this.headerIsDisplayed = entity.headerIsDisplayed();
 		this.headerRichTextEditorConfig = entity.headerRichTextEditorConfig();
 		this.ipRestrictionsHref = entity.ipRestrictionsHref();
-		this.checkedOutHref = '';
 	}
 
 	async save() {
@@ -223,7 +227,6 @@ decorate(Quiz, {
 	header: observable,
 	canEditHeader: observable,
 	headerRichTextEditorConfig: observable,
-	checkedOutHref: observable,
 	// actions
 	load: action,
 	setName: action,
