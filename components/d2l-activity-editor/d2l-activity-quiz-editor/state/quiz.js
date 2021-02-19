@@ -38,26 +38,24 @@ export class Quiz {
 			return this._checkedOut;
 		}
 
-		let href;
-
-		const p = new Promise(async(resolve) => {
-			const sirenEntity = await this._entity.checkout();
+		let href = this.href;
+		const getHrefPromise = this._entity.checkout().then(sirenEntity => {
 			if (sirenEntity) {
 				href = sirenEntity.self();
 				const entity = new Quiz(href, this.token);
 				entity.load(sirenEntity);
 				quizStore.put(href, entity);
 			}
-			resolve(href);
+			return href;
+		}, () => {
+			return href;
 		});
 
-		runInAction(() => {
-			if (!forcedCheckout) {
-				this._checkedOut = p;
-			}
-		});
+		if (!forcedCheckout) {
+			this._checkedOut = getHrefPromise;
+		}
 
-		return p;
+		return getHrefPromise;
 	}
 
 	delete() {
