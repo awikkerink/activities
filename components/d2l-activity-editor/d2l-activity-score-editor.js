@@ -192,7 +192,6 @@ class ActivityScoreEditor extends SkeletonMixin(ActivityEditorMixin(LocalizeActi
 		} = activity && activity.scoreAndGrade || {};
 
 		this._focusUngraded = isUngraded;
-		const outOfLang = this._createSelectboxGradeItemEnabled ? this.localize('editor.gradeOutOf') : this.localize('editor.scoreOutOf');
 
 		return isUngraded || this.skeleton ? html`
 			<div id="ungraded-button-container" class="d2l-skeletize">
@@ -209,7 +208,7 @@ class ActivityScoreEditor extends SkeletonMixin(ActivityEditorMixin(LocalizeActi
 				<div id="score-out-of-container">
 					<d2l-input-text
 						id="score-out-of"
-						label="${outOfLang}"
+						label="${this._createSelectboxGradeItemEnabled ? this.localize('editor.gradeOutOf') : this.localize('editor.scoreOutOf')}"
 						label-hidden
 						value="${scoreOutOf}"
 						size=4

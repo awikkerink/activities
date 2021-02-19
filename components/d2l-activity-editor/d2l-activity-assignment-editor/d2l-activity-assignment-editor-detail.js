@@ -118,7 +118,6 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 		} = assignment || {};
 
 		const hasSubmissions = assignment && assignment.submissionAndCompletionProps.assignmentHasSubmissions;
-		const outOfLang = this._createSelectboxGradeItemEnabled ? this.localize('gradeOutOf') : this.localize('scoreOutOf');
 
 		return html`
 			<d2l-alert ?hidden=${!hasSubmissions}>
@@ -158,7 +157,7 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 			<div id="score-and-duedate-container">
 				<div id="score-container" class="d2l-editor-layout-section">
 					<div class="d2l-activity-label-container d2l-label-text d2l-skeletize">
-						${outOfLang}
+						${this._createSelectboxGradeItemEnabled ? this.localize('gradeOutOf') : this.localize('scoreOutOf')}
 					</div>
 					<d2l-activity-score-editor
 						?skeleton="${this.skeleton}"
