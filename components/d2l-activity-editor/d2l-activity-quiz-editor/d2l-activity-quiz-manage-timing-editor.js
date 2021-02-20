@@ -34,9 +34,9 @@ class ActivityQuizManageTimingEditor extends ActivityEditorMixin(RtlMixin(Locali
 					margin-bottom: 0.9rem;
 				}
 				.d2l-input-number-label {
+					line-height: 2rem;
 					margin-left: 0.2rem;
 					margin-right: 0.2rem;
-					line-height: 2rem;
 				}
 				.d2l-time-menu-container {
 					margin-left: 1.7rem;
@@ -52,12 +52,12 @@ class ActivityQuizManageTimingEditor extends ActivityEditorMixin(RtlMixin(Locali
 					margin-right: 0.7rem;
 				}
 				:host([dir="rtl"]) .d2l-time-enforcement-input-container > * {
-					margin-right: 0;
 					margin-left: 0.7rem;
+					margin-right: 0;
 				}
 				:host([dir="rtl"]) .d2l-time-enforcement-input-container > *:last-of-type, .d2l-time-enforcement-input-container > *:last-of-type {
-					margin-right: 0;
 					margin-left: 0;
+					margin-right: 0;
 				}
 				.d2l-timing-option-container {
 					display: flex;
