@@ -21,7 +21,7 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(ActivityEdit
 			labelStyles,
 			css`
 				#manage-timing-dialog-timing-editor {
-					height: 500px;
+					height: 430px;
 				}
 			`,
 		];

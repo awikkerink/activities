@@ -6,10 +6,11 @@ import { labelStyles } from '@brightspace-ui/core/components/typography/styles.j
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
+import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles';
 import { sharedTiming as store } from './state/quiz-store';
 
-class ActivityQuizManageTimingEditor extends ActivityEditorMixin(LocalizeActivityQuizEditorMixin(MobxLitElement)) {
+class ActivityQuizManageTimingEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
 	static get styles() {
 		return [
 			inputLabelStyles,
@@ -35,6 +36,7 @@ class ActivityQuizManageTimingEditor extends ActivityEditorMixin(LocalizeActivit
 				.d2l-input-number-label {
 					margin-left: 0.2rem;
 					margin-right: 0.2rem;
+					line-height: 2rem;
 				}
 				.d2l-time-menu-container {
 					margin-left: 1.7rem;
@@ -43,7 +45,19 @@ class ActivityQuizManageTimingEditor extends ActivityEditorMixin(LocalizeActivit
 				.d2l-time-enforcement-input-container {
 					display: flex;
 					flex-direction: row;
+					flex-wrap: wrap;
+				}
+				.d2l-time-enforcement-input-container > * {
 					margin-bottom: 0.8rem;
+					margin-right: 0.7rem;
+				}
+				:host([dir="rtl"]) .d2l-time-enforcement-input-container > * {
+					margin-right: 0;
+					margin-left: 0.7rem;
+				}
+				:host([dir="rtl"]) .d2l-time-enforcement-input-container > *:last-of-type, .d2l-time-enforcement-input-container > *:last-of-type {
+					margin-right: 0;
+					margin-left: 0;
 				}
 				.d2l-timing-option-container {
 					display: flex;
@@ -121,9 +135,7 @@ class ActivityQuizManageTimingEditor extends ActivityEditorMixin(LocalizeActivit
 						max=${maxRecommendedTimeLimit}
 						?required=${inputValueRequired}
 						@change=${this._setTimeLimit}>
-						<div slot="after">
-							<span class="d2l-input-number-label">${this.localize('minutesLabel')}</span>
-						</div>
+						<span class="d2l-input-number-label" slot="after">${this.localize('minutesLabel')}</span>
 					</d2l-input-number>
 				</div>
 					<label>
@@ -164,9 +176,7 @@ class ActivityQuizManageTimingEditor extends ActivityEditorMixin(LocalizeActivit
 						max=${type.max}
 						?required=${inputValueRequired}
 						@change=${type.change}>
-						<div slot="after">
-							<span class="d2l-input-number-label">${type.slot}</span>
-						</div>
+						<span class='d2l-input-number-label' slot="after">${type.slot}</span>
 					</d2l-input-number>`)}
 				</div>
 				<div class="d2l-input-label">${this.localize('subHdrExceededTimeLimitBehaviour')}</div>
