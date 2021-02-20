@@ -45,6 +45,7 @@ export default {
 	"editor.cancel": "Cancel", // Text of dialog button to cancel action
 	"editor.ariaToolbarShortcutInstructions": "Press ALT-F10 for toolbar, and press ESC to exit toolbar once inside.", // Instructions for screenreader users on how to enter and exit the html editor toolbar
 	"editor.chooseFromGrades": "Choose from Grades", // Link text and dialog title for the edit grades dialog,
+	"editor.editLinkExisting": "Edit or Link to Existing", // New Link text and dialog title for the edit grades dialog,
 	"editor.hdrRubrics": "Rubrics", //Header for the rubrics section
 	"editor.startBeforeEndDate": "Start Date must be before End Date",
 	"editor.dueBetweenStartEndDate": "Due Date must be after Start Date and before or equal to End Date",
