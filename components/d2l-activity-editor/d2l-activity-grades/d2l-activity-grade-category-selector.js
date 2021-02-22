@@ -8,7 +8,9 @@ import { shared as store } from '../state/activity-store.js';
 
 class ActivityGradeCategorySelector extends ActivityEditorMixin(LocalizeActivityEditorMixin(MobxLitElement)) {
 	static get properties() {
-		return {};
+		return {
+			_showCategories: { type: Boolean },
+		};
 	}
 
 	static get styles() {
@@ -37,6 +39,7 @@ class ActivityGradeCategorySelector extends ActivityEditorMixin(LocalizeActivity
 
 	constructor() {
 		super(store);
+		this._showCategories = false;
 	}
 
 	render() {
@@ -54,7 +57,13 @@ class ActivityGradeCategorySelector extends ActivityEditorMixin(LocalizeActivity
 		} = this.newGradeCandidatesCollection;
 
 		return html`
-			<div id="d2l-activity-grade-category-selector">
+			<d2l-button-subtle
+				icon="tier1:plus-large"
+				?hidden="${this._showCategories}"
+				text="${this.localize('grades.newGradeItemCategory')}"
+				@click="${() => this.setShowCategories(true)}">
+			</d2l-button-subtle>
+			<div id="d2l-activity-grade-category-selector" ?hidden="${!this._showCategories}">
 				<label class="d2l-label-text">${this.localize('grades.newGradeItemCategory')}</label>
 				<select
 					id="grade-categories"
@@ -77,7 +86,9 @@ class ActivityGradeCategorySelector extends ActivityEditorMixin(LocalizeActivity
 			this.newGradeCandidatesCollection.setSelected();
 		}
 	}
-
+	setShowCategories(value) {
+		this._showCategories = value;
+	}
 }
 
 customElements.define('d2l-activity-grade-category-selector', ActivityGradeCategorySelector);
