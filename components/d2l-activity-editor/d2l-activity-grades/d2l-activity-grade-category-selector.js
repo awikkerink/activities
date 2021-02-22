@@ -10,6 +10,7 @@ class ActivityGradeCategorySelector extends ActivityEditorMixin(LocalizeActivity
 	static get properties() {
 		return {
 			_showCategories: { type: Boolean },
+			_createSelectboxGradeItemEnabled: { type: Boolean }
 		};
 	}
 
@@ -42,6 +43,20 @@ class ActivityGradeCategorySelector extends ActivityEditorMixin(LocalizeActivity
 		this._showCategories = false;
 	}
 
+	connectedCallback() {
+		super.connectedCallback();
+
+		const event = new CustomEvent('d2l-request-provider', {
+			detail: { key: 'd2l-provider-create-selectbox-grade-item-enabled' },
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+		this.dispatchEvent(event);
+
+		this._createSelectboxGradeItemEnabled = event.detail.provider;
+	}
+
 	render() {
 		const activity = store.get(this.href);
 
@@ -59,11 +74,11 @@ class ActivityGradeCategorySelector extends ActivityEditorMixin(LocalizeActivity
 		return html`
 			<d2l-button-subtle
 				icon="tier1:plus-large"
-				?hidden="${this._showCategories}"
+				?hidden="${this._showCategories || !this._createSelectboxGradeItemEnabled}"
 				text="${this.localize('grades.newGradeItemCategory')}"
 				@click="${() => this.setShowCategories(true)}">
 			</d2l-button-subtle>
-			<div id="d2l-activity-grade-category-selector" ?hidden="${!this._showCategories}">
+			<div id="d2l-activity-grade-category-selector" ?hidden="${!this._showCategories && this._createSelectboxGradeItemEnabled}">
 				<label class="d2l-label-text">${this.localize('grades.newGradeItemCategory')}</label>
 				<select
 					id="grade-categories"
