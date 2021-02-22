@@ -140,7 +140,11 @@ class ActivityQuizManageTimingEditor extends ActivityEditorMixin(RtlMixin(Locali
 				</div>
 					<label>
 						<span class="d2l-italic-label">${this.localize('showClockLabel')}</span>
-						<d2l-input-checkbox ?checked=${showClock}>${this.localize('showClockTitle')}</d2l-input-checkbox>
+						<d2l-input-checkbox
+							?checked=${showClock}
+							@change="${this._setShowClock}">
+							${this.localize('showClockTitle')}
+						</d2l-input-checkbox>
 					</label>
 				</div>
 			</div>
@@ -234,6 +238,11 @@ class ActivityQuizManageTimingEditor extends ActivityEditorMixin(RtlMixin(Locali
 			return;
 		}
 		entity && entity.setGracePeriod(data);
+	}
+	_setShowClock(e) {
+		const entity = store.get(this.href);
+		const data = e.target.checked;
+		entity && entity.setShowClock(data);
 	}
 	_setTimeLimit(e) {
 		const entity = store.get(this.href);

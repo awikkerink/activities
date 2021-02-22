@@ -63,6 +63,11 @@ export class QuizTiming {
 		this.fetch();
 	}
 
+	async setShowClock(data) {
+		await this._entity.setShowClock(data);
+		this.fetch();
+	}
+
 	async setTimeLimit(data) {
 		await this._entity.setTimeLimit(data);
 		this.fetch();
@@ -108,6 +113,7 @@ decorate(QuizTiming, {
 	setTimingType: action,
 	setExceededTimeLimitBehaviour: action,
 	setGracePeriod: action,
+	setShowClock: action,
 	setTimeLimit: action,
 	setExtendedDeadline: action
 });
