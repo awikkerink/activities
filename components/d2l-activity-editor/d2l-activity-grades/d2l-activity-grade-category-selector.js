@@ -76,7 +76,7 @@ class ActivityGradeCategorySelector extends ActivityEditorMixin(LocalizeActivity
 				icon="tier1:plus-large"
 				?hidden="${this._showCategories || !this._createSelectboxGradeItemEnabled}"
 				text="${this.localize('grades.newGradeItemCategory')}"
-				@click="${() => this.setShowCategories(true)}">
+				@click="${this.setShowCategories}">
 			</d2l-button-subtle>
 			<div id="d2l-activity-grade-category-selector" ?hidden="${!this._showCategories && this._createSelectboxGradeItemEnabled}">
 				<label class="d2l-label-text">${this.localize('grades.newGradeItemCategory')}</label>
@@ -94,15 +94,15 @@ class ActivityGradeCategorySelector extends ActivityEditorMixin(LocalizeActivity
 			</div>
 		`;
 	}
+	setShowCategories(value = true) {
+		this._showCategories = value;
+	}
 	_setSelected(e) {
 		if (e.target && e.target.value) {
 			this.newGradeCandidatesCollection.setSelected(e.target.value);
 		} else {
 			this.newGradeCandidatesCollection.setSelected();
 		}
-	}
-	setShowCategories(value) {
-		this._showCategories = value;
 	}
 }
 
