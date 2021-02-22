@@ -64,14 +64,14 @@ class ContentModuleDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 					${this.localize('content.description')}
 				</div>
 				<div class="d2l-skeletize">
-				<d2l-activity-text-editor
-					.ariaLabel="content-description"
-					.key="content-description"
-					.value="${descriptionRichText}"
-					@d2l-activity-html-editor-change="${this._onRichtextChange}"
-					.richtextEditorConfig="${{}}"
-				>
-				</d2l-activity-text-editor>
+					<d2l-activity-text-editor
+						.ariaLabel="content-description"
+						.key="content-description"
+						.value="${descriptionRichText}"
+						@d2l-activity-html-editor-change="${this._onRichtextChange}"
+						.richtextEditorConfig="${{}}"
+					>
+					</d2l-activity-text-editor>
 				</div>
 			</div>
 		`;
