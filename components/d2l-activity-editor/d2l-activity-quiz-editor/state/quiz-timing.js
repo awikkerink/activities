@@ -76,6 +76,10 @@ export class QuizTiming {
 
 	async updateProperty(updateFunc) {
 		const entity = await updateFunc();
+		// The siren-sdk function called to perform an action first checks that the entity has permission to do so.
+		// If the entity lacks permission, the function returns `undefined`, otherwise it returns a reconstructed siren-sdk timing entity.
+		// If `undefined` is returned, it likely means the UI is out of sync with the entity state, and disallowed actions can be performed.
+		// In this case, we should attempt to reload the MobX object, so that the UI state is in sync again.
 		if (!entity) {
 			this.fetch();
 		}
