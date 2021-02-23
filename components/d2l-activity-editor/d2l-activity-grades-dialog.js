@@ -127,7 +127,10 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 								</div>
 							</div>
 						</div>
-						<d2l-activity-grade-category-selector .href="${this.href}" .token="${this.token}"></d2l-activity-grade-category-selector>
+						<d2l-activity-grade-category-selector
+							.href="${this.href}"
+							.token="${this.token}">
+						</d2l-activity-grade-category-selector>
 					` : html`
 						<div class="d2l-body-small">
 							${this.localize('editor.noGradeCreatePermission')}
@@ -206,6 +209,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 	}
 
 	_onDialogOpen(e) {
+		this.shadowRoot.querySelector('d2l-activity-grade-category-selector').setShowCategories(false);
 		e.target.resize();
 	}
 
