@@ -219,7 +219,7 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 					<div class=${classMap(nameClasses)}>
 						${this._name}
 					</div>
-					<div class=${classMap(secondaryClasses)} slot="supporting-info">
+					<div class=${classMap(secondaryClasses)} slot="secondary">
 						${dateTemplate}
 						${separatorTemplate}
 						${this._orgName || this._orgCode}
