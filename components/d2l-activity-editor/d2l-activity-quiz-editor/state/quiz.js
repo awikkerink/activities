@@ -62,8 +62,14 @@ export class Quiz {
 		return this._entity.delete();
 	}
 
-	get dirty() {
-		return !this._entity.equals(this._makeQuizData());
+	async dirty(quizStore) {
+		const checkedOutHref = await this._checkedOut;
+		const checkedOutEntity = quizStore && quizStore.get(checkedOutHref);
+
+		const isQuizDirty = !this._entity.equals(this._makeQuizData()) || this._entity.canCheckin();
+		const isCheckedOutEntityDirty = checkedOutEntity && await checkedOutEntity.dirty();
+
+		return isQuizDirty || isCheckedOutEntityDirty;
 	}
 
 	async fetch() {
