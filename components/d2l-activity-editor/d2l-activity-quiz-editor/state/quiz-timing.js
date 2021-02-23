@@ -47,36 +47,39 @@ export class QuizTiming {
 		this.maxEnforcedGraceLimit = entity.maxEnforcedGraceLimit();
 	}
 
-	async setExceededTimeLimitBehaviour(data) {
+	setExceededTimeLimitBehaviour(data) {
 		this.isAutomaticZero = this._entity.isAutomaticZero(data);
-		await this._entity.setExceededTimeLimitBehaviour(data);
-		this.fetch();
+		this.updateProperty(() => this._entity.setExceededTimeLimitBehaviour(data));
+
 	}
 
-	async setExtendedDeadline(data) {
-		await this._entity.setExtendedDeadline(data);
-		this.fetch();
+	setExtendedDeadline(data) {
+		this.updateProperty(() => this._entity.setExtendedDeadline(data));
 	}
 
-	async setGracePeriod(data) {
-		await this._entity.setGracePeriod(data);
-		this.fetch();
+	setGracePeriod(data) {
+		this.updateProperty(() => this._entity.setGracePeriod(data));
 	}
 
-	async setShowClock(data) {
-		await this._entity.setShowClock(data);
-		this.fetch();
+	setShowClock(data) {
+		this.updateProperty(() => this._entity.setShowClock(data));
 	}
 
-	async setTimeLimit(data) {
-		await this._entity.setTimeLimit(data);
-		this.fetch();
+	setTimeLimit(data) {
+		this.updateProperty(() => this._entity.setTimeLimit(data));
 	}
 
-	async setTimingType(data) {
+	setTimingType(data) {
 		this.isTimingEnforced = this._entity.isTimingEnforced(data);
-		await this._entity.setTimingType(data);
-		this.fetch();
+		this.updateProperty(() => this._entity.setTimingType(data));
+	}
+
+	async updateProperty(updateFunc) {
+		const entity = await updateFunc();
+		if (!entity) {
+			this.fetch();
+		}
+		this._entity = entity;
 	}
 
 	_makeQuizData() {
