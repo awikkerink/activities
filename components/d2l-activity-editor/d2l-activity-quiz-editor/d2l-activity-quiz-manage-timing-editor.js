@@ -43,9 +43,9 @@ class ActivityQuizManageTimingEditor extends ActivityEditorMixin(RtlMixin(Locali
 					margin-right: 1.7rem;
 				}
 				.d2l-manage-timing-editor-timing-type-title {
+					margin-bottom: 0.8rem;
 					margin-left: 1.7rem;
 					margin-right: 1.7rem;
-					margin-bottom: 0.8rem;
 				}
 				.d2l-manage-timing-editor-submission-late-type-id-title {
 					margin-bottom: 0.8rem;
