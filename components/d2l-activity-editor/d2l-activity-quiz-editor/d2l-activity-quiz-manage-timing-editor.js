@@ -119,8 +119,8 @@ class ActivityQuizManageTimingEditor extends ActivityEditorMixin(RtlMixin(Locali
 						<select class="d2l-input-select" @change=${this._setExtendedDeadline}>
 							${extendedDeadlineOptions.map((option) => html`
 							<option value=${option.value} ?selected=${option.selected}>${option.value}</option>`)}
-						</select>` : html`<span>${extendedDeadline}</span>`
-					}
+						</select>
+					` : html`<span>${extendedDeadline}</span>`}
 					<span class='d2l-input-number-label'>${this.localize('extendedDeadlineInputLabel')}</span>
 				</label>
 			</div> ` : null;
@@ -216,9 +216,10 @@ class ActivityQuizManageTimingEditor extends ActivityEditorMixin(RtlMixin(Locali
 							@change=${this._setExceededTimeLimitBehaviour}
 							.value=${type.value} />
 						${type.title}
-					</label>`)}` :
-					html`<div class="d2l-manage-timing-editor-submission-late-type-id-title">${submissionLateTypeIdTitle}</div>`
-				}
+					</label>`)}
+				` : html`
+					<div class="d2l-manage-timing-editor-submission-late-type-id-title">${submissionLateTypeIdTitle}</div>
+				`}
 				${this._renderExtendedDeadline(entity)}
 			</div>
 		`;
@@ -241,7 +242,10 @@ class ActivityQuizManageTimingEditor extends ActivityEditorMixin(RtlMixin(Locali
 						.value=${type.value} />
 					${type.title}
 				</label>`)}
-			</div>` : html`<div class="d2l-manage-timing-editor-timing-type-title">${timingType.title}</div>`;
+			</div>
+		` : html`
+			<div class="d2l-manage-timing-editor-timing-type-title">${timingType.title}</div>
+		`;
 	}
 
 	_setExceededTimeLimitBehaviour(e) {
