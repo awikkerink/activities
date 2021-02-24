@@ -78,6 +78,7 @@ export class QuizTiming {
 		// In this case, we should attempt to reload the MobX object, so that the UI state is in sync again.
 		if (!entity) {
 			this.fetch();
+			return;
 		}
 		this._entity = entity;
 	}
