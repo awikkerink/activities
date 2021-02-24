@@ -179,7 +179,7 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 			return false;
 		}
 
-		return quiz.dirty;
+		return quiz.dirty(store);
 	}
 
 	async save() {

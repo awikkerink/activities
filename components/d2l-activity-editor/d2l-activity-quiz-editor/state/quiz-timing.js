@@ -11,10 +11,6 @@ export class QuizTiming {
 		this._saving = null;
 	}
 
-	get dirty() {
-		return !this._entity.equals(this._makeQuizData());
-	}
-
 	async fetch() {
 		const sirenEntity = await fetchEntity(this.href, this.token);
 
@@ -84,15 +80,6 @@ export class QuizTiming {
 			this.fetch();
 		}
 		this._entity = entity;
-	}
-
-	_makeQuizData() {
-		/* NOTE: if you add fields here, please make sure you update the corresponding equals method in siren-sdk.
-					 The cancel workflow is making use of that to detect changes.
-		*/
-		const data = {};
-
-		return data;
 	}
 }
 

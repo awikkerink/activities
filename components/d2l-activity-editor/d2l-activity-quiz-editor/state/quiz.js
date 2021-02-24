@@ -62,8 +62,16 @@ export class Quiz {
 		return this._entity.delete();
 	}
 
-	get dirty() {
-		return !this._entity.equals(this._makeQuizData());
+	async dirty(quizStore) {
+		const checkedOutHref = await this._checkedOut;
+		const checkedOutEntity = quizStore && quizStore.get(checkedOutHref);
+
+		// Check that this entity is not dirty, then check that it's checked out working copy does not have a `canCheckin` action.
+		// It avoids recursively fetching a working copy's working copy by not passing in a quizStore the second time.
+		const isQuizDirty = !this._entity.equals(this._makeQuizData()) || this._entity.canCheckin();
+		const isCheckedOutEntityDirty = checkedOutEntity && await checkedOutEntity.dirty();
+
+		return isQuizDirty || isCheckedOutEntityDirty;
 	}
 
 	async fetch() {
