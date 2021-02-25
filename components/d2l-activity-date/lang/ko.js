@@ -9,6 +9,6 @@ export const val = {
 	issueDateTimed : "{date}일 {time}시에 발행됨", // Displays the issue-date, with time, of the provided activity - with date string formatted to match request
 	startDate : "시작일 {date}", // Displays date of a future start-date of the provided activity - with date string formatted to match request
 	startDateTimed : "{date}일 {time}에 시작", // Displays date and time of a future start-date of the provided activity - with date string formatted to match request
-	startedDate : "{Date}에 시작됨", // Displays date of a past start-date of the provided activity - with date string formatted to match request
+	startedDate : "{date}에 시작됨", // Displays date of a past start-date of the provided activity - with date string formatted to match request
 	startedDateTimed : "{date}일 {time}에 시작됨", // Displays date and time of a past start-date of the provided activity - with date string formatted to match request
 };
