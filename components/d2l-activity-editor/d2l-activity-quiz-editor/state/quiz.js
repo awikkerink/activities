@@ -113,6 +113,7 @@ export class Quiz {
 		this.canEditDescription = entity.canEditDescription();
 		this.descriptionIsDisplayed = entity.descriptionIsDisplayed();
 		this.descriptionRichTextEditorConfig = entity.descriptionRichTextEditorConfig();
+		this.introIsAppendedToDescription = entity.introIsAppendedToDescription();
 		this.header = entity.canEditHeader() ? entity.headerEditorHtml() : entity.headerHtml();
 		this.canEditHeader = entity.canEditHeader();
 		this.headerIsDisplayed = entity.headerIsDisplayed();
@@ -230,6 +231,7 @@ decorate(Quiz, {
 	canEditDescription: observable,
 	descriptionIsDisplayed: observable,
 	descriptionRichTextEditorConfig: observable,
+	introIsAppendedToDescription: observable,
 	header: observable,
 	canEditHeader: observable,
 	headerRichTextEditorConfig: observable,
