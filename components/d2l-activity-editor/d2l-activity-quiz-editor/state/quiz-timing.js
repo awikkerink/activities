@@ -26,6 +26,12 @@ export class QuizTiming {
 	load(entity) {
 		this._entity = entity;
 		this.canEditTiming = entity.canEditTiming();
+		this.canEditTimeLimit = entity.canEditTimeLimit();
+		this.canEditGracePeriod = entity.canEditGracePeriod();
+		this.canEditExtendedDeadline = entity.canEditExtendedDeadline();
+		this.canEditExceededTimeLimitBehaviour = entity.canEditExceededTimeLimitBehaviour();
+		this.canEditShowClock = entity.canEditShowClock();
+		this.extendedDeadline = entity.getExtendedDeadline();
 		this.isTimingEnforced = entity.isTimingEnforced();
 		this.timingTypes = entity.timingTypes();
 		this.submissionLateType = entity.submissionLateType();
@@ -41,6 +47,8 @@ export class QuizTiming {
 		this.maxEnforcedTimeLimit = entity.maxEnforcedTimeLimit();
 		this.minEnforcedGraceLimit = entity.minEnforcedGraceLimit();
 		this.maxEnforcedGraceLimit = entity.maxEnforcedGraceLimit();
+		this.timingType = entity.timingType();
+		this.submissionLateTypeIdTitle = entity.getSubmissionLateTypeIdTitle();
 	}
 
 	setExceededTimeLimitBehaviour(data) {
@@ -88,6 +96,12 @@ decorate(QuizTiming, {
 	// props
 	name: observable,
 	canEditTiming: observable,
+	canEditTimeLimit: observable,
+	canEditGracePeriod: observable,
+	canEditExtendedDeadline: observable,
+	canEditExceededTimeLimitBehaviour: observable,
+	canEditShowClock: observable,
+	extendedDeadline: observable,
 	isTimingEnforced: observable,
 	timingTypes: observable,
 	submissionLateType: observable,
@@ -103,6 +117,8 @@ decorate(QuizTiming, {
 	maxEnforcedTimeLimit: observable,
 	minEnforcedGraceLimit: observable,
 	maxEnforcedGraceLimit: observable,
+	submissionLateTypeIdTitle: observable,
+	timingType: observable,
 	// actions
 	load: action,
 	setTimingType: action,
