@@ -73,6 +73,12 @@ class ContentEditorDetail extends MobxLitElement {
 			`;
 		}
 
+		if (entityType === CONTENT_TYPES.htmlFile) {
+			return html`
+				<h1>html file editor goes here</h1>
+			`;
+		}
+
 		return html``;
 	}
 
