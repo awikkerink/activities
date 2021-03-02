@@ -56,7 +56,7 @@ export const ActivityEditorWorkingCopyDialogMixin = superclass => class extends 
 
 		try {
 			await entity.checkin(this.store);
-		} catch {
+		} catch (e) {
 			this.isError = true;
 			this.errorTerm = this.serverErrorTerm;
 			return;
