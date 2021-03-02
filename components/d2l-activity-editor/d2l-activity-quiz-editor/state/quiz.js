@@ -31,6 +31,7 @@ export class Quiz {
 			this._saving = null;
 		}
 
+		if (!sirenEntity) return;
 		const href = sirenEntity.self();
 		const entity = new Quiz(href, this.token);
 		entity.load(sirenEntity);
