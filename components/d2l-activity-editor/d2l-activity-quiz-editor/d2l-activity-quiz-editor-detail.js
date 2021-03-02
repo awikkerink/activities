@@ -74,6 +74,7 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 				}
 				d2l-alert {
 					margin-bottom: 10px;
+					max-width: 100%;
 				}
 			`
 		];
