@@ -25,7 +25,7 @@ export class Quiz {
 		let sirenEntity;
 		try {
 			sirenEntity = await this._saving;
-		} catch(e) {
+		} catch (e) {
 			return;
 		} finally {
 			this._saving = null;

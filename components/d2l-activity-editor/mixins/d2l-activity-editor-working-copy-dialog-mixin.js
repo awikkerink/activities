@@ -100,15 +100,15 @@ export const ActivityEditorWorkingCopyDialogMixin = superclass => class extends 
 		return false;
 	}
 
+	_hasSkipAlertAncestor(node) {
+		return null !== findComposedAncestor(node, elm => elm && elm.hasAttribute && elm.hasAttribute('skip-alert'));
+	}
+
 	_resetProps() {
 		this.dialogHref = '';
 		this.errorTerm = '';
 		this.isError = false;
 		this.isSaving = false;
-	}
-
-	_hasSkipAlertAncestor(node) {
-		return null !== findComposedAncestor(node, elm => elm && elm.hasAttribute && elm.hasAttribute('skip-alert'));
 	}
 
 	async _verifyAllInputsValid() {
