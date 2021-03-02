@@ -102,13 +102,13 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 		const descriptionLang = this.localize('description');
 
 		return html`
-		<d2l-alert has-close-button ?hidden=${this.skeleton || descriptionIsDisplayed || !description || description.length === 0}>
-			${this.localize('textIsDisplayedPart1')}
-			${this.localize('textIsDisplayedSingularPart2', 'field', descriptionLang)}
-		</d2l-alert>
-		<d2l-alert has-close-button ?hidden=${this.skeleton || !introIsAppendedToDescription}>
-			${this.localize('introMovedToDescription')}
-		</d2l-alert>
+			<d2l-alert has-close-button ?hidden=${this.skeleton || descriptionIsDisplayed || !description || description.length === 0}>
+				${this.localize('textIsDisplayedPart1')}
+				${this.localize('textIsDisplayedSingularPart2', 'field', descriptionLang)}
+			</d2l-alert>
+			<d2l-alert has-close-button ?hidden=${this.skeleton || !introIsAppendedToDescription}>
+				${this.localize('introMovedToDescription')}
+			</d2l-alert>
 			<div id="quiz-name-container">
 				<d2l-input-text
 					?skeleton="${this.skeleton}"
