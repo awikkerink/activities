@@ -4,11 +4,11 @@ import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@brightspace-ui/core/components/icons/icon.js';
 import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html } from 'lit-element/lit-element';
+import { shared as store, sharedTiming as timingStore } from './state/quiz-store';
 import { ActivityEditorWorkingCopyDialogMixin } from '../mixins/d2l-activity-editor-working-copy-dialog-mixin';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
-import { sharedTiming as timingStore, shared as store } from './state/quiz-store';
 
 class ActivityQuizManageTimingContainer extends ActivityEditorWorkingCopyDialogMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
 	static get styles() {
@@ -23,7 +23,7 @@ class ActivityQuizManageTimingContainer extends ActivityEditorWorkingCopyDialogM
 					margin-bottom: 1rem;
 				}
 				.d2l-activity-quiz-manage-timing-container-dialog-summary {
-   					margin: 0.5rem 0;
+					margin: 0.5rem 0;
 				}
 				.d2l-activity-quiz-manage-timing-container-dialog-summary d2l-icon {
 					margin-right: 0.3rem;

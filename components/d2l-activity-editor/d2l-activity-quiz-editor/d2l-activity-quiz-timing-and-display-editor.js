@@ -45,13 +45,13 @@ class ActivityQuizTimingAndDisplayEditor extends ActivityEditorMixin(AsyncContai
 		];
 	}
 
-	connectedCallback() {
-		super.connectedCallback();
-	}
-
 	constructor() {
 		super(store);
 		this.checkoutOnLoad = true;
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
 	}
 
 	render() {
