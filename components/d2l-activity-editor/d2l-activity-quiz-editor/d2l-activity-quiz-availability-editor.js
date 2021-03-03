@@ -3,6 +3,7 @@ import '../d2l-activity-availability-dates-editor.js';
 import '../d2l-activity-availability-dates-summary.js';
 import '../d2l-activity-usage-conditions-editor.js';
 import '../d2l-activity-usage-conditions-summary.js';
+import './d2l-activity-ip-restrictions-summary.js';
 import './d2l-activity-quiz-password-summary';
 import './d2l-activity-quiz-password-editor.js';
 import './d2l-activity-quiz-ip-restriction-editor';
@@ -13,10 +14,11 @@ import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container
 import { heading4Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
+import { shared as quizStore } from './state/quiz-store';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 import { shared as store } from '../state/activity-store.js';
 
-class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivityQuizEditorMixin(SkeletonMixin(ActivityEditorMixin(MobxLitElement)))) {
+class ActivityQuizAvailabilityEditor extends ActivityEditorMixin(AsyncContainerMixin(LocalizeActivityQuizEditorMixin(SkeletonMixin(MobxLitElement)))) {
 
 	static get properties() {
 
@@ -49,6 +51,11 @@ class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivit
 		];
 	}
 
+	constructor() {
+		super(quizStore);
+		this.checkoutOnLoad = true;
+	}
+
 	connectedCallback() {
 		super.connectedCallback();
 	}
@@ -66,6 +73,7 @@ class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivit
 				<li slot="summary-items">${this._renderAvailabilityDatesSummary()}</li>
 				<li slot="summary-items">${this._renderReleaseConditionSummary()}</li>
 				<li slot="summary-items">${this._renderPasswordSummary()}</li>
+				<li slot="summary-items">${this._renderIpRestrictionsSummary()}</li>
 
 				<span slot="components">
 					${this._renderAvailabilityDatesEditor()}
@@ -115,6 +123,20 @@ class ActivityQuizAvailabilityEditor extends AsyncContainerMixin(LocalizeActivit
 				.href="${this.href}"
 				.token="${this.token}">
 			</d2l-activity-quiz-ip-restriction-editor>
+		`;
+	}
+
+	_renderIpRestrictionsSummary() {
+		const quizEntity = quizStore.get(this.checkedOutHref);
+		if (!quizEntity || !quizEntity.ipRestrictionsHref) {
+			return;
+		}
+
+		return html`
+			<d2l-activity-ip-restrictions-summary
+				href="${quizEntity.ipRestrictionsHref}"
+				.token="${this.token}">
+			</d2l-activity-ip-restrictions-summary>
 		`;
 	}
 
