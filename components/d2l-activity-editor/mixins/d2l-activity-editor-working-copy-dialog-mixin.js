@@ -68,13 +68,14 @@ export const ActivityEditorWorkingCopyDialogMixin = superclass => class extends 
 	}
 
 	async closeDialog(e) {
-		const dialog = this.shadowRoot.querySelector('d2l-dialog');
-		dialog && dialog.resetAsyncState();
 		this.handleClose(e);
-		this._resetProps();
 	}
 
 	async openDialog(e) {
+		const dialog = this.shadowRoot.querySelector('d2l-dialog');
+		dialog && dialog.resetAsyncState();
+		this._resetProps();
+
 		const entity = this.store.get(this.checkedOutHref);
 		if (!entity) return;
 

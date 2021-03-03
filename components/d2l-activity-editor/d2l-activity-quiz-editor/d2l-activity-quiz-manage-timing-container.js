@@ -58,13 +58,23 @@ class ActivityQuizManageTimingContainer extends ActivityEditorWorkingCopyDialogM
 	async _checkinDialog(e) {
 		await this.checkinDialog(e);
 
-		// Dialog successfully checked in, refetch working copy timing entity in order to update displayed timing summary
 		if (!this.isError) {
-			const quizEntity = this.checkedOutHref && store.get(this.checkedOutHref);
-			if (!quizEntity) return html``;
-			const { timingHref } = quizEntity;
-			const timingEntity = timingStore.get(timingHref);
-			timingEntity.fetch(true);
+			// Dialog successfully checked in
+			const checkedOutQuizEntity = this.checkedOutHref && store.get(this.checkedOutHref);
+			if (!checkedOutQuizEntity) return;
+			const { timingHref: checkedOutTimingHref } = checkedOutQuizEntity;
+
+			const dialogQuizEntity = this.dialogHref && store.get(this.dialogHref);
+			if (!dialogQuizEntity) return;
+			const { timingHref: dialogTimingHref } = dialogQuizEntity;
+
+			// Replace checkedOut timing entity with dialog timing entity to immediately update timing summarizer.
+			const dialogTimingEntity = timingStore.get(dialogTimingHref);
+			const checkedOutTimingEntity = timingStore.get(checkedOutTimingHref);
+			checkedOutTimingEntity.load(dialogTimingEntity._entity);
+
+			// Refetch checkedOut timing entity to ensure we display the correct timing summary.
+			checkedOutTimingEntity.fetch(true);
 		}
 	}
 
