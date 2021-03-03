@@ -65,9 +65,6 @@ export default {
 	"description": "Description", // Description label for the Description text input box
 	"showClockTitle": "Show clock", // Title for show clock
 	"description": "Description", // Description label for the Description text input box,
-	"btnOpenIpRestrictionDialog": "Manage IP restrictions", // Button text for opening IP restriction dialog
-	"hdrIpRestrictionDialog": "IP Restrictions (IPv4)", // timing/display accordion header
-	"ipRestrictionLabel": "IP Restrictions", // Label for IP restrictions editor
 	"manageAttemptsDialogConfirmationText": "OK", // copy that appears on the Attempts dialog confirmation button
 	"manageAttemptsDialogCancelText": "Cancel", // copy that appears on the Attempts dialog cancel button
 	"subHdrAttemptsTools": "Attempts", // Title for attempts tools
@@ -110,5 +107,6 @@ export default {
 	"maxLabel": "Max:", // label for Max input on Attempts Conditions range editor on Attempts Dialog
 	"andRangeText": "and", // copy on Attempts Condition range editor on Attempts Dialog
 	"percentageRangeText": "%", // copy on Attempts Condition range editor on Attempts Dialog
-	"ipRestrictionsSummary": "IP restrictions" // summary to be displayed when a quiz has ip restrictions
+	"ipRestrictionsSummary": "IP restrictions", // summary to be displayed when a quiz has ip restrictions
+	"ipRestrictionsInnerSummary" : "{count, plural, =1 {1 restriction} other {{count} restrictions}}", // summary to be displayed when accordion is expanded
 };

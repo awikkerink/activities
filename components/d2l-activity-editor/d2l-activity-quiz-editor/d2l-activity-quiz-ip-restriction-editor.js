@@ -2,7 +2,7 @@ import '@brightspace-ui/core/components/button/button-subtle.js';
 import './d2l-activity-quiz-ip-restrictions-container.js';
 import './d2l-activity-quiz-ip-restrictions-help-dialog.js';
 import 'd2l-inputs/d2l-input-text.js';
-import { bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles';
+import { bodyCompactStyles, bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html } from 'lit-element/lit-element.js';
 import { sharedIpRestrictions as ipStore, shared as store } from './state/quiz-store.js';
 import { ActivityEditorWorkingCopyDialogMixin } from '../mixins/d2l-activity-editor-working-copy-dialog-mixin';
@@ -28,6 +28,7 @@ class ActivityQuizIpRestrictionEditor
 
 		return [
 			bodyCompactStyles,
+			bodySmallStyles,
 			labelStyles,
 			css`
 				:host {
@@ -45,12 +46,19 @@ class ActivityQuizIpRestrictionEditor
 				#ip-container {
 					height: 250px;
 				}
+
+				#ip-summary {
+					margin-top: 0.55rem;
+				}
 			`
 		];
 	}
 
 	constructor() {
 		super(store);
+
+		this._scrollToAlert = this._scrollToAlert.bind(this);
+
 	}
 
 	render() {
@@ -125,6 +133,9 @@ class ActivityQuizIpRestrictionEditor
 			<div class="d2l-label-text">
 				${this.localize('ipRestrictionLabel')}
 			</div>
+
+			${this._renderSummary()}
+
 			<d2l-button-subtle
 				?disabled=${!canEditIpRestrictions}
 				text="${this.localize('btnOpenIpRestrictionDialog')}"
@@ -178,6 +189,26 @@ class ActivityQuizIpRestrictionEditor
 		`;
 	}
 
+	_renderSummary() {
+		const quizEntity = store.get(this.checkedOutHref);
+		if (!quizEntity) return;
+
+		const ipHref = quizEntity.ipRestrictionsHref;
+
+		const ipEntity = ipStore.get(ipHref);
+		if (!ipEntity) {
+			return;
+		}
+
+		if (!ipEntity.ipRestrictions || ipEntity.ipRestrictions.length === 0) {
+			return;
+		}
+
+		return html`<p id="ip-summary" class="d2l-body-small">
+						${this.localize('ipRestrictionsInnerSummary', 'count', ipEntity.ipRestrictions.length)}
+					</p>`;
+	}
+
 	_resizeDialog() {
 		const dialog = this.shadowRoot.querySelector('d2l-dialog');
 		dialog.resize();
@@ -191,8 +222,8 @@ class ActivityQuizIpRestrictionEditor
 		}
 
 		const hasValidationError = this._validate();
-
 		if (hasValidationError) {
+			this._scrollToAlert();
 			return;
 		}
 
@@ -200,6 +231,16 @@ class ActivityQuizIpRestrictionEditor
 
 		if (!entity.errors || !entity.errors.length) {
 			this._handleClose(e);
+			return;
+		}
+
+		this._scrollToAlert();
+	}
+
+	_scrollToAlert() {
+		const el = this.shadowRoot.querySelector('d2l-alert');
+		if (el && el.scrollIntoView) {
+			el.scrollIntoView();
 		}
 	}
 
