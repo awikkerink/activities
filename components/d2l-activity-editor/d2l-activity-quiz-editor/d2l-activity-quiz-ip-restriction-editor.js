@@ -68,6 +68,21 @@ class ActivityQuizIpRestrictionEditor
 		`;
 	}
 
+	async _handleClose(e) {
+		await this.checkinDialog(e);
+		const entity = store.get(this.checkedOutHref);
+
+		if (!entity) return;
+
+		if (!entity.ipRestrictionsHref) return;
+
+		const ipEntity = ipStore.get(entity.ipRestrictionsHref);
+
+		if (!ipEntity) return;
+
+		ipEntity.fetch(true);
+	}
+
 	_renderActionButtons() {
 		return html`
 			<div slot="footer" id="d2l-actions-container">
@@ -184,7 +199,7 @@ class ActivityQuizIpRestrictionEditor
 		await entity.saveRestrictions();
 
 		if (!entity.errors || !entity.errors.length) {
-			this.checkinDialog(e);
+			this._handleClose(e);
 		}
 	}
 
