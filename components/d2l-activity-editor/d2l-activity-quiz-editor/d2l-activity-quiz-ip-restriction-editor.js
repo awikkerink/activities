@@ -51,6 +51,8 @@ class ActivityQuizIpRestrictionEditor
 
 	constructor() {
 		super(store);
+
+		this._scrollToAlert = this._scrollToAlert.bind(this);
 	}
 
 	render() {
@@ -131,7 +133,10 @@ class ActivityQuizIpRestrictionEditor
 			return;
 		}
 
-		return errors.map((error) => {
+		// using a set to filter out duplicate error messages
+		const uniqueErrors = Array.from(new Set(errors));
+
+		return uniqueErrors.map((error) => {
 
 			if (error === 500 || !error) {
 				error = this.localize('ipRestrictions500Error');
@@ -178,6 +183,7 @@ class ActivityQuizIpRestrictionEditor
 		const hasValidationError = this._validate();
 
 		if (hasValidationError) {
+			this._scrollToAlert();
 			return;
 		}
 
@@ -185,6 +191,16 @@ class ActivityQuizIpRestrictionEditor
 
 		if (!entity.errors || !entity.errors.length) {
 			this.checkinDialog(e);
+			return;
+		}
+
+		this._scrollToAlert();
+	}
+
+	_scrollToAlert() {
+		const el = this.shadowRoot.querySelector('d2l-alert');
+		if (el && el.scrollIntoView) {
+			el.scrollIntoView();
 		}
 	}
 
@@ -221,7 +237,9 @@ class ActivityQuizIpRestrictionEditor
 			return true;
 		}
 
-		const isValid = !restriction.formValue || validateIp(restriction.formValue);
+		const isEnd = restriction.name === 'end'; // end values can be empty
+
+		const isValid = isEnd && !restriction.formValue || validateIp(restriction.formValue);
 
 		restriction.setAttribute('aria-invalid', !isValid);
 
