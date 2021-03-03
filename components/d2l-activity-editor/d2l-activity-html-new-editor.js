@@ -1,5 +1,5 @@
 import '@brightspace-ui/htmleditor/htmleditor.js';
-import { html, LitElement } from 'lit-element/lit-element.js';
+import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
 
 class ActivityHtmlNewEditor extends LocalizeActivityEditorMixin(LitElement) {
@@ -9,13 +9,23 @@ class ActivityHtmlNewEditor extends LocalizeActivityEditorMixin(LitElement) {
 			value: { type: String },
 			ariaLabel: { type: String },
 			disabled: { type: Boolean },
-			height: { type: String }
+			htmlEditorHeight: { type: String }
 		};
+	}
+
+	static get styles() {
+		return  [
+			css`
+				d2l-htmleditor {
+					height: 100%;
+				}
+			`
+		];
 	}
 
 	constructor() {
 		super();
-		this.height = "10rem";
+		this.htmlEditorHeight = "10rem";
 	}
 
 	render() {
@@ -25,8 +35,7 @@ class ActivityHtmlNewEditor extends LocalizeActivityEditorMixin(LitElement) {
 				label="${this.ariaLabel}"
 				label-hidden
 				?disabled="${this.disabled}"
-				height="${this.height}"
-				style="height:100%;"
+				height="${this.htmlEditorHeight}"
 				@d2l-htmleditor-blur="${this._onContentChange}">
 			</d2l-htmleditor>
 		`;
