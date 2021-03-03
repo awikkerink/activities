@@ -22,15 +22,20 @@ export class Quiz {
 		}
 
 		this._saving = this._entity.checkin();
-		const sirenEntity = await this._saving;
-		if (!sirenEntity) return;
+		let sirenEntity;
+		try {
+			sirenEntity = await this._saving;
+		} catch (e) {
+			return;
+		} finally {
+			this._saving = null;
+		}
 
+		if (!sirenEntity) return;
 		const href = sirenEntity.self();
 		const entity = new Quiz(href, this.token);
 		entity.load(sirenEntity);
 		quizStore.put(href, entity);
-
-		this._saving = null;
 	}
 
 	checkout(quizStore, forcedCheckout) {

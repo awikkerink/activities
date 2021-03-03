@@ -109,5 +109,7 @@ export default {
 	"minLabel": "Min:", // label for Min input on Attempts Conditions range editor on Attempts Dialog
 	"maxLabel": "Max:", // label for Max input on Attempts Conditions range editor on Attempts Dialog
 	"andRangeText": "and", // copy on Attempts Condition range editor on Attempts Dialog
-	"percentageRangeText": "%" // copy on Attempts Condition range editor on Attempts Dialog
+	"percentageRangeText": "%", // copy on Attempts Condition range editor on Attempts Dialog
+	"quizTimingValidationError": "Timing cannot be changed, please correct the outlined fields", // Appears in error alert when validation fails in Manage Timing dialog
+	"quizTimingServerError": "Something went wrong. Please try again." // Timing save server error alert message
 };

@@ -1,4 +1,5 @@
 import './d2l-activity-quiz-manage-timing-editor.js';
+import '@brightspace-ui/core/components/alert/alert.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorWorkingCopyDialogMixin } from '../mixins/d2l-activity-editor-working-copy-dialog-mixin';
@@ -15,12 +16,21 @@ class ActivityQuizManageTimingContainer extends ActivityEditorWorkingCopyDialogM
 				#manage-timing-dialog-timing-editor {
 					height: 430px;
 				}
+				d2l-alert {
+					margin-bottom: 1rem;
+				}
 			`,
 		];
 	}
 
 	constructor() {
 		super(store);
+	}
+
+	firstUpdated() {
+		super.firstUpdated();
+		this.serverErrorTerm = this.localize('quizTimingServerError');
+		this.validationErrorTerm = this.localize('quizTimingValidationError');
 	}
 
 	render() {
@@ -41,9 +51,10 @@ class ActivityQuizManageTimingContainer extends ActivityEditorWorkingCopyDialogM
 				?async="${showSpinnerWhenLoading}"
 				width="${width}"
 				title-text=${this.localize('subHdrTimingTools') }>
+					<d2l-alert type="error" ?hidden=${!this.isError || !this.errorTerm}>${this.errorTerm}</d2l-alert>
 					<div id="manage-timing-dialog-timing-editor">${this._renderQuizTimingEditor()}</div>
-					<d2l-button slot="footer" primary @click="${this.checkinDialog}">${this.localize('manageTimingDialogConfirmationText')}</d2l-button>
-					<d2l-button slot="footer" data-dialog-action>${this.localize('manageTimingDialogCancelText')}</d2l-button>
+					<d2l-button slot="footer" primary @click="${this.checkinDialog}" ?disabled="${this.isSaving}">${this.localize('manageTimingDialogConfirmationText')}</d2l-button>
+					<d2l-button slot="footer" data-dialog-action ?disabled="${this.isSaving}">${this.localize('manageTimingDialogCancelText')}</d2l-button>
 			</d2l-dialog>
 		`;
 	}
