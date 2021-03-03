@@ -10,6 +10,7 @@ import './d2l-activity-quiz-hints-summary.js';
 import './d2l-activity-quiz-shuffle-editor.js';
 import './d2l-activity-quiz-shuffle-summary.js';
 import './d2l-activity-quiz-manage-timing-container';
+import './d2l-activity-quiz-timing-summary';
 import { css, html } from 'lit-element/lit-element.js';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
@@ -18,8 +19,9 @@ import { labelStyles } from '@brightspace-ui/core/components/typography/styles.j
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
+import { shared as store } from './state/quiz-store';
 
-class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeActivityQuizEditorMixin(SkeletonMixin(ActivityEditorMixin(MobxLitElement)))) {
+class ActivityQuizTimingAndDisplayEditor extends ActivityEditorMixin(AsyncContainerMixin(LocalizeActivityQuizEditorMixin(SkeletonMixin(MobxLitElement)))) {
 
 	static get properties() {
 
@@ -47,6 +49,11 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 		super.connectedCallback();
 	}
 
+	constructor() {
+		super(store);
+		this.checkoutOnLoad = true;
+	}
+
 	render() {
 		return html`
 			<d2l-activity-accordion-collapse
@@ -59,6 +66,7 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 
 				// the summary text order is specific and should only be changed if required in a story
 
+				<li slot="summary-items">${this._renderTimingSummary()}</li>
 				<li slot="summary-items">${this._renderPreventMovingBackwardsSummary()}</li>
 				<li slot="summary-items">${this._renderShuffleSummary()}</li>
 				<li slot="summary-items">${this._renderAllowHintsSummary()}</li>
@@ -195,6 +203,19 @@ class ActivityQuizTimingAndDisplayEditor extends AsyncContainerMixin(LocalizeAct
 				href="${this.href}"
 				.token="${this.token}">
 			</d2l-activity-quiz-shuffle-summary>
+		`;
+	}
+
+	_renderTimingSummary() {
+		const entity = this.checkedOutHref && store.get(this.checkedOutHref);
+		if (!entity) return html``;
+		const { timingHref } = entity;
+
+		return html`
+			<d2l-activity-quiz-timing-summary
+				href="${timingHref}"
+				.token="${this.token}">
+			</d2l-activity-quiz-timing-summary>
 		`;
 	}
 

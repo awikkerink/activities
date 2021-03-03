@@ -1,16 +1,19 @@
 import './d2l-activity-quiz-manage-timing-editor.js';
 import '@brightspace-ui/core/components/alert/alert.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
+import '@brightspace-ui/core/components/icons/icon.js';
+import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorWorkingCopyDialogMixin } from '../mixins/d2l-activity-editor-working-copy-dialog-mixin';
-import { labelStyles } from '@brightspace-ui/core/components/typography/styles';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
-import { shared as store } from './state/quiz-store';
+import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
+import { sharedTiming as timingStore, shared as store } from './state/quiz-store';
 
-class ActivityQuizManageTimingContainer extends ActivityEditorWorkingCopyDialogMixin(LocalizeActivityQuizEditorMixin(MobxLitElement)) {
+class ActivityQuizManageTimingContainer extends ActivityEditorWorkingCopyDialogMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
 	static get styles() {
 		return [
+			bodySmallStyles,
 			labelStyles,
 			css`
 				#manage-timing-dialog-timing-editor {
@@ -18,6 +21,16 @@ class ActivityQuizManageTimingContainer extends ActivityEditorWorkingCopyDialogM
 				}
 				d2l-alert {
 					margin-bottom: 1rem;
+				}
+				.d2l-activity-quiz-manage-timing-container-dialog-summary {
+   					margin: 0.5rem 0;
+				}
+				.d2l-activity-quiz-manage-timing-container-dialog-summary d2l-icon {
+					margin-right: 0.3rem;
+				}
+				:host([dir="rtl"]) .d2l-activity-quiz-manage-timing-container-dialog-summary d2l-icon {
+					margin-left: 0.3rem;
+					margin-right: 0;
 				}
 			`,
 		];
@@ -35,9 +48,24 @@ class ActivityQuizManageTimingContainer extends ActivityEditorWorkingCopyDialogM
 
 	render() {
 		return html`
+			${this._renderDialogLabel()}
+			${this._renderDialogSummary()}
 			${this._renderDialogOpener()}
 			${this._renderDialog()}
     	`;
+	}
+
+	async _checkinDialog(e) {
+		await this.checkinDialog(e);
+
+		// Dialog successfully checked in, refetch working copy timing entity in order to update displayed timing summary
+		if (!this.isError) {
+			const quizEntity = this.checkedOutHref && store.get(this.checkedOutHref);
+			if (!quizEntity) return html``;
+			const { timingHref } = quizEntity;
+			const timingEntity = timingStore.get(timingHref);
+			timingEntity.fetch(true);
+		}
 	}
 
 	_renderDialog() {
@@ -53,17 +81,37 @@ class ActivityQuizManageTimingContainer extends ActivityEditorWorkingCopyDialogM
 				title-text=${this.localize('subHdrTimingTools') }>
 					<d2l-alert type="error" ?hidden=${!this.isError || !this.errorTerm}>${this.errorTerm}</d2l-alert>
 					<div id="manage-timing-dialog-timing-editor">${this._renderQuizTimingEditor()}</div>
-					<d2l-button slot="footer" primary @click="${this.checkinDialog}" ?disabled="${this.isSaving}">${this.localize('manageTimingDialogConfirmationText')}</d2l-button>
+					<d2l-button slot="footer" primary @click="${this._checkinDialog}" ?disabled="${this.isSaving}">${this.localize('manageTimingDialogConfirmationText')}</d2l-button>
 					<d2l-button slot="footer" data-dialog-action ?disabled="${this.isSaving}">${this.localize('manageTimingDialogCancelText')}</d2l-button>
 			</d2l-dialog>
 		`;
 	}
 
-	_renderDialogOpener() {
+	_renderDialogLabel() {
 		return html`
 			<div id="manage-timing-editor-label" class="d2l-label-text">${this.localize('subHdrTimingTools')}</div>
-			<div class="placeholder-for-summarizer"></div>
+		`;
+	}
+
+	_renderDialogOpener() {
+		return html`
 			<d2l-button-subtle text=${this.localize('manageTiming')} @click="${this.openDialog}" h-align="text"></d2l-button-subtle>
+		`;
+	}
+
+	_renderDialogSummary() {
+		const entity = this.checkedOutHref && store.get(this.checkedOutHref);
+		if (!entity) return html``;
+		const { timingHref } = entity;
+
+		return html`
+			<div class="d2l-activity-quiz-manage-timing-container-dialog-summary d2l-body-small">
+				<d2l-icon icon="tier1:time"></d2l-icon>
+				<d2l-activity-quiz-timing-summary
+					href="${timingHref}"
+					.token="${this.token}">
+				</d2l-activity-quiz-timing-summary>
+			</div>
 		`;
 	}
 

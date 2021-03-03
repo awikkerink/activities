@@ -11,8 +11,8 @@ export class QuizTiming {
 		this._saving = null;
 	}
 
-	async fetch() {
-		const sirenEntity = await fetchEntity(this.href, this.token);
+	async fetch(bypassCache) {
+		const sirenEntity = await fetchEntity(this.href, this.token, bypassCache);
 
 		if (sirenEntity) {
 			const entity = new QuizTimingEntity(sirenEntity, this.token, {
