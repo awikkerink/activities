@@ -8,8 +8,14 @@ class ActivityHtmlNewEditor extends LocalizeActivityEditorMixin(LitElement) {
 		return {
 			value: { type: String },
 			ariaLabel: { type: String },
-			disabled: { type: Boolean }
+			disabled: { type: Boolean },
+			height: { type: String }
 		};
+	}
+
+	constructor() {
+		super();
+		this.height = "10rem";
 	}
 
 	render() {
@@ -19,7 +25,8 @@ class ActivityHtmlNewEditor extends LocalizeActivityEditorMixin(LitElement) {
 				label="${this.ariaLabel}"
 				label-hidden
 				?disabled="${this.disabled}"
-				height="10rem"
+				height="${this.height}"
+				style="height:100%;"
 				@d2l-htmleditor-blur="${this._onContentChange}">
 			</d2l-htmleditor>
 		`;

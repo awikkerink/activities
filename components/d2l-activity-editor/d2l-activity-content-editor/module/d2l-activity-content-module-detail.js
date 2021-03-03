@@ -27,6 +27,17 @@ class ContentModuleDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 			css`
 				.d2l-activity-label-container {
 					margin-bottom: 7px;
+					display: inline-block;
+					vertical-align: bottom;
+				}
+				#content-description-container {
+					display: flex;
+					flex-flow: column;
+					height: inherit;
+				}
+				#html-editor-container {
+					flex-grow: 1;
+					min-height: 300px;
 				}
 			`
 		];
@@ -63,13 +74,15 @@ class ContentModuleDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 				<div class="d2l-activity-label-container d2l-label-text d2l-skeletize">
 					${this.localize('content.description')}
 				</div>
-				<div class="d2l-skeletize">
+				<div id="html-editor-container" class="d2l-skeletize">
 					<d2l-activity-text-editor
-						.ariaLabel="content-description"
+						id="d2l-activity-text-editor"
+						ariaLabel="${this.localize('content.description')}"
 						.key="content-description"
 						.value="${descriptionRichText}"
 						@d2l-activity-text-editor-change="${this._onRichtextChange}"
 						.richtextEditorConfig="${{}}"
+						height="100%"
 					>
 					</d2l-activity-text-editor>
 				</div>
