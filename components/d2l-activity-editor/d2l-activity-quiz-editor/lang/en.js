@@ -109,5 +109,6 @@ export default {
 	"minLabel": "Min:", // label for Min input on Attempts Conditions range editor on Attempts Dialog
 	"maxLabel": "Max:", // label for Max input on Attempts Conditions range editor on Attempts Dialog
 	"andRangeText": "and", // copy on Attempts Condition range editor on Attempts Dialog
-	"percentageRangeText": "%" // copy on Attempts Condition range editor on Attempts Dialog
+	"percentageRangeText": "%", // copy on Attempts Condition range editor on Attempts Dialog
+	"ipRestrictionsSummary": "IP restrictions" // summary to be displayed when a quiz has ip restrictions
 };
