@@ -106,10 +106,12 @@ export class QuizIpRestrictions {
 	}
 
 	_createPromises(restrictions) {
-		return restrictions.map(restriction => {
+		return restrictions.map((restriction, index) => {
 			const isNew = restriction.id === undefined;
 			if (isNew) {
-				return this._entity.addIpRestriction(restriction);
+				return this._entity.addIpRestriction(restriction).then(() => {
+					restriction.id = index;
+				});
 			}
 
 			return this._entity.updateIpRestriction(restriction);
