@@ -30,7 +30,7 @@ class ContentWebLinkDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandli
 		this._debounceJobs = {};
 		this._setEntityType(ContentWebLinkEntity);
 		this.skeleton = true;
-		this.saveOrder = 2000;
+		this.saveOrder = 500;
 	}
 
 	connectedCallback() {

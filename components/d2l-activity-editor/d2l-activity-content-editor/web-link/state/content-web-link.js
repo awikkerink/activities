@@ -15,7 +15,10 @@ export class ContentWebLink {
 	}
 
 	async cancelCreate() {
-		await this._contentWebLink.deleteWebLink();
+		const canceled = await this._contentWebLink.cancelWebLink();
+		if (!canceled) {
+			await this._contentWebLink.deleteWebLink();
+		}
 	}
 
 	get dirty() {
@@ -25,7 +28,8 @@ export class ContentWebLink {
 	async fetch() {
 		const sirenEntity = await fetchEntity(this.href, this.token);
 		if (sirenEntity) {
-			const entity = new ContentWebLinkEntity(sirenEntity, this.token, { remove: () => { } });
+			let entity = new ContentWebLinkEntity(sirenEntity, this.token, { remove: () => { } });
+			entity = await this._checkout(entity);
 			this.load(entity);
 		}
 		return this;
@@ -46,7 +50,9 @@ export class ContentWebLink {
 		await this._contentWebLink.setWebLinkTitle(this.title);
 		await this._contentWebLink.setWebLinkUrl(this.link);
 		await this._contentWebLink.setWebLinkExternalResource(this.isExternalResource);
-		await this.fetch();
+		const committedWebLinkEntity = await this._commit(this._contentWebLink);
+		const editableWebLinkEntity = await this._checkout(committedWebLinkEntity);
+		await this.load(editableWebLinkEntity);
 	}
 
 	setExternalResource(value) {
@@ -59,6 +65,30 @@ export class ContentWebLink {
 
 	setTitle(value) {
 		this.title = value;
+	}
+
+	async _checkout(webLinkEntity) {
+		if (!webLinkEntity) {
+			return;
+		}
+
+		const sirenEntity = await webLinkEntity.checkoutWebLink();
+		if (!sirenEntity) {
+			return webLinkEntity;
+		}
+		return new ContentWebLinkEntity(sirenEntity, this.token, { remove: () => { } });
+	}
+
+	async _commit(webLinkEntity) {
+		if (!webLinkEntity) {
+			return;
+		}
+
+		const sirenEntity = await webLinkEntity.commitWebLink();
+		if (!sirenEntity) {
+			return webLinkEntity;
+		}
+		return new ContentWebLinkEntity(sirenEntity, this.token, { remove: () => { } });
 	}
 
 	_makeWebLinkData() {
