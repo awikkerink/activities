@@ -12,6 +12,7 @@ import './d2l-activity-quiz-question-editor.js';
 
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
+import { ActivityEditorTelemetryMixin } from '../mixins/d2l-activity-editor-telemetry-mixin';
 import { css } from 'lit-element/lit-element.js';
 import { editorLayoutStyles } from '../styles/activity-editor-styles';
 import { html } from '@brightspace-hmc/foundation-engine/framework/lit/hypermedia-components.js';
@@ -21,7 +22,6 @@ import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
-import { ActivityEditorTelemetryMixin } from '../mixins/d2l-activity-editor-telemetry-mixin';
 
 import { shared as store } from './state/quiz-store.js';
 
@@ -197,8 +197,8 @@ class QuizEditorDetail extends ActivityEditorTelemetryMixin(ActivityEditorMixin(
 			return;
 		}
 
-		if ( quiz.introIsAppendedToDescription ) {
-			this.logIntroEvent(this.href, this.type, this.telemetryId);
+		if (quiz.introIsAppendedToDescription) {
+			this.logIntroAppendedToDescriptionEvent(this.href, this.type, this.telemetryId);
 		}
 
 		await quiz.save();
