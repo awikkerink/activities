@@ -140,6 +140,20 @@ class ActivityQuizAvailabilityEditor extends ActivityEditorMixin(AsyncContainerM
 		`;
 	}
 
+	_renderIpRestrictionsSummary() {
+		const quizEntity = quizStore.get(this.checkedOutHref);
+		if (!quizEntity || !quizEntity.ipRestrictionsHref) {
+			return;
+		}
+
+		return html`
+			<d2l-activity-ip-restrictions-summary
+				href="${quizEntity.ipRestrictionsHref}"
+				.token="${this.token}">
+			</d2l-activity-ip-restrictions-summary>
+		`;
+	}
+
 	_renderPasswordEditor() {
 
 		return html`

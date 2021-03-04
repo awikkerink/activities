@@ -1,5 +1,5 @@
 import '@brightspace-ui/core/components/button/button-subtle.js';
-import './d2l-activity-quiz-ip-restrictions-editor.js';
+import './d2l-activity-quiz-ip-restrictions-container.js';
 import './d2l-activity-quiz-ip-restrictions-help-dialog.js';
 import 'd2l-inputs/d2l-input-text.js';
 import { bodyCompactStyles, bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles';
@@ -11,7 +11,7 @@ import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 
-class ActivityQuizIpRestrictionContainer
+class ActivityQuizIpRestrictionEditor
 	extends ActivityEditorWorkingCopyDialogMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
 
 	static get properties() {
@@ -120,11 +120,11 @@ class ActivityQuizIpRestrictionContainer
 	}
 
 	_hasValidInputs() {
-		const ipRestrictionsEditor = this.shadowRoot.querySelector('d2l-activity-quiz-ip-restrictions-editor');
+		const ipRestrictionsContainer = this.shadowRoot.querySelector('d2l-activity-quiz-ip-restrictions-container');
 
-		if (!ipRestrictionsEditor) return;
+		if (!ipRestrictionsContainer) return;
 
-		const inputs = ipRestrictionsEditor.shadowRoot.querySelectorAll('.d2l-ip-input');
+		const inputs = ipRestrictionsContainer.shadowRoot.querySelectorAll('.d2l-ip-input');
 
 		const isInitialState = inputs.length === 2 && inputs[0].formValue === '' && inputs[1].formValue === '';
 
@@ -181,7 +181,7 @@ class ActivityQuizIpRestrictionContainer
 				<div id="ip-container">
 					${this._renderErrors()}
 					${this._renderHelpDialog()}
-					${this._renderIpRestrictionsEditor()}
+					${this._renderIpRestrictionsContainer()}
 				</div>
 
 				${this._renderActionButtons()}
@@ -251,14 +251,14 @@ class ActivityQuizIpRestrictionContainer
 		`;
 	}
 
-	_renderIpRestrictionsEditor() {
+	_renderIpRestrictionsContainer() {
 		return html`
-			<d2l-activity-quiz-ip-restrictions-editor
+			<d2l-activity-quiz-ip-restrictions-container
 				href="${this.ipRestrictionsHref}"
 				.token="${this.token}"
 				@restrictions-resize-dialog="${this._resizeDialog}"
 				@ip-restriction-deleted="${this._validate}">
-			</d2l-activity-quiz-ip-restrictions-editor>
+			</d2l-activity-quiz-ip-restrictions-container>
 		`;
 	}
 
@@ -357,6 +357,6 @@ class ActivityQuizIpRestrictionContainer
 }
 
 customElements.define(
-	'd2l-activity-quiz-ip-restrictions-container',
-	ActivityQuizIpRestrictionContainer
+	'd2l-activity-quiz-ip-restriction-editor',
+	ActivityQuizIpRestrictionEditor
 );
