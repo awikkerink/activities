@@ -73,9 +73,16 @@ class ActivityQuizAttemptsAndCompletionEditor extends AsyncContainerMixin(Locali
 	}
 
 	_renderManageAttemptsEditor() {
+		const entity = store.get(this.href);
+		if (!entity) return html``;
+
+		const {
+			attemptsHref
+		} = entity || {};
+
 		return html`
 			<d2l-activity-quiz-manage-attempts-editor
-				href="${this.href}"
+				href="${attemptsHref}"
 				.token="${this.token}">
 			</d2l-activity-quiz-manage-attempts-editor>`;
 	}

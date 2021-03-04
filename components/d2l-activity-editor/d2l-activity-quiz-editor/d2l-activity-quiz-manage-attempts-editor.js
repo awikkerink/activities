@@ -8,7 +8,7 @@ import { labelStyles } from '@brightspace-ui/core/components/typography/styles';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles';
-import { shared as store } from './state/quiz-store';
+import { sharedAttempts as store } from './state/quiz-store';
 
 class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(ActivityEditorDialogMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
 	static get styles() {
@@ -28,6 +28,10 @@ class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(ActivityEdito
 	}
 
 	render() {
+		const entity = store.get(this.href);
+		if (!entity) {
+			return html``;
+		}
 		return html`
 			${this._renderDialogOpener()}
 			${this._renderDialog()}
@@ -42,17 +46,18 @@ class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(ActivityEdito
 			</d2l-activity-quiz-attempt-conditions-editor>
 		`;
 	}
-	_renderAttemptsSelectsEditor() {
+	_renderAttemptsSelectsEditor(entity) {
 		// TODO: replace consts with data fetched from attempts entity
-		const attemptsAllowed = ['Unlimited', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+		const {
+			attemptsAllowedOptions
+		} = entity || {};
 		const gradingTypes = ['Highest Attempt', 'Lowest Attempt', 'Average of All Attempts', 'First Attempt', 'Last Attempt'];
 
 		return html`
 			<div class="d2l-label-text">${this.localize('attemptsAllowed')}</div>
 			<select class="d2l-input-select">
-				${attemptsAllowed.map((option) => html `<option value=${option}>${option}</option>`)}
+				${attemptsAllowedOptions.map((option) => html `<option value=${option.value} selected=${option.selected}>${option.title}</option>`)}
 			</select>
-
 			<div class="d2l-label-text">${this.localize('overallGradeCalculation')}</div>
 			<select class="d2l-input-select">
 				${gradingTypes.map((option) => html `<option value=${option}>${option}</option>`)}
@@ -77,11 +82,12 @@ class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(ActivityEdito
 
 	_renderDialogContent() {
 		// TODO: replace consts with data fetched from attempts entity
+		const entity = store.get(this.href);
 		const showRio = true;
 		const showAttemptsConditions = true;
 
 		return html `
-			${this._renderAttemptsSelectsEditor()}
+			${this._renderAttemptsSelectsEditor(entity)}
 			${showRio ? html`${this._renderRioEditor()}` : null}
 			${showAttemptsConditions ? html `${this._renderAttemptConditionsEditor()}` : null}
 		`;
