@@ -28,6 +28,8 @@ export class QuizAttempts {
 		this.canEditAttempts = entity.canUpdateAttemptsAllowed();
 		this.attemptsAllowed = entity.attemptsAllowed();
 		this.attemptsAllowedOptions = entity.attemptsAllowedOptions();
+		this.overallGradeCalculationType = entity.overallGradeCalculationType();
+		this.overallGradeCalculationOptions = entity.overallGradeCalculationOptions();
 	}
 
 	setAttemptsAllowed(data) {
@@ -56,6 +58,8 @@ decorate(QuizAttempts, {
 	canEditAttempts: observable,
 	attemptsAllowed: observable,
 	attemptsAllowedOptions: observable,
+	overallGradeCalculationType: observable,
+	overallGradeCalculationOptions: observable,
 
 	// actions
 	load: action,

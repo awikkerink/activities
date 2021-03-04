@@ -47,20 +47,19 @@ class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(ActivityEdito
 		`;
 	}
 	_renderAttemptsSelectsEditor(entity) {
-		// TODO: replace consts with data fetched from attempts entity
 		const {
-			attemptsAllowedOptions
+			attemptsAllowedOptions,
+			overallGradeCalculationOptions
 		} = entity || {};
-		const gradingTypes = ['Highest Attempt', 'Lowest Attempt', 'Average of All Attempts', 'First Attempt', 'Last Attempt'];
 
 		return html`
 			<div class="d2l-label-text">${this.localize('attemptsAllowed')}</div>
-			<select class="d2l-input-select">
-				${attemptsAllowedOptions.map((option) => html `<option value=${option.value} selected=${option.selected}>${option.title}</option>`)}
+			<select class="d2l-input-select" @change=${this._setAttemptsAllowed}>
+				${attemptsAllowedOptions.map((option) => html `<option value=${option.value} ?selected=${option.selected}>${option.title}</option>`)}
 			</select>
 			<div class="d2l-label-text">${this.localize('overallGradeCalculation')}</div>
-			<select class="d2l-input-select">
-				${gradingTypes.map((option) => html `<option value=${option}>${option}</option>`)}
+			<select class="d2l-input-select" @change=${this._setOverallGradeCalculationType}>
+				${overallGradeCalculationOptions.map((option) => html `<option value=${option.value} ?selected=${option.selected}>${option.title}</option>`)}
 			</select>
 		`;
 	}
@@ -113,6 +112,18 @@ class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(ActivityEdito
 				.token="${this.token}">
 			</d2l-activity-quiz-retake-incorrect-only-editor>
 		`;
+	}
+
+	_setAttemptsAllowed(e) {
+		const entity = store.get(this.href);
+		const data = e.target.value;
+		entity && entity.setAttemptsAllowed(data);
+	}
+
+	_setOverallGradeCalculationType(e) {
+		const entity = store.get(this.href);
+		const data = e.target.value;
+		// TODO: entity && entity.setOverallGradeCalculationType(data);
 	}
 }
 
