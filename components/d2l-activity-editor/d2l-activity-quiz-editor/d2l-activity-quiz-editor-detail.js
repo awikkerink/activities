@@ -21,10 +21,11 @@ import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
+import { ActivityEditorTelemetryMixin } from '../mixins/d2l-activity-editor-telemetry-mixin';
 
 import { shared as store } from './state/quiz-store.js';
 
-class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonMixin(LocalizeActivityQuizEditorMixin(RtlMixin(MobxLitElement))))) {
+class QuizEditorDetail extends ActivityEditorTelemetryMixin(ActivityEditorMixin(AsyncContainerMixin(SkeletonMixin(LocalizeActivityQuizEditorMixin(RtlMixin(MobxLitElement)))))) {
 
 	static get properties() {
 		return {
@@ -83,6 +84,9 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 	constructor() {
 		super(store);
 		this.skeleton = true;
+
+		this.telemetryId = 'quiz';
+		this.type = 'quiz';
 	}
 
 	render() {
@@ -191,6 +195,10 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 		const quiz = store.get(this.href);
 		if (!quiz) {
 			return;
+		}
+
+		if ( quiz.introIsAppendedToDescription ) {
+			this.logIntroEvent(this.href, this.type, this.telemetryId);
 		}
 
 		await quiz.save();
