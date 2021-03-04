@@ -2,7 +2,7 @@ import '@brightspace-ui/core/components/button/button-subtle.js';
 import './d2l-activity-quiz-ip-restrictions-container.js';
 import './d2l-activity-quiz-ip-restrictions-help-dialog.js';
 import 'd2l-inputs/d2l-input-text.js';
-import { bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles';
+import { bodyCompactStyles, bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html } from 'lit-element/lit-element.js';
 import { sharedIpRestrictions as ipStore, shared as store } from './state/quiz-store.js';
 import { ipToInt, validateIp } from './helpers/ip-validation-helper.js';
@@ -28,6 +28,7 @@ class ActivityQuizIpRestrictionEditor
 
 		return [
 			bodyCompactStyles,
+			bodySmallStyles,
 			labelStyles,
 			css`
 				:host {
@@ -44,6 +45,10 @@ class ActivityQuizIpRestrictionEditor
 
 				#ip-container {
 					height: 250px;
+				}
+
+				#ip-summary {
+					margin-top: 0.55rem;
 				}
 			`
 		];
@@ -68,6 +73,30 @@ class ActivityQuizIpRestrictionEditor
 			${this._renderDialog()}
 			${this._renderDialogOpener()}
 		`;
+	}
+
+	async _handleClose(e) {
+		await this.checkinDialog(e);
+
+		const checkedOutQuizEntity = this.checkedOutHref && store.get(this.checkedOutHref);
+		if (!checkedOutQuizEntity) return;
+
+		const { ipRestrictionsHref: checkedOutIpHref } = checkedOutQuizEntity;
+		if (!checkedOutIpHref) return;
+
+		const dialogQuizEntity = this.dialogHref && store.get(this.dialogHref);
+		if (!dialogQuizEntity) return;
+
+		const { ipRestrictionsHref: dialogIpHref } = dialogQuizEntity;
+
+		const dialogIpEntity = ipStore.get(dialogIpHref);
+		const checkedOutIpEntity = ipStore.get(checkedOutIpHref);
+
+		// Replace checkedOut ip entity with dialog ip entity to immediately update summarizer.
+		checkedOutIpEntity.load(dialogIpEntity._entity);
+
+		// Refetch checkedOut timing entity to ensure we display the correct timing summary.
+		checkedOutIpEntity.fetch(true);
 	}
 
 	_handleValidationError(errorKey) {
@@ -135,8 +164,8 @@ class ActivityQuizIpRestrictionEditor
 	_renderActionButtons() {
 		return html`
 			<div slot="footer" id="d2l-actions-container">
-				<d2l-button primary @click=${this._saveRestrictions}>${this.localize('btnIpRestrictionsDialogAdd')}</d2l-button>
-				<d2l-button data-dialog-action>${this.localize('btnIpRestrictionsDialogBtnCancel')}</d2l-button>
+				<d2l-button ?disabled="${this.isSaving}" primary @click=${this._saveRestrictions}>${this.localize('btnIpRestrictionsDialogAdd')}</d2l-button>
+				<d2l-button ?disabled="${this.isSaving}" data-dialog-action>${this.localize('btnIpRestrictionsDialogBtnCancel')}</d2l-button>
 			</div>
 		`;
 	}
@@ -174,6 +203,9 @@ class ActivityQuizIpRestrictionEditor
 			<div class="d2l-label-text">
 				${this.localize('ipRestrictionLabel')}
 			</div>
+
+			${this._renderSummary()}
+
 			<d2l-button-subtle
 				?disabled=${!canEditIpRestrictions}
 				text="${this.localize('btnOpenIpRestrictionDialog')}"
@@ -230,6 +262,26 @@ class ActivityQuizIpRestrictionEditor
 		`;
 	}
 
+	_renderSummary() {
+		const quizEntity = store.get(this.checkedOutHref);
+		if (!quizEntity) return;
+
+		const ipHref = quizEntity.ipRestrictionsHref;
+
+		const ipEntity = ipStore.get(ipHref);
+		if (!ipEntity) {
+			return;
+		}
+
+		if (!ipEntity.ipRestrictions || ipEntity.ipRestrictions.length === 0 || !ipEntity.ipRestrictions[0].start) {
+			return;
+		}
+
+		return html`<p id="ip-summary" class="d2l-body-small">
+						${this.localize('ipRestrictionsInnerSummary', 'count', ipEntity.ipRestrictions.length)}
+					</p>`;
+	}
+
 	_resizeDialog() {
 		const dialog = this.shadowRoot.querySelector('d2l-dialog');
 		dialog.resize();
@@ -242,7 +294,6 @@ class ActivityQuizIpRestrictionEditor
 			return;
 		}
 		const hasValidationError = this._validate();
-
 		if (hasValidationError) {
 			this._scrollToAlert();
 			return;
@@ -251,7 +302,7 @@ class ActivityQuizIpRestrictionEditor
 		await entity.saveRestrictions();
 
 		if (!entity.errors || !entity.errors.length) {
-			this.checkinDialog(e);
+			this._handleClose(e);
 			return;
 		}
 
