@@ -71,6 +71,7 @@ export default {
 	"manageAttempts": "Manage Attempts", // Label for button to launch attempts dialog
 	"textIsDisplayedPart1": "Fields cannot be toggled off in the new quiz creation experience.", // First sentence of alert warning that text fields will be visible
 	"textIsDisplayedSingularPart2": "The {field} field appears to learners when the quiz is saved.", // Second sentence of alert warning that text fields will be visible, when there is only one field
+	"introMovedToDescription": "Quizzes no longer support Introductions. Existing content in the Introduction field now appears in the Description field.", // Alert warning that existing quiz introduction has been removed and that the text in the introduction has been put into the quiz description
 	"attemptsAllowed": "Attempts Allowed", // Title for Attempts Allowed select in Attempts dialog
 	"overallGradeCalculation": "Overall Grade Calculation", // Title for Overall Grade Calculation select in Attempts dialog
 	"retakeIncorrectQuestionsOnly": "Retake Incorrect Questions Only", // Title for RIO checkbox in Attempts dialog
@@ -109,4 +110,9 @@ export default {
 	"percentageRangeText": "%", // copy on Attempts Condition range editor on Attempts Dialog
 	"ipRestrictionsSummary": "IP restrictions", // summary to be displayed when a quiz has ip restrictions
 	"ipRestrictionsInnerSummary" : "{count, plural, =1 {1 restriction} other {{count} restrictions}}", // summary to be displayed when accordion is expanded
+	"quizTimingValidationError": "Timing cannot be changed, please correct the outlined fields.", // Appears in error alert when validation fails in Manage Timing dialog
+	"quizTimingServerError": "Something went wrong. Please try again.", // Timing save server error alert message
+	"quizTimingSummary": "{timingType} ({numMinutes, plural, =1 {1 minute} other {{numMinutes} minutes}})", // Timing type followed by (x minute) or (x minutes). e.g. Recommended time limit (120 minutes)
+	"ipRestrictionsDuplicateError": "Duplicate IP range start address. Each IP range start value must be unique.", // Error for duplicate IP
+	"ipRestrictionsRangeError": "Invalid IP address range provided. Please ensure ranges are correctly formatted." // Error for invalid IP ranges
 };

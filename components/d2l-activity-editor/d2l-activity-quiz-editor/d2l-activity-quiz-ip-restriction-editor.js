@@ -5,11 +5,11 @@ import 'd2l-inputs/d2l-input-text.js';
 import { bodyCompactStyles, bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html } from 'lit-element/lit-element.js';
 import { sharedIpRestrictions as ipStore, shared as store } from './state/quiz-store.js';
+import { ipToInt, validateIp } from './helpers/ip-validation-helper.js';
 import { ActivityEditorWorkingCopyDialogMixin } from '../mixins/d2l-activity-editor-working-copy-dialog-mixin';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
-import { validateIp } from './helpers/ip-validation-helper.js';
 
 class ActivityQuizIpRestrictionEditor
 	extends ActivityEditorWorkingCopyDialogMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
@@ -58,7 +58,6 @@ class ActivityQuizIpRestrictionEditor
 		super(store);
 
 		this._scrollToAlert = this._scrollToAlert.bind(this);
-
 	}
 
 	render() {
@@ -89,6 +88,68 @@ class ActivityQuizIpRestrictionEditor
 		if (!ipEntity) return;
 
 		ipEntity.fetch(true);
+	}
+
+	_handleValidationError(errorKey) {
+		const entity = ipStore.get(this.ipRestrictionsHref);
+		if (!entity) return;
+
+		const errorMsg = this.localize(errorKey);
+		entity.setErrors([errorMsg]);
+		return true;
+	}
+
+	_hasDuplicates() {
+		const entity = ipStore.get(this.ipRestrictionsHref);
+		if (!entity || !entity.ipRestrictions || !entity.ipRestrictions.length) {
+			return false;
+		}
+		// stringified so Set will filter duplicate objects
+		const stringified = entity.ipRestrictions.map(restriction => restriction.start);
+
+		return new Set(stringified).size !== stringified.length;
+	}
+
+	_hasValidInputs() {
+		const ipRestrictionsContainer = this.shadowRoot.querySelector('d2l-activity-quiz-ip-restrictions-container');
+
+		if (!ipRestrictionsContainer) return;
+
+		const inputs = ipRestrictionsContainer.shadowRoot.querySelectorAll('.d2l-ip-input');
+
+		const isInitialState = inputs.length === 2 && inputs[0].formValue === '' && inputs[1].formValue === '';
+
+		if (isInitialState) {
+			return true;
+		}
+
+		let areInputsValid = true;
+
+		for (const input of inputs) {
+			if (!this._validateRestriction(input)) {
+				areInputsValid = false;
+			}
+		}
+
+		return areInputsValid;
+	}
+
+	_hasValidRanges() {
+		const entity = ipStore.get(this.ipRestrictionsHref);
+		if (!entity || !entity.ipRestrictions || !entity.ipRestrictions.length) {
+			return true;
+		}
+
+		for (const range of entity.ipRestrictions) {
+
+			if (!range.end) continue;
+
+			if (ipToInt(range.start) > ipToInt(range.end)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	_renderActionButtons() {
@@ -157,7 +218,10 @@ class ActivityQuizIpRestrictionEditor
 			return;
 		}
 
-		return errors.map((error) => {
+		// using a set to filter out duplicate error messages
+		const uniqueErrors = Array.from(new Set(errors));
+
+		return uniqueErrors.map((error) => {
 
 			if (error === 500 || !error) {
 				error = this.localize('ipRestrictions500Error');
@@ -220,7 +284,6 @@ class ActivityQuizIpRestrictionEditor
 		if (!entity) {
 			return;
 		}
-
 		const hasValidationError = this._validate();
 		if (hasValidationError) {
 			this._scrollToAlert();
@@ -237,7 +300,9 @@ class ActivityQuizIpRestrictionEditor
 		this._scrollToAlert();
 	}
 
-	_scrollToAlert() {
+	async _scrollToAlert() {
+		await this.updateComplete;
+
 		const el = this.shadowRoot.querySelector('d2l-alert');
 		if (el && el.scrollIntoView) {
 			el.scrollIntoView();
@@ -245,31 +310,26 @@ class ActivityQuizIpRestrictionEditor
 	}
 
 	_validate() {
-		const ipRestrictionsContainer = this.shadowRoot.querySelector('d2l-activity-quiz-ip-restrictions-container');
-
-		if (!ipRestrictionsContainer) return;
-
-		const inputs = ipRestrictionsContainer.shadowRoot.querySelectorAll('.d2l-ip-input');
-
-		let hasValidationError = false;
-
-		for (const input of inputs) {
-			if (!this._validateRestriction(input)) {
-				hasValidationError = true;
-			}
-		}
-
 		const entity = ipStore.get(this.ipRestrictionsHref);
+		if (!entity) return;
 
-		if (hasValidationError) {
-			const errorMsg = this.localize('ipRestrictionsValidationError');
-			entity.setErrors([errorMsg]);
-		} else {
-			entity.setErrors([]);
-			this._resizeDialog();
+		entity.setErrors([]);
+
+		if (!this._hasValidInputs()) {
+			return this._handleValidationError('ipRestrictionsValidationError');
 		}
 
-		return hasValidationError;
+		if (this._hasDuplicates()) {
+			return this._handleValidationError('ipRestrictionsDuplicateError');
+		}
+
+		if (!this._hasValidRanges()) {
+			return this._handleValidationError('ipRestrictionsRangeError');
+		}
+
+		this._resizeDialog();
+
+		return false;
 	}
 
 	_validateRestriction(restriction) {
@@ -277,7 +337,9 @@ class ActivityQuizIpRestrictionEditor
 			return true;
 		}
 
-		const isValid = !restriction.formValue || validateIp(restriction.formValue);
+		const isEnd = restriction.name === 'end'; // end values can be empty
+
+		const isValid = isEnd && !restriction.formValue || validateIp(restriction.formValue);
 
 		restriction.setAttribute('aria-invalid', !isValid);
 
