@@ -11,7 +11,6 @@ class ActivityQuizIpRestrictionsSummary extends ActivityEditorMixin(LocalizeActi
 	}
 
 	render() {
-		debugger;
 		const ipEntity = store.get(this.href);
 		if (!ipEntity || !ipEntity.ipRestrictions || ipEntity.ipRestrictions.length === 0 || !ipEntity.ipRestrictions[0].start) {
 			return html``;
