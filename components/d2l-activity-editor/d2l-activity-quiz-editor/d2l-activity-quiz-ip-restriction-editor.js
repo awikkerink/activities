@@ -77,17 +77,26 @@ class ActivityQuizIpRestrictionEditor
 
 	async _handleClose(e) {
 		await this.checkinDialog(e);
-		const entity = store.get(this.checkedOutHref);
 
-		if (!entity) return;
+		const checkedOutQuizEntity = this.checkedOutHref && store.get(this.checkedOutHref);
+		if (!checkedOutQuizEntity) return;
 
-		if (!entity.ipRestrictionsHref) return;
+		const { ipRestrictionsHref: checkedOutIpHref } = checkedOutQuizEntity;
+		if (!checkedOutIpHref) return;
 
-		const ipEntity = ipStore.get(entity.ipRestrictionsHref);
+		const dialogQuizEntity = this.dialogHref && store.get(this.dialogHref);
+		if (!dialogQuizEntity) return;
 
-		if (!ipEntity) return;
+		const { ipRestrictionsHref: dialogIpHref } = dialogQuizEntity;
 
-		ipEntity.fetch(true);
+		const dialogIpEntity = ipStore.get(dialogIpHref);
+		const checkedOutIpEntity = ipStore.get(checkedOutIpHref);
+
+		// Replace checkedOut ip entity with dialog ip entity to immediately update summarizer.
+		checkedOutIpEntity.load(dialogIpEntity._entity);
+
+		// Refetch checkedOut timing entity to ensure we display the correct timing summary.
+		checkedOutIpEntity.fetch(true);
 	}
 
 	_handleValidationError(errorKey) {
@@ -155,8 +164,8 @@ class ActivityQuizIpRestrictionEditor
 	_renderActionButtons() {
 		return html`
 			<div slot="footer" id="d2l-actions-container">
-				<d2l-button primary @click=${this._saveRestrictions}>${this.localize('btnIpRestrictionsDialogAdd')}</d2l-button>
-				<d2l-button data-dialog-action>${this.localize('btnIpRestrictionsDialogBtnCancel')}</d2l-button>
+				<d2l-button ?disabled="${this.isSaving}" primary @click=${this._saveRestrictions}>${this.localize('btnIpRestrictionsDialogAdd')}</d2l-button>
+				<d2l-button ?disabled="${this.isSaving}" data-dialog-action>${this.localize('btnIpRestrictionsDialogBtnCancel')}</d2l-button>
 			</div>
 		`;
 	}
@@ -264,7 +273,7 @@ class ActivityQuizIpRestrictionEditor
 			return;
 		}
 
-		if (!ipEntity.ipRestrictions || ipEntity.ipRestrictions.length === 0) {
+		if (!ipEntity.ipRestrictions || ipEntity.ipRestrictions.length === 0 || !ipEntity.ipRestrictions[0].start) {
 			return;
 		}
 
