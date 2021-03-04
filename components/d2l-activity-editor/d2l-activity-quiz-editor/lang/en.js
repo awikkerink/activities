@@ -111,5 +111,6 @@ export default {
 	"andRangeText": "and", // copy on Attempts Condition range editor on Attempts Dialog
 	"percentageRangeText": "%", // copy on Attempts Condition range editor on Attempts Dialog
 	"quizTimingValidationError": "Timing cannot be changed, please correct the outlined fields", // Appears in error alert when validation fails in Manage Timing dialog
-	"quizTimingServerError": "Something went wrong. Please try again." // Timing save server error alert message
+	"quizTimingServerError": "Something went wrong. Please try again.", // Timing save server error alert message
+	"quizTimingSummary": "{timingType} ({numMinutes, plural, =1 {1 minute} other {{numMinutes} minutes}})" // Timing type followed by (x minute) or (x minutes). e.g. Recommended time limit (120 minutes)
 };
