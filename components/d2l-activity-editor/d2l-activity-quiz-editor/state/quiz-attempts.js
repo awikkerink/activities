@@ -70,4 +70,5 @@ decorate(QuizAttempts, {
 	// actions
 	load: action,
 	setAttemptsAllowed: action,
+	setOverallGradeCalculationType: action
 });
