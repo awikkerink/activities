@@ -84,7 +84,7 @@ class ContentModuleDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 				<div class="d2l-activity-label-container d2l-label-text d2l-skeletize">
 					${this.localize('content.description')}
 				</div>
-				<div class="${htmlNewEditorEnabled ? 'd2l-new-html-editor-container' : ''} d2l-skeletize">
+				<div class="d2l-skeletize ${htmlNewEditorEnabled ? 'd2l-new-html-editor-container' : ''}">
 					<d2l-activity-text-editor
 						.ariaLabel="${this.localize('content.description')}"
 						.key="content-description"
