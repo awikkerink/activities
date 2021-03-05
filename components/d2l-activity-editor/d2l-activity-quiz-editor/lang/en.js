@@ -114,5 +114,9 @@ export default {
 	"quizTimingServerError": "Something went wrong. Please try again.", // Timing save server error alert message
 	"quizTimingSummary": "{timingType} ({numMinutes, plural, =1 {1 minute} other {{numMinutes} minutes}})", // Timing type followed by (x minute) or (x minutes). e.g. Recommended time limit (120 minutes)
 	"ipRestrictionsDuplicateError": "Duplicate IP range start address. Each IP range start value must be unique.", // Error for duplicate IP
-	"ipRestrictionsRangeError": "Invalid IP address range provided. Please ensure ranges are correctly formatted." // Error for invalid IP ranges
+	"ipRestrictionsRangeError": "Invalid IP address range provided. Please ensure ranges are correctly formatted.", // Error for invalid IP ranges
+	"subHdrHeaderFooter": "Header and Footer", // Header and Footer accordion header
+	"manageHeaderFooter": "Manage Header and Footer", // Label for button to launch Header and Footer dialog
+	"quizHeaderFooterServerError": "Oops server error", // replace with real error string
+	"quizHeaderFooterValidationError": "Oops header / footer validation error" // replace with real string
 };
