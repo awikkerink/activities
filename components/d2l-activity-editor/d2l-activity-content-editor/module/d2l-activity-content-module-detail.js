@@ -57,22 +57,21 @@ class ContentModuleDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 	render() {
 		const moduleEntity = moduleStore.getContentModuleActivity(this.href);
 		let descriptionRichText = undefined;
-		let htmlNewEditorEnabled = false;
 
 		if (moduleEntity) {
 			this.skeleton = false;
 			descriptionRichText = moduleEntity.descriptionRichText;
-
-			let newEditorEvent = new CustomEvent('d2l-request-provider', {
-				detail: { key: 'd2l-provider-html-new-editor-enabled' },
-				bubbles: true,
-				composed: true,
-				cancelable: true
-			});
-
-			this.dispatchEvent(newEditorEvent);
-			htmlNewEditorEnabled = newEditorEvent.detail.provider;
 		}
+
+		let newEditorEvent = new CustomEvent('d2l-request-provider', {
+			detail: { key: 'd2l-provider-html-new-editor-enabled' },
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+
+		this.dispatchEvent(newEditorEvent);
+		let htmlNewEditorEnabled = newEditorEvent.detail.provider;
 
 		return html`
 			<d2l-activity-content-editor-title
