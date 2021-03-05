@@ -28,14 +28,19 @@ export class QuizAttempts {
 		this.canEditAttempts = entity.canUpdateAttemptsAllowed();
 		this.attemptsAllowed = entity.attemptsAllowed();
 		this.attemptsAllowedOptions = entity.attemptsAllowedOptions();
+		this.canUpdateOverallGradeCalculation = entity.canUpdateOverallGradeCalculation();
 		this.overallGradeCalculationType = entity.overallGradeCalculationType();
 		this.overallGradeCalculationOptions = entity.overallGradeCalculationOptions();
 	}
 
 	setAttemptsAllowed(data) {
 		this.canUpdateAttemptsAllowed = this._entity.canUpdateAttemptsAllowed;
-		this.updateProperty(() => this._entity.updateAttempts(data));
+		this.updateProperty(() => this._entity.setAttemptsAllowed(data));
+	}
 
+	setOverallGradeCalculationType(data) {
+		this.canUpdateOverallGradeCalculation = this._canUpdateOverallGradeCalculation;
+		this.updateProperty(() => this._entity.setOverallGradeCalculationType(data));
 	}
 
 	async updateProperty(updateFunc) {
@@ -58,6 +63,7 @@ decorate(QuizAttempts, {
 	canEditAttempts: observable,
 	attemptsAllowed: observable,
 	attemptsAllowedOptions: observable,
+	canUpdateOverallGradeCalculation: observable,
 	overallGradeCalculationType: observable,
 	overallGradeCalculationOptions: observable,
 

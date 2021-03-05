@@ -32,6 +32,7 @@ class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(ActivityEdito
 		if (!entity) {
 			return html``;
 		}
+
 		return html`
 			${this._renderDialogOpener()}
 			${this._renderDialog()}
@@ -123,7 +124,7 @@ class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(ActivityEdito
 	_setOverallGradeCalculationType(e) {
 		const entity = store.get(this.href);
 		const data = e.target.value;
-		// TODO: entity && entity.setOverallGradeCalculationType(data);
+		entity && entity.setOverallGradeCalculationType(data);
 	}
 }
 
