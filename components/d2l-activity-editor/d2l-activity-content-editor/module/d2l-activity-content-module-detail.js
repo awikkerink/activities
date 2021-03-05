@@ -63,7 +63,7 @@ class ContentModuleDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 			descriptionRichText = moduleEntity.descriptionRichText;
 		}
 
-		let newEditorEvent = new CustomEvent('d2l-request-provider', {
+		const newEditorEvent = new CustomEvent('d2l-request-provider', {
 			detail: { key: 'd2l-provider-html-new-editor-enabled' },
 			bubbles: true,
 			composed: true,
@@ -71,7 +71,7 @@ class ContentModuleDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 		});
 
 		this.dispatchEvent(newEditorEvent);
-		let htmlNewEditorEnabled = newEditorEvent.detail.provider;
+		const htmlNewEditorEnabled = newEditorEvent.detail.provider;
 
 		return html`
 			<d2l-activity-content-editor-title
