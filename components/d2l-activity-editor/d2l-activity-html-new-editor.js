@@ -25,7 +25,7 @@ class ActivityHtmlNewEditor extends LocalizeActivityEditorMixin(LitElement) {
 
 	constructor() {
 		super();
-		this.htmlEditorHeight = "10rem";
+		this.htmlEditorHeight = '10rem';
 	}
 
 	render() {

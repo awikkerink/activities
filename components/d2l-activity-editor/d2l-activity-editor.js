@@ -40,9 +40,9 @@ class ActivityEditor extends ActivityEditorContainerMixin(ActivityEditorTelemetr
 				padding: 20px;
 			}
 			.d2l-primary-panel {
-				padding: 20px;
-				height: 100%;
 				box-sizing: border-box;
+				height: 100%;
+				padding: 20px;
 			}
 			.d2l-secondary-panel {
 				padding: 10px;

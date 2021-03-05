@@ -7,6 +7,9 @@ export const activityContentEditorStyles = css`
 	:host([hidden]) {
 		display: none;
 	}
+	:host([skeleton]) .d2l-skeletize::before {
+		z-index: 3;
+	}
 	:host > div {
 		padding-bottom: 20px;
 	}
