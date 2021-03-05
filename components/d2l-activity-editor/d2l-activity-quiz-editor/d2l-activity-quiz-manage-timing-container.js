@@ -1,27 +1,36 @@
 import './d2l-activity-quiz-manage-timing-editor.js';
+import '@brightspace-ui/core/components/alert/alert.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
+import '@brightspace-ui/core/components/icons/icon.js';
+import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html } from 'lit-element/lit-element';
-import { ActivityEditorDialogMixin } from '../mixins/d2l-activity-editor-dialog-mixin';
-import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin';
-import { labelStyles } from '@brightspace-ui/core/components/typography/styles';
+import { shared as store, sharedTiming as timingStore } from './state/quiz-store';
+import { ActivityEditorWorkingCopyDialogMixin } from '../mixins/d2l-activity-editor-working-copy-dialog-mixin';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
-import { shared as store } from './state/quiz-store';
+import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 
-class ActivityQuizManageTimingContainer extends ActivityEditorMixin(ActivityEditorDialogMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
-	static get properties() {
-
-		return {
-			dialogHref: { type: String }
-		};
-	}
-
+class ActivityQuizManageTimingContainer extends ActivityEditorWorkingCopyDialogMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
 	static get styles() {
 		return [
+			bodySmallStyles,
 			labelStyles,
 			css`
 				#manage-timing-dialog-timing-editor {
 					height: 430px;
+				}
+				d2l-alert {
+					margin-bottom: 1rem;
+				}
+				.d2l-activity-quiz-manage-timing-container-dialog-summary {
+					margin: 0.5rem 0;
+				}
+				.d2l-activity-quiz-manage-timing-container-dialog-summary d2l-icon {
+					margin-right: 0.3rem;
+				}
+				:host([dir="rtl"]) .d2l-activity-quiz-manage-timing-container-dialog-summary d2l-icon {
+					margin-left: 0.3rem;
+					margin-right: 0;
 				}
 			`,
 		];
@@ -29,65 +38,90 @@ class ActivityQuizManageTimingContainer extends ActivityEditorMixin(ActivityEdit
 
 	constructor() {
 		super(store);
-		this.dialogHref = '';
-		this.checkoutOnLoad = true;
+	}
+
+	firstUpdated() {
+		super.firstUpdated();
+		this.serverErrorTerm = this.localize('quizTimingServerError');
+		this.validationErrorTerm = this.localize('quizTimingValidationError');
 	}
 
 	render() {
 		return html`
+			${this._renderDialogLabel()}
+			${this._renderDialogSummary()}
 			${this._renderDialogOpener()}
 			${this._renderDialog()}
     	`;
 	}
 
-	async save() {
-		const entity = store.get(this.checkedOutHref);
-		if (!entity) return;
+	async _checkinDialog(e) {
+		await this.checkinDialog(e);
 
-		await entity.checkin(store);
-	}
+		if (!this.opened) {
+			// Dialog successfully checked in
+			const checkedOutQuizEntity = this.checkedOutHref && store.get(this.checkedOutHref);
+			if (!checkedOutQuizEntity) return;
+			const { timingHref: checkedOutTimingHref } = checkedOutQuizEntity;
 
-	async _closeDialog(e) {
-		const entity = store.get(this.dialogHref);
-		if (!entity) return;
+			const dialogQuizEntity = this.dialogHref && store.get(this.dialogHref);
+			if (!dialogQuizEntity) return;
+			const { timingHref: dialogTimingHref } = dialogQuizEntity;
 
-		if (e.detail.action === 'ok') {
-			await entity.checkin(store);
+			// Replace checkedOut timing entity with dialog timing entity to immediately update timing summarizer.
+			const dialogTimingEntity = timingStore.get(dialogTimingHref);
+			const checkedOutTimingEntity = timingStore.get(checkedOutTimingHref);
+			checkedOutTimingEntity.load(dialogTimingEntity._entity);
+
+			// Refetch checkedOut timing entity to ensure we display the correct timing summary.
+			checkedOutTimingEntity.fetch(true);
 		}
-
-		this.dialogHref = '';
-		this.handleClose(e);
-	}
-
-	async _openDialog(e) {
-		const entity = store.get(this.checkedOutHref);
-		if (!entity) return;
-
-		this.dialogHref = await entity.checkout(store, true);
-
-		this.open(e);
 	}
 
 	_renderDialog() {
+		const showSpinnerWhenLoading = true;
+		const width = 900;
 		return html`
 			<d2l-dialog
 				id="quiz-manage-timing-dialog"
 				?opened="${this.opened}"
-				@d2l-dialog-close="${this._closeDialog}"
-				width=800
+				@d2l-dialog-close="${this.closeDialog}"
+				?async="${showSpinnerWhenLoading}"
+				width="${width}"
 				title-text=${this.localize('subHdrTimingTools') }>
+					<d2l-alert type="error" ?hidden=${!this.isError || !this.errorTerm}>${this.errorTerm}</d2l-alert>
 					<div id="manage-timing-dialog-timing-editor">${this._renderQuizTimingEditor()}</div>
-					<d2l-button slot="footer" primary data-dialog-action="ok">${this.localize('manageTimingDialogConfirmationText')}</d2l-button>
-					<d2l-button slot="footer" data-dialog-action>${this.localize('manageTimingDialogCancelText')}</d2l-button>
+					<d2l-button slot="footer" primary @click="${this._checkinDialog}" ?disabled="${this.isSaving}">${this.localize('manageTimingDialogConfirmationText')}</d2l-button>
+					<d2l-button slot="footer" data-dialog-action ?disabled="${this.isSaving}">${this.localize('manageTimingDialogCancelText')}</d2l-button>
 			</d2l-dialog>
+		`;
+	}
+
+	_renderDialogLabel() {
+		return html`
+			<div id="manage-timing-editor-label" class="d2l-label-text">${this.localize('subHdrTimingTools')}</div>
 		`;
 	}
 
 	_renderDialogOpener() {
 		return html`
-			<div id="manage-timing-editor-label" class="d2l-label-text">${this.localize('subHdrTimingTools')}</div>
-			<div class="placeholder-for-summarizer"></div>
-			<d2l-button-subtle text=${this.localize('manageTiming')} @click="${this._openDialog}" h-align="text"></d2l-button-subtle>
+			<d2l-button-subtle text=${this.localize('manageTiming')} @click="${this.openDialog}" h-align="text"></d2l-button-subtle>
+		`;
+	}
+
+	_renderDialogSummary() {
+		const entity = this.checkedOutHref && store.get(this.checkedOutHref);
+		if (!entity) return html``;
+		const { timingHref } = entity;
+
+		return html`
+			<div class="d2l-activity-quiz-manage-timing-container-dialog-summary d2l-body-small">
+				<d2l-icon icon="tier1:time"></d2l-icon>
+				<d2l-activity-quiz-timing-summary
+					href="${timingHref}"
+					.token="${this.token}">
+				</d2l-activity-quiz-timing-summary>
+			</div>
 		`;
 	}
 

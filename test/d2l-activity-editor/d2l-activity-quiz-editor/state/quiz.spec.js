@@ -50,7 +50,8 @@ describe('Quiz', function() {
 				headerEditorHtml: () => 'This is an header',
 				headerIsDisplayed: () => true,
 				canEditHeader: () => true,
-				headerRichTextEditorConfig: () => {}
+				headerRichTextEditorConfig: () => {},
+				introIsAppendedToDescription: () => {},
 			};
 		});
 
