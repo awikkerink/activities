@@ -5,10 +5,7 @@ export const ActivityEditorTelemetryMixin = superclass => class extends supercla
 		if (!href || !type || !telemetryId) return;
 
 		const measureName = `d2l-activity-${type}-editor.page.intro.merged`;
-		performance.clearMeasures(measureName);
-
-		const saveStartMarkName = this._getSaveStartMarkName(type);
-		performance.measure(measureName, saveStartMarkName);
+		performance.measure(measureName);
 		this._logUserEvent(href, 'IntroductionAppendedToDescription', type, telemetryId, measureName);
 	}
 
