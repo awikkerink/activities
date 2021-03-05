@@ -54,7 +54,6 @@ class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(
 	}
 
 	_renderDialogLabel() {
-		console.log('Should see the label here');
 		return html`
 			<div id="manage-header-footer-editor-label" class="d2l-label-text">${this.localize('subHdrHeaderFooter')}</div>
 		`;
