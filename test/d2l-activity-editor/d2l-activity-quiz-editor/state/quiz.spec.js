@@ -38,6 +38,7 @@ describe('Quiz', function() {
 				canEditNotificationEmail: () => true,
 				notificationEmail: () => 'hello@d2l.com',
 				previewHref: () => 'http://test.desire2learn.d2l/d2l/lms/quizzing/user/quiz_summary.d2l?ou=6606&qi=46&isprv=1&fromQB=1&bp=1',
+				attemptsHref: () => 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/attempts?workingCopyId=4321',
 				timingHref: () => 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234',
 				ipRestrictionsHref: () => 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/37/ip',
 				canEditPassword: () => true,
@@ -80,6 +81,7 @@ describe('Quiz', function() {
 		expect(QuizEntity.mock.calls[0][0]).to.equal(sirenEntity);
 		expect(QuizEntity.mock.calls[0][1]).to.equal('token');
 		expect(fetchEntity.mock.calls.length).to.equal(1);
+		expect(quiz.attemptsHref).to.equal('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/attempts?workingCopyId=4321');
 		expect(quiz.previewHref).to.equal('http://test.desire2learn.d2l/d2l/lms/quizzing/user/quiz_summary.d2l?ou=6606&qi=46&isprv=1&fromQB=1&bp=1');
 		expect(quiz.timingHref).to.equal('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234');
 		expect(quiz.ipRestrictionsHref).to.equal('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/37/ip');
