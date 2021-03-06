@@ -2,7 +2,7 @@ import '@brightspace-ui/core/components/alert/alert.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@brightspace-ui/core/components/icons/icon.js';
 import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles';
-import { css, html } from 'lit-element/lit-element';
+import { html } from 'lit-element/lit-element';
 import { ActivityEditorDialogMixin } from '../mixins/d2l-activity-editor-dialog-mixin';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
