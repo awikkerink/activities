@@ -56,7 +56,7 @@ class ActivityQuizTimingAndDisplayEditor extends ActivityEditorMixin(AsyncContai
 	}
 
 	render() {
-			return html`
+		return html`
 			<d2l-activity-accordion-collapse
 				?has-errors=${this._errorInAccordion()}
 				?skeleton="${this.skeleton}">
