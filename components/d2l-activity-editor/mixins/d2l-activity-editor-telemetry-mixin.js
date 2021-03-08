@@ -1,14 +1,6 @@
 import Events from 'd2l-telemetry-browser-client';
 
 export const ActivityEditorTelemetryMixin = superclass => class extends superclass {
-	logIntroAppendedToDescriptionEvent(href, type, telemetryId) {
-		if (!href || !type || !telemetryId) return;
-
-		const measureName = `d2l-activity-${type}-editor.page.intro.merged`;
-		performance.measure(measureName);
-		this._logUserEvent(href, 'IntroductionAppendedToDescription', type, telemetryId, measureName);
-	}
-
 	logLoadEvent(href, type, telemetryId) {
 		if (!href || !type || !telemetryId) return;
 
