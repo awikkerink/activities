@@ -12,7 +12,7 @@ import './d2l-activity-quiz-question-editor.js';
 
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
-import { ActivityEditorTelemetryMixin } from '../mixins/d2l-activity-editor-telemetry-mixin';
+import { ActivityQuizEditorTelemetryMixin } from '../d2l-activity-quiz-editor/mixins/d2l-activity-quiz-editor-telemetry-mixin.js';
 import { css } from 'lit-element/lit-element.js';
 import { editorLayoutStyles } from '../styles/activity-editor-styles';
 import { html } from '@brightspace-hmc/foundation-engine/framework/lit/hypermedia-components.js';
@@ -25,7 +25,7 @@ import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton
 
 import { shared as store } from './state/quiz-store.js';
 
-class QuizEditorDetail extends ActivityEditorTelemetryMixin(ActivityEditorMixin(AsyncContainerMixin(SkeletonMixin(LocalizeActivityQuizEditorMixin(RtlMixin(MobxLitElement)))))) {
+class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMixin(AsyncContainerMixin(SkeletonMixin(LocalizeActivityQuizEditorMixin(RtlMixin(MobxLitElement)))))) {
 
 	static get properties() {
 		return {
