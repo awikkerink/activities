@@ -40,6 +40,12 @@ class ContentEditor extends LocalizeActivityEditorMixin(RtlMixin(ActivityEditorM
 				padding-left: 1rem;
 				padding-right: 0;
 			}
+			#d2l-activity-content-editor-primary-panel {
+				height: 100%;
+			}
+			d2l-activity-content-editor-detail {
+				height: inherit;
+			}
 		`;
 	}
 
@@ -90,7 +96,7 @@ class ContentEditor extends LocalizeActivityEditorMixin(RtlMixin(ActivityEditorM
 	get _editorTemplate() {
 		return html`
 			<slot name="editor-nav" slot="header"></slot>
-			<div slot="primary">
+			<div slot="primary" id="d2l-activity-content-editor-primary-panel">
 				<d2l-activity-content-editor-detail
 					.href="${this.href}"
 					.token="${this.token}"

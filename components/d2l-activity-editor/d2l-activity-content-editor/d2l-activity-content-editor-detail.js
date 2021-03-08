@@ -22,6 +22,11 @@ class ContentEditorDetail extends MobxLitElement {
 				d2l-loading-spinner {
 					width: 100%;
 				}
+				d2l-activity-content-module-detail {
+					display: flex;
+					flex-direction: column;
+					height: inherit;
+				}
 			`
 		];
 	}
