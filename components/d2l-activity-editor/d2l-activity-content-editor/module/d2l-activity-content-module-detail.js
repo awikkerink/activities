@@ -34,7 +34,7 @@ class ContentModuleDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 				}
 				#content-description-container {
 					display: flex;
-					flex-flow: column;
+					flex-direction: column;
 					height: inherit;
 				}
 			`

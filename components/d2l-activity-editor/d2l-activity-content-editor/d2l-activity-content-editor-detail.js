@@ -24,7 +24,7 @@ class ContentEditorDetail extends MobxLitElement {
 				}
 				d2l-activity-content-module-detail {
 					display: flex;
-					flex-flow: column;
+					flex-direction: column;
 					height: inherit;
 				}
 			`
