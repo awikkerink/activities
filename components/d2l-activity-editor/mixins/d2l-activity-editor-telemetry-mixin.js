@@ -20,18 +20,7 @@ export const ActivityEditorTelemetryMixin = superclass => class extends supercla
 		this._logUserEvent(href, 'Saved', type, telemetryId, measureName);
 	}
 
-	markSaveStart(type, telemetryId) {
-		if (!type || !telemetryId) return;
-		const saveStartMarkName = this._getSaveStartMarkName(type);
-		performance.clearMarks(saveStartMarkName);
-		performance.mark(saveStartMarkName);
-	}
-
-	_getSaveStartMarkName(type) {
-		return `d2l-activity-${type}-editor.page.save.start`;
-	}
-
-	async _logTelemetryEvent(href, action, type, telemetryId) {
+	async logTelemetryEvent(href, action, type, telemetryId) {
 		if (!href || !action || !type || !telemetryId) return;
 
 		const eventBody = new Events.EventBody()
@@ -44,6 +33,17 @@ export const ActivityEditorTelemetryMixin = superclass => class extends supercla
 			.setBody(eventBody);
 		const client = await D2L.Telemetry.CreateClient();
 		client.logUserEvent(event);
+	}
+
+	markSaveStart(type, telemetryId) {
+		if (!type || !telemetryId) return;
+		const saveStartMarkName = this._getSaveStartMarkName(type);
+		performance.clearMarks(saveStartMarkName);
+		performance.mark(saveStartMarkName);
+	}
+
+	_getSaveStartMarkName(type) {
+		return `d2l-activity-${type}-editor.page.save.start`;
 	}
 
 	async _logUserEvent(href, action, type, telemetryId, performanceMeasureName) {
