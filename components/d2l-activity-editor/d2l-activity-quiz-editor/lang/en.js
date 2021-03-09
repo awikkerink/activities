@@ -116,5 +116,7 @@ export default {
 	"ipRestrictionsDuplicateError": "Duplicate IP range start address. Each IP range start value must be unique.", // Error for duplicate IP
 	"ipRestrictionsRangeError": "Invalid IP address range provided. Please ensure ranges are correctly formatted.", // Error for invalid IP ranges
 	"subHdrHeaderFooter": "Header and Footer", // Header and Footer accordion header
-	"manageHeaderFooter": "Manage Header and Footer" // Label for button to launch Header and Footer dialog
+	"manageHeaderFooter": "Manage Header and Footer", // Label for button to launch Header and Footer dialog
+	"manageHeaderFooterDialogAddText": "Add", // Label for Add button for header and footer dialog
+	"manageHeaderFooterDialogCancelText": "Cancel" // Label for Cancel button header and footer dialog
 };
