@@ -9,6 +9,7 @@ import '../d2l-activity-text-editor.js';
 import '../d2l-activity-attachments/d2l-activity-attachments-editor.js';
 import '../d2l-activity-quiz-editor/d2l-activity-quiz-divider';
 import './d2l-activity-quiz-question-editor.js';
+import './d2l-activity-quiz-editor-action-bar.js';
 
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
@@ -164,7 +165,11 @@ class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMi
 					icon="tier1:preview">
 				</d2l-button-subtle>
 			</d2l-activity-quiz-divider>
-
+			<d2l-activity-quiz-editor-action-bar
+				?skeleton="${this.skeleton}"
+				href="${this.activityUsageHref}"
+				.token="${this.token}">
+			</d2l-activity-quiz-editor-action-bar>
 			<d2l-activity-quiz-question-editor href="${this.activityUsageHref}" .token="${this.token}">
 			</d2l-activity-quiz-question-editor>
 		`;
