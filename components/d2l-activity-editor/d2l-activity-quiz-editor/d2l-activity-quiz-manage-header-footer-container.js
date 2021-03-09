@@ -1,6 +1,7 @@
 import '@brightspace-ui/core/components/alert/alert.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@brightspace-ui/core/components/icons/icon.js';
+import './d2l-activity-quiz-manage-header-footer-editor.js';
 import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles';
 import { ActivityEditorDialogMixin } from '../mixins/d2l-activity-editor-dialog-mixin';
 import { html } from 'lit-element/lit-element';
@@ -29,6 +30,7 @@ class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(
 		return html`
 			${this._renderDialogLabel()}
 			${this._renderDialogOpener()}
+			${this._renderDialog()}
     	`;
 	}
 
@@ -40,14 +42,27 @@ class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(
 
 	_renderDialogOpener() {
 		return html`
-			<d2l-button-subtle text=${this.localize('manageHeaderFooter')} @click="${this.openDialog}" h-align="text"></d2l-button-subtle>
+			<d2l-button-subtle text=${this.localize('manageHeaderFooter')} @click="${this.open}" h-align="text"></d2l-button-subtle>
+		`;
+	}
+
+	_renderDialog() {
+		const width = 700;
+		return html`
+			<d2l-dialog
+				id="quiz-manage-header-footer-dialog"
+				?opened="${this.opened}"
+				@d2l-dialog-close="${this.handleClose}"
+				width="${width}"
+				title-text=${this.localize('manageHeaderFooter')}>
+					<div id="manage-header-footer-dialog-header-footer-editor">${this._renderQuizHeaderFooterEditor()}</div>
+					<d2l-button slot="footer" primary @click="${this._save}" ?disabled="${this.isSaving}">${this.localize('manageHeaderFooterDialogAddText')}</d2l-button>
+					<d2l-button slot="footer" data-dialog-action ?disabled="${this.isSaving}">${this.localize('manageHeaderFooterDialogCancelText')}</d2l-button>
+			</d2l-dialog>
 		`;
 	}
 
 	_renderQuizHeaderFooterEditor() {
-		const entity = store.get(this.dialogHref);
-		if (!entity) return html``;
-
 		return html`
 			<d2l-activity-quiz-manage-header-footer-editor
 				href="${this.href}"
