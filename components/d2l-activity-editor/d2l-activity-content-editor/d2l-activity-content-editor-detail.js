@@ -2,6 +2,7 @@ import './module/d2l-activity-content-module-detail.js';
 import './shared-components/d2l-activity-content-editor-due-date.js';
 import './lti-link/d2l-activity-content-lti-link-detail.js';
 import './web-link/d2l-activity-content-web-link-detail.js';
+import './html-file/d2l-activity-content-html-file-detail.js';
 import 'd2l-loading-spinner/d2l-loading-spinner.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { CONTENT_TYPES } from 'siren-sdk/src/activities/content/ContentEntity.js';
@@ -75,7 +76,12 @@ class ContentEditorDetail extends MobxLitElement {
 
 		if (entityType === CONTENT_TYPES.htmlFile) {
 			return html`
-				<h1>html file editor goes here</h1>
+				<d2l-activity-content-html-file-detail
+					.href="${contentActivityHref}"
+					.token="${this.token}"
+				>
+					${this._renderDueDate()}
+				</d2l-activity-content-html-file-detail>
 			`;
 		}
 
