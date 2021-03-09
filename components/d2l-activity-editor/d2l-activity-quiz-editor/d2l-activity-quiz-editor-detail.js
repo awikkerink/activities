@@ -12,6 +12,7 @@ import './d2l-activity-quiz-question-editor.js';
 
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
+import { ActivityQuizEditorTelemetryMixin } from '../d2l-activity-quiz-editor/mixins/d2l-activity-quiz-editor-telemetry-mixin.js';
 import { css } from 'lit-element/lit-element.js';
 import { editorLayoutStyles } from '../styles/activity-editor-styles';
 import { html } from '@brightspace-hmc/foundation-engine/framework/lit/hypermedia-components.js';
@@ -24,7 +25,7 @@ import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton
 
 import { shared as store } from './state/quiz-store.js';
 
-class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonMixin(LocalizeActivityQuizEditorMixin(RtlMixin(MobxLitElement))))) {
+class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMixin(AsyncContainerMixin(SkeletonMixin(LocalizeActivityQuizEditorMixin(RtlMixin(MobxLitElement)))))) {
 
 	static get properties() {
 		return {
@@ -83,6 +84,9 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 	constructor() {
 		super(store);
 		this.skeleton = true;
+
+		this.telemetryId = 'quiz';
+		this.type = 'quiz';
 	}
 
 	render() {
@@ -191,6 +195,10 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 		const quiz = store.get(this.href);
 		if (!quiz) {
 			return;
+		}
+
+		if (quiz.introIsAppendedToDescription) {
+			this.logIntroAppendedToDescriptionEvent(this.href, this.type, this.telemetryId);
 		}
 
 		await quiz.save();
