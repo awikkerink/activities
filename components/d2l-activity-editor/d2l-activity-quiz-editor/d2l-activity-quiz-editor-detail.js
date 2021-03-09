@@ -100,13 +100,14 @@ class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMi
 			canEditDescription,
 			descriptionRichTextEditorConfig,
 			descriptionIsDisplayed,
+			originalDescriptionIsEmpty,
 			introIsAppendedToDescription,
 		} = quiz || {};
 
 		const descriptionLang = this.localize('description');
 
 		return html`
-			<d2l-alert has-close-button ?hidden=${this.skeleton || descriptionIsDisplayed || !description || description.length === 0}>
+			<d2l-alert has-close-button ?hidden=${this.skeleton || descriptionIsDisplayed || originalDescriptionIsEmpty}>
 				${this.localize('textIsDisplayedPart1')}
 				${this.localize('textIsDisplayedSingularPart2', 'field', descriptionLang)}
 			</d2l-alert>
