@@ -47,24 +47,44 @@ class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(ActivityEdito
 			</d2l-activity-quiz-attempt-conditions-editor>
 		`;
 	}
+
+	_renderAttemptsAllowedOptions(options) {
+		if (!options) return html``;
+		if (!Array.isArray(options)) {
+			return html`<option value=${options[0]} selected>${options[0]}</option>`;
+		}
+		return html`
+			${options.map((option) => html`<option value=${option.value} ?selected=${option.selected}>${option.title}</option>`)}
+		`;
+	}
+
 	_renderAttemptsSelectsEditor(entity) {
 		const {
+			attemptsAllowed,
 			attemptsAllowedOptions,
+			canUpdateAttemptsAllowed,
+			canUpdateOverallGradeCalculation,
+			overallGradeCalculationType,
 			overallGradeCalculationOptions
 		} = entity || {};
 
 		return html`
 			<div class="d2l-label-text">${this.localize('attemptsAllowed')}</div>
-			<select class="d2l-input-select" @change=${this._setAttemptsAllowed}>
-				${attemptsAllowedOptions.map((option) => html `<option value=${option.value} ?selected=${option.selected}>${option.title}</option>`)}
+			<select
+				class="d2l-input-select"
+				?disabled =${!canUpdateAttemptsAllowed}
+				@change=${this._setAttemptsAllowed}>
+				${this._renderAttemptsAllowedOptions(attemptsAllowedOptions ? attemptsAllowedOptions : attemptsAllowed)}
 			</select>
 			<div class="d2l-label-text">${this.localize('overallGradeCalculation')}</div>
-			<select class="d2l-input-select" @change=${this._setOverallGradeCalculationType}>
-				${overallGradeCalculationOptions.map((option) => html `<option value=${option.value} ?selected=${option.selected}>${option.title}</option>`)}
+			<select
+				class="d2l-input-select"
+				?disabled =${!canUpdateOverallGradeCalculation}
+				@change=${this._setOverallGradeCalculationType}>
+				${this._renderOverallGradeCalculationOptions(overallGradeCalculationOptions ? overallGradeCalculationOptions : overallGradeCalculationType)}
 			</select>
 		`;
 	}
-
 	_renderDialog() {
 		return html`
 			<d2l-dialog
@@ -79,12 +99,12 @@ class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(ActivityEdito
 			</d2l-dialog>
 		`;
 	}
-
 	_renderDialogContent() {
 		// TODO: replace consts with data fetched from attempts entity
 		const entity = store.get(this.href);
-		const showRio = true;
-		const showAttemptsConditions = true;
+		const { attemptsAllowed } = entity || {};
+		const showRio = attemptsAllowed > 1;
+		const showAttemptsConditions = attemptsAllowed > 1;
 
 		return html `
 			${this._renderAttemptsSelectsEditor(entity)}
@@ -92,7 +112,6 @@ class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(ActivityEdito
 			${showAttemptsConditions ? html `${this._renderAttemptConditionsEditor()}` : null}
 		`;
 	}
-
 	_renderDialogOpener() {
 		return html`
 			<div id="manage-attempts-editor-label" class="d2l-label-text">
@@ -103,6 +122,15 @@ class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(ActivityEdito
 				@click="${this.open}"
 				h-align="text">
 			</d2l-button-subtle>
+		`;
+	}
+	_renderOverallGradeCalculationOptions(options) {
+		if (!options) return html``;
+		if (!Array.isArray(options)) {
+			return html`<option value=${options.value} selected>${options.title}</option>`;
+		}
+		return html`
+			${options.map((option) => html`<option value=${option.value} ?selected=${option.selected}>${option.title}</option>`)}
 		`;
 	}
 
