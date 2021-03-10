@@ -36,7 +36,6 @@ class ActivityQuizRetakeIncorrectOnlyEditor
 		if (!entity) {
 			return html``;
 		}
-
 		const {
 			isRetakeIncorrectOnly,
 			canUpdateRetakeIncorrectOnly
@@ -47,7 +46,7 @@ class ActivityQuizRetakeIncorrectOnlyEditor
 			<div class="d2l-input-checkbox-help-container">
 				<d2l-input-checkbox
 					@change="${this._setRetakeIncorrectOnly}"
-					checked="${isRetakeIncorrectOnly}"
+					?checked="${isRetakeIncorrectOnly}"
 					?disabled="${!canUpdateRetakeIncorrectOnly}">
 					${this.localize('rioCheckboxLabel')}
 				</d2l-input-checkbox>
