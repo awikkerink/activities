@@ -96,7 +96,7 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 			canEditDescription,
 			descriptionRichTextEditorConfig,
 			descriptionIsDisplayed,
-			introIsAppendedToDescription,
+			introIsAppendedToDescription
 		} = quiz || {};
 
 		const descriptionLang = this.localize('description');

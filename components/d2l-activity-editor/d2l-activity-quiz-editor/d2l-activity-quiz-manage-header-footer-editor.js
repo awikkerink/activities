@@ -1,17 +1,16 @@
 import { bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles';
-import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
-import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { css, html } from 'lit-element/lit-element.js';
-import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
+import { ActivityEditorDialogMixin } from '../mixins/d2l-activity-editor-dialog-mixin';
+import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
-import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
+import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
+import { shared as store } from './state/quiz-store.js';
 
-class ActivityQuizManageHeaderFooterEditor extends AsyncContainerMixin(LocalizeActivityQuizEditorMixin(SkeletonMixin(ActivityEditorMixin(MobxLitElement)))) {
+class ActivityQuizManageHeaderFooterEditor extends ActivityEditorDialogMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
 
 	static get styles() {
 
 		return [
-			super.styles,
 			bodyCompactStyles,
 			labelStyles,
 			css`
@@ -21,12 +20,37 @@ class ActivityQuizManageHeaderFooterEditor extends AsyncContainerMixin(LocalizeA
 			`
 		];
 	}
+	
+	constructor() {
+		super(store);
+	}
 
 	render() {
+		const quiz = store.get(this.href);
+
+		const {
+			header,
+			canEditHeader,
+			headerRichTextEditorConfig
+		} = quiz || {};
+
+		const headerLang = this.localize('header');
+
 		return html`
 			<div class="body-text-container"><p class="d2l-body-compact">${this.localize('headerDialogText')}</p></div>
 			<div class="d2l-label-text">${this.localize('headerLabel')}</div>
+			<d2l-activity-text-editor
+				.value="${header}"
+				.richtextEditorConfig="${headerRichTextEditorConfig}"
+				@d2l-activity-text-editor-change="${this._saveHeaderOnChange}"
+				ariaLabel="${headerLang}"
+				?disabled="${canEditHeader === undefined ? false : !canEditHeader}">
+			</d2l-activity-text-editor>
 		`;
+	}
+
+	_saveHeaderOnChange(e) {
+		Store.get(this.href).setHeader(e.detail.content);
 	}
 
 }
