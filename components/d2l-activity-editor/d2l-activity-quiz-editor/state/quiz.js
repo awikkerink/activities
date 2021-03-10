@@ -12,7 +12,7 @@ export class Quiz {
 		this._checkedOut = null;
 	}
 
-	async checkin(quizStore) {
+	async checkin(quizStore, refetch) {
 		if (!this._entity) {
 			return;
 		}
@@ -36,6 +36,10 @@ export class Quiz {
 		const entity = new Quiz(href, this.token);
 		entity.load(sirenEntity);
 		quizStore.put(href, entity);
+
+		if (refetch) {
+			this.fetch(true);
+		}
 	}
 
 	checkout(quizStore, forcedCheckout) {
@@ -79,8 +83,8 @@ export class Quiz {
 		return isQuizDirty || isCheckedOutEntityDirty;
 	}
 
-	async fetch() {
-		const sirenEntity = await fetchEntity(this.href, this.token);
+	async fetch(bypassCache) {
+		const sirenEntity = await fetchEntity(this.href, this.token, bypassCache);
 		if (sirenEntity) {
 			const entity = new QuizEntity(sirenEntity, this.token, {
 				remove: () => { },
@@ -117,6 +121,7 @@ export class Quiz {
 		this.description = entity.canEditDescription() ? entity.descriptionEditorHtml() : entity.descriptionHtml();
 		this.canEditDescription = entity.canEditDescription();
 		this.descriptionIsDisplayed = entity.descriptionIsDisplayed();
+		this.originalDescriptionIsEmpty = entity.originalDescriptionIsEmpty();
 		this.descriptionRichTextEditorConfig = entity.descriptionRichTextEditorConfig();
 		this.introIsAppendedToDescription = entity.introIsAppendedToDescription();
 		this.header = entity.canEditHeader() ? entity.headerEditorHtml() : entity.headerHtml();
@@ -235,6 +240,7 @@ decorate(Quiz, {
 	description: observable,
 	canEditDescription: observable,
 	descriptionIsDisplayed: observable,
+	originalDescriptionIsEmpty: observable,
 	descriptionRichTextEditorConfig: observable,
 	introIsAppendedToDescription: observable,
 	header: observable,

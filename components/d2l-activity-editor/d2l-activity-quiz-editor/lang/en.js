@@ -113,6 +113,7 @@ export default {
 	"quizTimingSummary": "{timingType} ({numMinutes, plural, =1 {1 minute} other {{numMinutes} minutes}})", // Timing type followed by (x minute) or (x minutes). e.g. Recommended time limit (120 minutes)
 	"ipRestrictionsDuplicateError": "Duplicate IP range start address. Each IP range start value must be unique.", // Error for duplicate IP
 	"ipRestrictionsRangeError": "Invalid IP address range provided. Please ensure ranges are correctly formatted.", // Error for invalid IP ranges
+	"totalPoints": "Total Points {scoreOutOf}", // Total points text that appears on quiz editor above list of questions
 	"subHdrHeaderFooter": "Header and Footer", // Header and Footer accordion header
 	"manageHeaderFooterButton": "Manage Header and Footer", // Label for button to launch Header and Footer dialog
 	"HeaderFooterDialogTitle": "Header and Footer",

@@ -36,13 +36,14 @@ export class ActivityUsage {
 		this.canEditDraft = entity.canEditDraft();
 		this.isError = false;
 		this.dates = new ActivityDates(entity);
-		this.scoreAndGrade = new ActivityScoreGrade(entity, this.token);
+		this.scoreAndGrade = new ActivityScoreGrade(this.token);
 		this.associationsHref = entity.getDirectRubricAssociationsHref();
 		this.specializationHref = entity.specializationHref();
 
 		await Promise.all([
 			this._loadSpecialAccess(entity),
-			this._loadCompetencyOutcomes(entity)
+			this._loadCompetencyOutcomes(entity),
+			this.scoreAndGrade.fetch(entity)
 		]);
 	}
 
@@ -158,7 +159,6 @@ export class ActivityUsage {
 			this.canUpdateAlignments = alignmentsHierarchical.canUpdateAlignments();
 		});
 	}
-
 	async _loadSpecialAccess(entity) {
 		const specialAccessHref = entity.specialAccessHref();
 		let specialAccess = null;

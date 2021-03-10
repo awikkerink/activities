@@ -9,9 +9,11 @@ import '../d2l-activity-text-editor.js';
 import '../d2l-activity-attachments/d2l-activity-attachments-editor.js';
 import '../d2l-activity-quiz-editor/d2l-activity-quiz-divider';
 import './d2l-activity-quiz-question-editor.js';
+import './d2l-activity-quiz-editor-action-bar.js';
 
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
+import { ActivityQuizEditorTelemetryMixin } from '../d2l-activity-quiz-editor/mixins/d2l-activity-quiz-editor-telemetry-mixin.js';
 import { css } from 'lit-element/lit-element.js';
 import { editorLayoutStyles } from '../styles/activity-editor-styles';
 import { html } from '@brightspace-hmc/foundation-engine/framework/lit/hypermedia-components.js';
@@ -24,7 +26,7 @@ import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton
 
 import { shared as store } from './state/quiz-store.js';
 
-class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonMixin(LocalizeActivityQuizEditorMixin(RtlMixin(MobxLitElement))))) {
+class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMixin(AsyncContainerMixin(SkeletonMixin(LocalizeActivityQuizEditorMixin(RtlMixin(MobxLitElement)))))) {
 
 	static get properties() {
 		return {
@@ -83,6 +85,9 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 	constructor() {
 		super(store);
 		this.skeleton = true;
+
+		this.telemetryId = 'quiz';
+		this.type = 'quiz';
 	}
 
 	render() {
@@ -96,13 +101,14 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 			canEditDescription,
 			descriptionRichTextEditorConfig,
 			descriptionIsDisplayed,
-			introIsAppendedToDescription
+			originalDescriptionIsEmpty,
+			introIsAppendedToDescription,
 		} = quiz || {};
 
 		const descriptionLang = this.localize('description');
 
 		return html`
-			<d2l-alert has-close-button ?hidden=${this.skeleton || descriptionIsDisplayed || !description || description.length === 0}>
+			<d2l-alert has-close-button ?hidden=${this.skeleton || descriptionIsDisplayed || originalDescriptionIsEmpty}>
 				${this.localize('textIsDisplayedPart1')}
 				${this.localize('textIsDisplayedSingularPart2', 'field', descriptionLang)}
 			</d2l-alert>
@@ -159,7 +165,11 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 					icon="tier1:preview">
 				</d2l-button-subtle>
 			</d2l-activity-quiz-divider>
-
+			<d2l-activity-quiz-editor-action-bar
+				?skeleton="${this.skeleton}"
+				href="${this.activityUsageHref}"
+				.token="${this.token}">
+			</d2l-activity-quiz-editor-action-bar>
 			<d2l-activity-quiz-question-editor href="${this.activityUsageHref}" .token="${this.token}">
 			</d2l-activity-quiz-question-editor>
 		`;
@@ -191,6 +201,10 @@ class QuizEditorDetail extends ActivityEditorMixin(AsyncContainerMixin(SkeletonM
 		const quiz = store.get(this.href);
 		if (!quiz) {
 			return;
+		}
+
+		if (quiz.introIsAppendedToDescription) {
+			this.logIntroAppendedToDescriptionEvent(this.href, this.type, this.telemetryId);
 		}
 
 		await quiz.save();
