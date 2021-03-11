@@ -2,10 +2,9 @@ import './d2l-activity-quiz-manage-attempts-editor.js';
 import '@brightspace-ui/core/components/alert/alert.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@brightspace-ui/core/components/icons/icon.js';
+import { sharedAttempts as attemptsStore, shared as store } from './state/quiz-store';
 import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html } from 'lit-element/lit-element';
-// eslint-disable-next-line sort-imports
-import { sharedAttempts as attemptsStore, shared as store } from './state/quiz-store';
 import { ActivityEditorWorkingCopyDialogMixin } from '../mixins/d2l-activity-editor-working-copy-dialog-mixin';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
