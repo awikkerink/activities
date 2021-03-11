@@ -116,4 +116,9 @@ export default {
 	"ipRestrictionsDuplicateError": "Duplicate IP range start address. Each IP range start value must be unique.", // Error for duplicate IP
 	"ipRestrictionsRangeError": "Invalid IP address range provided. Please ensure ranges are correctly formatted.", // Error for invalid IP ranges
 	"quizAttemptsValidationError": "Attempts cannot be changed, please correct the outlined fields.", // Appears in error alert when validation fails in Manage Attempts dialog
+	"totalPoints": "Total Points {scoreOutOf}", // Total points text that appears on quiz editor above list of questions
+	"subHdrHeaderFooter": "Header and Footer", // Header and Footer accordion header
+	"manageHeaderFooter": "Manage Header and Footer", // Label for button to launch Header and Footer dialog
+	"manageHeaderFooterDialogAddText": "Add", // Label for Add button for header and footer dialog
+	"manageHeaderFooterDialogCancelText": "Cancel" // Label for Cancel button header and footer dialog
 };

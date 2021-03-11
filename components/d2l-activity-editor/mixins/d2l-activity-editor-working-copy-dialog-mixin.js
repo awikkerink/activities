@@ -88,7 +88,7 @@ export const ActivityEditorWorkingCopyDialogMixin = superclass => class extends 
 		const entity = this.store.get(this.checkedOutHref);
 		if (!entity) return;
 
-		await entity.checkin(this.store);
+		await entity.checkin(this.store, true);
 	}
 
 	async _focusOnInvalid() {

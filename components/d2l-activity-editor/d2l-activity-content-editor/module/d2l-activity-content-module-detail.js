@@ -28,6 +28,15 @@ class ContentModuleDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 				.d2l-activity-label-container {
 					margin-bottom: 7px;
 				}
+				.d2l-new-html-editor-container {
+					flex-grow: 1;
+					min-height: 300px;
+				}
+				#content-description-container {
+					display: flex;
+					flex-direction: column;
+					height: inherit;
+				}
 			`
 		];
 	}
@@ -48,10 +57,21 @@ class ContentModuleDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 	render() {
 		const moduleEntity = moduleStore.getContentModuleActivity(this.href);
 		let descriptionRichText = undefined;
+
 		if (moduleEntity) {
 			this.skeleton = false;
 			descriptionRichText = moduleEntity.descriptionRichText;
 		}
+
+		const newEditorEvent = new CustomEvent('d2l-request-provider', {
+			detail: { key: 'd2l-provider-html-new-editor-enabled' },
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+
+		this.dispatchEvent(newEditorEvent);
+		const htmlNewEditorEnabled = newEditorEvent.detail.provider;
 
 		return html`
 			<d2l-activity-content-editor-title
@@ -63,13 +83,14 @@ class ContentModuleDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlin
 				<div class="d2l-activity-label-container d2l-label-text d2l-skeletize">
 					${this.localize('content.description')}
 				</div>
-				<div class="d2l-skeletize">
+				<div class="d2l-skeletize ${htmlNewEditorEnabled ? 'd2l-new-html-editor-container' : ''}">
 					<d2l-activity-text-editor
-						.ariaLabel="content-description"
+						.ariaLabel="${this.localize('content.description')}"
 						.key="content-description"
 						.value="${descriptionRichText}"
 						@d2l-activity-text-editor-change="${this._onRichtextChange}"
 						.richtextEditorConfig="${{}}"
+						htmlEditorHeight="100%"
 					>
 					</d2l-activity-text-editor>
 				</div>
