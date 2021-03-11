@@ -1,12 +1,12 @@
 import { bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html } from 'lit-element/lit-element.js';
-import { ActivityEditorDialogMixin } from '../mixins/d2l-activity-editor-dialog-mixin';
+import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { shared as store } from './state/quiz-store.js';
 
-class ActivityQuizManageHeaderFooterEditor extends ActivityEditorDialogMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
+class ActivityQuizManageHeaderFooterEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
 
 	static get styles() {
 

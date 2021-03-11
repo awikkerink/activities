@@ -116,7 +116,7 @@ export default {
 	"totalPoints": "Total Points {scoreOutOf}", // Total points text that appears on quiz editor above list of questions
 	"subHdrHeaderFooter": "Header and Footer", // Header and Footer accordion header
 	"manageHeaderFooterButton": "Manage Header and Footer", // Label for button to launch Header and Footer dialog
-	"HeaderFooterDialogTitle": "Header and Footer",
+	"headerFooterDialogTitle": "Header and Footer",
 	"manageHeaderFooterDialogAddText": "Add", // Label for Add button for header and footer dialog
 	"manageHeaderFooterDialogCancelText": "Cancel", // Label for Cancel button header and footer dialog
 	"headerLabel": "Header", // Label for the header text box

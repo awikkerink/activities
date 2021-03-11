@@ -41,7 +41,7 @@ class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(
 				?opened="${this.opened}"
 				@d2l-dialog-close="${this.handleClose}"
 				width="${width}"
-				title-text=${this.localize('HeaderFooterDialogTitle')}>
+				title-text=${this.localize('headerFooterDialogTitle')}>
 					<div id="manage-header-footer-dialog-header-footer-editor">${this._renderQuizHeaderFooterEditor()}</div>
 					<d2l-button slot="footer" primary @click="${this._save}" ?disabled="${this.isSaving}">${this.localize('manageHeaderFooterDialogAddText')}</d2l-button>
 					<d2l-button slot="footer" data-dialog-action ?disabled="${this.isSaving}">${this.localize('manageHeaderFooterDialogCancelText')}</d2l-button>
