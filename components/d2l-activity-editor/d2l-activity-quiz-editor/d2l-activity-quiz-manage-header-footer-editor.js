@@ -20,7 +20,7 @@ class ActivityQuizManageHeaderFooterEditor extends ActivityEditorDialogMixin(Rtl
 			`
 		];
 	}
-	
+
 	constructor() {
 		super(store);
 	}
@@ -50,7 +50,7 @@ class ActivityQuizManageHeaderFooterEditor extends ActivityEditorDialogMixin(Rtl
 	}
 
 	_saveHeaderOnChange(e) {
-		Store.get(this.href).setHeader(e.detail.content);
+		store.get(this.href).setHeader(e.detail.content);
 	}
 
 }
