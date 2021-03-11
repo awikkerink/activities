@@ -22,18 +22,18 @@ class ActivityQuizManageAttemptsContainer extends ActivityEditorWorkingCopyDialo
 			}
 
 			d2l-alert {
-					margin-bottom: 1rem;
-				}
-				.d2l-activity-quiz-manage-attempts-container-dialog-summary {
-					margin: 0.5rem 0;
-				}
-				.d2l-activity-quiz-manage-attempts-container-dialog-summary d2l-icon {
-					margin-right: 0.3rem;
-				}
-				:host([dir="rtl"]) .d2l-activity-quiz-manage-attempts-container-dialog-summary d2l-icon {
-					margin-left: 0.3rem;
-					margin-right: 0;
-				}
+				margin-bottom: 1rem;
+			}
+			.d2l-activity-quiz-manage-attempts-container-dialog-summary {
+				margin: 0.5rem 0;
+			}
+			.d2l-activity-quiz-manage-attempts-container-dialog-summary d2l-icon {
+				margin-right: 0.3rem;
+			}
+			:host([dir="rtl"]) .d2l-activity-quiz-manage-attempts-container-dialog-summary d2l-icon {
+				margin-left: 0.3rem;
+				margin-right: 0;
+			}
 			`,
 		];
 	}
