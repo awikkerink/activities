@@ -56,6 +56,9 @@ export const ActivityEditorWorkingCopyDialogMixin = superclass => class extends 
 			return;
 		}
 
+		// Refetch quiz entity in case presence of the check in action has changed
+		await entity.fetch(true);
+
 		try {
 			await entity.checkin(this.store);
 		} catch (e) {
