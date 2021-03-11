@@ -69,7 +69,6 @@ export class QuizAttempts {
 
 decorate(QuizAttempts, {
 	// props
-	name: observable,
 	canUpdateAttemptsAllowed: observable,
 	attemptsAllowed: observable,
 	attemptsAllowedOptions: observable,

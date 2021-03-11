@@ -55,7 +55,7 @@ class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(RtlMixin(Loca
 	_renderAttemptsAllowedOptions(options) {
 		if (!options) return html``;
 		if (!Array.isArray(options)) {
-			return html`<option value=${options[0]} selected>${options[0]}</option>`;
+			return html`<option value=${options} selected>${options}</option>`;
 		}
 		return html`
 			${options.map((option) => html`<option value=${option.value} ?selected=${option.selected}>${option.title}</option>`)}

@@ -1,5 +1,4 @@
 import { css, html } from 'lit-element/lit-element.js';
-import { ActivityEditorDialogMixin } from '../mixins/d2l-activity-editor-dialog-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { checkboxStyles } from '../styles/checkbox-styles.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles';
@@ -9,7 +8,7 @@ import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { sharedAttempts as store } from './state/quiz-store';
 
 class ActivityQuizRetakeIncorrectOnlyEditor
-	extends ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(ActivityEditorDialogMixin(MobxLitElement)))) {
+	extends ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
 
 	static get styles() {
 		return [
