@@ -14,7 +14,7 @@ class ActivityQuizManageHeaderFooterEditor extends ActivityEditorDialogMixin(Rtl
 			bodyCompactStyles,
 			labelStyles,
 			css`
-				.body-text-container {
+				.d2l-body-text-container {
 					margin-bottom: 1rem;
 				}
 			`
@@ -37,7 +37,7 @@ class ActivityQuizManageHeaderFooterEditor extends ActivityEditorDialogMixin(Rtl
 		const headerLang = this.localize('header');
 
 		return html`
-			<div class="body-text-container"><p class="d2l-body-compact">${this.localize('headerDialogText')}</p></div>
+			<div class="d2l-body-text-container"><p class="d2l-body-compact">${this.localize('headerDialogText')}</p></div>
 			<div class="d2l-label-text">${this.localize('headerLabel')}</div>
 			<d2l-activity-text-editor
 				.value="${header}"
