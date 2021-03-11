@@ -1,15 +1,14 @@
 import { css, html } from 'lit-element/lit-element.js';
-import { ActivityEditorDialogMixin } from '../mixins/d2l-activity-editor-dialog-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { checkboxStyles } from '../styles/checkbox-styles.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
-import { shared as store } from './state/quiz-store';
+import { sharedAttempts as store } from './state/quiz-store';
 
 class ActivityQuizRetakeIncorrectOnlyEditor
-	extends ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(ActivityEditorDialogMixin(MobxLitElement)))) {
+	extends ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
 
 	static get styles() {
 		return [
@@ -36,11 +35,20 @@ class ActivityQuizRetakeIncorrectOnlyEditor
 		if (!entity) {
 			return html``;
 		}
+		const {
+			isRetakeIncorrectOnly,
+			canUpdateRetakeIncorrectOnly
+		} = entity || {};
 
 		return html`
 			<div class="d2l-label-text">${this.localize('retakeIncorrectQuestionsOnly')}</div>
 			<div class="d2l-input-checkbox-help-container">
-				<d2l-input-checkbox>${this.localize('rioCheckboxLabel')}</d2l-input-checkbox>
+				<d2l-input-checkbox
+					@change="${this._setRetakeIncorrectOnly}"
+					?checked="${isRetakeIncorrectOnly}"
+					?disabled="${!canUpdateRetakeIncorrectOnly}">
+					${this.localize('rioCheckboxLabel')}
+				</d2l-input-checkbox>
 				<div class="d2l-input-checkbox-help">
 					<d2l-button-icon
 						text="${this.localize('rioAccessibileHelpText')}"
@@ -68,6 +76,12 @@ class ActivityQuizRetakeIncorrectOnlyEditor
 					</d2l-button>
 			</d2l-dialog>
 		`;
+	}
+
+	_setRetakeIncorrectOnly(e) {
+		const entity = store.get(this.href);
+		const data = e.target.checked;
+		entity && entity.setRetakeIncorrectOnly(data);
 	}
 }
 

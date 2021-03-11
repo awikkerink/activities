@@ -118,6 +118,7 @@ export class Quiz {
 		this.isAutoSetGradedEnabled = entity.isAutoSetGradedEnabled();
 		this.canEditAutoSetGraded = entity.canEditAutoSetGraded();
 		this.timingHref = entity.timingHref();
+		this.attemptsHref = entity.attemptsHref();
 		this.description = entity.canEditDescription() ? entity.descriptionEditorHtml() : entity.descriptionHtml();
 		this.canEditDescription = entity.canEditDescription();
 		this.descriptionIsDisplayed = entity.descriptionIsDisplayed();
@@ -237,6 +238,7 @@ decorate(Quiz, {
 	canPreviewQuiz: observable,
 	isAutoSetGradedEnabled: observable,
 	timingHref: observable,
+	attemptsHref: observable,
 	description: observable,
 	canEditDescription: observable,
 	descriptionIsDisplayed: observable,
