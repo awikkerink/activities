@@ -54,6 +54,7 @@ class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(RtlMixin(Loca
 
 	_renderAttemptsAllowedOptions(options) {
 		if (!options) return html``;
+		// When quiz is read only, options is passed as a `"<num"` instead of an array
 		if (!Array.isArray(options)) {
 			return html`<option value=${options} selected>${options}</option>`;
 		}
@@ -92,6 +93,7 @@ class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(RtlMixin(Loca
 
 	_renderOverallGradeCalculationOptions(options) {
 		if (!options) return html``;
+		// When quiz is read only, options is passed as a {gradeCalcOption} instead of an array
 		if (!Array.isArray(options)) {
 			return html`<option value=${options.value} selected>${options.title}</option>`;
 		}
