@@ -57,11 +57,12 @@ class ActivityQuizManageTimingContainer extends ActivityEditorWorkingCopyDialogM
 
 	async _checkinDialog(e) {
 		const { timingHref: dialogTimingHref } = (this.dialogHref && store.get(this.dialogHref)) || {};
-		const dialogTimingEntity = timingStore.get(dialogTimingHref);
-		// Wait for timing entity PATCH requests to complete before checking in
-		if (dialogTimingEntity && dialogTimingEntity.saving) {
-			await dialogTimingEntity.saving;
+		const dialogTimingEntity = dialogTimingHref && timingStore.get(dialogTimingHref);
+		if (!dialogTimingEntity) {
+			return;
 		}
+
+		await dialogTimingEntity.saving; // Wait for timing entity PATCH requests to complete before checking in
 
 		await this.checkinDialog(e);
 
