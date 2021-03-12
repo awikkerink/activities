@@ -8,6 +8,7 @@ export class QuizAttempts {
 	constructor(href, token) {
 		this.href = href;
 		this.token = token;
+		this.saving = null;
 	}
 
 	async fetch() {
@@ -53,7 +54,9 @@ export class QuizAttempts {
 	}
 
 	async updateProperty(updateFunc) {
-		const entity = await updateFunc();
+		this.saving = updateFunc();
+		const entity = await this.saving;
+		this.saving = null;
 		// The siren-sdk function called to perform an action first checks that the entity has permission to do so.
 		// If the entity lacks permission, the function returns `undefined`, otherwise it returns a reconstructed siren-sdk attempts entity.
 		// If `undefined` is returned, it likely means the UI is out of sync with the entity state, and disallowed actions can be performed.

@@ -21,6 +21,9 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 			labelStyles,
 			selectStyles,
 			css`
+				d2l-button-subtle {
+					display: flex
+				}
 				d2l-input-number {
 					margin-left: 2rem;
 					margin-right: 2rem;
