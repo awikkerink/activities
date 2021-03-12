@@ -10,7 +10,6 @@ export class QuizIpRestrictions {
 	constructor(href, token) {
 		this.href = href;
 		this.token = token;
-		this._saving = null;
 		this.ipRestrictions = [];
 		this.errors = [];
 	}
