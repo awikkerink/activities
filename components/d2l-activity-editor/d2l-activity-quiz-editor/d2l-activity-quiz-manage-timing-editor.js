@@ -98,7 +98,7 @@ class ActivityQuizManageTimingEditor extends ActivityEditorMixin(RtlMixin(Locali
 	}
 
 	_isInputTimeInvalid(data, min, max) {
-		return data !== undefined && (data < min || data > max);
+		return data === undefined || data < min || data > max;
 	}
 
 	_renderExtendedDeadline(entity) {
