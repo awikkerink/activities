@@ -2,8 +2,8 @@ import '@brightspace-ui/core/components/alert/alert.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@brightspace-ui/core/components/icons/icon.js';
 import './d2l-activity-quiz-manage-header-footer-editor.js';
-import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles';
 import { ActivityEditorDialogMixin } from '../mixins/d2l-activity-editor-dialog-mixin';
+import { bodySmallStyles } from '@brightspace-ui/core/components/typography/styles';
 import { html } from 'lit-element/lit-element';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -13,8 +13,7 @@ import { shared as store } from './state/quiz-store';
 class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
 	static get styles() {
 		return [
-			bodySmallStyles,
-			labelStyles
+			bodySmallStyles
 		];
 	}
 
@@ -42,7 +41,7 @@ class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(
 				?opened="${this.opened}"
 				@d2l-dialog-close="${this.handleClose}"
 				width="${width}"
-				title-text=${this.localize('manageHeaderFooter')}>
+				title-text=${this.localize('headerFooterDialogTitle')}>
 					<div id="manage-header-footer-dialog-header-footer-editor">${this._renderQuizHeaderFooterEditor()}</div>
 					<d2l-button slot="footer" primary @click="${this._save}" ?disabled="${this.isSaving}">${this.localize('manageHeaderFooterDialogAddText')}</d2l-button>
 					<d2l-button slot="footer" data-dialog-action ?disabled="${this.isSaving}">${this.localize('manageHeaderFooterDialogCancelText')}</d2l-button>
@@ -58,7 +57,7 @@ class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(
 
 	_renderDialogOpener() {
 		return html`
-			<d2l-button-subtle text=${this.localize('manageHeaderFooter')} @click="${this.open}" h-align="text"></d2l-button-subtle>
+			<d2l-button-subtle text=${this.localize('manageHeaderFooterButton')} @click="${this.open}" h-align="text"></d2l-button-subtle>
 		`;
 	}
 

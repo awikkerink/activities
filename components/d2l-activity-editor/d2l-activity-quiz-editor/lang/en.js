@@ -62,9 +62,7 @@ export default {
 	"subHdrExceededTimeLimitBehaviour": "Exceeded Time Limit Behaviour", // Title for submission late type options,
 	"exceededTimeLimitBehaviourPrefix": "After the grace period, flag the quiz attempt as exceeded time limit and,", // label for submission label type options
 	"showClockLabel": "Will be displayed before the quiz starts", // Label for show clock checkbox
-	"description": "Description", // Description label for the Description text input box
 	"showClockTitle": "Show clock", // Title for show clock
-	"description": "Description", // Description label for the Description text input box,
 	"manageAttemptsDialogConfirmationText": "OK", // copy that appears on the Attempts dialog confirmation button
 	"manageAttemptsDialogCancelText": "Cancel", // copy that appears on the Attempts dialog cancel button
 	"subHdrAttemptsTools": "Attempts", // Title for attempts tools
@@ -118,7 +116,11 @@ export default {
 	"quizAttemptsValidationError": "Attempts cannot be changed, please correct the outlined fields.", // Appears in error alert when validation fails in Manage Attempts dialog
 	"totalPoints": "Total Points {scoreOutOf}", // Total points text that appears on quiz editor above list of questions
 	"subHdrHeaderFooter": "Header and Footer", // Header and Footer accordion header
-	"manageHeaderFooter": "Manage Header and Footer", // Label for button to launch Header and Footer dialog
+	"manageHeaderFooterButton": "Manage Header and Footer", // Label for button to launch Header and Footer dialog
+	"headerFooterDialogTitle": "Header and Footer",
 	"manageHeaderFooterDialogAddText": "Add", // Label for Add button for header and footer dialog
-	"manageHeaderFooterDialogCancelText": "Cancel" // Label for Cancel button header and footer dialog
+	"manageHeaderFooterDialogCancelText": "Cancel", // Label for Cancel button header and footer dialog
+	"headerLabel": "Header", // Label for the header text box
+	"headerDialogText": "The Quiz Header and Footer will be visible to learners at the top and bottom of the quiz, respectively.", // Header and Footer dialog text
+	"header": "Header" // Header label for the header text box.
 };
