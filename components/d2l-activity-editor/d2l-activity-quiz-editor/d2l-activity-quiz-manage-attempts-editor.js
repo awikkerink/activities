@@ -37,8 +37,8 @@ class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(RtlMixin(Loca
 			canUpdateRetakeIncorrectOnly,
 			isRetakeIncorrectOnly
 		} = entity || {};
-
-		let showRio = attemptsAllowed > 1 ;
+		// Show RIO when attempts is 'Unlimited' or '0' or >1
+		let showRio = attemptsAllowed !== '2';
 		const showAttemptsConditions = attemptsAllowed > 1;
 		// If RIO flag is off (f16751-retake-incorrect-only) don't render RIO editor
 		if (isRetakeIncorrectOnly === undefined && !canUpdateRetakeIncorrectOnly) {
