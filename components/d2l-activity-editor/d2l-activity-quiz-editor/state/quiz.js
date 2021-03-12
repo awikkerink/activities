@@ -12,7 +12,7 @@ export class Quiz {
 		this._checkedOut = null;
 	}
 
-	async checkin(quizStore) {
+	async checkin(quizStore, refetch) {
 		if (!this._entity) {
 			return;
 		}
@@ -22,15 +22,24 @@ export class Quiz {
 		}
 
 		this._saving = this._entity.checkin();
-		const sirenEntity = await this._saving;
-		if (!sirenEntity) return;
+		let sirenEntity;
+		try {
+			sirenEntity = await this._saving;
+		} catch (e) {
+			return;
+		} finally {
+			this._saving = null;
+		}
 
+		if (!sirenEntity) return;
 		const href = sirenEntity.self();
 		const entity = new Quiz(href, this.token);
 		entity.load(sirenEntity);
 		quizStore.put(href, entity);
 
-		this._saving = null;
+		if (refetch) {
+			this.fetch(true);
+		}
 	}
 
 	checkout(quizStore, forcedCheckout) {
@@ -74,8 +83,8 @@ export class Quiz {
 		return isQuizDirty || isCheckedOutEntityDirty;
 	}
 
-	async fetch() {
-		const sirenEntity = await fetchEntity(this.href, this.token);
+	async fetch(bypassCache) {
+		const sirenEntity = await fetchEntity(this.href, this.token, bypassCache);
 		if (sirenEntity) {
 			const entity = new QuizEntity(sirenEntity, this.token, {
 				remove: () => { },
@@ -109,10 +118,13 @@ export class Quiz {
 		this.isAutoSetGradedEnabled = entity.isAutoSetGradedEnabled();
 		this.canEditAutoSetGraded = entity.canEditAutoSetGraded();
 		this.timingHref = entity.timingHref();
+		this.attemptsHref = entity.attemptsHref();
 		this.description = entity.canEditDescription() ? entity.descriptionEditorHtml() : entity.descriptionHtml();
 		this.canEditDescription = entity.canEditDescription();
 		this.descriptionIsDisplayed = entity.descriptionIsDisplayed();
+		this.originalDescriptionIsEmpty = entity.originalDescriptionIsEmpty();
 		this.descriptionRichTextEditorConfig = entity.descriptionRichTextEditorConfig();
+		this.introIsAppendedToDescription = entity.introIsAppendedToDescription();
 		this.header = entity.canEditHeader() ? entity.headerEditorHtml() : entity.headerHtml();
 		this.canEditHeader = entity.canEditHeader();
 		this.headerIsDisplayed = entity.headerIsDisplayed();
@@ -226,10 +238,13 @@ decorate(Quiz, {
 	canPreviewQuiz: observable,
 	isAutoSetGradedEnabled: observable,
 	timingHref: observable,
+	attemptsHref: observable,
 	description: observable,
 	canEditDescription: observable,
 	descriptionIsDisplayed: observable,
+	originalDescriptionIsEmpty: observable,
 	descriptionRichTextEditorConfig: observable,
+	introIsAppendedToDescription: observable,
 	header: observable,
 	canEditHeader: observable,
 	headerRichTextEditorConfig: observable,

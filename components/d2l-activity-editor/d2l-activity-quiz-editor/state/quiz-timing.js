@@ -8,11 +8,11 @@ export class QuizTiming {
 	constructor(href, token) {
 		this.href = href;
 		this.token = token;
-		this._saving = null;
+		this.saving = null;
 	}
 
-	async fetch() {
-		const sirenEntity = await fetchEntity(this.href, this.token);
+	async fetch(bypassCache) {
+		const sirenEntity = await fetchEntity(this.href, this.token, bypassCache);
 
 		if (sirenEntity) {
 			const entity = new QuizTimingEntity(sirenEntity, this.token, {
@@ -79,7 +79,9 @@ export class QuizTiming {
 	}
 
 	async updateProperty(updateFunc) {
-		const entity = await updateFunc();
+		this.saving = updateFunc();
+		const entity = await this.saving;
+		this.saving = null;
 		// The siren-sdk function called to perform an action first checks that the entity has permission to do so.
 		// If the entity lacks permission, the function returns `undefined`, otherwise it returns a reconstructed siren-sdk timing entity.
 		// If `undefined` is returned, it likely means the UI is out of sync with the entity state, and disallowed actions can be performed.
@@ -94,7 +96,6 @@ export class QuizTiming {
 
 decorate(QuizTiming, {
 	// props
-	name: observable,
 	canEditTiming: observable,
 	canEditTimeLimit: observable,
 	canEditGracePeriod: observable,
@@ -119,6 +120,7 @@ decorate(QuizTiming, {
 	maxEnforcedGraceLimit: observable,
 	submissionLateTypeIdTitle: observable,
 	timingType: observable,
+	saving: observable,
 	// actions
 	load: action,
 	setTimingType: action,

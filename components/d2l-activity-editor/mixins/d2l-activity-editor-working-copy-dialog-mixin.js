@@ -8,7 +8,27 @@ export const ActivityEditorWorkingCopyDialogMixin = superclass => class extends 
 
 	static get properties() {
 		return {
-			dialogHref: { type: String }
+			dialogHref: { type: String },
+			/**
+			 * Error term to display (either serverErrorTerm or validationErrorTerm)
+			 */
+			errorTerm: { type: String },
+			/**
+			 * If there is an error on the page (client and/or server side).
+			 */
+			isError: { type: Boolean },
+			/**
+			 * If there is a save attempt in progress. After being enabled, it will only disable on validation or save error.
+			 */
+			isSaving: { type: Boolean },
+			/**
+			 * Error term to display on server save error.
+			 */
+			serverErrorTerm: { type: String },
+			/**
+			 * Error term to display on input validation error.
+			 */
+			validationErrorTerm: { type: String }
 		};
 	}
 
@@ -16,29 +36,50 @@ export const ActivityEditorWorkingCopyDialogMixin = superclass => class extends 
 		super(store);
 		this.checkoutOnLoad = true;
 		this.dialogHref = '';
+		this.errorTerm = '';
+		this.isError = false;
+		this.isSaving = false;
 	}
 
 	async checkinDialog(e) {
 		const entity = this.store.get(this.dialogHref);
 		if (!entity) return;
 
-		const isValid = await this._verifyAllInputsValid();
-		if (!isValid) {
+		this.isSaving = true;
+		this.isError = false;
+
+		const inputsValid = await this._verifyAllInputsValid();
+		if (!inputsValid) {
+			this.isError = true;
+			this.isSaving = false;
+			this.errorTerm = this.validationErrorTerm;
 			return;
 		}
 
-		await entity.checkin(this.store);
+		// Refetch quiz entity in case presence of the check in action has changed
+		await entity.fetch(true);
+
+		try {
+			await entity.checkin(this.store);
+		} catch (e) {
+			this.isError = true;
+			this.errorTerm = this.serverErrorTerm;
+			this.isSaving = false;
+			return;
+		}
+
 		this.closeDialog(e);
 	}
 
 	async closeDialog(e) {
-		const dialog = this.shadowRoot.querySelector('d2l-dialog');
-		dialog && dialog.resetAsyncState();
-		this.dialogHref = '';
 		this.handleClose(e);
 	}
 
 	async openDialog(e) {
+		const dialog = this.shadowRoot.querySelector('d2l-dialog');
+		dialog && dialog.resetAsyncState();
+		this._resetProps();
+
 		const entity = this.store.get(this.checkedOutHref);
 		if (!entity) return;
 
@@ -50,7 +91,7 @@ export const ActivityEditorWorkingCopyDialogMixin = superclass => class extends 
 		const entity = this.store.get(this.checkedOutHref);
 		if (!entity) return;
 
-		await entity.checkin(this.store);
+		await entity.checkin(this.store, true);
 	}
 
 	async _focusOnInvalid() {
@@ -66,6 +107,13 @@ export const ActivityEditorWorkingCopyDialogMixin = superclass => class extends 
 
 	_hasSkipAlertAncestor(node) {
 		return null !== findComposedAncestor(node, elm => elm && elm.hasAttribute && elm.hasAttribute('skip-alert'));
+	}
+
+	_resetProps() {
+		this.dialogHref = '';
+		this.errorTerm = '';
+		this.isError = false;
+		this.isSaving = false;
 	}
 
 	async _verifyAllInputsValid() {
