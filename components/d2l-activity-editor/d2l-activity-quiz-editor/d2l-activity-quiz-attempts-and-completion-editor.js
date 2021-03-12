@@ -1,7 +1,7 @@
 import '../d2l-activity-accordion-collapse.js';
 import '../d2l-activity-notification-email-editor.js';
 import './d2l-activity-quiz-notification-email-summary.js';
-import './d2l-activity-quiz-manage-attempts-editor';
+import './d2l-activity-quiz-manage-attempts-container';
 import { css, html } from 'lit-element/lit-element.js';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
@@ -73,11 +73,14 @@ class ActivityQuizAttemptsAndCompletionEditor extends AsyncContainerMixin(Locali
 	}
 
 	_renderManageAttemptsEditor() {
+		const entity = store.get(this.href);
+		if (!entity) return html``;
+
 		return html`
-			<d2l-activity-quiz-manage-attempts-editor
+			<d2l-activity-quiz-manage-attempts-container
 				href="${this.href}"
 				.token="${this.token}">
-			</d2l-activity-quiz-manage-attempts-editor>`;
+			</d2l-activity-quiz-manage-attempts-container>`;
 	}
 
 	_renderNotificationEmailEditor() {

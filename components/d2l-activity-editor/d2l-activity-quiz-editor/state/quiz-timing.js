@@ -94,7 +94,6 @@ export class QuizTiming {
 
 decorate(QuizTiming, {
 	// props
-	name: observable,
 	canEditTiming: observable,
 	canEditTimeLimit: observable,
 	canEditGracePeriod: observable,
