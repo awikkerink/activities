@@ -32,9 +32,18 @@ class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(RtlMixin(Loca
 			return html``;
 		}
 
-		const { attemptsAllowed } = entity || {};
-		const showRio = attemptsAllowed > 1;
+		const {
+			attemptsAllowed,
+			canUpdateRetakeIncorrectOnly,
+			isRetakeIncorrectOnly
+		} = entity || {};
+
+		let showRio = attemptsAllowed > 1 ;
 		const showAttemptsConditions = attemptsAllowed > 1;
+		// If RIO flag is off (f16751-retake-incorrect-only) don't render RIO editor
+		if (isRetakeIncorrectOnly === undefined && !canUpdateRetakeIncorrectOnly) {
+			showRio = false;
+		}
 
 		return html `
 				${this._renderAttemptsSelectsEditor(entity)}
