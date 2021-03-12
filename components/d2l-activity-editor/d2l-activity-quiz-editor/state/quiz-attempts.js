@@ -8,7 +8,6 @@ export class QuizAttempts {
 	constructor(href, token) {
 		this.href = href;
 		this.token = token;
-		this._saving = null;
 	}
 
 	async fetch() {

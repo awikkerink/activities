@@ -56,25 +56,17 @@ class ActivityQuizManageTimingContainer extends ActivityEditorWorkingCopyDialogM
 	}
 
 	async _checkinDialog(e) {
+		const { timingHref: dialogTimingHref } = (this.dialogHref && store.get(this.dialogHref)) || {};
+		const dialogTimingEntity = timingStore.get(dialogTimingHref);
+		// Wait for timing entity PATCH requests to complete before checking in
+		if (dialogTimingEntity && dialogTimingEntity.saving) {
+			await dialogTimingEntity.saving;
+		}
+
 		await this.checkinDialog(e);
 
-		if (!this.opened) {
-			// Dialog successfully checked in
-			const checkedOutQuizEntity = this.checkedOutHref && store.get(this.checkedOutHref);
-			if (!checkedOutQuizEntity) return;
-			const { timingHref: checkedOutTimingHref } = checkedOutQuizEntity;
-
-			const dialogQuizEntity = this.dialogHref && store.get(this.dialogHref);
-			if (!dialogQuizEntity) return;
-			const { timingHref: dialogTimingHref } = dialogQuizEntity;
-
-			// Replace checkedOut timing entity with dialog timing entity to immediately update timing summarizer.
-			const dialogTimingEntity = timingStore.get(dialogTimingHref);
-			const checkedOutTimingEntity = timingStore.get(checkedOutTimingHref);
-			checkedOutTimingEntity.load(dialogTimingEntity._entity);
-
-			// Refetch checkedOut timing entity to ensure we display the correct timing summary.
-			checkedOutTimingEntity.fetch(true);
+		if (!this.opened) { // Dialog successfully checked in
+			this._updateSummary();
 		}
 	}
 
@@ -139,6 +131,24 @@ class ActivityQuizManageTimingContainer extends ActivityEditorWorkingCopyDialogM
 				.token="${this.token}">
 			</d2l-activity-quiz-manage-timing-editor>
 		`;
+	}
+
+	_updateSummary() {
+		const checkedOutQuizEntity = this.checkedOutHref && store.get(this.checkedOutHref);
+		if (!checkedOutQuizEntity) return;
+		const { timingHref: checkedOutTimingHref } = checkedOutQuizEntity;
+
+		const dialogQuizEntity = this.dialogHref && store.get(this.dialogHref);
+		if (!dialogQuizEntity) return;
+		const { timingHref: dialogTimingHref } = dialogQuizEntity;
+
+		// Replace checkedOut timing entity with dialog timing entity to immediately update timing summarizer.
+		const dialogTimingEntity = timingStore.get(dialogTimingHref);
+		const checkedOutTimingEntity = timingStore.get(checkedOutTimingHref);
+		checkedOutTimingEntity.load(dialogTimingEntity._entity);
+
+		// Refetch checkedOut timing entity to ensure we display the correct timing summary.
+		checkedOutTimingEntity.fetch(true);
 	}
 }
 
