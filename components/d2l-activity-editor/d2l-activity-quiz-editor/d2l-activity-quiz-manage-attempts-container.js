@@ -61,9 +61,10 @@ class ActivityQuizManageAttemptsContainer extends ActivityEditorWorkingCopyDialo
 		const { attemptsHref: dialogAttemptsHref } = (this.dialogHref && store.get(this.dialogHref)) || {};
 		const dialogAttemptsEntity = attemptsStore.get(dialogAttemptsHref);
 		// Wait for attempts entity PATCH requests to complete before checking in
-		if (dialogAttemptsEntity && dialogAttemptsEntity.saving) {
-			await dialogAttemptsEntity.saving;
+		if (!dialogAttemptsEntity) {
+			return;
 		}
+		await dialogAttemptsEntity.saving;
 
 		await this.checkinDialog(e);
 
