@@ -9,23 +9,87 @@ export class Quiz {
 		this.href = href;
 		this.token = token;
 		this._saving = null;
+		this._checkedOut = null;
+	}
+
+	async checkin(quizStore, refetch) {
+		if (!this._entity) {
+			return;
+		}
+
+		if (this._saving) {
+			return this._saving;
+		}
+
+		this._saving = this._entity.checkin();
+		let sirenEntity;
+		try {
+			sirenEntity = await this._saving;
+		} catch (e) {
+			return;
+		} finally {
+			this._saving = null;
+		}
+
+		if (!sirenEntity) return;
+		const href = sirenEntity.self();
+		const entity = new Quiz(href, this.token);
+		entity.load(sirenEntity);
+		quizStore.put(href, entity);
+
+		if (refetch) {
+			this.fetch(true);
+		}
+	}
+
+	checkout(quizStore, forcedCheckout) {
+		if (!forcedCheckout && this._checkedOut) {
+			return this._checkedOut;
+		}
+
+		let href = this.href;
+		const getHrefPromise = this._entity.checkout().then(sirenEntity => {
+			if (sirenEntity) {
+				href = sirenEntity.self();
+				const entity = new Quiz(href, this.token);
+				entity.load(sirenEntity);
+				quizStore.put(href, entity);
+			}
+			return href;
+		}, () => {
+			return href;
+		});
+
+		if (!forcedCheckout) {
+			this._checkedOut = getHrefPromise;
+		}
+
+		return getHrefPromise;
 	}
 
 	delete() {
 		return this._entity.delete();
 	}
 
-	get dirty() {
-		return !this._entity.equals(this._makeQuizData());
+	async dirty(quizStore) {
+		const checkedOutHref = await this._checkedOut;
+		const checkedOutEntity = quizStore && quizStore.get(checkedOutHref);
+
+		// Check that this entity is not dirty, then check that it's checked out working copy does not have a `canCheckin` action.
+		// It avoids recursively fetching a working copy's working copy by not passing in a quizStore the second time.
+		const isQuizDirty = !this._entity.equals(this._makeQuizData()) || this._entity.canCheckin();
+		const isCheckedOutEntityDirty = checkedOutEntity && await checkedOutEntity.dirty();
+
+		return isQuizDirty || isCheckedOutEntityDirty;
 	}
 
-	async fetch() {
-		const sirenEntity = await fetchEntity(this.href, this.token);
-
+	async fetch(bypassCache) {
+		const sirenEntity = await fetchEntity(this.href, this.token, bypassCache);
 		if (sirenEntity) {
 			const entity = new QuizEntity(sirenEntity, this.token, {
 				remove: () => { },
 			});
+
 			this.load(entity);
 		}
 		return this;
@@ -54,10 +118,13 @@ export class Quiz {
 		this.isAutoSetGradedEnabled = entity.isAutoSetGradedEnabled();
 		this.canEditAutoSetGraded = entity.canEditAutoSetGraded();
 		this.timingHref = entity.timingHref();
+		this.attemptsHref = entity.attemptsHref();
 		this.description = entity.canEditDescription() ? entity.descriptionEditorHtml() : entity.descriptionHtml();
 		this.canEditDescription = entity.canEditDescription();
 		this.descriptionIsDisplayed = entity.descriptionIsDisplayed();
+		this.originalDescriptionIsEmpty = entity.originalDescriptionIsEmpty();
 		this.descriptionRichTextEditorConfig = entity.descriptionRichTextEditorConfig();
+		this.introIsAppendedToDescription = entity.introIsAppendedToDescription();
 		this.header = entity.canEditHeader() ? entity.headerEditorHtml() : entity.headerHtml();
 		this.canEditHeader = entity.canEditHeader();
 		this.headerIsDisplayed = entity.headerIsDisplayed();
@@ -171,10 +238,13 @@ decorate(Quiz, {
 	canPreviewQuiz: observable,
 	isAutoSetGradedEnabled: observable,
 	timingHref: observable,
+	attemptsHref: observable,
 	description: observable,
 	canEditDescription: observable,
 	descriptionIsDisplayed: observable,
+	originalDescriptionIsEmpty: observable,
 	descriptionRichTextEditorConfig: observable,
+	introIsAppendedToDescription: observable,
 	header: observable,
 	canEditHeader: observable,
 	headerRichTextEditorConfig: observable,
@@ -192,5 +262,7 @@ decorate(Quiz, {
 	setDescription: action,
 	setHeader: action,
 	save: action,
-	delete: action
+	delete: action,
+	checkout: action,
+	checkin: action
 });

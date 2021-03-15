@@ -17,6 +17,8 @@ class ContentEditor extends LocalizeActivityEditorMixin(RtlMixin(ActivityEditorM
 
 	static get properties() {
 		return {
+			htmlEditorEnabled: { type: Boolean },
+			htmlNewEditorEnabled: { type: Boolean },
 			widthType: { type: String, attribute: 'width-type' },
 			isNew: { type: Boolean },
 			cancelHref: { type: String },
@@ -37,6 +39,12 @@ class ContentEditor extends LocalizeActivityEditorMixin(RtlMixin(ActivityEditorM
 			:host([dir="rtl"]) d2l-icon {
 				padding-left: 1rem;
 				padding-right: 0;
+			}
+			#d2l-activity-content-editor-primary-panel {
+				height: 100%;
+			}
+			d2l-activity-content-editor-detail {
+				height: inherit;
 			}
 		`;
 	}
@@ -69,6 +77,8 @@ class ContentEditor extends LocalizeActivityEditorMixin(RtlMixin(ActivityEditorM
 				width-type="${this.widthType}"
 				error-term="${this.localize('content.saveError')}"
 				?isnew="${this.isNew}"
+				?html-editor-enabled="${this.htmlEditorEnabled}"
+				?html-new-editor-enabled="${this.htmlNewEditorEnabled}">
 			>
 				${this._editorTemplate}
 			</d2l-activity-editor>
@@ -86,7 +96,7 @@ class ContentEditor extends LocalizeActivityEditorMixin(RtlMixin(ActivityEditorM
 	get _editorTemplate() {
 		return html`
 			<slot name="editor-nav" slot="header"></slot>
-			<div slot="primary">
+			<div slot="primary" id="d2l-activity-content-editor-primary-panel">
 				<d2l-activity-content-editor-detail
 					.href="${this.href}"
 					.token="${this.token}"

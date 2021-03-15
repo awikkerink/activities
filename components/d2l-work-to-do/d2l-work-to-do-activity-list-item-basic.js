@@ -30,9 +30,9 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 			_activityProperties: { type: Object },
 			/** entity associated with ActivityUsageEntity's organization */
 			_organization: { type: Object },
-			/** href to evaluate all submissions for assignment (for quick-eval widget) */
-			evaluateAllHref: {
-				attribute: 'evaluate-all-href',
+			/** href to evaluate submissions for assignment (for quick-eval widget) */
+			evaluationHref: {
+				attribute: 'evaluate-href',
 				type: String
 			},
 			/** number of submissions to evaluate (for quick-eval widget) */
@@ -65,6 +65,11 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 				:host([skeleton]) .d2l-activity-icon-container {
 					height: 1.3rem;
 					width: 1.2rem;
+				}
+				:host([skeleton]) .d2l-activity-qe-icon-container {
+					height: 2rem;
+					margin-left: 0.5rem;
+					width: 2.5rem;
 				}
 				.d2l-activity-name-container {
 					overflow: hidden;
@@ -165,6 +170,11 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 			'd2l-skeletize': true,
 		};
 
+		const qeIconClasses = {
+			'd2l-activity-qe-icon-container': true,
+			'd2l-skeletize': true,
+		};
+
 		const nameClasses = {
 			'd2l-activity-name-container': true,
 			'd2l-skeletize': true,
@@ -179,38 +189,44 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 
 		const dateTemplate = html `<d2l-activity-date href="${this.href}" .token="${this.token}" format="MMM d" ?hidden=${this.skeleton}></d2l-activity-date>`;
 
-		const separatorTemplate = !this.skeleton && this._date && (this._orgName || this._orgCode)
-			? html `<d2l-icon class="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon>`
+		const separatorTemplate = !this.skeleton
+			? html ` <d2l-icon class="d2l-icon-bullet" icon="tier1:bullet"></d2l-icon> `
 			: nothing;
 
-		const startDateTemplate = !this.skeleton && !this._started && !this.evaluateAllHref
+		const startDateTemplate = !this.skeleton && !this._started && !this.evaluationHref
 			? html `
 			<div class="d2l-status-container">
 				<d2l-status-indicator state="none" text="${this._startDateFormatted}"></d2l-status-indicator>
 			</div>`
 			: nothing;
 
+		const supportingInfoTemplate = (items) => {
+			const filteredItems = items.filter(item => item);
+			return html `${filteredItems.map((item, idx) => [item, idx < filteredItems.length - 1 ? separatorTemplate : nothing]).flat()}`;
+		};
+
 		return this._renderListItem({
-			illustration: this.evaluateAllHref ? html`
-					<d2l-quick-eval-widget-submission-icon style="overflow: visible;"
-						icon=${this._icon}
-						submission-count=${ifDefined(this.submissionCount > 0 ? (this.submissionCount > 99 ? '99+' : this.submissionCount) : undefined)} >
-					</d2l-quick-eval-widget-submission-icon>` :
+			illustration: this.evaluationHref ? html`
+				<d2l-quick-eval-widget-submission-icon style="overflow: visible;"
+					class=${classMap(qeIconClasses)}
+					icon=${this._icon}
+					?skeleton=${this.skeleton}
+					submission-count=${ifDefined(this.submissionCount > 0 ? (this.submissionCount > 99 ? '99+' : this.submissionCount) : undefined)} >
+				</d2l-quick-eval-widget-submission-icon>` :
 				html`
-					<d2l-icon
-						class=${classMap(iconClasses)}
-						?skeleton=${this.skeleton}
-						icon=${this._icon}>
-					</d2l-icon>`,
+				<d2l-icon
+					class=${classMap(iconClasses)}
+					?skeleton=${this.skeleton}
+					icon=${this._icon}>
+				</d2l-icon>`,
 			content: html`
 				<d2l-list-item-content id="content">
 					<div class=${classMap(nameClasses)}>
 						${this._name}
 					</div>
-					<div class=${classMap(secondaryClasses)} slot="supporting-info">
-						${dateTemplate}
-						${separatorTemplate}
-						${this._orgName || this._orgCode}
+					<div class=${classMap(secondaryClasses)} slot="secondary">
+						${supportingInfoTemplate([this._date ? dateTemplate : null, this._orgName || this._orgCode, // eslint-disable-next-line indent
+							this._activityProperties && this._activityProperties.type === ActivityAllowList.userCourseOfferingActivity.type && this._type])}
 						${startDateTemplate}
 					</div>
 				</d2l-list-item-content>
@@ -240,9 +256,15 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 				: '');
 	}
 
+	get _type() {
+		return this._activityProperties && !this.skeleton
+			? this.localize(this._activityProperties.type)
+			: '';
+	}
+
 	/** String associated with icon catalogue for provided activity type */
 	get _icon() {
-		if (this._activity && !this.skeleton && !this.evaluateAllHref) {
+		if (this._activity && !this.skeleton && !this.evaluationHref) {
 			const subEntity = this._activity.getSubEntityByClasses(['icon', 'tier2']);
 			if (subEntity && subEntity.hasProperty('iconSetKey')) {
 				return subEntity.properties.iconSetKey;
@@ -293,7 +315,7 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 		}
 
 		const entity = this._usage._entity;
-		const allowList =  this.evaluateAllHref ? QuickEvalActivityAllowList : ActivityAllowList;
+		const allowList =  this.evaluationHref ? QuickEvalActivityAllowList : ActivityAllowList;
 
 		for (const allowed in allowList) {
 			if (entity.hasClass(allowList[allowed].class)) {
@@ -311,7 +333,7 @@ class ActivityListItemBasic extends ListItemLinkMixin(SkeletonMixin(EntityMixinL
 						&& this._activity.getLinkByRel(this._activityProperties.linkRel)
 					) || this._activity.getLinkByRel('alternate');
 
-					this.actionHref = (this.evaluateAllHref || this._started && (link && link.href)) || null;
+					this.actionHref = (this.evaluationHref || this._started && (link && link.href)) || null;
 				}
 
 				break;

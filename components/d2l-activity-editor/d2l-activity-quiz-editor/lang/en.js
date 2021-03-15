@@ -62,18 +62,14 @@ export default {
 	"subHdrExceededTimeLimitBehaviour": "Exceeded Time Limit Behaviour", // Title for submission late type options,
 	"exceededTimeLimitBehaviourPrefix": "After the grace period, flag the quiz attempt as exceeded time limit and,", // label for submission label type options
 	"showClockLabel": "Will be displayed before the quiz starts", // Label for show clock checkbox
-	"description": "Description", // Description label for the Description text input box
 	"showClockTitle": "Show clock", // Title for show clock
-	"description": "Description", // Description label for the Description text input box,
-	"btnOpenIpRestrictionDialog": "Manage IP restrictions", // Button text for opening IP restriction dialog
-	"hdrIpRestrictionDialog": "IP Restrictions (IPv4)", // timing/display accordion header
-	"ipRestrictionLabel": "IP Restrictions", // Label for IP restrictions editor
 	"manageAttemptsDialogConfirmationText": "OK", // copy that appears on the Attempts dialog confirmation button
 	"manageAttemptsDialogCancelText": "Cancel", // copy that appears on the Attempts dialog cancel button
 	"subHdrAttemptsTools": "Attempts", // Title for attempts tools
 	"manageAttempts": "Manage Attempts", // Label for button to launch attempts dialog
 	"textIsDisplayedPart1": "Fields cannot be toggled off in the new quiz creation experience.", // First sentence of alert warning that text fields will be visible
 	"textIsDisplayedSingularPart2": "The {field} field appears to learners when the quiz is saved.", // Second sentence of alert warning that text fields will be visible, when there is only one field
+	"introMovedToDescription": "Quizzes no longer support Introductions. Existing content in the Introduction field now appears in the Description field.", // Alert warning that existing quiz introduction has been removed and that the text in the introduction has been put into the quiz description
 	"attemptsAllowed": "Attempts Allowed", // Title for Attempts Allowed select in Attempts dialog
 	"overallGradeCalculation": "Overall Grade Calculation", // Title for Overall Grade Calculation select in Attempts dialog
 	"retakeIncorrectQuestionsOnly": "Retake Incorrect Questions Only", // Title for RIO checkbox in Attempts dialog
@@ -86,11 +82,11 @@ export default {
 	"ipRestrictionDialogDescription": "Only learners coming from IP addresses that meet the defined restrictions can write the quiz.", // guidelines for IP restrictions dialog
 	"btnIpRestrictionsDialogAdd": "Add", // text for IP restrictions dialog "Add" button
 	"btnIpRestrictionsDialogBtnCancel": "Cancel", // text for IP restrictions dialog "Cancel" button
-	"ipRestrictionsDialogAddNewRange": "Add new IP range", // text for IP restrictions dialog "Add new IP range" button
+	"ipRestrictionsDialogAddNewRange": "IP Range", // text for IP restrictions dialog "Add new IP range" button
 	"ipRestrictionsTableStartRangeHdr": "IP Range Start", // text for IP restrictions table header start
 	"ipRestrictionsTableEndRangeHdr": "IP Range End", // text for IP restrictions table header end
 	"ipRestrictionsTableDeleteRangeHdr": "Delete", // text for IP restrictions table header delete
-	"ipRestrictionsValidationError": "Invalid IP address format. Please correct outlined fields.", // error message for invalid IP addresses
+	"ipRestrictionsValidationError": "Invalid IP address format. Please correct outlined fields. Example IP address: 155.55.5.15.", // error message for invalid IP addresses
 	"ipRestrictions500Error": "Something went wrong. Please try again.", // error message for IP restrictions 500 response
 	"ipRestrictionsHelpTxtConfirmation": "OK", // confirmation text on IP restrictions help dialog
 	"hdrIpRestrictionsHelpDialog": "Information: IP Restrictions (IPv4)", // timing/display accordion header
@@ -109,5 +105,22 @@ export default {
 	"minLabel": "Min:", // label for Min input on Attempts Conditions range editor on Attempts Dialog
 	"maxLabel": "Max:", // label for Max input on Attempts Conditions range editor on Attempts Dialog
 	"andRangeText": "and", // copy on Attempts Condition range editor on Attempts Dialog
-	"percentageRangeText": "%" // copy on Attempts Condition range editor on Attempts Dialog
+	"percentageRangeText": "%", // copy on Attempts Condition range editor on Attempts Dialog
+	"ipRestrictionsSummary": "IP restrictions", // summary to be displayed when a quiz has ip restrictions
+	"ipRestrictionsInnerSummary" : "{count, plural, =1 {1 restriction} other {{count} restrictions}}", // summary to be displayed when accordion is expanded
+	"quizTimingValidationError": "Timing cannot be changed, please correct the outlined fields.", // Appears in error alert when validation fails in Manage Timing dialog
+	"quizTimingServerError": "Something went wrong. Please try again.", // Timing save server error alert message
+	"quizTimingSummary": "{timingType} ({numMinutes, plural, =1 {1 minute} other {{numMinutes} minutes}})", // Timing type followed by (x minute) or (x minutes). e.g. Recommended time limit (120 minutes)
+	"ipRestrictionsDuplicateError": "Duplicate IP range start address. Each IP range start value must be unique.", // Error for duplicate IP
+	"ipRestrictionsRangeError": "Invalid IP address range provided. Please ensure ranges are correctly formatted.", // Error for invalid IP ranges
+	"quizAttemptsValidationError": "Attempts cannot be changed, please correct the outlined fields.", // Appears in error alert when validation fails in Manage Attempts dialog
+	"totalPoints": "Total Points {scoreOutOf}", // Total points text that appears on quiz editor above list of questions
+	"subHdrHeaderFooter": "Header and Footer", // Header and Footer accordion header
+	"manageHeaderFooterButton": "Manage Header and Footer", // Label for button to launch Header and Footer dialog
+	"headerFooterDialogTitle": "Header and Footer",
+	"manageHeaderFooterDialogAddText": "Add", // Label for Add button for header and footer dialog
+	"manageHeaderFooterDialogCancelText": "Cancel", // Label for Cancel button header and footer dialog
+	"headerLabel": "Header", // Label for the header text box
+	"headerDialogText": "The Quiz Header and Footer will be visible to learners at the top and bottom of the quiz, respectively.", // Header and Footer dialog text
+	"header": "Header" // Header label for the header text box.
 };
