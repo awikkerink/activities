@@ -1,5 +1,5 @@
 import 'd2l-inputs/d2l-input-textarea';
-import { css, html, LitElement } from 'lit-element/lit-element';
+import { html, LitElement } from 'lit-element/lit-element';
 
 class ActivityTextEditor extends LitElement {
 
@@ -12,16 +12,6 @@ class ActivityTextEditor extends LitElement {
 			key: { type: String },
 			htmlEditorHeight: { type: String }
 		};
-	}
-	
-	static get styles() {
-		return  [
-			css`
-				d2l-activity-html-new-editor {
-					height: 100%;
-				}
-			`
-		];
 	}
 
 	render() {
