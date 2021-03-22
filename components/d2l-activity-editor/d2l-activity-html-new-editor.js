@@ -10,7 +10,9 @@ class ActivityHtmlNewEditor extends ActivityEditorMixin(LocalizeActivityEditorMi
 			ariaLabel: { type: String },
 			disabled: { type: Boolean },
 			htmlEditorHeight: { type: String },
-			_filesToReplace: { type: Object }
+			_filesToReplace: { type: Object },
+			fullPage: { type: Boolean },
+			fullPageFontSize: { type: String }
 		};
 	}
 
@@ -26,7 +28,6 @@ class ActivityHtmlNewEditor extends ActivityEditorMixin(LocalizeActivityEditorMi
 
 	constructor() {
 		super();
-		this.htmlEditorHeight = '10rem';
 		this._context = JSON.parse(document.documentElement.getAttribute('data-he-context'));
 		this._filesToReplace = {};
 		this.saveOrder = 500;
@@ -42,6 +43,8 @@ class ActivityHtmlNewEditor extends ActivityEditorMixin(LocalizeActivityEditorMi
 				label-hidden
 				?disabled="${this.disabled}"
 				height="${this.htmlEditorHeight}"
+				full-page="${this.fullPage}"
+				full-page-font-size="${this.fullPageFontSize}"
 				?paste-local-images="${allowPaste}">
 			</d2l-htmleditor>
 		`;
