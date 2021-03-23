@@ -1,4 +1,4 @@
-import { action, configure as configureMobx, decorate, observable, runInAction } from 'mobx';
+import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { fetchEntity } from './fetch-entity.js';
 import { GradeCandidateCollection } from '../d2l-activity-grades/state/grade-candidate-collection.js';
 
@@ -14,23 +14,9 @@ export class ActivityScoreGrade {
 		this.inGrades = true;
 	}
 
-	async fetch(entity) {
-		await entity.fetchLinkedScoreOutOfEntity(fetchEntity);
-		runInAction(() => {
-			this.scoreOutOf = entity.scoreOutOf() ? entity.scoreOutOf().toString() : '';
-			this.scoreOutOfError = null;
-			this.inGrades = entity.inGrades();
-			this.gradeType = (entity.gradeType() || entity.numericGradeTypeTitle()).toLowerCase();
-			this.isUngraded = !this.inGrades && !this.scoreOutOf;
-			this.canEditScoreOutOf = entity.canEditScoreOutOf();
-			this.canSeeGrades = entity.canSeeGrades();
-			this.canEditGrades = entity.canEditGrades();
-			this.gradeCandidatesHref = entity.gradeCandidatesHref();
-			this.gradeCandidateCollection = null;
-			this.createNewGrade = !entity.gradeHref();
-			this.newGradeCandidatesHref = entity.newGradeCandidatesHref();
-			this.newGradeCandidatesCollection = null;
-		});
+	async fetch(entity, bypassCache) {
+		await entity.fetchLinkedScoreOutOfEntity(fetchEntity, bypassCache);
+		this.load(entity);
 	}
 
 	async fetchGradeCandidates() {
@@ -41,7 +27,6 @@ export class ActivityScoreGrade {
 		this.gradeCandidateCollection = new GradeCandidateCollection(this.gradeCandidatesHref, this.token);
 		await this.gradeCandidateCollection.fetch();
 	}
-
 	async fetchNewGradeCandidates() {
 		if (this.newGradeCandidatesCollection) {
 			return;
@@ -49,6 +34,10 @@ export class ActivityScoreGrade {
 
 		this.newGradeCandidatesCollection = new GradeCandidateCollection(this.newGradeCandidatesHref, this.token);
 		await this.newGradeCandidatesCollection.fetch();
+	}
+	async fetchUpdatedScoreOutOf(entity, bypassCache) {
+		await entity.fetchLinkedScoreOutOfEntity(fetchEntity, bypassCache);
+		this.loadScoreOutOf(entity);
 	}
 
 	getAssociatedGradeEntity() {
@@ -85,6 +74,24 @@ export class ActivityScoreGrade {
 		this.createNewGrade = true;
 		this.setGraded();
 	}
+	load(entity) {
+		this.scoreOutOf = entity.scoreOutOf() ? entity.scoreOutOf().toString() : '';
+		this.scoreOutOfError = null;
+		this.inGrades = entity.inGrades();
+		this.gradeType = (entity.gradeType() || entity.numericGradeTypeTitle()).toLowerCase();
+		this.isUngraded = !this.inGrades && !this.scoreOutOf;
+		this.canEditScoreOutOf = entity.canEditScoreOutOf();
+		this.canSeeGrades = entity.canSeeGrades();
+		this.canEditGrades = entity.canEditGrades();
+		this.gradeCandidatesHref = entity.gradeCandidatesHref();
+		this.gradeCandidateCollection = null;
+		this.createNewGrade = !entity.gradeHref();
+		this.newGradeCandidatesHref = entity.newGradeCandidatesHref();
+		this.newGradeCandidatesCollection = null;
+	}
+	loadScoreOutOf(entity) {
+		this.scoreOutOf = entity.scoreOutOf() ? entity.scoreOutOf().toString() : '';
+	}
 	async primeGradeSave() {
 		if (this.inGrades && this.createNewGrade) {
 			await this.fetchNewGradeCandidates();
@@ -96,12 +103,10 @@ export class ActivityScoreGrade {
 			this.scoreOutOfError = null;
 		}
 	}
-
 	setGraded() {
 		this.inGrades = true;
 		this.isUngraded = false;
 	}
-
 	setNewGradeName(name) {
 		this.newGradeName = name;
 	}
@@ -110,13 +115,11 @@ export class ActivityScoreGrade {
 		this.scoreOutOfError = null;
 		this.validate();
 	}
-
 	setUngraded() {
 		this.inGrades = false;
 		this.isUngraded = true;
 		this.setScoreOutOf('');
 	}
-
 	validate() {
 		// This validation was hardcoded in the original UI implementation.
 		// It might have been better to come up with a way to represent this in the Siren representation
@@ -162,5 +165,7 @@ decorate(ActivityScoreGrade, {
 	fetchNewGradeCandidates: action,
 	linkToNewGrade: action,
 	setNewGradeName: action,
-	primeGradeSave: action
+	primeGradeSave: action,
+	load: action,
+	loadScoreOutOf: action
 });
