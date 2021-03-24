@@ -1,7 +1,9 @@
 import '@brightspace-ui/htmleditor/htmleditor.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
+import { ifDefined } from 'lit-html/directives/if-defined';
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
+
 class ActivityHtmlNewEditor extends ActivityEditorMixin(LocalizeActivityEditorMixin(LitElement)) {
 
 	static get properties() {
@@ -9,10 +11,10 @@ class ActivityHtmlNewEditor extends ActivityEditorMixin(LocalizeActivityEditorMi
 			value: { type: String },
 			ariaLabel: { type: String },
 			disabled: { type: Boolean },
-			htmlEditorHeight: { type: String },
 			_filesToReplace: { type: Object },
-			fullPage: { type: Boolean },
-			fullPageFontSize: { type: String }
+			htmlEditorHeight: { type: String, attribute: 'html-editor-height' },
+			fullPage: { type: Boolean, attribute: 'full-page' },
+			fullPageFontSize: { type: String, attribute: 'full-page-font-size' }
 		};
 	}
 
@@ -31,6 +33,8 @@ class ActivityHtmlNewEditor extends ActivityEditorMixin(LocalizeActivityEditorMi
 		this._context = JSON.parse(document.documentElement.getAttribute('data-he-context'));
 		this._filesToReplace = {};
 		this.saveOrder = 500;
+		this.fullPage = false;
+		this.htmlEditorHeight = '10rem';
 	}
 
 	render() {
@@ -42,9 +46,9 @@ class ActivityHtmlNewEditor extends ActivityEditorMixin(LocalizeActivityEditorMi
 				label="${this.ariaLabel}"
 				label-hidden
 				?disabled="${this.disabled}"
-				height="${this.htmlEditorHeight}"
-				full-page="${this.fullPage}"
-				full-page-font-size="${this.fullPageFontSize}"
+				height=${ifDefined(this.htmlEditorHeight)}
+				?full-page="${this.fullPage}"
+				full-page-font-size="${ifDefined(this.fullPageFontSize)}"
 				?paste-local-images="${allowPaste}">
 			</d2l-htmleditor>
 		`;
