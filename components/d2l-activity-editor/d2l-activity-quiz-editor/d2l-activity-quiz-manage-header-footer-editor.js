@@ -26,6 +26,7 @@ class ActivityQuizManageHeaderFooterEditor extends ActivityEditorMixin(RtlMixin(
 	}
 
 	render() {
+
 		const quiz = store.get(this.href);
 
 		const {
@@ -42,15 +43,10 @@ class ActivityQuizManageHeaderFooterEditor extends ActivityEditorMixin(RtlMixin(
 			<d2l-activity-text-editor
 				.value="${header}"
 				.richtextEditorConfig="${headerRichTextEditorConfig}"
-				@d2l-activity-text-editor-change="${this._saveHeaderOnChange}"
 				ariaLabel="${headerLang}"
 				?disabled="${canEditHeader === undefined ? false : !canEditHeader}">
 			</d2l-activity-text-editor>
 		`;
-	}
-
-	_saveHeaderOnChange(e) {
-		store.get(this.href).setHeader(e.detail.content);
 	}
 
 }
