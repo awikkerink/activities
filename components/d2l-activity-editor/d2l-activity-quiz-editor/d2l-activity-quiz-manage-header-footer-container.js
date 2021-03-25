@@ -11,6 +11,14 @@ import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { shared as store } from './state/quiz-store';
 
 class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
+
+	static get properties() {
+		return {
+			href: { type: String },
+			token: { type: Object }
+		};
+	}
+
 	static get styles() {
 		return [
 			bodySmallStyles
@@ -42,7 +50,7 @@ class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(
 				@d2l-dialog-close="${this.handleClose}"
 				width="${width}"
 				title-text=${this.localize('headerFooterDialogTitle')}>
-					<div id="manage-header-footer-dialog-header-footer-editor">${this._renderQuizHeaderFooterEditor()}</div>
+					${this._renderQuizHeaderFooterEditor()}
 					<d2l-button slot="footer" primary @click="${this._save}" ?disabled="${this.isSaving}">${this.localize('manageHeaderFooterDialogAddText')}</d2l-button>
 					<d2l-button slot="footer" data-dialog-action ?disabled="${this.isSaving}">${this.localize('manageHeaderFooterDialogCancelText')}</d2l-button>
 			</d2l-dialog>
