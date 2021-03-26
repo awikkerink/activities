@@ -33,24 +33,61 @@ export class QuizAttempts {
 		this.overallGradeCalculationOptions = entity.overallGradeCalculationOptions();
 		this.canUpdateRetakeIncorrectOnly = entity.canUpdateRetakeIncorrectOnly();
 		this.isRetakeIncorrectOnly = entity.isRetakeIncorrectOnly();
+		this.attemptConditions = entity.attemptConditions();
 	}
 
-	setAttemptsAllowed(data) {
-		this.canUpdateAttemptsAllowed = this._entity.canUpdateAttemptsAllowed;
+	setAttemptCondition(data) {
+		this.updateProperty(() => this._entity.setAttemptCondition(data));
+	}
+
+	async setAttemptsAllowed(data) {
+		const newAttemptsAllowed = parseInt(data);
+		const attemptsAllowed = parseInt(this.attemptsAllowed);
+		// Optimistic UI: remove excess attempt conditions instead of waiting for attempts entity
+		if (newAttemptsAllowed > 1 && newAttemptsAllowed < this.attemptsAllowed) {
+			const slicedAttemptConditions = this.attemptConditions.slice(0, newAttemptsAllowed - 1);
+			this.updateAttemptConditons(slicedAttemptConditions);
+		}
+		// Optimistic UI: add additional attempt conditions with no min & max values
+		else if (newAttemptsAllowed > 1 && newAttemptsAllowed > this.attemptsAllowed) {
+			const newAttemptConditions = [];
+			for (let i = attemptsAllowed; i < newAttemptsAllowed; i++) {
+				newAttemptConditions.push({ properties: { attempt: i + 1, min: null, max: null } });
+			}
+			try {
+				if (this.attemptConditions && this.attemptConditions.length > 0) {
+					const combinedAttemptConditions = this.attemptConditions.slice(0, newAttemptsAllowed - 2).concat(newAttemptConditions);
+					this.updateAttemptConditons(combinedAttemptConditions);
+				}
+				// No attempt conditons locally, add blank attempt conditions
+				if (!this.attemptConditions) {
+					this.updateAttemptConditons(newAttemptConditions);
+				}
+			} catch (error) {
+				console.error(error);
+			}
+		} else {
+			// attempts allowed has not changed due to asyc jank, don't update attempt conditions
+			return;
+		}
+		// Update local attempts allowed value finally
 		this.attemptsAllowed = data;
-		this.updateProperty(() => this._entity.setAttemptsAllowed(data));
+
+		await this.updateProperty(() => this._entity.setAttemptsAllowed(data));
 	}
 
 	setOverallGradeCalculationType(data) {
-		this.canUpdateOverallGradeCalculation = this._entity.canUpdateOverallGradeCalculation;
 		this.overallGradeCalculationType = data;
 		this.updateProperty(() => this._entity.setOverallGradeCalculationType(data));
 	}
 
 	setRetakeIncorrectOnly(data) {
-		this.canUpdateRetakeIncorrectOnly = this._entity.canUpdateRetakeIncorrectOnly;
 		this.isRetakeIncorrectOnly = data;
 		this.updateProperty(() => this._entity.setRetakeIncorrectOnly(data));
+	}
+
+	updateAttemptConditons(attemptConditions) {
+		this.attemptConditions = attemptConditions;
 	}
 
 	async updateProperty(updateFunc) {
@@ -79,10 +116,14 @@ decorate(QuizAttempts, {
 	overallGradeCalculationOptions: observable,
 	canUpdateRetakeIncorrectOnly: observable,
 	isRetakeIncorrectOnly: observable,
+	canUpdateAttemptConditions: observable,
+	attemptConditions: observable,
 
 	// actions
 	load: action,
 	setAttemptsAllowed: action,
 	setOverallGradeCalculationType: action,
-	setRetakeIncorrectOnly: action
+	setRetakeIncorrectOnly: action,
+	setAttemptCondtion: action,
+	updateAttemptConditons: action
 });
