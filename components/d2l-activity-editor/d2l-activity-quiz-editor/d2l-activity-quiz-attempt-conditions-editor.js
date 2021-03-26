@@ -126,6 +126,7 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 						min=0
 						max=100
 						name="min"
+						?disabled=${!canUpdateAttemptConditions}
 						input-width=3.5rem
 						@change=${this._generateHandler(this._handleChange, attempt)}
 						>
@@ -140,6 +141,7 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 						min=0
 						max=100
 						name="max"
+						?disabled=${!canUpdateAttemptConditions}
 						input-width=3.5rem
 						@change=${this._generateHandler(this._handleChange, attempt)}
 						>
