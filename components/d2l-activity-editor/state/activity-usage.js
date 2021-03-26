@@ -27,6 +27,9 @@ export class ActivityUsage {
 		}
 		return this;
 	}
+	async fetchScoreAndGradeScoreOutOf(bypassCache) {
+		await this.scoreAndGrade.fetchUpdatedScoreOutOf(this._entity, bypassCache);
+	}
 
 	async load(entity) {
 		this._entity = entity;
@@ -43,7 +46,7 @@ export class ActivityUsage {
 		await Promise.all([
 			this._loadSpecialAccess(entity),
 			this._loadCompetencyOutcomes(entity),
-			this.scoreAndGrade.fetch(entity)
+			this.scoreAndGrade.fetch(entity, false)
 		]);
 	}
 
