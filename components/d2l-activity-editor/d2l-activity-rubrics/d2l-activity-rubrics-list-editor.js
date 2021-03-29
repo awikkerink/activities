@@ -96,7 +96,6 @@ class ActivityRubricsListEditor extends ActivityEditorMixin(LocalizeActivityEdit
 				<d2l-rubric
 					class="d2l-association-box"
 					force-compact
-					outcomes-tool-integration-enabled
 					.href="${association.rubricHref}"
 					.token="${this.token}">
 				</d2l-rubric>
