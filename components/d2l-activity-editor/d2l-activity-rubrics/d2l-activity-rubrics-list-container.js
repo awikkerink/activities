@@ -28,7 +28,10 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 		return {
 			_newlyCreatedPotentialAssociationHref: { type: String },
 			activityUsageHref: { type: String },
-			assignmentHref: { type: String }
+			assignmentHref: { type: String },
+			_outcomesTerm: { type: String },
+			_browseOutcomesText: { type: String },
+			_alignOutcomesText: { type: String }
 		};
 	}
 
@@ -71,6 +74,14 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 		super(associationStore);
 		this._newlyCreatedPotentialAssociation = {};
 		this._newlyCreatedPotentialAssociationHref = '';
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+
+		this._browseOutcomesText = this._dispatchRequestProvider('d2l-provider-browse-outcomes-text');
+		this._outcomesTerm = this._dispatchRequestProvider('d2l-provider-outcomes-term');
+		this._alignOutcomesText = this._dispatchRequestProvider('d2l-provider-align-outcomes-text');
 	}
 
 	render() {
@@ -191,13 +202,25 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 		}
 
 	}
+
+	_dispatchRequestProvider(key) {
+		const event = new CustomEvent('d2l-request-provider', {
+			detail: { key: key },
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+		this.dispatchEvent(event);
+		return event.detail.provider;
+	}
+
 	_openAttachRubricDialog() {
 		this._toggleDialog(true);
 	}
 	_renderAddRubricDropdown(entity) {
 
-		const canCreatePotentialAssociation = entity.canCreatePotentialAssociation();
-		const canCreateAssociation = entity.canCreateAssociation();
+		const canCreatePotentialAssociation = entity.canCreatePotentialAssociation;
+		const canCreateAssociation = entity.canCreateAssociation;
 
 		const canEditRubricAssociation = canCreatePotentialAssociation || canCreateAssociation;
 
@@ -261,6 +284,10 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 				<d2l-rubric-editor
 					.href="${this._newlyCreatedPotentialAssociationHref}"
 					.token="${this.token}"
+					outcomes-tool-integration-enabled
+					outcomes-title="${this._outcomesTerm}"
+					browse-outcomes-text="${this._browseOutcomesText}"
+					align-outcomes-text="${this._alignOutcomesText}"
 					title-dropdown-hidden>
 				</d2l-rubric-editor>`;
 		} else {
