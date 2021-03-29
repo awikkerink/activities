@@ -151,7 +151,6 @@ export class AssociationCollection {
 		this._entity.getAllAssociations().forEach(asc => {
 
 			const associationEntity = new Association(asc, this.token);
-			console.log('href', href);
 			const rubricHref = associationEntity.getRubricLink();
 			const formattedEntity = this._formatAssociationEntity(associationEntity);
 
