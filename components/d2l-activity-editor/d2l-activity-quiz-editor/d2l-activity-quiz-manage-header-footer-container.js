@@ -41,6 +41,11 @@ class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(
     	`;
 	}
 
+	_cancel() {
+		const e = this.shadowRoot.querySelector('d2l-activity-quiz-manage-header-footer-editor');
+		e.reset();
+	}
+
 	_renderDialog() {
 		const width = 700;
 		return html`
@@ -51,8 +56,8 @@ class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(
 				width="${width}"
 				title-text=${this.localize('headerFooterDialogTitle')}>
 					${this._renderQuizHeaderFooterEditor()}
-					<d2l-button slot="footer" primary @click="${this._save}" ?disabled="${this.isSaving}">${this.localize('manageHeaderFooterDialogAddText')}</d2l-button>
-					<d2l-button slot="footer" data-dialog-action ?disabled="${this.isSaving}">${this.localize('manageHeaderFooterDialogCancelText')}</d2l-button>
+					<d2l-button slot="footer" primary data-dialog-action="save" @click="${this._save}" ?disabled="${this.isSaving}">${this.localize('manageHeaderFooterDialogAddText')}</d2l-button>
+					<d2l-button slot="footer" data-dialog-action="cancel" @click="${this._cancel}" ?disabled="${this.isSaving}">${this.localize('manageHeaderFooterDialogCancelText')}</d2l-button>
 			</d2l-dialog>
 		`;
 	}
@@ -76,6 +81,11 @@ class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(
 				.token="${this.token}">
 			</d2l-activity-quiz-manage-header-footer-editor>
 		`;
+	}
+
+	_save() {
+		const el = this.shadowRoot.querySelector('d2l-activity-quiz-manage-header-footer-editor');
+		el.save();
 	}
 }
 

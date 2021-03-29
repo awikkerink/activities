@@ -17,6 +17,9 @@ class ActivityQuizManageHeaderFooterEditor extends ActivityEditorMixin(RtlMixin(
 				.d2l-body-text-container {
 					margin-bottom: 1rem;
 				}
+				.d2l-label-text {
+					margin-bottom: 0.5rem;
+				}
 			`
 		];
 	}
@@ -26,7 +29,6 @@ class ActivityQuizManageHeaderFooterEditor extends ActivityEditorMixin(RtlMixin(
 	}
 
 	render() {
-
 		const quiz = store.get(this.href);
 
 		const {
@@ -47,6 +49,28 @@ class ActivityQuizManageHeaderFooterEditor extends ActivityEditorMixin(RtlMixin(
 				?disabled="${canEditHeader === undefined ? false : !canEditHeader}">
 			</d2l-activity-text-editor>
 		`;
+	}
+
+	reset() {
+		const quiz = store.get(this.href);
+
+		const {
+			header
+		} = quiz || {};
+
+		const el = this.shadowRoot.querySelector('d2l-activity-text-editor');
+		const newEd = el.shadowRoot.querySelector('d2l-activity-html-new-editor');
+		const htmlEd = newEd.shadowRoot.querySelector('d2l-htmleditor');
+		htmlEd.html = header;
+		return;
+	}
+
+	save() {
+		const el = this.shadowRoot.querySelector('d2l-activity-text-editor');
+		const newEd = el.shadowRoot.querySelector('d2l-activity-html-new-editor');
+		const htmlEd = newEd.shadowRoot.querySelector('d2l-htmleditor');
+		const entity = store.get(this.href);
+		entity.setHeader(htmlEd.html);
 	}
 
 }
