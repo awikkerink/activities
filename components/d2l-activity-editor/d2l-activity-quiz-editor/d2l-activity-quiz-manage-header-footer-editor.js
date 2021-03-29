@@ -18,7 +18,7 @@ class ActivityQuizManageHeaderFooterEditor extends ActivityEditorMixin(RtlMixin(
 					margin-bottom: 1rem;
 				}
 				.d2l-label-text {
-					margin-bottom: .5rem;
+					margin-bottom: 0.5rem;
 				}
 			`
 		];
