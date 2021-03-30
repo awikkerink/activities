@@ -15,7 +15,7 @@ describe('d2l-activity-rubrics-list-wrapper', function() {
 	let href, token, associationCollection, assignment, activity;
 
 	function _requestProviderMock(e) {
-		e.detail.provider = 'hello';
+		e.detail.provider = 'Standards';
 		e.stopPropagation();
 	}
 
@@ -114,34 +114,55 @@ describe('d2l-activity-rubrics-list-wrapper', function() {
 	});
 
 	describe('Rubrics List Editor', () => {
-		let el, containerComponent, container, rubricsListEditor;
+		let el, containerComponent, container, rubricsListEditorComponent;
 		beforeEach(async() => {
 			el = await loadComponent();
 			containerComponent = el.shadowRoot.querySelector('d2l-activity-rubrics-list-container');
 			container = await fixture(html`${containerComponent}`);
-			rubricsListEditor = container.shadowRoot.querySelector('d2l-activity-rubrics-list-editor');
+			rubricsListEditorComponent = container.shadowRoot.querySelector('d2l-activity-rubrics-list-editor');
 		});
 
 		it('has rubrics list editor', async() => {
-			const rubricsListEditorComponent = await fixture(html`${rubricsListEditor}`);
+			const rubricsListEditor = await fixture(html`${rubricsListEditorComponent}`);
 
-			const rubricComponent = rubricsListEditorComponent.shadowRoot.querySelectorAll('.d2l-association-container > d2l-rubric')[0];
+			const rubricComponent = rubricsListEditor.shadowRoot.querySelectorAll('.d2l-association-container > d2l-rubric')[0];
 			expect(rubricComponent).to.not.be.null;
 
-			const rubricIconComponent = rubricsListEditorComponent.shadowRoot.querySelectorAll('.d2l-association-container > d2l-button-icon')[0];
+			const rubricIconComponent = rubricsListEditor.shadowRoot.querySelectorAll('.d2l-association-container > d2l-button-icon')[0];
 			expect(rubricIconComponent.text).to.equal(langTerms['rubrics.txtDeleteRubric']);
 			expect(rubricIconComponent.hidden).to.equal(false);
 		});
 
 		it('hides delete association button when canDeleteAssociation is false', async() => {
-			const rubricsListEditorComponent = await fixture(html`${rubricsListEditor}`);
+			const rubricsListEditor = await fixture(html`${rubricsListEditorComponent}`);
 
-			const rubricComponent = rubricsListEditorComponent.shadowRoot.querySelectorAll('.d2l-association-container > d2l-rubric')[1];
+			const rubricComponent = rubricsListEditor.shadowRoot.querySelectorAll('.d2l-association-container > d2l-rubric')[1];
 			expect(rubricComponent).to.not.be.null;
 
-			const rubricIconComponent = rubricsListEditorComponent.shadowRoot.querySelectorAll('.d2l-association-container > d2l-button-icon')[1];
+			const rubricIconComponent = rubricsListEditor.shadowRoot.querySelectorAll('.d2l-association-container > d2l-button-icon')[1];
 			expect(rubricIconComponent.text).to.equal(langTerms['rubrics.txtDeleteRubric']);
 			expect(rubricIconComponent.hidden).to.equal(true);
+		});
+	});
+
+	describe('Rubrics Simple Overlay', () => {
+		let el, containerComponent, container;
+
+		beforeEach(async() => {
+			el = await loadComponent();
+			containerComponent = el.shadowRoot.querySelector('d2l-activity-rubrics-list-container');
+			containerComponent._newlyCreatedPotentialAssociationHref = 'http://newref/2';
+			container = await fixture(html`${containerComponent}`);
+		});
+
+		it('has rubric editor with correct attributes', async() => {
+			const rubricEditor = await fixture(container._renderRubricEditor());
+			expect(rubricEditor).to.not.equal(html``);
+			expect(rubricEditor.getAttribute('title-dropdown-hidden')).to.not.be.null;
+			expect(rubricEditor.getAttribute('outcomes-tool-integration-enabled')).to.not.be.null;
+			expect(rubricEditor.getAttribute('outcomes-title')).to.equal('Standards');
+			expect(rubricEditor.getAttribute('browse-outcomes-text')).to.equal('Standards');
+			expect(rubricEditor.getAttribute('align-outcomes-text')).to.equal('Standards');
 		});
 	});
 });
