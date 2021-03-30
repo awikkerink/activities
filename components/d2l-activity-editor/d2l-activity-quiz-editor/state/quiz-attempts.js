@@ -37,53 +37,20 @@ export class QuizAttempts {
 	}
 
 	setAttemptCondition(data) {
-		this.updateProperty(() => this._entity.setAttemptCondition(data));
+		if (!data || data.attempt < 2) {
+			return;
+		}
+		const acIdx = data.attempt - 2;
+		const attemptCondition = this._entity.attemptConditions()[acIdx];
+		const entityMin = attemptCondition && attemptCondition.properties.min || null;
+		const entityMax = attemptCondition && attemptCondition.properties.max || null;
+		const { attempt, min = entityMin, max = entityMax } = data;
+		this.updateProperty(() => this._entity.setAttemptCondition({ attempt, min, max }));
 	}
 
 	setAttemptsAllowed(data) {
-		const newAttemptsAllowed = parseInt(data);
-		const attemptsAllowed = parseInt(this.attemptsAllowed);
-
-		// Optimistic UI: attempts allowed set to 0 or 1, clear attempt conditions
-		if (newAttemptsAllowed <= 1) {
-			this.updateAttemptConditions(undefined);
-		}
-		// Optimistic UI: remove excess attempt conditions instead of waiting for attempts entity
-		else if (newAttemptsAllowed > 1 && newAttemptsAllowed < this.attemptsAllowed) {
-
-			const slicedAttemptConditions = this.attemptConditions.slice(0, newAttemptsAllowed - 1);
-			this.updateAttemptConditions(slicedAttemptConditions);
-
-		}
-		// Optimistic UI: add additional attempt conditions with no min & max values
-		else if (newAttemptsAllowed > 1 && newAttemptsAllowed > this.attemptsAllowed) {
-			const newAttemptConditions = [];
-			for (let i = attemptsAllowed; i < newAttemptsAllowed; i++) {
-				if (i === 0) continue; // skip when `0`: happens when user rapidly switches attempts allowed
-				newAttemptConditions.push({ properties: { attempt: i + 1, min: null, max: null } });
-			}
-
-			if (this.attemptConditions && this.attemptConditions.length > 0) {
-				const combinedAttemptConditions = this.attemptConditions.slice(0, newAttemptsAllowed - 2).concat(newAttemptConditions);
-
-				this.updateAttemptConditions(combinedAttemptConditions);
-			}
-			// No attempt conditions locally, add blank attempt conditions
-			if (!this.attemptConditions) {
-				this.updateAttemptConditions(newAttemptConditions);
-			}
-
-		} else {
-			// attempts allowed has not changed due to async jank, don't update attempt conditions
-			return;
-		}
-		// Update local attempts allowed value finally
 		this.attemptsAllowed = data;
-
 		this.updateProperty(() => this._entity.setAttemptsAllowed(data));
-		// Update the local entity with fetched attempt conditions in case of loss of permissions
-		// Unless we should never update the local values in case of jank?
-		// this.updateACs(this._entity.attemptConditions());
 	}
 
 	setOverallGradeCalculationType(data) {
@@ -109,11 +76,12 @@ export class QuizAttempts {
 		// If `undefined` is returned, it likely means the UI is out of sync with the entity state, and disallowed actions can be performed.
 		// In this case, we should attempt to reload the MobX object, so that the UI state is in sync again.
 		if (!entity) {
-
 			this.fetch();
 			return;
 		}
 		this._entity = entity;
+		// mobX store does not trigger re-render unless we directly update the observable
+		this.updateAttemptConditions(this._entity.attemptConditions());
 	}
 }
 

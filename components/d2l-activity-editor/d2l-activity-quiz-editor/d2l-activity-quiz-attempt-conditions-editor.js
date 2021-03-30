@@ -93,7 +93,6 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 	}
 
 	_renderAttemptConditionsRangeEditor() {
-		// TODO: replace attemptConditions with data fetched from attempts entity when #attempts allowed >=2 and replace index/next with fetched data
 		const entity = store.get(this.href);
 		if (!entity) {
 			return html``;
