@@ -109,7 +109,7 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 
 		return html` ${attemptConditions.map((ac) => {
 			const { attempt, min, max } = ac.properties;
-			if (attempt > attemptsAllowed) {
+			if (attempt > attemptsAllowed || attempt < 2) {
 				return; // don't render extra attempt conditions
 			}
 			const index = attempt - 1;
@@ -126,7 +126,7 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 						min=0
 						max=100
 						name="min"
-						?disabled=${!canUpdateAttemptConditions}
+						?disabled=${canUpdateAttemptConditions}
 						input-width=3.5rem
 						@change=${this._generateHandler(this._handleChange, attempt)}
 						>
@@ -141,7 +141,7 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 						min=0
 						max=100
 						name="max"
-						?disabled=${!canUpdateAttemptConditions}
+						?disabled=${canUpdateAttemptConditions}
 						input-width=3.5rem
 						@change=${this._generateHandler(this._handleChange, attempt)}
 						>
