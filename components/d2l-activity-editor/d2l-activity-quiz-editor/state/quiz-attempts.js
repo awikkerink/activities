@@ -40,40 +40,50 @@ export class QuizAttempts {
 		this.updateProperty(() => this._entity.setAttemptCondition(data));
 	}
 
-	async setAttemptsAllowed(data) {
+	setAttemptsAllowed(data) {
 		const newAttemptsAllowed = parseInt(data);
 		const attemptsAllowed = parseInt(this.attemptsAllowed);
+
+		// Optimistic UI: attempts allowed set to 0 or 1, clear attempt conditions
+		if (newAttemptsAllowed <= 1) {
+			this.updateAttemptConditions(undefined);
+		}
 		// Optimistic UI: remove excess attempt conditions instead of waiting for attempts entity
-		if (newAttemptsAllowed > 1 && newAttemptsAllowed < this.attemptsAllowed) {
+		else if (newAttemptsAllowed > 1 && newAttemptsAllowed < this.attemptsAllowed) {
+
 			const slicedAttemptConditions = this.attemptConditions.slice(0, newAttemptsAllowed - 1);
-			this.updateAttemptConditons(slicedAttemptConditions);
+			this.updateAttemptConditions(slicedAttemptConditions);
+
 		}
 		// Optimistic UI: add additional attempt conditions with no min & max values
 		else if (newAttemptsAllowed > 1 && newAttemptsAllowed > this.attemptsAllowed) {
 			const newAttemptConditions = [];
 			for (let i = attemptsAllowed; i < newAttemptsAllowed; i++) {
+				if (i === 0) continue; // skip when `0`: happens when user rapidly switches attempts allowed
 				newAttemptConditions.push({ properties: { attempt: i + 1, min: null, max: null } });
 			}
-			try {
-				if (this.attemptConditions && this.attemptConditions.length > 0) {
-					const combinedAttemptConditions = this.attemptConditions.slice(0, newAttemptsAllowed - 2).concat(newAttemptConditions);
-					this.updateAttemptConditons(combinedAttemptConditions);
-				}
-				// No attempt conditons locally, add blank attempt conditions
-				if (!this.attemptConditions) {
-					this.updateAttemptConditons(newAttemptConditions);
-				}
-			} catch (error) {
-				console.error(error);
+
+			if (this.attemptConditions && this.attemptConditions.length > 0) {
+				const combinedAttemptConditions = this.attemptConditions.slice(0, newAttemptsAllowed - 2).concat(newAttemptConditions);
+
+				this.updateAttemptConditions(combinedAttemptConditions);
 			}
+			// No attempt conditions locally, add blank attempt conditions
+			if (!this.attemptConditions) {
+				this.updateAttemptConditions(newAttemptConditions);
+			}
+
 		} else {
-			// attempts allowed has not changed due to asyc jank, don't update attempt conditions
+			// attempts allowed has not changed due to async jank, don't update attempt conditions
 			return;
 		}
 		// Update local attempts allowed value finally
 		this.attemptsAllowed = data;
 
-		await this.updateProperty(() => this._entity.setAttemptsAllowed(data));
+		this.updateProperty(() => this._entity.setAttemptsAllowed(data));
+		// Update the local entity with fetched attempt conditions in case of loss of permissions
+		// Unless we should never update the local values in case of jank?
+		// this.updateACs(this._entity.attemptConditions());
 	}
 
 	setOverallGradeCalculationType(data) {
@@ -86,7 +96,7 @@ export class QuizAttempts {
 		this.updateProperty(() => this._entity.setRetakeIncorrectOnly(data));
 	}
 
-	updateAttemptConditons(attemptConditions) {
+	updateAttemptConditions(attemptConditions) {
 		this.attemptConditions = attemptConditions;
 	}
 
@@ -99,6 +109,7 @@ export class QuizAttempts {
 		// If `undefined` is returned, it likely means the UI is out of sync with the entity state, and disallowed actions can be performed.
 		// In this case, we should attempt to reload the MobX object, so that the UI state is in sync again.
 		if (!entity) {
+
 			this.fetch();
 			return;
 		}
@@ -125,5 +136,5 @@ decorate(QuizAttempts, {
 	setOverallGradeCalculationType: action,
 	setRetakeIncorrectOnly: action,
 	setAttemptCondtion: action,
-	updateAttemptConditons: action
+	updateAttemptConditions: action
 });
