@@ -57,7 +57,12 @@ export class AssociationCollection {
 			this.associationsMap.set(rubricHref, formattedEntity);
 		}
 	}
-
+	canCreateAssociation() {
+		return this._entity.canCreateAssociation();
+	}
+	canCreatePotentialAssociation() {
+		return this._entity.canCreatePotentialAssociation();
+	}
 	async createPotentialAssociation() {
 		const newAssociation = await this._entity.createPotentialAssociation();
 		const associationEntity = new Association(newAssociation, this.token);
@@ -158,9 +163,6 @@ export class AssociationCollection {
 				this.associationsMap.set(rubricHref, formattedEntity);
 			}
 		});
-
-		this.canCreateAssociation = this._entity.canCreateAssociation();
-		this.canCreatePotentialAssociation = this._entity.canCreatePotentialAssociation();
 
 		const associations = this.fetchAssociations();
 		const validDefaultScoringOption = associations.filter(association => (association.isAssociating || association.isAssociated) && !association.isDeleting);
