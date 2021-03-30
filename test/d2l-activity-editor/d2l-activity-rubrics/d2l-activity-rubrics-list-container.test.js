@@ -144,36 +144,4 @@ describe('d2l-activity-rubrics-list-wrapper', function() {
 			expect(rubricIconComponent.hidden).to.equal(true);
 		});
 	});
-
-	describe('Rubrics List Editor', () => {
-		let el, containerComponent, container, rubricsListEditor;
-		beforeEach(async() => {
-			el = await loadComponent();
-			containerComponent = el.shadowRoot.querySelector('d2l-activity-rubrics-list-container');
-			container = await fixture(html`${containerComponent}`);
-			rubricsListEditor = container.shadowRoot.querySelector('d2l-activity-rubrics-list-editor');
-		});
-
-		it('has rubrics list editor', async() => {
-			const rubricsListEditorComponent = await fixture(html`${rubricsListEditor}`);
-
-			const rubricComponent = rubricsListEditorComponent.shadowRoot.querySelectorAll('.d2l-association-container > d2l-rubric')[0];
-			expect(rubricComponent).to.not.be.null;
-
-			const rubricIconComponent = rubricsListEditorComponent.shadowRoot.querySelectorAll('.d2l-association-container > d2l-button-icon')[0];
-			expect(rubricIconComponent.text).to.equal(langTerms['rubrics.txtDeleteRubric']);
-			expect(rubricIconComponent.hidden).to.equal(false);
-		});
-
-		it('hides delete association button when canDeleteAssociation is false', async() => {
-			const rubricsListEditorComponent = await fixture(html`${rubricsListEditor}`);
-
-			const rubricComponent = rubricsListEditorComponent.shadowRoot.querySelectorAll('.d2l-association-container > d2l-rubric')[1];
-			expect(rubricComponent).to.not.be.null;
-
-			const rubricIconComponent = rubricsListEditorComponent.shadowRoot.querySelectorAll('.d2l-association-container > d2l-button-icon')[1];
-			expect(rubricIconComponent.text).to.equal(langTerms['rubrics.txtDeleteRubric']);
-			expect(rubricIconComponent.hidden).to.equal(true);
-		});
-	});
 });
