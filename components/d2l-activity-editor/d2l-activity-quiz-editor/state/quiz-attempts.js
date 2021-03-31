@@ -40,11 +40,21 @@ export class QuizAttempts {
 		if (!data || data.attempt < 2) {
 			return;
 		}
-		const acIdx = data.attempt - 2;
-		const attemptCondition = this._entity.attemptConditions()[acIdx];
+		const acIndex = data.attempt - 2;
+		const attemptCondition = this._entity.attemptConditions()[acIndex];
 		const entityMin = attemptCondition && attemptCondition.properties.min || null;
 		const entityMax = attemptCondition && attemptCondition.properties.max || null;
-		const { attempt, min = entityMin, max = entityMax } = data;
+		const attempt = data.attempt;
+		let min = entityMin, max = entityMax;
+		if ('min' in data) min = data.min;
+		if ('max' in data) max = data.max;
+
+		const updatedAttemptCondition = { properties: { attempt, min, max } };
+		const attemptConditions = this.attemptConditions.map((ac) => {
+			if (ac.properties.attempt === data.attempt) return updatedAttemptCondition;
+			else return ac;
+		});
+		this.updateAttemptConditions(attemptConditions);
 		this.updateProperty(() => this._entity.setAttemptCondition({ attempt, min, max }));
 	}
 
