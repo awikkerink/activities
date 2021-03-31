@@ -67,13 +67,13 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 			</d2l-button-subtle>`}
 		`;
 	}
-	_generateHandler(handler, attemptConditionNumber) {
-		return (e) => handler(e, attemptConditionNumber, this);
+	_generateHandler(attemptConditionNumber) {
+		return (e) => this._handleChange(e, attemptConditionNumber);
 	}
 
-	_handleChange(e, attemptConditionNumber, ctx) {
+	_handleChange(e, attemptConditionNumber) {
 		const { name, value } = e.target;
-		ctx._setAttemptCondition({
+		this._setAttemptCondition({
 			attempt: attemptConditionNumber,
 			[name]: value
 		});
@@ -127,7 +127,7 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 						name="min"
 						?disabled=${canUpdateAttemptConditions}
 						input-width=3.5rem
-						@change=${this._generateHandler(this._handleChange, attempt)}
+						@change=${this._generateHandler(attempt)}
 						>
 						<div slot="after">
 							<span class="d2l-label-text d2l-input-number-text">${this.localize('percentageRangeText')}</span>
@@ -142,7 +142,7 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 						name="max"
 						?disabled=${canUpdateAttemptConditions}
 						input-width=3.5rem
-						@change=${this._generateHandler(this._handleChange, attempt)}
+						@change=${this._generateHandler(attempt)}
 						>
 						<div slot="after">
 							<span class="d2l-label-text d2l-input-number-text">${this.localize('percentageRangeText')}</span>
