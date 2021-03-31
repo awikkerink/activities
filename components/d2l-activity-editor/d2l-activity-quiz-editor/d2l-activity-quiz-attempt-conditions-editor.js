@@ -121,7 +121,7 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 					</div>
 					<d2l-input-number
 						label="${this.localize('minLabel')}"
-						value="${min || null}"
+						value="${min}"
 						min=0
 						max=100
 						name="min"
@@ -136,7 +136,7 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 					<div class="d2l-body-small d2l-input-range-text">${this.localize('andRangeText')}</div>
 					<d2l-input-number
 						label="${this.localize('maxLabel')}"
-						value="${max || null}"
+						value="${max}"
 						min=0
 						max=100
 						name="max"
