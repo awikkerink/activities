@@ -122,5 +122,9 @@ export default {
 	"manageHeaderFooterDialogCancelText": "Cancel", // Label for Cancel button header and footer dialog
 	"headerLabel": "Header", // Label for the header text box
 	"headerDialogText": "The Quiz Header and Footer will be visible to learners at the top and bottom of the quiz, respectively.", // Header and Footer dialog text
-	"header": "Header" // Header label for the header text box.
+	"header": "Header", // Header label for the header text box.
+	"headerAdded": "Header added", // Header added summary text for Timing and Display accordion.
+	"footerAdded": "Footer added", // Footer added summary text for Timing and Display accordion.
+	"headerAndFooter": "Header and footer added" // Header and footer summary text for closed accordion
+
 };
