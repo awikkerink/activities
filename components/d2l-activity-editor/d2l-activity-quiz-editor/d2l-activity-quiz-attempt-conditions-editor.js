@@ -4,7 +4,7 @@ import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles';
-import { shared as store } from './state/quiz-store';
+import { sharedAttempts as store } from './state/quiz-store';
 
 class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeActivityQuizEditorMixin(MobxLitElement)) {
 	static get properties() {
@@ -67,9 +67,22 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 			</d2l-button-subtle>`}
 		`;
 	}
+	_generateHandler(attemptConditionNumber) {
+		return (e) => this._handleChange(e, attemptConditionNumber);
+	}
+
+	_handleChange(e, attemptConditionNumber) {
+		const { name, value } = e.target;
+		this._setAttemptCondition({
+			attempt: attemptConditionNumber,
+			[name]: value
+		});
+	}
+
 	_openAttemptConditionsRangeEditor() {
 		this.isAttemptConditionsOpen = !this.isAttemptConditionsOpen;
 	}
+
 	_renderAttemptConditionsEditor() {
 		return html`
 			<div class="d2l-heading-3 d2l-attempts-condition-header">${this.localize('attemptConditions')}</div>
@@ -78,24 +91,59 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 			${this._renderAttemptConditionsRangeEditor()}
 		`;
 	}
+
 	_renderAttemptConditionsRangeEditor() {
-		// TODO: replace attemptConditions with data fetched from attempts entity when #attempts allowed >=2 and replace index/next with fetched data
-		const attemptsConditions = [1, 2, 3, 4, 5];
-		return html` ${attemptsConditions.map((index) => {
-			const next = index + 1;
-			return  html`
+		const entity = store.get(this.href);
+		if (!entity) {
+			return html``;
+		}
+
+		const {
+			attemptsAllowed,
+			attemptConditions,
+			canUpdateAttemptConditions
+		} = entity || {};
+
+		if (!attemptConditions || attemptsAllowed < 2) return html``;
+
+		return html` ${attemptConditions.map((ac) => {
+			const { attempt, min, max } = ac.properties;
+			if (attempt > attemptsAllowed || attempt < 2) {
+				return; // don't render extra attempt conditions
+			}
+			const index = attempt - 1;
+			const next = attempt;
+			return html`
 				<div class="d2l-attempts-conditions-range-editor">
 					<div>
 						<div class="d2l-label-text">${this.localize('attemptConditionsRangePrefixText1', { index })}</div>
 						<div class="d2l-body-small">${this.localize('attemptConditionsRangePrefixText2')}</div>
 					</div>
-					<d2l-input-number label=${this.localize('minLabel')} min=0 max=100 input-width=3.5rem>
+					<d2l-input-number
+						label="${this.localize('minLabel')}"
+						value="${min}"
+						min=0
+						max=100
+						name="min"
+						?disabled=${canUpdateAttemptConditions}
+						input-width=3.5rem
+						@change=${this._generateHandler(attempt)}
+						>
 						<div slot="after">
 							<span class="d2l-label-text d2l-input-number-text">${this.localize('percentageRangeText')}</span>
 						</div>
 					</d2l-input-number>
 					<div class="d2l-body-small d2l-input-range-text">${this.localize('andRangeText')}</div>
-					<d2l-input-number label=${this.localize('maxLabel')} min=0 max=100 input-width=3.5rem>
+					<d2l-input-number
+						label="${this.localize('maxLabel')}"
+						value="${max}"
+						min=0
+						max=100
+						name="max"
+						?disabled=${canUpdateAttemptConditions}
+						input-width=3.5rem
+						@change=${this._generateHandler(attempt)}
+						>
 						<div slot="after">
 							<span class="d2l-label-text d2l-input-number-text">${this.localize('percentageRangeText')}</span>
 						</div>
@@ -108,6 +156,12 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 			`;})}
 		`;
 	}
+
+	_setAttemptCondition(data) {
+		const entity = store.get(this.href);
+		entity && entity.setAttemptCondition(data);
+	}
+
 }
 
 customElements.define(

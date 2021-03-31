@@ -33,24 +33,47 @@ export class QuizAttempts {
 		this.overallGradeCalculationOptions = entity.overallGradeCalculationOptions();
 		this.canUpdateRetakeIncorrectOnly = entity.canUpdateRetakeIncorrectOnly();
 		this.isRetakeIncorrectOnly = entity.isRetakeIncorrectOnly();
+		this.attemptConditions = entity.attemptConditions();
+	}
+
+	setAttemptCondition(data) {
+		if (!data || data.attempt < 2) {
+			return;
+		}
+		const attemptCondition = this._entity.attemptConditions().find((ac) => ac.properties.attempt === data.attempt);
+		const entityMin = attemptCondition && attemptCondition.properties.min || null;
+		const entityMax = attemptCondition && attemptCondition.properties.max || null;
+		const attempt = data.attempt;
+		let min = entityMin, max = entityMax;
+		if ('min' in data) min = data.min;
+		if ('max' in data) max = data.max;
+
+		const updatedAttemptCondition = { properties: { attempt, min, max } };
+		const attemptConditions = this.attemptConditions.map((ac) => {
+			if (ac.properties.attempt === data.attempt) return updatedAttemptCondition;
+			else return ac;
+		});
+		this.updateAttemptConditions(attemptConditions);
+		this.updateProperty(() => this._entity.setAttemptCondition({ attempt, min, max }));
 	}
 
 	setAttemptsAllowed(data) {
-		this.canUpdateAttemptsAllowed = this._entity.canUpdateAttemptsAllowed;
 		this.attemptsAllowed = data;
 		this.updateProperty(() => this._entity.setAttemptsAllowed(data));
 	}
 
 	setOverallGradeCalculationType(data) {
-		this.canUpdateOverallGradeCalculation = this._entity.canUpdateOverallGradeCalculation;
 		this.overallGradeCalculationType = data;
 		this.updateProperty(() => this._entity.setOverallGradeCalculationType(data));
 	}
 
 	setRetakeIncorrectOnly(data) {
-		this.canUpdateRetakeIncorrectOnly = this._entity.canUpdateRetakeIncorrectOnly;
 		this.isRetakeIncorrectOnly = data;
 		this.updateProperty(() => this._entity.setRetakeIncorrectOnly(data));
+	}
+
+	updateAttemptConditions(attemptConditions) {
+		this.attemptConditions = attemptConditions;
 	}
 
 	async updateProperty(updateFunc) {
@@ -79,10 +102,14 @@ decorate(QuizAttempts, {
 	overallGradeCalculationOptions: observable,
 	canUpdateRetakeIncorrectOnly: observable,
 	isRetakeIncorrectOnly: observable,
+	canUpdateAttemptConditions: observable,
+	attemptConditions: observable,
 
 	// actions
 	load: action,
 	setAttemptsAllowed: action,
 	setOverallGradeCalculationType: action,
-	setRetakeIncorrectOnly: action
+	setRetakeIncorrectOnly: action,
+	setAttemptCondtion: action,
+	updateAttemptConditions: action
 });

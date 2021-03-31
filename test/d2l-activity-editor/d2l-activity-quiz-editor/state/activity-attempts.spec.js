@@ -16,6 +16,11 @@ const gradeCalcOptions = [
 ];
 const gradeCalcType = { title: 'Highest Attempt', value: 1 };
 
+const attemptConditions = [
+	{ properties: { attempt: 2 } },
+	{ properties: { attempt: 3 } }
+];
+
 describe('Quiz Attempts', function() {
 	afterEach(() => {
 		sinon.restore();
@@ -33,18 +38,20 @@ describe('Quiz Attempts', function() {
 				canUpdateAttemptsAllowed: () => true,
 				canUpdateOverallGradeCalculation: () => true,
 				canUpdateRetakeIncorrectOnly: () => true,
+				canUpdateAttemptConditions: () => true,
 				attemptsAllowed: () => '5',
 				attemptsAllowedOptions: () => attemptsAllowedOpts,
 				overallGradeCalculationType: () => gradeCalcType,
 				overallGradeCalculationOptions: () => gradeCalcOptions,
 				isRetakeIncorrectOnly: () => true,
+				attemptConditions: () => attemptConditions
 			};
 		});
 
 		fetchEntity.mockImplementation(() => Promise.resolve(sirenEntity));
 	});
 
-	describe('setting attempts', () => {
+	describe('attempts', () => {
 		it('fetches', async() => {
 			const attempts = new QuizAttempts('http://1', 'token');
 			await attempts.fetch();
@@ -55,6 +62,8 @@ describe('Quiz Attempts', function() {
 			expect(attempts.attemptsAllowedOptions.length).to.equal(2);
 			expect(attempts.overallGradeCalculationType).to.deep.equal(gradeCalcType);
 			expect(attempts.overallGradeCalculationOptions.length).to.equal(2);
+			expect(attempts.isRetakeIncorrectOnly).to.be.true;
+			expect(attempts.attemptConditions.length).to.equal(2);
 		});
 
 		it('set attempts', async() => {
@@ -84,9 +93,39 @@ describe('Quiz Attempts', function() {
 			const attempts = new QuizAttempts('http://1', 'token');
 			await attempts.fetch();
 
-			expect(attempts.isRetakeIncorrectOnly).to.be.true;
 			attempts.setRetakeIncorrectOnly(false);
 			expect(attempts.isRetakeIncorrectOnly).to.be.false;
+		});
+
+		it('set attempt conditions', async() => {
+			const attempts = new QuizAttempts('http://1', 'token');
+			await attempts.fetch();
+			const attemptConditionTwo = { attempt: 2, min: 2.5, max: 88.8 };
+			const attemptConditionThree = { attempt: 3, min: 42 };
+
+			attempts.setAttemptCondition(attemptConditionTwo);
+			expect(attempts.attemptConditions[0].properties).to.include(attemptConditionTwo);
+			attempts.setAttemptCondition(attemptConditionThree);
+			expect(attempts.attemptConditions[1].properties).to.include(attemptConditionThree);
+		});
+
+		it('delete attempt condition min and/or max values', async() => {
+			const attempts = new QuizAttempts('http://1', 'token');
+			await attempts.fetch();
+			const attemptConditionTwo = { attempt: 2, min: 2.5, max: 88.8 };
+			const attemptConditionThree = { attempt: 3, min: 42, max: 94 };
+			const attemptConditionTwoNoMin = { attempt: 2, min: undefined, max: 88.8 };
+			const attemptConditionThreeNoMax = { attempt: 3, min: 42, max: undefined };
+			const attemptConditionThreeReset = { attempt: 3, min: undefined, max: undefined };
+
+			attempts.setAttemptCondition(attemptConditionTwo);
+			attempts.setAttemptCondition(attemptConditionThree);
+			attempts.setAttemptCondition(attemptConditionTwoNoMin);
+			attempts.setAttemptCondition(attemptConditionThreeNoMax);
+			expect(attempts.attemptConditions[0].properties).to.include(attemptConditionTwoNoMin);
+			expect(attempts.attemptConditions[1].properties).to.include(attemptConditionThreeNoMax);
+			attempts.setAttemptCondition(attemptConditionThreeReset);
+			expect(attempts.attemptConditions[1].properties).to.include(attemptConditionThreeReset);
 		});
 	});
 });

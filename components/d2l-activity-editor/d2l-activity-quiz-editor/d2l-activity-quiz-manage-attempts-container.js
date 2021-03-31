@@ -69,7 +69,7 @@ class ActivityQuizManageAttemptsContainer extends ActivityEditorWorkingCopyDialo
 		await this.checkinDialog(e);
 
 		if (!this.opened) { // Dialog successfully checked in
-			this._updateSummary();
+			// this._updateSummary();
 		}
 	}
 
