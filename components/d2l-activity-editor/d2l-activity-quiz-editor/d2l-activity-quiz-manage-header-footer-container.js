@@ -24,7 +24,7 @@ class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(
 		return [
 			bodySmallStyles,
 			css`
-				.d2l-activity-quiz-manage-header-footer-dialog-summary::after{
+				.d2l-activity-quiz-manage-header-footer-dialog-summary::after {
 					white-space: pre;
 				}
 			`,
