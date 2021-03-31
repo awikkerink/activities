@@ -40,8 +40,7 @@ export class QuizAttempts {
 		if (!data || data.attempt < 2) {
 			return;
 		}
-		const acIndex = data.attempt - 2;
-		const attemptCondition = this._entity.attemptConditions()[acIndex];
+		const attemptCondition = this._entity.attemptConditions().find((ac) => ac.properties.attempt === data.attempt);
 		const entityMin = attemptCondition && attemptCondition.properties.min || null;
 		const entityMax = attemptCondition && attemptCondition.properties.max || null;
 		const attempt = data.attempt;
@@ -90,8 +89,6 @@ export class QuizAttempts {
 			return;
 		}
 		this._entity = entity;
-		// mobX store does not trigger re-render unless we directly update the observable
-		this.updateAttemptConditions(this._entity.attemptConditions());
 	}
 }
 
