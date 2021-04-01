@@ -41,7 +41,6 @@ class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(
 
 	render() {
 		return html`
-			${this._renderDialogLabel()}
 			${this._renderHeaderDialogSummary()}
 			${this._renderDialogOpener()}
 			${this._renderDialog()}
@@ -66,12 +65,6 @@ class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(
 					<d2l-button slot="footer" primary data-dialog-action="save" @click="${this._save}" ?disabled="${this.isSaving}">${this.localize('manageHeaderFooterDialogAddText')}</d2l-button>
 					<d2l-button slot="footer" data-dialog-action="cancel" @click="${this._cancel}" ?disabled="${this.isSaving}">${this.localize('manageHeaderFooterDialogCancelText')}</d2l-button>
 			</d2l-dialog>
-		`;
-	}
-
-	_renderDialogLabel() {
-		return html`
-			<div id="manage-header-footer-editor-label" class="d2l-label-text">${this.localize('subHdrHeaderFooter')}</div>
 		`;
 	}
 

@@ -104,6 +104,9 @@ class ActivityQuizTimingAndDisplayEditor extends ActivityEditorMixin(AsyncContai
 				</div>
 
 				<div class="d2l-editors" slot="components">
+					<label class="d2l-label-text">
+						${this.localize('subHdrHeaderFooter')}
+					</label>
 					${this._renderManageHeaderFooterContainer()}
 				</div>
 
