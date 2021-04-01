@@ -60,17 +60,30 @@ class ActivityQuizManageHeaderFooterEditor extends ActivityEditorMixin(RtlMixin(
 
 		const el = this.shadowRoot.querySelector('d2l-activity-text-editor');
 		const newEd = el.shadowRoot.querySelector('d2l-activity-html-new-editor');
-		const htmlEd = newEd.shadowRoot.querySelector('d2l-htmleditor');
-		htmlEd.html = header;
-		return;
+
+		if (newEd) {
+			const htmlEd = newEd.shadowRoot.querySelector('d2l-htmleditor');
+			htmlEd.html = header;
+		} else {
+			const ed = el.shadowRoot.querySelector('d2l-input-textarea');
+			ed.value = header;
+		}
 	}
 
 	save() {
+		const entity = store.get(this.href);
+
 		const el = this.shadowRoot.querySelector('d2l-activity-text-editor');
 		const newEd = el.shadowRoot.querySelector('d2l-activity-html-new-editor');
-		const htmlEd = newEd.shadowRoot.querySelector('d2l-htmleditor');
-		const entity = store.get(this.href);
-		entity.setHeader(htmlEd.html);
+
+		if (newEd) {
+			const htmlEd = newEd.shadowRoot.querySelector('d2l-htmleditor');
+			entity.setHeader(htmlEd.html);
+		} else {
+			// assuming htmlEd is turned off in user profile.  Deliberately won't handle old html editor.
+			const ed = el.shadowRoot.querySelector('d2l-input-textarea');
+			entity.setHeader(ed.value);
+		}
 	}
 
 }
