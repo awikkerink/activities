@@ -15,10 +15,7 @@ export class ContentWebLink {
 	}
 
 	async cancelCreate() {
-		const canceled = await this._contentWebLink.cancelWebLink();
-		if (!canceled) {
-			await this._contentWebLink.deleteWebLink();
-		}
+		await this._contentWebLink.deleteWebLink();
 	}
 
 	get dirty() {
