@@ -12,7 +12,7 @@
     "lint:wc": "polymer lint -i \"./*\" \"components\" \"demo\" \"test\"",
     "test:karma": "karma start",
     "test:karma:watch": "karma start --auto-watch=true --single-run=false",
-    "test:polymer:local": "polymer test --skip-plugin sauce",
+    "test:polymer:local": "polymer test -p --skip-plugin sauce",
     "test:polymer:sauce": "polymer test --skip-plugin local",
     "test:js": "jest",
     "test:js:watch": "jest --watch",

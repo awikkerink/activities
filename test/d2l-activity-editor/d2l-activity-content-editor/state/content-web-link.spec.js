@@ -9,6 +9,8 @@ jest.mock('../../../../components/d2l-activity-editor/state/fetch-entity.js');
 
 describe('Content Web Link', function() {
 
+	let checkoutWebLinkMock;
+
 	afterEach(() => {
 		sinon.restore();
 		ContentWebLinkEntity.mockClear();
@@ -20,12 +22,14 @@ describe('Content Web Link', function() {
 	beforeEach(() => {
 		sirenEntity = sinon.stub();
 
+		checkoutWebLinkMock = jest.fn();
+
 		ContentWebLinkEntity.mockImplementation(() => {
 			return {
 				title: () => 'Test Web Link Title',
 				url: () => 'http://test.com',
 				isExternalResource: () => false,
-				checkoutWebLink: () => null
+				checkoutWebLink: checkoutWebLinkMock
 			};
 		});
 
@@ -43,5 +47,6 @@ describe('Content Web Link', function() {
 		expect(fetchEntity.mock.calls.length).to.equal(1);
 		expect(ContentWebLinkEntity.mock.calls[0][0]).to.equal(sirenEntity);
 		expect(ContentWebLinkEntity.mock.calls[0][1]).to.equal('token');
+		expect(checkoutWebLinkMock.mock.calls.length).to.equal(1);
 	});
 });
