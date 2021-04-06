@@ -71,16 +71,40 @@ class ActivityQuizManageHeaderFooterEditor extends ActivityEditorMixin(RtlMixin(
 	}
 
 	save() {
+		const editorEvent = new CustomEvent('d2l-request-provider', {
+			detail: { key: 'd2l-provider-html-editor-enabled' },
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+		this.dispatchEvent(editorEvent);
+
+		const htmlEditorEnabled = editorEvent.detail.provider;
+
+		const newEditorEvent = new CustomEvent('d2l-request-provider', {
+			detail: { key: 'd2l-provider-html-new-editor-enabled' },
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+		this.dispatchEvent(newEditorEvent);
+
+		const htmlNewEditorEnabled = newEditorEvent.detail.provider;
+
 		const entity = store.get(this.href);
 
 		const el = this.shadowRoot.querySelector('d2l-activity-text-editor');
-		const newEd = el.shadowRoot.querySelector('d2l-activity-html-new-editor');
 
-		if (newEd) {
+		if (htmlNewEditorEnabled) {
+			const newEd = el.shadowRoot.querySelector('d2l-activity-html-new-editor');
 			const htmlEd = newEd.shadowRoot.querySelector('d2l-htmleditor');
 			entity.setHeader(htmlEd.html);
+		}
+		if (htmlEditorEnabled) {
+			const oldEd = el.shadowRoot.querySelector('d2l-activity-html-editor');
+			const htmlEd = oldEd.shadowRoot.querySelector('d2l-html-editor');
+			entity.setHeader(htmlEd.innerText);
 		} else {
-			// assuming htmlEd is turned off in user profile.  Deliberately won't handle old html editor.
 			const ed = el.shadowRoot.querySelector('d2l-input-textarea');
 			entity.setHeader(ed.value);
 		}
