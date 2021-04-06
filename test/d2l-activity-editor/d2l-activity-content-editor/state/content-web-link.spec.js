@@ -24,7 +24,8 @@ describe('Content Web Link', function() {
 			return {
 				title: () => 'Test Web Link Title',
 				url: () => 'http://test.com',
-				isExternalResource: () => false
+				isExternalResource: () => false,
+				checkoutWebLink: () => null
 			};
 		});
 
