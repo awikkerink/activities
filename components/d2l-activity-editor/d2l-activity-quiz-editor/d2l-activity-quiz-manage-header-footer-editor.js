@@ -60,17 +60,55 @@ class ActivityQuizManageHeaderFooterEditor extends ActivityEditorMixin(RtlMixin(
 
 		const el = this.shadowRoot.querySelector('d2l-activity-text-editor');
 		const newEd = el.shadowRoot.querySelector('d2l-activity-html-new-editor');
-		const htmlEd = newEd.shadowRoot.querySelector('d2l-htmleditor');
-		htmlEd.html = header;
-		return;
+
+		if (newEd) {
+			const htmlEd = newEd.shadowRoot.querySelector('d2l-htmleditor');
+			htmlEd.html = header;
+		} else {
+			const ed = el.shadowRoot.querySelector('d2l-input-textarea');
+			ed.value = header;
+		}
 	}
 
 	save() {
-		const el = this.shadowRoot.querySelector('d2l-activity-text-editor');
-		const newEd = el.shadowRoot.querySelector('d2l-activity-html-new-editor');
-		const htmlEd = newEd.shadowRoot.querySelector('d2l-htmleditor');
+		const editorEvent = new CustomEvent('d2l-request-provider', {
+			detail: { key: 'd2l-provider-html-editor-enabled' },
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+		this.dispatchEvent(editorEvent);
+
+		const htmlEditorEnabled = editorEvent.detail.provider;
+
+		const newEditorEvent = new CustomEvent('d2l-request-provider', {
+			detail: { key: 'd2l-provider-html-new-editor-enabled' },
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+		this.dispatchEvent(newEditorEvent);
+
+		const htmlNewEditorEnabled = newEditorEvent.detail.provider;
+
 		const entity = store.get(this.href);
-		entity.setHeader(htmlEd.html);
+
+		const el = this.shadowRoot.querySelector('d2l-activity-text-editor');
+
+		if (htmlEditorEnabled && htmlNewEditorEnabled) {
+			const newEd = el.shadowRoot.querySelector('d2l-activity-html-new-editor');
+			const htmlEd = newEd.shadowRoot.querySelector('d2l-htmleditor');
+			entity.setHeader(htmlEd.html);
+		}
+		if (htmlEditorEnabled && !htmlNewEditorEnabled) {
+			const oldEd = el.shadowRoot.querySelector('d2l-activity-html-editor');
+			const htmlEd = oldEd.shadowRoot.querySelector('d2l-html-editor');
+			entity.setHeader(htmlEd.innerText);
+		}
+		if (!htmlEditorEnabled) {
+			const ed = el.shadowRoot.querySelector('d2l-input-textarea');
+			entity.setHeader(ed.value);
+		}
 	}
 
 }
