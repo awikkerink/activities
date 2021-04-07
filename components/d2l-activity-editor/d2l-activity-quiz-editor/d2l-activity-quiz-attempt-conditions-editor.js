@@ -57,6 +57,22 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 	}
 
 	render() {
+		const entity = store.get(this.href);
+
+		const {
+			attemptsAllowed,
+			attemptConditions,
+		} = entity || {};
+
+		// Always show attempt conditions if at least one attempt condition has data and would be visible if button clicked
+		const shouldShowAttemptConditions = attemptsAllowed > 1 && attemptConditions && attemptConditions.length > 0;
+
+		if (shouldShowAttemptConditions) {
+			const attemptConditionsHaveValues = attemptConditions.slice(0, attemptsAllowed - 1).find((ac) =>  'min' in ac.properties || 'max' in ac.properties);
+			// if button clicked or there's attempt conditions to show, render the attempt conditions range editor
+			this.isAttemptConditionsOpen = this.isAttemptConditionsOpen || attemptConditionsHaveValues !== undefined;
+		}
+
 		return html`
 		${this.isAttemptConditionsOpen ? html`${this._renderAttemptConditionsEditor()}` :
 		html`
@@ -73,8 +89,12 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 
 	_handleChange(e, attemptConditionNumber) {
 		const { name, value } = e.target;
+		if (value !== undefined && (value < 0 || value > 100)) {
+			return;
+		}
 		this._setAttemptCondition({
 			attempt: attemptConditionNumber,
+			// set `min: value` or `max: value` according to input
 			[name]: value
 		});
 	}
