@@ -87,6 +87,9 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 
 	_handleChange(e, attemptConditionNumber) {
 		const { name, value } = e.target;
+		if (value !== undefined && (value < 0 || value > 100)) {
+			return;
+		}
 		this._setAttemptCondition({
 			attempt: attemptConditionNumber,
 			// set `min: value` or `max: value` according to input
