@@ -95,16 +95,17 @@ class ActivityQuizManageHeaderFooterEditor extends ActivityEditorMixin(RtlMixin(
 
 		const el = this.shadowRoot.querySelector('d2l-activity-text-editor');
 
-		if (htmlNewEditorEnabled) {
+		if (htmlEditorEnabled && htmlNewEditorEnabled) {
 			const newEd = el.shadowRoot.querySelector('d2l-activity-html-new-editor');
 			const htmlEd = newEd.shadowRoot.querySelector('d2l-htmleditor');
 			entity.setHeader(htmlEd.html);
 		}
-		if (htmlEditorEnabled) {
+		if (htmlEditorEnabled && !htmlNewEditorEnabled) {
 			const oldEd = el.shadowRoot.querySelector('d2l-activity-html-editor');
 			const htmlEd = oldEd.shadowRoot.querySelector('d2l-html-editor');
 			entity.setHeader(htmlEd.innerText);
-		} else {
+		}
+		if (!htmlEditorEnabled) {
 			const ed = el.shadowRoot.querySelector('d2l-input-textarea');
 			entity.setHeader(ed.value);
 		}
