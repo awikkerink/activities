@@ -41,13 +41,20 @@ export class QuizAttempts {
 			return;
 		}
 		const attemptCondition = this.attemptConditions.find((ac) => ac.properties.attempt === data.attempt);
-		const originalMin = attemptCondition && attemptCondition.properties.min || null;
-		const originalMax = attemptCondition && attemptCondition.properties.max || null;
 		const attempt = data.attempt;
-		let min = originalMin, max = originalMax;
-		// update with new min/max to make a complete request
+		let min = null, max = null;
+		// update min or max with new value: `undefined`(deleting) or values: [0, 100]
 		if ('min' in data) min = data.min;
 		if ('max' in data) max = data.max;
+		// fetch original value for min or max that is still null
+		if (min === null || max === null) {
+			if (attemptCondition && min === null && attemptCondition.properties.min !== undefined) {
+				min = attemptCondition.properties.min;
+			}
+			if (attemptCondition && max === null && attemptCondition.properties.max !== undefined) {
+				max = attemptCondition.properties.max;
+			}
+		}
 
 		const updatedAttemptCondition = { properties: { attempt, min, max } };
 		const attemptConditions = this.attemptConditions.map((ac) => {

@@ -17,7 +17,7 @@ class ActivityQuizManageAttemptsContainer extends ActivityEditorWorkingCopyDialo
 			labelStyles,
 			css`
 			#manage-attempts-dialog-attempts-editor {
-				height: 430px;
+				height: 830px;
 			}
 
 			d2l-alert {
