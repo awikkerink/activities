@@ -46,7 +46,7 @@ export class QuizAttempts {
 		// update min or max with new value: `undefined`(deleting) or values: [0, 100]
 		if ('min' in data) min = data.min;
 		if ('max' in data) max = data.max;
-		// fetch original value for min or max that is still null
+		// set original value for the min or max that is still null to be sent in the request
 		if (min === null || max === null) {
 			if (attemptCondition && min === null && attemptCondition.properties.min !== undefined) {
 				min = attemptCondition.properties.min;
