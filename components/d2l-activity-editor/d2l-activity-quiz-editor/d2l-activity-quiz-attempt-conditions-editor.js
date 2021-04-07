@@ -65,7 +65,9 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 		} = entity || {};
 
 		// Always show attempt conditions if at least one attempt condition has data and would be visible if button clicked
-		if (attemptsAllowed > 1 && attemptConditions && attemptConditions.length > 0) {
+		const shouldShowAttemptConditions = attemptsAllowed > 1 && attemptConditions && attemptConditions.length > 0;
+
+		if (shouldShowAttemptConditions) {
 			const attemptConditionsHaveValues = attemptConditions.slice(0, attemptsAllowed - 1).find((ac) =>  'min' in ac.properties || 'max' in ac.properties);
 			// if button clicked or there's attempt conditions to show, render the attempt conditions range editor
 			this.isAttemptConditionsOpen = this.isAttemptConditionsOpen || attemptConditionsHaveValues !== undefined;
