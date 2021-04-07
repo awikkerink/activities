@@ -22,7 +22,7 @@ import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton
 
 import { shared as store } from './state/activity-store.js';
 
-class ActivityScoreEditor extends SkeletonMixin(ActivityEditorMixin(LocalizeActivityEditorMixin(RtlMixin(MobxLitElement)))) {
+class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActivityEditorMixin(RtlMixin(MobxLitElement)))) {
 
 	static get properties() {
 		return {
@@ -163,6 +163,7 @@ class ActivityScoreEditor extends SkeletonMixin(ActivityEditorMixin(LocalizeActi
 
 	constructor() {
 		super(store);
+		this.checkoutOnLoad = true;
 	}
 
 	connectedCallback() {

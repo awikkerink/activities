@@ -14,19 +14,86 @@ export class ActivityUsage {
 	constructor(href, token) {
 		this.href = href;
 		this.token = token;
+		this._saving = null;
+		this._checkedOut = null;
 	}
 
-	async dirty() {
-		return !this._entity.equals(this._makeUsageData());
+	async checkin(store, refetch) {
+		if (!this._entity) {
+			return;
+		}
+
+		if (this._saving) {
+			return this._saving;
+		}
+
+		this._saving = this._entity.checkin();
+		let sirenEntity;
+		try {
+			sirenEntity = await this._saving;
+		} catch (e) {
+			return;
+		} finally {
+			this._saving = null;
+		}
+
+		if (!sirenEntity) return;
+		const href = sirenEntity.self();
+		const entity = new ActivityUsage(href, this.token);
+		entity.load(sirenEntity);
+		store.put(href, entity);
+
+		if (refetch) {
+			this.fetch(true);
+		}
 	}
-	async fetch() {
-		const sirenEntity = await fetchEntity(this.href, this.token);
+
+	checkout(store, forcedCheckout) {
+		if (!forcedCheckout && this._checkedOut) {
+			return this._checkedOut;
+		}
+
+		let href = this.href;
+		const getHrefPromise = this._entity.checkout().then(sirenEntity => {
+			if (sirenEntity) {
+				href = sirenEntity.self();
+				const entity = new ActivityUsage(href, this.token);
+				entity.load(sirenEntity);
+				store.put(href, entity);
+			}
+			return href;
+		}, () => {
+			return href;
+		});
+
+		if (!forcedCheckout) {
+			this._checkedOut = getHrefPromise;
+		}
+
+		return getHrefPromise;
+	}
+
+	async dirty(store) {
+		const checkedOutHref = await this._checkedOut;
+		const checkedOutEntity = store && store.get(checkedOutHref);
+
+		// Check that this entity is not dirty, then check that it's checked out working copy does not have a `canCheckin` action.
+		// It avoids recursively fetching a working copy's working copy by not passing in a store the second time.
+		const isDirty = !this._entity.equals(this._makeUsageData()) || this._entity.canCheckin();
+		const isCheckedOutEntityDirty = checkedOutEntity && await checkedOutEntity.dirty();
+
+		return isDirty || isCheckedOutEntityDirty;
+	}
+
+	async fetch(bypassCache) {
+		const sirenEntity = await fetchEntity(this.href, this.token, bypassCache);
 		if (sirenEntity) {
 			const entity = new ActivityUsageEntity(sirenEntity, this.token, { remove: () => { } });
 			await this.load(entity);
 		}
 		return this;
 	}
+
 	async fetchScoreAndGradeScoreOutOf(bypassCache) {
 		await this.scoreAndGrade.fetchUpdatedScoreOutOf(this._entity, bypassCache);
 	}
@@ -42,6 +109,7 @@ export class ActivityUsage {
 		this.scoreAndGrade = new ActivityScoreGrade(this.token);
 		this.associationsHref = entity.getDirectRubricAssociationsHref();
 		this.specializationHref = entity.specializationHref();
+		this.associateGradeHref = entity.associateGradeHref();
 
 		await Promise.all([
 			this._loadSpecialAccess(entity),
@@ -70,9 +138,15 @@ export class ActivityUsage {
 			return;
 		}
 
+		if (this._saving) {
+			return this._saving;
+		}
+
 		await this.scoreAndGrade.primeGradeSave();
 
-		await this._entity.save(this._makeUsageData());
+		this._saving = this._entity.save(this._makeUsageData());
+		await this._saving;
+		this._saving = null;
 
 		await this.fetch();
 	}
@@ -214,6 +288,7 @@ decorate(ActivityUsage, {
 	canEditCompetencies: observable,
 	competenciesDialogUrl: observable,
 	specialAccess: observable,
+	associateGradeHref: observable,
 	// actions
 	load: action,
 	setDraftStatus: action,
@@ -226,5 +301,7 @@ decorate(ActivityUsage, {
 	setDates: action,
 	setAlignmentsHref: action,
 	setCanUpdateAlignments: action,
-	loadCompetencies: action
+	loadCompetencies: action,
+	checkout: action,
+	checkin: action
 });
