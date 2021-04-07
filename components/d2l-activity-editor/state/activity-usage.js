@@ -6,92 +6,16 @@ import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntit
 import { AlignmentsHierarchicalEntity } from 'siren-sdk/src/alignments/AlignmentsHierarchicalEntity.js';
 import { CompetenciesEntity } from 'siren-sdk/src/competencies/CompetenciesEntity.js';
 import { fetchEntity } from '../state/fetch-entity.js';
+import { WorkingCopy } from './working-copy.js';
 
 configureMobx({ enforceActions: 'observed' });
 
-export class ActivityUsage {
+export class ActivityUsage extends WorkingCopy {
 
 	constructor(href, token) {
+		super(ActivityUsage, ActivityUsageEntity)
 		this.href = href;
 		this.token = token;
-		this._saving = null;
-		this._checkedOut = null;
-	}
-
-	async checkin(store, refetch) {
-		if (!this._entity) {
-			return;
-		}
-
-		if (this._saving) {
-			return this._saving;
-		}
-
-		this._saving = this._entity.checkin();
-		let sirenEntity;
-		try {
-			sirenEntity = await this._saving;
-		} catch (e) {
-			return;
-		} finally {
-			this._saving = null;
-		}
-
-		if (!sirenEntity) return;
-		const href = sirenEntity.self();
-		const entity = new ActivityUsage(href, this.token);
-		entity.load(sirenEntity);
-		store.put(href, entity);
-
-		if (refetch) {
-			this.fetch(true);
-		}
-	}
-
-	checkout(store, forcedCheckout) {
-		if (!forcedCheckout && this._checkedOut) {
-			return this._checkedOut;
-		}
-
-		let href = this.href;
-		const getHrefPromise = this._entity.checkout().then(sirenEntity => {
-			if (sirenEntity) {
-				href = sirenEntity.self();
-				const entity = new ActivityUsage(href, this.token);
-				entity.load(sirenEntity);
-				store.put(href, entity);
-			}
-			return href;
-		}, () => {
-			return href;
-		});
-
-		if (!forcedCheckout) {
-			this._checkedOut = getHrefPromise;
-		}
-
-		return getHrefPromise;
-	}
-
-	async dirty(store) {
-		const checkedOutHref = await this._checkedOut;
-		const checkedOutEntity = store && store.get(checkedOutHref);
-
-		// Check that this entity is not dirty, then check that it's checked out working copy does not have a `canCheckin` action.
-		// It avoids recursively fetching a working copy's working copy by not passing in a store the second time.
-		const isDirty = !this._entity.equals(this._makeUsageData()) || this._entity.canCheckin();
-		const isCheckedOutEntityDirty = checkedOutEntity && await checkedOutEntity.dirty();
-
-		return isDirty || isCheckedOutEntityDirty;
-	}
-
-	async fetch(bypassCache) {
-		const sirenEntity = await fetchEntity(this.href, this.token, bypassCache);
-		if (sirenEntity) {
-			const entity = new ActivityUsageEntity(sirenEntity, this.token, { remove: () => { } });
-			await this.load(entity);
-		}
-		return this;
 	}
 
 	async fetchScoreAndGradeScoreOutOf(bypassCache) {
@@ -138,17 +62,9 @@ export class ActivityUsage {
 			return;
 		}
 
-		if (this._saving) {
-			return this._saving;
-		}
-
 		await this.scoreAndGrade.primeGradeSave();
 
-		this._saving = this._entity.save(this._makeUsageData());
-		await this._saving;
-		this._saving = null;
-
-		await this.fetch();
+		super.save();
 	}
 	setAlignmentsHref(value) {
 		this.alignmentsHref = value;
@@ -248,7 +164,7 @@ export class ActivityUsage {
 		runInAction(() => this.specialAccess = specialAccess);
 	}
 
-	_makeUsageData() {
+	_makeEntityData() {
 		return {
 			isDraft: this.isDraft,
 			dates: {
@@ -301,7 +217,5 @@ decorate(ActivityUsage, {
 	setDates: action,
 	setAlignmentsHref: action,
 	setCanUpdateAlignments: action,
-	loadCompetencies: action,
-	checkout: action,
-	checkin: action
+	loadCompetencies: action
 });
