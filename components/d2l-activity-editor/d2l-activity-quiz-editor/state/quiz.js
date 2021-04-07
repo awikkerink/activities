@@ -6,7 +6,7 @@ configureMobx({ enforceActions: 'observed' });
 
 export class Quiz extends WorkingCopy {
 	constructor(href, token) {
-		super(Quiz, QuizEntity)
+		super(Quiz, QuizEntity);
 		this.href = href;
 		this.token = token;
 	}

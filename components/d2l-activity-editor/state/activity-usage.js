@@ -13,7 +13,7 @@ configureMobx({ enforceActions: 'observed' });
 export class ActivityUsage extends WorkingCopy {
 
 	constructor(href, token) {
-		super(ActivityUsage, ActivityUsageEntity)
+		super(ActivityUsage, ActivityUsageEntity);
 		this.href = href;
 		this.token = token;
 	}

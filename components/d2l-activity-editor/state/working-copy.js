@@ -12,8 +12,6 @@ export class WorkingCopy {
 		this._checkedOut = null;
 	}
 
-	_makeEntityData() { }
-
 	async checkin(store, refetch) {
 		if (!this._entity) {
 			return;
@@ -105,6 +103,8 @@ export class WorkingCopy {
 
 		await this.fetch();
 	}
+
+	_makeEntityData() { }
 }
 
 decorate(WorkingCopy, {
