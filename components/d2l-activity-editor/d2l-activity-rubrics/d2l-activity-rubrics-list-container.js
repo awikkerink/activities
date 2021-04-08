@@ -31,7 +31,8 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 			assignmentHref: { type: String },
 			_outcomesTerm: { type: String },
 			_browseOutcomesText: { type: String },
-			_alignOutcomesText: { type: String }
+			_alignOutcomesText: { type: String },
+			_outcomesToolIntegrationEnabled: { type: Boolean }
 		};
 	}
 
@@ -82,6 +83,7 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 		this._browseOutcomesText = this._dispatchRequestProvider('d2l-provider-browse-outcomes-text');
 		this._outcomesTerm = this._dispatchRequestProvider('d2l-provider-outcomes-term');
 		this._alignOutcomesText = this._dispatchRequestProvider('d2l-provider-align-outcomes-text');
+		this._outcomesToolIntegrationEnabled = this._dispatchRequestProvider('outcomes-tool-integration-enabled');
 	}
 
 	render() {
@@ -284,7 +286,7 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 				<d2l-rubric-editor
 					.href="${this._newlyCreatedPotentialAssociationHref}"
 					.token="${this.token}"
-					outcomes-tool-integration-enabled
+					?outcomes-tool-integration-enabled="${this._outcomesToolIntegrationEnabled}"
 					outcomes-title="${this._outcomesTerm}"
 					browse-outcomes-text="${this._browseOutcomesText}"
 					align-outcomes-text="${this._alignOutcomesText}"
