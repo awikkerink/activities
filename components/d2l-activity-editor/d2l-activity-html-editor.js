@@ -3,7 +3,6 @@ import 'd2l-html-editor/d2l-html-editor-client.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { getUniqueId } from '@brightspace-ui/core/helpers/uniqueId';
 import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles';
-import { live } from 'lit-html/directives/live.js';
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
 import { resolveUrl } from '@polymer/polymer/lib/utils/resolve-url.js';
 
