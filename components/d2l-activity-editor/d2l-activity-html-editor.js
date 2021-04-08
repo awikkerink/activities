@@ -3,6 +3,7 @@ import 'd2l-html-editor/d2l-html-editor-client.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { getUniqueId } from '@brightspace-ui/core/helpers/uniqueId';
 import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles';
+import { live } from 'lit-html/directives/live.js';
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
 import { resolveUrl } from '@polymer/polymer/lib/utils/resolve-url.js';
 
@@ -87,6 +88,7 @@ class ActivityHtmlEditor extends LocalizeActivityEditorMixin(LitElement) {
 				</div>
 			</d2l-html-editor>`;
 	}
+
 	updated(changedProperties) {
 		super.updated(changedProperties);
 		// This is acknowledged to be non-idiomatic (manipulating DOM outside render), but this
@@ -105,6 +107,14 @@ class ActivityHtmlEditor extends LocalizeActivityEditorMixin(LitElement) {
 			}
 		}
 	}
+
+	reset() {
+		const editorContainer = this.shadowRoot.querySelector('d2l-html-editor > .d2l-html-editor-container');
+		if (editorContainer) {
+			editorContainer.innerHTML = this.value;
+		}
+	}
+
 	_onContentChange() {
 		const content = this.shadowRoot.querySelector('d2l-html-editor').getContent();
 		this.dispatchEvent(new CustomEvent('d2l-activity-html-editor-change', {
