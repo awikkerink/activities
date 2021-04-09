@@ -1,20 +1,20 @@
-import { action, configure as configureMobx, decorate, observable } from 'mobx';
-import { fetchEntity } from './fetch-entity.js';
+import { action, configure as configureMobx, decorate } from 'mobx';
 import { AssociateGradeEntity } from 'siren-sdk/src/activities/associateGrade/AssociateGradeEntity.js';
+import { fetchEntity } from './fetch-entity.js';
 
 configureMobx({ enforceActions: 'observed' });
+
+export const GradebookStatus = {
+	NotInGradebook: 'not-in-gradebook',
+	NewGrade: 'new-grade',
+	ExistingGrade: 'existing-grade'
+};
 
 export class AssociateGrade {
 	constructor(href, token) {
 		this.href = href;
 		this.token = token;
 	}
-
-	GradebookStatus = {
-		NotInGradebook: "not-in-gradebook",
-		NewGrade: "new-grade",
-		ExistingGrade: "existing-grade"
-	};
 
 	async fetch(bypassCache) {
 		const sirenEntity = await fetchEntity(this.href, this.token, bypassCache);
