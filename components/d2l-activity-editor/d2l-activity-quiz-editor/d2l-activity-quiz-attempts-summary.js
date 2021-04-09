@@ -17,7 +17,11 @@ class ActivityQuizAttemptsSummary
 		if (!entity) {
 			return html``;
 		}
-		const { attemptsAllowed } = entity;
+		const { attemptsAllowed } = entity || {};
+		if ( attemptsAllowed == undefined || attemptsAllowed == null ) {
+			return html``;
+		}
+
 		return html`${this.localize('quizAttemptsAllowedSummary', 'numAttemptsAllowed', attemptsAllowed)}`;
 	}
 }
