@@ -18,7 +18,7 @@ class ActivityQuizAttemptsSummary
 			return html``;
 		}
 		const { attemptsAllowed } = entity || {};
-		if ( attemptsAllowed == undefined || attemptsAllowed == null ) {
+		if (attemptsAllowed === undefined || attemptsAllowed === null) {
 			return html``;
 		}
 
