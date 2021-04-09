@@ -10,11 +10,11 @@ export class AssociateGrade {
 		this.token = token;
 	}
 
-	GradebookStatus = Object.freeze({
+	GradebookStatus = {
 		NotInGradebook: "not-in-gradebook",
 		NewGrade: "new-grade",
 		ExistingGrade: "existing-grade"
-	});
+	};
 
 	async fetch(bypassCache) {
 		const sirenEntity = await fetchEntity(this.href, this.token, bypassCache);
