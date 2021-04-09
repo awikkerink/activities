@@ -268,16 +268,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		`;
 	}
 
-	async save() {
-		const entity = this.store.get(this.href);
-		if (!entity) return;
-
-		// Refetch entity in case presence of the check in action has changed
-		await entity.fetch(true);
-
-		await entity.checkin(this.store);
-	}
-
 	updated(changedProperties) {
 		super.updated(changedProperties);
 
@@ -317,6 +307,16 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		if (changedProperties.size === 0) {
 			this._setNewGradeName(this.activityName);
 		}
+	}
+
+	async save() {
+		const entity = this.store.get(this.href);
+		if (!entity) return;
+
+		// Refetch entity in case presence of the check in action has changed
+		await entity.fetch(true);
+
+		await entity.checkin(this.store);
 	}
 
 	_addOrRemoveMenuItem() {
