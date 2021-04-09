@@ -21,6 +21,7 @@ import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 
 import { shared as store } from './state/activity-store.js';
+import { sharedAssociateGrade as associateGradeStore } from './state/activity-store.js';
 
 class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActivityEditorMixin(RtlMixin(MobxLitElement)))) {
 
@@ -28,7 +29,8 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		return {
 			activityName: { type: String },
 			_focusUngraded: { type: Boolean },
-			_createSelectboxGradeItemEnabled: { type: Boolean }
+			_createSelectboxGradeItemEnabled: { type: Boolean },
+			_associateGradeHref: { type: String }
 		};
 	}
 
@@ -266,16 +268,39 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			</div>
 		`;
 	}
+
+	async save() {
+		const entity = this.store.get(this.href);
+		if (!entity) return;
+
+		// Refetch entity in case presence of the check in action has changed
+		await entity.fetch(true);
+
+		await entity.checkin(this.store);
+	}
+
 	updated(changedProperties) {
 		super.updated(changedProperties);
 
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
+
 			this.store && this._fetch(() => {
 				const fetch = this.store.fetch(this.href, this.token);
 				fetch.then(() => {
 					this._setNewGradeName(this.activityName);
 				});
+			});
+		}
+
+		if (changedProperties.has('checkedOutHref') && associateGradeStore) {
+			const checkedOutEntity = store.get(this.checkedOutHref);
+			if (!checkedOutEntity || !checkedOutEntity.associateGradeHref) {
+				return;
+			}
+			this._associateGradeHref = checkedOutEntity.associateGradeHref;
+			this._fetch(() => {
+				return associateGradeStore.fetch(this._associateGradeHref, this.token);
 			});
 		}
 
