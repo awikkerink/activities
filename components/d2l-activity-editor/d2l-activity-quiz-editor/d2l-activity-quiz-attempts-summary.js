@@ -18,7 +18,6 @@ class ActivityQuizAttemptsSummary
 			return html``;
 		}
 		const { attemptsAllowed } = entity;
-		console.error('Attempts: ', attemptsAllowed);
 		return html`${this.localize('quizAttemptsAllowedSummary', 'numAttemptsAllowed', attemptsAllowed)}`;
 	}
 }
