@@ -81,7 +81,9 @@ class ActivityQuizAttemptsAndCompletionEditor extends ActivityEditorMixin(AsyncC
 	_renderAttemptsSummary() {
 		const entity = this.checkedOutHref && store.get(this.checkedOutHref);
 		if (!entity) return html``;
-		const { attemptsHref } = entity;
+		const { attemptsHref } = entity || {};
+		if (!attemptsHref) return html``;
+
 		return html`
 			<d2l-activity-quiz-attempts-summary
 				href="${attemptsHref}"
