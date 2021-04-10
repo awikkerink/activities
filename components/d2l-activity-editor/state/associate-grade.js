@@ -4,11 +4,11 @@ import { fetchEntity } from './fetch-entity.js';
 
 configureMobx({ enforceActions: 'observed' });
 
-export const GradebookStatus = {
+/*export const GradebookStatus = {
 	NotInGradebook: 'not-in-gradebook',
 	NewGrade: 'new-grade',
 	ExistingGrade: 'existing-grade'
-};
+};*/
 
 export class AssociateGrade {
 	constructor(href, token) {
