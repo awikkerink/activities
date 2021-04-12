@@ -49,6 +49,7 @@ export class Quiz extends WorkingCopy {
 		this.canEditHeader = entity.canEditHeader();
 		this.headerIsDisplayed = entity.headerIsDisplayed();
 		this.headerRichTextEditorConfig = entity.headerRichTextEditorConfig();
+		this.originalHeaderIsEmpty = entity.originalHeaderIsEmpty();
 		this.ipRestrictionsHref = entity.ipRestrictionsHref();
 	}
 
@@ -151,6 +152,7 @@ decorate(Quiz, {
 	header: observable,
 	canEditHeader: observable,
 	headerRichTextEditorConfig: observable,
+	originalHeaderIsEmpty: observable,
 	// actions
 	load: action,
 	setName: action,
