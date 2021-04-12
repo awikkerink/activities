@@ -4,7 +4,6 @@
     "sort-class-members/sort-class-members": "error"
   },
   "plugins": [
-    "nullishCoalescingOperator",
-  	"optionalChaining"
-	]
+    "nullishCoalescingOperator"
+  ]
 }
