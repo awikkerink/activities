@@ -284,13 +284,12 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 
 		if (changedProperties.has('checkedOutHref') && associateGradeStore) {
 			const checkedOutEntity = store.get(this.checkedOutHref);
-			if (!checkedOutEntity || !checkedOutEntity.associateGradeHref) {
-				return;
+			if (checkedOutEntity && checkedOutEntity.associateGradeHref) {
+				this._associateGradeHref = checkedOutEntity.associateGradeHref;
+				this._fetch(() => {
+					return associateGradeStore.fetch(this._associateGradeHref, this.token);
+				});
 			}
-			this._associateGradeHref = checkedOutEntity.associateGradeHref;
-			this._fetch(() => {
-				return associateGradeStore.fetch(this._associateGradeHref, this.token);
-			});
 		}
 
 		changedProperties.forEach((oldValue, propName) => {
@@ -307,16 +306,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		if (changedProperties.size === 0) {
 			this._setNewGradeName(this.activityName);
 		}
-	}
-
-	async save() {
-		const entity = this.store.get(this.href);
-		if (!entity) return;
-
-		// Refetch entity in case presence of the check in action has changed
-		await entity.fetch(true);
-
-		await entity.checkin(this.store);
 	}
 
 	_addOrRemoveMenuItem() {
