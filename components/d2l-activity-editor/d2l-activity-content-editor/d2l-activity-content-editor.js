@@ -150,7 +150,7 @@ class ContentEditor extends LocalizeActivityEditorMixin(RtlMixin(ActivityEditorM
 		let redirectLocation = this.saveHref;
 		store.fetchContentActivity(this.href, this.token)
 			.then((contentActivity) => {
-				if (contentActivity?.lessonViewPageHref) {
+				if (contentActivity && contentActivity.lessonViewPageHref) {
 					redirectLocation = contentActivity.lessonViewPageHref;
 				}
 			})
