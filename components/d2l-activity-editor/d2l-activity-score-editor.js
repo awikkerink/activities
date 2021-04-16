@@ -15,7 +15,7 @@ import { sharedAssociateGrade as associateGradeStore, shared as store } from './
 import { bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
-//import { GradebookStatus } from './state/associate-grade.js';
+import { GradebookStatus } from './state/associate-grade.js';
 import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles.js';
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -260,7 +260,8 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 							</d2l-dropdown-menu>
 						</d2l-dropdown>
 						<d2l-activity-grades-dialog
-							href="${this.href}"
+							href="${this.checkedOutHref}"
+							activity-usage-href="${this.href}"
 							.token="${this.token}"></d2l-activity-grades-dialog>
 					</div>
 				` : null}
@@ -277,7 +278,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			this.store && this._fetch(() => {
 				const fetch = this.store.fetch(this.href, this.token);
 				fetch.then(() => {
-					this._setNewGradeName(this.activityName);
+					this._setNewGradeName(this.activityName, this.href);
 				});
 			});
 		}
@@ -287,7 +288,10 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			if (checkedOutEntity && checkedOutEntity.associateGradeHref) {
 				this._associateGradeHref = checkedOutEntity.associateGradeHref;
 				this._fetch(() => {
-					return associateGradeStore.fetch(this._associateGradeHref, this.token);
+					const fetch = associateGradeStore.fetch(this._associateGradeHref, this.token);
+					fetch.then(() => {
+						this._setNewGradeName(this.activityName, this.checkedOutHref);
+					});
 				});
 			}
 		}
@@ -299,12 +303,13 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 					this.shadowRoot.querySelector('#score-out-of');
 				toFocus.focus();
 			} else if (propName === 'activityName') {
-				this._setNewGradeName(this.activityName);
+				this._setNewGradeName(this.activityName, this.href);
+				this._associateGradeSetGradeName(this.activityName);
 			}
 		});
 
 		if (changedProperties.size === 0) {
-			this._setNewGradeName(this.activityName);
+			this._setNewGradeName(this.activityName, this.href);
 		}
 	}
 
@@ -324,6 +329,21 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	}
 	_addToGrades() {
 		store.get(this.href).scoreAndGrade.addToGrades();
+		this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
+	}
+	_associateGradeSetGradebookStatus(gradebookStatus) {
+		const scoreAndGrade = store.get(this.checkedOutHref).scoreAndGrade;
+
+		const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
+		associateGradeEntity.setGradebookStatus(gradebookStatus, scoreAndGrade.newGradeName, scoreAndGrade.scoreOutOf);
+	}
+	_associateGradeSetGradeName(name) {
+		const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
+		associateGradeEntity && associateGradeEntity.setGradeName(name);
+	}
+	_associateGradeSetMaxPoints(maxPoints) {
+		const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
+		associateGradeEntity.setGradeMaxPoints(maxPoints);
 	}
 	_chooseFromGrades() {
 		const activityGradesElement = this.shadowRoot.querySelector('d2l-activity-grades-dialog');
@@ -344,6 +364,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		}
 
 		scoreAndGrade.setScoreOutOf(scoreOutOf);
+		this._associateGradeSetMaxPoints(scoreOutOf);
 	}
 
 	_removeFromGrades() {
@@ -352,9 +373,10 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	_setGraded() {
 		const scoreAndGrade = store.get(this.href).scoreAndGrade;
 		scoreAndGrade.setGraded(scoreAndGrade.canEditGrades);
+		this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 	}
-	_setNewGradeName(name) {
-		const activity = store.get(this.href);
+	_setNewGradeName(name, href) {
+		const activity = store.get(href);
 		if (activity) {
 			activity.scoreAndGrade.setNewGradeName(name);
 		}

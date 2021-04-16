@@ -67,8 +67,6 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 		}
 	}
 	updated(changedProperties) {
-		super.updated(changedProperties);
-
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
 
@@ -90,7 +88,17 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 	hasPendingChanges() {
 		return false;
 	}
-	async save() {}
+	async save() {
+		if( this.checkoutOnLoad ) {
+			const entity = this.store.get(this.checkedOutHref);
+			if (!entity) return;
+
+			// Refetch entity in case presence of the check in action has changed
+			await entity.fetch(true);
+
+			await entity.checkin(this.store, true);
+		}
+	}
 
 	async validate() {}
 
