@@ -1,5 +1,5 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
-import { CategoriesEntity } from 'siren-sdk/src/activities/CategoriesEntity.js';
+import { CategoriesEntity } from 'siren-sdk/src/activities/assignments/CategoriesEntity.js';
 import { fetchEntity } from '../../state/fetch-entity.js';
 
 configureMobx({ enforceActions: 'observed' });
@@ -29,6 +29,8 @@ export class AssignmentCategories {
 		this.categories = entity.getCategories();
 		this.canEditCategories = entity.canEditCategories();
 		this.selectedCategory = entity.getSelectedCategory();
+		this.selectedCategoryId = this.selectedCategory && this.selectedCategory.properties.categoryId;
+		this.categoryName = '';
 	}
 
 	async save() {
@@ -47,14 +49,31 @@ export class AssignmentCategories {
 		await this.fetch(true);
 	}
 
-	setSelectedCategory(category) {
-		this.selectedCategory = category;
+	setNewCategoryName(name) {
+		this.categoryName = name;
+	}
+
+	setSelectedCategoryId(categoryId) {
+		this.selectedCategoryId = categoryId;
 	}
 
 	_makeCategoriesData() {
-		return {
-			categoryId: this.selectedCategory
-		};
+		const data = {};
+
+		if (this.categoryName) {
+			data.categoryName = this.categoryName;
+		}
+
+		if (this.selectedCategoryId) {
+			const initialId = this.selectedCategory && this.selectedCategory.properties.categoryId;
+			const shouldUpdateCategoryId = this.selectedCategoryId !== initialId;
+
+			if (shouldUpdateCategoryId) {
+				data.categoryId = this.selectedCategoryId;
+			}
+		}
+
+		return data;
 	}
 }
 
@@ -63,7 +82,10 @@ decorate(AssignmentCategories, {
 	categories: observable,
 	selectedCategory: observable,
 	canEditCategories: observable,
+	selectedCategoryId: observable,
+	categoryName: observable,
 	// actions
 	load: action,
-	setSelectedCategory: action
+	setSelectedCategoryId: action,
+	setNewCategoryName: action
 });
