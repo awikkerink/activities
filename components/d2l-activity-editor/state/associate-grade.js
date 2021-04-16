@@ -33,8 +33,8 @@ export class AssociateGrade {
 
 	setGradebookStatus(newStatus, gradeName, maxPoints) {
 		this.gradebookStatus = newStatus;
-		if(gradeName) this.gradeName = gradeName;
-		if(maxPoints) this.maxPoints = maxPoints;
+		if (gradeName) this.gradeName = gradeName;
+		if (maxPoints) this.maxPoints = maxPoints;
 		this._updateProperty(() => this._entity.setGradebookStatus(newStatus, gradeName, maxPoints));
 	}
 

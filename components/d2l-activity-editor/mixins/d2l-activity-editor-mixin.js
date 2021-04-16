@@ -89,7 +89,7 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 		return false;
 	}
 	async save() {
-		if( this.checkoutOnLoad ) {
+		if (this.checkoutOnLoad) {
 			const entity = this.store.get(this.checkedOutHref);
 			if (!entity) return;
 
