@@ -62,9 +62,7 @@ export default {
 	"subHdrExceededTimeLimitBehaviour": "Exceeded Time Limit Behaviour", // Title for submission late type options,
 	"exceededTimeLimitBehaviourPrefix": "After the grace period, flag the quiz attempt as exceeded time limit and,", // label for submission label type options
 	"showClockLabel": "Will be displayed before the quiz starts", // Label for show clock checkbox
-	"description": "Description", // Description label for the Description text input box
 	"showClockTitle": "Show clock", // Title for show clock
-	"description": "Description", // Description label for the Description text input box,
 	"manageAttemptsDialogConfirmationText": "OK", // copy that appears on the Attempts dialog confirmation button
 	"manageAttemptsDialogCancelText": "Cancel", // copy that appears on the Attempts dialog cancel button
 	"subHdrAttemptsTools": "Attempts", // Title for attempts tools
@@ -73,6 +71,7 @@ export default {
 	"textIsDisplayedSingularPart2": "The {field} field appears to learners when the quiz is saved.", // Second sentence of alert warning that text fields will be visible, when there is only one field
 	"introMovedToDescription": "Quizzes no longer support Introductions. Existing content in the Introduction field now appears in the Description field.", // Alert warning that existing quiz introduction has been removed and that the text in the introduction has been put into the quiz description
 	"attemptsAllowed": "Attempts Allowed", // Title for Attempts Allowed select in Attempts dialog
+	"quizAttemptsAllowedSummary": "{numAttemptsAllowed, plural, =1 {1 attempt allowed} other {{numAttemptsAllowed} attempts allowed}}", //
 	"overallGradeCalculation": "Overall Grade Calculation", // Title for Overall Grade Calculation select in Attempts dialog
 	"retakeIncorrectQuestionsOnly": "Retake Incorrect Questions Only", // Title for RIO checkbox in Attempts dialog
 	"rioCheckboxLabel": "On new attempts, only allow answers for previously incorrect questions", // Label for RIO checkbox in Attempts dialog
@@ -112,13 +111,22 @@ export default {
 	"ipRestrictionsInnerSummary" : "{count, plural, =1 {1 restriction} other {{count} restrictions}}", // summary to be displayed when accordion is expanded
 	"quizTimingValidationError": "Timing cannot be changed, please correct the outlined fields.", // Appears in error alert when validation fails in Manage Timing dialog
 	"quizTimingServerError": "Something went wrong. Please try again.", // Timing save server error alert message
-	"quizTimingSummary": "{timingType} ({numMinutes, plural, =1 {1 minute} other {{numMinutes} minutes}})", // Timing type followed by (x minute) or (x minutes). e.g. Recommended time limit (120 minutes)
+	"quizTimingRecommendedSummary": "Recommended time limit ({numMinutes, plural, =1 {1 minute} other {{numMinutes} minutes}})", // Recommended time limit (x minute) or (x minutes).
+	"quizTimingEnforcedSummary": "Enforced time limit ({numMinutes, plural, =1 {1 minute} other {{numMinutes} minutes}})", // Enforced time limit(x minute) or (x minutes).
 	"ipRestrictionsDuplicateError": "Duplicate IP range start address. Each IP range start value must be unique.", // Error for duplicate IP
 	"ipRestrictionsRangeError": "Invalid IP address range provided. Please ensure ranges are correctly formatted.", // Error for invalid IP ranges
 	"quizAttemptsValidationError": "Attempts cannot be changed, please correct the outlined fields.", // Appears in error alert when validation fails in Manage Attempts dialog
 	"totalPoints": "Total Points {scoreOutOf}", // Total points text that appears on quiz editor above list of questions
 	"subHdrHeaderFooter": "Header and Footer", // Header and Footer accordion header
-	"manageHeaderFooter": "Manage Header and Footer", // Label for button to launch Header and Footer dialog
+	"manageHeaderFooterButton": "Manage Header and Footer", // Label for button to launch Header and Footer dialog
+	"headerFooterDialogTitle": "Header and Footer",
 	"manageHeaderFooterDialogAddText": "Add", // Label for Add button for header and footer dialog
-	"manageHeaderFooterDialogCancelText": "Cancel" // Label for Cancel button header and footer dialog
+	"manageHeaderFooterDialogCancelText": "Cancel", // Label for Cancel button header and footer dialog
+	"headerLabel": "Header", // Label for the header text box
+	"headerDialogText": "The Quiz Header and Footer will be visible to learners at the top and bottom of the quiz, respectively.", // Header and Footer dialog text
+	"header": "Header", // Header label for the header text box.
+	"headerAdded": "Header added", // Header added summary text for Timing and Display accordion.
+	"footerAdded": "Footer added", // Footer added summary text for Timing and Display accordion.
+	"headerAndFooter": "Header and footer added" // Header and footer summary text for closed accordion
+
 };

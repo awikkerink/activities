@@ -2,19 +2,32 @@ import '@brightspace-ui/core/components/alert/alert.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@brightspace-ui/core/components/icons/icon.js';
 import './d2l-activity-quiz-manage-header-footer-editor.js';
-import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles';
+import './d2l-activity-quiz-manage-header-footer-dialog-summary.js';
+import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorDialogMixin } from '../mixins/d2l-activity-editor-dialog-mixin';
-import { html } from 'lit-element/lit-element';
+import { bodySmallStyles } from '@brightspace-ui/core/components/typography/styles';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { shared as store } from './state/quiz-store';
 
 class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
+
+	static get properties() {
+		return {
+			href: { type: String },
+			token: { type: Object }
+		};
+	}
+
 	static get styles() {
 		return [
 			bodySmallStyles,
-			labelStyles
+			css`
+				.d2l-activity-quiz-manage-header-footer-dialog-summary::after {
+					white-space: pre;
+				}
+			`,
 		];
 	}
 
@@ -28,10 +41,15 @@ class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(
 
 	render() {
 		return html`
-			${this._renderDialogLabel()}
+			${this._renderHeaderDialogSummary()}
 			${this._renderDialogOpener()}
 			${this._renderDialog()}
     	`;
+	}
+
+	_cancel() {
+		const e = this.shadowRoot.querySelector('d2l-activity-quiz-manage-header-footer-editor');
+		e.reset();
 	}
 
 	_renderDialog() {
@@ -42,23 +60,28 @@ class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(
 				?opened="${this.opened}"
 				@d2l-dialog-close="${this.handleClose}"
 				width="${width}"
-				title-text=${this.localize('manageHeaderFooter')}>
-					<div id="manage-header-footer-dialog-header-footer-editor">${this._renderQuizHeaderFooterEditor()}</div>
-					<d2l-button slot="footer" primary @click="${this._save}" ?disabled="${this.isSaving}">${this.localize('manageHeaderFooterDialogAddText')}</d2l-button>
-					<d2l-button slot="footer" data-dialog-action ?disabled="${this.isSaving}">${this.localize('manageHeaderFooterDialogCancelText')}</d2l-button>
+				title-text=${this.localize('headerFooterDialogTitle')}>
+					${this._renderQuizHeaderFooterEditor()}
+					<d2l-button slot="footer" primary data-dialog-action="save" @click="${this._save}" ?disabled="${this.isSaving}">${this.localize('manageHeaderFooterDialogAddText')}</d2l-button>
+					<d2l-button slot="footer" data-dialog-action="cancel" @click="${this._cancel}" ?disabled="${this.isSaving}">${this.localize('manageHeaderFooterDialogCancelText')}</d2l-button>
 			</d2l-dialog>
-		`;
-	}
-
-	_renderDialogLabel() {
-		return html`
-			<div id="manage-header-footer-editor-label" class="d2l-label-text">${this.localize('subHdrHeaderFooter')}</div>
 		`;
 	}
 
 	_renderDialogOpener() {
 		return html`
-			<d2l-button-subtle text=${this.localize('manageHeaderFooter')} @click="${this.open}" h-align="text"></d2l-button-subtle>
+			<d2l-button-subtle text=${this.localize('manageHeaderFooterButton')} @click="${this.open}" h-align="text"></d2l-button-subtle>
+		`;
+	}
+
+	_renderHeaderDialogSummary() {
+		return html`
+			<div class="d2l-activity-quiz-manage-header-footer-dialog-summary">
+				<d2l-activity-quiz-manage-header-footer-dialog-summary class="d2l-body-small"
+					href="${this.href}"
+					.token="${this.token}">
+				</d2l-activity-quiz-manage-header-footer-dialog-summary>
+			</div>
 		`;
 	}
 
@@ -69,6 +92,11 @@ class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(
 				.token="${this.token}">
 			</d2l-activity-quiz-manage-header-footer-editor>
 		`;
+	}
+
+	_save() {
+		const el = this.shadowRoot.querySelector('d2l-activity-quiz-manage-header-footer-editor');
+		el.save();
 	}
 }
 

@@ -2,7 +2,7 @@ import './d2l-activity-quiz-retake-incorrect-only-editor.js';
 import './d2l-activity-quiz-attempt-conditions-editor.js';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin';
-import { labelStyles } from '@brightspace-ui/core/components/typography/styles';
+import { inputLabelStyles } from '@brightspace-ui/core/components/inputs/input-label-styles.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin';
@@ -12,10 +12,11 @@ import { sharedAttempts as store } from './state/quiz-store';
 class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
 	static get styles() {
 		return [
-			labelStyles,
+			inputLabelStyles,
 			selectStyles,
 			css`
 				.d2l-input-select {
+					display: block;
 					margin-bottom: 1.5rem;
 				}
 			`
@@ -31,10 +32,18 @@ class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(RtlMixin(Loca
 		if (!entity) {
 			return html``;
 		}
-
-		const { attemptsAllowed } = entity || {};
-		const showRio = attemptsAllowed > 1;
+		const {
+			attemptsAllowed,
+			canUpdateRetakeIncorrectOnly,
+			isRetakeIncorrectOnly
+		} = entity || {};
+		// Show RIO when attempts is 'Unlimited' or '0' or >1
+		let showRio = attemptsAllowed !== '1';
 		const showAttemptsConditions = attemptsAllowed > 1;
+		// If RIO flag is off (f16751-retake-incorrect-only) don't render RIO editor
+		if (isRetakeIncorrectOnly === undefined && !canUpdateRetakeIncorrectOnly) {
+			showRio = false;
+		}
 
 		return html `
 				${this._renderAttemptsSelectsEditor(entity)}
@@ -54,7 +63,7 @@ class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(RtlMixin(Loca
 
 	_renderAttemptsAllowedOptions(options) {
 		if (!options) return html``;
-		// When quiz is read only, options is passed as a `"<num"` instead of an array
+		// When quiz is read only, options is passed as a `"<num>"` instead of an array
 		if (!Array.isArray(options)) {
 			return html`<option value=${options} selected>${options}</option>`;
 		}
@@ -74,20 +83,24 @@ class ActivityQuizManageAttemptsEditor extends ActivityEditorMixin(RtlMixin(Loca
 		} = entity || {};
 
 		return html`
-			<div class="d2l-label-text">${this.localize('attemptsAllowed')}</div>
-			<select
-				class="d2l-input-select"
-				?disabled =${!canUpdateAttemptsAllowed}
-				@change=${this._setAttemptsAllowed}>
-				${this._renderAttemptsAllowedOptions(attemptsAllowedOptions ? attemptsAllowedOptions : attemptsAllowed)}
-			</select>
-			<div class="d2l-label-text">${this.localize('overallGradeCalculation')}</div>
-			<select
-				class="d2l-input-select"
-				?disabled =${!canUpdateOverallGradeCalculation}
-				@change=${this._setOverallGradeCalculationType}>
-				${this._renderOverallGradeCalculationOptions(overallGradeCalculationOptions ? overallGradeCalculationOptions : overallGradeCalculationType)}
-			</select>
+			<label>
+			<span class="d2l-input-label">${this.localize('attemptsAllowed')}</span>
+				<select
+					class="d2l-input-select"
+					?disabled=${!canUpdateAttemptsAllowed}
+					@change=${this._setAttemptsAllowed}>
+					${this._renderAttemptsAllowedOptions(attemptsAllowedOptions ? attemptsAllowedOptions : attemptsAllowed)}
+				</select>
+			</label>
+			<label>
+				<span class="d2l-input-label">${this.localize('overallGradeCalculation')}</span>
+				<select
+					class="d2l-input-select"
+					?disabled =${!canUpdateOverallGradeCalculation}
+					@change=${this._setOverallGradeCalculationType}>
+					${this._renderOverallGradeCalculationOptions(overallGradeCalculationOptions ? overallGradeCalculationOptions : overallGradeCalculationType)}
+				</select>
+			</label>
 		`;
 	}
 

@@ -12,6 +12,7 @@ import './d2l-activity-quiz-shuffle-summary.js';
 import './d2l-activity-quiz-manage-timing-container';
 import './d2l-activity-quiz-timing-summary';
 import './d2l-activity-quiz-manage-header-footer-container';
+import './d2l-activity-quiz-manage-header-footer-summary';
 import { css, html } from 'lit-element/lit-element.js';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
@@ -73,6 +74,7 @@ class ActivityQuizTimingAndDisplayEditor extends ActivityEditorMixin(AsyncContai
 				<li slot="summary-items">${this._renderAllowHintsSummary()}</li>
 				<li slot="summary-items">${this._renderDisableRightClickSummary()}</li>
 				<li slot="summary-items">${this._renderDisablePagerAndAlertsSummary()}</li>
+				<li slot="summary-items">${this._renderHeaderFooterSummary()}</li>
 
 				<div class="d2l-editors" slot="components">
 					${this._renderManageTimingContainer()}
@@ -102,6 +104,9 @@ class ActivityQuizTimingAndDisplayEditor extends ActivityEditorMixin(AsyncContai
 				</div>
 
 				<div class="d2l-editors" slot="components">
+					<label class="d2l-label-text">
+						${this.localize('subHdrHeaderFooter')}
+					</label>
 					${this._renderManageHeaderFooterContainer()}
 				</div>
 
@@ -155,6 +160,15 @@ class ActivityQuizTimingAndDisplayEditor extends ActivityEditorMixin(AsyncContai
 				href="${this.href}"
 				.token="${this.token}">
 			</d2l-activity-quiz-disable-right-click-summary>
+		`;
+	}
+
+	_renderHeaderFooterSummary() {
+		return html`
+			<d2l-activity-quiz-manage-header-footer-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-manage-header-footer-summary>
 		`;
 	}
 

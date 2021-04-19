@@ -19,19 +19,11 @@ class ActivityQuizManageAttemptsContainer extends ActivityEditorWorkingCopyDialo
 			#manage-attempts-dialog-attempts-editor {
 				height: 430px;
 			}
-
 			d2l-alert {
 				margin-bottom: 1rem;
 			}
-			.d2l-activity-quiz-manage-attempts-container-dialog-summary {
+			.d2l-activity-quiz-manage-attempts-dialog-summary {
 				margin: 0.5rem 0;
-			}
-			.d2l-activity-quiz-manage-attempts-container-dialog-summary d2l-icon {
-				margin-right: 0.3rem;
-			}
-			:host([dir="rtl"]) .d2l-activity-quiz-manage-attempts-container-dialog-summary d2l-icon {
-				margin-left: 0.3rem;
-				margin-right: 0;
 			}
 			`,
 		];
@@ -58,25 +50,18 @@ class ActivityQuizManageAttemptsContainer extends ActivityEditorWorkingCopyDialo
 	}
 
 	async _checkinDialog(e) {
+		const { attemptsHref: dialogAttemptsHref } = (this.dialogHref && store.get(this.dialogHref)) || {};
+		const dialogAttemptsEntity = dialogAttemptsHref && attemptsStore.get(dialogAttemptsHref);
+		// Wait for attempts entity PATCH requests to complete before checking in
+		if (!dialogAttemptsEntity) {
+			return;
+		}
+		await dialogAttemptsEntity.saving;
+
 		await this.checkinDialog(e);
 
-		if (!this.opened) {
-			// Dialog successfully checked in
-			const checkedOutQuizEntity = this.checkedOutHref && store.get(this.checkedOutHref);
-			if (!checkedOutQuizEntity) return;
-			const { attemptsHref: checkedOutAttemptsHref } = checkedOutQuizEntity;
-
-			const dialogQuizEntity = this.dialogHref && store.get(this.dialogHref);
-			if (!dialogQuizEntity) return;
-			const { attemptsHref: dialogAttemptsHref } = dialogQuizEntity;
-
-			// Replace checkedOut attempts entity with dialog attempts entity to immediately update attempts summarizer.
-			const dialogAttemptsEntity = attemptsStore.get(dialogAttemptsHref);
-			const checkedOutAttemptsEntity = attemptsStore.get(checkedOutAttemptsHref);
-			checkedOutAttemptsEntity.load(dialogAttemptsEntity._entity);
-
-			// Refetch checkedOut attempts entity to ensure we display the correct attempts summary.
-			checkedOutAttemptsEntity.fetch(true);
+		if (!this.opened) { // Dialog successfully checked in
+			this._updateSummary();
 		}
 	}
 
@@ -120,18 +105,17 @@ class ActivityQuizManageAttemptsContainer extends ActivityEditorWorkingCopyDialo
 	_renderDialogSummary() {
 		const entity = this.checkedOutHref && store.get(this.checkedOutHref);
 		if (!entity) return html``;
-		return html``;
-		// const { attemptsHref } = entity;
-		// TODO: add attempts summary details
-		// return html`
-		// 	<div class="d2l-activity-quiz-manage-attempts-container-dialog-summary d2l-body-small">
-		// 		<d2l-icon icon="tier1:time"></d2l-icon>
-		// 		<d2l-activity-quiz-attempts-summary
-		// 			href="${attemptsHref}"
-		// 			.token="${this.token}">
-		// 		</d2l-activity-quiz-attempts-summary>
-		// 	</div>
-		// `;
+		const { attemptsHref } = entity || {};
+		if (!attemptsHref) return html``;
+
+		return html`
+			<div class="d2l-activity-quiz-manage-attempts-dialog-summary d2l-body-small">
+				<d2l-activity-quiz-attempts-summary
+					href="${attemptsHref}"
+					.token="${this.token}">
+				</d2l-activity-quiz-attempts-summary>
+			</div>
+		`;
 	}
 
 	_renderQuizAttemptsEditor() {
@@ -148,6 +132,24 @@ class ActivityQuizManageAttemptsContainer extends ActivityEditorWorkingCopyDialo
 				.token="${this.token}">
 			</d2l-activity-quiz-manage-attempts-editor>
 		`;
+	}
+
+	_updateSummary() {
+		const checkedOutQuizEntity = this.checkedOutHref && store.get(this.checkedOutHref);
+		if (!checkedOutQuizEntity) return;
+		const { attemptsHref: checkedOutAttemptsHref } = checkedOutQuizEntity;
+
+		const dialogQuizEntity = this.dialogHref && store.get(this.dialogHref);
+		if (!dialogQuizEntity) return;
+		const { attemptsHref: dialogAttemptsHref } = dialogQuizEntity;
+
+		// Replace checkedOut attempts entity with dialog attempts entity to immediately update attempts summarizer.
+		const dialogAttemptsEntity = attemptsStore.get(dialogAttemptsHref);
+		const checkedOutAttemptsEntity = attemptsStore.get(checkedOutAttemptsHref);
+		checkedOutAttemptsEntity.load(dialogAttemptsEntity._entity);
+
+		// Refetch checkedOut attempts entity to ensure we display the correct attempts summary.
+		checkedOutAttemptsEntity.fetch(true);
 	}
 }
 
