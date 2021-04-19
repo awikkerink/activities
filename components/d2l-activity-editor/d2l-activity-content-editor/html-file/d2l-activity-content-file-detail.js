@@ -13,7 +13,7 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 
-class ContentHtmlFileDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlingMixin(LocalizeActivityEditorMixin(EntityMixinLit(RtlMixin(ActivityEditorMixin(MobxLitElement))))))) {
+class ContentFileDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlingMixin(LocalizeActivityEditorMixin(EntityMixinLit(RtlMixin(ActivityEditorMixin(MobxLitElement))))))) {
 
 	static get styles() {
 		return  [
@@ -38,6 +38,10 @@ class ContentHtmlFileDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandl
 
 	render() {
 		const htmlFileEntity = htmlFileStore.getContentHtmlFileActivity(this.href);
+
+		// eslint-disable-next-line no-console
+		console.log({ htmlFileEntity });
+
 		if (htmlFileEntity) {
 			this.skeleton = false;
 		}
@@ -95,4 +99,4 @@ class ContentHtmlFileDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandl
 	}
 }
 
-customElements.define('d2l-activity-content-html-file-detail', ContentHtmlFileDetail);
+customElements.define('d2l-activity-content-file-detail', ContentFileDetail);

@@ -1,4 +1,4 @@
-import '../../../../components/d2l-activity-editor/d2l-activity-content-editor/html-file/d2l-activity-content-html-file-detail.js';
+import '../../../../components/d2l-activity-editor/d2l-activity-content-editor/html-file/d2l-activity-content-file-detail.js';
 import { expect, fixture, html } from '@open-wc/testing';
 import { ContentHtmlFile } from '../../../../components/d2l-activity-editor/d2l-activity-content-editor/html-file/state/content-html-file.js';
 import { shared as htmlFileStore } from '../../../../components/d2l-activity-editor/d2l-activity-content-editor/html-file/state/content-html-file-store.js';
