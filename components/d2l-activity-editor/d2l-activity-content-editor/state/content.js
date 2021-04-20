@@ -5,7 +5,7 @@ import { shared as ltiLinkStore } from '../lti-link/state/content-lti-link-store
 import { shared as moduleStore } from '../module/state/content-module-store.js';
 import { shared as webLinkStore } from '../web-link/state/content-web-link-store.js';
 // eslint-disable-next-line sort-imports
-import { shared as contentFileStore } from '../html-file/state/content-html-file-store.js';
+import { shared as contentFileStore } from '../html-file/state/content-file-store.js';
 
 configureMobx({ enforceActions: 'observed' });
 
@@ -43,7 +43,7 @@ export class Content {
 			ltiLinkStore.fetchContentLTILinkActivity(this.contentActivityHref, this.token);
 		} else if (this.entityType === CONTENT_TYPES.contentFile) {
 			this.contentActivityHref = contentEntity.getContentFileHref();
-			contentFileStore.fetchContentHtmlFileActivity(this.contentActivityHref, this.token);
+			contentFileStore.fetchContentFileActivity(this.contentActivityHref, this.token);
 		}
 
 		this.lessonViewPageHref = contentEntity.getLessonViewPageHref();

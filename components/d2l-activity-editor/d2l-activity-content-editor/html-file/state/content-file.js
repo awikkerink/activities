@@ -1,10 +1,10 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
-import { ContentHtmlFileEntity } from 'siren-sdk/src/activities/content/ContentHtmlFileEntity.js';
+import { ContentFileEntity } from 'siren-sdk/src/activities/content/ContentFileEntity.js';
 import { fetchEntity } from '../../../state/fetch-entity.js';
 
 configureMobx({ enforceActions: 'observed' });
 
-export class ContentHtmlFile {
+export class ContentFile {
 
 	constructor(href, token) {
 		this.href = href;
@@ -13,33 +13,33 @@ export class ContentHtmlFile {
 	}
 
 	async cancelCreate() {
-		await this._contentHtmlFile.deleteHtmlFile();
+		await this._contentFile.deleteFile();
 	}
 
 	get dirty() {
-		return !this._contentHtmlFile.equals(this._makeHtmlFileData());
+		return !this._contentFile.equals(this._makeContentFileData());
 	}
 
 	async fetch() {
 		const sirenEntity = await fetchEntity(this.href, this.token);
 		if (sirenEntity) {
-			const entity = new ContentHtmlFileEntity(sirenEntity, this.token, { remove: () => { } });
+			const entity = new ContentFileEntity(sirenEntity, this.token, { remove: () => { } });
 			this.load(entity);
 		}
 		return this;
 	}
 
-	load(htmlFileEntity) {
-		this._contentHtmlFile = htmlFileEntity;
-		this.title = htmlFileEntity.title();
+	load(fileEntity) {
+		this._contentFile = fileEntity;
+		this.title = fileEntity.title();
 	}
 
 	async save() {
-		if (!this._contentHtmlFile) {
+		if (!this._contentFile) {
 			return;
 		}
 
-		await this._contentHtmlFile.setHtmlFileTitle(this.title);
+		await this._contentFile.setFileTitle(this.title);
 		await this.fetch();
 	}
 
@@ -47,7 +47,7 @@ export class ContentHtmlFile {
 		this.title = value;
 	}
 
-	_makeHtmlFileData() {
+	_makeContentFileData() {
 		/* NOTE: if you add fields here, please make sure you update the corresponding equals method in siren-sdk.
 			The cancel workflow is making use of that to detect changes.
 		*/
@@ -57,7 +57,7 @@ export class ContentHtmlFile {
 	}
 }
 
-decorate(ContentHtmlFile, {
+decorate(ContentFile, {
 	// props
 	title: observable,
 	// actions

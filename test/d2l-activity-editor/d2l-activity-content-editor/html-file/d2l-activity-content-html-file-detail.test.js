@@ -1,7 +1,7 @@
 import '../../../../components/d2l-activity-editor/d2l-activity-content-editor/html-file/d2l-activity-content-file-detail.js';
 import { expect, fixture, html } from '@open-wc/testing';
-import { ContentHtmlFile } from '../../../../components/d2l-activity-editor/d2l-activity-content-editor/html-file/state/content-html-file.js';
-import { shared as htmlFileStore } from '../../../../components/d2l-activity-editor/d2l-activity-content-editor/html-file/state/content-html-file-store.js';
+import { ContentFile } from '../../../../components/d2l-activity-editor/d2l-activity-content-editor/html-file/state/content-file.js';
+import { shared as htmlFileStore } from '../../../../components/d2l-activity-editor/d2l-activity-content-editor/html-file/state/content-file-store.js';
 import { runConstructor } from '@brightspace-ui/core/tools/constructor-test-helper.js';
 
 describe('d2l-activity-content-html-file-detail', function() {
@@ -24,7 +24,7 @@ describe('d2l-activity-content-html-file-detail', function() {
 	beforeEach(async() => {
 		href = 'http://test-html-file-href.com';
 		token = 'token';
-		contentItem = new ContentHtmlFile(href, token);
+		contentItem = new ContentFile(href, token);
 	});
 
 	afterEach(async() => {
