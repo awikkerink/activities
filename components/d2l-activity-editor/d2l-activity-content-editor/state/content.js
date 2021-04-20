@@ -1,11 +1,10 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { CONTENT_TYPES, ContentEntity } from 'siren-sdk/src/activities/content/ContentEntity.js';
+import { shared as contentFileStore } from '../html-file/state/content-file-store.js';
 import { fetchEntity } from '../../state/fetch-entity.js';
 import { shared as ltiLinkStore } from '../lti-link/state/content-lti-link-store.js';
 import { shared as moduleStore } from '../module/state/content-module-store.js';
 import { shared as webLinkStore } from '../web-link/state/content-web-link-store.js';
-// eslint-disable-next-line sort-imports
-import { shared as contentFileStore } from '../html-file/state/content-file-store.js';
 
 configureMobx({ enforceActions: 'observed' });
 

@@ -1,6 +1,8 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { ContentWebLinkEntity } from 'siren-sdk/src/activities/content/ContentWebLinkEntity.js';
 import { fetchEntity } from '../../../state/fetch-entity.js';
+// TODO: Explore idea of using this shared WorkingCopy
+// import { WorkingCopy } from '../../../state/working-copy.js';
 
 configureMobx({ enforceActions: 'observed' });
 
