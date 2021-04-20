@@ -33,7 +33,7 @@ describe('d2l-activity-content-content-file-detail', function() {
 
 	it('should construct', async() => {
 		await loadComponent();
-		runConstructor('d2l-activity-content-content-file-detail');
+		runConstructor('d2l-activity-content-file-detail');
 	});
 
 	it('passes accessibility test', async() => {
