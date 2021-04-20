@@ -39,9 +39,6 @@ class ContentFileDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlingM
 	render() {
 		const contentFileEntity = contentFileStore.getContentFileActivity(this.href);
 
-		// eslint-disable-next-line no-console
-		console.log({ contentFileEntity });
-
 		if (contentFileEntity) {
 			this.skeleton = false;
 		}

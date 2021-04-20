@@ -26,17 +26,15 @@ export class ContentFile {
 		const sirenEntity = await fetchEntity(this.href, this.token);
 		if (sirenEntity) {
 			let entity = new ContentFileEntity(sirenEntity, this.token, { remove: () => { } });
-			console.log({1: entity});
 			entity = await this._checkout(entity);
-			console.log({2: entity});
 			this.load(entity);
 		}
 		return this;
 	}
 
-	load(fileEntity) {
-		this._contentFile = fileEntity;
-		this.title = fileEntity.title();
+	load(contentFileEntity) {
+		this._contentFile = contentFileEntity;
+		this.title = contentFileEntity.title();
 	}
 
 	async save() {
@@ -48,7 +46,6 @@ export class ContentFile {
 		const committedContentFileEntity = await this._commit(this._contentFile);
 		const editableContentFileEntity = await this._checkout(committedContentFileEntity);
 		this.load(editableContentFileEntity);
-		// await this.fetch();
 	}
 
 	setTitle(value) {
@@ -72,9 +69,7 @@ export class ContentFile {
 			return;
 		}
 
-		console.log({a: contentFileEntity});
 		const sirenEntity = await contentFileEntity.commit();
-		console.log({b: contentFileEntity});
 		if (!sirenEntity) {
 			return contentFileEntity;
 		}
