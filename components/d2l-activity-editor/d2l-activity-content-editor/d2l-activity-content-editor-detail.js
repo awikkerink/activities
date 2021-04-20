@@ -2,7 +2,7 @@ import './module/d2l-activity-content-module-detail.js';
 import './shared-components/d2l-activity-content-editor-due-date.js';
 import './lti-link/d2l-activity-content-lti-link-detail.js';
 import './web-link/d2l-activity-content-web-link-detail.js';
-import './html-file/d2l-activity-content-file-detail.js';
+import './content-file/d2l-activity-content-file-detail.js';
 import 'd2l-loading-spinner/d2l-loading-spinner.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { CONTENT_TYPES } from 'siren-sdk/src/activities/content/ContentEntity.js';

@@ -1,10 +1,10 @@
-import '../../../../components/d2l-activity-editor/d2l-activity-content-editor/html-file/d2l-activity-content-file-detail.js';
+import '../../../../components/d2l-activity-editor/d2l-activity-content-editor/content-file/d2l-activity-content-file-detail.js';
 import { expect, fixture, html } from '@open-wc/testing';
-import { ContentFile } from '../../../../components/d2l-activity-editor/d2l-activity-content-editor/html-file/state/content-file.js';
-import { shared as htmlFileStore } from '../../../../components/d2l-activity-editor/d2l-activity-content-editor/html-file/state/content-file-store.js';
+import { ContentFile } from '../../../../components/d2l-activity-editor/d2l-activity-content-editor/content-file/state/content-file.js';
+import { shared as htmlFileStore } from '../../../../components/d2l-activity-editor/d2l-activity-content-editor/content-file/state/content-file-store.js';
 import { runConstructor } from '@brightspace-ui/core/tools/constructor-test-helper.js';
 
-describe('d2l-activity-content-html-file-detail', function() {
+describe('d2l-activity-content-content-file-detail', function() {
 
 	let href, token, contentItem;
 
@@ -12,11 +12,11 @@ describe('d2l-activity-content-html-file-detail', function() {
 		htmlFileStore.put(href, contentItem);
 		return await fixture(
 			html`
-				<d2l-activity-content-html-file-detail
+				<d2l-activity-content-file-detail
 					.href=${href}
 					.token="${token}"
 				>
-				</d2l-activity-content-html-file-detail>
+				</d2l-activity-content-file-detail>
 			`
 		);
 	}
@@ -33,7 +33,7 @@ describe('d2l-activity-content-html-file-detail', function() {
 
 	it('should construct', async() => {
 		await loadComponent();
-		runConstructor('d2l-activity-content-html-file-detail');
+		runConstructor('d2l-activity-content-content-file-detail');
 	});
 
 	it('passes accessibility test', async() => {
