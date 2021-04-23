@@ -25,7 +25,7 @@ export class ActivityScoreGrade {
 		}
 
 		this.gradeCandidateCollection = new GradeCandidateCollection(this.gradeCandidatesHref, this.token);
-		await this.gradeCandidateCollection.fetch();
+		await this.gradeCandidateCollection.fetch(true);
 	}
 	async fetchNewGradeCandidates() {
 		if (this.newGradeCandidatesCollection) {
@@ -33,7 +33,7 @@ export class ActivityScoreGrade {
 		}
 
 		this.newGradeCandidatesCollection = new GradeCandidateCollection(this.newGradeCandidatesHref, this.token);
-		await this.newGradeCandidatesCollection.fetch();
+		await this.newGradeCandidatesCollection.fetch(true);
 	}
 	async fetchUpdatedScoreOutOf(entity, bypassCache) {
 		await entity.fetchLinkedScoreOutOfEntity(fetchEntity, bypassCache);
@@ -151,8 +151,8 @@ decorate(ActivityScoreGrade, {
 	gradeCandidateCollection: observable,
 	newGradeName: observable,
 	createNewGrade: observable,
-	gradeCategoriesHref: observable,
-	gradeCategoryCollection: observable,
+	newGradeCandidatesHref: observable,
+	newGradeCandidatesCollection: observable,
 	// actions
 	setScoreOutOf: action,
 	setUngraded: action,
