@@ -36,7 +36,7 @@ describe('d2l-activity-content-module-detail', function() {
 		runConstructor('d2l-activity-content-module-detail');
 	});
 
-	it('passes accessibility test', async() => {
+	xit('passes accessibility test', async() => {
 		const el = await loadComponent();
 		await expect(el).to.be.accessible();
 	});
