@@ -51,7 +51,7 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 
 				<li slot="summary-items">${this._renderAutoSetGradedSummary()}</li>
 
-				<div class="d2l-editors" slot="components">
+				<div class="d2l-editor" slot="components">
 					${this._renderAutoSetGradedSubHeader()}
 					${this._renderAutomaticGradesEditor()}
 				</div>

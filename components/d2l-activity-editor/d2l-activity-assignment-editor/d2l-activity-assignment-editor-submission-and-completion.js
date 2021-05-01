@@ -36,10 +36,6 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 			selectStyles,
 			accordionStyles,
 			css`
-				:host {
-					display: block;
-				}
-
 				.d2l-block-select {
 					display: block;
 					max-width: 300px;
@@ -171,7 +167,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		}
 
 		return html`
-			<div id="assignment-completion-type-container">
+			<div id="assignment-completion-type" class="d2l-editor">
 				<label class="d2l-label-text" for="assignment-completion-type">
 					${this.localize('completionType')}
 				</label>
@@ -229,8 +225,8 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		}
 
 		return html`
-			<div id="assignment-files-submission-limit-container">
-				<label class="d2l-label-text" for="assignment-files-submission-limit-container">
+			<div id="assignment-files-submission-limit" class="d2l-editor">
+				<label class="d2l-label-text" for="assignment-files-submission-limit">
 					${this.localize('filesSubmissionLimit')}
 				</label>
 				${submissionLimitContent}
@@ -244,7 +240,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		}
 
 		return html`
-			<div id="assignment-notification-email-container">
+			<div id="assignment-notification-email" class="d2l-editor">
 				<d2l-activity-notification-email-editor
 					value="${assignment.notificationEmail}"
 					?disabled="${!assignment.canEditNotificationEmail}"
@@ -286,8 +282,8 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		}
 
 		return html`
-			<div id="assignment-submissions-rule-container">
-				<label class="d2l-label-text" for="assignment-submissions-rule-container">
+			<div id="assignment-submissions-rule" class="d2l-editor">
+				<label class="d2l-label-text" for="assignment-submissions-rule">
 					${this.localize('submissionsRule')}
 				</label>
 				${submissionsRuleContent}
@@ -317,7 +313,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		}
 
 		return html`
-			<div id="assignment-submission-type-container">
+			<div id="assignment-submission-type" class="d2l-editor">
 				<label class="d2l-label-text" for="assignment-submission-type">
 					${this.localize('submissionType')}
 				</label>
@@ -340,7 +336,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	}
 	_renderAssignmentType() {
 		return html`
-			<div id="assignment-type-container">
+			<div id="assignment-type" class="d2l-editor">
 				<label class="d2l-label-text">
 					${this.localize('txtAssignmentType')}
 				</label>
