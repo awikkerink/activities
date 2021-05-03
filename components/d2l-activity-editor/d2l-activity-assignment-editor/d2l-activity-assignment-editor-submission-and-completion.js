@@ -225,8 +225,8 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		}
 
 		return html`
-			<div id="assignment-files-submission-limit" class="d2l-editor">
-				<label class="d2l-label-text" for="assignment-files-submission-limit">
+			<div id="assignment-files-submission-limit-container" class="d2l-editor">
+				<label class="d2l-label-text" for="assignment-files-submission-limit-container">
 					${this.localize('filesSubmissionLimit')}
 				</label>
 				${submissionLimitContent}
@@ -282,8 +282,8 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		}
 
 		return html`
-			<div id="assignment-submissions-rule" class="d2l-editor">
-				<label class="d2l-label-text" for="assignment-submissions-rule">
+			<div id="assignment-submissions-rule-container" class="d2l-editor">
+				<label class="d2l-label-text" for="assignment-submissions-rule-container">
 					${this.localize('submissionsRule')}
 				</label>
 				${submissionsRuleContent}
