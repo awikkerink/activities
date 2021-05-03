@@ -167,7 +167,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		}
 
 		return html`
-			<div id="assignment-completion-type" class="d2l-editor">
+			<div id="assignment-completion-type-container" class="d2l-editor">
 				<label class="d2l-label-text" for="assignment-completion-type">
 					${this.localize('completionType')}
 				</label>
