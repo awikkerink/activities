@@ -313,7 +313,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		}
 
 		return html`
-			<div id="assignment-submission-type" class="d2l-editor">
+			<div id="assignment-submission-type-container" class="d2l-editor">
 				<label class="d2l-label-text" for="assignment-submission-type">
 					${this.localize('submissionType')}
 				</label>
