@@ -9,10 +9,10 @@ import '../d2l-activity-rubrics/d2l-activity-rubrics-summary-wrapper.js';
 import './d2l-assignment-turnitin-editor.js';
 import './d2l-assignment-turnitin-summary.js';
 import '../d2l-activity-accordion-collapse.js';
-import { css, html } from 'lit-element/lit-element.js';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { shared as activityStore } from '../state/activity-store.js';
+import { html } from 'lit-element/lit-element.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
@@ -33,13 +33,7 @@ class ActivityAssignmentEvaluationEditor extends SkeletonMixin(LocalizeActivityA
 
 		return [
 			super.styles,
-			accordionStyles,
-			css`
-				.d2l-editors > *:not(:first-child) {
-					display: block;
-					margin-top: 1rem;
-				}
-			`
+			accordionStyles
 		];
 	}
 
@@ -57,23 +51,25 @@ class ActivityAssignmentEvaluationEditor extends SkeletonMixin(LocalizeActivityA
 				${html`<li slot="summary-items">${this._renderAnnotationsSummary()}</li>`}
 				${html`<li slot="summary-items">${this._renderAnonymousMarkingSummary()}</li>`}
 				${assignment.canEditTurnitin ? html`<li slot="summary-items">${this._renderTurnitinSummary()}</li>` : null}
-				<div class="d2l-editors" slot="components">
+				<span slot="components">
 					${ html`${this._renderRubricsCollectionEditor()}`}
 					${activity.canEditCompetencies ? this._renderCompetenciesOpener() : null}
 					${html`${this._renderAnnotationsEditor()}`}
 					${html`${this._renderAnonymousMarkingEditor()}`}
 					${assignment.canEditTurnitin ? html`${this._renderTurnitinEditor()}` : null}
-				</div>
+				</span>
 			</d2l-activity-accordion-collapse>
 		`;
 	}
 	_renderAnnotationsEditor() {
 
 		return html`
-			<d2l-activity-assignment-annotations-editor
-				href="${this.href}"
-				.token="${this.token}">
-			</d2l-activity-assignment-annotations-editor>
+			<div class="d2l-editor">
+				<d2l-activity-assignment-annotations-editor
+					href="${this.href}"
+					.token="${this.token}">
+				</d2l-activity-assignment-annotations-editor>
+			</div>
 		`;
 	}
 	_renderAnnotationsSummary() {
@@ -88,10 +84,12 @@ class ActivityAssignmentEvaluationEditor extends SkeletonMixin(LocalizeActivityA
 	_renderAnonymousMarkingEditor() {
 
 		return html`
-			<d2l-activity-assignment-anonymous-marking-editor
-				href="${this.href}"
-				.token="${this.token}">
-			</d2l-activity-assignment-anonymous-marking-editor>
+			<div class="d2l-editor">
+				<d2l-activity-assignment-anonymous-marking-editor
+					href="${this.href}"
+					.token="${this.token}">
+				</d2l-activity-assignment-anonymous-marking-editor>
+			</div>
 		`;
 	}
 	_renderAnonymousMarkingSummary() {
@@ -106,10 +104,12 @@ class ActivityAssignmentEvaluationEditor extends SkeletonMixin(LocalizeActivityA
 
 	_renderCompetenciesOpener() {
 		return html`
-			<d2l-activity-competencies
-				.href="${this.activityUsageHref}"
-				.token="${this.token}">
-			</d2l-activity-competencies>
+			<div class="d2l-editor">
+				<d2l-activity-competencies
+					.href="${this.activityUsageHref}"
+					.token="${this.token}">
+				</d2l-activity-competencies>
+			</div>
 		`;
 	}
 	_renderCompetenciesSummary() {
@@ -122,11 +122,13 @@ class ActivityAssignmentEvaluationEditor extends SkeletonMixin(LocalizeActivityA
 	}
 	_renderRubricsCollectionEditor() {
 		return html`
-			<d2l-activity-rubrics-list-wrapper
-				.href="${this.activityUsageHref}"
-				.token="${this.token}"
-				.assignmentHref="${this.href}">
-			</d2l-activity-rubrics-list-wrapper>
+			<div class="d2l-editor">
+				<d2l-activity-rubrics-list-wrapper
+					.href="${this.activityUsageHref}"
+					.token="${this.token}"
+					.assignmentHref="${this.href}">
+				</d2l-activity-rubrics-list-wrapper>
+			</div>
 		`;
 	}
 	_renderRubricsSummary() {
@@ -138,12 +140,13 @@ class ActivityAssignmentEvaluationEditor extends SkeletonMixin(LocalizeActivityA
 		`;
 	}
 	_renderTurnitinEditor() {
-
 		return html`
-			<d2l-assignment-turnitin-editor
-				href="${this.href}"
-				.token="${this.token}">
-			</d2l-assignment-turnitin-editor>
+			<div class="d2l-editor">
+				<d2l-assignment-turnitin-editor
+					href="${this.href}"
+					.token="${this.token}">
+				</d2l-assignment-turnitin-editor>
+			</div>
 		`;
 	}
 
