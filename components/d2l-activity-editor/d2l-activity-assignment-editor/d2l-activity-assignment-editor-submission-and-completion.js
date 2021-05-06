@@ -240,7 +240,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		}
 
 		return html`
-			<div id="assignment-notification-email" class="d2l-editor">
+			<div id="assignment-notification-email-container" class="d2l-editor">
 				<d2l-activity-notification-email-editor
 					value="${assignment.notificationEmail}"
 					?disabled="${!assignment.canEditNotificationEmail}"
@@ -336,7 +336,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	}
 	_renderAssignmentType() {
 		return html`
-			<div id="assignment-type" class="d2l-editor">
+			<div id="assignment-type-container" class="d2l-editor">
 				<label class="d2l-label-text">
 					${this.localize('txtAssignmentType')}
 				</label>
