@@ -5,7 +5,7 @@ export default {
 	"hlpReleaseConditions": "Les utilisateurs ne peuvent pas accéder à l’affectation ou la visualiser s’ils ne remplissent pas les conditions de validation.", // release conditions help
 	"completionType": "Identifié comme étant Terminé", // Label for the completion type field when creating/editing an assignment
 	"lblAnonymousMarking": "Attribution anonyme d’état", // Label for anonymous marking
-	"chkAnonymousMarking": "Masquer les noms des étudiants lors des évaluations", // Checkbox for anonymous marking
+	"chkAnonymousMarking": "Masquer les noms des élèves lors des évaluations", // Checkbox for anonymous marking
 	"dueDate": "Date d’échéance", // ARIA label for the due date field when creating/editing an activity
 	"txtAnnotationsOff": "Annotations désactivées", // annotations off text
 	"emptyNameError": "Le nom est obligatoire", // Error message to inform user that the assignment name is a required field
@@ -46,5 +46,14 @@ export default {
 	"hlpSpecialAccess": "L’accès spécial permet aux travaux de n’être accessibles qu’à un groupe d’utilisateurs en particulier ou permet de définir des dates d’échéance individualisées pour certains utilisateurs.", // special access help
 	"assignmentLocked": "Certains réglages sont verrouillés car des soumissions ont été reçues.",
 	"hlpSubmissionNotificationEmail": "Saisissez une adresse courriel ou plusieurs adresses courriel séparées par une virgule pour recevoir des notifications à la soumission d’un travail.",
-	"gradeOutOf": "Grade Out Of", // Label for the grade-out-of field when creating/editing an activity
+	"gradeOutOf": "Note d'appréciation sur", // Label for the grade-out-of field when creating/editing an activity
+	"txtCategoriesLabel": "Catégories", // Label for categories dropdown
+	"noCategoryLabel": "Aucune catégorie", // Label for when there are no categories
+	"newCategoryLabel": "Nouvelle catégorie", // Label for adding a new category
+	"newAssignmentCategory": "Catégorie de nouveau travail", // Title for category dialog
+	"btnAssignmentCategoryCreate": "Créer", // Categories create button
+	"btnAssignmentCategoryCancel": "Annuler", // Categories cancel button
+	"inputCategoryLabel": "Nom", // Label for new category input
+	"categorySummaryPrefix": "Catégorie", // Label for new category input
+
 };
