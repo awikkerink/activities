@@ -40,8 +40,8 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 			accordionStyles,
 			css`
 				d2l-dropdown-button-subtle {
-					margin-left: -0.6rem;
 					margin-bottom: 0.6rem;
+					margin-left: -0.6rem;
 				}
 			`
 		];
