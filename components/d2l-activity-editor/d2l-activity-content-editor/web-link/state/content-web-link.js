@@ -32,7 +32,6 @@ export class ContentWebLink {
 			entity = await this._checkout(entity);
 			this.load(entity);
 		}
-
 		return this;
 	}
 
@@ -56,7 +55,6 @@ export class ContentWebLink {
 		const committedWebLinkEntity = await this._commit(this._contentWebLink);
 		const editableWebLinkEntity = await this._checkout(committedWebLinkEntity);
 		this.load(editableWebLinkEntity);
-
 		return this._contentWebLink;
 	}
 
@@ -81,7 +79,6 @@ export class ContentWebLink {
 		if (!sirenEntity) {
 			return webLinkEntity;
 		}
-
 		return new ContentWebLinkEntity(sirenEntity, this.token, { remove: () => { } });
 	}
 
@@ -94,7 +91,6 @@ export class ContentWebLink {
 		if (!sirenEntity) {
 			return webLinkEntity;
 		}
-
 		return new ContentWebLinkEntity(sirenEntity, this.token, { remove: () => { } });
 	}
 
