@@ -3,6 +3,7 @@ import './d2l-activity-assignment-submission-email-notification-summary.js';
 import './d2l-activity-assignment-type-editor.js';
 import './d2l-activity-assignment-categories-editor.js';
 import './d2l-activity-assignment-type-summary.js';
+import './d2l-activity-assignment-categories-summary.js';
 import '../d2l-activity-notification-email-editor';
 import { bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
@@ -35,10 +36,6 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 			selectStyles,
 			accordionStyles,
 			css`
-				:host {
-					display: block;
-				}
-
 				.d2l-block-select {
 					display: block;
 					max-width: 300px;
@@ -47,11 +44,6 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 
 				div[id*="container"] {
 					margin-top: 20px;
-				}
-
-				div[id*="container"] > .d2l-label-text {
-					display: inline-block;
-					margin-bottom: 10px;
 				}
 
 				.d2l-input-radio-label {
@@ -74,9 +66,11 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 					${this.localize('submissionCompletionAndCategorization')}
 				</span>
 				<li slot="summary-items">${this._renderAssignmentTypeSummary()}</li>
+				<li slot="summary-items">${this._renderCategoriesSummary(assignment)}</li>
 				<li slot="summary-items">${this._renderAssignmentSubmissionTypeSummary(assignment)}</li>
 				<li slot="summary-items">${this._renderAssignmentCompletionTypeSummary()}</li>
 				<li slot="summary-items">${this._renderSubmissionEmailNotificationSummary(assignment)}</li>
+
 				<span slot="components">
 					${this._renderAssignmentType()}
 					${this._renderCategoriesDropdown(assignment)}
@@ -155,6 +149,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 			completionTypeContent = html`
 				<select
 					id="assignment-completion-type"
+					aria-labelledby="assignment-completion-type-label"
 					class="d2l-input-select d2l-block-select"
 					@change="${this._saveCompletionTypeOnChange}">
 						${this._getCompletionTypeOptions(assignment)}
@@ -168,10 +163,10 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		}
 
 		return html`
-			<div id="assignment-completion-type-container">
-				<label class="d2l-label-text" for="assignment-completion-type">
+			<div id="assignment-completion-type-container" class="d2l-editor">
+				<div class="d2l-label-text" id="assignment-completion-type-label">
 					${this.localize('completionType')}
-				</label>
+				</div>
 				${completionTypeContent}
 			</div>
 		`;
@@ -226,10 +221,10 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		}
 
 		return html`
-			<div id="assignment-files-submission-limit-container">
-				<label class="d2l-label-text" for="assignment-files-submission-limit-container">
+			<div id="assignment-files-submission-limit-container" class="d2l-editor">
+				<div class="d2l-label-text">
 					${this.localize('filesSubmissionLimit')}
-				</label>
+				</div>
 				${submissionLimitContent}
 			</div>
 		`;
@@ -241,7 +236,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		}
 
 		return html`
-			<div id="assignment-notification-email-container">
+			<div id="assignment-notification-email-container" class="d2l-editor">
 				<d2l-activity-notification-email-editor
 					value="${assignment.notificationEmail}"
 					?disabled="${!assignment.canEditNotificationEmail}"
@@ -283,10 +278,10 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		}
 
 		return html`
-			<div id="assignment-submissions-rule-container">
-				<label class="d2l-label-text" for="assignment-submissions-rule-container">
+			<div id="assignment-submissions-rule-container" class="d2l-editor">
+				<div class="d2l-label-text">
 					${this.localize('submissionsRule')}
-				</label>
+				</div>
 				${submissionsRuleContent}
 			</div>
 		`;
@@ -301,6 +296,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 			submissionTypeContent = html`
 				<select
 					id="assignment-submission-type"
+					aria-labelledby="assignment-submission-type-label"
 					class="d2l-input-select d2l-block-select"
 					@change="${this._saveSubmissionTypeOnChange}">
 						${this._getSubmissionTypeOptions(assignment)}
@@ -314,10 +310,10 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		}
 
 		return html`
-			<div id="assignment-submission-type-container">
-				<label class="d2l-label-text" for="assignment-submission-type">
+			<div id="assignment-submission-type-container" class="d2l-editor">
+				<div class="d2l-label-text" id="assignment-submission-type-label">
 					${this.localize('submissionType')}
-				</label>
+				</div>
 				${submissionTypeContent}
 			</div>
 		`;
@@ -337,10 +333,10 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	}
 	_renderAssignmentType() {
 		return html`
-			<div id="assignment-type-container">
-				<label class="d2l-label-text">
+			<div id="assignment-type-container" class="d2l-editor">
+				<div class="d2l-label-text">
 					${this.localize('txtAssignmentType')}
-				</label>
+				</div>
 				<d2l-activity-assignment-type-editor
 					href="${this.href}"
 					.token="${this.token}">
@@ -361,18 +357,24 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		if (!assignment || !assignment.categoriesLink) return;
 
 		return html`
-			<div id="categories-editor-container">
-
-				<label class="d2l-label-text">
-					${this.localize('txtCategoriesLabel')}
-				</label>
-
-				<d2l-activity-assignment-categories-editor
-					href="${assignment.categoriesLink}"
-					.token="${this.token}">
-				</d2l-activity-assignment-categories-editor>
-			</div>
+		<div id="container">
+			<d2l-activity-assignment-categories-editor
+				href="${assignment.categoriesLink}"
+				.token="${this.token}">
+			</d2l-activity-assignment-categories-editor>
+		</div>
 	`;
+	}
+
+	_renderCategoriesSummary(assignment) {
+		if (!assignment || !assignment.categoriesLink) return;
+
+		return html`
+			<d2l-activity-assignment-categories-summary
+				href="${assignment.categoriesLink}"
+				.token="${this.token}">
+			</d2l-activity-assignment-categories-summary>
+		`;
 	}
 
 	_renderSubmissionEmailNotificationSummary(assignment) {

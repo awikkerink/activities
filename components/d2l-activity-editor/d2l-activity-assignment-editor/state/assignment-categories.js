@@ -1,6 +1,8 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
-import { CategoriesEntity } from 'siren-sdk/src/activities/CategoriesEntity.js';
+import { CategoriesEntity } from 'siren-sdk/src/activities/assignments/CategoriesEntity.js';
 import { fetchEntity } from '../../state/fetch-entity.js';
+
+const UNSELECTED_ID = '0'; // API expects 0 to unselect a category
 
 configureMobx({ enforceActions: 'observed' });
 
@@ -28,10 +30,27 @@ export class AssignmentCategories {
 		this._entity = entity;
 		this.categories = entity.getCategories();
 		this.canEditCategories = entity.canEditCategories();
+		this.canAddCategories = entity.canAddCategories();
 		this.selectedCategory = entity.getSelectedCategory();
+		this.initialCategory = this.initialCategory || this.selectedCategory || UNSELECTED_ID;
+		this.selectedCategoryName = this.selectedCategory && this.selectedCategory.properties.name;
+		this.selectedCategoryId = this.selectedCategory && this.selectedCategory.properties.categoryId;
+		this.newCategoryName = '';
 	}
 
-	async save() {
+	async reset() {
+		if (!this._entity) {
+			return;
+		}
+
+		if (this.initialCategory === UNSELECTED_ID) {
+			await this._entity.save({ categoryId: UNSELECTED_ID });
+		}
+
+		this.initialCategory && await this._entity.save({ categoryId: this.initialCategory.properties.categoryId });
+	}
+
+	async save(shouldReset) {
 		if (!this._entity) {
 			return;
 		}
@@ -44,17 +63,36 @@ export class AssignmentCategories {
 		await this._saving;
 		this._saving = null;
 
+		shouldReset && this._resetInitalCategory();
+
 		await this.fetch(true);
 	}
 
-	setSelectedCategory(category) {
-		this.selectedCategory = category;
+	setNewCategoryName(name) {
+		this.newCategoryName = name;
+	}
+
+	setSelectedCategory(categoryId, categoryName) {
+		this.selectedCategoryId = categoryId;
+		this.selectedCategoryName = categoryName;
 	}
 
 	_makeCategoriesData() {
-		return {
-			categoryId: this.selectedCategory
-		};
+		const data = {};
+
+		if (this.newCategoryName) {
+			data.categoryName = this.newCategoryName;
+		}
+
+		if (this.selectedCategoryId) {
+			data.categoryId = this.selectedCategoryId;
+		}
+
+		return data;
+	}
+
+	_resetInitalCategory() {
+		this.initialCategory = null;
 	}
 }
 
@@ -63,7 +101,12 @@ decorate(AssignmentCategories, {
 	categories: observable,
 	selectedCategory: observable,
 	canEditCategories: observable,
+	canAddCategories: observable,
+	selectedCategoryId: observable,
+	newCategoryName: observable,
+	selectedCategoryName: observable,
 	// actions
 	load: action,
-	setSelectedCategory: action
+	setSelectedCategory: action,
+	setNewCategoryName: action
 });

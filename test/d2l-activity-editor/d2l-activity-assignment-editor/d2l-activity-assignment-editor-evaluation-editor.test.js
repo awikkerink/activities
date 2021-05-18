@@ -189,7 +189,7 @@ describe('d2l-activity-assignment-editor-evaluation-editor', function() {
 		it('loads properly and is visible when user can edit annotations', async() => {
 			const el = await loadComponent();
 			const annotationEditorComponent =
-				el.shadowRoot.querySelectorAll('d2l-activity-accordion-collapse > .d2l-editors > d2l-activity-assignment-annotations-editor');
+				el.shadowRoot.querySelectorAll('d2l-activity-accordion-collapse > span > .d2l-editor > d2l-activity-assignment-annotations-editor');
 			const annotationEditor = await fixture(html`${annotationEditorComponent}`);
 
 			const label = annotationEditor.shadowRoot.querySelectorAll('.d2l-label-text')[0];
@@ -206,7 +206,7 @@ describe('d2l-activity-assignment-editor-evaluation-editor', function() {
 		it('updates the annotations tools avaliable value when change event occurs', async() => {
 			const el = await loadComponent();
 			const annotationEditorComponent =
-				el.shadowRoot.querySelectorAll('d2l-activity-accordion-collapse > .d2l-editors > d2l-activity-assignment-annotations-editor');
+				el.shadowRoot.querySelectorAll('d2l-activity-accordion-collapse > span > .d2l-editor > d2l-activity-assignment-annotations-editor');
 			const annotationEditor = await fixture(html`${annotationEditorComponent}`);
 
 			const checkbox = annotationEditor.shadowRoot.querySelectorAll('d2l-input-checkbox')[0];
@@ -221,7 +221,7 @@ describe('d2l-activity-assignment-editor-evaluation-editor', function() {
 		it('loads properly and is visible when anonymous marking is avaliable', async() => {
 			const el = await loadComponent();
 			const anonMarkingEditorComponent =
-				el.shadowRoot.querySelectorAll('d2l-activity-accordion-collapse > .d2l-editors > d2l-activity-assignment-anonymous-marking-editor');
+				el.shadowRoot.querySelectorAll('d2l-activity-accordion-collapse > span > .d2l-editor > d2l-activity-assignment-anonymous-marking-editor');
 			const anonMarkingEditor = await fixture(html`${anonMarkingEditorComponent}`);
 
 			const label = anonMarkingEditor.shadowRoot.querySelectorAll('.d2l-label-text')[0];
@@ -243,7 +243,7 @@ describe('d2l-activity-assignment-editor-evaluation-editor', function() {
 			anonymousMarkingProps.isAnonymousMarkingEnabled = false;
 			const el = await loadComponent();
 			const anonMarkingEditorComponent =
-				el.shadowRoot.querySelectorAll('d2l-activity-accordion-collapse> .d2l-editors > d2l-activity-assignment-anonymous-marking-editor');
+				el.shadowRoot.querySelectorAll('d2l-activity-accordion-collapse > span > .d2l-editor > d2l-activity-assignment-anonymous-marking-editor');
 			const anonMarkingEditor = await fixture(html`${anonMarkingEditorComponent}`);
 
 			const checkbox = anonMarkingEditor.shadowRoot.querySelectorAll('d2l-input-checkbox')[0];
@@ -260,13 +260,13 @@ describe('d2l-activity-assignment-editor-evaluation-editor', function() {
 
 			const el = await loadComponent();
 			const turnItInEditorComponent =
-				el.shadowRoot.querySelectorAll('d2l-activity-accordion-collapse > .d2l-editors > d2l-assignment-turnitin-editor');
+				el.shadowRoot.querySelectorAll('d2l-activity-accordion-collapse > span > .d2l-editor > d2l-assignment-turnitin-editor');
 			const turnItInEditor = await fixture(html`${turnItInEditorComponent}`);
 
 			const turnItInContainer = turnItInEditor.shadowRoot.querySelectorAll('#assignment-turnitin-container');
 			expect(turnItInContainer.hidden).to.be.undefined;
 
-			const heading = turnItInEditor.shadowRoot.querySelectorAll('.d2l-heading-4')[0];
+			const heading = turnItInEditor.shadowRoot.querySelectorAll('.d2l-label-text')[0];
 			expect(heading.innerText).to.equal(langTerms.hdrTurnitin);
 
 			const button = turnItInEditor.shadowRoot.querySelectorAll('d2l-button-subtle')[0];
@@ -278,7 +278,7 @@ describe('d2l-activity-assignment-editor-evaluation-editor', function() {
 
 			const el = await loadComponent();
 			const turnItInEditorComponent =
-				el.shadowRoot.querySelectorAll('d2l-activity-accordion-collapse > .d2l-editors > d2l-assignment-turnitin-editor');
+				el.shadowRoot.querySelectorAll('d2l-activity-accordion-collapse > span > .d2l-editor > d2l-assignment-turnitin-editor');
 			let turnItInEditor, featureSummary;
 
 			assignment.setTurnitin(false, false);

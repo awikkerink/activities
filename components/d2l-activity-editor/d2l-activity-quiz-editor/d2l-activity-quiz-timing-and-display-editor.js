@@ -13,10 +13,10 @@ import './d2l-activity-quiz-manage-timing-container';
 import './d2l-activity-quiz-timing-summary';
 import './d2l-activity-quiz-manage-header-footer-container';
 import './d2l-activity-quiz-manage-header-footer-summary';
-import { css, html } from 'lit-element/lit-element.js';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
+import { html } from 'lit-element/lit-element.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -39,11 +39,6 @@ class ActivityQuizTimingAndDisplayEditor extends ActivityEditorMixin(AsyncContai
 			super.styles,
 			accordionStyles,
 			labelStyles,
-			css`
-				.d2l-editors:not(:first-of-type) {
-					margin-top: 20px;
-				}
-			`,
 		];
 	}
 
@@ -76,37 +71,37 @@ class ActivityQuizTimingAndDisplayEditor extends ActivityEditorMixin(AsyncContai
 				<li slot="summary-items">${this._renderDisablePagerAndAlertsSummary()}</li>
 				<li slot="summary-items">${this._renderHeaderFooterSummary()}</li>
 
-				<div class="d2l-editors" slot="components">
+				<div class="d2l-editor" slot="components">
 					${this._renderManageTimingContainer()}
 				</div>
 
-				<div class="d2l-editors" slot="components">
-					<label class="d2l-label-text">
+				<div class="d2l-editor" slot="components">
+					<div class="d2l-label-text">
 						${this.localize('subHdrPagingTools')}
-					</label>
+					</div>
 					${this._renderPreventMovingBackwardsEditor()}
 				</div>
 
-				<div class="d2l-editors" slot="components">
-					<label class="d2l-label-text">
+				<div class="d2l-editor" slot="components">
+					<div class="d2l-label-text">
 						${this.localize('subHdrShuffleQuiz')}
-					</label>
+					</div>
 					${this._renderShuffleEditor()}
 				</div>
 
-				<div class="d2l-editors" slot="components">
-					<label class="d2l-label-text">
+				<div class="d2l-editor" slot="components">
+					<div class="d2l-label-text">
 						${this.localize('subHdrDisplayTools')}
-					</label>
+					</div>
 					${this._renderHintsEditor()}
 					${this._renderDisableRightClickEditor()}
 					${this._renderDisablePagerAndAlertsEditor()}
 				</div>
 
-				<div class="d2l-editors" slot="components">
-					<label class="d2l-label-text">
+				<div class="d2l-editor" slot="components">
+					<div class="d2l-label-text">
 						${this.localize('subHdrHeaderFooter')}
-					</label>
+					</div>
 					${this._renderManageHeaderFooterContainer()}
 				</div>
 

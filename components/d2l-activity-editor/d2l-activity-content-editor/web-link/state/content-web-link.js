@@ -1,6 +1,8 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { ContentWebLinkEntity } from 'siren-sdk/src/activities/content/ContentWebLinkEntity.js';
 import { fetchEntity } from '../../../state/fetch-entity.js';
+// TODO: Explore idea of using this shared WorkingCopy
+// import { WorkingCopy } from '../../../state/working-copy.js';
 
 configureMobx({ enforceActions: 'observed' });
 
@@ -30,6 +32,7 @@ export class ContentWebLink {
 			entity = await this._checkout(entity);
 			this.load(entity);
 		}
+
 		return this;
 	}
 
@@ -53,6 +56,7 @@ export class ContentWebLink {
 		const committedWebLinkEntity = await this._commit(this._contentWebLink);
 		const editableWebLinkEntity = await this._checkout(committedWebLinkEntity);
 		this.load(editableWebLinkEntity);
+
 		return this._contentWebLink;
 	}
 
@@ -77,6 +81,7 @@ export class ContentWebLink {
 		if (!sirenEntity) {
 			return webLinkEntity;
 		}
+
 		return new ContentWebLinkEntity(sirenEntity, this.token, { remove: () => { } });
 	}
 
@@ -89,6 +94,7 @@ export class ContentWebLink {
 		if (!sirenEntity) {
 			return webLinkEntity;
 		}
+
 		return new ContentWebLinkEntity(sirenEntity, this.token, { remove: () => { } });
 	}
 

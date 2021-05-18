@@ -8,7 +8,7 @@ import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorDialogMixin } from '../mixins/d2l-activity-editor-dialog-mixin';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
-import { heading4Styles } from '@brightspace-ui/core/components/typography/styles.js';
+import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
@@ -27,10 +27,10 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 
 		return [
 			super.styles,
+			labelStyles,
 			accordionStyles,
-			heading4Styles,
 			css`
-				.d2l-heading-4 {
+				.d2l-label-text {
 					display: inline;
 				}
 			`
@@ -47,11 +47,9 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 					${this.localize('hdrEvaluationAndFeedback')}
 				</span>
 
-				// the summary text is in a specific order and should only be changed if required in a story
-
 				<li slot="summary-items">${this._renderAutoSetGradedSummary()}</li>
 
-				<div class="d2l-editors" slot="components">
+				<div class="d2l-editor" slot="components">
 					${this._renderAutoSetGradedSubHeader()}
 					${this._renderAutomaticGradesEditor()}
 				</div>
@@ -79,9 +77,9 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 		return html`
 			<div>
 				<span>
-					<h3 class="d2l-heading-4">
+					<div class="d2l-label-text">
 						${this.localize('subHdrAutomaticGrades')}
-					</h3>
+					</div>
 				</span>
 				<span>
 					<d2l-button-icon
