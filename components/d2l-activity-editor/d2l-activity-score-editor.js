@@ -278,7 +278,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			this.store && this._fetch(() => {
 				const fetch = this.store.fetch(this.href, this.token);
 				fetch.then(() => {
-					this._setNewGradeName(this.activityName, this.href);
+					this._setNewGradeName(this.activityName);
 				});
 			});
 		}
@@ -288,10 +288,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			if (checkedOutEntity && checkedOutEntity.associateGradeHref) {
 				this._associateGradeHref = checkedOutEntity.associateGradeHref;
 				this._fetch(() => {
-					const fetch = associateGradeStore.fetch(this._associateGradeHref, this.token);
-					fetch.then(() => {
-						this._setNewGradeName(this.activityName, this.checkedOutHref);
-					});
+					return associateGradeStore.fetch(this._associateGradeHref, this.token);
 				});
 			}
 		}
@@ -303,13 +300,13 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 					this.shadowRoot.querySelector('#score-out-of');
 				toFocus.focus();
 			} else if (propName === 'activityName') {
-				this._setNewGradeName(this.activityName, this.href);
+				this._setNewGradeName(this.activityName);
 				this._associateGradeSetGradeName(this.activityName);
 			}
 		});
 
 		if (changedProperties.size === 0) {
-			this._setNewGradeName(this.activityName, this.href);
+			this._setNewGradeName(this.activityName);
 		}
 	}
 
@@ -332,7 +329,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 	}
 	_associateGradeSetGradebookStatus(gradebookStatus) {
-		const scoreAndGrade = store.get(this.checkedOutHref).scoreAndGrade;
+		const scoreAndGrade = store.get(this.href).scoreAndGrade;
 
 		const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
 		associateGradeEntity.setGradebookStatus(gradebookStatus, scoreAndGrade.newGradeName, scoreAndGrade.scoreOutOf);
@@ -369,14 +366,15 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 
 	_removeFromGrades() {
 		store.get(this.href).scoreAndGrade.removeFromGrades();
+		this._associateGradeSetGradebookStatus(GradebookStatus.NotInGradebook);
 	}
 	_setGraded() {
 		const scoreAndGrade = store.get(this.href).scoreAndGrade;
 		scoreAndGrade.setGraded(scoreAndGrade.canEditGrades);
 		this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 	}
-	_setNewGradeName(name, href) {
-		const activity = store.get(href);
+	_setNewGradeName(name) {
+		const activity = store.get(this.href);
 		if (activity) {
 			activity.scoreAndGrade.setNewGradeName(name);
 		}
@@ -384,6 +382,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 
 	_setUngraded() {
 		store.get(this.href).scoreAndGrade.setUngraded();
+		this._associateGradeSetGradebookStatus(GradebookStatus.NotInGradebook);
 	}
 
 }

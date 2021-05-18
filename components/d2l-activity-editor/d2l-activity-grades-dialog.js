@@ -90,7 +90,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 	}
 
 	render() {
-		const activity = store.get(this.checkedOutHref);
+		const activity = store.get(this.activityUsageHref);
 		if (!activity) {
 			return html``;
 		}
@@ -214,7 +214,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 	}
 
 	_associateGradeSetGradebookStatus(gradebookStatus) {
-		const scoreAndGrade = store.get(this.href).scoreAndGrade;
+		const scoreAndGrade = store.get(this.activityUsageHref).scoreAndGrade;
 
 		const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
 		associateGradeEntity.setGradebookStatus(gradebookStatus, scoreAndGrade.newGradeName, scoreAndGrade.scoreOutOf);

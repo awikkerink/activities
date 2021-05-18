@@ -12,7 +12,7 @@ function dispatchEvent(elem, eventType, composed) {
 	elem.dispatchEvent(e);
 }
 
-describe.skip('d2l-activity-score-editor', function() {
+describe('d2l-activity-score-editor', function() {
 
 	let el, href, activity, score;
 
