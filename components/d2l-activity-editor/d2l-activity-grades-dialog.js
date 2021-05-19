@@ -4,20 +4,22 @@ import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/inputs/input-radio-spacer.js';
+import { sharedAssociateGrade as associateGradeStore, shared as store } from './state/activity-store.js';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
 import { bodySmallStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { formatNumber } from '@brightspace-ui/intl/lib/number.js';
+import { GradebookStatus } from './state/associate-grade.js';
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
-import { shared as store } from './state/activity-store.js';
 
 class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMixin(RtlMixin(MobxLitElement))) {
 
 	static get properties() {
 		return {
+			activityUsageHref: { type: String, attribute: 'activity-usage-href' },
 			_createNewRadioChecked: { type: Boolean },
 			_canLinkNewGrade: { type: Boolean },
 			_hasGradeCandidates: { type: Boolean },
@@ -88,7 +90,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 	}
 
 	render() {
-		const activity = store.get(this.href);
+		const activity = store.get(this.activityUsageHref);
 		if (!activity) {
 			return html``;
 		}
@@ -128,7 +130,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 							</div>
 						</div>
 						<d2l-activity-grade-category-selector
-							.href="${this.href}"
+							.href="${this.activityUsageHref}"
 							.token="${this.token}">
 						</d2l-activity-grade-category-selector>
 					` : html`
@@ -149,19 +151,30 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 				</label>
 				<d2l-input-radio-spacer ?hidden="${this._createNewRadioChecked && this._hasGradeCandidates}" ?disabled="${!this._hasGradeCandidates}">
 					${this._hasGradeCandidates ? html`<d2l-activity-grade-candidate-selector
-						.href="${this.href}"
+						.href="${this.activityUsageHref}"
 						.token="${this.token}">
 					</d2l-activity-grade-candidate-selector>` : html`<div class="d2l-body-small">
 						${this.localize('editor.noGradeItems')}
 					</div>`}
 				</d2l-input-radio-spacer>
-				<d2l-button slot="footer" primary dialog-action="done">${this.localize('editor.ok')}</d2l-button>
+				<d2l-button slot="footer" primary dialog-action="done" @click=${this._saveAssociateGrade}>${this.localize('editor.ok')}</d2l-button>
 				<d2l-button slot="footer" dialog-action="cancel">${this.localize('editor.cancel')}</d2l-button>
 			</d2l-dialog>
 		`;
 	}
 	async open() {
-		const scoreAndGrade = store.get(this.href).scoreAndGrade;
+		const entity = await this.store.get(this.href);
+		if (entity && entity.checkout) {
+			this.checkedOutHref = await entity.checkout(this.store);
+		}
+		const checkedOutEntity = store.get(this.checkedOutHref);
+		this._associateGradeHref = checkedOutEntity.associateGradeHref;
+		this._fetch(() => {
+			return associateGradeStore.fetch(this._associateGradeHref, this.token);
+		});
+
+		const scoreAndGrade = store.get(this.activityUsageHref).scoreAndGrade;
+
 		await Promise.all([
 			scoreAndGrade.fetchGradeCandidates(),
 			scoreAndGrade.fetchNewGradeCandidates()
@@ -178,6 +191,10 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 		this._hasGradeCandidates = gradeCandidateCollection && gradeCandidateCollection.gradeCandidates.length > 0;
 		const prevSelectedHref = gradeCandidateCollection && gradeCandidateCollection.selected ? gradeCandidateCollection.selected.href : null;
 		const prevSelectedCategoryHref = newGradeCandidatesCollection.selected.href;
+
+		if (this._createNewRadioChecked) {
+			this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
+		}
 
 		const dialog = this.shadowRoot.querySelector('d2l-dialog');
 		const action = await dialog.open();
@@ -196,10 +213,18 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 		}
 	}
 
+	_associateGradeSetGradebookStatus(gradebookStatus) {
+		const scoreAndGrade = store.get(this.activityUsageHref).scoreAndGrade;
+
+		const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
+		associateGradeEntity.setGradebookStatus(gradebookStatus, scoreAndGrade.newGradeName, scoreAndGrade.scoreOutOf);
+	}
+
 	_dialogRadioChanged(e) {
 		const currentTarget = e.currentTarget;
 		if (currentTarget && currentTarget.value === 'createNew') {
 			this._createNewRadioChecked = true;
+			this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 		} else if (currentTarget && currentTarget.value === 'linkExisting') {
 			this._createNewRadioChecked = false;
 		}
@@ -213,5 +238,14 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 		e.target.resize();
 	}
 
+	async _saveAssociateGrade() {
+		const entity = this.store.get(this.checkedOutHref);
+		if (!entity) return;
+
+		// Refetch entity in case presence of the check in action has changed
+		await entity.fetch(true);
+
+		entity.checkin(this.store, true);
+	}
 }
 customElements.define('d2l-activity-grades-dialog', ActivityGradesDialog);

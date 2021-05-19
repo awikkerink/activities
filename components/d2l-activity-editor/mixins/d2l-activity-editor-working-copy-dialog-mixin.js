@@ -87,13 +87,6 @@ export const ActivityEditorWorkingCopyDialogMixin = superclass => class extends 
 		this.dialogHref = await entity.checkout(this.store, true);
 	}
 
-	async save() {
-		const entity = this.store.get(this.checkedOutHref);
-		if (!entity) return;
-
-		await entity.checkin(this.store, true);
-	}
-
 	async _focusOnInvalid() {
 		const isAriaInvalid = node => node.getAttribute('aria-invalid') === 'true' && node.getClientRects().length > 0 && !this._hasSkipAlertAncestor(node);
 		await this.updateComplete;
