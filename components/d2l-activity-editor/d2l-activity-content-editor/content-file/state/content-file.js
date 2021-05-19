@@ -39,7 +39,7 @@ export class ContentFile {
 			if (entity.getFileType() === FILE_TYPES.html && fileEntityHref) {
 				const fileEntityResponse = await fetchEntity(fileEntityHref, this.token);
 				const fileEntity = new FileEntity(fileEntityResponse, this.token, { remove: () => { } });
-				const fileContentFetchResponse = await fetch(fileEntity.getFileLocationHref());
+				const fileContentFetchResponse = await window.d2lfetch.fetch(fileEntity.getFileDataLocationHref());
 				if (fileContentFetchResponse.ok) {
 					fileContent = await fileContentFetchResponse.text();
 				}
