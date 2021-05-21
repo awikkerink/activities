@@ -10,4 +10,9 @@ export const activityContentEditorStyles = css`
 	:host > div {
 		padding-bottom: 20px;
 	}
+	#content-description-container {
+		display: flex;
+		flex-direction: column;
+		height: inherit;
+	}
 `;
