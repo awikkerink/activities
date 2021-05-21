@@ -45,8 +45,8 @@ export default {
 	"editor.cancel": "Annuler", // Text of dialog button to cancel action
 	"editor.ariaToolbarShortcutInstructions": "Cliquez sur Alt + F10 pour afficher la barre d’outils et sur Échap pour la faire disparaître.", // Instructions for screenreader users on how to enter and exit the html editor toolbar
 	"editor.chooseFromGrades": "Faire un choix dans les Notes d’appréciation", // Link text and dialog title for the edit grades dialog,
-	"editor.editLinkExisting": "Edit or Link to Existing", // New Link text and dialog title for the edit grades dialog,
-	"editor.hdrRubrics": "Rubriques", //Header for the rubrics section
+	"editor.editLinkExisting": "Modifier ou lier à un élément existant", // New Link text and dialog title for the edit grades dialog,
+	"editor.hdrRubrics": "Grilles d'évaluation", //Header for the rubrics section
 	"editor.startBeforeEndDate": "La date du début doit être antérieure à la date de fin.",
 	"editor.dueBetweenStartEndDate": "La date d’échéance doit être postérieure à la date du début et antérieure ou correspondre à la date de fin.",
 	"editor.dueAfterStartDate": "La date d’échéance doit être postérieure à la date du début.",
@@ -78,25 +78,27 @@ export default {
 	"editor.noLabel": "Non",
 	"editor.notificationEmailLabel": "Courriel de notification", // Label for notification email input field
 	"editor.invalidNotificationEmailError": "Veuillez saisir une adresse courriel valide", // error shown on tooltip when notification email is invalid
-	"editor.gradeOutOf": "Grade Out Of", // ARIA label for the grade out of field, when creating/editing an activity
-	"editor.inGradebook": "In Gradebook", // New state of the grades field when there is a score, and an associated grade item
-	"editor.notInGradebook": "Not in Gradebook", // New state of the grades field when there is a score, but no associated grade item
-	"editor.addToGradebook": "Add to Gradebook", // New menu item for adding grade association
+	"editor.gradeOutOf": "Note d'appréciation sur", // ARIA label for the grade out of field, when creating/editing an activity
+	"editor.inGradebook": "Dans le carnet de notes", // New state of the grades field when there is a score, and an associated grade item
+	"editor.notInGradebook": "Ne figure pas dans le carnet de notes", // New state of the grades field when there is a score, but no associated grade item
+	"editor.addToGradebook": "Inclure dans le carnet de notes", // New menu item for adding grade association
 
-	"rubrics.btnAddRubric": "Ajouter une rubrique", //text for add rubric button
+	"rubrics.btnAddRubric": "Ajouter une grille d'évaluation", //text for add rubric button
 	"rubrics.btnCreateNew": "Créer", //Text for create new dropdown
+	"rubrics.btnDetach": "Detach", //Text for the button to confirm detaching a rubric
 	"rubrics.btnAddExisting": "Ajouter existant", //Text for Add Existing dropdown
-	"rubrics.hdrRubrics": "Rubriques", //Header for the rubrics section
-	"rubrics.btnAttachRubric": "Joindre la rubrique", //Button for the attach new rubric overlay
+	"rubrics.hdrRubrics": "Grilles d'évaluation", //Header for the rubrics section
+	"rubrics.btnAttachRubric": "Joindre la grille d'évaluation", //Button for the attach new rubric overlay
 	"rubrics.btnCancel": "Annuler", //Button for canceling out of the attach new rubric overlay
 	"rubrics.txtAddExisting": "Ajouter existant", //Title for the attach rubrics dialog,
-	"rubrics.txtNoRubricAdded": "Aucune rubrique n’a été ajoutée", // rubric summary for no rubrics
-	"rubrics.txtRubricsAdded": "{count, plural, =1 {1 rubrique ajoutée} other {{count} rubriques ajoutées}}", // count of asoociated rubrics
-	"rubrics.txtDeleteRubric": "Supprimer la rubrique", // Text for deleting rubric icon
+	"rubrics.txtNoRubricAdded": "Aucune grille d'évaluation n’a été ajoutée", // rubric summary for no rubrics
+	"rubrics.txtRubricsAdded": "{count, plural, =1 {1 grille d'évaluation ajoutée} other {{count} grilles d'évaluation ajoutées}}", // count of asoociated rubrics
+	"rubrics.txtDeleteRubric": "Supprimer la grille d'évaluation", // Text for deleting rubric icon
 	"rubrics.btnClose": "Fermer", // X button for exiting the create new rubric overlay
-	"rubrics.txtRubricAdded": "Rubrique ajoutée", // Text for notifying screenreader rubric was added
-	"rubrics.txtRubricRemoved": "Rubrique supprimée", // Text for notifying screenreader rubric was removed
-	"rubrics.defaultScoringRubric": "Rubrique de notation par défaut", // Sub heading for the default scoring rubric select dropdown
+	"rubrics.txtRubricAdded": "Grille d'évaluation ajoutée", // Text for notifying screenreader rubric was added
+	"rubrics.txtRubricRemoved": "Grille d'évaluation supprimée", // Text for notifying screenreader rubric was removed
+	"rubrics.txtConfirmDetachRubric": "Once the rubric is detached, all previous assessments of the rubric in this activity will be deleted. Confirm detaching the rubric?", //Text for the dialog to confirm detaching a rubric from an evaluated activity
+	"rubrics.defaultScoringRubric": "Grille d'évaluation de notation par défaut", // Sub heading for the default scoring rubric select dropdown
 	"rubrics.noDefaultScoringRubricSelected": "Aucune valeur par défaut sélectionnée", // option in default scoring rubric when no default scoring rubric selected
 
 	"grades.points": "Points : {points}", // Text label for displaying points of a grade
