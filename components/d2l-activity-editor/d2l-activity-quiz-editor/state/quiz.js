@@ -50,6 +50,11 @@ export class Quiz extends WorkingCopy {
 		this.headerIsDisplayed = entity.headerIsDisplayed();
 		this.headerRichTextEditorConfig = entity.headerRichTextEditorConfig();
 		this.originalHeaderIsEmpty = entity.originalHeaderIsEmpty();
+		this.footer = entity.canEditFooter() ? entity.footerEditorHtml() : entity.footerHtml();
+		this.canEditFooter = entity.canEditFooter();
+		this.footerIsDisplayed = entity.footerIsDisplayed();
+		this.footerRichTextEditorConfig = entity.footerRichTextEditorConfig();
+		this.originalFooterIsEmpty = entity.originalFooterIsEmpty();
 		this.ipRestrictionsHref = entity.ipRestrictionsHref();
 
 		const types = await entity.activityTypes();
@@ -72,6 +77,10 @@ export class Quiz extends WorkingCopy {
 
 	setDisableRightClick(value) {
 		this.isDisableRightClickEnabled = value;
+	}
+
+	setFooter(value) {
+		this.footer = value;
 	}
 
 	setHeader(value) {
@@ -117,7 +126,8 @@ export class Quiz extends WorkingCopy {
 			notificationEmail: this.notificationEmail,
 			autoSetGraded: this.isAutoSetGradedEnabled,
 			description: this.description,
-			header: this.header
+			header: this.header,
+			footer: this.footer
 		};
 
 		return data;
@@ -158,6 +168,10 @@ decorate(Quiz, {
 	canEditHeader: observable,
 	headerRichTextEditorConfig: observable,
 	originalHeaderIsEmpty: observable,
+	footer: observable,
+	canEditFooter: observable,
+	footerRichTextEditorConfig: observable,
+	originalFooterIsEmpty: observable,
 	activityTypes: observable,
 	// actions
 	load: action,
@@ -172,5 +186,6 @@ decorate(Quiz, {
 	setAutoSetGraded: action,
 	setDescription: action,
 	setHeader: action,
+	setFooter: action,
 	delete: action
 });
