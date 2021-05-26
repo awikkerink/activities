@@ -54,6 +54,11 @@ describe('Quiz', function() {
 				canEditHeader: () => true,
 				headerRichTextEditorConfig: () => { },
 				originalHeaderIsEmpty: () => false,
+				footeEditorHtml: () => 'This is an footer',
+				footerIsDisplayed: () => true,
+				canEditFooter: () => true,
+				footerRichTextEditorConfig: () => { },
+				originalFooterIsEmpty: () => false,
 				introIsAppendedToDescription: () => {},
 				activityTypes: () => []
 			};
@@ -92,7 +97,9 @@ describe('Quiz', function() {
 		expect(quiz.description).to.equal('This is a description');
 		expect(quiz.descriptionIsDisplayed).to.equal(true);
 		expect(quiz.header).to.equal('This is an header');
+		expect(quiz.footer).to.equal('This is an footer');
 		expect(quiz.originalHeaderIsEmpty).to.equal(false);
+		expect(quiz.originalFooterIsEmpty).to.equal(false);
 	});
 
 	it('setName', async() => {
@@ -188,5 +195,14 @@ describe('Quiz', function() {
 		quiz.setHeader('New header');
 
 		expect(quiz.header).to.equal('New header');
+	});
+
+	it('setFooter', async() => {
+		const quiz = new Quiz('http://quiz/1', 'token');
+		await quiz.fetch();
+
+		quiz.setFooter('New footer');
+
+		expect(quiz.footer).to.equal('New footer');
 	});
 });
