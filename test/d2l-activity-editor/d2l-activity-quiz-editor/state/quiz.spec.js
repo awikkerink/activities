@@ -54,7 +54,7 @@ describe('Quiz', function() {
 				canEditHeader: () => true,
 				headerRichTextEditorConfig: () => { },
 				originalHeaderIsEmpty: () => false,
-				footeEditorHtml: () => 'This is an footer',
+				footerEditorHtml: () => 'This is an footer',
 				footerIsDisplayed: () => true,
 				canEditFooter: () => true,
 				footerRichTextEditorConfig: () => { },
