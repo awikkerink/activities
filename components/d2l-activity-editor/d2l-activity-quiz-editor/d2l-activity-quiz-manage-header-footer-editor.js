@@ -14,11 +14,21 @@ class ActivityQuizManageHeaderFooterEditor extends ActivityEditorMixin(RtlMixin(
 			bodyCompactStyles,
 			labelStyles,
 			css`
+				.d2l-body-compact {
+					margin-top: 0;
+				}
 				.d2l-body-text-container {
 					margin-bottom: 1rem;
 				}
 				.d2l-label-text {
-					margin-bottom: 0.5rem;
+					margin-bottom: 1rem;
+					margin-top: 1.5rem;
+				}
+				.d2l-label-text-footer {
+					margin-top: 2rem;
+				}
+				.d2l-activity-text-editor-spacer {
+					margin-top: 1rem;
 				}
 			`
 		];
@@ -34,20 +44,32 @@ class ActivityQuizManageHeaderFooterEditor extends ActivityEditorMixin(RtlMixin(
 		const {
 			header,
 			canEditHeader,
-			headerRichTextEditorConfig
+			headerRichTextEditorConfig,
+			footer,
+			canEditFooter,
+			footerRichTextEditorConfig
 		} = quiz || {};
 
 		const headerLang = this.localize('header');
+		const footerLang = this.localize('footer');
 
 		return html`
 			<div class="d2l-body-text-container"><p class="d2l-body-compact">${this.localize('headerDialogText')}</p></div>
 			<div class="d2l-label-text">${this.localize('headerLabel')}</div>
-			<d2l-activity-text-editor
+			<d2l-activity-text-editor id="headerEditor"
 				.value="${header}"
 				.richtextEditorConfig="${headerRichTextEditorConfig}"
 				ariaLabel="${headerLang}"
 				?disabled="${canEditHeader === undefined ? false : !canEditHeader}">
 			</d2l-activity-text-editor>
+			<div class="d2l-label-text d2l-label-text-footer">${this.localize('footerLabel')}</div>
+			<d2l-activity-text-editor id="footerEditor"
+				.value="${footer}"
+				.richtextEditorConfig="${footerRichTextEditorConfig}"
+				ariaLabel="${footerLang}"
+				?disabled="${canEditFooter === undefined ? false : !canEditFooter}">
+			</d2l-activity-text-editor>
+			<div class="d2l-activity-text-editor-spacer"></div>
 		`;
 	}
 
@@ -78,21 +100,30 @@ class ActivityQuizManageHeaderFooterEditor extends ActivityEditorMixin(RtlMixin(
 
 		const entity = store.get(this.href);
 
-		const el = this.shadowRoot.querySelector('d2l-activity-text-editor');
+		const headerEditor = this.shadowRoot.querySelector('#headerEditor');
+		const footerEditor = this.shadowRoot.querySelector('#footerEditor');
 
 		if (htmlEditorEnabled && htmlNewEditorEnabled) {
-			const newEd = el.shadowRoot.querySelector('d2l-activity-html-new-editor');
-			const htmlEd = newEd.shadowRoot.querySelector('d2l-htmleditor');
-			entity.setHeader(htmlEd.html);
+			const newEdH = headerEditor.shadowRoot.querySelector('d2l-activity-html-new-editor');
+			const htmlEdH = newEdH.shadowRoot.querySelector('d2l-htmleditor');
+			entity.setHeader(htmlEdH.html);
+			const newEdF = footerEditor.shadowRoot.querySelector('d2l-activity-html-new-editor');
+			const htmlEdF = newEdF.shadowRoot.querySelector('d2l-htmleditor');
+			entity.setFooter(htmlEdF.html);
 		}
 		if (htmlEditorEnabled && !htmlNewEditorEnabled) {
-			const oldEd = el.shadowRoot.querySelector('d2l-activity-html-editor');
-			const htmlEd = oldEd.shadowRoot.querySelector('d2l-html-editor');
-			entity.setHeader(htmlEd.innerText);
+			const oldEdH = headerEditor.shadowRoot.querySelector('d2l-activity-html-editor');
+			const htmlEdH = oldEdH.shadowRoot.querySelector('d2l-html-editor');
+			entity.setHeader(htmlEdH.innerText);
+			const oldEdF = footerEditor.shadowRoot.querySelector('d2l-activity-html-editor');
+			const htmlEdF = oldEdF.shadowRoot.querySelector('d2l-html-editor');
+			entity.setFooter(htmlEdF.innerText);
 		}
 		if (!htmlEditorEnabled) {
-			const ed = el.shadowRoot.querySelector('d2l-input-textarea');
-			entity.setHeader(ed.value);
+			const edH = headerEditor.shadowRoot.querySelector('d2l-input-textarea');
+			entity.setHeader(edH.value);
+			const edF = footerEditor.shadowRoot.querySelector('d2l-input-textarea');
+			entity.setFooter(edF.value);
 		}
 	}
 
