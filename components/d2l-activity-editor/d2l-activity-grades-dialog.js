@@ -9,7 +9,7 @@ import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
 import { bodySmallStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { formatNumber } from '@brightspace-ui/intl/lib/number.js';
-import { GradebookStatus } from './state/associate-grade.js';
+import { GradebookStatus } from 'siren-sdk/src/activities/associateGrade/AssociateGradeEntity.js';
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
@@ -163,9 +163,9 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 		`;
 	}
 	async open() {
-		const entity = await this.store.get(this.href);
+		const entity = await store.get(this.href);
 		if (entity && entity.checkout) {
-			this.checkedOutHref = await entity.checkout(this.store);
+			this.checkedOutHref = await entity.checkout(store);
 		}
 		const checkedOutEntity = store.get(this.checkedOutHref);
 		this._associateGradeHref = checkedOutEntity.associateGradeHref;
@@ -194,6 +194,8 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 
 		if (this._createNewRadioChecked) {
 			this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
+		} else {
+			this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
 		}
 
 		const dialog = this.shadowRoot.querySelector('d2l-dialog');
@@ -227,6 +229,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 			this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 		} else if (currentTarget && currentTarget.value === 'linkExisting') {
 			this._createNewRadioChecked = false;
+			this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
 		}
 
 		const dialog = this.shadowRoot.querySelector('d2l-dialog');
@@ -239,13 +242,13 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 	}
 
 	async _saveAssociateGrade() {
-		const entity = this.store.get(this.checkedOutHref);
+		const entity = store.get(this.checkedOutHref);
 		if (!entity) return;
 
 		// Refetch entity in case presence of the check in action has changed
 		await entity.fetch(true);
 
-		entity.checkin(this.store, true);
+		entity.checkin(store, true);
 	}
 }
 customElements.define('d2l-activity-grades-dialog', ActivityGradesDialog);
