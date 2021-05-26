@@ -15,14 +15,14 @@ class ActivityQuizManageHeaderFooterEditor extends ActivityEditorMixin(RtlMixin(
 			labelStyles,
 			css`
 				.d2l-body-compact {
-					margin-top: 0rem;
+					margin-top: 0;
 				}
 				.d2l-body-text-container {
 					margin-bottom: 1rem;
 				}
 				.d2l-label-text {
-					margin-top: 1.5rem;
 					margin-bottom: 1rem;
+					margin-top: 1.5rem;
 				}
 				.d2l-label-text-footer {
 					margin-top: 2rem;
