@@ -4,12 +4,6 @@ import { fetchEntity } from './fetch-entity.js';
 
 configureMobx({ enforceActions: 'observed' });
 
-export const GradebookStatus = Object.freeze({
-	NotInGradebook: 'not-in-gradebook',
-	NewGrade: 'new-grade',
-	ExistingGrade: 'existing-grade'
-});
-
 export class AssociateGrade {
 	constructor(href, token) {
 		this.href = href;
@@ -29,6 +23,10 @@ export class AssociateGrade {
 
 	load(entity) {
 		this._entity = entity;
+		this.gradebookStatus = entity.gradebookStatus();
+		this.gradeName = entity.gradeName();
+		this.maxPoints = entity.maxPoints();
+		this.gradeType = entity.gradeType();
 	}
 
 	setGradebookStatus(newStatus, gradeName, maxPoints) {
@@ -54,7 +52,7 @@ export class AssociateGrade {
 			this.fetch();
 			return;
 		}
-		this._entity = entity;
+		this.load(entity);
 	}
 }
 
@@ -63,6 +61,9 @@ decorate(AssociateGrade, {
 	gradebookStatus: observable,
 	gradeName: observable,
 	maxPoints: observable,
+	gradeType: observable,
+	gradeCandidatesHref: observable,
+	gradeCandidateCollection: observable,
 	// actions
 	load: action,
 	setGradebookStatus: action,
