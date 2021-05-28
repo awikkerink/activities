@@ -127,6 +127,7 @@ export default {
 	"header": "Header", // Header label for the header text box.
 	"headerAdded": "Header added", // Header added summary text for Timing and Display accordion.
 	"footerAdded": "Footer added", // Footer added summary text for Timing and Display accordion.
+	"headerAndFooterAdded": "Header and footer added", // Header and footer added text for Timing and Display accordion.
 	"footer": "Footer", // Footer lable for the footer text box.
 	"footerLabel": "Footer", // Label for the footer text box.
 	"headerAndFooter": "Header and footer added", // Header and footer summary text for closed accordion
