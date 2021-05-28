@@ -108,15 +108,6 @@ class ActivityRubricsListEditor extends ActivityEditorMixin(LocalizeActivityEdit
 		this._confirmDetachDialogOpen = false;
 	}
 
-	_handleConfirmDetachDialogOpen(e) {
-		//Set default keyboard focus to the cancel button
-		const dialog = e.target;
-		const closeButton = dialog.querySelector('.detach-rubric-dialog-cancel-button');
-		if (closeButton) {
-			closeButton.focus();
-		}
-	}
-
 	_onDeleteAssociationButtonClicked(e, association) {
 		const associationEntity = association.entity._entity;
 		const activityUsageLink = associationEntity.getSubEntityByClass('activity-usage');
@@ -164,7 +155,6 @@ class ActivityRubricsListEditor extends ActivityEditorMixin(LocalizeActivityEdit
 			<d2l-dialog-confirm
 				?opened="${this._confirmDetachDialogOpen}"
 				text="${this.localize('rubrics.txtConfirmDetachRubric')}"
-				@d2l-dialog-open="${this._handleConfirmDetachDialogOpen}}"
 				@d2l-dialog-close="${deleteConfirmDialogClosedFunc}"
 			>
 				<d2l-button
