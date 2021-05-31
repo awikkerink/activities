@@ -14,13 +14,20 @@ class ActivityQuizHeaderFooterSummary extends ActivityEditorMixin(LocalizeActivi
 		const quiz = store.get(this.href);
 
 		const {
-			header
+			header,
+			footer
 		} = quiz || {};
+		const isHeader = header && header.length > 0;
+		const isFooter = footer && footer.length > 0;
 
-		if (!quiz || !header || header.length === 0) {
+		if (!quiz || !(isHeader || isFooter)) {
 			return html``;
-		} else {
+		} else if (isHeader && !isFooter) {
 			return html`${this.localize('headerAdded')}`;
+		} else if (!isHeader && isFooter) {
+			return html`${this.localize('footerAdded')}`;
+		} else if (isHeader && isFooter) {
+			return html`${this.localize('headerAndFooterAdded')}`;
 		}
 	}
 }

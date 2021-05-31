@@ -41,7 +41,7 @@ class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(
 
 	render() {
 		return html`
-			${this._renderHeaderDialogSummary()}
+			${this._renderHeaderFooterDialogSummary()}
 			${this._renderDialogOpener()}
 			${this._renderDialog()}
     	`;
@@ -74,14 +74,12 @@ class ActivityQuizManageHeaderFooterContainer extends ActivityEditorDialogMixin(
 		`;
 	}
 
-	_renderHeaderDialogSummary() {
+	_renderHeaderFooterDialogSummary() {
 		return html`
-			<div class="d2l-activity-quiz-manage-header-footer-dialog-summary">
-				<d2l-activity-quiz-manage-header-footer-dialog-summary class="d2l-body-small"
-					href="${this.href}"
-					.token="${this.token}">
-				</d2l-activity-quiz-manage-header-footer-dialog-summary>
-			</div>
+			<d2l-activity-quiz-manage-header-footer-dialog-summary
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-manage-header-footer-dialog-summary>
 		`;
 	}
 
