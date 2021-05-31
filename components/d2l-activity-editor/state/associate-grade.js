@@ -28,12 +28,14 @@ export class AssociateGrade {
 		this.gradeName = entity.gradeName();
 		this.maxPoints = entity.maxPoints();
 		this.gradeType = entity.gradeType();
-		this.gradeCategories = null; // what is this, or call it collection ?? how do we use it?
+		this.gradeCategoryCollection = null; // what is this, or call it collection ?? how do we use it?
 	}
 
-	getGradeCategories() {
-		this.gradeCategories = new GradeCategoryCollection(this._entity.getGradeCategories(), this.token);
-		// need to fetch this
+	async getGradeCategories() {
+		const gradeCategoryCollectionEntity = await this._entity.getGradeCategories();
+		if (!gradeCategoryCollectionEntity) return;
+		this.gradeCategoryCollection = new GradeCategoryCollection(gradeCategoryCollectionEntity, this.token);
+		this.gradeCategoryCollection.fetch();
 	}
 
 	async setGradebookStatus(newStatus, gradeName, maxPoints) {
@@ -67,7 +69,7 @@ decorate(AssociateGrade, {
 	gradeName: observable,
 	maxPoints: observable,
 	gradeType: observable,
-	gradeCategories: observable,
+	gradeCategoryCollection: observable,
 	gradeCandidatesHref: observable,
 	gradeCandidateCollection: observable,
 	// actions

@@ -195,7 +195,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 		if (this._createNewRadioChecked) {
 			await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 			const associateGrade = associateGradeStore.get(this._associateGradeHref);
-			associateGrade.getGradeCategories(); // what to do with this, and also duplicate?
+			associateGrade.getGradeCategories();
 
 		} else {
 			this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
@@ -231,7 +231,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 			this._createNewRadioChecked = true;
 			await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 			const associateGrade = associateGradeStore.get(this._associateGradeHref);
-			associateGrade.getGradeCategories(); // what to do with this?
+			associateGrade.getGradeCategories();
 		} else if (currentTarget && currentTarget.value === 'linkExisting') {
 			this._createNewRadioChecked = false;
 			this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
