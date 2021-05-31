@@ -1,5 +1,6 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { AssociateGradeEntity } from 'siren-sdk/src/activities/associateGrade/AssociateGradeEntity.js';
+import { GradeCategoryCollection } from '../d2l-activity-grades/state/grade-category-collection.js';
 import { fetchEntity } from './fetch-entity.js';
 
 configureMobx({ enforceActions: 'observed' });
@@ -27,22 +28,25 @@ export class AssociateGrade {
 		this.gradeName = entity.gradeName();
 		this.maxPoints = entity.maxPoints();
 		this.gradeType = entity.gradeType();
+		this.gradeCategories = null; // what is this, or call it collection ?? how do we use it?
 	}
 
-	setGradebookStatus(newStatus, gradeName, maxPoints) {
-		this.gradebookStatus = newStatus;
+	getGradeCategories() {
+		this.gradeCategories = new GradeCategoryCollection(this._entity.getGradeCategories(), this.token);
+		// need to fetch this
+	}
+
+	async setGradebookStatus(newStatus, gradeName, maxPoints) {
 		if (gradeName) this.gradeName = gradeName;
 		if (maxPoints) this.maxPoints = maxPoints;
-		this._updateProperty(() => this._entity.setGradebookStatus(newStatus, gradeName, maxPoints));
+		await this._updateProperty(() => this._entity.setGradebookStatus(newStatus, gradeName, maxPoints));
 	}
 
 	setGradeMaxPoints(maxPoints) {
-		this.maxPoints = maxPoints;
 		this._updateProperty(() => this._entity.setGradeMaxPoints(maxPoints));
 	}
 
 	setGradeName(gradeName) {
-		this.gradeName = gradeName;
 		this._updateProperty(() => this._entity.setGradeName(gradeName));
 	}
 
@@ -52,6 +56,7 @@ export class AssociateGrade {
 			this.fetch();
 			return;
 		}
+
 		this.load(entity);
 	}
 }
@@ -62,10 +67,12 @@ decorate(AssociateGrade, {
 	gradeName: observable,
 	maxPoints: observable,
 	gradeType: observable,
+	gradeCategories: observable,
 	gradeCandidatesHref: observable,
 	gradeCandidateCollection: observable,
 	// actions
 	load: action,
+	getGradeCategories: action,
 	setGradebookStatus: action,
 	setGradeMaxPoints: action,
 	setGradeName: action
