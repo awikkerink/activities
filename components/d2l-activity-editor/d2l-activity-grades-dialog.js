@@ -193,7 +193,10 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 		const prevSelectedCategoryHref = newGradeCandidatesCollection.selected.href;
 
 		if (this._createNewRadioChecked) {
-			this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
+			await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
+			const associateGrade = associateGradeStore.get(this._associateGradeHref);
+			associateGrade.getGradeCategories();
+
 		} else {
 			this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
 		}
@@ -215,18 +218,20 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 		}
 	}
 
-	_associateGradeSetGradebookStatus(gradebookStatus) {
+	async _associateGradeSetGradebookStatus(gradebookStatus) {
 		const scoreAndGrade = store.get(this.activityUsageHref).scoreAndGrade;
 
-		const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
-		associateGradeEntity.setGradebookStatus(gradebookStatus, scoreAndGrade.newGradeName, scoreAndGrade.scoreOutOf);
+		const associateGrade = associateGradeStore.get(this._associateGradeHref);
+		await associateGrade.setGradebookStatus(gradebookStatus, scoreAndGrade.newGradeName, scoreAndGrade.scoreOutOf);
 	}
 
-	_dialogRadioChanged(e) {
+	async _dialogRadioChanged(e) {
 		const currentTarget = e.currentTarget;
 		if (currentTarget && currentTarget.value === 'createNew') {
 			this._createNewRadioChecked = true;
-			this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
+			await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
+			const associateGrade = associateGradeStore.get(this._associateGradeHref);
+			associateGrade.getGradeCategories();
 		} else if (currentTarget && currentTarget.value === 'linkExisting') {
 			this._createNewRadioChecked = false;
 			this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
