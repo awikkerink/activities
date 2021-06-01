@@ -169,7 +169,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 		}
 
 		const checkedOutEntity = store.get(this.checkedOutHref);
-		if (this.checkedOutEntity && checkedOutEntity.associateGradeHref) {
+		if (checkedOutEntity && checkedOutEntity.associateGradeHref) {
 			this._associateGradeHref = checkedOutEntity.associateGradeHref;
 			this._fetch(() => {
 				return associateGradeStore.fetch(this._associateGradeHref, this.token);
