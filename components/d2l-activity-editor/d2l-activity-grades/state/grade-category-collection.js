@@ -13,12 +13,6 @@ export class GradeCategoryCollection {
 		this.selected = null;
 	}
 
-	async fetchGradeCategory(gradeCategoryLinkedEntity) {
-		const gradeCategory = new GradeCategory(gradeCategoryLinkedEntity, this.token);
-		await gradeCategory.fetch();
-		return gradeCategory;
-	}
-
 	async fetch() {
 		const gradeCategoryPromises = this.gradeCategoryCollectionEntity.getGradeCategories().map(category => {
 			const gradeCategoryLinkedEntity = new GradeCategoryLinkedEntity(category, this.token, { remove: () => { } });
@@ -28,6 +22,12 @@ export class GradeCategoryCollection {
 		await Promise.all(gradeCategoryPromises);
 		await this.load();
 		return this;
+	}
+
+	async fetchGradeCategory(gradeCategoryLinkedEntity) {
+		const gradeCategory = new GradeCategory(gradeCategoryLinkedEntity, this.token);
+		await gradeCategory.fetch();
+		return gradeCategory;
 	}
 
 	async load() {
