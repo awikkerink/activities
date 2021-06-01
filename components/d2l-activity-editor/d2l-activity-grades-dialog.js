@@ -164,15 +164,17 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 	}
 	async open() {
 		const entity = await store.get(this.href);
-		if (entity && entity.checkout) {
+		if (this._createSelectboxGradeItemEnabled && entity && entity.checkout) {
 			this.checkedOutHref = await entity.checkout(store);
 		}
-		const checkedOutEntity = store.get(this.checkedOutHref);
-		this._associateGradeHref = checkedOutEntity.associateGradeHref;
-		this._fetch(() => {
-			return associateGradeStore.fetch(this._associateGradeHref, this.token);
-		});
 
+		const checkedOutEntity = store.get(this.checkedOutHref);
+		if (checkedOutEntity && checkedOutEntity.associateGradeHref) {
+			this._associateGradeHref = checkedOutEntity.associateGradeHref;
+			this._fetch(() => {
+				return associateGradeStore.fetch(this._associateGradeHref, this.token);
+			});
+		}
 		const scoreAndGrade = store.get(this.activityUsageHref).scoreAndGrade;
 
 		await Promise.all([
@@ -195,8 +197,9 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 		if (this._createNewRadioChecked) {
 			await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 			const associateGrade = associateGradeStore.get(this._associateGradeHref);
-			associateGrade.getGradeCategories();
-
+			if (associateGrade) {
+				associateGrade.getGradeCategories();
+			}
 		} else {
 			this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
 		}
@@ -222,6 +225,7 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 		const scoreAndGrade = store.get(this.activityUsageHref).scoreAndGrade;
 
 		const associateGrade = associateGradeStore.get(this._associateGradeHref);
+		if (!scoreAndGrade || !associateGrade) return;
 		await associateGrade.setGradebookStatus(gradebookStatus, scoreAndGrade.newGradeName, scoreAndGrade.scoreOutOf);
 	}
 
@@ -231,7 +235,9 @@ class ActivityGradesDialog extends ActivityEditorMixin(LocalizeActivityEditorMix
 			this._createNewRadioChecked = true;
 			await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 			const associateGrade = associateGradeStore.get(this._associateGradeHref);
-			associateGrade.getGradeCategories();
+			if (associateGrade) {
+				associateGrade.getGradeCategories();
+			}
 		} else if (currentTarget && currentTarget.value === 'linkExisting') {
 			this._createNewRadioChecked = false;
 			this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
