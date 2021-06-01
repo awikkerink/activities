@@ -10,7 +10,7 @@ export class GradeCandidateCollection {
 
 	constructor(hrefOrGradeCandidateCollectionEntity, token) {
 		if (typeof hrefOrGradeCandidateCollectionEntity === GradeCandidateCollectionEntity) {
-			this.gradeCandidateCollectionEntity = hrefOrGradeCandidateCollectionEntity
+			this.gradeCandidateCollectionEntity = hrefOrGradeCandidateCollectionEntity;
 		} else {
 			this.href = hrefOrGradeCandidateCollectionEntity;
 		}
