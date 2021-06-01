@@ -340,7 +340,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	}
 	_associateGradeSetMaxPoints(maxPoints) {
 		const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
-		aassociateGradeEntity && ssociateGradeEntity.setGradeMaxPoints(maxPoints);
+		associateGradeEntity && associateGradeEntity.setGradeMaxPoints(maxPoints);
 	}
 	_chooseFromGrades() {
 		const activityGradesElement = this.shadowRoot.querySelector('d2l-activity-grades-dialog');
