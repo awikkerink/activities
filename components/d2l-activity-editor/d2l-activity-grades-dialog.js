@@ -201,14 +201,17 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 				});
 			}
 
+			const associateGrade = associateGradeStore.get(this._associateGradeHref);
 			if (this._createNewRadioChecked) {
 				await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
-				const associateGrade = associateGradeStore.get(this._associateGradeHref);
 				if (associateGrade) {
 					associateGrade.getGradeCategories();
 				}
 			} else {
 				this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
+				if (associateGrade) {
+					associateGrade.getGradeCandidates();
+				}
 			}
 		}
 	}
@@ -223,16 +226,19 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 
 	async _dialogRadioChanged(e) {
 		const currentTarget = e.currentTarget;
+		const associateGrade = associateGradeStore.get(this._associateGradeHref);
 		if (currentTarget && currentTarget.value === 'createNew') {
 			this._createNewRadioChecked = true;
 			await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
-			const associateGrade = associateGradeStore.get(this._associateGradeHref);
 			if (associateGrade) {
 				associateGrade.getGradeCategories();
 			}
 		} else if (currentTarget && currentTarget.value === 'linkExisting') {
 			this._createNewRadioChecked = false;
 			this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
+			if (associateGrade) {
+				associateGrade.getGradeCandidates();
+			}
 		}
 
 		const dialog = this.shadowRoot.querySelector('d2l-dialog');
