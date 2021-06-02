@@ -1,6 +1,7 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { AssociateGradeEntity } from 'siren-sdk/src/activities/associateGrade/AssociateGradeEntity.js';
 import { fetchEntity } from './fetch-entity.js';
+import { GradeCandidateCollection } from '../d2l-activity-grades/state/grade-candidate-collection.js';
 import { GradeCategoryCollection } from '../d2l-activity-grades/state/grade-category-collection.js';
 
 configureMobx({ enforceActions: 'observed' });
@@ -22,11 +23,18 @@ export class AssociateGrade {
 		return this;
 	}
 
+	async getGradeCandidates() {
+		const gradeCandidateCollectionEntity = await this._entity.getGradeCandidates();
+		if (!gradeCandidateCollectionEntity) return;
+		this.gradeCandidateCollection = new GradeCandidateCollection(gradeCandidateCollectionEntity, this.token);
+		await this.gradeCandidateCollection.fetch();
+	}
+
 	async getGradeCategories() {
 		const gradeCategoryCollectionEntity = await this._entity.getGradeCategories();
 		if (!gradeCategoryCollectionEntity) return;
 		this.gradeCategoryCollection = new GradeCategoryCollection(gradeCategoryCollectionEntity, this.token);
-		this.gradeCategoryCollection.fetch();
+		await this.gradeCategoryCollection.fetch();
 	}
 
 	load(entity) {
@@ -35,7 +43,8 @@ export class AssociateGrade {
 		this.gradeName = entity.gradeName();
 		this.maxPoints = entity.maxPoints();
 		this.gradeType = entity.gradeType();
-		this.gradeCategoryCollection = null; // what is this, or call it collection ?? how do we use it?
+		this.gradeCategoryCollection = null;
+		this.gradeCandidateCollection = null;
 	}
 
 	async setGradebookStatus(newStatus, gradeName, maxPoints) {
@@ -70,11 +79,11 @@ decorate(AssociateGrade, {
 	maxPoints: observable,
 	gradeType: observable,
 	gradeCategoryCollection: observable,
-	gradeCandidatesHref: observable,
 	gradeCandidateCollection: observable,
 	// actions
 	load: action,
 	getGradeCategories: action,
+	getGradeCandidates: action,
 	setGradebookStatus: action,
 	setGradeMaxPoints: action,
 	setGradeName: action
