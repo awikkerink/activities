@@ -345,7 +345,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	_chooseFromGrades() {
 		const activityGradesElement = this.shadowRoot.querySelector('d2l-activity-grades-dialog');
 		if (activityGradesElement) {
-			activityGradesElement.open();
+			activityGradesElement.openGradesDialog();
 		}
 	}
 	_onScoreOutOfChanged() {
