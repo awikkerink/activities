@@ -23,6 +23,7 @@ class ActivityEditor extends ActivityEditorContainerMixin(ActivityEditorTelemetr
 			errorTerm: { type: String, attribute: 'error-term' },
 			htmlEditorEnabled: { type: Boolean, attribute: 'html-editor-enabled' },
 			htmlNewEditorEnabled: { type: Boolean, attribute: 'html-new-editor-enabled' },
+			resizable: { type: Boolean },
 			_backdropShown: { type: Boolean },
 			_saveToastVisible: { type: Boolean }
 		};
@@ -68,7 +69,7 @@ class ActivityEditor extends ActivityEditorContainerMixin(ActivityEditorTelemetr
 		// The following line introduces a worse bug, where typing into a text input on Android causes
 		// the cursor to go to the beginning every time a space is entered
 		//document.documentElement.style.overflow = 'auto'; // needed for FF bug
-
+		this.resizable = false;
 		this._backdropShown = false;
 		this._saveToastVisible = null;
 	}
@@ -95,6 +96,7 @@ class ActivityEditor extends ActivityEditorContainerMixin(ActivityEditorTelemetr
 			<div id="editor-container">
 				<d2l-template-primary-secondary
 					background-shading="secondary"
+					?resizable="${this.resizable}"
 					width-type="${this.widthType}">
 					<slot name="header" slot="header"></slot>
 					<div slot="primary" class="d2l-primary-panel">
