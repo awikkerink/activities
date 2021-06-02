@@ -95,9 +95,7 @@ class ActivityEditor extends ActivityEditorContainerMixin(ActivityEditorTelemetr
 			<div id="editor-container">
 				<d2l-template-primary-secondary
 					background-shading="secondary"
-					resizeable="true"
 					width-type="${this.widthType}">
-
 					<slot name="header" slot="header"></slot>
 					<div slot="primary" class="d2l-primary-panel">
 						<d2l-alert type="error" ?hidden=${!this.isError}>${this.errorTerm}</d2l-alert>
