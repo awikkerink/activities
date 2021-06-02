@@ -9,7 +9,7 @@ configureMobx({ enforceActions: 'observed' });
 export class GradeCandidateCollection {
 
 	constructor(hrefOrGradeCandidateCollectionEntity, token) {
-		if (typeof hrefOrGradeCandidateCollectionEntity === GradeCandidateCollectionEntity) {
+		if (hrefOrGradeCandidateCollectionEntity instanceof GradeCandidateCollectionEntity) {
 			this.gradeCandidateCollectionEntity = hrefOrGradeCandidateCollectionEntity;
 		} else {
 			this.href = hrefOrGradeCandidateCollectionEntity;
