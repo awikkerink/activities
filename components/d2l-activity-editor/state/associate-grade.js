@@ -27,14 +27,14 @@ export class AssociateGrade {
 		const gradeCandidateCollectionEntity = await this._entity.getGradeCandidates();
 		if (!gradeCandidateCollectionEntity) return;
 		this.gradeCandidateCollection = new GradeCandidateCollection(gradeCandidateCollectionEntity, this.token);
-		this.gradeCandidateCollection.fetch();
+		await this.gradeCandidateCollection.fetch();
 	}
 
 	async getGradeCategories() {
 		const gradeCategoryCollectionEntity = await this._entity.getGradeCategories();
 		if (!gradeCategoryCollectionEntity) return;
 		this.gradeCategoryCollection = new GradeCategoryCollection(gradeCategoryCollectionEntity, this.token);
-		this.gradeCategoryCollection.fetch();
+		await this.gradeCategoryCollection.fetch();
 	}
 
 	load(entity) {
