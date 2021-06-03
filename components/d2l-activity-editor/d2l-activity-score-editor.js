@@ -1,5 +1,5 @@
 import './d2l-activity-grades/d2l-activity-grade-candidate-selector';
-import './d2l-activity-grades-dialog.js';
+import './d2l-activity-grades/d2l-activity-grades-dialog.js';
 import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
