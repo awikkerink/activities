@@ -19,7 +19,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 
 	static get properties() {
 		return {
-			activityUsageHref: { type: String, attribute: 'activity-usage-href' },
+			baseActivityUsageHref: { type: String, attribute: 'base-activity-usage-href' },
 			_createNewRadioChecked: { type: Boolean },
 			_canLinkNewGrade: { type: Boolean },
 			_hasGradeCandidates: { type: Boolean },
@@ -78,7 +78,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 	connectedCallback() {
 		super.connectedCallback();
 
-		this.checkedOutHref = this.href || this.activityUsageHref;
+		this.checkedOutHref = this.href;
 
 		const event = new CustomEvent('d2l-request-provider', {
 			detail: { key: 'd2l-provider-create-selectbox-grade-item-enabled' },
@@ -92,16 +92,18 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 	}
 
 	render() {
-		const activity = store.get(this.activityUsageHref);
+		const href = this._createSelectboxGradeItemEnabled ? this.dialogHref : this.href;
+		const activity = store.get(href);
 		if (!activity) {
 			return html``;
 		}
 
+		const scoreAndGrade = store.get(this.baseActivityUsageHref).scoreAndGrade;
 		const {
 			scoreOutOf,
 			scoreOutOfError,
 			newGradeName
-		} = activity.scoreAndGrade;
+		} = scoreAndGrade;
 
 		const showSpinnerWhenLoading = false; //todo: fix this so it works when it's true
 		const width = 460;
@@ -140,7 +142,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 							</div>
 						</div>
 						<d2l-activity-grade-category-selector
-							.href="${this.activityUsageHref}"
+							.href="${href}"
 							.token="${this.token}">
 						</d2l-activity-grade-category-selector>
 					` : html`
@@ -161,7 +163,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 				</label>
 				<d2l-input-radio-spacer ?hidden="${this._createNewRadioChecked && this._hasGradeCandidates}" ?disabled="${!this._hasGradeCandidates}">
 					${this._hasGradeCandidates ? html`<d2l-activity-grade-candidate-selector
-						.href="${this.activityUsageHref}"
+						.href="${href}"
 						.token="${this.token}">
 					</d2l-activity-grade-candidate-selector>` : html`<div class="d2l-body-small">
 						${this.localize('editor.noGradeItems')}
@@ -174,9 +176,15 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 	}
 
 	async openGradesDialog() {
-		this.openDialog();
+		if (this._createSelectboxGradeItemEnabled) {
+			await this.openDialog();
+		} else {
+			this.openDialog();
+		}
 
-		const scoreAndGrade = store.get(this.activityUsageHref).scoreAndGrade;
+		const href = this._createSelectboxGradeItemEnabled ? this.dialogHref : this.href;
+
+		const scoreAndGrade = store.get(href).scoreAndGrade;
 
 		await Promise.all([
 			scoreAndGrade.fetchGradeCandidates(),
@@ -217,45 +225,16 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 	}
 
 	async _associateGradeSetGradebookStatus(gradebookStatus) {
-		const scoreAndGrade = store.get(this.activityUsageHref).scoreAndGrade;
+		const scoreAndGrade = store.get(this.baseActivityUsageHref).scoreAndGrade;
 
 		const associateGrade = associateGradeStore.get(this._associateGradeHref);
 		if (!scoreAndGrade || !associateGrade) return;
 		await associateGrade.setGradebookStatus(gradebookStatus, scoreAndGrade.newGradeName, scoreAndGrade.scoreOutOf);
 	}
 
-	async _dialogRadioChanged(e) {
-		const currentTarget = e.currentTarget;
-		const associateGrade = associateGradeStore.get(this._associateGradeHref);
-		if (currentTarget && currentTarget.value === 'createNew') {
-			this._createNewRadioChecked = true;
-			await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
-			if (associateGrade) {
-				associateGrade.getGradeCategories();
-			}
-		} else if (currentTarget && currentTarget.value === 'linkExisting') {
-			this._createNewRadioChecked = false;
-			this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
-			if (associateGrade) {
-				associateGrade.getGradeCandidates();
-			}
-		}
-
-		const dialog = this.shadowRoot.querySelector('d2l-dialog');
-		dialog.resize();
-	}
-
-	_onDialogOpen(e) {
-		if (this._createSelectboxGradeItemEnabled) {
-			const gradeCategorySelector = this.shadowRoot.querySelector('d2l-activity-grade-category-selector');
-			gradeCategorySelector && gradeCategorySelector.resetShowCategoriesProperty();
-			e.target.resize();
-		}
-	}
-
 	_cancel(e) {
 		if (!this._createSelectboxGradeItemEnabled) {
-			const scoreAndGrade = store.get(this.activityUsageHref).scoreAndGrade;
+			const scoreAndGrade = store.get(this.href).scoreAndGrade;
 
 			const {
 				gradeCandidateCollection,
@@ -274,6 +253,42 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 		this.closeDialog(e);
 	}
 
+	async _dialogRadioChanged(e) {
+		const currentTarget = e.currentTarget;
+		const associateGrade = associateGradeStore.get(this._associateGradeHref);
+		if (currentTarget && currentTarget.value === 'createNew') {
+			this._createNewRadioChecked = true;
+		} else if (currentTarget && currentTarget.value === 'linkExisting') {
+			this._createNewRadioChecked = false;
+		}
+
+		if (this._createSelectboxGradeItemEnabled) {
+			if (currentTarget && currentTarget.value === 'createNew') {
+				await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
+				if (associateGrade) {
+					associateGrade.getGradeCategories();
+				}
+			} else if (currentTarget && currentTarget.value === 'linkExisting') {
+				this._createNewRadioChecked = false;
+				this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
+				if (associateGrade) {
+					associateGrade.getGradeCandidates();
+				}
+			}
+		}
+
+		const dialog = this.shadowRoot.querySelector('d2l-dialog');
+		dialog.resize();
+	}
+
+	_onDialogOpen(e) {
+		if (this._createSelectboxGradeItemEnabled) {
+			const gradeCategorySelector = this.shadowRoot.querySelector('d2l-activity-grade-category-selector');
+			gradeCategorySelector && gradeCategorySelector.resetShowCategoriesProperty();
+			e.target.resize();
+		}
+	}
+
 	async _saveAssociateGrade(e) {
 		if (this._createSelectboxGradeItemEnabled) {
 			const entity = store.get(this.dialogHref);
@@ -287,7 +302,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 				// do something
 			}
 		} else {
-			const scoreAndGrade = store.get(this.activityUsageHref).scoreAndGrade;
+			const scoreAndGrade = store.get(this.href).scoreAndGrade;
 
 			if (this._createNewRadioChecked) {
 				scoreAndGrade.linkToNewGrade();

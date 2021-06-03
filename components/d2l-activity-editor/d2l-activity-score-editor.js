@@ -198,6 +198,8 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		const inGradesTerm = this._createSelectboxGradeItemEnabled ? this.localize('editor.inGradebook') : this.localize('editor.inGrades');
 		const notInGradesTerm = this._createSelectboxGradeItemEnabled ? this.localize('editor.notInGradebook') : this.localize('editor.notInGrades');
 
+		const workingCopyHref = this.checkedOutHref || this.href;
+
 		return isUngraded || this.skeleton ? html`
 			<div id="ungraded-button-container" class="d2l-skeletize">
 				<button id="ungraded" class="d2l-input"
@@ -260,8 +262,8 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 							</d2l-dropdown-menu>
 						</d2l-dropdown>
 						<d2l-activity-grades-dialog
-							href="${this.checkedOutHref}"
-							activity-usage-href="${this.href}"
+							href="${workingCopyHref}"
+							base-activity-usage-href="${this.href}"
 							.token="${this.token}"></d2l-activity-grades-dialog>
 					</div>
 				` : null}
@@ -330,7 +332,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	}
 	_associateGradeSetGradebookStatus(gradebookStatus) {
 		const scoreAndGrade = store.get(this.href).scoreAndGrade;
-
 		const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
 		associateGradeEntity && associateGradeEntity.setGradebookStatus(gradebookStatus, scoreAndGrade.newGradeName, scoreAndGrade.scoreOutOf);
 	}
