@@ -26,7 +26,7 @@ class ContentEditorDueDate extends SkeletonMixin(LocalizeActivityEditorMixin(Rtl
 					display: none;
 				}
 				#duedate-container {
-					padding-bottom: 20px;
+					margin-bottom: 20px;
 				}
 			`
 		];
@@ -53,7 +53,7 @@ class ContentEditorDueDate extends SkeletonMixin(LocalizeActivityEditorMixin(Rtl
 
 		return html `
 			<div id="duedate-container">
-				<d2l-button-subtle class="d2l-skeletize"
+				<d2l-button-subtle
 					text="${this.localize('content.addDueDate')}"
 					@click="${this._showDueDate}"
 					?hidden="${this.expanded}"
