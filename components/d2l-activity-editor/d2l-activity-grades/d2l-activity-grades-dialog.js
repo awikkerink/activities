@@ -67,6 +67,9 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			#linkToExistingGradeItemRadioButton {
 				padding-bottom: 10px;
 			}
+			.d2l-activity-grades-dialog-editor {
+				min-height: 300px;
+			}
 			`
 		];
 	}
@@ -92,7 +95,28 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 	}
 
 	render() {
+		const showSpinnerWhenLoading = this._createSelectboxGradeItemEnabled;
+		const width = 460;
+		const titleText = this._createSelectboxGradeItemEnabled ? this.localize('editor.editLinkExisting') : this.localize('editor.chooseFromGrades');
+
+		return html`
+			<d2l-dialog
+				id="activity-grades-dialog"
+				title-text="${titleText}"
+				width="${width}"
+				?opened="${this.opened}"
+				@d2l-dialog-open="${this._onDialogOpen}"
+				?async="${showSpinnerWhenLoading}">
+				${this.renderDialogEditor()}
+				<d2l-button slot="footer" primary @click=${this._saveAssociateGrade} ?disabled="${this.isSaving}">${this.localize('editor.ok')}</d2l-button>
+				<d2l-button slot="footer" @click=${this._cancel} ?disabled="${this.isSaving}">${this.localize('editor.cancel')}</d2l-button>
+			</d2l-dialog>
+		`;
+	}
+
+	renderDialogEditor() {
 		const href = this._createSelectboxGradeItemEnabled ? this.dialogHref : this.href;
+
 		const activity = store.get(href);
 		if (!activity) {
 			return html``;
@@ -105,20 +129,8 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			newGradeName
 		} = scoreAndGrade;
 
-		const showSpinnerWhenLoading = false; //todo: fix this so it works when it's true
-		const width = 460;
-		const titleText = this._createSelectboxGradeItemEnabled ? this.localize('editor.editLinkExisting') : this.localize('editor.chooseFromGrades');
-
 		return html`
-			<d2l-dialog
-				id="activity-grades-dialog"
-				title-text="${titleText}"
-				width="${width}"
-				?opened="${this.opened}"
-				@d2l-dialog-open="${this._onDialogOpen}"
-				@d2l-dialog-close="${this.closeDialog}"
-				?async="${showSpinnerWhenLoading}">
-
+			<div class="d2l-activity-grades-dialog-editor">
 				<label class="d2l-input-radio-label ${!this._canLinkNewGrade ? 'd2l-input-radio-label-disabled' : ''}">
 					<input
 						type="radio"
@@ -169,23 +181,20 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 						${this.localize('editor.noGradeItems')}
 					</div>`}
 				</d2l-input-radio-spacer>
-				<d2l-button slot="footer" primary @click=${this._saveAssociateGrade} ?disabled="${this.isSaving}">${this.localize('editor.ok')}</d2l-button>
-				<d2l-button slot="footer" @click=${this._cancel} ?disabled="${this.isSaving}">${this.localize('editor.cancel')}</d2l-button>
-			</d2l-dialog>
+			</div>
 		`;
 	}
 
 	async openGradesDialog() {
 		if (this._createSelectboxGradeItemEnabled) {
-			await this.openDialog();
-		} else {
-			this.openDialog();
+			this.openDialog(null, true);
+			const entity = store.get(this.href);
+			if (!entity) return;
+			this.dialogHref = await entity.checkout(store, true);
 		}
 
-		const href = this._createSelectboxGradeItemEnabled ? this.dialogHref : this.href;
-
+		const href = this.dialogHref || this.href;
 		const scoreAndGrade = store.get(href).scoreAndGrade;
-
 		await Promise.all([
 			scoreAndGrade.fetchGradeCandidates(),
 			scoreAndGrade.fetchNewGradeCandidates()
@@ -213,14 +222,18 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			if (this._createNewRadioChecked) {
 				await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 				if (associateGrade) {
-					associateGrade.getGradeCategories();
+					await associateGrade.getGradeCategories();
 				}
 			} else {
-				this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
+				await this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
 				if (associateGrade) {
-					associateGrade.getGradeCandidates();
+					await associateGrade.getGradeCandidates();
 				}
 			}
+		}
+
+		if (!this._createSelectboxGradeItemEnabled) {
+			this.openDialog(null, true);
 		}
 	}
 
