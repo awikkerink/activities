@@ -19,7 +19,6 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 
 	static get properties() {
 		return {
-			baseActivityUsageHref: { type: String, attribute: 'base-activity-usage-href' },
 			_createNewRadioChecked: { type: Boolean },
 			_canLinkNewGrade: { type: Boolean },
 			_hasGradeCandidates: { type: Boolean },
@@ -81,8 +80,6 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 	connectedCallback() {
 		super.connectedCallback();
 
-		this.checkedOutHref = this.href;
-
 		const event = new CustomEvent('d2l-request-provider', {
 			detail: { key: 'd2l-provider-create-selectbox-grade-item-enabled' },
 			bubbles: true,
@@ -92,6 +89,10 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 		this.dispatchEvent(event);
 
 		this._createSelectboxGradeItemEnabled = event.detail.provider;
+		if (!this._createSelectboxGradeItemEnabled) {
+			this.checkoutOnLoad = false;
+			this.checkedOutHref = this.href;
+		}
 	}
 
 	render() {
@@ -116,10 +117,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 
 	async openGradesDialog() {
 		if (this._createSelectboxGradeItemEnabled) {
-			this.openDialog(null, true);
-			const entity = store.get(this.href);
-			if (!entity) return;
-			this.dialogHref = await entity.checkout(store, true);
+			await this.openDialog();
 		}
 
 		const href = this.dialogHref || this.href;
@@ -167,7 +165,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 	}
 
 	async _associateGradeSetGradebookStatus(gradebookStatus) {
-		const scoreAndGrade = store.get(this.baseActivityUsageHref).scoreAndGrade;
+		const scoreAndGrade = store.get(this.dialogHref).scoreAndGrade;
 
 		const associateGrade = associateGradeStore.get(this._associateGradeHref);
 		if (!scoreAndGrade || !associateGrade) return;
@@ -239,7 +237,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			return html``;
 		}
 
-		const scoreAndGrade = store.get(this.baseActivityUsageHref).scoreAndGrade;
+		const scoreAndGrade = store.get(this.href).scoreAndGrade;
 		const {
 			scoreOutOf,
 			scoreOutOfError,
