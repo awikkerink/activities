@@ -91,7 +91,6 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 		this._createSelectboxGradeItemEnabled = event.detail.provider;
 		if (!this._createSelectboxGradeItemEnabled) {
 			this.checkoutOnLoad = false;
-			this.checkedOutHref = this.href;
 		}
 	}
 
@@ -160,7 +159,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 		}
 
 		if (!this._createSelectboxGradeItemEnabled) {
-			this.openDialog(null, true);
+			this.openDialog();
 		}
 	}
 
@@ -305,13 +304,9 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			const entity = store.get(this.dialogHref);
 			if (!entity) return;
 
-			await entity.saving; // Wait for timing entity PATCH requests to complete before checking in
+			await entity.saving; // Wait for activity usage entity PATCH requests to complete before checking in
 
 			await this.checkinDialog(e);
-
-			if (!this.opened) { // Dialog successfully checked in
-				// do something
-			}
 		} else {
 			const scoreAndGrade = store.get(this.href).scoreAndGrade;
 
