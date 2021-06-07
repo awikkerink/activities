@@ -1,6 +1,7 @@
 /* eslint-disable indent */
 import '@brightspace-ui/core/components/button/button-subtle.js';
 import './d2l-activity-content-lti-link-jump-icon.js';
+import './d2l-activity-content-lti-link-preview.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityEditorMixin } from '../../mixins/d2l-activity-editor-lang-mixin.js';
@@ -35,6 +36,15 @@ class ActivityContentLTILinkExternalActivity extends SkeletonMixin(LocalizeActiv
 				margin-top: 18px;
 				padding-top: 18px;
 			}
+			.flex-container {
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-start;
+			}
+			d2l-activity-content-lti-link-preview {
+				height: 100%;
+			}
 			`,
 			labelStyles
 		];
@@ -68,7 +78,7 @@ class ActivityContentLTILinkExternalActivity extends SkeletonMixin(LocalizeActiv
 			</div>
 			${this.clicked ?
 				html`<d2l-activity-content-lti-link-jump-icon text="${this.localize('content.externalActivityOpened')}"></d2l-activity-content-lti-link-jump-icon>` :
-				html`<div class="d2l-external-activity-inner-frame d2l-skeletize">&nbsp;</div>`
+				html`<d2l-activity-content-lti-link-preview .entity=${this.entity}></d2l-activity-content-lti-link-preview>`
 			}
 		</div>
 		`;
