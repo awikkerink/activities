@@ -68,7 +68,7 @@ export const ActivityEditorWorkingCopyDialogMixin = superclass => class extends 
 			return;
 		}
 
-		this.closeDialog(e);
+		this.closeDialog();
 	}
 
 	async closeDialog(e) {

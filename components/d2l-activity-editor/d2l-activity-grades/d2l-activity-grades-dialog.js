@@ -106,10 +106,11 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 				width="${width}"
 				?opened="${this.opened}"
 				@d2l-dialog-open="${this._onDialogOpen}"
+				@d2l-dialog-close="${this._onDialogClose}"
 				?async="${showSpinnerWhenLoading}">
 				${this._renderDialogEditor()}
-				<d2l-button slot="footer" primary @click=${this._saveAssociateGrade} ?disabled="${this.isSaving}">${this.localize('editor.ok')}</d2l-button>
-				<d2l-button slot="footer" @click=${this._cancel} ?disabled="${this.isSaving}">${this.localize('editor.cancel')}</d2l-button>
+				<d2l-button slot="footer" primary @click=${this._saveAssociateGrade} ?disabled="${this.isSaving}" dialog-action="done">${this.localize('editor.ok')}</d2l-button>
+				<d2l-button slot="footer" @click=${this._cancel} ?disabled="${this.isSaving}" data-dialog-action>${this.localize('editor.cancel')}</d2l-button>
 			</d2l-dialog>
 		`;
 	}
@@ -174,8 +175,8 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 		await associateGrade.setGradebookStatus(gradebookStatus, scoreAndGrade.newGradeName, scoreAndGrade.scoreOutOf);
 	}
 
-	_cancel(e) {
-		if (!this._createSelectboxGradeItemEnabled) {
+	_onDialogClose(e) {
+		if (!this._createSelectboxGradeItemEnabled && e.detail.action !== "done") {
 			const scoreAndGrade = store.get(this.href).scoreAndGrade;
 
 			const {
@@ -191,8 +192,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			}
 			newGradeCandidatesCollection.setSelected(prevSelectedCategoryHref);
 		}
-
-		this.closeDialog(e);
+		this.handleClose(e);
 	}
 
 	async _dialogRadioChanged(e) {
@@ -323,7 +323,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 				scoreAndGrade.linkToExistingGrade();
 			}
 
-			this.closeDialog(e);
+			this.closeDialog();
 		}
 	}
 }
