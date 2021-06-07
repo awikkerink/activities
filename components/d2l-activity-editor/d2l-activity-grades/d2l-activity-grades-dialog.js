@@ -164,15 +164,12 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 	}
 
 	async _associateGradeSetGradebookStatus(gradebookStatus) {
-		const dialogEntity = store.get(this.dialogHref);
-		const scoreAndGradeDialog = dialogEntity && dialogEntity.scoreAndGrade;
-
-		const associateGrade = associateGradeStore.get(this._associateGradeHref);
-
 		const baseEntity = store.get(this.href);
 		const scoreAndGradeBase = baseEntity && baseEntity.scoreAndGrade;
 
-		if (!scoreAndGradeDialog || !associateGrade || !scoreAndGradeBase) return;
+		const associateGrade = associateGradeStore.get(this._associateGradeHref);
+
+		if (!scoreAndGradeBase || !associateGrade) return;
 
 		await associateGrade.setGradebookStatus(gradebookStatus, scoreAndGradeBase.newGradeName, scoreAndGradeBase.scoreOutOf);
 	}
