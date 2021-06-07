@@ -13,7 +13,6 @@ jobs:
       - name: Lint
         run: |
           export NODE_OPTIONS=--max_old_space_size=8192
-          DISABLE_V8_COMPILE_CACHE=1
           npm run lint
       - name: Unit Tests (Jest)
         run: npm run test:js
