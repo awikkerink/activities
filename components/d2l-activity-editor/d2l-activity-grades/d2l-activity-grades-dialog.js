@@ -110,7 +110,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 				?async="${showSpinnerWhenLoading}">
 				${this._renderDialogEditor()}
 				<d2l-button slot="footer" primary @click=${this._saveAssociateGrade} ?disabled="${this.isSaving}" dialog-action="done">${this.localize('editor.ok')}</d2l-button>
-				<d2l-button slot="footer" @click=${this._cancel} ?disabled="${this.isSaving}" dialog-action="cancel">${this.localize('editor.cancel')}</d2l-button>
+				<d2l-button slot="footer" ?disabled="${this.isSaving}" dialog-action="cancel">${this.localize('editor.cancel')}</d2l-button>
 			</d2l-dialog>
 		`;
 	}
