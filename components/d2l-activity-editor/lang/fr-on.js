@@ -85,7 +85,7 @@ export default {
 
 	"rubrics.btnAddRubric": "Ajouter une grille d'évaluation", //text for add rubric button
 	"rubrics.btnCreateNew": "Créer", //Text for create new dropdown
-	"rubrics.btnDetach": "Detach", //Text for the button to confirm detaching a rubric
+	"rubrics.btnDetach": "Détacher", //Text for the button to confirm detaching a rubric
 	"rubrics.btnAddExisting": "Ajouter existant", //Text for Add Existing dropdown
 	"rubrics.hdrRubrics": "Grilles d'évaluation", //Header for the rubrics section
 	"rubrics.btnAttachRubric": "Joindre la grille d'évaluation", //Button for the attach new rubric overlay
@@ -97,7 +97,7 @@ export default {
 	"rubrics.btnClose": "Fermer", // X button for exiting the create new rubric overlay
 	"rubrics.txtRubricAdded": "Grille d'évaluation ajoutée", // Text for notifying screenreader rubric was added
 	"rubrics.txtRubricRemoved": "Grille d'évaluation supprimée", // Text for notifying screenreader rubric was removed
-	"rubrics.txtConfirmDetachRubric": "Once the rubric is detached, all previous assessments of the rubric in this activity will be deleted. Confirm detaching the rubric?", //Text for the dialog to confirm detaching a rubric from an evaluated activity
+	"rubrics.txtConfirmDetachRubric": "Une fois la grille d’évaluation détachée, toutes les évaluations précédentes de la rubrique dans cette activité seront supprimées. Confirmer le détachement de la grille d’évaluation ?", //Text for the dialog to confirm detaching a rubric from an evaluated activity
 	"rubrics.defaultScoringRubric": "Grille d'évaluation de notation par défaut", // Sub heading for the default scoring rubric select dropdown
 	"rubrics.noDefaultScoringRubricSelected": "Aucune valeur par défaut sélectionnée", // option in default scoring rubric when no default scoring rubric selected
 
