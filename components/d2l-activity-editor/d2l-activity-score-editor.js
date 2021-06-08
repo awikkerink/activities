@@ -178,7 +178,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		this.dispatchEvent(event);
 
 		this._createSelectboxGradeItemEnabled = event.detail.provider;
-		this.checkoutOnLoad = event.detail.provider;
+		this.checkoutOnLoad = this._createSelectboxGradeItemEnabled;
 	}
 
 	render() {
@@ -197,8 +197,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 
 		const inGradesTerm = this._createSelectboxGradeItemEnabled ? this.localize('editor.inGradebook') : this.localize('editor.inGrades');
 		const notInGradesTerm = this._createSelectboxGradeItemEnabled ? this.localize('editor.notInGradebook') : this.localize('editor.notInGrades');
-
-		const workingCopyHref = this.checkedOutHref || this.href;
 
 		return isUngraded || this.skeleton ? html`
 			<div id="ungraded-button-container" class="d2l-skeletize">
@@ -262,8 +260,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 							</d2l-dropdown-menu>
 						</d2l-dropdown>
 						<d2l-activity-grades-dialog
-							href="${workingCopyHref}"
-							base-activity-usage-href="${this.href}"
+							href="${this.href}"
 							.token="${this.token}"></d2l-activity-grades-dialog>
 					</div>
 				` : null}

@@ -19,7 +19,6 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 
 	static get properties() {
 		return {
-			baseActivityUsageHref: { type: String, attribute: 'base-activity-usage-href' },
 			_createNewRadioChecked: { type: Boolean },
 			_canLinkNewGrade: { type: Boolean },
 			_hasGradeCandidates: { type: Boolean },
@@ -81,8 +80,6 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 	connectedCallback() {
 		super.connectedCallback();
 
-		this.checkedOutHref = this.href;
-
 		const event = new CustomEvent('d2l-request-provider', {
 			detail: { key: 'd2l-provider-create-selectbox-grade-item-enabled' },
 			bubbles: true,
@@ -92,6 +89,9 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 		this.dispatchEvent(event);
 
 		this._createSelectboxGradeItemEnabled = event.detail.provider;
+		if (!this._createSelectboxGradeItemEnabled) {
+			this.checkoutOnLoad = false;
+		}
 	}
 
 	render() {
@@ -117,10 +117,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 
 	async openGradesDialog() {
 		if (this._createSelectboxGradeItemEnabled) {
-			this.openDialog(null, true);
-			const entity = store.get(this.href);
-			if (!entity) return;
-			this.dialogHref = await entity.checkout(store, true);
+			await this.openDialog();
 		}
 
 		const href = this.dialogHref || this.href;
@@ -163,16 +160,19 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 		}
 
 		if (!this._createSelectboxGradeItemEnabled) {
-			this.openDialog(null, true);
+			this.openDialog();
 		}
 	}
 
 	async _associateGradeSetGradebookStatus(gradebookStatus) {
-		const scoreAndGrade = store.get(this.baseActivityUsageHref).scoreAndGrade;
+		const baseEntity = store.get(this.href);
+		const scoreAndGradeBase = baseEntity && baseEntity.scoreAndGrade;
 
 		const associateGrade = associateGradeStore.get(this._associateGradeHref);
-		if (!scoreAndGrade || !associateGrade) return;
-		await associateGrade.setGradebookStatus(gradebookStatus, scoreAndGrade.newGradeName, scoreAndGrade.scoreOutOf);
+
+		if (!scoreAndGradeBase || !associateGrade) return;
+
+		await associateGrade.setGradebookStatus(gradebookStatus, scoreAndGradeBase.newGradeName, scoreAndGradeBase.scoreOutOf);
 	}
 
 	_onDialogClose(e) {
@@ -239,7 +239,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			return html``;
 		}
 
-		const scoreAndGrade = store.get(this.baseActivityUsageHref).scoreAndGrade;
+		const scoreAndGrade = store.get(this.href).scoreAndGrade;
 		const {
 			scoreOutOf,
 			scoreOutOfError,
@@ -307,13 +307,9 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			const entity = store.get(this.dialogHref);
 			if (!entity) return;
 
-			await entity.saving; // Wait for timing entity PATCH requests to complete before checking in
+			await entity.saving; // Wait for activity usage entity PATCH requests to complete before checking in
 
 			await this.checkinDialog(e);
-
-			if (!this.opened) { // Dialog successfully checked in
-				// do something
-			}
 		} else {
 			const scoreAndGrade = store.get(this.href).scoreAndGrade;
 

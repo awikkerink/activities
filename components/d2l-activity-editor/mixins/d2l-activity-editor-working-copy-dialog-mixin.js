@@ -75,19 +75,16 @@ export const ActivityEditorWorkingCopyDialogMixin = superclass => class extends 
 		this.handleClose(e);
 	}
 
-	async openDialog(e, skipCheckout) {
+	async openDialog(e) {
 		const dialog = this.shadowRoot.querySelector('d2l-dialog');
 		dialog && dialog.resetAsyncState();
 		this._resetProps();
 
-		const entity = this.store.get(this.checkedOutHref);
-		if (!entity) return;
-
 		this.open(e);
 
-		if (!skipCheckout) {
-			this.dialogHref = await entity.checkout(this.store, true);
-		}
+		const entity = this.store.get(this.checkedOutHref);
+		if (!entity) return;
+		this.dialogHref = await entity.checkout(this.store, true);
 	}
 
 	async _focusOnInvalid() {
