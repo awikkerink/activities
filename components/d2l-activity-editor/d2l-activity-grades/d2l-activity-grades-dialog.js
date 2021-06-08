@@ -20,8 +20,6 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 	static get properties() {
 		return {
 			_createNewRadioChecked: { type: Boolean },
-			_canLinkNewGrade: { type: Boolean },
-			_hasGradeCandidates: { type: Boolean },
 			_createSelectboxGradeItemEnabled: { type: Boolean }
 		};
 	}
@@ -122,46 +120,42 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 
 		const href = this.dialogHref || this.href;
 		const scoreAndGrade = store.get(href).scoreAndGrade;
+		// TODO: This should only be fetched if this._createSelectboxGradeItemEnabled is false, but without it wc is breaking right now
 		await Promise.all([
 			scoreAndGrade.fetchGradeCandidates(),
 			scoreAndGrade.fetchNewGradeCandidates()
 		]);
 
-		const {
-			gradeCandidateCollection,
-			createNewGrade
-		} = scoreAndGrade;
-
-		this._canLinkNewGrade = !!scoreAndGrade.getAssociateNewGradeAction();
-		this._createNewRadioChecked = createNewGrade && this._canLinkNewGrade;
-		this._hasGradeCandidates = gradeCandidateCollection && gradeCandidateCollection.gradeCandidates.length > 0;
-
 		if (this._createSelectboxGradeItemEnabled) {
-			const dialogEntity = store.get(this.dialogHref);
-			if (dialogEntity && dialogEntity.associateGradeHref) {
-				this._associateGradeHref = dialogEntity.associateGradeHref;
-				this._fetch(() => {
-					return associateGradeStore.fetch(this._associateGradeHref, this.token);
-				});
-			}
+			const associateGradeHref = this._associateGradeHref;
+			if (associateGradeHref) {
+				await this._fetch(() => associateGradeStore.fetch(associateGradeHref, this.token));
 
-			const associateGrade = associateGradeStore.get(this._associateGradeHref);
-			if (this._createNewRadioChecked) {
-				await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
-				if (associateGrade) {
-					await associateGrade.getGradeCategories();
-				}
-			} else {
-				await this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
-				if (associateGrade) {
-					await associateGrade.getGradeCandidates();
+				const associateGrade = associateGradeStore.get(associateGradeHref);
+				this._createNewRadioChecked = associateGrade.gradebookStatus === GradebookStatus.NewGrade && this._canCreateNewGrade;
+
+				if (this._createNewRadioChecked) {
+					await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
+					if (associateGrade) {
+						await associateGrade.getGradeCategories();
+					}
+				} else {
+					await this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
+					if (associateGrade) {
+						await associateGrade.getGradeCandidates();
+					}
 				}
 			}
-		}
-
-		if (!this._createSelectboxGradeItemEnabled) {
+		} else {
+			const { createNewGrade } = scoreAndGrade || {};
+			this._createNewRadioChecked = createNewGrade && this._canCreateNewGrade;
 			this.openDialog();
 		}
+	}
+
+	get _associateGradeHref() {
+		const dialogEntity = store.get(this.dialogHref);
+		return dialogEntity && dialogEntity.associateGradeHref;
 	}
 
 	async _associateGradeSetGradebookStatus(gradebookStatus) {
@@ -175,9 +169,19 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 		await associateGrade.setGradebookStatus(gradebookStatus, scoreAndGradeBase.newGradeName, scoreAndGradeBase.scoreOutOf);
 	}
 
+	get _canCreateNewGrade() {
+		if (this._createSelectboxGradeItemEnabled) {
+			const associateGrade = associateGradeStore.get(this._associateGradeHref);
+			return associateGrade && associateGrade.canCreateNewGrade;
+		} else {
+			const entity = store.get(this.href);
+			const scoreAndGrade = entity && entity.scoreAndGrade;
+			return scoreAndGrade && !!scoreAndGrade.getAssociateNewGradeAction();
+		}
+	}
+
 	async _dialogRadioChanged(e) {
 		const currentTarget = e.currentTarget;
-		const associateGrade = associateGradeStore.get(this._associateGradeHref);
 		if (currentTarget && currentTarget.value === 'createNew') {
 			this._createNewRadioChecked = true;
 		} else if (currentTarget && currentTarget.value === 'linkExisting') {
@@ -185,6 +189,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 		}
 
 		if (this._createSelectboxGradeItemEnabled) {
+			const associateGrade = associateGradeStore.get(this._associateGradeHref);
 			if (currentTarget && currentTarget.value === 'createNew') {
 				await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 				if (associateGrade) {
@@ -201,6 +206,21 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 
 		const dialog = this.shadowRoot.querySelector('d2l-dialog');
 		dialog.resize();
+	}
+
+	get _hasGradeCandidates() {
+		let gradeCandidateCollection = {};
+
+		if (this._createSelectboxGradeItemEnabled) {
+			const associateGrade = associateGradeStore.get(this._associateGradeHref);
+			gradeCandidateCollection = (associateGrade && associateGrade.gradeCandidateCollection) || {};
+		} else {
+			const entity = store.get(this.href);
+			const scoreAndGrade = entity && entity.scoreAndGrade;
+			gradeCandidateCollection = (scoreAndGrade && scoreAndGrade.gradeCandidateCollection) || {};
+		}
+
+		return (gradeCandidateCollection.gradeCandidates || []).length > 0;
 	}
 
 	_onDialogClose(e) {
@@ -246,20 +266,23 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			newGradeName
 		} = scoreAndGrade;
 
+		const hasGradeCandidates = this._hasGradeCandidates;
+		const canCreateNewGrade = this._canCreateNewGrade;
+
 		return html`
 			<div class="d2l-activity-grades-dialog-editor">
-				<label class="d2l-input-radio-label ${!this._canLinkNewGrade ? 'd2l-input-radio-label-disabled' : ''}">
+				<label class="d2l-input-radio-label ${!canCreateNewGrade ? 'd2l-input-radio-label-disabled' : ''}">
 					<input
 						type="radio"
 						name="chooseFromGrades"
 						value="createNew"
-						?disabled="${!this._canLinkNewGrade}"
+						?disabled="${!canCreateNewGrade}"
 						.checked="${this._createNewRadioChecked}"
 						@change="${this._dialogRadioChanged}">
 					${this.localize('editor.createAndLinkToNewGradeItem')}
 				</label>
-				<d2l-input-radio-spacer ?hidden="${!this._createNewRadioChecked && this._canLinkNewGrade}">
-					${this._canLinkNewGrade ? html`
+				<d2l-input-radio-spacer ?hidden="${!this._createNewRadioChecked && canCreateNewGrade}">
+					${canCreateNewGrade ? html`
 						<div class="d2l-activity-grades-dialog-create-new-container">
 							<div class="d2l-activity-grades-dialog-create-new-icon"><d2l-icon class="d2l-activity-grades-dialog-grade-icon" icon="tier1:grade"></d2l-icon></div>
 							<div>
@@ -280,18 +303,18 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 						</div>
 					`}
 				</d2l-input-radio-spacer>
-				<label id="linkToExistingGradeItemRadioButton" class="d2l-input-radio-label ${!this._hasGradeCandidates ? 'd2l-input-radio-label-disabled' : ''}">
+				<label id="linkToExistingGradeItemRadioButton" class="d2l-input-radio-label ${!hasGradeCandidates ? 'd2l-input-radio-label-disabled' : ''}">
 					<input
 						type="radio"
 						name="chooseFromGrades"
 						value="linkExisting"
-						?disabled="${!this._hasGradeCandidates}"
-						.checked="${!this._createNewRadioChecked && this._hasGradeCandidates}"
+						?disabled="${!hasGradeCandidates}"
+						.checked="${!this._createNewRadioChecked && hasGradeCandidates}"
 						@change="${this._dialogRadioChanged}">
 					${this.localize('editor.linkToExistingGradeItem')}
 				</label>
-				<d2l-input-radio-spacer ?hidden="${this._createNewRadioChecked && this._hasGradeCandidates}" ?disabled="${!this._hasGradeCandidates}">
-					${this._hasGradeCandidates ? html`<d2l-activity-grade-candidate-selector
+				<d2l-input-radio-spacer ?hidden="${this._createNewRadioChecked && hasGradeCandidates}" ?disabled="${!hasGradeCandidates}">
+					${hasGradeCandidates ? html`<d2l-activity-grade-candidate-selector
 						.href="${href}"
 						.token="${this.token}">
 					</d2l-activity-grade-candidate-selector>` : html`<div class="d2l-body-small">
