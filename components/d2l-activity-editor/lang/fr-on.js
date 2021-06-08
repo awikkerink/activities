@@ -97,7 +97,7 @@ export default {
 	"rubrics.btnClose": "Fermer", // X button for exiting the create new rubric overlay
 	"rubrics.txtRubricAdded": "Grille d'évaluation ajoutée", // Text for notifying screenreader rubric was added
 	"rubrics.txtRubricRemoved": "Grille d'évaluation supprimée", // Text for notifying screenreader rubric was removed
-	"rubrics.txtConfirmDetachRubric": "Une fois la grille d’évaluation détachée, toutes les évaluations précédentes de la rubrique dans cette activité seront supprimées. Confirmer le détachement de la grille d’évaluation ?", //Text for the dialog to confirm detaching a rubric from an evaluated activity
+	"rubrics.txtConfirmDetachRubric": "Une fois la grille d’évaluation détachée, toutes les évaluations précédentes de la grille d’évaluation dans cette activité seront supprimées. Confirmer le détachement de la grille d’évaluation ?", //Text for the dialog to confirm detaching a rubric from an evaluated activity
 	"rubrics.defaultScoringRubric": "Grille d'évaluation de notation par défaut", // Sub heading for the default scoring rubric select dropdown
 	"rubrics.noDefaultScoringRubricSelected": "Aucune valeur par défaut sélectionnée", // option in default scoring rubric when no default scoring rubric selected
 
