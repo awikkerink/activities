@@ -4,7 +4,7 @@ export default {
 	"editor.btnEditReleaseConditions": "Modifier les conditions de diffusion", // edit release conditions button
 	"editor.btnAddReleaseCondition": "Ajouter une condition de diffusion", // add release condition button
 	"editor.btnCreateNew": "Créer", // create new button
-	"editor.btnAddExisting": "Ajouter existant", // add existing button
+	"editor.btnAddExisting": "En ajouter une existante", // add existing button
 	"editor.btnRemoveCondition": "Supprimer la condition", // remove condition button
 	"editor.lblConditionsOperator": "Pour consulter cet article, les utilisateurs doivent respecter", // conditions operator label
 	"editor.txtConditionAdded": "Condition ajoutée : {title}",
