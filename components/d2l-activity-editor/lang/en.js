@@ -104,6 +104,7 @@ export default {
 	"grades.points": "Points: {points}", // Text label for displaying points of a grade
 	"grades.weight": "Weight: {weight}", // Text label for displaying weight of a grade
 	"grades.gradeItem": "Grade Item", //ARIA label for grade-item picker when linking an activity to an existing grade item
+	"grades.chooseNewGradeItemCategory": "Choose Grade Category", // Label for add category button
 	"grades.newGradeItemCategory": "Grade Category", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "No Category", // Category dropdown text for not selecting a category
 
