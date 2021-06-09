@@ -85,6 +85,7 @@ export default {
 
 	"rubrics.btnAddRubric": "Add rubric", //text for add rubric button
 	"rubrics.btnCreateNew": "Create New", //Text for create new dropdown
+	"rubrics.hdrCreateRubric": "Create Rubric", // Header for creating a new rubric
 	"rubrics.btnDetach": "Detach", //Text for the button to confirm detaching a rubric
 	"rubrics.btnAddExisting": "Add Existing", //Text for Add Existing dropdown
 	"rubrics.hdrRubrics": "Rubrics", //Header for the rubrics section
@@ -94,7 +95,6 @@ export default {
 	"rubrics.txtNoRubricAdded": "No rubric added", // rubric summary for no rubrics
 	"rubrics.txtRubricsAdded": "{count, plural, =1 {1 rubric added} other {{count} rubrics added}}", // count of asoociated rubrics
 	"rubrics.txtDeleteRubric": "Delete Rubric", // Text for deleting rubric icon
-	"rubrics.btnClose": "Close", // X button for exiting the create new rubric overlay
 	"rubrics.txtRubricAdded": "Rubric added", // Text for notifying screenreader rubric was added
 	"rubrics.txtRubricRemoved": "Rubric removed", // Text for notifying screenreader rubric was removed
 	"rubrics.txtConfirmDetachRubric": "Once the rubric is detached, all previous assessments of the rubric in this activity will be deleted. Confirm detaching the rubric?", //Text for the dialog to confirm detaching a rubric from an evaluated activity
