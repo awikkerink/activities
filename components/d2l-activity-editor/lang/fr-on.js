@@ -86,11 +86,11 @@ export default {
 	"rubrics.btnAddRubric": "Ajouter une grille d'évaluation", //text for add rubric button
 	"rubrics.btnCreateNew": "Créer", //Text for create new dropdown
 	"rubrics.btnDetach": "Détacher", //Text for the button to confirm detaching a rubric
-	"rubrics.btnAddExisting": "Ajouter existant", //Text for Add Existing dropdown
+	"rubrics.btnAddExisting": "En ajouter une existante", //Text for Add Existing dropdown
 	"rubrics.hdrRubrics": "Grilles d'évaluation", //Header for the rubrics section
 	"rubrics.btnAttachRubric": "Joindre la grille d'évaluation", //Button for the attach new rubric overlay
 	"rubrics.btnCancel": "Annuler", //Button for canceling out of the attach new rubric overlay
-	"rubrics.txtAddExisting": "Ajouter existant", //Title for the attach rubrics dialog,
+	"rubrics.txtAddExisting": "En ajouter une existantet", //Title for the attach rubrics dialog,
 	"rubrics.txtNoRubricAdded": "Aucune grille d'évaluation n’a été ajoutée", // rubric summary for no rubrics
 	"rubrics.txtRubricsAdded": "{count, plural, =1 {1 grille d'évaluation ajoutée} other {{count} grilles d'évaluation ajoutées}}", // count of asoociated rubrics
 	"rubrics.txtDeleteRubric": "Supprimer la grille d'évaluation", // Text for deleting rubric icon
