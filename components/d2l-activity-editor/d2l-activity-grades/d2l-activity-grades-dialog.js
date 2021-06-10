@@ -147,7 +147,13 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 				}
 			}
 		} else {
-			const { createNewGrade } = scoreAndGrade || {};
+			const {
+				gradeCandidateCollection,
+				createNewGrade,
+				newGradeCandidatesCollection
+			} = scoreAndGrade || {};
+			this._prevSelectedHref = gradeCandidateCollection && gradeCandidateCollection.selected ? gradeCandidateCollection.selected.href : null;
+			this._prevSelectedCategoryHref = newGradeCandidatesCollection && newGradeCandidatesCollection.selected.href;
 			this._createNewRadioChecked = createNewGrade && this._canCreateNewGrade;
 			this.openDialog();
 		}
@@ -232,13 +238,10 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 				newGradeCandidatesCollection
 			} = scoreAndGrade;
 
-			const prevSelectedHref = gradeCandidateCollection && gradeCandidateCollection.selected ? gradeCandidateCollection.selected.href : null;
-			const prevSelectedCategoryHref = newGradeCandidatesCollection.selected.href;
-
-			if (prevSelectedHref) {
-				gradeCandidateCollection.setSelected(prevSelectedHref);
+			if (this._prevSelectedHref) {
+				gradeCandidateCollection.setSelected(this._prevSelectedHref);
 			}
-			newGradeCandidatesCollection.setSelected(prevSelectedCategoryHref);
+			newGradeCandidatesCollection.setSelected(this._prevSelectedCategoryHref);
 		}
 		this.handleClose(e);
 	}
