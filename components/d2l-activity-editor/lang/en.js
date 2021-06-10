@@ -85,6 +85,7 @@ export default {
 
 	"rubrics.btnAddRubric": "Add rubric", //text for add rubric button
 	"rubrics.btnCreateNew": "Create New", //Text for create new dropdown
+	"rubrics.hdrCreateRubric": "Create Rubric", // Header for creating a new rubric
 	"rubrics.btnDetach": "Detach", //Text for the button to confirm detaching a rubric
 	"rubrics.btnAddExisting": "Add Existing", //Text for Add Existing dropdown
 	"rubrics.hdrRubrics": "Rubrics", //Header for the rubrics section
@@ -94,7 +95,6 @@ export default {
 	"rubrics.txtNoRubricAdded": "No rubric added", // rubric summary for no rubrics
 	"rubrics.txtRubricsAdded": "{count, plural, =1 {1 rubric added} other {{count} rubrics added}}", // count of asoociated rubrics
 	"rubrics.txtDeleteRubric": "Delete Rubric", // Text for deleting rubric icon
-	"rubrics.btnClose": "Close", // X button for exiting the create new rubric overlay
 	"rubrics.txtRubricAdded": "Rubric added", // Text for notifying screenreader rubric was added
 	"rubrics.txtRubricRemoved": "Rubric removed", // Text for notifying screenreader rubric was removed
 	"rubrics.txtConfirmDetachRubric": "Once the rubric is detached, all previous assessments of the rubric in this activity will be deleted. Confirm detaching the rubric?", //Text for the dialog to confirm detaching a rubric from an evaluated activity
@@ -139,13 +139,18 @@ export default {
 	"content.pageContent": "Page Content", // Text label for page content input field (HTML files)
 	"content.availabilityHeader": "Availability Dates", // availability header
 	"content.saveError": "Your content item wasn't saved. Please correct the fields outlined in red.", // Error message to inform the user that there was a problem saving the content item, instructing them to correct invalid fields
+	"content.displayOptions": "Display Options", // Text label for display options
 	"content.addDueDate": "Add Due Date", // Text label for name input field
-	"content.embedOnPage": "Embed on the page (iframe)", // Text label for link radio button
-	"content.openNewTab": "Open in a new tab", // Text label for link radio button
+	"content.embedOnPage": "Embed on the page", // Text label for link radio button
+	"content.openNewTab": "Open in a new tab (recommended)", // Text label for link radio button
+	"content.openNewTabHelp": "Time on page is not tracked", // ARIA label for the help icon next to link radio button
 	"content.link": "Link", //Text label for link input field
 	"content.emptyLinkField": "Link is required.", //Error message shown on link tooltip when the link is empty
 	"content.invalidLink": "Please enter a valid URL.", //Error message shown on link tooltip when the link is not formatted correctly
 	"content.notHttps": "Only links using \"https\" can be embedded.", //Error message shown on link tooltip when https is not used for embedded links
 	"content.noEmbed": "That site cannot be embedded.", //Error message shown on link tooltip when the link cannot be embedded
 	"content.previewLabel": "Preview", // The label text for the link preview
+	"content.openInNewWindow": "Open in New Window", // The label text for the subtle-button for opening a LTI link in a new window
+	"content.externalActivity": "External Activity", // The label text for the external activity section on the LTI link page
+	"content.externalActivityOpened": "Open the activity in new window to view its content.", // Text for displaying underneath the LTI link jump logo
 };

@@ -1,4 +1,4 @@
-import { action, configure as configureMobx, decorate, observable } from 'mobx';
+import { action, configure as configureMobx, decorate, observable, runInAction } from 'mobx';
 import { AssociateGradeEntity } from 'siren-sdk/src/activities/associateGrade/AssociateGradeEntity.js';
 import { fetchEntity } from './fetch-entity.js';
 import { GradeCandidateCollection } from '../d2l-activity-grades/state/grade-candidate-collection.js';
@@ -26,14 +26,18 @@ export class AssociateGrade {
 	async getGradeCandidates() {
 		const gradeCandidateCollectionEntity = await this._entity.getGradeCandidates();
 		if (!gradeCandidateCollectionEntity) return;
-		this.gradeCandidateCollection = new GradeCandidateCollection(gradeCandidateCollectionEntity, this.token);
+		runInAction(() => {
+			this.gradeCandidateCollection = new GradeCandidateCollection(gradeCandidateCollectionEntity, this.token);
+		});
 		await this.gradeCandidateCollection.fetch();
 	}
 
 	async getGradeCategories() {
 		const gradeCategoryCollectionEntity = await this._entity.getGradeCategories();
 		if (!gradeCategoryCollectionEntity) return;
-		this.gradeCategoryCollection = new GradeCategoryCollection(gradeCategoryCollectionEntity, this.token);
+		runInAction(() => {
+			this.gradeCategoryCollection = new GradeCategoryCollection(gradeCategoryCollectionEntity, this.token);
+		});
 		await this.gradeCategoryCollection.fetch();
 	}
 
@@ -43,8 +47,7 @@ export class AssociateGrade {
 		this.gradeName = entity.gradeName();
 		this.maxPoints = entity.maxPoints();
 		this.gradeType = entity.gradeType();
-		this.gradeCategoryCollection = null;
-		this.gradeCandidateCollection = null;
+		this.canCreateNewGrade = entity.canCreateNewGrade();
 	}
 
 	async setGradebookStatus(newStatus, gradeName, maxPoints) {
@@ -74,6 +77,7 @@ export class AssociateGrade {
 
 decorate(AssociateGrade, {
 	// props
+	canCreateNewGrade: observable,
 	gradebookStatus: observable,
 	gradeName: observable,
 	maxPoints: observable,
