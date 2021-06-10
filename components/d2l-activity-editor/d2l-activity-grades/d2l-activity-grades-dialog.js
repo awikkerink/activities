@@ -149,7 +149,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 				gradeCandidateCollection,
 				createNewGrade,
 				newGradeCandidatesCollection
-			} = scoreAndGrade || {};
+			} = scoreAndGrade;
 
 			this._prevSelectedHref = gradeCandidateCollection && gradeCandidateCollection.selected ? gradeCandidateCollection.selected.href : null;
 			this._prevSelectedCategoryHref = newGradeCandidatesCollection && newGradeCandidatesCollection.selected.href;
