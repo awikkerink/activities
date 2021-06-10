@@ -116,42 +116,41 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 	async openGradesDialog() {
 		if (this._createSelectboxGradeItemEnabled) {
 			await this.openDialog();
-		}
 
-		const href = this.dialogHref || this.href;
-		const scoreAndGrade = store.get(href).scoreAndGrade;
-		// TODO: This should only be fetched if this._createSelectboxGradeItemEnabled is false, but without it wc is breaking right now
-		await Promise.all([
-			scoreAndGrade.fetchGradeCandidates(),
-			scoreAndGrade.fetchNewGradeCandidates()
-		]);
-
-		if (this._createSelectboxGradeItemEnabled) {
 			const associateGradeHref = this._associateGradeHref;
 			if (associateGradeHref) {
 				await this._fetch(() => associateGradeStore.fetch(associateGradeHref, this.token));
 
 				const associateGrade = associateGradeStore.get(associateGradeHref);
+				if (!associateGrade) return;
+
 				this._createNewRadioChecked = associateGrade.gradebookStatus === GradebookStatus.NewGrade && this._canCreateNewGrade;
 
+				associateGrade.getGradeCategories();
+				associateGrade.getGradeCandidates();
+
 				if (this._createNewRadioChecked) {
-					await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
-					if (associateGrade) {
-						await associateGrade.getGradeCategories();
-					}
+					this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 				} else {
-					await this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
-					if (associateGrade) {
-						await associateGrade.getGradeCandidates();
-					}
+					this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
 				}
 			}
 		} else {
+			const entity = store.get(this.href);
+			if (!entity || !entity.scoreAndGrade) return;
+			const scoreAndGrade = entity.scoreAndGrade;
+
+			await Promise.all([
+				scoreAndGrade.fetchGradeCandidates(),
+				scoreAndGrade.fetchNewGradeCandidates()
+			]);
+
 			const {
 				gradeCandidateCollection,
 				createNewGrade,
 				newGradeCandidatesCollection
 			} = scoreAndGrade || {};
+
 			this._prevSelectedHref = gradeCandidateCollection && gradeCandidateCollection.selected ? gradeCandidateCollection.selected.href : null;
 			this._prevSelectedCategoryHref = newGradeCandidatesCollection && newGradeCandidatesCollection.selected.href;
 			this._createNewRadioChecked = createNewGrade && this._canCreateNewGrade;

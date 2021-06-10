@@ -35,7 +35,9 @@ export class AssociateGrade {
 	async getGradeCategories() {
 		const gradeCategoryCollectionEntity = await this._entity.getGradeCategories();
 		if (!gradeCategoryCollectionEntity) return;
-		this.gradeCategoryCollection = new GradeCategoryCollection(gradeCategoryCollectionEntity, this.token);
+		runInAction(() => {
+			this.gradeCategoryCollection = new GradeCategoryCollection(gradeCategoryCollectionEntity, this.token);
+		});
 		await this.gradeCategoryCollection.fetch();
 	}
 
