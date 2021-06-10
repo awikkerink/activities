@@ -1,6 +1,7 @@
 /* eslint-disable indent */
 import '@brightspace-ui/core/components/button/button-subtle.js';
 import './d2l-activity-content-lti-link-jump-icon.js';
+import './d2l-activity-content-lti-link-preview.js';
 import { bodyStandardStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { LocalizeActivityEditorMixin } from '../../mixins/d2l-activity-editor-lang-mixin.js';
@@ -13,8 +14,7 @@ class ActivityContentLTILinkExternalActivity extends SkeletonMixin(LocalizeActiv
 	static get properties() {
 		return {
 			entity: { type: Object },
-			showIsOpened: { type: Boolean },
-			skeleton: { type: Boolean },
+			showInNewTab: { type: Boolean },
 		};
 	}
 
@@ -23,7 +23,10 @@ class ActivityContentLTILinkExternalActivity extends SkeletonMixin(LocalizeActiv
 			super.styles,
 			css`
 				.d2l-external-activity-outer-frame {
+					display: flex;
 					flex-direction: column;
+					height: 100%;
+					justify-content: flex-start;
 				}
 				.d2l-content-link-external-activity {
 					align-items: center;
@@ -31,8 +34,10 @@ class ActivityContentLTILinkExternalActivity extends SkeletonMixin(LocalizeActiv
 					justify-content: space-between;
 				}
 				.d2l-external-activity-inner-frame {
-					margin-top: 36px;
-					padding-top: 36px;
+					margin-top: 6px;
+				}
+				d2l-activity-content-lti-link-preview {
+					height: 100%;
 				}
 			`,
 			labelStyles,
@@ -43,7 +48,7 @@ class ActivityContentLTILinkExternalActivity extends SkeletonMixin(LocalizeActiv
 	constructor() {
 		super();
 		this.skeleton = true;
-		this.showIsOpened = false;
+		this.showInNewTab = false;
 		this.activityWindowPopout = null;
 	}
 
@@ -61,14 +66,19 @@ class ActivityContentLTILinkExternalActivity extends SkeletonMixin(LocalizeActiv
 						text="${this.localize('content.openInNewWindow')}"
 						icon="tier1:new-window"
 						@click="${this._openPopout}"
-						?skeleton=${this.skeleton}
+						class="d2l-skeletize"
 					>
 					</d2l-button-subtle>
 				</div>
-				<div class="d2l-external-activity-inner-frame">
-					${this.showIsOpened ?
-						html`<d2l-activity-content-lti-link-jump-icon><p class="d2l-body-standard">${this.localize('content.externalActivityOpened')}</p></d2l-activity-content-lti-link-jump-icon>` :
-						html`<div class="d2l-skeletize">&nbsp;</div>`
+				<div class="d2l-external-activity-inner-frame d2l-skeletize">
+					${this.showInNewTab ?
+						html`
+							<d2l-activity-content-lti-link-jump-icon>
+								<p class="d2l-body-standard">
+									${this.localize('content.externalActivityOpened')}
+								</p>
+							</d2l-activity-content-lti-link-jump-icon>` :
+						html`<d2l-activity-content-lti-link-preview .entity=${this.entity}></d2l-activity-content-lti-link-preview>`
 					}
 				</div>
 			</div>
@@ -76,7 +86,7 @@ class ActivityContentLTILinkExternalActivity extends SkeletonMixin(LocalizeActiv
 	}
 
 	_openPopout() {
-		this.showIsOpened = true;
+		this.showInNewTab = true;
 		if (this.activityWindowPopout && !this.activityWindowPopout.closed) {
 			this.activityWindowPopout.focus();
 			return;
