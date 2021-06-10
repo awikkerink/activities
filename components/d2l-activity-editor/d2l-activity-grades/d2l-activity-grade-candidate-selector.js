@@ -1,15 +1,17 @@
 import { css, html } from 'lit-element/lit-element';
 import { formatNumber, formatPercent } from '@brightspace-ui/intl/lib/number.js';
+import { sharedAssociateGrade as associateGradeStore, shared as store } from '../state/activity-store.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { bodySmallStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityEditorMixin } from '../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles';
-import { shared as store } from '../state/activity-store.js';
 
 class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeActivityEditorMixin(MobxLitElement)) {
 	static get properties() {
-		return {};
+		return {
+			_createSelectboxGradeItemEnabled: { type: Boolean }
+		};
 	}
 
 	static get styles() {
@@ -32,17 +34,30 @@ class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeActivit
 		super(store);
 	}
 
-	render() {
-		const activity = store.get(this.href);
+	connectedCallback() {
+		super.connectedCallback();
 
-		if (!activity || !activity.scoreAndGrade.gradeCandidateCollection) {
+		const event = new CustomEvent('d2l-request-provider', {
+			detail: { key: 'd2l-provider-create-selectbox-grade-item-enabled' },
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+		this.dispatchEvent(event);
+
+		this._createSelectboxGradeItemEnabled = event.detail.provider;
+	}
+
+	render() {
+		const gradeCandidateCollection = this._gradeCandidateCollection;
+		if (!gradeCandidateCollection) {
 			return html``;
 		}
 
 		const {
 			gradeCandidates,
 			selected
-		} = activity.scoreAndGrade.gradeCandidateCollection;
+		} = gradeCandidateCollection;
 
 		const formatNumberOptions = { maximumFractionDigits: 2 };
 		const formattedPoints = selected && selected.maxPoints !== undefined ? formatNumber(selected.maxPoints, formatNumberOptions) : '';
@@ -63,9 +78,11 @@ class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeActivit
 			</div>
 		`;
 	}
+
 	_renderGradeCandidate(gc, selected) {
 		return html`<option value="${gc.href}" .selected="${selected && gc.href === selected.href}">${gc.name}</option>`;
 	}
+
 	_renderGradeCandidateTemplates(gradeCandidates, selected) {
 		return gradeCandidates.map(gc => {
 			if (gc.isCategory) {
@@ -86,13 +103,27 @@ class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeActivit
 
 	_setSelected(event) {
 		if (event && event.target && event.target.value) {
-			const activity = store.get(this.href);
-			if (activity && activity.scoreAndGrade.gradeCandidateCollection) {
-				activity.scoreAndGrade.gradeCandidateCollection.setSelected(event.target.value);
-			}
+			const gradeCandidateCollection = this._gradeCandidateCollection;
+			gradeCandidateCollection && gradeCandidateCollection.setSelected(event.target.value);
 		}
 	}
 
+	get _gradeCandidateCollection() {
+		const activity = store.get(this.href);
+		if (!activity) {
+			return html``;
+		}
+
+		let gradeCandidateCollection = null;
+		if (this._createSelectboxGradeItemEnabled) {
+			const associateGradeEntity = activity.associateGradeHref && associateGradeStore.get(activity.associateGradeHref);
+			gradeCandidateCollection = associateGradeEntity && associateGradeEntity.gradeCandidateCollection;
+		} else {
+			gradeCandidateCollection = activity.scoreAndGrade && activity.scoreAndGrade.gradeCandidateCollection;
+		}
+
+		return gradeCandidateCollection;
+	}
 }
 
 customElements.define('d2l-activity-grade-candidate-selector', ActivityGradeCandidateSelector);
