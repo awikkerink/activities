@@ -28,6 +28,19 @@ class ContentEditorLtiLinkOptions extends SkeletonMixin(ErrorHandlingMixin(Local
 			radioStyles,
 			activityContentEditorStyles,
 			css`
+				.d2l-display-options-text {
+					margin-bottom: 6px;
+				}
+				.d2l-label-text {
+					display: inline-block;
+				}
+				#open-new-tab-help-span {
+					margin-left: 12px;
+				}
+				:host([dir='rtl']) #open-new-tab-help-span {
+					margin-left: 0;
+					margin-right: 12px;
+				}
 				:host > div {
 					padding-bottom: 0; /* undo the activity-content-editor-styles padding */
 				}
@@ -51,26 +64,40 @@ class ContentEditorLtiLinkOptions extends SkeletonMixin(ErrorHandlingMixin(Local
 		}
 
 		return html`
-		<div id="content-link-options-container" class="d2l-skeletize">
-			<label class="d2l-input-radio-label">
+		<div id="content-link-options-container">
+			<div class="d2l-display-options-text">
+				<label class="d2l-label-text d2l-skeletize">
+					${this.localize('content.displayOptions')}
+				</label>
+			</div>
+			<label class="d2l-input-radio-label d2l-skeletize">
 				<input
 					id="embed-on-page"
 					type="radio"
 					name="link-display-group"
 					value="embed"
-                    ?checked="${!isExternalResource}"
-                    @change="${this._saveLinkOptions}">
+					?checked="${!isExternalResource}"
+					@change="${this._saveLinkOptions}">
 					${this.localize('content.embedOnPage')}
 			</label>
-			<label class="d2l-input-radio-label">
+			<label class="d2l-input-radio-label d2l-skeletize">
 				<input
 					id="open-new-tab"
 					type="radio"
 					name="link-display-group"
 					value="newTab"
-                    ?checked="${isExternalResource}"
-                    @change="${this._saveLinkOptions}">
+					?checked="${isExternalResource}"
+					@change="${this._saveLinkOptions}">
 					${this.localize('content.openNewTab')}
+					<span id="open-new-tab-help-span" tabindex="0">
+						<d2l-icon
+							icon="d2l-tier1:help">
+						</d2l-icon>
+						<d2l-tooltip
+							for="open-new-tab-help-span">
+							${this.localize('content.openNewTabHelp')}
+						</d2l-tooltip>
+					</span>
 			</label>
 		</div>
 		`;
