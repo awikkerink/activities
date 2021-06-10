@@ -1,6 +1,6 @@
+import { sharedAssociateGrade as associateGradeStore, shared as store } from '../state/activity-store.js';
 import { css, html } from 'lit-element/lit-element';
 import { formatNumber, formatPercent } from '@brightspace-ui/intl/lib/number.js';
-import { sharedAssociateGrade as associateGradeStore, shared as store } from '../state/activity-store.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { bodySmallStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityEditorMixin } from '../mixins/d2l-activity-editor-lang-mixin.js';
@@ -79,6 +79,23 @@ class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeActivit
 		`;
 	}
 
+	get _gradeCandidateCollection() {
+		const activity = store.get(this.href);
+		if (!activity) {
+			return html``;
+		}
+
+		let gradeCandidateCollection = null;
+		if (this._createSelectboxGradeItemEnabled) {
+			const associateGradeEntity = activity.associateGradeHref && associateGradeStore.get(activity.associateGradeHref);
+			gradeCandidateCollection = associateGradeEntity && associateGradeEntity.gradeCandidateCollection;
+		} else {
+			gradeCandidateCollection = activity.scoreAndGrade && activity.scoreAndGrade.gradeCandidateCollection;
+		}
+
+		return gradeCandidateCollection;
+	}
+
 	_renderGradeCandidate(gc, selected) {
 		return html`<option value="${gc.href}" .selected="${selected && gc.href === selected.href}">${gc.name}</option>`;
 	}
@@ -106,23 +123,6 @@ class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeActivit
 			const gradeCandidateCollection = this._gradeCandidateCollection;
 			gradeCandidateCollection && gradeCandidateCollection.setSelected(event.target.value);
 		}
-	}
-
-	get _gradeCandidateCollection() {
-		const activity = store.get(this.href);
-		if (!activity) {
-			return html``;
-		}
-
-		let gradeCandidateCollection = null;
-		if (this._createSelectboxGradeItemEnabled) {
-			const associateGradeEntity = activity.associateGradeHref && associateGradeStore.get(activity.associateGradeHref);
-			gradeCandidateCollection = associateGradeEntity && associateGradeEntity.gradeCandidateCollection;
-		} else {
-			gradeCandidateCollection = activity.scoreAndGrade && activity.scoreAndGrade.gradeCandidateCollection;
-		}
-
-		return gradeCandidateCollection;
 	}
 }
 
