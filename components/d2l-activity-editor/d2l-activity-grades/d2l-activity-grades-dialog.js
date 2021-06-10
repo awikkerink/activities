@@ -59,9 +59,6 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			.d2l-input-radio-label-disabled {
 				margin-bottom: 0;
 			}
-			.d2l-grade-properties {
-				padding-top: 16px;
-			}
 			#linkToExistingGradeItemRadioButton {
 				padding-bottom: 10px;
 			}
@@ -298,6 +295,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 						</div>
 						${this._createSelectboxGradeItemEnabled ? html`
 							<d2l-activity-edit-new-grade
+								associate-grade-href="${this._associateGradeHref}"
 								.href="${href}"
 								.token="${this.token}">
 							</d2l-activity-edit-new-grade>

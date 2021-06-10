@@ -48,6 +48,7 @@ export class AssociateGrade {
 		this.maxPoints = entity.maxPoints();
 		this.gradeType = entity.gradeType();
 		this.canCreateNewGrade = entity.canCreateNewGrade();
+		this.canEditNewGrade = entity.canEditNewGrade();
 	}
 
 	async setGradebookStatus(newStatus, gradeName, maxPoints) {
