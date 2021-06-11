@@ -107,6 +107,14 @@ export default {
 	"grades.chooseNewGradeItemCategory": "Choose Grade Category", // Label for add category button
 	"grades.newGradeItemCategory": "Grade Category", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "No Category", // Category dropdown text for not selecting a category
+	"grades.changeNewGradeTypeAndScheme": "Change Grade Type & Scheme", // Label for change type and scheme button
+	"grades.newGradeType": "Grade Type", // Label for the grade type
+	"grades.newGradeTypeNumeric": "Numeric", // Label for numeric grade type radio option
+	"grades.newGradeTypeSelectbox": "Selectbox", // Label for selectbox grade type radio option
+	"grades.numericDescription": "Grade users by assigning a value out of a specified total number of points.", // Description of numeric grade type
+	"grades.numericDescriptionExample": "E.g. 8/10", // Example of numeric grade type
+	"grades.selectboxDescription": "Grade users by selecting the grade scheme level that best matches their achievement.", // Description of selectbox grade type
+	"grades.selectboxDescriptionExample": "E.g. \"Very Good\" or \"B+\"", // Example of selectbox grade type
 
 	"attachments.addGoogleDriveLink": "Attach from Google Drive", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "File Upload", // Tooltip for a button that opens a file upload dialog
