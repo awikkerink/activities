@@ -83,6 +83,7 @@ export class AssociateGrade {
 decorate(AssociateGrade, {
 	// props
 	canCreateNewGrade: observable,
+	canEditNewGrade: observable,
 	gradebookStatus: observable,
 	gradeName: observable,
 	maxPoints: observable,

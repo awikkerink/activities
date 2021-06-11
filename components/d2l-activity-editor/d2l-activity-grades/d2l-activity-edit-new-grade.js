@@ -5,11 +5,11 @@ import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { LocalizeActivityEditorMixin } from '../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
+import { shared as store } from '../state/activity-store.js';
 
 class ActivityEditNewGrade extends ActivityEditorMixin(LocalizeActivityEditorMixin(RtlMixin(MobxLitElement))) {
 	static get properties() {
 		return {
-			associateGradeHref: { type: String, attribute: 'associate-grade-href' },
 			_showCategories: { type: Boolean },
 			_showTypes: { type: Boolean }
 		};
@@ -66,7 +66,7 @@ class ActivityEditNewGrade extends ActivityEditorMixin(LocalizeActivityEditorMix
 		</d2l-activity-grade-category-selector>
 		<d2l-activity-grade-type-scheme-selector
 			?hidden="${!this._showTypes}"
-			.href="${this.associateGradeHref}"
+			.href="${this._associateGradeHref}"
 			.token="${this.token}">
 		</d2l-activity-grade-type-scheme-selector>
 		`;
@@ -80,6 +80,10 @@ class ActivityEditNewGrade extends ActivityEditorMixin(LocalizeActivityEditorMix
 	}
 	showTypes() {
 		this._showTypes = true;
+	}
+	get _associateGradeHref() {
+		const entity = store.get(this.href);
+		return entity && entity.associateGradeHref;
 	}
 }
 

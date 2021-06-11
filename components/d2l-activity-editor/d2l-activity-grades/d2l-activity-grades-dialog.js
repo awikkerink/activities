@@ -295,7 +295,6 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 						</div>
 						${this._createSelectboxGradeItemEnabled ? html`
 							<d2l-activity-edit-new-grade
-								associate-grade-href="${this._associateGradeHref}"
 								.href="${href}"
 								.token="${this.token}">
 							</d2l-activity-edit-new-grade>
