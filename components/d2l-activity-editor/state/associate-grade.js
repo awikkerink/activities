@@ -65,6 +65,10 @@ export class AssociateGrade {
 		this._updateProperty(() => this._entity.setGradeName(gradeName));
 	}
 
+	setGradeType(gradeType) {
+		this._updateProperty(() => this._entity.setGradeType(gradeType));
+	}
+
 	async _updateProperty(updateFunc) {
 		const entity = await updateFunc();
 		if (!entity) {

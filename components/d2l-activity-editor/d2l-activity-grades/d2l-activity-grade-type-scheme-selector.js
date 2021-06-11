@@ -94,8 +94,14 @@ class ActivityGradeTypeSchemeSelector extends ActivityEditorMixin(LocalizeActivi
 		`;
 	}
 
-	_typeRadioChanged() {
-		// TODO
+	async _typeRadioChanged(e) {
+		const currentTarget = e.currentTarget;
+		if (!currentTarget) return;
+
+		const associateGrade = store.get(this.href);
+		if (!associateGrade) return;
+
+		await associateGrade.setGradeType(currentTarget.value);
 	}
 }
 
