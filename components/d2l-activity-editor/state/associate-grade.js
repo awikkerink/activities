@@ -95,5 +95,6 @@ decorate(AssociateGrade, {
 	getGradeCandidates: action,
 	setGradebookStatus: action,
 	setGradeMaxPoints: action,
-	setGradeName: action
+	setGradeName: action,
+	setGradeType: action
 });
