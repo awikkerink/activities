@@ -48,6 +48,7 @@ export class AssociateGrade {
 		this.maxPoints = entity.maxPoints();
 		this.gradeType = entity.gradeType();
 		this.canCreateNewGrade = entity.canCreateNewGrade();
+		this.canEditNewGrade = entity.canEditNewGrade();
 
 		this.gradeCandidateCollection || this.getGradeCandidates();
 		this.gradeCategoryCollection || this.getGradeCategories();
@@ -67,6 +68,10 @@ export class AssociateGrade {
 		this._updateProperty(() => this._entity.setGradeName(gradeName));
 	}
 
+	setGradeType(gradeType) {
+		this._updateProperty(() => this._entity.setGradeType(gradeType));
+	}
+
 	async _updateProperty(updateFunc) {
 		const entity = await updateFunc();
 		if (!entity) {
@@ -81,6 +86,7 @@ export class AssociateGrade {
 decorate(AssociateGrade, {
 	// props
 	canCreateNewGrade: observable,
+	canEditNewGrade: observable,
 	gradebookStatus: observable,
 	gradeName: observable,
 	maxPoints: observable,
@@ -93,5 +99,6 @@ decorate(AssociateGrade, {
 	getGradeCandidates: action,
 	setGradebookStatus: action,
 	setGradeMaxPoints: action,
-	setGradeName: action
+	setGradeName: action,
+	setGradeType: action
 });

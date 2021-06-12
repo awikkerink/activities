@@ -1,5 +1,6 @@
-import './d2l-activity-grade-candidate-selector';
-import './d2l-activity-grade-category-selector';
+import './d2l-activity-grade-candidate-selector.js';
+import './d2l-activity-grade-category-selector.js';
+import './d2l-activity-edit-new-grade.js';
 import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@brightspace-ui/core/components/icons/icon.js';
@@ -58,9 +59,6 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			.d2l-input-radio-label-disabled {
 				margin-bottom: 0;
 			}
-			.d2l-activity-grade-category-selector {
-				padding-top: 16px;
-			}
 			#linkToExistingGradeItemRadioButton {
 				padding-bottom: 10px;
 			}
@@ -94,7 +92,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 
 	render() {
 		const showSpinnerWhenLoading = this._createSelectboxGradeItemEnabled;
-		const width = 460;
+		const width = this._createSelectboxGradeItemEnabled ? 500 : 460;
 		const titleText = this._createSelectboxGradeItemEnabled ? this.localize('editor.editLinkExisting') : this.localize('editor.chooseFromGrades');
 
 		return html`
@@ -108,7 +106,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 				?async="${showSpinnerWhenLoading}">
 				${this._renderDialogEditor()}
 				<d2l-button slot="footer" primary @click=${this._saveAssociateGrade} ?disabled="${this.isSaving}" dialog-action="done">${this.localize('editor.ok')}</d2l-button>
-				<d2l-button slot="footer" @click=${this._cancel} ?disabled="${this.isSaving}" dialog-action="cancel">${this.localize('editor.cancel')}</d2l-button>
+				<d2l-button slot="footer" ?disabled="${this.isSaving}" dialog-action="cancel">${this.localize('editor.cancel')}</d2l-button>
 			</d2l-dialog>
 		`;
 	}
@@ -230,8 +228,8 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 
 	_onDialogOpen(e) {
 		if (this._createSelectboxGradeItemEnabled) {
-			const gradeCategorySelector = this.shadowRoot.querySelector('d2l-activity-grade-category-selector');
-			gradeCategorySelector && gradeCategorySelector.resetShowCategoriesProperty();
+			const editNewGrade = this.shadowRoot.querySelector('d2l-activity-edit-new-grade');
+			editNewGrade && editNewGrade.reset();
 			e.target.resize();
 		}
 	}
@@ -278,10 +276,17 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 								</div>
 							</div>
 						</div>
-						<d2l-activity-grade-category-selector
-							.href="${href}"
-							.token="${this.token}">
-						</d2l-activity-grade-category-selector>
+						${this._createSelectboxGradeItemEnabled ? html`
+							<d2l-activity-edit-new-grade
+								.href="${href}"
+								.token="${this.token}">
+							</d2l-activity-edit-new-grade>
+						` : html`
+							<d2l-activity-grade-category-selector
+								.href="${href}"
+								.token="${this.token}">
+							</d2l-activity-grade-category-selector>
+						`}
 					` : html`
 						<div class="d2l-body-small">
 							${this.localize('editor.noGradeCreatePermission')}
