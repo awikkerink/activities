@@ -126,9 +126,6 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 
 				this._createNewRadioChecked = associateGrade.gradebookStatus === GradebookStatus.NewGrade && this._canCreateNewGrade;
 
-				associateGrade.getGradeCategories();
-				associateGrade.getGradeCandidates();
-
 				if (this._createNewRadioChecked) {
 					this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 				} else {
@@ -189,24 +186,10 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 		const currentTarget = e.currentTarget;
 		if (currentTarget && currentTarget.value === 'createNew') {
 			this._createNewRadioChecked = true;
+			this._createSelectboxGradeItemEnabled && this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 		} else if (currentTarget && currentTarget.value === 'linkExisting') {
 			this._createNewRadioChecked = false;
-		}
-
-		if (this._createSelectboxGradeItemEnabled) {
-			const associateGrade = associateGradeStore.get(this._associateGradeHref);
-			if (currentTarget && currentTarget.value === 'createNew') {
-				await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
-				if (associateGrade) {
-					associateGrade.getGradeCategories();
-				}
-			} else if (currentTarget && currentTarget.value === 'linkExisting') {
-				this._createNewRadioChecked = false;
-				this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
-				if (associateGrade) {
-					associateGrade.getGradeCandidates();
-				}
-			}
+			this._createSelectboxGradeItemEnabled && this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
 		}
 
 		const dialog = this.shadowRoot.querySelector('d2l-dialog');
