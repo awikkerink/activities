@@ -121,7 +121,8 @@ class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeActivit
 	_setSelected(event) {
 		if (event && event.target && event.target.value) {
 			const gradeCandidateCollection = this._gradeCandidateCollection;
-			gradeCandidateCollection && gradeCandidateCollection.setSelected(event.target.value);
+			const storeForAssociateGrade = this._createSelectboxGradeItemEnabled ? associateGradeStore : null;
+			gradeCandidateCollection && gradeCandidateCollection.setSelected(event.target.value, storeForAssociateGrade);
 		}
 	}
 }
