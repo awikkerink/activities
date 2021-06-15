@@ -19,7 +19,7 @@ export class AssociateGrade {
 			const entity = new AssociateGradeEntity(sirenEntity, this.token, {
 				remove: () => { },
 			});
-			this.load(entity);
+			await this.load(entity);
 		}
 		return this;
 	}
@@ -60,6 +60,9 @@ export class AssociateGrade {
 		this.canCreateNewGrade = entity.canCreateNewGrade();
 		this.canEditNewGrade = entity.canEditNewGrade();
 		this.canGetSchemes = entity.canGetSchemesForType(this.gradeType);
+
+		this.gradeCandidateCollection || this.getGradeCandidates();
+		this.gradeCategoryCollection || this.getGradeCategories();
 	}
 
 	async setGradebookStatus(newStatus, gradeName, maxPoints) {

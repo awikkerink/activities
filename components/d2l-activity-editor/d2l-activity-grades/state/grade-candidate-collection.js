@@ -58,8 +58,13 @@ export class GradeCandidateCollection {
 		});
 	}
 
-	setSelected(href) {
-		this.selected = this._findGradeCandidate(href, this.gradeCandidates);
+	setSelected(href, associateGradeStore) {
+		const gradeCandidate = this._findGradeCandidate(href, this.gradeCandidates);
+		this.selected = gradeCandidate;
+
+		if (associateGradeStore) {
+			gradeCandidate.associateGrade(associateGradeStore);
+		}
 	}
 
 	_findCurrentAssociation(gradeCandidates) {
@@ -101,7 +106,6 @@ export class GradeCandidateCollection {
 			}
 		}
 	}
-
 }
 
 decorate(GradeCandidateCollection, {

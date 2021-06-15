@@ -17,6 +17,16 @@ export class GradeCandidate {
 		this.gradeCandidates = [];
 	}
 
+	async associateGrade(associateGradeStore) {
+		const sirenEntity = await this.gradeCandidateEntity.associateGrade();
+		if (!sirenEntity || !associateGradeStore) return;
+
+		const href = sirenEntity.self();
+		const entity = associateGradeStore.get(href);
+		await entity.load(sirenEntity);
+		associateGradeStore.put(href, entity);
+	}
+
 	async fetch() {
 		const href = this.gradeCandidateEntity.href();
 		let sirenEntity;
@@ -62,7 +72,6 @@ export class GradeCandidate {
 		});
 		this.gradeCandidates = await Promise.all(gradeCandidatePromises);
 	}
-
 }
 
 decorate(GradeCandidate, {
@@ -75,5 +84,6 @@ decorate(GradeCandidate, {
 	maxPoints: observable,
 	name: observable,
 	// actions
-	load: action
+	load: action,
+	associateGrade: action
 });
