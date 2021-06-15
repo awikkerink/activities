@@ -63,11 +63,11 @@ class ContentEditorLtiLinkOptions extends SkeletonMixin(ErrorHandlingMixin(Local
 		let isExternalResource = false;
 
 		if (this.entity) {
-			isExternalResource = this.entity.isExternalResource;
 			this.canEmbedIframe.then(canEmbedIframe => {
 				this.showLinkOptions = canEmbedIframe;
 				this.skeleton = false;
 			});
+			isExternalResource = this.showLinkOptions ? this.entity.isExternalResource : true;
 		}
 
 		let renderOptionsContent = this.showLinkOptions ? this._renderLinkOptions(isExternalResource) : this._renderNewWindowOnlyMessage();
