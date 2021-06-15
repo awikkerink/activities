@@ -19,8 +19,8 @@ export class GradeCategoryCollection {
 			return this.fetchGradeCategory(gradeCategoryLinkedEntity);
 		});
 
-		await Promise.all(gradeCategoryPromises);
-		await this.load();
+		const gradeCategoriesEntity = await Promise.all(gradeCategoryPromises);
+		await this.load(gradeCategoriesEntity);
 		return this;
 	}
 
@@ -30,9 +30,31 @@ export class GradeCategoryCollection {
 		return gradeCategory;
 	}
 
-	async load() {
+	async load(gradeCategoriesEntity) {
 		this.selected = this.gradeCategoryCollectionEntity.getSelectedCategory();
-		this.gradeCategories = this.gradeCategoryCollectionEntity.getGradeCategories();
+		this.gradeCategories = gradeCategoriesEntity;
+	}
+
+	setSelected(href, associateGradeStore) {
+		const gradeCategory = this._findGradeCategory(href, this.gradeCategories);
+		if (gradeCategory) {
+			this.selected = gradeCategory;
+
+			if (associateGradeStore) {
+				gradeCategory.selectCategory(associateGradeStore);
+			}
+		}
+	}
+
+	_findGradeCategory(href, gradeCategories) {
+		if (!gradeCategories) {
+			return;
+		}
+		for (const gc of gradeCategories) {
+			if (href === gc.href || (!gc.href && href === 'undefined')) {
+				return gc;
+			}
+		}
 	}
 }
 
@@ -41,5 +63,6 @@ decorate(GradeCategoryCollection, {
 	gradeCategories: observable,
 	selected: observable,
 	// actions
-	load: action
+	load: action,
+	setSelected: action
 });

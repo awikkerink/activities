@@ -11,6 +11,16 @@ export class GradeCategory {
 		this.token = token;
 	}
 
+	async selectCategory(associateGradeStore) {
+		const sirenEntity = await this.gradeCategoryLinkedEntity.selectCategory();
+		if (!sirenEntity || !associateGradeStore) return;
+
+		const href = sirenEntity.self();
+		const entity = associateGradeStore.get(href);
+		await entity.load(sirenEntity);
+		associateGradeStore.put(href, entity);
+	}
+
 	async fetch() {
 		const href = this.gradeCategoryLinkedEntity.href();
 		let sirenEntity;
@@ -35,5 +45,6 @@ decorate(GradeCategory, {
 	// props
 	name: observable,
 	// actions
-	load: action
+	load: action,
+	selectCategory: action
 });
