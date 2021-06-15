@@ -1,5 +1,6 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { ContentLTILinkEntity } from 'siren-sdk/src/activities/content/ContentLTILinkEntity.js';
+import { ContentLTILinkFrameOptionsEntity } from 'siren-sdk/src/activities/content/ContentLTILinkFrameOptionsEntity.js';
 import { fetchEntity } from '../../../state/fetch-entity.js';
 
 configureMobx({ enforceActions: 'observed' });
@@ -54,6 +55,19 @@ export class ContentLTILink {
 
 	setTitle(value) {
 		this.title = value;
+	}
+
+	async canEmbedIframe() {
+		const frameOptionsEntityHref = this._contentLTILink.getFrameOptionsHref();
+		let canEmbed = true;
+
+		if(frameOptionsEntityHref) {
+			const frameOptionsResponse = await fetchEntity(frameOptionsEntityHref, this.token);
+			const frameOptionsEntity = new ContentLTILinkFrameOptionsEntity(frameOptionsResponse, this.token, { remove: () => { } });
+			canEmbed = (frameOptionsEntity.canBeEmbedded() !== undefined) ? frameOptionsEntity.canBeEmbedded() : true;
+		}
+
+		return canEmbed;
 	}
 
 	_makeLTILinkData() {

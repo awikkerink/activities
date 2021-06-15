@@ -43,10 +43,12 @@ class ContentLTILinkDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandli
 		super.connectedCallback();
 		this.saveTitle = this.saveTitle.bind(this);
 		this.saveLinkOptions = this.saveLinkOptions.bind(this);
+		this.canEmbedIframe = this.canEmbedIframe.bind(this);
 	}
 
 	render() {
 		const ltiLinkEntity = ltiLinkStore.getContentLTILinkActivity(this.href);
+
 		if (ltiLinkEntity) {
 			this.skeleton = false;
 		}
@@ -62,11 +64,13 @@ class ContentLTILinkDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandli
 			<d2l-activity-content-lti-link-options
 				.entity=${ltiLinkEntity}
 				.onSave=${this.saveLinkOptions}
+				.canEmbedIframe=${this.canEmbedIframe()}
 			>
 			</d2l-activity-content-lti-link-options>
 
 			<d2l-activity-content-lti-link-external-activity
 				.entity=${ltiLinkEntity}
+				.canEmbedIframe=${this.canEmbedIframe()}
 			>
 			</d2l-activity-content-lti-link-external-activity>
 		`;
@@ -118,6 +122,14 @@ class ContentLTILinkDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandli
 			return;
 		}
 		ltiLinkEntity.setTitle(title);
+	}
+
+	canEmbedIframe() {
+		const ltiLinkEntity = ltiLinkStore.getContentLTILinkActivity(this.href);
+		if (!ltiLinkEntity) {
+			return;
+		}
+		return ltiLinkEntity.canEmbedIframe();
 	}
 }
 
