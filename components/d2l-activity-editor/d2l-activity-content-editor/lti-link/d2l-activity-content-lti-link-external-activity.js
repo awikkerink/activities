@@ -2,7 +2,7 @@
 import '@brightspace-ui/core/components/button/button-subtle.js';
 import './d2l-activity-content-lti-link-jump-icon.js';
 import './d2l-activity-content-lti-link-preview.js';
-import { bodyStandardStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
+import { bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { LocalizeActivityEditorMixin } from '../../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -43,7 +43,7 @@ class ActivityContentLTILinkExternalActivity extends SkeletonMixin(LocalizeActiv
 				}
 			`,
 			labelStyles,
-			bodyStandardStyles
+			bodyCompactStyles
 		];
 	}
 
@@ -81,7 +81,7 @@ class ActivityContentLTILinkExternalActivity extends SkeletonMixin(LocalizeActiv
 					${this.showInNewTab || this.showActivityPreview ?
 						html`
 							<d2l-activity-content-lti-link-jump-icon>
-								<p class="d2l-body-standard">
+								<p class="d2l-body-compact">
 									${this.localize('content.externalActivityOpened')}
 								</p>
 							</d2l-activity-content-lti-link-jump-icon>` :

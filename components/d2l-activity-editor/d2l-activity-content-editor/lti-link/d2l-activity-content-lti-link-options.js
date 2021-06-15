@@ -63,17 +63,28 @@ class ContentEditorLtiLinkOptions extends SkeletonMixin(ErrorHandlingMixin(Local
 		let isExternalResource = false;
 
 		if (this.entity) {
+			isExternalResource = this.entity.isExternalResource;
+			
 			this.canEmbedIframe.then(canEmbedIframe => {
 				this.showLinkOptions = canEmbedIframe;
 				this.skeleton = false;
 			});
-			isExternalResource = this.showLinkOptions ? this.entity.isExternalResource : true;
+
+			if(!this.showLinkOptions) {
+				isExternalResource = true;
+				this.onSave(isExternalResource);;
+			}
 		}
 
 		let renderOptionsContent = this.showLinkOptions ? this._renderLinkOptions(isExternalResource) : this._renderNewWindowOnlyMessage();
 
 		return html`
 		<div id="content-link-options-container">
+			<div class="d2l-display-options-text">
+				<label class="d2l-label-text d2l-skeletize">
+					${this.localize('content.displayOptions')}
+				</label>
+			</div>
 			${renderOptionsContent}
 		</div>
 		`;
@@ -81,11 +92,6 @@ class ContentEditorLtiLinkOptions extends SkeletonMixin(ErrorHandlingMixin(Local
 
 	_renderLinkOptions(isExternalResource) {
 		return html`
-			<div class="d2l-display-options-text">
-				<label class="d2l-label-text d2l-skeletize">
-					${this.localize('content.displayOptions')}
-				</label>
-			</div>
 			<label class="d2l-input-radio-label d2l-skeletize">
 				<input
 					id="embed-on-page"
@@ -120,11 +126,6 @@ class ContentEditorLtiLinkOptions extends SkeletonMixin(ErrorHandlingMixin(Local
 
 	_renderNewWindowOnlyMessage() {
 		return html`
-			<div class="d2l-display-options-text">
-				<label class="d2l-label-text d2l-skeletize">
-					${this.localize('content.displayOptions')}
-				</label>
-			</div>
 			<div class="d2l-skeletize d2l-body-compact">
 				${this.localize('content.externalActivityEmbeddedNotAllowed')}
 			</div>`;
