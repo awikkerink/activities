@@ -19,6 +19,19 @@ export class ContentLTILink {
 		await this._contentLTILink.deleteLTILink();
 	}
 
+	async canEmbedIframe() {
+		const frameOptionsEntityHref = this._contentLTILink.getFrameOptionsHref();
+		let canEmbed = true;
+
+		if (frameOptionsEntityHref) {
+			const frameOptionsResponse = await fetchEntity(frameOptionsEntityHref, this.token);
+			const frameOptionsEntity = new ContentLTILinkFrameOptionsEntity(frameOptionsResponse, this.token, { remove: () => { } });
+			canEmbed = (frameOptionsEntity.canBeEmbedded() !== undefined) ? frameOptionsEntity.canBeEmbedded() : true;
+		}
+
+		return canEmbed;
+	}
+
 	get dirty() {
 		return !this._contentLTILink.equals(this._makeLTILinkData());
 	}
@@ -55,19 +68,6 @@ export class ContentLTILink {
 
 	setTitle(value) {
 		this.title = value;
-	}
-
-	async canEmbedIframe() {
-		const frameOptionsEntityHref = this._contentLTILink.getFrameOptionsHref();
-		let canEmbed = true;
-
-		if(frameOptionsEntityHref) {
-			const frameOptionsResponse = await fetchEntity(frameOptionsEntityHref, this.token);
-			const frameOptionsEntity = new ContentLTILinkFrameOptionsEntity(frameOptionsResponse, this.token, { remove: () => { } });
-			canEmbed = (frameOptionsEntity.canBeEmbedded() !== undefined) ? frameOptionsEntity.canBeEmbedded() : true;
-		}
-
-		return canEmbed;
 	}
 
 	_makeLTILinkData() {

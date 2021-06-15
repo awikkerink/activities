@@ -91,6 +91,14 @@ class ContentLTILinkDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandli
 		await ltiLinkEntity.cancelCreate();
 	}
 
+	canEmbedIframe() {
+		const ltiLinkEntity = ltiLinkStore.getContentLTILinkActivity(this.href);
+		if (!ltiLinkEntity) {
+			return;
+		}
+		return ltiLinkEntity.canEmbedIframe();
+	}
+
 	hasPendingChanges() {
 		const ltiLinkEntity = ltiLinkStore.getContentLTILinkActivity(this.href);
 		if (!ltiLinkEntity) {
@@ -122,14 +130,6 @@ class ContentLTILinkDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandli
 			return;
 		}
 		ltiLinkEntity.setTitle(title);
-	}
-
-	canEmbedIframe() {
-		const ltiLinkEntity = ltiLinkStore.getContentLTILinkActivity(this.href);
-		if (!ltiLinkEntity) {
-			return;
-		}
-		return ltiLinkEntity.canEmbedIframe();
 	}
 }
 

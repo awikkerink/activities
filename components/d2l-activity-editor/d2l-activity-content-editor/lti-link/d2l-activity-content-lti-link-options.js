@@ -1,11 +1,11 @@
 import 'd2l-inputs/d2l-input-text.js';
 import 'd2l-tooltip/d2l-tooltip';
 import '@brightspace-ui/core/components/button/button-subtle.js';
+import { bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { activityContentEditorStyles } from '../shared-components/d2l-activity-content-editor-styles.js';
 import { ActivityEditorMixin } from '../../mixins/d2l-activity-editor-mixin.js';
 import { ErrorHandlingMixin } from '../../error-handling-mixin.js';
-import { labelStyles, bodyCompactStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityEditorMixin } from '../../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
@@ -64,19 +64,19 @@ class ContentEditorLtiLinkOptions extends SkeletonMixin(ErrorHandlingMixin(Local
 
 		if (this.entity) {
 			isExternalResource = this.entity.isExternalResource;
-			
+
 			this.canEmbedIframe.then(canEmbedIframe => {
 				this.showLinkOptions = canEmbedIframe;
 				this.skeleton = false;
 			});
 
-			if(!this.showLinkOptions) {
+			if (!this.showLinkOptions) {
 				isExternalResource = true;
-				this.onSave(isExternalResource);;
+				this.onSave(isExternalResource);
 			}
 		}
 
-		let renderOptionsContent = this.showLinkOptions ? this._renderLinkOptions(isExternalResource) : this._renderNewWindowOnlyMessage();
+		const renderOptionsContent = this.showLinkOptions ? this._renderLinkOptions(isExternalResource) : this._renderNewWindowOnlyMessage();
 
 		return html`
 		<div id="content-link-options-container">
@@ -130,7 +130,7 @@ class ContentEditorLtiLinkOptions extends SkeletonMixin(ErrorHandlingMixin(Local
 				${this.localize('content.externalActivityEmbeddedNotAllowed')}
 			</div>`;
 	}
-	
+
 	_saveLinkOptions(e) {
 		const isExternalResource = e.target.value === 'newTab';
 		this.onSave(isExternalResource);
