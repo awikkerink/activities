@@ -18,7 +18,7 @@ class ContentEditorLtiLinkOptions extends SkeletonMixin(ErrorHandlingMixin(Local
 		return {
 			entity: { type: Object },
 			onSave: { type: Function },
-			canEmbedIframe: { type: Function },
+			canEmbedIframe: { type: Object },
 			showLinkOptions: { type: Boolean }
 		};
 	}

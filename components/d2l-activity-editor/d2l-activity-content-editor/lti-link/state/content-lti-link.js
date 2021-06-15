@@ -21,15 +21,19 @@ export class ContentLTILink {
 
 	async canEmbedIframe() {
 		const frameOptionsEntityHref = this._contentLTILink.getFrameOptionsHref();
-		let canEmbed = true;
 
-		if (frameOptionsEntityHref) {
-			const frameOptionsResponse = await fetchEntity(frameOptionsEntityHref, this.token);
-			const frameOptionsEntity = new ContentLTILinkFrameOptionsEntity(frameOptionsResponse, this.token, { remove: () => { } });
-			canEmbed = (frameOptionsEntity.canBeEmbedded() !== undefined) ? frameOptionsEntity.canBeEmbedded() : true;
+		if (!frameOptionsEntityHref) {
+			return true;
 		}
 
-		return canEmbed;
+		const frameOptionsResponse = await fetchEntity(frameOptionsEntityHref, this.token);
+
+		if (!frameOptionsResponse) {
+			return true;
+		}
+
+		const frameOptionsEntity = new ContentLTILinkFrameOptionsEntity(frameOptionsResponse, this.token, { remove: () => { } });
+		return (frameOptionsEntity.canBeEmbedded() !== undefined) ? frameOptionsEntity.canBeEmbedded() : true;
 	}
 
 	get dirty() {

@@ -15,7 +15,7 @@ class ActivityContentLTILinkExternalActivity extends SkeletonMixin(LocalizeActiv
 		return {
 			entity: { type: Object },
 			showInNewTab: { type: Boolean },
-			canEmbedIframe: { type: Function },
+			canEmbedIframe: { type: Object },
 			showActivityPreview: { type: Boolean }
 		};
 	}
@@ -58,7 +58,7 @@ class ActivityContentLTILinkExternalActivity extends SkeletonMixin(LocalizeActiv
 	render() {
 		if (this.entity) {
 			this.canEmbedIframe.then(canEmbedIframe => {
-				this.showActivityPreview = !canEmbedIframe;
+				this.showActivityPreview = canEmbedIframe;
 				this.skeleton = false;
 			});
 		}
@@ -78,7 +78,7 @@ class ActivityContentLTILinkExternalActivity extends SkeletonMixin(LocalizeActiv
 					</d2l-button-subtle>
 				</div>
 				<div class="d2l-external-activity-inner-frame d2l-skeletize">
-					${this.showInNewTab || this.showActivityPreview ?
+					${this.showInNewTab || !this.showActivityPreview ?
 						html`
 							<d2l-activity-content-lti-link-jump-icon>
 								<p class="d2l-body-compact">
