@@ -5,12 +5,12 @@ import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { sharedIpRestrictions as store } from './state/quiz-store.js';
-//import { tableStyles } from '@brightspace-ui/core/components/table/table-wrapper.js';
+import { tableStyles } from '@brightspace-ui/core/components/table/table-wrapper.js';
 
 class ActivityQuizIpRestrictionsEditor extends ActivityEditorMixin(ActivityEditorContainerMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
 
 	static get styles() {
-		return [css`
+		return [tableStyles, css`
 				:host {
 					display: block;
 				}
