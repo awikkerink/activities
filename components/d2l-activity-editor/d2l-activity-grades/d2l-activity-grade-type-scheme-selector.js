@@ -99,7 +99,7 @@ class ActivityGradeTypeSchemeSelector extends ActivityEditorMixin(LocalizeActivi
 					class="d2l-input-select"
 					@change="${this._setSelectedScheme}"
 					>
-					${gradeSchemeCollection?.gradeSchemes.map(scheme => html`
+					${gradeSchemeCollection && gradeSchemeCollection.gradeSchemes.map(scheme => html`
 						<option value="${scheme.href}" .selected="${scheme.isSelected}">
 							${scheme.isDefault ?
 								this.localize('grades.defaultGradeScheme', { schemeName: scheme.name })
