@@ -1,4 +1,4 @@
-import { action, configure as configureMobx, decorate, observable } from 'mobx';
+import { action, configure as configureMobx, decorate, observable, runInAction } from 'mobx';
 import { GradeScheme } from './grade-scheme.js';
 import { GradeSchemeLinkedEntity } from 'siren-sdk/src/activities/associateGrade/GradeSchemeLinkedEntity.js';
 
@@ -10,7 +10,6 @@ export class GradeSchemeCollection {
 		this.gradeSchemeCollectionEntity = gradeSchemeCollectionEntity;
 		this.token = token;
 		this.gradeSchemes = [];
-		this.selected = null;
 	}
 
 	async fetch() {
@@ -19,8 +18,12 @@ export class GradeSchemeCollection {
 			return this.fetchGradeScheme(gradeSchemeLinkedEntity);
 		});
 
-		await Promise.all(gradeSchemePromises);
-		await this.load();
+		const tempGradeSchemes = await Promise.all(gradeSchemePromises);
+
+		runInAction(() => {
+			this.gradeSchemes = tempGradeSchemes;
+		});
+
 		return this;
 	}
 
@@ -30,16 +33,29 @@ export class GradeSchemeCollection {
 		return gradeScheme;
 	}
 
-	async load() {
-		this.selected = this.gradeSchemeCollectionEntity.getSelectedScheme();
-		this.gradeSchemes = this.gradeSchemeCollectionEntity.getGradeSchemes();
+	async setGradeScheme(href, associateGradeStore) {
+		const gradeScheme = this._findGradeScheme(href);
+
+		if (associateGradeStore) {
+			await gradeScheme.selectScheme(associateGradeStore);
+		}
+	}
+
+	_findGradeScheme(href) {
+		if (!this.gradeSchemes) {
+			return;
+		}
+		for (const scheme of this.gradeSchemes) {
+			if (href === scheme.href) {
+				return scheme;
+			}
+		}
 	}
 }
 
 decorate(GradeSchemeCollection, {
 	// props
 	gradeSchemes: observable,
-	selected: observable,
 	// actions
-	load: action
+	setGradeScheme: action
 });

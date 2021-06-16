@@ -63,6 +63,7 @@ export class AssociateGrade {
 
 		this.gradeCandidateCollection || this.getGradeCandidates();
 		this.gradeCategoryCollection || this.getGradeCategories();
+		this.gradeSchemeCollection || this.getGradeSchemes();
 	}
 
 	async setGradebookStatus(newStatus, gradeName, maxPoints) {
@@ -110,6 +111,7 @@ decorate(AssociateGrade, {
 	load: action,
 	getGradeCategories: action,
 	getGradeCandidates: action,
+	getGradeSchemes: action,
 	setGradebookStatus: action,
 	setGradeMaxPoints: action,
 	setGradeName: action,

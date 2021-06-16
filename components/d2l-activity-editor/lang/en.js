@@ -115,6 +115,8 @@ export default {
 	"grades.numericDescriptionExample": "E.g. 8/10", // Example of numeric grade type
 	"grades.selectboxDescription": "Grade users by selecting the grade scheme level that best matches their achievement.", // Description of selectbox grade type
 	"grades.selectboxDescriptionExample": "E.g. \"Very Good\" or \"B+\"", // Example of selectbox grade type
+	"grades.newGradeScheme": "Grade Scheme", // Label for the grade scheme
+	"grades.defaultGradeScheme": "--Default-- ({schemeName})", // name of default grade scheme
 
 	"attachments.addGoogleDriveLink": "Attach from Google Drive", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "File Upload", // Tooltip for a button that opens a file upload dialog
