@@ -64,13 +64,13 @@ class ContentLTILinkDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandli
 			<d2l-activity-content-lti-link-options
 				.entity=${ltiLinkEntity}
 				.onSave=${this.saveLinkOptions}
-				.canEmbedIframe=${canEmbedIframePromise}
+				.canEmbedIframePromise=${canEmbedIframePromise}
 			>
 			</d2l-activity-content-lti-link-options>
 
 			<d2l-activity-content-lti-link-external-activity
 				.entity=${ltiLinkEntity}
-				.canEmbedIframe=${canEmbedIframePromise}
+				.canEmbedIframePromise=${canEmbedIframePromise}
 			>
 			</d2l-activity-content-lti-link-external-activity>
 		`;

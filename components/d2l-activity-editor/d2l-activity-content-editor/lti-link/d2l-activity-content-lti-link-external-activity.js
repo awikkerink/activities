@@ -15,7 +15,7 @@ class ActivityContentLTILinkExternalActivity extends SkeletonMixin(LocalizeActiv
 		return {
 			entity: { type: Object },
 			showInNewTab: { type: Boolean },
-			canEmbedIframe: { type: Object },
+			canEmbedIframePromise: { type: Object },
 			showActivityPreview: { type: Boolean }
 		};
 	}
@@ -57,7 +57,7 @@ class ActivityContentLTILinkExternalActivity extends SkeletonMixin(LocalizeActiv
 
 	render() {
 		if (this.entity) {
-			this.canEmbedIframe.then(canEmbedIframe => {
+			this.canEmbedIframePromise.then(canEmbedIframe => {
 				this.showActivityPreview = canEmbedIframe;
 				this.skeleton = false;
 			});
