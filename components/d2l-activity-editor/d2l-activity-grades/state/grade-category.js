@@ -11,16 +11,6 @@ export class GradeCategory {
 		this.token = token;
 	}
 
-	async selectCategory(associateGradeStore) {
-		const sirenEntity = await this.gradeCategoryLinkedEntity.selectCategory();
-		if (!sirenEntity || !associateGradeStore) return;
-
-		const href = sirenEntity.self();
-		const entity = associateGradeStore.get(href);
-		await entity.load(sirenEntity);
-		associateGradeStore.put(href, entity);
-	}
-
 	async fetch() {
 		const href = this.gradeCategoryLinkedEntity.href();
 		let sirenEntity;
@@ -39,6 +29,16 @@ export class GradeCategory {
 		this._entity = entity;
 		this.name = entity.name();
 		this.isSelected = this.gradeCategoryLinkedEntity.isSelected();
+	}
+
+	async selectCategory(associateGradeStore) {
+		const sirenEntity = await this.gradeCategoryLinkedEntity.selectCategory();
+		if (!sirenEntity || !associateGradeStore) return;
+
+		const href = sirenEntity.self();
+		const entity = associateGradeStore.get(href);
+		await entity.load(sirenEntity);
+		associateGradeStore.put(href, entity);
 	}
 }
 

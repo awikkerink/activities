@@ -81,7 +81,7 @@ class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeActivit
 
 	get _gradeCandidateCollection() {
 		const activity = store.get(this.href);
-		if (!activity) return;
+		if (!activity) return null;
 
 		let gradeCandidateCollection = null;
 		if (this._createSelectboxGradeItemEnabled) {

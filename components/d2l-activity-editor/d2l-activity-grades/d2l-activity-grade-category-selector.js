@@ -87,7 +87,7 @@ class ActivityGradeCategorySelector extends ActivityEditorMixin(LocalizeActivity
 	get _newGradeCandidatesCollection() {
 		const activity = store.get(this.href);
 
-		if (!activity) return;
+		if (!activity) return null;
 
 		let newGradeCandidatesCollection = null;
 		if (this._createSelectboxGradeItemEnabled) {
