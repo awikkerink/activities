@@ -28,12 +28,26 @@ export class GradeCategory {
 		this.href = this.gradeCategoryLinkedEntity.href();
 		this._entity = entity;
 		this.name = entity.name();
+		this.isSelected = this.gradeCategoryLinkedEntity.isSelected();
+	}
+
+	async selectCategory(associateGradeStore) {
+		const sirenEntity = await this.gradeCategoryLinkedEntity.selectCategory();
+		if (!sirenEntity || !associateGradeStore) return;
+
+		const href = sirenEntity.self();
+		const entity = associateGradeStore.get(href);
+		await entity.load(sirenEntity);
+		associateGradeStore.put(href, entity);
 	}
 }
 
 decorate(GradeCategory, {
 	// props
+	href: observable,
 	name: observable,
+	isSelected: observable,
 	// actions
-	load: action
+	load: action,
+	selectCategory: action
 });
