@@ -19,8 +19,8 @@ export class GradeCategoryCollection {
 			return this.fetchGradeCategory(gradeCategoryLinkedEntity);
 		});
 
-		const gradeCategoriesEntity = await Promise.all(gradeCategoryPromises);
-		await this.load(gradeCategoriesEntity);
+		const gradeCategories = await Promise.all(gradeCategoryPromises);
+		await this.load(gradeCategories);
 		return this;
 	}
 
@@ -30,9 +30,11 @@ export class GradeCategoryCollection {
 		return gradeCategory;
 	}
 
-	async load(gradeCategoriesEntity) {
-		this.selected = this.gradeCategoryCollectionEntity.getSelectedCategory();
-		this.gradeCategories = gradeCategoriesEntity;
+	async load(gradeCategories) {
+		if (gradeCategories) {
+			this.gradeCategories = gradeCategories;
+		}
+		this.selected = this._getSelectedCategory();
 	}
 
 	setSelected(href, associateGradeStore) {
@@ -55,6 +57,13 @@ export class GradeCategoryCollection {
 				return gc;
 			}
 		}
+	}
+
+	_getSelectedCategory() {
+		if (!this.gradeCategories) {
+			return;
+		}
+		return this.gradeCategories.find(cat => cat.isSelected);
 	}
 }
 

@@ -38,12 +38,15 @@ export class GradeCategory {
 		this.href = this.gradeCategoryLinkedEntity.href();
 		this._entity = entity;
 		this.name = entity.name();
+		this.isSelected = this.gradeCategoryLinkedEntity.isSelected();
 	}
 }
 
 decorate(GradeCategory, {
 	// props
+	href: observable,
 	name: observable,
+	isSelected: observable,
 	// actions
 	load: action,
 	selectCategory: action
