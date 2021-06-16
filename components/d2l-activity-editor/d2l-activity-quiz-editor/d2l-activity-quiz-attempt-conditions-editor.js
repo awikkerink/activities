@@ -1,3 +1,4 @@
+import '@brightspace-ui/core/components/inputs/input-percent';
 import { bodyCompactStyles, bodySmallStyles, heading3Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin';
@@ -24,7 +25,7 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 				d2l-button-subtle {
 					display: flex;
 				}
-				d2l-input-number {
+				d2l-input-percent {
 					margin-left: 2rem;
 					margin-right: 2rem;
 					width: auto;
@@ -139,35 +140,25 @@ class ActivityQuizAttemptConditionsEditor extends ActivityEditorMixin(LocalizeAc
 						<div class="d2l-label-text">${this.localize('attemptConditionsRangePrefixText1', { index })}</div>
 						<div class="d2l-body-small">${this.localize('attemptConditionsRangePrefixText2')}</div>
 					</div>
-					<d2l-input-number
+					<d2l-input-percent
 						label="${this.localize('minLabel')}"
 						value="${min}"
-						min=0
-						max=100
 						name="min"
 						?disabled=${canUpdateAttemptConditions}
-						input-width=3.5rem
+						input-width=4rem
 						@change=${this._generateHandler(attempt)}
 						>
-						<div slot="after">
-							<span class="d2l-label-text d2l-input-number-text">${this.localize('percentageRangeText')}</span>
-						</div>
-					</d2l-input-number>
+					</d2l-input-percent>
 					<div class="d2l-body-small d2l-input-range-text">${this.localize('andRangeText')}</div>
-					<d2l-input-number
+					<d2l-input-percent
 						label="${this.localize('maxLabel')}"
 						value="${max}"
-						min=0
-						max=100
 						name="max"
 						?disabled=${canUpdateAttemptConditions}
-						input-width=3.5rem
+						input-width=4rem
 						@change=${this._generateHandler(attempt)}
 						>
-						<div slot="after">
-							<span class="d2l-label-text d2l-input-number-text">${this.localize('percentageRangeText')}</span>
-						</div>
-					</d2l-input-number>
+					</d2l-input-percent>
 					<div>
 						<div class="d2l-body-small">${this.localize('attemptConditionsRangeSuffixText1')}</div>
 						<div class="d2l-label-text">${this.localize('attemptConditionsRangeSuffixText2', { next })}</div>

@@ -25,15 +25,32 @@ export class GradeScheme {
 	}
 
 	async load(entity) {
-		this.href = this.gradeSchemeLinkedEntity.href();
 		this._entity = entity;
+		this.href = this.gradeSchemeLinkedEntity.href();
 		this.name = entity.name();
+		this.isSelected = this.gradeSchemeLinkedEntity.isSelected();
+		this.isDefault = this.gradeSchemeLinkedEntity.isDefault();
+	}
+
+	async selectScheme(associateGradeStore) {
+		const sirenEntity = await this.gradeSchemeLinkedEntity.selectScheme();
+		if (!sirenEntity || !associateGradeStore) return;
+
+		const href = sirenEntity.self();
+		const entity = associateGradeStore.get(href);
+		await entity.load(sirenEntity);
+		await entity.getGradeSchemes();
+
+		associateGradeStore.put(href, entity);
 	}
 }
 
 decorate(GradeScheme, {
 	// props
 	name: observable,
+	isSelected: observable,
+	isDefault: observable,
 	// actions
-	load: action
+	load: action,
+	selectScheme: action
 });

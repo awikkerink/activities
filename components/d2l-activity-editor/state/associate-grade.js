@@ -63,6 +63,7 @@ export class AssociateGrade {
 
 		this.gradeCandidateCollection || this.getGradeCandidates();
 		this.gradeCategoryCollection || this.getGradeCategories();
+		this.gradeSchemeCollection || this.getGradeSchemes();
 	}
 
 	async setGradebookStatus(newStatus, gradeName, maxPoints) {
@@ -79,8 +80,8 @@ export class AssociateGrade {
 		this._updateProperty(() => this._entity.setGradeName(gradeName));
 	}
 
-	setGradeType(gradeType) {
-		this._updateProperty(() => this._entity.setGradeType(gradeType));
+	async setGradeType(gradeType) {
+		await this._updateProperty(() => this._entity.setGradeType(gradeType));
 	}
 
 	async _updateProperty(updateFunc) {
@@ -110,6 +111,7 @@ decorate(AssociateGrade, {
 	load: action,
 	getGradeCategories: action,
 	getGradeCandidates: action,
+	getGradeSchemes: action,
 	setGradebookStatus: action,
 	setGradeMaxPoints: action,
 	setGradeName: action,
