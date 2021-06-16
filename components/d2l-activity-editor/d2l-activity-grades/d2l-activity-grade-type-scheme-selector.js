@@ -55,7 +55,8 @@ class ActivityGradeTypeSchemeSelector extends ActivityEditorMixin(LocalizeActivi
 
 		const {
 			canEditNewGrade,
-			gradeType
+			gradeType,
+			gradeSchemeCollection
 		} = associateGrade;
 
 		return html`
@@ -91,7 +92,34 @@ class ActivityGradeTypeSchemeSelector extends ActivityEditorMixin(LocalizeActivi
 					</d2l-input-radio-spacer>
 				</d2l-input-fieldset>
 			</div>
+			<div id="d2l-activity-grade-scheme-selector">
+				<label for="grade-schemes" class="d2l-input-label">${this.localize('grades.newGradeScheme')}</label>
+				<select
+					id="grade-schemes"
+					class="d2l-input-select"
+					@change="${this._setSelectedScheme}"
+					>
+					${gradeSchemeCollection && gradeSchemeCollection.gradeSchemes.map(scheme => html`
+						<option value="${scheme.href}" .selected="${scheme.isSelected}">
+							${scheme.isDefault ?
+		this.localize('grades.defaultGradeScheme', { schemeName: scheme.name })
+		: scheme.name
+}
+						</option>
+					`)};
+				</select>
+			</div>
 		`;
+	}
+
+	async _setSelectedScheme(e) {
+		const currentTarget = e.currentTarget;
+		if (!currentTarget) return;
+
+		const associateGrade = store.get(this.href);
+		if (!associateGrade) return;
+
+		await associateGrade.gradeSchemeCollection.setGradeScheme(currentTarget.value, store);
 	}
 
 	async _typeRadioChanged(e) {
@@ -102,6 +130,7 @@ class ActivityGradeTypeSchemeSelector extends ActivityEditorMixin(LocalizeActivi
 		if (!associateGrade) return;
 
 		await associateGrade.setGradeType(currentTarget.value);
+		await associateGrade.getGradeSchemes();
 	}
 }
 
