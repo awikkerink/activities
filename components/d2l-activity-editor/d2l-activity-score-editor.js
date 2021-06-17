@@ -331,7 +331,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		} else {
 			const scoreAndGrade = store.get(this.href).scoreAndGrade;
 			inGrades = scoreAndGrade && scoreAndGrade.inGrades;
-			canEditGrades = canEditGrades;
+			canEditGrades = scoreAndGrade && scoreAndGrade.canEditGrades;
 		}
 
 		return inGrades ? html`
