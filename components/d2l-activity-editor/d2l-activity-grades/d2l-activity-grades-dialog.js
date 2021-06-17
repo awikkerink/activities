@@ -323,6 +323,13 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			await entity.saving; // Wait for activity usage entity PATCH requests to complete before checking in
 
 			await this.checkinDialog(e);
+
+			const event = new CustomEvent('d2l-activity-grades-dialog-close', {
+				bubbles: true,
+				composed: true,
+				cancelable: true
+			});
+			this.dispatchEvent(event);
 		} else {
 			const scoreAndGrade = store.get(this.href).scoreAndGrade;
 
