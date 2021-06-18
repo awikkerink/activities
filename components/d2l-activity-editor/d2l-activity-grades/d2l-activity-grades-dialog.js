@@ -118,7 +118,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			const associateGradeHref = this._associateGradeHref;
 			if (!associateGradeHref) return;
 
-			let associateGrade = await this._fetch(() => associateGradeStore.fetch(associateGradeHref, this.token));
+			const associateGrade = await associateGradeStore.fetch(associateGradeHref, this.token);
 			if (!associateGrade) return;
 
 			this._createNewRadioChecked = associateGrade.gradebookStatus === GradebookStatus.NewGrade || associateGrade.gradebookStatus === GradebookStatus.NotInGradebook;
@@ -188,9 +188,8 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 				await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 
 				//the entity resets the gradeType to numeric when switching from link existing to create new
-				if (gradebookStatus === GradebookStatus.NewGrade) {
-					await associateGrade.getGradeSchemes(true);
-				}
+				const associateGrade = associateGradeStore.get(this._associateGradeHref);
+				await associateGrade.getGradeSchemes(true);
 			}
 		} else if (currentTarget && currentTarget.value === 'linkExisting') {
 			this._createNewRadioChecked = false;
