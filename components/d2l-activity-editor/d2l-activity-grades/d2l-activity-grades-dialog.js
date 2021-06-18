@@ -116,20 +116,20 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			await this.openDialog();
 
 			const associateGradeHref = this._associateGradeHref;
-			if (associateGradeHref) {
-				await this._fetch(() => associateGradeStore.fetch(associateGradeHref, this.token));
+			if (!associateGradeHref) return;
 
-				const associateGrade = associateGradeStore.get(associateGradeHref);
-				if (!associateGrade) return;
+			const associateGrade = await associateGradeStore.fetch(associateGradeHref, this.token);
+			if (!associateGrade) return;
 
-				this._createNewRadioChecked = associateGrade.gradebookStatus === GradebookStatus.NewGrade && this._canCreateNewGrade;
+			this._createNewRadioChecked = associateGrade.gradebookStatus === GradebookStatus.NewGrade || associateGrade.gradebookStatus === GradebookStatus.NotInGradebook;
 
-				if (this._createNewRadioChecked) {
-					this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
-				} else {
-					this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
-				}
+			if (associateGrade.gradebookStatus === GradebookStatus.NotInGradebook) {
+				await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 			}
+
+			associateGrade.getGradeSchemes();
+			associateGrade.getGradeCandidates();
+			associateGrade.getGradeCategories();
 		} else {
 			const entity = store.get(this.href);
 			if (!entity || !entity.scoreAndGrade) return;
@@ -167,9 +167,6 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 		if (!scoreAndGradeBase || !associateGrade) return;
 
 		await associateGrade.setGradebookStatus(gradebookStatus, scoreAndGradeBase.newGradeName, scoreAndGradeBase.scoreOutOf);
-		if (gradebookStatus === GradebookStatus.NewGrade) {
-			await associateGrade.getGradeSchemes();
-		}
 	}
 
 	get _canCreateNewGrade() {
@@ -187,7 +184,13 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 		const currentTarget = e.currentTarget;
 		if (currentTarget && currentTarget.value === 'createNew') {
 			this._createNewRadioChecked = true;
-			this._createSelectboxGradeItemEnabled && this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
+			if (this._createSelectboxGradeItemEnabled) {
+				await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
+
+				//the entity resets the gradeType to numeric when switching from link existing to create new
+				const associateGrade = associateGradeStore.get(this._associateGradeHref);
+				await associateGrade.getGradeSchemes(true);
+			}
 		} else if (currentTarget && currentTarget.value === 'linkExisting') {
 			this._createNewRadioChecked = false;
 			this._createSelectboxGradeItemEnabled && this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);

@@ -25,15 +25,19 @@ export class AssociateGrade {
 	}
 
 	async getGradeCandidates() {
+		if (this.gradeCandidateCollection) return;
+
 		const gradeCandidateCollectionEntity = await this._entity.getGradeCandidates();
 		if (!gradeCandidateCollectionEntity) return;
 		runInAction(() => {
-			this.gradeCandidateCollection = new GradeCandidateCollection(gradeCandidateCollectionEntity, this.token);
+			this.gradeCandidateCollection = new GradeCandidateCollection(gradeCandidateCollectionEntity.self(), this.token);
 		});
-		await this.gradeCandidateCollection.fetch();
+		await this.gradeCandidateCollection.load(gradeCandidateCollectionEntity);
 	}
 
 	async getGradeCategories() {
+		if (this.gradeCategoryCollection) return;
+
 		const gradeCategoryCollectionEntity = await this._entity.getGradeCategories();
 		if (!gradeCategoryCollectionEntity) return;
 		runInAction(() => {
@@ -42,7 +46,9 @@ export class AssociateGrade {
 		await this.gradeCategoryCollection.fetch();
 	}
 
-	async getGradeSchemes() {
+	async getGradeSchemes(bypassCache) {
+		if (!bypassCache && this.gradeSchemeCollection) return;
+
 		const gradeSchemeCollectionEntity = await this._entity.getGradeSchemesForType(this.gradeType);
 		if (!gradeSchemeCollectionEntity) return;
 		runInAction(() => {
@@ -60,10 +66,6 @@ export class AssociateGrade {
 		this.canCreateNewGrade = entity.canCreateNewGrade();
 		this.canEditNewGrade = entity.canEditNewGrade();
 		this.canGetSchemes = entity.canGetSchemesForType(this.gradeType);
-
-		this.gradeCandidateCollection || this.getGradeCandidates();
-		this.gradeCategoryCollection || this.getGradeCategories();
-		this.gradeSchemeCollection || this.getGradeSchemes();
 	}
 
 	async setGradebookStatus(newStatus, gradeName, maxPoints) {
