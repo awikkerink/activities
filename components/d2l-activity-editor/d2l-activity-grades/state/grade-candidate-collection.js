@@ -8,12 +8,8 @@ configureMobx({ enforceActions: 'observed' });
 
 export class GradeCandidateCollection {
 
-	constructor(hrefOrGradeCandidateCollectionEntity, token) {
-		if (hrefOrGradeCandidateCollectionEntity instanceof GradeCandidateCollectionEntity) {
-			this.gradeCandidateCollectionEntity = hrefOrGradeCandidateCollectionEntity;
-		} else {
-			this.href = hrefOrGradeCandidateCollectionEntity;
-		}
+	constructor(href, token) {
+		this.href = href;
 		this.token = token;
 		this.gradeCandidates = [];
 		this.selected = null;
@@ -24,8 +20,6 @@ export class GradeCandidateCollection {
 		if (sirenEntity) {
 			const entity = new GradeCandidateCollectionEntity(sirenEntity, this.token, { remove: () => { } });
 			await this.load(entity);
-		} else {
-			this.gradeCandidateCollectionEntity && await this.load(this.gradeCandidateCollectionEntity);
 		}
 		return this;
 	}

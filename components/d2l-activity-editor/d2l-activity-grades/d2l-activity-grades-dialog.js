@@ -116,20 +116,20 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			await this.openDialog();
 
 			const associateGradeHref = this._associateGradeHref;
-			if (associateGradeHref) {
-				await this._fetch(() => associateGradeStore.fetch(associateGradeHref, this.token));
+			if (!associateGradeHref) return;
 
-				const associateGrade = associateGradeStore.get(associateGradeHref);
-				if (!associateGrade) return;
+			let associateGrade = await this._fetch(() => associateGradeStore.fetch(associateGradeHref, this.token));
+			if (!associateGrade) return;
 
-				this._createNewRadioChecked = associateGrade.gradebookStatus === GradebookStatus.NewGrade && this._canCreateNewGrade;
+			this._createNewRadioChecked = associateGrade.gradebookStatus === GradebookStatus.NewGrade || associateGrade.gradebookStatus === GradebookStatus.NotInGradebook;
 
-				if (this._createNewRadioChecked) {
-					this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
-				} else {
-					this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
-				}
+			if (associateGrade.gradebookStatus === GradebookStatus.NotInGradebook) {
+				await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 			}
+
+			associateGrade.getGradeSchemes();
+			associateGrade.getGradeCandidates();
+			associateGrade.getGradeCategories();
 		} else {
 			const entity = store.get(this.href);
 			if (!entity || !entity.scoreAndGrade) return;
