@@ -39,7 +39,7 @@ export class GradeScheme {
 		const href = sirenEntity.self();
 		const entity = associateGradeStore.get(href);
 		await entity.load(sirenEntity);
-		await entity.getGradeSchemes();
+		await entity.getGradeSchemes(true);
 
 		associateGradeStore.put(href, entity);
 	}

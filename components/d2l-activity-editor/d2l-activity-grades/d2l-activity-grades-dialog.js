@@ -167,9 +167,6 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 		if (!scoreAndGradeBase || !associateGrade) return;
 
 		await associateGrade.setGradebookStatus(gradebookStatus, scoreAndGradeBase.newGradeName, scoreAndGradeBase.scoreOutOf);
-		if (gradebookStatus === GradebookStatus.NewGrade) {
-			await associateGrade.getGradeSchemes();
-		}
 	}
 
 	get _canCreateNewGrade() {
@@ -187,7 +184,14 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 		const currentTarget = e.currentTarget;
 		if (currentTarget && currentTarget.value === 'createNew') {
 			this._createNewRadioChecked = true;
-			this._createSelectboxGradeItemEnabled && this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
+			if (this._createSelectboxGradeItemEnabled) {
+				await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
+
+				//the entity resets the gradeType to numeric when switching from link existing to create new
+				if (gradebookStatus === GradebookStatus.NewGrade) {
+					await associateGrade.getGradeSchemes(true);
+				}
+			}
 		} else if (currentTarget && currentTarget.value === 'linkExisting') {
 			this._createNewRadioChecked = false;
 			this._createSelectboxGradeItemEnabled && this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
