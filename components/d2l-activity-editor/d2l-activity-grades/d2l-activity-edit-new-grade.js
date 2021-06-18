@@ -29,7 +29,13 @@ class ActivityEditNewGrade extends ActivityEditorMixin(LocalizeActivityEditorMix
 			.d2l-activity-grades-dialog-property-buttons {
 				display: flex;
 				flex-direction: row;
+				flex-wrap: wrap;
 				justify-content: space-between;
+				margin-left: -0.6rem;
+			}
+			:host([dir="rtl"]) .d2l-activity-grades-dialog-property-buttons {
+				margin-left: 0;
+				margin-right: -0.6rem;
 			}
 			`
 		];
