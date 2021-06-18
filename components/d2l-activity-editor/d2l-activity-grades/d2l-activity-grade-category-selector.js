@@ -57,14 +57,14 @@ class ActivityGradeCategorySelector extends ActivityEditorMixin(LocalizeActivity
 	}
 
 	render() {
-		const newGradeCandidatesCollection = this._newGradeCandidatesCollection;
-		if (!newGradeCandidatesCollection) {
+		const gradeCategoryCollection = this._gradeCategoryCollection;
+		if (!gradeCategoryCollection) {
 			return html``;
 		}
 
-		const { selected } = newGradeCandidatesCollection;
+		const { selected } = gradeCategoryCollection;
 		const gradeCategories = this._createSelectboxGradeItemEnabled ?
-			newGradeCandidatesCollection.gradeCategories : newGradeCandidatesCollection.gradeCandidates;
+			gradeCategoryCollection.gradeCategories : gradeCategoryCollection.gradeCandidates;
 
 		return html`
 			<div id="d2l-activity-grade-category-selector">
@@ -84,37 +84,37 @@ class ActivityGradeCategorySelector extends ActivityEditorMixin(LocalizeActivity
 		`;
 	}
 
-	get _newGradeCandidatesCollection() {
+	get _gradeCategoryCollection() {
 		const activity = store.get(this.href);
 
 		if (!activity) return null;
 
-		let newGradeCandidatesCollection = null;
+		let gradeCategoryCollection = null;
 		if (this._createSelectboxGradeItemEnabled) {
 			const associateGradeEntity = activity.associateGradeHref && associateGradeStore.get(activity.associateGradeHref);
-			newGradeCandidatesCollection = associateGradeEntity && associateGradeEntity.gradeCategoryCollection;
+			gradeCategoryCollection = associateGradeEntity && associateGradeEntity.gradeCategoryCollection;
 		} else {
-			const hasNewGradeCandidateCategory = activity.scoreAndGrade &&
+			const hasCategory = activity.scoreAndGrade &&
 				activity.scoreAndGrade.newGradeCandidatesCollection &&
 				activity.scoreAndGrade.newGradeCandidatesCollection.hasNewGradeCandidateWithCategory();
 
-			if (hasNewGradeCandidateCategory) {
-				newGradeCandidatesCollection = activity.scoreAndGrade.newGradeCandidatesCollection;
+			if (hasCategory) {
+				gradeCategoryCollection = activity.scoreAndGrade.newGradeCandidatesCollection;
 			}
 		}
 
-		return newGradeCandidatesCollection;
+		return gradeCategoryCollection;
 	}
 
 	_setSelected(e) {
-		const newGradeCandidatesCollection = this._newGradeCandidatesCollection;
-		if (!newGradeCandidatesCollection) return;
+		const gradeCategoryCollection = this._gradeCategoryCollection;
+		if (!gradeCategoryCollection) return;
 
 		const storeForAssociateGrade = this._createSelectboxGradeItemEnabled ? associateGradeStore : null;
 		if (e && e.target && e.target.value) {
-			newGradeCandidatesCollection.setSelected(e.target.value, storeForAssociateGrade);
+			gradeCategoryCollection.setSelected(e.target.value, storeForAssociateGrade);
 		} else {
-			newGradeCandidatesCollection.setSelected(null, storeForAssociateGrade);
+			gradeCategoryCollection.setSelected(null, storeForAssociateGrade);
 		}
 	}
 }
