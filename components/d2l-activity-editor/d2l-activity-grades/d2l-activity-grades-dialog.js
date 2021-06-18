@@ -167,6 +167,9 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 		if (!scoreAndGradeBase || !associateGrade) return;
 
 		await associateGrade.setGradebookStatus(gradebookStatus, scoreAndGradeBase.newGradeName, scoreAndGradeBase.scoreOutOf);
+		if (gradebookStatus === GradebookStatus.NewGrade) {
+			await associateGrade.getGradeSchemes();
+		}
 	}
 
 	get _canCreateNewGrade() {
