@@ -14,12 +14,14 @@ import { sharedAssociateGrade as associateGradeStore, shared as store } from './
 import { bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
+import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { GradebookStatus } from 'siren-sdk/src/activities/associateGrade/AssociateGradeEntity.js';
 import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles.js';
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
+import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
 class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActivityEditorMixin(RtlMixin(MobxLitElement)))) {
 
@@ -163,6 +165,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 
 	constructor() {
 		super(store);
+		this._debounceJobs = null;
 	}
 
 	connectedCallback() {
@@ -312,7 +315,11 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 				toFocus.focus();
 			} else if (propName === 'activityName') {
 				this._setNewGradeName(this.activityName);
-				this._associateGradeSetGradeName(this.activityName);
+				this._debounceJobs = Debouncer.debounce(
+					this._debounceJobs,
+					timeOut.after(1000),
+					() => this._associateGradeSetGradeName(this.activityName)
+				);
 			}
 		});
 
