@@ -182,12 +182,23 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 
 	render() {
 		const activity = store.get(this.href);
+
+		let gradeType;
+		let inGrades;
+
+		if (this._createSelectboxGradeItemEnabled) {
+			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
+			gradeType = associateGradeEntity && associateGradeEntity.gradeType;
+			inGrades = associateGradeEntity && associateGradeEntity.gradebookStatus !== GradebookStatus.NotInGradebook;
+		} else {
+			gradeType = activity && activity.scoreAndGrade && activity.scoreAndGrade.gradeType;
+			inGrades = activity && activity.scoreAndGrade && activity.scoreAndGrade.inGrades;
+		}
+
 		const {
 			scoreOutOf,
 			scoreOutOfError,
 			canEditScoreOutOf,
-			gradeType,
-			inGrades,
 			isUngraded,
 			canSeeGrades
 		} = activity && activity.scoreAndGrade || {};
@@ -260,7 +271,9 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 						</d2l-dropdown>
 						<d2l-activity-grades-dialog
 							href="${this.href}"
-							.token="${this.token}"></d2l-activity-grades-dialog>
+							.token="${this.token}"
+							@d2l-activity-grades-dialog-close="${this._onDialogClose}">
+						</d2l-activity-grades-dialog>
 					</div>
 				` : null}
 			</div>
@@ -309,13 +322,24 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	}
 
 	_addOrRemoveMenuItem() {
-		const scoreAndGrade = store.get(this.href).scoreAndGrade;
-		return scoreAndGrade.inGrades ? html`
+		let inGrades;
+		let canEditGrades;
+		if (this._createSelectboxGradeItemEnabled) {
+			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
+			inGrades = associateGradeEntity && associateGradeEntity.gradebookStatus !== GradebookStatus.NotInGradebook;
+			canEditGrades = associateGradeEntity.canCreateNewGrade;
+		} else {
+			const scoreAndGrade = store.get(this.href).scoreAndGrade;
+			inGrades = scoreAndGrade && scoreAndGrade.inGrades;
+			canEditGrades = scoreAndGrade && scoreAndGrade.canEditGrades;
+		}
+
+		return inGrades ? html`
 			<d2l-menu-item
 				text="${this._createSelectboxGradeItemEnabled ? this.localize('editor.notInGradebook') : this.localize('editor.removeFromGrades')}"
 				@d2l-menu-item-select="${this._removeFromGrades}"
 			></d2l-menu-item>
-		` : scoreAndGrade.canEditGrades ? html`
+		` : canEditGrades ? html`
 			<d2l-menu-item
 				text="${this._createSelectboxGradeItemEnabled ? this.localize('editor.addToGradebook') : this.localize('editor.addToGrades')}"
 				@d2l-menu-item-select="${this._addToGrades}"
@@ -327,15 +351,18 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 	}
 	_associateGradeSetGradebookStatus(gradebookStatus) {
+		if (!this._createSelectboxGradeItemEnabled) return;
 		const scoreAndGrade = store.get(this.href).scoreAndGrade;
 		const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
 		associateGradeEntity && associateGradeEntity.setGradebookStatus(gradebookStatus, scoreAndGrade.newGradeName, scoreAndGrade.scoreOutOf);
 	}
 	_associateGradeSetGradeName(name) {
+		if (!this._createSelectboxGradeItemEnabled) return;
 		const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
 		associateGradeEntity && associateGradeEntity.setGradeName(name);
 	}
 	_associateGradeSetMaxPoints(maxPoints) {
+		if (!this._createSelectboxGradeItemEnabled) return;
 		const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
 		associateGradeEntity && associateGradeEntity.setGradeMaxPoints(maxPoints);
 	}
@@ -344,6 +371,10 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		if (activityGradesElement) {
 			activityGradesElement.openGradesDialog();
 		}
+	}
+	_onDialogClose() {
+		const entity = associateGradeStore.get(this._associateGradeHref);
+		entity.fetch(true);
 	}
 	_onScoreOutOfChanged() {
 		const activity = store.get(this.href);
