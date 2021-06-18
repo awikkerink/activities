@@ -30,7 +30,7 @@ export class AssociateGrade {
 		const gradeCandidateCollectionEntity = await this._entity.getGradeCandidates();
 		if (!gradeCandidateCollectionEntity) return;
 		runInAction(() => {
-			this.gradeCandidateCollection = new GradeCandidateCollection(gradeCandidateCollectionEntity, this.token);
+			this.gradeCandidateCollection = new GradeCandidateCollection(gradeCandidateCollectionEntity.self(), this.token);
 		});
 		await this.gradeCandidateCollection.load(gradeCandidateCollectionEntity);
 	}
