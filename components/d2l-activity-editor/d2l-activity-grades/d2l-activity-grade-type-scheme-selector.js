@@ -56,7 +56,8 @@ class ActivityGradeTypeSchemeSelector extends ActivityEditorMixin(LocalizeActivi
 		const {
 			canEditNewGrade,
 			gradeType,
-			gradeSchemeCollection
+			gradeSchemeCollection,
+			selectedSchemeHref
 		} = associateGrade;
 
 		return html`
@@ -100,7 +101,7 @@ class ActivityGradeTypeSchemeSelector extends ActivityEditorMixin(LocalizeActivi
 					@change="${this._setSelectedScheme}"
 					>
 					${gradeSchemeCollection && gradeSchemeCollection.gradeSchemes.map(scheme => html`
-						<option value="${scheme.href}" .selected="${scheme.isSelected}">
+						<option value="${scheme.href}" .selected="${scheme.href == selectedSchemeHref}">
 							${scheme.isDefault ?
 		this.localize('grades.defaultGradeScheme', { schemeName: scheme.name })
 		: scheme.name
