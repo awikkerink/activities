@@ -28,7 +28,6 @@ export class GradeScheme {
 		this._entity = entity;
 		this.href = this.gradeSchemeLinkedEntity.href();
 		this.name = entity.name();
-		this.isSelected = this.gradeSchemeLinkedEntity.isSelected();
 		this.isDefault = this.gradeSchemeLinkedEntity.isDefault();
 	}
 
@@ -39,7 +38,6 @@ export class GradeScheme {
 		const href = sirenEntity.self();
 		const entity = associateGradeStore.get(href);
 		await entity.load(sirenEntity);
-		await entity.getGradeSchemes(true);
 
 		associateGradeStore.put(href, entity);
 	}
@@ -48,7 +46,6 @@ export class GradeScheme {
 decorate(GradeScheme, {
 	// props
 	name: observable,
-	isSelected: observable,
 	isDefault: observable,
 	// actions
 	load: action,

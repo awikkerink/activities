@@ -66,6 +66,7 @@ export class AssociateGrade {
 		this.canCreateNewGrade = entity.canCreateNewGrade();
 		this.canEditNewGrade = entity.canEditNewGrade();
 		this.canGetSchemes = entity.canGetSchemesForType(this.gradeType);
+		this.selectedSchemeHref = entity.selectedSchemeHref();
 	}
 
 	async setGradebookStatus(newStatus, gradeName, maxPoints) {
@@ -109,6 +110,7 @@ decorate(AssociateGrade, {
 	gradeCategoryCollection: observable,
 	gradeCandidateCollection: observable,
 	gradeSchemeCollection: observable,
+	selectedSchemeHref: observable,
 	// actions
 	load: action,
 	getGradeCategories: action,
