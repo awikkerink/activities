@@ -88,7 +88,7 @@ export class WorkingCopy {
 		return this;
 	}
 
-	async save() {
+	async save(createSelectboxGradeItemEnabled) {
 		if (!this._entity) {
 			return;
 		}
@@ -97,7 +97,7 @@ export class WorkingCopy {
 			return this._saving;
 		}
 
-		this._saving = this._entity.save(this._makeEntityData());
+		this._saving = this._entity.save(this._makeEntityData(), createSelectboxGradeItemEnabled);
 		await this._saving;
 		this._saving = null;
 
