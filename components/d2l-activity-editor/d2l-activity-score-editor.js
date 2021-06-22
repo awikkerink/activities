@@ -280,6 +280,17 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		`;
 	}
 
+	async save() {
+		if (this._createSelectboxGradeItemEnabled) {
+			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
+			if (associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NewGrade) {
+				const scoreOutOf = this.shadowRoot.querySelector('#score-out-of').value;
+				this._associateGradeSetMaxPoints(scoreOutOf);
+				this._associateGradeSetGradeName(this.activityName);
+			}
+		}
+	}
+
 	updated(changedProperties) {
 		super.updated(changedProperties);
 
@@ -312,7 +323,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 				toFocus.focus();
 			} else if (propName === 'activityName') {
 				this._setNewGradeName(this.activityName);
-				this._associateGradeSetGradeName(this.activityName);
 			}
 		});
 
@@ -352,9 +362,8 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	}
 	_associateGradeSetGradebookStatus(gradebookStatus) {
 		if (!this._createSelectboxGradeItemEnabled) return;
-		const scoreAndGrade = store.get(this.href).scoreAndGrade;
 		const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
-		associateGradeEntity && associateGradeEntity.setGradebookStatus(gradebookStatus, scoreAndGrade.newGradeName, scoreAndGrade.scoreOutOf);
+		associateGradeEntity && associateGradeEntity.setGradebookStatus(gradebookStatus);
 	}
 	_associateGradeSetGradeName(name) {
 		if (!this._createSelectboxGradeItemEnabled) return;
@@ -389,7 +398,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		}
 
 		scoreAndGrade.setScoreOutOf(scoreOutOf);
-		this._associateGradeSetMaxPoints(scoreOutOf);
 	}
 
 	_removeFromGrades() {
