@@ -159,14 +159,10 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 	}
 
 	async _associateGradeSetGradebookStatus(gradebookStatus) {
-		const baseEntity = store.get(this.href);
-		const scoreAndGradeBase = baseEntity && baseEntity.scoreAndGrade;
-
 		const associateGrade = associateGradeStore.get(this._associateGradeHref);
+		if (!associateGrade) return;
 
-		if (!scoreAndGradeBase || !associateGrade) return;
-
-		await associateGrade.setGradebookStatus(gradebookStatus, scoreAndGradeBase.newGradeName, scoreAndGradeBase.scoreOutOf);
+		await associateGrade.setGradebookStatus(gradebookStatus);
 	}
 
 	get _canCreateNewGrade() {
@@ -186,10 +182,6 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			this._createNewRadioChecked = true;
 			if (this._createSelectboxGradeItemEnabled) {
 				await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
-
-				//the entity resets the gradeType to numeric when switching from link existing to create new
-				const associateGrade = associateGradeStore.get(this._associateGradeHref);
-				await associateGrade.getGradeSchemes(true);
 			}
 		} else if (currentTarget && currentTarget.value === 'linkExisting') {
 			this._createNewRadioChecked = false;

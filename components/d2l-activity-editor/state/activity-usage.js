@@ -57,14 +57,16 @@ export class ActivityUsage extends WorkingCopy {
 			this.unevaluatedCompetenciesCount = entity.unevaluatedCount() || 0;
 		});
 	}
-	async save() {
+	async save(createSelectboxGradeItemEnabled) {
 		if (!this._entity) {
 			return;
 		}
 
-		await this.scoreAndGrade.primeGradeSave();
+		if (!createSelectboxGradeItemEnabled) {
+			await this.scoreAndGrade.primeGradeSave();
+		}
 
-		await super.save();
+		await super.save(createSelectboxGradeItemEnabled);
 	}
 	setAlignmentsHref(value) {
 		this.alignmentsHref = value;

@@ -62,18 +62,21 @@ export class AssociateGrade {
 		this.gradebookStatus = entity.gradebookStatus();
 		this.gradeName = entity.gradeName();
 		this.maxPoints = entity.maxPoints();
-		this.gradeType = entity.gradeType();
 		this.canCreateNewGrade = entity.canCreateNewGrade();
 		this.canEditNewGrade = entity.canEditNewGrade();
-		this.canGetSchemes = entity.canGetSchemesForType(this.gradeType);
 		this.selectedSchemeHref = entity.selectedSchemeHref();
+
+		const existingGradeType = this.gradeType;
+		this.gradeType = entity.gradeType();
+		this.canGetSchemes = entity.canGetSchemesForType(this.gradeType);
+
+		if (this.gradeSchemeCollection && existingGradeType !== this.gradeType) {
+			this.getGradeSchemes(true);
+		}
 	}
 
-	async setGradebookStatus(newStatus, gradeName, maxPoints) {
-		this.gradebookStatus = newStatus;
-		if (gradeName) this.gradeName = gradeName;
-		if (maxPoints) this.maxPoints = maxPoints;
-		await this._updateProperty(() => this._entity.setGradebookStatus(newStatus, gradeName, maxPoints));
+	async setGradebookStatus(newStatus) {
+		await this._updateProperty(() => this._entity.setGradebookStatus(newStatus));
 	}
 
 	setGradeMaxPoints(maxPoints) {
