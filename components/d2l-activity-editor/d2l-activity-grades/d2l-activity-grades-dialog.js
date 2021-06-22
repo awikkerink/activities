@@ -186,10 +186,6 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			this._createNewRadioChecked = true;
 			if (this._createSelectboxGradeItemEnabled) {
 				await this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
-
-				//the entity resets the gradeType to numeric when switching from link existing to create new
-				const associateGrade = associateGradeStore.get(this._associateGradeHref);
-				await associateGrade.getGradeSchemes(true);
 			}
 		} else if (currentTarget && currentTarget.value === 'linkExisting') {
 			this._createNewRadioChecked = false;
