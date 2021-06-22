@@ -131,7 +131,6 @@ class ActivityGradeTypeSchemeSelector extends ActivityEditorMixin(LocalizeActivi
 		if (!associateGrade) return;
 
 		await associateGrade.setGradeType(currentTarget.value);
-		await associateGrade.getGradeSchemes(true);
 	}
 }
 
