@@ -183,15 +183,15 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	render() {
 		const activity = store.get(this.href);
 
-		let gradeType;
+		let gradeUnits;
 		let inGrades;
 
 		if (this._createSelectboxGradeItemEnabled) {
 			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
-			gradeType = associateGradeEntity && associateGradeEntity.gradeType;
+			gradeUnits = this.localize('grades.gradeUnits');
 			inGrades = associateGradeEntity && associateGradeEntity.gradebookStatus !== GradebookStatus.NotInGradebook;
 		} else {
-			gradeType = activity && activity.scoreAndGrade && activity.scoreAndGrade.gradeType;
+			gradeUnits = activity && activity.scoreAndGrade && activity.scoreAndGrade.gradeType;
 			inGrades = activity && activity.scoreAndGrade && activity.scoreAndGrade.inGrades;
 		}
 
@@ -244,7 +244,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 							${scoreOutOfError ? html`<span>${this.localize(`editor.${scoreOutOfError}`)}</span>` : null}
 						</d2l-tooltip>
 					` : null}
-					<div class="d2l-body-compact d2l-grade-type-text">${gradeType}</div>
+					<div class="d2l-body-compact d2l-grade-type-text">${gradeUnits}</div>
 				</div>
 				${canSeeGrades ? html`
 					<div id="grade-info-container">
