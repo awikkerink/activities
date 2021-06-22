@@ -158,7 +158,16 @@ class ActivityEditor extends ActivityEditorContainerMixin(ActivityEditorTelemetr
 	async save() {
 		const activity = store.get(this.href);
 		if (activity) {
-			await activity.save();
+			const event = new CustomEvent('d2l-request-provider', {
+				detail: { key: 'd2l-provider-create-selectbox-grade-item-enabled' },
+				bubbles: true,
+				composed: true,
+				cancelable: true
+			});
+			this.dispatchEvent(event);
+
+			const createSelectboxGradeItemEnabled = event.detail.provider;
+			await activity.save(createSelectboxGradeItemEnabled);
 		}
 	}
 
