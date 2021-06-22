@@ -76,6 +76,7 @@ export class AssociateGrade {
 	}
 
 	async setGradebookStatus(newStatus) {
+		this.gradebookStatus = newStatus;
 		await this._updateProperty(() => this._entity.setGradebookStatus(newStatus));
 	}
 
