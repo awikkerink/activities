@@ -76,18 +76,22 @@ export class AssociateGrade {
 	}
 
 	async setGradebookStatus(newStatus) {
+		this.gradebookStatus = newStatus;
 		await this._updateProperty(() => this._entity.setGradebookStatus(newStatus));
 	}
 
 	setGradeMaxPoints(maxPoints) {
+		this.maxPoints = maxPoints;
 		this._updateProperty(() => this._entity.setGradeMaxPoints(maxPoints));
 	}
 
 	setGradeName(gradeName) {
+		this.gradeName = gradeName;
 		this._updateProperty(() => this._entity.setGradeName(gradeName));
 	}
 
 	async setGradeType(gradeType) {
+		this.gradeType = gradeType;
 		await this._updateProperty(() => this._entity.setGradeType(gradeType));
 	}
 
