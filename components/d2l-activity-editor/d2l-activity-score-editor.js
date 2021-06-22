@@ -324,7 +324,8 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		if (this._createSelectboxGradeItemEnabled) {
 			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
 			if (associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NewGrade) {
-				const scoreOutOf = this.shadowRoot.querySelector('#score-out-of').value;
+				const activity = store.get(this.href);
+				const scoreOutOf = activity && activity.scoreAndGrade && activity.scoreAndGrade.scoreOutOf;
 				this._associateGradeSetMaxPoints(scoreOutOf);
 				this._associateGradeSetGradeName(this.activityName);
 			}
