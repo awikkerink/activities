@@ -280,17 +280,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		`;
 	}
 
-	async save() {
-		if (this._createSelectboxGradeItemEnabled) {
-			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
-			if (associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NewGrade) {
-				const scoreOutOf = this.shadowRoot.querySelector('#score-out-of').value;
-				this._associateGradeSetMaxPoints(scoreOutOf);
-				this._associateGradeSetGradeName(this.activityName);
-			}
-		}
-	}
-
 	updated(changedProperties) {
 		super.updated(changedProperties);
 
@@ -328,6 +317,17 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 
 		if (changedProperties.size === 0) {
 			this._setNewGradeName(this.activityName);
+		}
+	}
+
+	async save() {
+		if (this._createSelectboxGradeItemEnabled) {
+			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
+			if (associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NewGrade) {
+				const scoreOutOf = this.shadowRoot.querySelector('#score-out-of').value;
+				this._associateGradeSetMaxPoints(scoreOutOf);
+				this._associateGradeSetGradeName(this.activityName);
+			}
 		}
 	}
 
