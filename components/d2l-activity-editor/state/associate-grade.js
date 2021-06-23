@@ -1,5 +1,5 @@
 import { action, configure as configureMobx, decorate, observable, runInAction } from 'mobx';
-import { AssociateGradeEntity } from 'siren-sdk/src/activities/associateGrade/AssociateGradeEntity.js';
+import { AssociateGradeEntity, GradeType } from 'siren-sdk/src/activities/associateGrade/AssociateGradeEntity.js';
 import { fetchEntity } from './fetch-entity.js';
 import { GradeCandidateCollection } from '../d2l-activity-grades/state/grade-candidate-collection.js';
 import { GradeCategoryCollection } from '../d2l-activity-grades/state/grade-category-collection.js';
@@ -55,6 +55,9 @@ export class AssociateGrade {
 			this.gradeSchemeCollection = new GradeSchemeCollection(gradeSchemeCollectionEntity, this.token);
 		});
 		await this.gradeSchemeCollection.fetch();
+		this.schemesIsEmpty = this.gradeType === GradeType.Selectbox ?
+			this.gradeSchemeCollection.gradeSchemes.length === 0 :
+			this.gradeSchemeCollection.gradeSchemes.length === 1;
 	}
 
 	load(entity) {
@@ -118,6 +121,7 @@ decorate(AssociateGrade, {
 	gradeCandidateCollection: observable,
 	gradeSchemeCollection: observable,
 	selectedSchemeHref: observable,
+	schemesIsEmpty: observable,
 	// actions
 	load: action,
 	getGradeCategories: action,
