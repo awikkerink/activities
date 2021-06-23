@@ -1,10 +1,9 @@
 import { action, configure as configureMobx, decorate, observable, runInAction } from 'mobx';
-import { AssociateGradeEntity } from 'siren-sdk/src/activities/associateGrade/AssociateGradeEntity.js';
+import { AssociateGradeEntity, GradeType } from 'siren-sdk/src/activities/associateGrade/AssociateGradeEntity.js';
 import { fetchEntity } from './fetch-entity.js';
 import { GradeCandidateCollection } from '../d2l-activity-grades/state/grade-candidate-collection.js';
 import { GradeCategoryCollection } from '../d2l-activity-grades/state/grade-category-collection.js';
 import { GradeSchemeCollection } from '../d2l-activity-grades/state/grade-scheme-collection.js';
-import { GradeType } from 'siren-sdk/src/activities/associateGrade/AssociateGradeEntity.js';
 
 configureMobx({ enforceActions: 'observed' });
 
