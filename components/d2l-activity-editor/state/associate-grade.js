@@ -91,7 +91,6 @@ export class AssociateGrade {
 	}
 
 	async setGradeType(gradeType) {
-		this.gradeType = gradeType;
 		await this._updateProperty(() => this._entity.setGradeType(gradeType));
 	}
 
