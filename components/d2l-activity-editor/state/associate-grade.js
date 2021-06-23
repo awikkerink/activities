@@ -4,6 +4,7 @@ import { fetchEntity } from './fetch-entity.js';
 import { GradeCandidateCollection } from '../d2l-activity-grades/state/grade-candidate-collection.js';
 import { GradeCategoryCollection } from '../d2l-activity-grades/state/grade-category-collection.js';
 import { GradeSchemeCollection } from '../d2l-activity-grades/state/grade-scheme-collection.js';
+import { GradeType } from 'siren-sdk/src/activities/associateGrade/AssociateGradeEntity.js';
 
 configureMobx({ enforceActions: 'observed' });
 
@@ -55,6 +56,9 @@ export class AssociateGrade {
 			this.gradeSchemeCollection = new GradeSchemeCollection(gradeSchemeCollectionEntity, this.token);
 		});
 		await this.gradeSchemeCollection.fetch();
+		this.schemesIsEmpty = this.gradeType === GradeType.Selectbox ?
+			this.gradeSchemeCollection.gradeSchemes.length === 0 :
+			this.gradeSchemeCollection.gradeSchemes.length === 1;
 	}
 
 	load(entity) {
@@ -71,7 +75,7 @@ export class AssociateGrade {
 		this.canGetSchemes = entity.canGetSchemesForType(this.gradeType);
 
 		if (this.gradeSchemeCollection && existingGradeType !== this.gradeType) {
-			this.getGradeSchemes(true);
+			this.getGradeSchemes(true)
 		}
 	}
 

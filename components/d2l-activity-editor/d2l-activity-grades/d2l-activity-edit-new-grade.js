@@ -3,7 +3,6 @@ import './d2l-activity-grade-type-scheme-selector.js';
 import { sharedAssociateGrade as associateGradeStore, shared as store } from '../state/activity-store.js';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
-import { GradeType } from 'siren-sdk/src/activities/associateGrade/AssociateGradeEntity.js';
 import { LocalizeActivityEditorMixin } from '../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
@@ -58,9 +57,7 @@ class ActivityEditNewGrade extends ActivityEditorMixin(LocalizeActivityEditorMix
 			return html``;
 		}
 		const categoriesEmpty =	associateGradeEntity.gradeCategoryCollection.gradeCategories.length === 0;
-		const schemesEmpty = associateGradeEntity.gradeType === GradeType.Selectbox ?
-			associateGradeEntity.gradeSchemeCollection.gradeSchemes.length === 0 :
-			associateGradeEntity.gradeSchemeCollection.gradeSchemes.length === 1;
+		const schemesEmpty = associateGradeEntity.schemesIsEmpty;
 
 		return html`
 		<div class="d2l-activity-grades-dialog-property-buttons">
