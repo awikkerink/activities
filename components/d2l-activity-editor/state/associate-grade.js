@@ -122,6 +122,7 @@ decorate(AssociateGrade, {
 	gradeCandidateCollection: observable,
 	gradeSchemeCollection: observable,
 	selectedSchemeHref: observable,
+	schemesIsEmpty: observable,
 	// actions
 	load: action,
 	getGradeCategories: action,
