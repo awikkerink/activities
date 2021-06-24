@@ -63,7 +63,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 				padding-bottom: 10px;
 			}
 			.d2l-activity-grades-dialog-editor {
-				min-height: 300px;
+				height: 500px;
 			}
 			`
 		];
@@ -92,7 +92,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 
 	render() {
 		const showSpinnerWhenLoading = this._createSelectboxGradeItemEnabled;
-		const width = this._createSelectboxGradeItemEnabled ? 500 : 460;
+		const width = this._createSelectboxGradeItemEnabled ? 600 : 460;
 		const titleText = this._createSelectboxGradeItemEnabled ? this.localize('editor.editLinkExisting') : this.localize('editor.chooseFromGrades');
 
 		return html`
@@ -188,8 +188,10 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			this._createSelectboxGradeItemEnabled && this._associateGradeSetGradebookStatus(GradebookStatus.ExistingGrade);
 		}
 
-		const dialog = this.shadowRoot.querySelector('d2l-dialog');
-		dialog.resize();
+		if (!this._createSelectboxGradeItemEnabled) {
+			const dialog = this.shadowRoot.querySelector('d2l-dialog');
+			dialog.resize();
+		}
 	}
 
 	get _hasGradeCandidates() {
