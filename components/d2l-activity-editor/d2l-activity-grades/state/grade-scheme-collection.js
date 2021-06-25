@@ -33,14 +33,6 @@ export class GradeSchemeCollection {
 		return gradeScheme;
 	}
 
-	async setGradeScheme(href, associateGradeStore) {
-		const gradeScheme = this.findGradeScheme(href);
-
-		if (associateGradeStore) {
-			await gradeScheme.selectScheme(associateGradeStore);
-		}
-	}
-
 	findGradeScheme(href) {
 		if (!href || !this.gradeSchemes) {
 			return;
@@ -49,6 +41,14 @@ export class GradeSchemeCollection {
 			if (href === scheme.href) {
 				return scheme;
 			}
+		}
+	}
+
+	async setGradeScheme(href, associateGradeStore) {
+		const gradeScheme = this.findGradeScheme(href);
+
+		if (associateGradeStore) {
+			await gradeScheme.selectScheme(associateGradeStore);
 		}
 	}
 }

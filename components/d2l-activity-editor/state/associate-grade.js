@@ -74,7 +74,7 @@ export class AssociateGrade {
 		this.canCreateNewGrade = entity.canCreateNewGrade();
 		this.canEditNewGrade = entity.canEditNewGrade();
 		this.selectedSchemeHref = entity.selectedSchemeHref();
-		this.selectedCategoryHref= entity.selectedCategoryHref();
+		this.selectedCategoryHref = entity.selectedCategoryHref();
 
 		const existingGradeType = this.gradeType;
 		this.gradeType = entity.gradeType();
@@ -87,11 +87,6 @@ export class AssociateGrade {
 		runInAction(async() => {
 			this.isDefaultSchemeSelected = this._isDefaultSchemeSelected();
 		});
-	}
-
-	_isDefaultSchemeSelected() {
-		const gradeScheme = this.gradeSchemeCollection && this.gradeSchemeCollection.findGradeScheme(this.selectedSchemeHref);
-		return !gradeScheme || gradeScheme.isDefault;
 	}
 
 	async setGradebookStatus(newStatus) {
@@ -111,6 +106,11 @@ export class AssociateGrade {
 
 	async setGradeType(gradeType) {
 		await this._updateProperty(() => this._entity.setGradeType(gradeType));
+	}
+
+	_isDefaultSchemeSelected() {
+		const gradeScheme = this.gradeSchemeCollection && this.gradeSchemeCollection.findGradeScheme(this.selectedSchemeHref);
+		return !gradeScheme || gradeScheme.isDefault;
 	}
 
 	async _updateProperty(updateFunc) {
