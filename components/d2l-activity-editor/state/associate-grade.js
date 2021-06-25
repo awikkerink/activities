@@ -54,13 +54,19 @@ export class AssociateGrade {
 		runInAction(() => {
 			this.gradeSchemeCollection = new GradeSchemeCollection(gradeSchemeCollectionEntity, this.token);
 		});
+
 		await this.gradeSchemeCollection.fetch();
-		this.schemesIsEmpty = this.gradeType === GradeType.Selectbox ?
-			this.gradeSchemeCollection.gradeSchemes.length === 0 :
-			this.gradeSchemeCollection.gradeSchemes.length === 1;
+
+		runInAction(async() => {
+			this.schemesIsEmpty = this.gradeType === GradeType.Selectbox ?
+				this.gradeSchemeCollection.gradeSchemes.length === 0 :
+				this.gradeSchemeCollection.gradeSchemes.length === 1;
+
+			this.isDefaultSchemeSelected = this._isDefaultSchemeSelected();
+		});
 	}
 
-	load(entity) {
+	async load(entity) {
 		this._entity = entity;
 		this.gradebookStatus = entity.gradebookStatus();
 		this.gradeName = entity.gradeName();
@@ -68,14 +74,19 @@ export class AssociateGrade {
 		this.canCreateNewGrade = entity.canCreateNewGrade();
 		this.canEditNewGrade = entity.canEditNewGrade();
 		this.selectedSchemeHref = entity.selectedSchemeHref();
+		this.selectedCategoryHref = entity.selectedCategoryHref();
 
 		const existingGradeType = this.gradeType;
 		this.gradeType = entity.gradeType();
 		this.canGetSchemes = entity.canGetSchemesForType(this.gradeType);
 
 		if (this.gradeSchemeCollection && existingGradeType !== this.gradeType) {
-			this.getGradeSchemes(true);
+			await this.getGradeSchemes(true);
 		}
+
+		runInAction(async() => {
+			this.isDefaultSchemeSelected = this._isDefaultSchemeSelected();
+		});
 	}
 
 	async setGradebookStatus(newStatus) {
@@ -95,6 +106,11 @@ export class AssociateGrade {
 
 	async setGradeType(gradeType) {
 		await this._updateProperty(() => this._entity.setGradeType(gradeType));
+	}
+
+	_isDefaultSchemeSelected() {
+		const gradeScheme = this.gradeSchemeCollection && this.gradeSchemeCollection.findGradeScheme(this.selectedSchemeHref);
+		return !gradeScheme || gradeScheme.isDefault;
 	}
 
 	async _updateProperty(updateFunc) {
@@ -122,6 +138,8 @@ decorate(AssociateGrade, {
 	gradeSchemeCollection: observable,
 	selectedSchemeHref: observable,
 	schemesIsEmpty: observable,
+	selectedCategoryHref: observable,
+	isDefaultSchemeSelected: observable,
 	// actions
 	load: action,
 	getGradeCategories: action,
