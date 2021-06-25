@@ -63,7 +63,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 				padding-bottom: 10px;
 			}
 			.d2l-activity-grades-dialog-editor {
-				height: 500px;
+				height: 570px;
 			}
 			`
 		];
@@ -92,7 +92,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 
 	render() {
 		const showSpinnerWhenLoading = this._createSelectboxGradeItemEnabled;
-		const width = this._createSelectboxGradeItemEnabled ? 600 : 460;
+		const width = this._createSelectboxGradeItemEnabled ? 700 : 460;
 		const titleText = this._createSelectboxGradeItemEnabled ? this.localize('editor.editLinkExisting') : this.localize('editor.chooseFromGrades');
 
 		return html`
