@@ -105,10 +105,7 @@ class ActivityGradeTypeSchemeSelector extends ActivityEditorMixin(LocalizeActivi
 						>
 						${gradeSchemeCollection && gradeSchemeCollection.gradeSchemes.map(scheme => html`
 							<option value="${scheme.href}" .selected="${scheme.href === selectedSchemeHref}">
-								${scheme.isDefault ?
-			this.localize('grades.defaultGradeScheme', { schemeName: scheme.name })
-			: scheme.name
-	}
+								${scheme.isDefault ? this.localize('grades.defaultGradeScheme', { schemeName: scheme.name }) : scheme.name }
 							</option>
 						`)};
 					</select>
