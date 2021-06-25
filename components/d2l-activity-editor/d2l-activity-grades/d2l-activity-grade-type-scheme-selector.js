@@ -28,9 +28,11 @@ class ActivityGradeTypeSchemeSelector extends ActivityEditorMixin(LocalizeActivi
 			.d2l-input-radio-label {
 				margin-bottom: 0;
 			}
+			#d2l-activity-grade-type-scheme-selector {
+				margin-bottom: 1.8rem;
+			}
 			#d2l-activity-grade-type-selector {
-				margin-bottom: 32px;
-				margin-top: 16px;
+				margin-bottom: 0.9rem;
 			}
 			.d2l-body-small {
 				margin-bottom: 0.9rem;
@@ -61,54 +63,56 @@ class ActivityGradeTypeSchemeSelector extends ActivityEditorMixin(LocalizeActivi
 		} = associateGrade;
 
 		return html`
-			<div id="d2l-activity-grade-type-selector">
-				<d2l-input-fieldset label=${this.localize('grades.newGradeType')}>
-					<label class="d2l-input-radio-label ${!canEditNewGrade ? 'd2l-input-radio-label-disabled' : ''}">
-						<input
-							type="radio"
-							name="gradeType"
-							value="numeric"
-							?disabled="${!canEditNewGrade}"
-							.checked="${gradeType === GradeType.Numeric}"
-							@change="${this._typeRadioChanged}">
-						${this.localize('grades.newGradeTypeNumeric')}
-					</label>
-					<d2l-input-radio-spacer class="d2l-body-small">
-						${this.localize('grades.numericDescription')}<br />
-						${this.localize('grades.numericDescriptionExample')}
-					</d2l-input-radio-spacer>
-					<label class="d2l-input-radio-label ${!canEditNewGrade ? 'd2l-input-radio-label-disabled' : ''}">
-						<input
-							type="radio"
-							name="gradeType"
-							value="selectbox"
-							?disabled="${!canEditNewGrade}"
-							.checked="${gradeType === GradeType.Selectbox}"
-							@change="${this._typeRadioChanged}">
-						${this.localize('grades.newGradeTypeSelectbox')}
-					</label>
-					<d2l-input-radio-spacer class="d2l-body-small">
-						${this.localize('grades.selectboxDescription')}<br />
-						${this.localize('grades.selectboxDescriptionExample')}
-					</d2l-input-radio-spacer>
-				</d2l-input-fieldset>
-			</div>
-			<div id="d2l-activity-grade-scheme-selector">
-				<label for="grade-schemes" class="d2l-input-label">${this.localize('grades.newGradeScheme')}</label>
-				<select
-					id="grade-schemes"
-					class="d2l-input-select"
-					@change="${this._setSelectedScheme}"
-					>
-					${gradeSchemeCollection && gradeSchemeCollection.gradeSchemes.map(scheme => html`
-						<option value="${scheme.href}" .selected="${scheme.href === selectedSchemeHref}">
-							${scheme.isDefault ?
-		this.localize('grades.defaultGradeScheme', { schemeName: scheme.name })
-		: scheme.name
-}
-						</option>
-					`)};
-				</select>
+			<div id="d2l-activity-grade-type-scheme-selector">
+				<div id="d2l-activity-grade-type-selector">
+					<d2l-input-fieldset label=${this.localize('grades.newGradeType')}>
+						<label class="d2l-input-radio-label ${!canEditNewGrade ? 'd2l-input-radio-label-disabled' : ''}">
+							<input
+								type="radio"
+								name="gradeType"
+								value="numeric"
+								?disabled="${!canEditNewGrade}"
+								.checked="${gradeType === GradeType.Numeric}"
+								@change="${this._typeRadioChanged}">
+							${this.localize('grades.newGradeTypeNumeric')}
+						</label>
+						<d2l-input-radio-spacer class="d2l-body-small">
+							${this.localize('grades.numericDescription')}<br />
+							${this.localize('grades.numericDescriptionExample')}
+						</d2l-input-radio-spacer>
+						<label class="d2l-input-radio-label ${!canEditNewGrade ? 'd2l-input-radio-label-disabled' : ''}">
+							<input
+								type="radio"
+								name="gradeType"
+								value="selectbox"
+								?disabled="${!canEditNewGrade}"
+								.checked="${gradeType === GradeType.Selectbox}"
+								@change="${this._typeRadioChanged}">
+							${this.localize('grades.newGradeTypeSelectbox')}
+						</label>
+						<d2l-input-radio-spacer class="d2l-body-small">
+							${this.localize('grades.selectboxDescription')}<br />
+							${this.localize('grades.selectboxDescriptionExample')}
+						</d2l-input-radio-spacer>
+					</d2l-input-fieldset>
+				</div>
+				<div id="d2l-activity-grade-scheme-selector">
+					<label for="grade-schemes" class="d2l-input-label">${this.localize('grades.newGradeScheme')}</label>
+					<select
+						id="grade-schemes"
+						class="d2l-input-select"
+						@change="${this._setSelectedScheme}"
+						>
+						${gradeSchemeCollection && gradeSchemeCollection.gradeSchemes.map(scheme => html`
+							<option value="${scheme.href}" .selected="${scheme.href === selectedSchemeHref}">
+								${scheme.isDefault ?
+			this.localize('grades.defaultGradeScheme', { schemeName: scheme.name })
+			: scheme.name
+	}
+							</option>
+						`)};
+					</select>
+				</div>
 			</div>
 		`;
 	}
