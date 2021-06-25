@@ -8,9 +8,11 @@ import '@brightspace-ui/core/components/inputs/input-radio-spacer.js';
 import { sharedAssociateGrade as associateGradeStore, shared as store } from '../state/activity-store.js';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorWorkingCopyDialogMixin } from '../mixins/d2l-activity-editor-working-copy-dialog-mixin.js';
+import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import { bodySmallStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { formatNumber } from '@brightspace-ui/intl/lib/number.js';
 import { GradebookStatus } from 'siren-sdk/src/activities/associateGrade/AssociateGradeEntity.js';
+import { GradeType } from 'siren-sdk/src/activities/associateGrade/AssociateGradeEntity.js';
 import { LocalizeActivityEditorMixin } from '../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
@@ -321,6 +323,16 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			if (!entity) return;
 
 			await entity.saving; // Wait for activity usage entity PATCH requests to complete before checking in
+
+			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
+			if (this._createNewRadioChecked) {
+				const localizeTerm = associateGradeEntity.gradeType === GradeType.Selectbox ? 'grades.creatingNewSelectboxGradeItem' : 'grades.creatingNewNumericGradeItem'
+				const scoreAndGrade = store.get(this.href).scoreAndGrade;
+				announce(`${this.localize(localizeTerm, { newGradeName: scoreAndGrade.newGradeName })}`);
+			} else {
+				const gradeCandidateCollection = associateGradeEntity && associateGradeEntity.gradeCandidateCollection;
+				announce(`${this.localize('grades.linkingToGradeItem', { gradeName: gradeCandidateCollection.selected.name })}`);
+			}
 
 			await this.checkinDialog(e);
 
