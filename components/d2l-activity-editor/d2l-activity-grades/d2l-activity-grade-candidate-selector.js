@@ -26,7 +26,7 @@ class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeActivit
 			.d2l-activity-grade-candidate-selector-points-and-weight {
 				padding-top: 7px;
 			}
-			.grade-candidate-selector-select {
+			.d2l-grade-candidate-selector-select {
 				max-width: 100%;
 			}
 			`
@@ -70,7 +70,7 @@ class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeActivit
 			<select
 				aria-label="${this.localize('grades.gradeItem')}"
 				id="grade-candidates"
-				class="d2l-input-select grade-candidate-selector-select"
+				class="d2l-input-select d2l-grade-candidate-selector-select"
 				@change="${this._setSelected}"
 			>
 				${this._renderGradeCandidateTemplates(gradeCandidates, selected)}

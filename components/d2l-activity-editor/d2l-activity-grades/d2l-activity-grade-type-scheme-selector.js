@@ -40,7 +40,7 @@ class ActivityGradeTypeSchemeSelector extends ActivityEditorMixin(LocalizeActivi
 			.d2l-body-small:last-of-type {
 				margin-bottom: 0;
 			}
-			.grade-schemes-selector-select {
+			.d2l-grade-schemes-selector-select {
 				max-width: 100%;
 			}
 			`
@@ -103,7 +103,7 @@ class ActivityGradeTypeSchemeSelector extends ActivityEditorMixin(LocalizeActivi
 					<label for="grade-schemes" class="d2l-input-label">${this.localize('grades.newGradeScheme')}</label>
 					<select
 						id="grade-schemes"
-						class="d2l-input-select grade-schemes-selector-select"
+						class="d2l-input-select d2l-grade-schemes-selector-select"
 						@change="${this._setSelectedScheme}"
 						>
 						${gradeSchemeCollection && gradeSchemeCollection.gradeSchemes.map(scheme => html`

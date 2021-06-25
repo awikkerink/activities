@@ -33,7 +33,7 @@ class ActivityGradeCategorySelector extends ActivityEditorMixin(LocalizeActivity
 			#d2l-activity-grade-category-selector {
 				margin-bottom: 1.2rem;
 			}
-			.grade-category-selector-select {
+			.d2l-grade-category-selector-select {
 				max-width: 100%;
 			}
 			`
@@ -73,7 +73,7 @@ class ActivityGradeCategorySelector extends ActivityEditorMixin(LocalizeActivity
 				<label for="grade-categories" class="d2l-input-label">${this.localize('grades.newGradeItemCategory')}</label>
 				<select
 					id="grade-categories"
-					class="d2l-input-select grade-category-selector-select"
+					class="d2l-input-select d2l-grade-category-selector-select"
 					@change="${this._setSelected}"
 					>
 					${gradeCategories.map(gc => html`
