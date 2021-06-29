@@ -18,6 +18,7 @@ export class ContentFile {
 		this.persistedFileContent = '';
 		this.fileContent = '';
 		this.fileType = null;
+		this.htmlTemplatesHref = null;
 	}
 
 	async cancelCreate() {
@@ -60,6 +61,7 @@ export class ContentFile {
 		this.fileContent = fileContent;
 		this.fileType = contentFileEntity.getFileType();
 		this.fileHref = contentFileEntity.getFileHref();
+		this.htmlTemplatesHref = contentFileEntity.getHtmlTemplatesHref();
 	}
 
 	async save() {

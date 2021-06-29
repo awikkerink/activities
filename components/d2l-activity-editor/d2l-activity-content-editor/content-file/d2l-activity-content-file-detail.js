@@ -2,15 +2,17 @@ import '../shared-components/d2l-activity-content-editor-title.js';
 import './d2l-activity-content-file-loading.js';
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { ContentFileEntity, FILE_TYPES } from 'siren-sdk/src/activities/content/ContentFileEntity.js';
+import { css, html } from 'lit-element/lit-element.js';
 import { activityContentEditorStyles } from '../shared-components/d2l-activity-content-editor-styles.js';
 import { ActivityEditorMixin } from '../../mixins/d2l-activity-editor-mixin.js';
 import { activityHtmlEditorStyles } from '../shared-components/d2l-activity-html-editor-styles.js';
 import { ContentEditorConstants } from '../constants';
 import { shared as contentFileStore } from './state/content-file-store.js';
+import { ContentHtmlFileTemplatesEntity } from 'siren-sdk/src/activities/content/ContentHtmlFileTemplatesEntity.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ErrorHandlingMixin } from '../../error-handling-mixin.js';
-import { html } from 'lit-element/lit-element.js';
+import { fetchEntity } from '../../state/fetch-entity.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityEditorMixin } from '../../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -20,12 +22,26 @@ import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
 class ContentFileDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlingMixin(LocalizeActivityEditorMixin(EntityMixinLit(RtlMixin(ActivityEditorMixin(MobxLitElement))))))) {
 
+	static get properties() {
+		return {
+			htmlFileTemplates: { type: Array }
+		};
+	}
+
 	static get styles() {
 		return [
 			super.styles,
 			labelStyles,
 			activityContentEditorStyles,
-			activityHtmlEditorStyles
+			activityHtmlEditorStyles,
+			css`
+				.d2l-page-content-label-select-template-container {
+					align-items: center;
+					display: flex;
+					justify-content: space-between;
+					margin-bottom: 6px;
+				}
+			`
 		];
 	}
 
@@ -35,6 +51,10 @@ class ContentFileDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlingM
 		this._setEntityType(ContentFileEntity);
 		this.skeleton = true;
 		this.saveOrder = 500;
+		this.htmlTemplatesHref = null;
+		this.htmlFileTemplates = [];
+		this.firstTemplatesLoadAttempted = false;
+		this.htmlFileTemplatesLoaded = false;
 	}
 
 	connectedCallback() {
@@ -50,6 +70,8 @@ class ContentFileDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlingM
 		if (contentFileEntity) {
 			this.skeleton = false;
 			pageContent = contentFileEntity.fileContent;
+
+			this.htmlTemplatesHref = contentFileEntity.htmlTemplatesHref;
 
 			switch (contentFileEntity.fileType) {
 				case FILE_TYPES.html:
@@ -128,6 +150,25 @@ class ContentFileDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlingM
 		contentFileActivity.setTitle(title);
 	}
 
+	_getHtmlTemplateLoadingMenuItem() {
+		return html`<d2l-menu-item text=${this.localize('content.htmlTemplatesLoading')} disabled="true"></d2l-menu-item>`;
+	}
+
+	async _getHtmlTemplates() {
+		const htmlTemplatesResponse = await fetchEntity(this.htmlTemplatesHref, this.token);
+		const htmlTemplatesEntity = new ContentHtmlFileTemplatesEntity(htmlTemplatesResponse, this.token, { remove: () => { } });
+		const templates = htmlTemplatesEntity.getHtmlFileTemplates();
+		this.htmlFileTemplates = templates;
+		this.htmlFileTemplatesLoaded = true;
+	}
+
+	_handleClickSelectTemplateButton() {
+		if (!this.htmlFileTemplatesLoaded && !this.firstTemplatesLoadAttempted) {
+			this.firstTemplatesLoadAttempted = true;
+			this._getHtmlTemplates(this.htmlTemplatesHref);
+		}
+	}
+
 	_onPageContentChange(e) {
 		const pageContent = e.detail.content;
 		this._savePageContent(pageContent);
@@ -158,8 +199,25 @@ class ContentFileDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlingM
 		const activityTextEditorChange = htmlNewEditorEnabled ? this._onPageContentChange : this._onPageContentChangeDebounced;
 
 		return html`
-			<div class="d2l-activity-label-container d2l-label-text d2l-skeletize">
-				${this.localize('content.pageContent')}
+			<div class="d2l-page-content-label-select-template-container">
+				<label class="d2l-label-text d2l-skeletize">
+					${this.localize('content.pageContent')}
+				</label>
+				<d2l-dropdown-button-subtle 
+					style="${this.htmlTemplatesHref ? '' : 'visibility:hidden;'}" 
+					text=${this.localize('content.selectTemplate')}
+					class="d2l-skeletize"
+					@click=${this._handleClickSelectTemplateButton}
+				>
+					<d2l-dropdown-menu
+						style="${this.htmlTemplatesHref ? '' : 'visibility:hidden;'}" 
+					>
+						<d2l-menu label=${this.localize('content.htmlTemplatesLoading')}>
+							<d2l-menu-item text=${this.localize('content.BrowseForHtmlTemplate')}></d2l-menu-item>
+							${this.htmlFileTemplatesLoaded ? this.htmlFileTemplates.map((template) => { return html`<d2l-menu-item text=${template.properties.title}></d2l-menu-item>`; }) : this._getHtmlTemplateLoadingMenuItem()}
+						</d2l-menu>
+					</d2l-dropdown-menu>
+				</d2l-dropdown-button-subtle>	
 			</div>
 			<div class="d2l-skeletize ${htmlNewEditorEnabled ? 'd2l-new-html-editor-container' : ''}">
 				<d2l-activity-text-editor
