@@ -118,6 +118,9 @@ export default {
 	"grades.selectboxDescriptionExample": "例: 「とても良い」または「B+」", // Example of selectbox grade type
 	"grades.newGradeScheme": "成績スキーム", // Label for the grade scheme
 	"grades.defaultGradeScheme": "-- デフォルト -- （{schemeName}）", // name of default grade scheme
+	"grades.creatingNewNumericGradeItem": "Creating new numeric grade item {newGradeName}", // Aria text for new grade we are creating
+	"grades.creatingNewSelectboxGradeItem": "Creating new selectbox grade item {newGradeName}", // Aria text for new grade we are creating
+	"grades.linkingToGradeItem": "Linking to existing grade item {gradeName}", // Aria text for grade item we are linking to
 
 	"attachments.addGoogleDriveLink": "Google ドライブから添付", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "ファイルアップロード", // Tooltip for a button that opens a file upload dialog

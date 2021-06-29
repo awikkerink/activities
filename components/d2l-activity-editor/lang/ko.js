@@ -118,6 +118,9 @@ export default {
 	"grades.selectboxDescriptionExample": "예: \"매우 좋음\" 또는 \"B+\"", // Example of selectbox grade type
 	"grades.newGradeScheme": "평점 제도", // Label for the grade scheme
 	"grades.defaultGradeScheme": "-- 기본값 --({schemeName})", // name of default grade scheme
+	"grades.creatingNewNumericGradeItem": "Creating new numeric grade item {newGradeName}", // Aria text for new grade we are creating
+	"grades.creatingNewSelectboxGradeItem": "Creating new selectbox grade item {newGradeName}", // Aria text for new grade we are creating
+	"grades.linkingToGradeItem": "Linking to existing grade item {gradeName}", // Aria text for grade item we are linking to
 
 	"attachments.addGoogleDriveLink": "Google Drive에서 첨부", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "파일 업로드", // Tooltip for a button that opens a file upload dialog

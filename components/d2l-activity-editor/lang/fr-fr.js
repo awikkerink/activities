@@ -118,6 +118,9 @@ export default {
 	"grades.selectboxDescriptionExample": "Par ex. « Très bien » ou « B+ »", // Example of selectbox grade type
 	"grades.newGradeScheme": "Barème de notation", // Label for the grade scheme
 	"grades.defaultGradeScheme": "--Par défaut-- ({schemeName})", // name of default grade scheme
+	"grades.creatingNewNumericGradeItem": "Creating new numeric grade item {newGradeName}", // Aria text for new grade we are creating
+	"grades.creatingNewSelectboxGradeItem": "Creating new selectbox grade item {newGradeName}", // Aria text for new grade we are creating
+	"grades.linkingToGradeItem": "Linking to existing grade item {gradeName}", // Aria text for grade item we are linking to
 
 	"attachments.addGoogleDriveLink": "Joindre depuis Google Drive", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "Téléchargement du fichier", // Tooltip for a button that opens a file upload dialog

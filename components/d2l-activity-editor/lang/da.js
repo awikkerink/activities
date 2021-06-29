@@ -118,6 +118,9 @@ export default {
 	"grades.selectboxDescriptionExample": "F.eks. \"Meget god\" eller \"B+\"", // Example of selectbox grade type
 	"grades.newGradeScheme": "Karakteroversigt", // Label for the grade scheme
 	"grades.defaultGradeScheme": "--Standard-- ({schemeName})", // name of default grade scheme
+	"grades.creatingNewNumericGradeItem": "Creating new numeric grade item {newGradeName}", // Aria text for new grade we are creating
+	"grades.creatingNewSelectboxGradeItem": "Creating new selectbox grade item {newGradeName}", // Aria text for new grade we are creating
+	"grades.linkingToGradeItem": "Linking to existing grade item {gradeName}", // Aria text for grade item we are linking to
 
 	"attachments.addGoogleDriveLink": "Vedhæft fra Google Drev", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "Upload af fil", // Tooltip for a button that opens a file upload dialog

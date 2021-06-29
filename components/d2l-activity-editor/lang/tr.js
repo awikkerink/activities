@@ -118,6 +118,9 @@ export default {
 	"grades.selectboxDescriptionExample": "Örn: \"Çok İyi\" veya \"B+\"", // Example of selectbox grade type
 	"grades.newGradeScheme": "Not Planı", // Label for the grade scheme
 	"grades.defaultGradeScheme": "--Varsayılan-- ({schemeName})", // name of default grade scheme
+	"grades.creatingNewNumericGradeItem": "Creating new numeric grade item {newGradeName}", // Aria text for new grade we are creating
+	"grades.creatingNewSelectboxGradeItem": "Creating new selectbox grade item {newGradeName}", // Aria text for new grade we are creating
+	"grades.linkingToGradeItem": "Linking to existing grade item {gradeName}", // Aria text for grade item we are linking to
 
 	"attachments.addGoogleDriveLink": "Google Drive'dan Ekle", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "Dosya Yükleme", // Tooltip for a button that opens a file upload dialog

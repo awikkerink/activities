@@ -118,6 +118,9 @@ export default {
 	"grades.selectboxDescriptionExample": "例如，“非常好”或“B+”", // Example of selectbox grade type
 	"grades.newGradeScheme": "成绩方案", // Label for the grade scheme
 	"grades.defaultGradeScheme": "--默认-- ({schemeName})", // name of default grade scheme
+	"grades.creatingNewNumericGradeItem": "Creating new numeric grade item {newGradeName}", // Aria text for new grade we are creating
+	"grades.creatingNewSelectboxGradeItem": "Creating new selectbox grade item {newGradeName}", // Aria text for new grade we are creating
+	"grades.linkingToGradeItem": "Linking to existing grade item {gradeName}", // Aria text for grade item we are linking to
 
 	"attachments.addGoogleDriveLink": "从 Google Drive 附加", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "文件上传", // Tooltip for a button that opens a file upload dialog
