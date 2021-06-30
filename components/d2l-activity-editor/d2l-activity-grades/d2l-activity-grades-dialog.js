@@ -342,6 +342,8 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 				announce(`${this.localize(localizeTerm, { newGradeName: scoreAndGrade.newGradeName })}`);
 			} else {
 				const gradeCandidateCollection = associateGradeEntity && associateGradeEntity.gradeCandidateCollection;
+				const baseEntity = store.get(this.href);
+				baseEntity.scoreAndGrade.setScoreOutOf(gradeCandidateCollection.selected.maxPoints.toString());
 				announce(`${this.localize('grades.linkingToGradeItem', { gradeName: gradeCandidateCollection.selected.name })}`);
 			}
 
