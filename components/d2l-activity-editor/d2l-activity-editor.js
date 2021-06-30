@@ -72,7 +72,6 @@ class ActivityEditor extends ActivityEditorContainerMixin(ActivityEditorTelemetr
 		this.resizable = false;
 		this._backdropShown = false;
 		this._saveToastVisible = null;
-		this.saveOrder = 1500;
 	}
 
 	connectedCallback() {
