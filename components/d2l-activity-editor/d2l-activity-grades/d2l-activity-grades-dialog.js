@@ -347,7 +347,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 
 			await this.checkinDialog(e);
 
-			const event = new CustomEvent('d2l-activity-grades-dialog-close', {
+			const event = new CustomEvent('d2l-activity-grades-dialog-save-complete', {
 				bubbles: true,
 				composed: true,
 				cancelable: true
