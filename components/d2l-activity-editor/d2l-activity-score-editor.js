@@ -163,6 +163,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 
 	constructor() {
 		super(store);
+		this.saveOrder = 500;
 	}
 
 	connectedCallback() {
@@ -330,6 +331,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 				this._associateGradeSetGradeName(this.activityName);
 			}
 		}
+		await super.save();
 	}
 
 	_addOrRemoveMenuItem() {
