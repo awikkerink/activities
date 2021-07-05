@@ -14,6 +14,7 @@ import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ErrorHandlingMixin } from '../../error-handling-mixin.js';
 import { fetchEntity } from '../../state/fetch-entity.js';
+import { FileEntity } from 'siren-sdk/src/files/FileEntity.js';
 import { LocalizeActivityEditorMixin } from '../../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
@@ -24,7 +25,8 @@ class ContentFileDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlingM
 
 	static get properties() {
 		return {
-			htmlFileTemplates: { type: Array }
+			htmlFileTemplates: { type: Array },
+			sortHTMLTemplatesByName: { type: Boolean },
 		};
 	}
 
@@ -161,7 +163,19 @@ class ContentFileDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlingM
 	async _getHtmlTemplates() {
 		const htmlTemplatesResponse = await fetchEntity(this.htmlTemplatesHref, this.token);
 		const htmlTemplatesEntity = new ContentHtmlFileTemplatesEntity(htmlTemplatesResponse, this.token, { remove: () => { } });
-		const templates = htmlTemplatesEntity.getHtmlFileTemplates();
+		const templates = htmlTemplatesEntity.getHtmlFileTemplates().map(rawEntity => new FileEntity(rawEntity)) || [];
+
+		if (this.sortHTMLTemplatesByName) {
+			templates.sort((a, b) => {
+				if (a.title() < b.title()) {
+					return -1;
+				} else if (a.title() > b.title()) {
+					return 1;
+				}
+				return 0;
+			});
+		}
+
 		this.htmlFileTemplates = templates;
 		this.htmlFileTemplatesLoaded = true;
 	}
@@ -230,9 +244,7 @@ class ContentFileDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlingM
 			return html`<p class="d2l-menu-item-span d2l-body-small">${this.localize('content.noHtmlTemplates')}</p>`;
 		}
 
-		return this.htmlFileTemplates.map((template) => {
-			return html`<d2l-menu-item text=${template.properties.title}></d2l-menu-item>`;
-		});
+		return this.htmlFileTemplates.map((template) => html`<d2l-menu-item text=${template.title()}></d2l-menu-item>`);
 	}
 
 	_renderTemplateSelectDropdown() {
