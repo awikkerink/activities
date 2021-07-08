@@ -5,7 +5,7 @@ on:
 jobs:
   fyi:
     name: Posts a PR Reminder checklist
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, AWS]
     timeout-minutes: 2
     steps:
       - uses: Brightspace/third-party-actions@actions/github-script
