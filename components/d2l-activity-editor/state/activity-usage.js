@@ -71,6 +71,9 @@ export class ActivityUsage extends WorkingCopy {
 	setAlignmentsHref(value) {
 		this.alignmentsHref = value;
 	}
+	setAssociateGradeHref(value) {
+		this.associateGradeHref = value;
+	}
 	setCanEditDraft(value) {
 		this.canEditDraft = value;
 	}

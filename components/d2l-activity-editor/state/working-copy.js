@@ -33,9 +33,16 @@ export class WorkingCopy {
 
 		if (!sirenEntity) return;
 		const href = sirenEntity.self();
-		const entity = new this.StateType(href, this.token);
-		entity.load(sirenEntity);
-		store.put(href, entity);
+
+		let entity = store.get(href);
+
+		if (entity.associateGradeHref) {
+			entity.setAssociateGradeHref(sirenEntity.associateGradeHref());
+		} else {
+			entity = new this.StateType(href, this.token);
+			entity.load(sirenEntity);
+			store.put(href, entity);
+		}
 
 		if (refetch) {
 			this.fetch(true);
