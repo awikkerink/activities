@@ -18,6 +18,15 @@ export class ActivityUsage extends WorkingCopy {
 		this.token = token;
 	}
 
+	async checkin(store, refetch) {
+		const { sirenEntity } = await super.checkin(store, refetch, true) || {};
+		if (!sirenEntity) return;
+		const entity = store.get(sirenEntity.self());
+		if (entity) {
+			entity.setAssociateGradeHref(sirenEntity.associateGradeHref());
+		}
+	}
+
 	async fetchScoreAndGradeScoreOutOf(bypassCache) {
 		await this.scoreAndGrade.fetchUpdatedScoreOutOf(this._entity, bypassCache);
 	}
