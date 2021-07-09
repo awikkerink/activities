@@ -334,6 +334,16 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		await super.save();
 	}
 
+	updateSelectedGrade() {
+		if (this._createSelectboxGradeItemEnabled) {
+			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
+			const gradeCandidateCollection = associateGradeEntity && associateGradeEntity.gradeCandidateCollection;
+			if (gradeCandidateCollection) {
+				gradeCandidateCollection.fetch(true);
+			}
+		}
+	}
+
 	_addOrRemoveMenuItem() {
 		let inGrades;
 		let canEditGrades;
@@ -436,6 +446,5 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		store.get(this.href).scoreAndGrade.setUngraded();
 		this._associateGradeSetGradebookStatus(GradebookStatus.NotInGradebook);
 	}
-
 }
 customElements.define('d2l-activity-score-editor', ActivityScoreEditor);
