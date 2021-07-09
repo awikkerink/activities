@@ -181,11 +181,7 @@ class AssignmentEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityAssi
 			const scoreEditor = this.shadowRoot.querySelector('d2l-activity-assignment-editor-detail')
 				.shadowRoot.querySelector('d2l-activity-score-editor');
 
-			scoreEditor.dispatchEvent(new CustomEvent('d2l-update-selected-grade', {
-				bubbles: true,
-				composed: true,
-				cancelable: true
-			}));
+			scoreEditor.updateSelectedGrade();
 		}
 	}
 }
