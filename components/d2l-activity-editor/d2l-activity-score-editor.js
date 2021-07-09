@@ -442,7 +442,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
 			const gradeCandidateCollection = associateGradeEntity && associateGradeEntity.gradeCandidateCollection;
 			if (gradeCandidateCollection) {
-				gradeCandidateCollection.selected.fetch(true);
+				gradeCandidateCollection.fetch(true);
 			}
 		}
 	}
