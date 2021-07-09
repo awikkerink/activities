@@ -12,7 +12,7 @@ export class WorkingCopy {
 		this._checkedOut = null;
 	}
 
-	async checkin(store, refetch) {
+	async checkin(store, refetch, skipStoringResult) {
 		if (!this._entity) {
 			return;
 		}
@@ -33,13 +33,8 @@ export class WorkingCopy {
 
 		if (!sirenEntity) return;
 		const href = sirenEntity.self();
-
-		let entity = store.get(href);
-
-		if (entity.associateGradeHref) {
-			entity.setAssociateGradeHref(sirenEntity.associateGradeHref());
-		} else {
-			entity = new this.StateType(href, this.token);
+		if (!skipStoringResult) {
+			const entity = new this.StateType(href, this.token);
 			entity.load(sirenEntity);
 			store.put(href, entity);
 		}
@@ -47,6 +42,8 @@ export class WorkingCopy {
 		if (refetch) {
 			this.fetch(true);
 		}
+
+		return { sirenEntity };
 	}
 
 	checkout(store, forcedCheckout) {
