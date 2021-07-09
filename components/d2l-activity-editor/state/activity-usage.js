@@ -222,5 +222,6 @@ decorate(ActivityUsage, {
 	setDates: action,
 	setAlignmentsHref: action,
 	setCanUpdateAlignments: action,
-	loadCompetencies: action
+	loadCompetencies: action,
+	setAssociateGradeHref: action
 });
