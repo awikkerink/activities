@@ -169,6 +169,8 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	connectedCallback() {
 		super.connectedCallback();
 
+		this.addEventListener('d2l-update-selected-grade', this._updateSelectedGrade);
+
 		const event = new CustomEvent('d2l-request-provider', {
 			detail: { key: 'd2l-provider-create-selectbox-grade-item-enabled' },
 			bubbles: true,
@@ -179,6 +181,11 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 
 		this._createSelectboxGradeItemEnabled = event.detail.provider;
 		this.checkoutOnLoad = this._createSelectboxGradeItemEnabled;
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		this.removeEventListener('d2l-update-selected-grade', this._updateSelectedGrade);
 	}
 
 	render() {
@@ -437,5 +444,14 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		this._associateGradeSetGradebookStatus(GradebookStatus.NotInGradebook);
 	}
 
+	_updateSelectedGrade() {
+		if (this._createSelectboxGradeItemEnabled) {
+			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
+			const gradeCandidateCollection = associateGradeEntity && associateGradeEntity.gradeCandidateCollection;
+			if (gradeCandidateCollection) {
+				gradeCandidateCollection.selected.fetch(true);
+			}
+		}
+	}
 }
 customElements.define('d2l-activity-score-editor', ActivityScoreEditor);
