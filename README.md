@@ -24,7 +24,7 @@ To lint ([eslint](http://eslint.org/) and [Polymer lint](https://www.polymer-pro
 npm run lint
 ```
 
-*Note: You may likely run into memory issues when running the linter. To resolve this on Windows, add an environment variable called `NODE_OPTIONS` with value `--max_old_space_size=10240`. Then (re)start a Powershell Terminal as Admin, navigate to the root of this repo, and then run the lint command above. 
+*Note: You may likely run into memory issues when running the linter. To resolve this on Windows, add an environment variable called `NODE_OPTIONS` with value `--max_old_space_size=10240`. Then (re)start a Powershell Terminal as Admin, navigate to the root of this repo, and then run the lint command above.
 
 To run unit tests locally using [Jest](https://jestjs.io/):
 
@@ -125,3 +125,12 @@ Maintenance branch names should be of the form: `+([0-9])?(.{+([0-9]),x}).x`.
 Regular expressions are complicated, but this essentially means branch names should look like:
 * `1.15.x` for patch releases on top of the `1.15` release (after version `1.16` exists)
 * `2.x` for feature releases on top of the `2` release (after version `3` exists)
+
+### Cert Fixes
+
+Use `/backport [release branch name]` to create a draft PR on the targeted release branch with the exact same changes in the source PR.
+Make sure to review the changes carefully before marking the draft PR as ready or merging it into the cert branch.
+
+`release branch name` should be in the format `20.x.y` (x and y should not have prepending zeroes) and the release branch should exist remotely.
+Use the backport command after changes in the source PR have been finalized (ideally after the source PR has been merged into `master`).
+If a backport PR has already been successfully created, further changes in the source PR should be put into a new PR or manually cherry-picked as multiple patches containing the same commits applied to the same destination branch would cause conflicts.
