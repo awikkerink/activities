@@ -128,9 +128,10 @@ Regular expressions are complicated, but this essentially means branch names sho
 
 ### Cert Fixes
 
-Use `/backport [release branch name]` to create a draft PR on the targeted release branch with the exact same changes in the source PR.
-Make sure to review the changes carefully before marking the draft PR as ready or merging it into the cert branch.
+Use `/backport [targeted release branch name]` to create a draft PR on the targeted release branch with the exact same changes in the source PR.
+`targeted release branch name` should be in the format `20.x.y` and the release branch should exist remotely, e.g. `release/20.21.7` -> `/backport 20.21.7`.
 
-`release branch name` should be in the format `20.x.y` (x and y should not have prepending zeroes) and the release branch should exist remotely.
-Use the backport command after changes in the source PR have been finalized (ideally after the source PR has been merged into `master`).
-If a backport PR has already been successfully created, further changes in the source PR should be put into a new PR or manually cherry-picked as multiple patches containing the same commits applied to the same destination branch would cause conflicts.
+Things to note:
+* Make sure to review the changes carefully before marking the draft PR as ready or merging it into the cert branch.
+* Use the backport command after changes in the source PR have been finalized (ideally after the source PR has been merged into `master`).
+* If a backport PR has already been successfully created, further changes in the source PR should be put into a new PR or manually cherry-picked as multiple patches containing the same commits applied to the same destination branch would cause conflicts.
