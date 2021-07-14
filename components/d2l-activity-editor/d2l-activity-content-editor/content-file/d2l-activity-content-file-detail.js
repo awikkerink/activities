@@ -1,6 +1,5 @@
 import '../shared-components/d2l-activity-content-editor-title.js';
 import './d2l-activity-content-file-loading.js';
-import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { ContentFileEntity, FILE_TYPES } from 'siren-sdk/src/activities/content/ContentFileEntity.js';
 import { css, html } from 'lit-element/lit-element.js';
@@ -21,10 +20,11 @@ import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
-class ContentFileDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlingMixin(LocalizeActivityEditorMixin(EntityMixinLit(RtlMixin(ActivityEditorMixin(MobxLitElement))))))) {
+class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivityEditorMixin(EntityMixinLit(RtlMixin(ActivityEditorMixin(MobxLitElement)))))) {
 
 	static get properties() {
 		return {
+			activityUsageHref: { type: String },
 			htmlFileTemplates: { type: Array },
 			sortHTMLTemplatesByName: { type: Boolean },
 		};
@@ -92,19 +92,20 @@ class ContentFileDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlingM
 			<d2l-activity-content-editor-title
 				.entity=${contentFileEntity}
 				.onSave=${this.saveTitle}
+				?skeleton="${this.skeleton}"
 			>
 			</d2l-activity-content-editor-title>
-			<slot name="due-date"></slot>
+			<d2l-activity-content-editor-due-date
+				.href="${this.activityUsageHref}"
+				.token="${this.token}"
+				?skeleton="${this.skeleton}"
+				expanded="true"
+			>
+			</d2l-activity-content-editor-due-date>
 			<div id="content-page-content-container">
 				${pageRenderer}
 			</div>
 		`;
-	}
-
-	updated(changedProperties) {
-		if (changedProperties.has('asyncState')) {
-			this.skeleton = this.asyncState !== asyncStates.complete;
-		}
 	}
 
 	async cancelCreate() {
@@ -133,7 +134,7 @@ class ContentFileDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlingM
 
 		this._saveOnChange('htmlContent');
 
-		const originalActivityUsageHref = contentFileActivity.activityUsageHref;
+		const originalActivityUsageHref = this.activityUsageHref;
 		const updatedEntity = await contentFileActivity.save();
 		const event = new CustomEvent('d2l-content-working-copy-committed', {
 			detail: {
