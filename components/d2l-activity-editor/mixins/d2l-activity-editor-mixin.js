@@ -54,8 +54,6 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 		if (super.connectedCallback) {
 			super.connectedCallback();
 		}
-
-		this._dispatchActivityEditorEvent();
 	}
 	disconnectedCallback() {
 		if (this._container) {
@@ -65,6 +63,9 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 		if (super.disconnectedCallback) {
 			super.disconnectedCallback();
 		}
+	}
+	firstUpdated() {
+		this._dispatchActivityEditorEvent();
 	}
 	updated(changedProperties) {
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&

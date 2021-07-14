@@ -3,12 +3,13 @@ import './editor-contents/d2l-activity-gbl-map-editor-detail.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../../mixins/d2l-activity-editor-mixin.js';
 import { shared as activityStore } from '../../state/activity-store.js';
+import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin';
 import { LocalizeActivityEditorMixin } from '../../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { shared as store } from './state/gbl-map-store.js';
 
-class GblMapEditor extends LocalizeActivityEditorMixin(RtlMixin(ActivityEditorMixin(MobxLitElement))) {
+class GblMapEditor extends AsyncContainerMixin(LocalizeActivityEditorMixin(RtlMixin(ActivityEditorMixin(MobxLitElement)))) {
 	static get properties() {
 		return {
 			/**
@@ -16,17 +17,13 @@ class GblMapEditor extends LocalizeActivityEditorMixin(RtlMixin(ActivityEditorMi
 			 */
 			isNew: { type: Boolean, attribute: 'is-new' },
 			/**
-			 * API endpoint for determining whether a domain is trusted
-			 */
-			trustedSitesEndpoint: { type: String, attribute: 'trusted-sites-endpoint' },
-			/**
-			 * API endpoint for attachment unfurling service
-			 */
-			unfurlEndpoint: { type: String, attribute: 'unfurl-endpoint' },
-			/**
 			 * Set the WidthType on the template to constrain the page width if necessary
 			 */
-			widthType: { type: String, attribute: 'width-type' }
+			widthType: { type: String, attribute: 'width-type' },
+			/**
+			 * The location to return to when leaving the FACE page
+			 */
+			returnLocation: { type: String, attribute: 'return-location' }
 		};
 	}
 
@@ -43,6 +40,20 @@ class GblMapEditor extends LocalizeActivityEditorMixin(RtlMixin(ActivityEditorMi
 
 	constructor() {
 		super(store);
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+
+		this.addEventListener('d2l-activity-editor-save-complete', this._redirectOnSaveAndClose);
+		this.addEventListener('d2l-activity-editor-cancel-complete', this._redirectOnCancel);
+	}
+
+	disconnectedCallback() {
+		this.removeEventListener('d2l-activity-editor-save-complete', this._redirectOnSaveAndClose);
+		this.removeEventListener('d2l-activity-editor-cancel-complete', this._redirectOnSaveAndClose);
+
+		super.disconnectedCallback();
 	}
 
 	render() {
@@ -88,6 +99,18 @@ class GblMapEditor extends LocalizeActivityEditorMixin(RtlMixin(ActivityEditorMi
 				</d2l-activity-gbl-map-editor-secondary>
 			</div>
 		`;
+	}
+
+	_redirectOnCancel() {
+		if (this.returnLocation) {
+			window.location.href = this.returnLocation;
+		}
+	}
+
+	_redirectOnSaveAndClose({ detail: { saveInPlace } }) {
+		if (this.returnLocation && !saveInPlace) {
+			window.location.href = this.returnLocation;
+		}
 	}
 }
 

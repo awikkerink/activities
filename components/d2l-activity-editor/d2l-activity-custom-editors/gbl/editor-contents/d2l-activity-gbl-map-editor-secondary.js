@@ -1,17 +1,15 @@
+import './d2l-activity-gbl-map-background-editor.js';
 import '@brightspace-ui/core/components/colors/colors.js';
-import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { ActivityEditorMixin } from '../../../mixins/d2l-activity-editor-mixin.js';
 import { LocalizeActivityEditorMixin } from '../../../mixins/d2l-activity-editor-lang-mixin';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin';
+import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin';
 
-class GblMapEditorSecondary extends AsyncContainerMixin(SkeletonMixin(RtlMixin(LocalizeActivityEditorMixin(LitElement)))) {
-	static get properties() {
-		return {
-			activityUsageHref: { type: String, attribute: 'activity-usage-href' }
-		};
-	}
+// TODO: DO I NEED THE ASYNC CONTAINER MIXIN?
 
+class GblMapEditorSecondary extends AsyncContainerMixin(SkeletonMixin(RtlMixin(ActivityEditorMixin(LitElement)))) {
 	static get styles() {
 		return [
 			super.styles,
@@ -40,15 +38,14 @@ class GblMapEditorSecondary extends AsyncContainerMixin(SkeletonMixin(RtlMixin(L
 	}
 
 	render() {
-		return html``;
-	}
-
-	updated(changedProperties) {
-		super.updated(changedProperties);
-
-		if (changedProperties.has('asyncState')) {
-			this.skeleton = this.asyncState !== asyncStates.complete;
-		}
+		return html`
+			<d2l-activity-gbl-map-background-editor
+				.href=${this.href}
+				.token=${this.token}
+				?skeleton=${this.skeleton}
+			>
+			</d2l-activity-gbl-map-background-editor>
+		`;
 	}
 }
 

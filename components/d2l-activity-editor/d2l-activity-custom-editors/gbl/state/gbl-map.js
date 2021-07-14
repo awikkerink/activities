@@ -1,4 +1,4 @@
-import { configure as configureMobx, decorate, observable } from 'mobx';
+import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { fetchEntity } from '../../../state/fetch-entity';
 import { GblActivityUsageEntity } from 'siren-sdk/src/activities/gbl/GblActivityUsageEntity';
 import { GblMapEntity } from 'siren-sdk/src/activities/gbl/GblMapEntity';
@@ -10,10 +10,13 @@ export class GblMap {
 		this.href = href;
 		this.token = token;
 		this.title = '';
-		this.mapData = {};
+		this.mapData = '';
 	}
 
 	get dirty() {
+		console.log('checking if dirty');
+		//console.log(this.mapData);
+		//console.log(this._gblMapEntity.mapData);
 		return !(this._gblMapEntity.equals(this._makeGblMapEntityData()));
 	}
 
@@ -24,16 +27,24 @@ export class GblMap {
 			const gblMapEntity = await fetchEntity(activityUsage.getGblMapHref(), this.token);
 			if (gblMapEntity) {
 				const gblMap = new GblMapEntity(gblMapEntity, this.token, { remove: () => {} });
-				this._load(gblMap);
+				this.load(gblMap);
 			}
 		}
 		return this;
 	}
 
-	_load(gblMap) {
+	load(gblMap) {
 		this._gblMapEntity = gblMap;
 		this.title = gblMap.title();
 		this.mapData = gblMap.mapData();
+	}
+
+	setMapData(value) {
+		this.mapData = value;
+	}
+
+	setTitle(value) {
+		this.title = value;
 	}
 
 	_makeGblMapEntityData() {
@@ -47,5 +58,9 @@ export class GblMap {
 decorate(GblMap, {
 	// props
 	title: observable,
-	mapData: observable
+	mapData: observable,
+	// actions
+	load: action,
+	setMapData: action,
+	setTitle: action,
 });
