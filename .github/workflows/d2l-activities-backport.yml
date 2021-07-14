@@ -8,7 +8,7 @@ jobs:
   respond:
     if: github.event.issue.pull_request && startswith(github.event.comment.body, '/backport')
     timeout-minutes: 5
-    runs-on: [self-hosted, AWS, Linux]
+    runs-on: ubuntu-latest
 
     steps:
       - id: source-pr
