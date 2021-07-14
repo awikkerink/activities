@@ -47,6 +47,7 @@ class ContentWebLinkDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActi
 
 	render() {
 		const webLinkEntity = webLinkStore.getContentWebLinkActivity(this.href);
+
 		if (webLinkEntity) {
 			this.skeleton = false;
 		}
