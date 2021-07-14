@@ -20,12 +20,17 @@ import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
+// Index for the browse template button
+const browseTemplateKey = 'browse';
+const editorKeyInitial = 'content-page-content';
+
 class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivityEditorMixin(EntityMixinLit(RtlMixin(ActivityEditorMixin(MobxLitElement)))))) {
 
 	static get properties() {
 		return {
 			activityUsageHref: { type: String },
 			htmlFileTemplates: { type: Array },
+			pageContent: { typeof: Text },
 			sortHTMLTemplatesByName: { type: Boolean },
 		};
 	}
@@ -61,6 +66,8 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 		this.htmlFileTemplates = [];
 		this.firstTemplatesLoadAttempted = false;
 		this.htmlFileTemplatesLoaded = false;
+		this.pageContent = null;
+		this.editorKey = editorKeyInitial;
 	}
 
 	connectedCallback() {
@@ -70,18 +77,17 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 
 	render() {
 		const contentFileEntity = contentFileStore.getContentFileActivity(this.href);
-		let pageContent = undefined;
 		let pageRenderer = undefined;
 
 		if (contentFileEntity) {
 			this.skeleton = false;
-			pageContent = contentFileEntity.fileContent;
+			this.pageContent = contentFileEntity.fileContent;
 
 			this.htmlTemplatesHref = contentFileEntity.htmlTemplatesHref;
 
 			switch (contentFileEntity.fileType) {
 				case FILE_TYPES.html:
-					pageRenderer = this._renderHtmlEditor(pageContent);
+					pageRenderer = this._renderHtmlEditor();
 					break;
 			}
 		} else {
@@ -181,21 +187,38 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 		}
 	}
 
+	async _handleClickTemplateMenuItem(e) {
+		const target = e.target.getAttribute('key');
+
+		if (target === browseTemplateKey) {
+			// TODO: Add Browse Template Button Support
+		}
+		else {
+			const response = await window.d2lfetch.fetch(target);
+
+			if (response.ok) {
+				const content = await response.text();
+				this._savePageContent(content);
+				this.editorKey = `${editorKeyInitial}-${Date.now().toString()}`; // key needs to be modified in order to re-render old HTML editor
+			}
+		}
+	}
+
 	_onPageContentChange(e) {
-		const pageContent = e.detail.content;
-		this._savePageContent(pageContent);
+		const htmlContent = e.detail.content;
+		this._savePageContent(htmlContent);
 	}
 
 	_onPageContentChangeDebounced(e) {
-		const pageContent = e.detail.content;
+		const htmlContent = e.detail.content;
 		this._debounceJobs.description = Debouncer.debounce(
 			this._debounceJobs.description,
 			timeOut.after(ContentEditorConstants.DEBOUNCE_TIMEOUT),
-			() => this._savePageContent(pageContent)
+			() => this._savePageContent(htmlContent)
 		);
 	}
 
-	_renderHtmlEditor(pageContent) {
+	_renderHtmlEditor() {
 		const newEditorEvent = new CustomEvent('d2l-request-provider', {
 			detail: { key: 'd2l-provider-html-new-editor-enabled' },
 			bubbles: true,
@@ -220,8 +243,8 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 			<div class="d2l-skeletize ${htmlNewEditorEnabled ? 'd2l-new-html-editor-container' : ''}">
 				<d2l-activity-text-editor
 					.ariaLabel="${this.localize('content.pageContent')}"
-					.key="content-page-content"
-					.value="${pageContent}"
+					.key=${this.editorKey}
+					.value="${this.pageContent}"
 					@d2l-activity-text-editor-change="${activityTextEditorChange}"
 					.richtextEditorConfig="${{}}"
 					html-editor-height="100%"
@@ -238,7 +261,7 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 			return html`<p class="d2l-menu-item-span d2l-body-small">${this.localize('content.noHtmlTemplates')}</p>`;
 		}
 
-		return this.htmlFileTemplates.map((template) => html`<d2l-menu-item text=${template.title()}></d2l-menu-item>`);
+		return this.htmlFileTemplates.map((template) => html`<d2l-menu-item text=${template.title()} key=${template.getFileDataLocationHref()}></d2l-menu-item>`);
 	}
 
 	_renderTemplateSelectDropdown() {
@@ -260,8 +283,8 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 		>
 
 		<d2l-dropdown-menu align="end">
-			<d2l-menu label="${label}">
-				<d2l-menu-item text=${this.localize('content.BrowseForHtmlTemplate')}></d2l-menu-item>
+			<d2l-menu label="${label}" @d2l-menu-item-select=${this._handleClickTemplateMenuItem}>
+				<d2l-menu-item text=${this.localize('content.BrowseForHtmlTemplate')} key=${browseTemplateKey}></d2l-menu-item>
 				${this.htmlFileTemplatesLoaded ? this._renderHtmlTemplates() : this._getHtmlTemplateLoadingMenuItem()}
 			</d2l-menu>
 		</d2l-dropdown-menu>
@@ -281,12 +304,13 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 		this._debounceJobs[jobName] && this._debounceJobs[jobName].flush();
 	}
 
-	_savePageContent(pageContent) {
+	_savePageContent(htmlContent) {
 		const contentFileEntity = contentFileStore.getContentFileActivity(this.href);
 		if (!contentFileEntity) {
 			return;
 		}
-		contentFileEntity.setPageContent(pageContent);
+		contentFileEntity.setPageContent(htmlContent);
+		this.pageContent = htmlContent;
 	}
 }
 
