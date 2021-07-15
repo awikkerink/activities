@@ -52,7 +52,7 @@ class GblMapEditorDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandling
 		}
 
 		const {
-			title,
+			name,
 			mapData
 		} = gblMapEntity || {};
 
@@ -64,7 +64,7 @@ class GblMapEditorDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandling
 						id='gbl-map-name'
 						label=${this.localize('gbl.name')}
 						maxlength='150'
-						value=${title}
+						value=${name}
 						required
 						prevent-submit
 						?aria-invalid=${this._nameError}
@@ -80,6 +80,7 @@ class GblMapEditorDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandling
 						editMap
 						mapData=${mapData}
 						@d2l-gbl-map-updated=${this._handleMapUpdated}
+						?skeleton=${this.skeleton}
 					>
 					</gbl-map-editor>
 				</div>
@@ -89,11 +90,21 @@ class GblMapEditorDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandling
 
 	hasPendingChanges() {
 		const gblMapEntity = store.getGblMapActivity(this.href);
-		if (gblMapEntity) {
+		if (!gblMapEntity) {
 			return false;
 		}
 
 		return gblMapEntity.dirty;
+	}
+
+	async save() {
+		const gblMapEntity = store.getGblMapActivity(this.href);
+		if (!gblMapEntity) {
+			return false;
+		}
+
+		this._saveOnChange('name');
+		await gblMapEntity.save();
 	}
 
 	_debounce(jobName, fn, interval = DEBOUNCE_INTERVAL) {
@@ -110,13 +121,13 @@ class GblMapEditorDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandling
 		}
 	}
 
-	_handleMapUpdated({ detail: { map } }) {
+	_handleMapUpdated({ detail: { mapData } }) {
 		const gblMapEntity = store.getGblMapActivity(this.href);
-		if (gblMapEntity) {
+		if (!gblMapEntity) {
 			return false;
 		}
 
-		gblMapEntity.setMapData(map);
+		gblMapEntity.setMapData(mapData);
 	}
 
 	_renderNameTooltip() {
@@ -146,7 +157,7 @@ class GblMapEditorDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandling
 					this.setError('_nameError', 'gbl.emptyNameField');
 				} else {
 					this.clearError('_nameError');
-					store.getGblMapActivity(this.href).setTitle(name);
+					store.getGblMapActivity(this.href).setName(name);
 				}
 			}
 		);

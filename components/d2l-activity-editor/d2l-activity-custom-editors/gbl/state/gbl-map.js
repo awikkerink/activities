@@ -14,9 +14,6 @@ export class GblMap {
 	}
 
 	get dirty() {
-		console.log('checking if dirty');
-		//console.log(this.mapData);
-		//console.log(this._gblMapEntity.mapData);
 		return !(this._gblMapEntity.equals(this._makeGblMapEntityData()));
 	}
 
@@ -35,21 +32,37 @@ export class GblMap {
 
 	load(gblMap) {
 		this._gblMapEntity = gblMap;
-		this.title = gblMap.title();
+		this.name = gblMap.name();
 		this.mapData = gblMap.mapData();
+	}
+
+	async save() {
+		if (!this._gblMapEntity) {
+			return;
+		}
+
+		if (this.name !== this._gblMapEntity.name()) {
+			await this._gblMapEntity.setName(this.name);
+		}
+
+		if (this.mapData !== this._gblMapEntity.mapData()) {
+			await this._gblMapEntity.setMapData(this.mapData);
+		}
+
+		await this.fetch();
 	}
 
 	setMapData(value) {
 		this.mapData = value;
 	}
 
-	setTitle(value) {
-		this.title = value;
+	setName(value) {
+		this.name = value;
 	}
 
 	_makeGblMapEntityData() {
 		return {
-			title: this.title,
+			name: this.name,
 			mapData: this.mapData
 		};
 	}
