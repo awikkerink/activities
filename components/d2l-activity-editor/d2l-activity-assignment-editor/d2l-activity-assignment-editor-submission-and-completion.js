@@ -76,7 +76,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 					${this._renderCategoriesDropdown(assignment)}
 					${this._renderAssignmentSubmissionType(assignment)}
 					${this._renderAssignmentFilesSubmissionLimit(assignment)}
-					${this._renderAllowableFiletypesDropdown(assignment)}
+					${this._renderAllowableFileTypesDropdown(assignment)}
 					${this._renderAssignmentSubmissionsRule(assignment)}
 					${this._renderAssignmentCompletionType(assignment)}
 					${this._renderAssignmentSubmissionNotificationEmail(assignment)}
@@ -130,6 +130,15 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 			${assignment.submissionAndCompletionProps.submissionTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.submissionAndCompletionProps.submissionType}>${option.title}</option>`)}
 		`;
 	}
+	_getAllowableFileTypeOptions(assignment) {
+		if (!assignment || !assignment.submissionAndCompletionProps) {
+			return html``;
+		}
+
+		return html`
+			${assignment.submissionAndCompletionProps.allowableFileTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.submissionAndCompletionProps.submissionType}>${option.title}</option>`)}
+		`;
+	}
 
 	_onNotificationEmailChanged(e) {
 		const assignment = store.get(this.href);
@@ -137,7 +146,8 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		assignment && assignment.setNotificationEmail(data);
 	}
 
-	_renderAllowableFiletypesDropdown(assignment) {
+	_renderAllowableFileTypesDropdown(assignment) {
+		console.log('assignment')
 		console.log(assignment)
 
 		// only show the dropdown if the API provides the Restrict File Ext property (check here)
@@ -154,8 +164,8 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 					id="assignment-allowable-filetypes"
 					aria-labelledby="assignment-allowable-filetypes-label"
 					class="d2l-input-select d2l-block-select"
-					@change="${this._saveSubmissionTypeOnChange}">
-						${this._getSubmissionTypeOptions(assignment)}
+					@change="${this._saveAllowableFileTypesOnChange}">
+						${this._getAllowableFileTypeOptions(assignment)}
 				</select>
 			</div>
 		`;
