@@ -19,6 +19,7 @@ export class ContentFile {
 		this.fileContent = '';
 		this.fileType = null;
 		this.htmlTemplatesHref = null;
+		this.fontSize = null;
 	}
 
 	async cancelCreate() {
@@ -61,7 +62,12 @@ export class ContentFile {
 		this.fileContent = fileContent;
 		this.fileType = contentFileEntity.getFileType();
 		this.fileHref = contentFileEntity.getFileHref();
-		this.htmlTemplatesHref = contentFileEntity.getHtmlTemplatesHref();
+
+		if (this.fileType === FILE_TYPES.html) {
+			const htmlFileEntity = new ContentHtmlFileEntity(contentFileEntity._entity, this.token, { remove: () => { } });
+			this.htmlTemplatesHref = htmlFileEntity.getHtmlTemplatesHref();
+			this.fontSize = htmlFileEntity.fontSize();
+		}
 	}
 
 	async save() {
