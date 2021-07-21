@@ -93,7 +93,15 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 
 		await assignment.save();
 	}
+	_getAllowableFileTypeOptions(assignment) {
+		if (!assignment || !assignment.submissionAndCompletionProps) {
+			return html``;
+		}
 
+		return html`
+			${assignment.submissionAndCompletionProps.allowableFileTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.submissionAndCompletionProps.submissionType}>${option.title}</option>`)}
+		`;
+	}
 	_getCompletionTypeOptions(assignment) {
 		const completionTypeOptions = assignment && assignment.submissionAndCompletionProps ? assignment.submissionAndCompletionProps.completionTypeOptions : [];
 		const completionType = assignment && assignment.submissionAndCompletionProps ? assignment.submissionAndCompletionProps.completionType : '0';
@@ -102,7 +110,13 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 			${completionTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === completionType}>${option.title}</option>`)}
 		`;
 	}
+	_getSelectedAllowableFileType(assignment) {
+		if (!assignment || !assignment.submissionAndCompletionProps || !assignment.submissionAndCompletionProps.allowableFileTypeOptions) {
+			return html``;
+		}
 
+		return assignment.submissionAndCompletionProps.allowableFileTypeOptions.find(opt => String(opt.value) === assignment.submissionAndCompletionProps.allowableFileType);
+	}
 	_getSelectedCompletionType(assignment) {
 		if (!assignment ||
 			!assignment.submissionAndCompletionProps ||
@@ -130,16 +144,6 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 			${assignment.submissionAndCompletionProps.submissionTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.submissionAndCompletionProps.submissionType}>${option.title}</option>`)}
 		`;
 	}
-	_getAllowableFileTypeOptions(assignment) {
-		if (!assignment || !assignment.submissionAndCompletionProps) {
-			return html``;
-		}
-
-		return html`
-			${assignment.submissionAndCompletionProps.allowableFileTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.submissionAndCompletionProps.submissionType}>${option.title}</option>`)}
-		`;
-	}
-
 	_onNotificationEmailChanged(e) {
 		const assignment = store.get(this.href);
 		const data = e.detail.value;
@@ -147,12 +151,24 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	}
 
 	_renderAllowableFileTypesDropdown(assignment) {
-		console.log('assignment')
-		console.log(assignment)
-
-		// only show the dropdown if the API provides the Restrict File Ext property (check here)
 		if (!assignment || !assignment.submissionAndCompletionProps) {
 			return html``;
+		}
+
+		let allowableFileTypeContent = html``;
+		if (assignment.submissionAndCompletionProps.canEditSubmissionType) {
+			allowableFileTypeContent = html`<select
+										id="assignment-allowable-filetypes"
+										aria-labelledby="assignment-allowable-filetypes-label"
+										class="d2l-input-select d2l-block-select"
+										@change="${this._saveAllowableFileTypeOnChange}">
+											${this._getAllowableFileTypeOptions(assignment)}
+									</select>`;
+		} else {
+			const allowableFileType = this._getSelectedAllowableFileType(assignment);
+			if (allowableFileType) {
+				allowableFileTypeContent = html`<div class="d2l-body-compact">${allowableFileType.title}</div>`;
+			}
 		}
 
 		return html`
@@ -160,16 +176,11 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 				<div class="d2l-label-text" id="assignment-allowable-filetypes-label">
 					${this.localize('allowableFiletypes')}
 				</div>
-				<select
-					id="assignment-allowable-filetypes"
-					aria-labelledby="assignment-allowable-filetypes-label"
-					class="d2l-input-select d2l-block-select"
-					@change="${this._saveAllowableFileTypesOnChange}">
-						${this._getAllowableFileTypeOptions(assignment)}
-				</select>
+				${allowableFileTypeContent}
 			</div>
 		`;
 	}
+
 	_renderAssignmentCompletionType(assignment) {
 		if (!assignment ||
 			!assignment.submissionAndCompletionProps ||
@@ -422,6 +433,9 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 			</d2l-activity-assignment-submission-email-notification-summary>
 		`;
 	}
+	_saveAllowableFileTypeOnChange(event) {
+		store.get(this.href).setAllowableFileType(event.target.value);
+	}
 	_saveCompletionTypeOnChange(event) {
 		store.get(this.href).setCompletionType(event.target.value);
 	}
@@ -429,7 +443,6 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	_saveSubmissionTypeOnChange(event) {
 		store.get(this.href).setSubmissionType(event.target.value);
 	}
-
 	_setfilesSubmisisonLimit(e) {
 		const assignment = store.get(this.href);
 		const data = e.target.value;

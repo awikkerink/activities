@@ -30,6 +30,9 @@ export class SubmissionAndCompletionProps {
 		}
 	}
 
+	setAllowableFileType(value) {
+		this.allowableFileType = value;
+	}
 	setCompletionType(value) {
 		this.completionType = value;
 	}
@@ -43,10 +46,6 @@ export class SubmissionAndCompletionProps {
 		this.submissionType = value;
 
 		this._setValidCompletionTypeForSubmissionType();
-	}
-
-	setAllowableFileType(value) {
-		this.allowableFileType = value;
 	}
 
 	get showFilesSubmissionLimit() {

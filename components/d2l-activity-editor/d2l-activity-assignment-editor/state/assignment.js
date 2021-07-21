@@ -38,8 +38,6 @@ export class Assignment {
 
 	load(entity) {
 		this._entity = entity;
-		console.log('ENTITY!!')
-		console.log(entity)
 		this.submissionAndCompletionProps = new SubmissionAndCompletionProps({
 			allowableFileTypeOptions: entity.allowableFileTypeOptions(),
 			allowableFileType: entity.allowableFileType().value,
@@ -123,6 +121,9 @@ export class Assignment {
 
 		await this.fetch();
 	}
+	setAllowableFileType(value) {
+		this.submissionAndCompletionProps.setAllowableFileType(value);
+	}
 	setAnnotationToolsAvailable(value) {
 		this.annotationToolsAvailable = value;
 	}
@@ -176,9 +177,6 @@ export class Assignment {
 		this.submissionAndCompletionProps.setSubmissionType(value);
 
 		this.anonymousMarkingProps.setIsAnonymousMarkingAvailableForSubmissionType(this.submissionAndCompletionProps.submissionType);
-	}
-	setAllowableFileType(value) {
-		this.submissionAndCompletionProps.setAllowableFileType(value);
 	}
 	setToGroupAssignmentType() {
 		this.assignmentTypeProps.setToGroupAssignmentType();
