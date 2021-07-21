@@ -169,6 +169,13 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 		contentFileActivity.setTitle(title);
 	}
 
+	_closeSelectTemplateDropdownMenuIfOpen() {
+		const selectTemplateDropdownMenu = this.shadowRoot.getElementById('select-template-dropdown-menu');
+		if (selectTemplateDropdownMenu) {
+			selectTemplateDropdownMenu.close();
+		}
+	}
+
 	_getHtmlTemplateLoadingMenuItem() {
 		return html`<p class="d2l-menu-item-span d2l-body-small">${this.localize('content.htmlTemplatesLoading')}</p>`;
 	}
@@ -308,6 +315,7 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 					.key=${this.editorKey}
 					.value="${this.pageContent}"
 					@d2l-activity-text-editor-change="${activityTextEditorChange}"
+					@d2l-new-html-editor-focus="${this._closeSelectTemplateDropdownMenuIfOpen}"
 					.richtextEditorConfig="${{}}"
 					html-editor-height="100%"
 					full-page
@@ -361,7 +369,7 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 			@click=${this._handleClickSelectTemplateButton}
 		>
 
-		<d2l-dropdown-menu align="end">
+		<d2l-dropdown-menu id="select-template-dropdown-menu" align="end">
 			<d2l-menu label="${label}" @d2l-menu-item-select=${this._handleClickTemplateMenuItem}>
 				<d2l-menu-item text=${this.localize('content.browseForHtmlTemplate')} key=${browseTemplateKey}></d2l-menu-item>
 				${this.htmlFileTemplatesLoaded ? this._renderHtmlTemplates() : this._getHtmlTemplateLoadingMenuItem()}

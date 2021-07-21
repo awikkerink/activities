@@ -58,7 +58,8 @@ class ActivityHtmlNewEditor extends ActivityEditorMixin(LocalizeActivityEditorMi
 				full-page-font-size="${ifDefined(this.fullPageFontSize)}"
 				full-page-font-family="${ifDefined(this.fullPageFontFamily)}"
 				?paste-local-images="${allowPaste}"
-				@d2l-htmleditor-blur="${this._onBlur}">
+				@d2l-htmleditor-blur="${this._onBlur}"
+				@d2l-htmleditor-focus="${this._onFocus}">
 			</d2l-htmleditor>
 		`;
 	}
@@ -119,6 +120,12 @@ class ActivityHtmlNewEditor extends ActivityEditorMixin(LocalizeActivityEditorMi
 	_onBlur() {
 		const editor = this.shadowRoot.querySelector('d2l-htmleditor');
 		this._dispatchChangeEvent(editor.html);
+	}
+
+	_onFocus() {
+		this.dispatchEvent(new CustomEvent('d2l-new-html-editor-focus', {
+			bubbles: true, composed: true
+		}));
 	}
 
 	_parseHtml() {
