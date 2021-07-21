@@ -38,6 +38,8 @@ export class Assignment {
 
 	load(entity) {
 		this._entity = entity;
+		// console.log('ENTITY!!')
+		// console.log(entity)
 		this.submissionAndCompletionProps = new SubmissionAndCompletionProps({
 			submissionTypeOptions: entity.submissionTypeOptions(),
 			submissionType: entity.submissionType().value,

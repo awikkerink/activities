@@ -76,6 +76,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 					${this._renderCategoriesDropdown(assignment)}
 					${this._renderAssignmentSubmissionType(assignment)}
 					${this._renderAssignmentFilesSubmissionLimit(assignment)}
+					${this._renderAllowableFiletypesDropdown(assignment)}
 					${this._renderAssignmentSubmissionsRule(assignment)}
 					${this._renderAssignmentCompletionType(assignment)}
 					${this._renderAssignmentSubmissionNotificationEmail(assignment)}
@@ -136,6 +137,29 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		assignment && assignment.setNotificationEmail(data);
 	}
 
+	_renderAllowableFiletypesDropdown(assignment) {
+		console.log(assignment)
+
+		// only show the dropdown if the API provides the Restrict File Ext property (check here)
+		if (!assignment || !assignment.submissionAndCompletionProps) {
+			return html``;
+		}
+
+		return html`
+			<div id="assignment-allowable-filetypes-container" class="d2l-editor">
+				<div class="d2l-label-text" id="assignment-allowable-filetypes-label">
+					${this.localize('allowableFiletypes')}
+				</div>
+				<select
+					id="assignment-allowable-filetypes"
+					aria-labelledby="assignment-allowable-filetypes-label"
+					class="d2l-input-select d2l-block-select"
+					@change="${this._saveSubmissionTypeOnChange}">
+						${this._getSubmissionTypeOptions(assignment)}
+				</select>
+			</div>
+		`;
+	}
 	_renderAssignmentCompletionType(assignment) {
 		if (!assignment ||
 			!assignment.submissionAndCompletionProps ||

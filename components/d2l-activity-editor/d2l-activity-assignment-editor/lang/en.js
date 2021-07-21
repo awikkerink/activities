@@ -3,6 +3,7 @@
 export default {
 	"hdrReleaseConditions": "Release Conditions", // release conditions heading
 	"hlpReleaseConditions": "Users are not able to access or view the assignment unless they meet the release conditions.", // release conditions help
+	"allowableFiletypes": "Allowable Filetypes", // Label for the allowable filetypes field when creating/editing an assignment
 	"completionType": "Marked as completed", // Label for the completion type field when creating/editing an assignment
 	"lblAnonymousMarking": "Anonymous Marking", // Label for anonymous marking
 	"chkAnonymousMarking": "Hide student names during assessment", // Checkbox for anonymous marking
