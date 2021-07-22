@@ -70,6 +70,7 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 		this.pageContent = null;
 		this.editorKey = editorKeyInitial;
 		this.replacementContent = null;
+		this.fontSize = '12pt';
 
 		const context = JSON.parse(document.documentElement.getAttribute('data-he-context'));
 		this.orgUnitId = context ? context.orgUnitId : '';
@@ -92,6 +93,7 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 
 			switch (contentFileEntity.fileType) {
 				case FILE_TYPES.html:
+					this.fontSize = contentFileEntity.fontSize ? `${contentFileEntity.fontSize}pt` : this.fontSize;
 					pageRenderer = this._renderHtmlEditor();
 					break;
 			}
@@ -311,7 +313,7 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 					.richtextEditorConfig="${{}}"
 					html-editor-height="100%"
 					full-page
-					full-page-font-size="12pt"
+					full-page-font-size=${this.fontSize}
 					full-page-font-family="Verdana"
 				>
 				</d2l-activity-text-editor>
