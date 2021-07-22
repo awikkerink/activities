@@ -99,7 +99,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		}
 
 		return html`
-			${assignment.submissionAndCompletionProps.allowableFileTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.submissionAndCompletionProps.submissionType}>${option.title}</option>`)}
+			${assignment.submissionAndCompletionProps.allowableFileTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.submissionAndCompletionProps.allowableFileType}>${option.title}</option>`)}
 		`;
 	}
 	_getCompletionTypeOptions(assignment) {
@@ -154,6 +154,9 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		if (!assignment || !assignment.submissionAndCompletionProps) {
 			return html``;
 		}
+
+		console.log('assignment')
+		console.log(assignment.submissionAndCompletionProps)
 
 		let allowableFileTypeContent = html``;
 		if (assignment.submissionAndCompletionProps.canEditSubmissionType) {
