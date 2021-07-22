@@ -49,6 +49,15 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 				.d2l-input-radio-label {
 					margin-bottom: 10px;
 				}
+
+				#allowable-filetypes-help-span {
+					margin-left: 10px;
+				}
+
+				:host([dir='rtl']) #allowable-filetypes-help-span {
+					margin-left: 0;
+					margin-right: 10px;
+				}
 			`
 		];
 	}
@@ -150,13 +159,17 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		assignment && assignment.setNotificationEmail(data);
 	}
 
+	_openPopoutInNewTab() {
+		window.open(
+			'https://documentation.brightspace.com/EN/le/assignments/learner/assignments_intro_1.htm',
+			'_blank '
+		);
+	}
+
 	_renderAllowableFileTypesDropdown(assignment) {
 		if (!assignment || !assignment.submissionAndCompletionProps) {
 			return html``;
 		}
-
-		console.log('assignment')
-		console.log(assignment.submissionAndCompletionProps)
 
 		let allowableFileTypeContent = html``;
 		if (assignment.submissionAndCompletionProps.canEditSubmissionType) {
@@ -178,6 +191,13 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 			<div id="assignment-allowable-filetypes-container" class="d2l-editor">
 				<div class="d2l-label-text" id="assignment-allowable-filetypes-label">
 					${this.localize('allowableFiletypes')}
+					<span id="allowable-filetypes-help-span">
+						<d2l-button-icon
+							text="${this.localize('allowableFileTypesHelp')}"
+							icon="tier1:help"
+							@click="${this._openPopoutInNewTab}">
+						</d2l-button-icon>
+					</span>
 				</div>
 				${allowableFileTypeContent}
 			</div>
