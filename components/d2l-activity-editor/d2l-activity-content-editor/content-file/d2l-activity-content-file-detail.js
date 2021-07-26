@@ -253,16 +253,6 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 		this.replacementContent = null;
 	}
 
-	_isEditorEmpty() {
-		const htmlContent = this.pageContent;
-
-		let innerHtml = htmlContent.substring(htmlContent.indexOf('<body') + 5, htmlContent.indexOf('</body>'));
-
-		innerHtml = innerHtml.substring(innerHtml.indexOf('>') + 1);
-
-		return (/^([\s\n]|[<p>(&nbsp;)*</p>])*$/g.test(innerHtml));
-	}
-
 	_onPageContentChange(e) {
 		const htmlContent = e.detail.content;
 		this._savePageContent(htmlContent);
@@ -395,7 +385,9 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 	}
 
 	_tryOverwriteContent(htmlContent) {
-		if (this._isEditorEmpty()) {
+		const contentFileEntity = contentFileStore.getContentFileActivity(this.href);
+
+		if (contentFileEntity.empty) {
 			this._savePageContent(htmlContent);
 		} else {
 			this.replacementContent = htmlContent;

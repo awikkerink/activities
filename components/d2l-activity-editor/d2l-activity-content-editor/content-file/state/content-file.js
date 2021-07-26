@@ -27,7 +27,15 @@ export class ContentFile {
 	}
 
 	get dirty() {
-		return !(this._contentFileEntity.equals(this._makeContentFileData()) && this.persistedFileContent === this.fileContent);
+		return !(this._contentFileEntity.equals(this._makeContentFileData()) && this._contentEquals());
+	}
+
+	get empty() {
+		let innerHtml = this.fileContent.substring(this.fileContent.indexOf('<body') + 5, this.fileContent.indexOf('</body>'));
+
+		innerHtml = innerHtml.substring(innerHtml.indexOf('>') + 1);
+
+		return (/^([\s\n]|[<p>(&nbsp;)*</p>])*$/g.test(innerHtml));
 	}
 
 	async fetch() {
@@ -122,6 +130,18 @@ export class ContentFile {
 		}
 
 		return new ContentFileEntity(sirenEntity, this.token, { remove: () => { } });
+	}
+
+	_contentEquals() {
+		/* This check stops the discard dialog from appearing when no content
+			is added to the editor but it was clicked in. Faster than stripping
+			the html, body, etc. tags added by the new html editor
+		*/
+		if (this.persistedFileContent === '' && this.empty) {
+			return true;
+		}
+
+		return this.persistedFileContent === this.fileContent;
 	}
 
 	_makeContentFileData() {
