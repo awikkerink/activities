@@ -104,7 +104,7 @@ export default {
 	"grades.points": "Pwyntiau: {points}", // Text label for displaying points of a grade
 	"grades.weight": "Pwysau: {weight}", // Text label for displaying weight of a grade
 	"grades.gradeItem": "Eitem Gradd", //ARIA label for grade-item picker when linking an activity to an existing grade item
-	"grades.gradeUnits": "points", // unit label for GradeOutOf value (e.g. 10 points)
+	"grades.gradeUnits": "pwyntiau", // unit label for GradeOutOf value (e.g. 10 points)
 	"grades.chooseNewGradeItemCategory": "Dewiswch Gategori Gradd", // Label for add category button
 	"grades.newGradeItemCategory": "Categori Gradd", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "Dim Categori", // Category dropdown text for not selecting a category
@@ -118,6 +118,9 @@ export default {
 	"grades.selectboxDescriptionExample": "E.e. \"Da Iawn\" neu \"B+\"", // Example of selectbox grade type
 	"grades.newGradeScheme": "Cynllun Gradd", // Label for the grade scheme
 	"grades.defaultGradeScheme": "--Diofyn-- ({schemeName})", // name of default grade scheme
+	"grades.creatingNewNumericGradeItem": "Wrthi'n creu eitem gradd rifol newydd {newGradeName}", // Aria text for new grade we are creating
+	"grades.creatingNewSelectboxGradeItem": "Wrthi'n creu eitem gradd blwch dethol newydd {newGradeName}", // Aria text for new grade we are creating
+	"grades.linkingToGradeItem": "Wrthi’n cysylltu i eitem gradd bresennol {gradeName}", // Aria text for grade item we are linking to
 
 	"attachments.addGoogleDriveLink": "Atodi o Google Drive", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "Lanlwytho Ffeil", // Tooltip for a button that opens a file upload dialog
@@ -139,7 +142,12 @@ export default {
 	"content.name": "Enw", // Text label for name input field
 	"content.emptyNameField": "Mae angen enw.", // Error text that appears below name field when it is left empty
 	"content.description": "Disgrifiad", // Text label for description input field
-	"content.pageContent": "Cynnwys y Dudalen", // Text label for page content input field (HTML files)
+	"content.pageContent": "Cynnwys y Dudalen", // Text label for page content input field (html files)
+	"content.selectTemplate": "Dewiswch Dempled", // The label text for the subtle-button for selecting an html template
+	"content.htmlTemplatesLoading": "Wrthi'n llwytho...", // Message displayed while list of html templates is loading
+	"content.noHtmlTemplates": "Dim templedi ar gael", // Message displayed in dropdown when no html templates are found
+	"content.defaultHtmlTemplateHeader": "Templedi Ffeil HTML", // The text to display as the default header for the html template select dropdown
+	"content.browseForHtmlTemplate": "Pori am Dempled", // Text for button to browse for an html template
 	"content.availabilityHeader": "Dyddiadau Argaeledd", // availability header
 	"content.saveError": "Ni chadwyd eich eitem cynnwys. Cywirwch y meysydd a amlinellir mewn coch.", // Error message to inform the user that there was a problem saving the content item, instructing them to correct invalid fields
 	"content.displayOptions": "Arddangos Opsiynau", // Text label for display options
@@ -157,5 +165,9 @@ export default {
 	"content.openInNewWindow": "Agor mewn Ffenest Newydd", // The label text for the subtle-button for opening a LTI link in a new window
 	"content.externalActivity": "Gweithgaredd Allanol", // The label text for the external activity section on the LTI link page
 	"content.externalActivityOpened": "Agorwch y gweithgaredd mewn ffenestr newydd i weld ei gynnwys.", // Text for displaying underneath the LTI link jump logo
-	"content.externalActivityEmbeddedNotAllowed": "Nid yw'r gweithgaredd allanol hwn yn cefnogi ymgorffori. Dim ond drwy agor mewn ffenestr newydd y gellir ei weld." // Text that replaces the LTI display options if embedding is not allowed
+	"content.externalActivityEmbeddedNotAllowed": "Nid yw'r gweithgaredd allanol hwn yn cefnogi ymgorffori. Dim ond drwy agor mewn ffenestr newydd y gellir ei weld.", // Text that replaces the LTI display options if embedding is not allowed
+	"content.confirmDialogTitle": "Bydd eich cynnwys presennol yn cael ei ddileu.", // The text for the title of the replace html template confirmation dialog
+	"content.confirmDialogBody": "Ydych chi’n siŵr eich bod am ddisodli eich cynnwys presennol â’r templed hwn?", // The text for the body of the replace html template confirmation dialog
+	"content.confirmDialogActionOption": "Amnewid", // The text for the confirmation action to replace content
+	"content.confirmDialogCancelOption": "Canslo" // The text for the cancel action to not replace content
 };

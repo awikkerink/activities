@@ -104,7 +104,7 @@ export default {
 	"grades.points": "النقاط: {points}", // Text label for displaying points of a grade
 	"grades.weight": "الوزن: {weight}", // Text label for displaying weight of a grade
 	"grades.gradeItem": "مادة سيتم وضع علامة عليها", //ARIA label for grade-item picker when linking an activity to an existing grade item
-	"grades.gradeUnits": "من النقاط", // unit label for GradeOutOf value (e.g. 10 points)
+	"grades.gradeUnits": "نقاط", // unit label for GradeOutOf value (e.g. 10 points)
 	"grades.chooseNewGradeItemCategory": "اختيار فئة العلامات", // Label for add category button
 	"grades.newGradeItemCategory": "فئة العلامات", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "لا توجد فئة", // Category dropdown text for not selecting a category
@@ -118,6 +118,9 @@ export default {
 	"grades.selectboxDescriptionExample": "مثال \"جيد جدًا\" أو \"B+‎\"", // Example of selectbox grade type
 	"grades.newGradeScheme": "نظام العلامات", // Label for the grade scheme
 	"grades.defaultGradeScheme": "--افتراضي-- ({schemeName})", // name of default grade scheme
+	"grades.creatingNewNumericGradeItem": "يتم إنشاء مادة رقمية جديدة سيتم وضع علامة عليها {newGradeName}", // Aria text for new grade we are creating
+	"grades.creatingNewSelectboxGradeItem": "يتم إنشاء مادة جديدة لمربع الاختيار سيتم وضع علامة عليها {newGradeName}", // Aria text for new grade we are creating
+	"grades.linkingToGradeItem": "يتم الربط بمادة متوفرة سيتم وضع علامة عليها {gradeName}", // Aria text for grade item we are linking to
 
 	"attachments.addGoogleDriveLink": "إرفاق من Google Drive", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "تحميل ملف", // Tooltip for a button that opens a file upload dialog
@@ -139,7 +142,12 @@ export default {
 	"content.name": "الاسم", // Text label for name input field
 	"content.emptyNameField": "الاسم مطلوب.", // Error text that appears below name field when it is left empty
 	"content.description": "وصف", // Text label for description input field
-	"content.pageContent": "محتوى الصفحة", // Text label for page content input field (HTML files)
+	"content.pageContent": "محتوى الصفحة", // Text label for page content input field (html files)
+	"content.selectTemplate": "تحديد قالب", // The label text for the subtle-button for selecting an html template
+	"content.htmlTemplatesLoading": "يتم الآن التحميل...", // Message displayed while list of html templates is loading
+	"content.noHtmlTemplates": "ما من قوالب متوفرة", // Message displayed in dropdown when no html templates are found
+	"content.defaultHtmlTemplateHeader": "قوالب ملف HTML", // The text to display as the default header for the html template select dropdown
+	"content.browseForHtmlTemplate": "استعراض للوصول إلى قالب", // Text for button to browse for an html template
 	"content.availabilityHeader": "تواريخ إمكانية التوفّر", // availability header
 	"content.saveError": "لم يتم حفظ مادة المحتوى الخاصة بك. يُرجى تصحيح الحقول الموضّحة باللون الأحمر.", // Error message to inform the user that there was a problem saving the content item, instructing them to correct invalid fields
 	"content.displayOptions": "خيارات العرض", // Text label for display options
@@ -157,5 +165,9 @@ export default {
 	"content.openInNewWindow": "فتح في نافذة جديدة", // The label text for the subtle-button for opening a LTI link in a new window
 	"content.externalActivity": "نشاط خارجي", // The label text for the external activity section on the LTI link page
 	"content.externalActivityOpened": "افتح النشاط في نافذة جديدة لعرض محتواه.", // Text for displaying underneath the LTI link jump logo
-	"content.externalActivityEmbeddedNotAllowed": "لا يتيح هذا النشاط الخارجي التضمين. يمكن عرضه فقط من خلال فتحه في نافذة جديدة." // Text that replaces the LTI display options if embedding is not allowed
+	"content.externalActivityEmbeddedNotAllowed": "لا يتيح هذا النشاط الخارجي التضمين. يمكن عرضه فقط من خلال فتحه في نافذة جديدة.", // Text that replaces the LTI display options if embedding is not allowed
+	"content.confirmDialogTitle": "سيتم حذف المحتوى الحالي.", // The text for the title of the replace html template confirmation dialog
+	"content.confirmDialogBody": "هل تريد فعلاً استبدال المحتوى الحالي بهذا القالب؟", // The text for the body of the replace html template confirmation dialog
+	"content.confirmDialogActionOption": "استبدال", // The text for the confirmation action to replace content
+	"content.confirmDialogCancelOption": "إلغاء" // The text for the cancel action to not replace content
 };
