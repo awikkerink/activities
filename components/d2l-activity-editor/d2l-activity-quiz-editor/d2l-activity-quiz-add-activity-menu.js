@@ -68,7 +68,7 @@ class ActivityQuizAddActivityMenu extends ActivityEditorMixin(SkeletonMixin(Loca
 			eventInit.detail = { activities: activityUsageHrefs };
 		}
 
-		this.dispatchEvent(new CustomEvent('d2l-question-activity-added', eventInit));
+		this.dispatchEvent(new CustomEvent('d2l-question-activity-add-start', eventInit));
 	}
 
 	_onSelect(e) {
