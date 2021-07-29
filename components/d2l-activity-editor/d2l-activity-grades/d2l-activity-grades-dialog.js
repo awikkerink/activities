@@ -40,7 +40,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			}
 			.d2l-activity-grades-dialog-create-new-container {
 				display: flex;
-				margin-bottom: 18px;
+				margin-bottom: 24px;
 			}
 			.d2l-activity-grades-dialog-create-new-activity-name {
 				overflow-wrap: anywhere; /* not supported by safari */
@@ -64,7 +64,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 				padding-bottom: 10px;
 			}
 			.d2l-activity-grades-dialog-editor {
-				height: 570px;
+				height: 540px;
 			}
 			`
 		];

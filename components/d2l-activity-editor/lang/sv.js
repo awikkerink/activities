@@ -118,6 +118,9 @@ export default {
 	"grades.selectboxDescriptionExample": "Exempel: \"Mycket bra\" eller \"B+\"", // Example of selectbox grade type
 	"grades.newGradeScheme": "Betygsschema", // Label for the grade scheme
 	"grades.defaultGradeScheme": "--Standard-- ({schemeName})", // name of default grade scheme
+	"grades.creatingNewNumericGradeItem": "Skapa nytt numeriskt betygsobjekt {newGradeName}", // Aria text for new grade we are creating
+	"grades.creatingNewSelectboxGradeItem": "Skapa nytt betygsobjekt av typen markeringsruta {newGradeName}", // Aria text for new grade we are creating
+	"grades.linkingToGradeItem": "Länkar till befintligt betygsobjekt {gradeName}", // Aria text for grade item we are linking to
 
 	"attachments.addGoogleDriveLink": "Bifoga från Google Drive", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "Filuppladdning", // Tooltip for a button that opens a file upload dialog
@@ -139,7 +142,12 @@ export default {
 	"content.name": "Namn", // Text label for name input field
 	"content.emptyNameField": "Namn krävs.", // Error text that appears below name field when it is left empty
 	"content.description": "Beskrivning", // Text label for description input field
-	"content.pageContent": "Sidoinnehåll", // Text label for page content input field (HTML files)
+	"content.pageContent": "Sidoinnehåll", // Text label for page content input field (html files)
+	"content.selectTemplate": "Välj mall", // The label text for the subtle-button for selecting an html template
+	"content.htmlTemplatesLoading": "Läser in ...", // Message displayed while list of html templates is loading
+	"content.noHtmlTemplates": "Inga mallar tillgängliga", // Message displayed in dropdown when no html templates are found
+	"content.defaultHtmlTemplateHeader": "HTML-filmallar", // The text to display as the default header for the html template select dropdown
+	"content.browseForHtmlTemplate": "Bläddra efter en mall", // Text for button to browse for an html template
 	"content.availabilityHeader": "Tillgänglighetsdatum", // availability header
 	"content.saveError": "Ditt innehållsobjekt sparades inte. Korrigera de fält som är markerade med rött.", // Error message to inform the user that there was a problem saving the content item, instructing them to correct invalid fields
 	"content.displayOptions": "Visa alternativ", // Text label for display options
@@ -157,5 +165,9 @@ export default {
 	"content.openInNewWindow": "Öppna i nytt fönster", // The label text for the subtle-button for opening a LTI link in a new window
 	"content.externalActivity": "Extern aktivitet", // The label text for the external activity section on the LTI link page
 	"content.externalActivityOpened": "Öppna aktiviteten i ett nytt fönster för att visa innehållet i den.", // Text for displaying underneath the LTI link jump logo
-	"content.externalActivityEmbeddedNotAllowed": "Den här externa aktiviteten stöder inte inbäddning. Du kan endast visa den genom att öppna den i ett nytt fönster." // Text that replaces the LTI display options if embedding is not allowed
+	"content.externalActivityEmbeddedNotAllowed": "Den här externa aktiviteten stöder inte inbäddning. Du kan endast visa den genom att öppna den i ett nytt fönster.", // Text that replaces the LTI display options if embedding is not allowed
+	"content.confirmDialogTitle": "Det befintliga innehållet raderas.", // The text for the title of the replace html template confirmation dialog
+	"content.confirmDialogBody": "Är du säker på att du vill ersätta befintligt innehåll med den här mallen?", // The text for the body of the replace html template confirmation dialog
+	"content.confirmDialogActionOption": "Ersätt", // The text for the confirmation action to replace content
+	"content.confirmDialogCancelOption": "Avbryt" // The text for the cancel action to not replace content
 };

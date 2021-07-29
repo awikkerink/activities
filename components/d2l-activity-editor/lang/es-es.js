@@ -104,7 +104,7 @@ export default {
 	"grades.points": "Puntos: {points}", // Text label for displaying points of a grade
 	"grades.weight": "Ponderación: {weight}", // Text label for displaying weight of a grade
 	"grades.gradeItem": "Elemento de calificación", //ARIA label for grade-item picker when linking an activity to an existing grade item
-	"grades.gradeUnits": "points", // unit label for GradeOutOf value (e.g. 10 points)
+	"grades.gradeUnits": "puntos", // unit label for GradeOutOf value (e.g. 10 points)
 	"grades.chooseNewGradeItemCategory": "Categoría de calificación actualizada", // Label for add category button
 	"grades.newGradeItemCategory": "Categoría de calificación", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "Ninguna categoría", // Category dropdown text for not selecting a category
@@ -118,6 +118,9 @@ export default {
 	"grades.selectboxDescriptionExample": "Por ejemplo, \"Muy bien\" o \"B+\"", // Example of selectbox grade type
 	"grades.newGradeScheme": "Esquema de calificaciones", // Label for the grade scheme
 	"grades.defaultGradeScheme": "--Predeterminado-- ({schemeName})", // name of default grade scheme
+	"grades.creatingNewNumericGradeItem": "Creando nuevo elemento de calificación numérica {newGradeName}", // Aria text for new grade we are creating
+	"grades.creatingNewSelectboxGradeItem": "Creando nuevo elemento de calificación de cuadro de selección {newGradeName}", // Aria text for new grade we are creating
+	"grades.linkingToGradeItem": "Creando vínculo al elemento de calificación existente {gradeName}", // Aria text for grade item we are linking to
 
 	"attachments.addGoogleDriveLink": "Adjuntar desde Google Drive", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "Carga de archivo", // Tooltip for a button that opens a file upload dialog
@@ -139,7 +142,12 @@ export default {
 	"content.name": "Nombre", // Text label for name input field
 	"content.emptyNameField": "El nombre es obligatorio.", // Error text that appears below name field when it is left empty
 	"content.description": "Descripción", // Text label for description input field
-	"content.pageContent": "Contenido de la página", // Text label for page content input field (HTML files)
+	"content.pageContent": "Contenido de la página", // Text label for page content input field (html files)
+	"content.selectTemplate": "Seleccionar plantilla", // The label text for the subtle-button for selecting an html template
+	"content.htmlTemplatesLoading": "Cargando…", // Message displayed while list of html templates is loading
+	"content.noHtmlTemplates": "No hay plantillas disponibles", // Message displayed in dropdown when no html templates are found
+	"content.defaultHtmlTemplateHeader": "Plantillas de archivos HTML", // The text to display as the default header for the html template select dropdown
+	"content.browseForHtmlTemplate": "Buscar una plantilla", // Text for button to browse for an html template
 	"content.availabilityHeader": "Fechas de disponibilidad", // availability header
 	"content.saveError": "El elemento de contenido no se ha guardado. Corrija los campos señalados en rojo.", // Error message to inform the user that there was a problem saving the content item, instructing them to correct invalid fields
 	"content.displayOptions": "Opciones de visualización", // Text label for display options
@@ -157,5 +165,9 @@ export default {
 	"content.openInNewWindow": "Abrir en una ventana nueva", // The label text for the subtle-button for opening a LTI link in a new window
 	"content.externalActivity": "Actividad externa", // The label text for the external activity section on the LTI link page
 	"content.externalActivityOpened": "Abra la actividad en una ventana nueva para ver su contenido.", // Text for displaying underneath the LTI link jump logo
-	"content.externalActivityEmbeddedNotAllowed": "Esta actividad externa no admite la incrustación. Solo se puede ver abriéndola en una ventana nueva." // Text that replaces the LTI display options if embedding is not allowed
+	"content.externalActivityEmbeddedNotAllowed": "Esta actividad externa no admite la incrustación. Solo se puede ver abriéndola en una ventana nueva.", // Text that replaces the LTI display options if embedding is not allowed
+	"content.confirmDialogTitle": "Se eliminará el contenido existente.", // The text for the title of the replace html template confirmation dialog
+	"content.confirmDialogBody": "¿Seguro que desea reemplazar el contenido existente por esta plantilla?", // The text for the body of the replace html template confirmation dialog
+	"content.confirmDialogActionOption": "Reemplazar", // The text for the confirmation action to replace content
+	"content.confirmDialogCancelOption": "Cancelar" // The text for the cancel action to not replace content
 };
