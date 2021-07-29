@@ -118,6 +118,9 @@ export default {
 	"grades.selectboxDescriptionExample": "Bijv. \"Zeer goed\" of \"B+\"", // Example of selectbox grade type
 	"grades.newGradeScheme": "Scoreschema", // Label for the grade scheme
 	"grades.defaultGradeScheme": "--Standaard- ({schemeName})", // name of default grade scheme
+	"grades.creatingNewNumericGradeItem": "Nieuw numeriek score-onderdeel {newGradeName} wordt gemaakt", // Aria text for new grade we are creating
+	"grades.creatingNewSelectboxGradeItem": "Nieuw score-onderdeel met selectievakje {newGradeName} wordt gemaakt", // Aria text for new grade we are creating
+	"grades.linkingToGradeItem": "Koppelen aan bestaand score-onderdeel {gradeName}", // Aria text for grade item we are linking to
 
 	"attachments.addGoogleDriveLink": "Toevoegen vanuit Google Drive", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "Bestand uploaden", // Tooltip for a button that opens a file upload dialog
@@ -139,7 +142,12 @@ export default {
 	"content.name": "Naam", // Text label for name input field
 	"content.emptyNameField": "Naam is vereist.", // Error text that appears below name field when it is left empty
 	"content.description": "Beschrijving", // Text label for description input field
-	"content.pageContent": "Pagina-inhoud", // Text label for page content input field (HTML files)
+	"content.pageContent": "Pagina-inhoud", // Text label for page content input field (html files)
+	"content.selectTemplate": "Sjabloon selecteren", // The label text for the subtle-button for selecting an html template
+	"content.htmlTemplatesLoading": "Laden...", // Message displayed while list of html templates is loading
+	"content.noHtmlTemplates": "Geen sjablonen beschikbaar", // Message displayed in dropdown when no html templates are found
+	"content.defaultHtmlTemplateHeader": "HTML-bestandssjablonen", // The text to display as the default header for the html template select dropdown
+	"content.browseForHtmlTemplate": "Bladeren naar een sjabloon", // Text for button to browse for an html template
 	"content.availabilityHeader": "Beschikbare data", // availability header
 	"content.saveError": "Uw inhoudsitem is niet opgeslagen. Corrigeer de rood omlijnde velden.", // Error message to inform the user that there was a problem saving the content item, instructing them to correct invalid fields
 	"content.displayOptions": "Weergaveopties", // Text label for display options
@@ -157,5 +165,9 @@ export default {
 	"content.openInNewWindow": "Openen in nieuw venster", // The label text for the subtle-button for opening a LTI link in a new window
 	"content.externalActivity": "Externe activiteit", // The label text for the external activity section on the LTI link page
 	"content.externalActivityOpened": "Open de activiteit in nieuw venster om de inhoud ervan te bekijken.", // Text for displaying underneath the LTI link jump logo
-	"content.externalActivityEmbeddedNotAllowed": "Deze externe activiteit kan niet worden ingesloten. U kunt de activiteit alleen bekijken door deze in een nieuw venster te openen." // Text that replaces the LTI display options if embedding is not allowed
+	"content.externalActivityEmbeddedNotAllowed": "Deze externe activiteit kan niet worden ingesloten. U kunt de activiteit alleen bekijken door deze in een nieuw venster te openen.", // Text that replaces the LTI display options if embedding is not allowed
+	"content.confirmDialogTitle": "Uw bestaande inhoud wordt verwijderd.", // The text for the title of the replace html template confirmation dialog
+	"content.confirmDialogBody": "Weet u zeker dat u uw bestaande inhoud wilt vervangen door deze sjabloon?", // The text for the body of the replace html template confirmation dialog
+	"content.confirmDialogActionOption": "Vervangen", // The text for the confirmation action to replace content
+	"content.confirmDialogCancelOption": "Annuleren" // The text for the cancel action to not replace content
 };
