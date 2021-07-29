@@ -118,6 +118,9 @@ export default {
 	"grades.selectboxDescriptionExample": "Örn: \"Çok İyi\" veya \"B+\"", // Example of selectbox grade type
 	"grades.newGradeScheme": "Not Planı", // Label for the grade scheme
 	"grades.defaultGradeScheme": "--Varsayılan-- ({schemeName})", // name of default grade scheme
+	"grades.creatingNewNumericGradeItem": "Yeni sayısal not öğesi {newGradeName} oluşturuluyor", // Aria text for new grade we are creating
+	"grades.creatingNewSelectboxGradeItem": "Yeni seçim kutusu notu öğesi {newGradeName} oluşturuluyor", // Aria text for new grade we are creating
+	"grades.linkingToGradeItem": "Mevcut {gradeName} not öğesine bağlanıyor", // Aria text for grade item we are linking to
 
 	"attachments.addGoogleDriveLink": "Google Drive'dan Ekle", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "Dosya Yükleme", // Tooltip for a button that opens a file upload dialog
@@ -139,7 +142,12 @@ export default {
 	"content.name": "Ad", // Text label for name input field
 	"content.emptyNameField": "Ad gerekli.", // Error text that appears below name field when it is left empty
 	"content.description": "Açıklama", // Text label for description input field
-	"content.pageContent": "Sayfa İçeriği", // Text label for page content input field (HTML files)
+	"content.pageContent": "Sayfa İçeriği", // Text label for page content input field (html files)
+	"content.selectTemplate": "Şablon Seç", // The label text for the subtle-button for selecting an html template
+	"content.htmlTemplatesLoading": "Yükleniyor...", // Message displayed while list of html templates is loading
+	"content.noHtmlTemplates": "Şablon yok", // Message displayed in dropdown when no html templates are found
+	"content.defaultHtmlTemplateHeader": "HTML Dosya Şablonları", // The text to display as the default header for the html template select dropdown
+	"content.browseForHtmlTemplate": "Şablon için Gözat", // Text for button to browse for an html template
 	"content.availabilityHeader": "Geçerlilik Tarihleri", // availability header
 	"content.saveError": "İçerik öğeniz kaydedilmedi. Lütfen kırmızı ile gösterilen alanları düzeltin.", // Error message to inform the user that there was a problem saving the content item, instructing them to correct invalid fields
 	"content.displayOptions": "Görüntüleme Seçenekleri", // Text label for display options
@@ -157,5 +165,9 @@ export default {
 	"content.openInNewWindow": "Yeni Pencerede Aç", // The label text for the subtle-button for opening a LTI link in a new window
 	"content.externalActivity": "Harici Etkinlik", // The label text for the external activity section on the LTI link page
 	"content.externalActivityOpened": "İçeriğini görüntülemek için etkinliği yeni pencerede açın.", // Text for displaying underneath the LTI link jump logo
-	"content.externalActivityEmbeddedNotAllowed": "Bu harici etkinlik, içerik yerleştirmeyi desteklemiyor. Yalnızca yeni bir pencerede açılarak görüntülenebilir." // Text that replaces the LTI display options if embedding is not allowed
+	"content.externalActivityEmbeddedNotAllowed": "Bu harici etkinlik, içerik yerleştirmeyi desteklemiyor. Yalnızca yeni bir pencerede açılarak görüntülenebilir.", // Text that replaces the LTI display options if embedding is not allowed
+	"content.confirmDialogTitle": "Mevcut içeriğiniz silinecek.", // The text for the title of the replace html template confirmation dialog
+	"content.confirmDialogBody": "Mevcut içeriğinizi bu şablonla değiştirmek istediğinizden emin misiniz?", // The text for the body of the replace html template confirmation dialog
+	"content.confirmDialogActionOption": "Değiştir", // The text for the confirmation action to replace content
+	"content.confirmDialogCancelOption": "İptal" // The text for the cancel action to not replace content
 };

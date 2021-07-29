@@ -118,6 +118,9 @@ export default {
 	"grades.selectboxDescriptionExample": "例: 「とても良い」または「B+」", // Example of selectbox grade type
 	"grades.newGradeScheme": "成績スキーム", // Label for the grade scheme
 	"grades.defaultGradeScheme": "-- デフォルト -- （{schemeName}）", // name of default grade scheme
+	"grades.creatingNewNumericGradeItem": "数値の成績項目 {newGradeName} を新規作成", // Aria text for new grade we are creating
+	"grades.creatingNewSelectboxGradeItem": "選択ボックスの成績項目 {newGradeName} を新規作成", // Aria text for new grade we are creating
+	"grades.linkingToGradeItem": "既存の成績項目 {gradeName} にリンク", // Aria text for grade item we are linking to
 
 	"attachments.addGoogleDriveLink": "Google ドライブから添付", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "ファイルアップロード", // Tooltip for a button that opens a file upload dialog
@@ -139,7 +142,12 @@ export default {
 	"content.name": "名前", // Text label for name input field
 	"content.emptyNameField": "名前は必須です。", // Error text that appears below name field when it is left empty
 	"content.description": "説明", // Text label for description input field
-	"content.pageContent": "ページコンテンツ", // Text label for page content input field (HTML files)
+	"content.pageContent": "ページコンテンツ", // Text label for page content input field (html files)
+	"content.selectTemplate": "テンプレートの選択", // The label text for the subtle-button for selecting an html template
+	"content.htmlTemplatesLoading": "読み込み中...", // Message displayed while list of html templates is loading
+	"content.noHtmlTemplates": "使用可能なテンプレートはありません", // Message displayed in dropdown when no html templates are found
+	"content.defaultHtmlTemplateHeader": "HTML ファイルのテンプレート", // The text to display as the default header for the html template select dropdown
+	"content.browseForHtmlTemplate": "テンプレートの参照", // Text for button to browse for an html template
 	"content.availabilityHeader": "使用可能日", // availability header
 	"content.saveError": "コンテンツ項目は保存されませんでした。赤で囲まれたフィールドを修正してください。", // Error message to inform the user that there was a problem saving the content item, instructing them to correct invalid fields
 	"content.displayOptions": "表示オプション", // Text label for display options
@@ -157,5 +165,9 @@ export default {
 	"content.openInNewWindow": "新規ウィンドウで開く", // The label text for the subtle-button for opening a LTI link in a new window
 	"content.externalActivity": "外部アクティビティ", // The label text for the external activity section on the LTI link page
 	"content.externalActivityOpened": "アクティビティの内容を表示するには新しいウィンドウで開きます。", // Text for displaying underneath the LTI link jump logo
-	"content.externalActivityEmbeddedNotAllowed": "この外部アクティビティは埋め込みをサポートしていません。新しいウィンドウで開くことでのみ表示できます。" // Text that replaces the LTI display options if embedding is not allowed
+	"content.externalActivityEmbeddedNotAllowed": "この外部アクティビティは埋め込みをサポートしていません。新しいウィンドウで開くことでのみ表示できます。", // Text that replaces the LTI display options if embedding is not allowed
+	"content.confirmDialogTitle": "既存のコンテンツは削除されます。", // The text for the title of the replace html template confirmation dialog
+	"content.confirmDialogBody": "既存のコンテンツをこのテンプレートに置き換えてもよろしいですか？", // The text for the body of the replace html template confirmation dialog
+	"content.confirmDialogActionOption": "置換", // The text for the confirmation action to replace content
+	"content.confirmDialogCancelOption": "キャンセル" // The text for the cancel action to not replace content
 };

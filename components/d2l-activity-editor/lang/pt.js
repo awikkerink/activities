@@ -118,6 +118,9 @@ export default {
 	"grades.selectboxDescriptionExample": "Por exemplo: \"Muito bom\" ou \"B+\"", // Example of selectbox grade type
 	"grades.newGradeScheme": "Grade do esquema", // Label for the grade scheme
 	"grades.defaultGradeScheme": "--Padrão-- ({schemeName})", // name of default grade scheme
+	"grades.creatingNewNumericGradeItem": "Criar nova nota numérica {newGradeName}", // Aria text for new grade we are creating
+	"grades.creatingNewSelectboxGradeItem": "Criar nova nota de caixa de seleção {newGradeName}", // Aria text for new grade we are creating
+	"grades.linkingToGradeItem": "Vincular à nota existente {gradeName}", // Aria text for grade item we are linking to
 
 	"attachments.addGoogleDriveLink": "Anexar arquivo do Google Drive", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "Carregamento de arquivo", // Tooltip for a button that opens a file upload dialog
@@ -139,7 +142,12 @@ export default {
 	"content.name": "Nome", // Text label for name input field
 	"content.emptyNameField": "O nome é obrigatório.", // Error text that appears below name field when it is left empty
 	"content.description": "Descrição", // Text label for description input field
-	"content.pageContent": "Conteúdo da página", // Text label for page content input field (HTML files)
+	"content.pageContent": "Conteúdo da página", // Text label for page content input field (html files)
+	"content.selectTemplate": "Selecione um modelo", // The label text for the subtle-button for selecting an html template
+	"content.htmlTemplatesLoading": "Carregando…", // Message displayed while list of html templates is loading
+	"content.noHtmlTemplates": "Não há modelos disponíveis", // Message displayed in dropdown when no html templates are found
+	"content.defaultHtmlTemplateHeader": "Modelos de arquivo HTML", // The text to display as the default header for the html template select dropdown
+	"content.browseForHtmlTemplate": "Procurar um modelo", // Text for button to browse for an html template
 	"content.availabilityHeader": "Datas de disponibilidade", // availability header
 	"content.saveError": "Seu item de conteúdo não foi salvo. Corrija os campos destacados em vermelho.", // Error message to inform the user that there was a problem saving the content item, instructing them to correct invalid fields
 	"content.displayOptions": "Opções de visualização", // Text label for display options
@@ -157,5 +165,9 @@ export default {
 	"content.openInNewWindow": "Abrir em uma nova janela", // The label text for the subtle-button for opening a LTI link in a new window
 	"content.externalActivity": "Atividade externa", // The label text for the external activity section on the LTI link page
 	"content.externalActivityOpened": "Abra a atividade em uma nova janela para visualizar o conteúdo.", // Text for displaying underneath the LTI link jump logo
-	"content.externalActivityEmbeddedNotAllowed": "Esta atividade externa não é compatível com incorporação. Ela só pode ser visualizada em uma nova janela." // Text that replaces the LTI display options if embedding is not allowed
+	"content.externalActivityEmbeddedNotAllowed": "Esta atividade externa não é compatível com incorporação. Ela só pode ser visualizada em uma nova janela.", // Text that replaces the LTI display options if embedding is not allowed
+	"content.confirmDialogTitle": "O conteúdo atual será excluído.", // The text for the title of the replace html template confirmation dialog
+	"content.confirmDialogBody": "Tem certeza de que deseja substituir o conteúdo atual por este modelo?", // The text for the body of the replace html template confirmation dialog
+	"content.confirmDialogActionOption": "Substituir", // The text for the confirmation action to replace content
+	"content.confirmDialogCancelOption": "Cancelar" // The text for the cancel action to not replace content
 };
