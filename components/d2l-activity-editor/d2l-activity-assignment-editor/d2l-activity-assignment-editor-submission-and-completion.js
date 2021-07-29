@@ -5,7 +5,7 @@ import './d2l-activity-assignment-categories-editor.js';
 import './d2l-activity-assignment-type-summary.js';
 import './d2l-activity-assignment-categories-summary.js';
 import '../d2l-activity-notification-email-editor';
-import { bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
+import { bodyCompactStyles, bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
@@ -31,6 +31,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		return [
 			super.styles,
 			bodyCompactStyles,
+			bodySmallStyles,
 			labelStyles,
 			radioStyles,
 			selectStyles,
@@ -40,6 +41,10 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 					display: block;
 					max-width: 300px;
 					width: 100%;
+				}
+
+				.d2l-body-small{
+					margin: 0px 0px 0.6rem;
 				}
 
 				div[id*="container"] {
@@ -69,6 +74,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 
 	render() {
 		const assignment = store.get(this.href);
+		console.log(assignment);
 		return html`
 			<d2l-activity-accordion-collapse ?skeleton="${this.skeleton}">
 				<span slot="header">
@@ -86,6 +92,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 					${this._renderAssignmentSubmissionType(assignment)}
 					${this._renderAssignmentFilesSubmissionLimit(assignment)}
 					${this._renderAllowableFileTypesDropdown(assignment)}
+					${this._renderCustomFileTypesInput(assignment)}
 					${this._renderAssignmentSubmissionsRule(assignment)}
 					${this._renderAssignmentCompletionType(assignment)}
 					${this._renderAssignmentSubmissionNotificationEmail(assignment)}
@@ -445,6 +452,34 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		`;
 	}
 
+	_renderCustomFileTypesInput(assignment) {
+		if (!assignment || !assignment.submissionAndCompletionProps) {
+			return html``;
+		}
+
+		if (assignment.submissionAndCompletionProps.allowableFileType === '5') {
+			return html`
+				<div>
+					<p class="d2l-body-small">${this.localize('customFiletypesNotification')}</p>
+				</div>
+
+				<d2l-input-text
+					id="custom-filetype-input"
+					label="${this.localize('customFiletypes')}"
+					label-hidden
+					maxlength="1024"
+					@change="${this._saveCustomAllowableFileTypes}"
+					placeholder="${this.localize('customFiletypesPlaceholder')}"
+					prevent-submit
+					required
+					novalidate>
+				</d2l-input-text>
+			`;
+		} else {
+			return html``;
+		}
+	}
+
 	_renderSubmissionEmailNotificationSummary(assignment) {
 		if (!assignment || !assignment.showNotificationEmail) {
 			return html``;
@@ -462,7 +497,10 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	_saveCompletionTypeOnChange(event) {
 		store.get(this.href).setCompletionType(event.target.value);
 	}
-
+	_saveCustomAllowableFileTypes(event) {
+		console.log(event.target.value);
+		console.log(store.get(this.href).setCustomAllowableFileTypes(event.target.value));
+	}
 	_saveSubmissionTypeOnChange(event) {
 		store.get(this.href).setSubmissionType(event.target.value);
 	}

@@ -7,6 +7,7 @@ export class SubmissionAndCompletionProps {
 	constructor(entity) {
 		this.allowableFileTypeOptions = entity.allowableFileTypeOptions;
 		this.allowableFileType = String(entity.allowableFileType);
+		this.customAllowableFileTypes = String(entity.customAllowableFileTypes);
 		this.canEditAllowableFileType = entity.canEditAllowableFileType;
 		this.submissionTypeOptions = entity.submissionTypeOptions;
 		this.submissionType = String(entity.submissionType);
@@ -35,6 +36,11 @@ export class SubmissionAndCompletionProps {
 	}
 	setCompletionType(value) {
 		this.completionType = value;
+	}
+	setCustomAllowableFileTypes(value) {
+		console.log("2");
+		console.log(value);
+		this.customAllowableFileTypes = value;
 	}
 	setFilesSubmissionLimit(value) {
 		this.filesSubmissionLimit = value;
@@ -117,6 +123,7 @@ decorate(SubmissionAndCompletionProps, {
 	allowableFileTypeOptions: observable,
 	allowableFileType: observable,
 	canEditAllowableFileType: observable,
+	customAllowableFileTypes: observable,
 	submissionTypeOptions: observable,
 	submissionType: observable,
 	canEditSubmissionType: observable,
