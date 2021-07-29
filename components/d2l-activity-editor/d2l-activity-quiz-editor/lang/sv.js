@@ -111,7 +111,7 @@ export default {
 	"ipRestrictionsInnerSummary" : "{count, plural, =1 {1 begränsning} other {{count} begränsningar}}", // summary to be displayed when accordion is expanded
 	"quizTimingValidationError": "Tidsmätning kan inte ändras. Korrigera de markerade fälten.", // Appears in error alert when validation fails in Manage Timing dialog
 	"quizTimingServerError": "Något gick fel. Försök igen.", // Timing save server error alert message
-	"quizTimingRecommendedSummary": "Rekommenderad tidsgräns ({numMinutes, plural, =1 {1 minut} other {{numMinutes} minuter})", // Recommended time limit (x minute) or (x minutes).
+	"quizTimingRecommendedSummary": "Rekommenderad tidsgräns ({numMinutes, plural, =1 {1 minut} other {{numMinutes} minuter}})", // Recommended time limit (x minute) or (x minutes).
 	"quizTimingEnforcedSummary": "Tvingad tidsgräns ({numMinutes, plural, =1 {1 minut} other {{numMinutes} minuter}})", // Enforced time limit(x minute) or (x minutes).
 	"ipRestrictionsDuplicateError": "Duplicerad startadress för IP-adressintervall. Alla startvärden för IP-adressintervall måste vara unika.", // Error for duplicate IP
 	"ipRestrictionsRangeError": "Du har angett ett ogiltigt IP-adressintervall. Kontrollera att du har formaterat intervallen på rätt sätt.", // Error for invalid IP ranges
