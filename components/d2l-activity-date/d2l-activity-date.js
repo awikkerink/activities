@@ -2,6 +2,7 @@ import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { formatDate, formatTime } from '@brightspace-ui/intl/lib/dateTime.js';
 import { ActivityUsageEntity } from 'siren-sdk/src/activities/ActivityUsageEntity';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit';
+import { getLocalDateTimeFromUTCDateTime } from '@brightspace-ui/core/helpers/dateTime.js';
 import { LocalizeActivityDateMixin } from './localization';
 import { nothing } from 'lit-html/lit-html';
 
@@ -73,7 +74,7 @@ class D2LActivityDate extends EntityMixinLit(LocalizeActivityDateMixin(LitElemen
 		const dateString = this._usage
 			&& (this._usage.dueDate() || this._usage.endDate());
 
-		return dateString ? new Date(dateString) : dateString;
+		return dateString ? new Date(getLocalDateTimeFromUTCDateTime(dateString)) : dateString;
 	}
 
 	get _type() {
