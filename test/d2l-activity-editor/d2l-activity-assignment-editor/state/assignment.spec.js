@@ -46,6 +46,14 @@ describe('Assignment ', function() {
 					{ title: 'On paper submission', value: 2, completionTypes: [1, 2], selected: true },
 					{ title: 'Observed in person', value: 3, completionTypes: [3], selected: false }
 				],
+				allowableFileTypeOptions: () => [
+					{ title: 'No Restrictions', value: 0, selected: true },
+					{ title: 'Pdf Only', value: 1, selected: false },
+					{ title: 'Annotatable Files', value: 2, selected: true },
+					{ title: 'Files that can be previewed without conversion', value: 3, selected: false },
+					{ title: 'Images and Videos', value: 4, selected: false },
+					{ title: 'Custom File Types', value: 5, selected: false },
+				],
 				allCompletionTypeOptions: () => [
 					{
 						'title': 'Automatically on submission',
@@ -69,12 +77,14 @@ describe('Assignment ', function() {
 					}
 				],
 				canEditSubmissionType: () => true,
+				canEditAllowableFileType: () => true,
 				canEditCompletionType: () => true,
 				canEditFilesSubmissionLimit: () => true,
 				canEditDefaultScoringRubric: () => true,
 				getDefaultScoringRubric: () => '-1',
 				filesSubmissionLimit: () => 'unlimited',
 				submissionType: () => { return { title: 'On paper submission', value: 2 }; },
+				allowableFileType: () => { return { title: 'No restrictions', value: 0 }; },
 				completionType: () => { return { title: 'Manually by learners', value: 2 }; },
 				completionTypeValue: () => { return '2'; },
 				isGroupAssignmentTypeDisabled: () => false,
