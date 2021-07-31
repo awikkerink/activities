@@ -60,7 +60,7 @@
 			const expectedFiltersWithMasterTeacher = expectedFilters.concat('Primary Facilitator');
 
 			function waitForList(callback) {
-				const firstDataCell = list.shadowRoot.querySelector('d2l-tbody > d2l-tr > d2l-td.d2l-table-cell-first');
+				const firstDataCell = list.shadowRoot.querySelector('tbody > tr > td.d2l-table-cell-first');
 
 				if (firstDataCell) {
 					callback(firstDataCell);

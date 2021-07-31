@@ -316,7 +316,7 @@ class D2LQuickEvalSubmissions extends mixinBehaviors(
 					return;
 				}
 
-				const tbody = this.shadowRoot.querySelector('d2l-quick-eval-submissions-table').shadowRoot.querySelector('d2l-tbody');
+				const tbody = this.shadowRoot.querySelector('d2l-quick-eval-submissions-table').shadowRoot.querySelector('tbody');
 				const lastFocusableTableElement = D2L.Dom.Focus.getLastFocusableDescendant(tbody, false);
 
 				try {
