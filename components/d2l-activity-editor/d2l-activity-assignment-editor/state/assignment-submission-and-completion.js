@@ -5,6 +5,9 @@ configureMobx({ enforceActions: 'observed' });
 export class SubmissionAndCompletionProps {
 
 	constructor(entity) {
+		this.allowableFileTypeOptions = entity.allowableFileTypeOptions;
+		this.allowableFileType = String(entity.allowableFileType);
+		this.canEditAllowableFileType = entity.canEditAllowableFileType;
 		this.submissionTypeOptions = entity.submissionTypeOptions;
 		this.submissionType = String(entity.submissionType);
 		this.canEditSubmissionType = entity.canEditSubmissionType;
@@ -27,6 +30,9 @@ export class SubmissionAndCompletionProps {
 		}
 	}
 
+	setAllowableFileType(value) {
+		this.allowableFileType = value;
+	}
 	setCompletionType(value) {
 		this.completionType = value;
 	}
@@ -108,6 +114,9 @@ export class SubmissionAndCompletionProps {
 
 decorate(SubmissionAndCompletionProps, {
 	// props
+	allowableFileTypeOptions: observable,
+	allowableFileType: observable,
+	canEditAllowableFileType: observable,
 	submissionTypeOptions: observable,
 	submissionType: observable,
 	canEditSubmissionType: observable,

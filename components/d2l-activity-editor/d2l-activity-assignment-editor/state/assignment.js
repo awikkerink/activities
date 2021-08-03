@@ -39,6 +39,9 @@ export class Assignment {
 	load(entity) {
 		this._entity = entity;
 		this.submissionAndCompletionProps = new SubmissionAndCompletionProps({
+			allowableFileTypeOptions: entity.allowableFileTypeOptions(),
+			allowableFileType: entity.allowableFileType().value,
+			canEditAllowableFileType: entity.canEditAllowableFileType(),
 			submissionTypeOptions: entity.submissionTypeOptions(),
 			submissionType: entity.submissionType().value,
 			canEditSubmissionType: entity.canEditSubmissionType(),
@@ -118,6 +121,9 @@ export class Assignment {
 
 		await this.fetch();
 	}
+	setAllowableFileType(value) {
+		this.submissionAndCompletionProps.setAllowableFileType(value);
+	}
 	setAnnotationToolsAvailable(value) {
 		this.annotationToolsAvailable = value;
 	}
@@ -195,6 +201,7 @@ export class Assignment {
 			name: this.name,
 			annotationToolsAvailable: this.annotationToolsAvailable,
 			submissionType: this.submissionAndCompletionProps.submissionType,
+			allowableFileType: this.submissionAndCompletionProps.allowableFileType,
 			isIndividualAssignmentType: this.assignmentTypeProps.isIndividualAssignmentType,
 			groupTypeId: this.assignmentTypeProps.selectedGroupCategoryId,
 			defaultScoringRubricId: this.defaultScoringRubricId
@@ -226,6 +233,7 @@ decorate(Assignment, {
 	submissionAndCompletionProps: observable,
 	name: observable,
 	canEditName: observable,
+	allowableFileType: observable,
 	instructions: observable,
 	canEditInstructions: observable,
 	instructionsRichTextEditorConfig: observable,
@@ -255,6 +263,7 @@ decorate(Assignment, {
 	setAnonymousMarking: action,
 	setAnnotationToolsAvailable: action,
 	setSubmissionType: action,
+	setAllowableFileType: action,
 	setTurnitin: action,
 	setCompletionType: action,
 	save: action,

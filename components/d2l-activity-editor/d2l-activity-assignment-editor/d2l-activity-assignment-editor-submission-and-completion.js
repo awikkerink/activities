@@ -16,6 +16,7 @@ import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 import { shared as store } from './state/assignment-store.js';
+const allowableFileTypeDocumentationURL = 'https://documentation.brightspace.com/EN/le/assignments/learner/assignments_intro_1.htm';
 
 class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(ActivityEditorMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement)))) {
 
@@ -49,6 +50,15 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 				.d2l-input-radio-label {
 					margin-bottom: 10px;
 				}
+
+				#allowable-filetypes-help-span {
+					margin-left: 10px;
+				}
+
+				:host([dir='rtl']) #allowable-filetypes-help-span {
+					margin-left: 0;
+					margin-right: 10px;
+				}
 			`
 		];
 	}
@@ -76,6 +86,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 					${this._renderCategoriesDropdown(assignment)}
 					${this._renderAssignmentSubmissionType(assignment)}
 					${this._renderAssignmentFilesSubmissionLimit(assignment)}
+					${this._renderAllowableFileTypesDropdown(assignment)}
 					${this._renderAssignmentSubmissionsRule(assignment)}
 					${this._renderAssignmentCompletionType(assignment)}
 					${this._renderAssignmentSubmissionNotificationEmail(assignment)}
@@ -92,7 +103,15 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 
 		await assignment.save();
 	}
+	_getAllowableFileTypeOptions(assignment) {
+		if (!assignment || !assignment.submissionAndCompletionProps || !assignment.submissionAndCompletionProps.allowableFileTypeOptions) {
+			return html``;
+		}
 
+		return html`
+			${assignment.submissionAndCompletionProps.allowableFileTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.submissionAndCompletionProps.allowableFileType}>${option.title}</option>`)}
+		`;
+	}
 	_getCompletionTypeOptions(assignment) {
 		const completionTypeOptions = assignment && assignment.submissionAndCompletionProps ? assignment.submissionAndCompletionProps.completionTypeOptions : [];
 		const completionType = assignment && assignment.submissionAndCompletionProps ? assignment.submissionAndCompletionProps.completionType : '0';
@@ -101,7 +120,13 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 			${completionTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === completionType}>${option.title}</option>`)}
 		`;
 	}
+	_getSelectedAllowableFileType(assignment) {
+		if (!assignment || !assignment.submissionAndCompletionProps || !assignment.submissionAndCompletionProps.allowableFileTypeOptions) {
+			return html``;
+		}
 
+		return assignment.submissionAndCompletionProps.allowableFileTypeOptions.find(opt => String(opt.value) === assignment.submissionAndCompletionProps.allowableFileType);
+	}
 	_getSelectedCompletionType(assignment) {
 		if (!assignment ||
 			!assignment.submissionAndCompletionProps ||
@@ -121,7 +146,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		return assignment.submissionAndCompletionProps.submissionTypeOptions.find(opt => String(opt.value) === assignment.submissionAndCompletionProps.submissionType);
 	}
 	_getSubmissionTypeOptions(assignment) {
-		if (!assignment || !assignment.submissionAndCompletionProps) {
+		if (!assignment || !assignment.submissionAndCompletionProps || !assignment.submissionAndCompletionProps.submissionTypeOptions) {
 			return html``;
 		}
 
@@ -129,11 +154,55 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 			${assignment.submissionAndCompletionProps.submissionTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.submissionAndCompletionProps.submissionType}>${option.title}</option>`)}
 		`;
 	}
-
 	_onNotificationEmailChanged(e) {
 		const assignment = store.get(this.href);
 		const data = e.detail.value;
 		assignment && assignment.setNotificationEmail(data);
+	}
+
+	_openPopoutInNewTab() {
+		window.open(
+			allowableFileTypeDocumentationURL,
+			'_blank '
+		);
+	}
+
+	_renderAllowableFileTypesDropdown(assignment) {
+		if (!assignment || !assignment.submissionAndCompletionProps) {
+			return html``;
+		}
+
+		let allowableFileTypeContent = html``;
+		if (assignment.submissionAndCompletionProps.canEditSubmissionType) {
+			allowableFileTypeContent = html`<select
+										id="assignment-allowable-filetypes"
+										aria-labelledby="assignment-allowable-filetypes-label"
+										class="d2l-input-select d2l-block-select"
+										@change="${this._saveAllowableFileTypeOnChange}">
+											${this._getAllowableFileTypeOptions(assignment)}
+									</select>`;
+		} else {
+			const allowableFileType = this._getSelectedAllowableFileType(assignment);
+			if (allowableFileType) {
+				allowableFileTypeContent = html`<div class="d2l-body-compact">${allowableFileType.title}</div>`;
+			}
+		}
+
+		return html`
+			<div id="assignment-allowable-filetypes-container" class="d2l-editor">
+				<div class="d2l-label-text" id="assignment-allowable-filetypes-label">
+					${this.localize('allowableFiletypes')}
+					<span id="allowable-filetypes-help-span">
+						<d2l-button-icon
+							text="${this.localize('allowableFileTypesHelp')}"
+							icon="tier1:help"
+							@click="${this._openPopoutInNewTab}">
+						</d2l-button-icon>
+					</span>
+				</div>
+				${allowableFileTypeContent}
+			</div>
+		`;
 	}
 
 	_renderAssignmentCompletionType(assignment) {
@@ -388,6 +457,9 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 			</d2l-activity-assignment-submission-email-notification-summary>
 		`;
 	}
+	_saveAllowableFileTypeOnChange(event) {
+		store.get(this.href).setAllowableFileType(event.target.value);
+	}
 	_saveCompletionTypeOnChange(event) {
 		store.get(this.href).setCompletionType(event.target.value);
 	}
@@ -395,7 +467,6 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	_saveSubmissionTypeOnChange(event) {
 		store.get(this.href).setSubmissionType(event.target.value);
 	}
-
 	_setfilesSubmisisonLimit(e) {
 		const assignment = store.get(this.href);
 		const data = e.target.value;
