@@ -58,6 +58,7 @@ class QuizEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityQuizEditor
 				@d2l-question-updated="${this._handleQuestionUpdated}"
 				@d2l-question-activity-add-start="${this._onActivityAddStart}"
 				@d2l-question-activity-add-complete="${this._refreshTotalPoints}"
+				@d2l-question-activity-deleted="${this._refreshTotalPoints}"
 				resizable>
 
 				${this._editorTemplate}
