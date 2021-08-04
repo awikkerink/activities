@@ -44,7 +44,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 				}
 
 				.d2l-body-small {
-					margin: 0px 0px 0.6rem;
+					margin-bottom: 0.6rem;
 				}
 
 				div[id*="container"] {
