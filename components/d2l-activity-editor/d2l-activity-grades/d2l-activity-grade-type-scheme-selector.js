@@ -32,7 +32,7 @@ class ActivityGradeTypeSchemeSelector extends ActivityEditorMixin(LocalizeActivi
 				margin-bottom: 1.8rem;
 			}
 			#d2l-activity-grade-type-selector {
-				margin-bottom: 0.9rem;
+				margin-bottom: 1.5rem;
 			}
 			.d2l-body-small {
 				margin-bottom: 0.9rem;

@@ -32,11 +32,17 @@ export class WorkingCopy {
 		}
 
 		if (!sirenEntity) return;
+
 		const href = sirenEntity.self();
 		if (!skipStoringResult) {
-			const entity = new this.StateType(href, this.token);
-			entity.load(sirenEntity);
-			store.put(href, entity);
+			const existingEntity = store.get(href);
+			if (existingEntity) {
+				existingEntity.load(sirenEntity);
+			} else {
+				const entity = new this.StateType(href, this.token);
+				entity.load(sirenEntity);
+				store.put(href, entity);
+			}
 		}
 
 		if (refetch) {

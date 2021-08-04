@@ -23,6 +23,10 @@ class ActivityQuizDisableRightClickEditor
 					margin: auto 0.4em auto 0;
 					padding: 0;
 				}
+
+				:host([dir="rtl"]) .d2l-input-checkbox-help {
+					margin: auto 0 auto 0.4em;
+				}
 			`
 		];
 	}

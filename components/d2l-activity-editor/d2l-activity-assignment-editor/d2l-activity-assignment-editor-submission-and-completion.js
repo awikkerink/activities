@@ -16,6 +16,7 @@ import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 import { shared as store } from './state/assignment-store.js';
+const allowableFileTypeDocumentationURL = 'https://documentation.brightspace.com/EN/le/assignments/learner/assignments_intro_1.htm';
 
 class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(ActivityEditorMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement)))) {
 
@@ -110,7 +111,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		await assignment.save();
 	}
 	_getAllowableFileTypeOptions(assignment) {
-		if (!assignment || !assignment.submissionAndCompletionProps) {
+		if (!assignment || !assignment.submissionAndCompletionProps || !assignment.submissionAndCompletionProps.allowableFileTypeOptions) {
 			return html``;
 		}
 
@@ -152,7 +153,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		return assignment.submissionAndCompletionProps.submissionTypeOptions.find(opt => String(opt.value) === assignment.submissionAndCompletionProps.submissionType);
 	}
 	_getSubmissionTypeOptions(assignment) {
-		if (!assignment || !assignment.submissionAndCompletionProps) {
+		if (!assignment || !assignment.submissionAndCompletionProps || !assignment.submissionAndCompletionProps.submissionTypeOptions) {
 			return html``;
 		}
 
@@ -168,7 +169,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 
 	_openPopoutInNewTab() {
 		window.open(
-			'https://documentation.brightspace.com/EN/le/assignments/learner/assignments_intro_1.htm',
+			allowableFileTypeDocumentationURL,
 			'_blank '
 		);
 	}

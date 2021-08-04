@@ -6,7 +6,8 @@ const componentClass = class extends LitElement {
 	static get properties() {
 		return {
 			href: { type: String, reflect: true },
-			token: { type: String }
+			token: { type: String },
+			newactivityhrefs: { type: Array }
 		};
 	}
 	static get styles() {
@@ -17,14 +18,8 @@ const componentClass = class extends LitElement {
 	}
 	render() {
 		return html `
-			<d2l-activity-editor-main href="${this.href}" .token="${this.token}"></d2l-activity-editor-main>
+			<d2l-activity-editor-main href="${this.href}" .token="${this.token}" .newactivityhrefs=${this.newactivityhrefs}></d2l-activity-editor-main>
 		`;
-	}
-	async addToCollection(activities) {
-		const editor = this.shadowRoot.querySelector('d2l-activity-collection-editor-quiz');
-		if (editor) {
-			await editor.addToCollection(activities);
-		}
 	}
 };
 

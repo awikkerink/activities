@@ -1,6 +1,7 @@
 import '../shared-components/d2l-activity-content-editor-due-date.js';
 import '../shared-components/d2l-activity-content-editor-title.js';
 import '../../d2l-activity-text-editor.js';
+import { css, html } from 'lit-element/lit-element.js';
 import { activityContentEditorStyles } from '../shared-components/d2l-activity-content-editor-styles.js';
 import { ActivityEditorMixin } from '../../mixins/d2l-activity-editor-mixin.js';
 import { activityHtmlEditorStyles } from '../shared-components/d2l-activity-html-editor-styles.js';
@@ -9,7 +10,6 @@ import { ContentModuleEntity } from 'siren-sdk/src/activities/content/ContentMod
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ErrorHandlingMixin } from '../../error-handling-mixin.js';
-import { html } from 'lit-element/lit-element.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityEditorMixin } from '../../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -29,6 +29,13 @@ class ContentModuleDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActiv
 	static get styles() {
 		return  [
 			super.styles,
+			css`
+				#d2l-activity-content-label-container {
+					display: flex;
+					justify-content: space-between;
+					margin-bottom: 6px;
+				}
+			`,
 			labelStyles,
 			activityContentEditorStyles,
 			activityHtmlEditorStyles
@@ -84,8 +91,10 @@ class ContentModuleDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActiv
 			>
 			</d2l-activity-content-editor-due-date>
 			<div id="content-description-container">
-				<div class="d2l-activity-label-container d2l-label-text d2l-skeletize">
-					${this.localize('content.description')}
+				<div id="d2l-activity-content-label-container">
+					<label class="d2l-label-text d2l-skeletize">
+						${this.localize('content.description')}
+					</label>
 				</div>
 				<div class="d2l-skeletize ${htmlNewEditorEnabled ? 'd2l-new-html-editor-container' : ''}">
 					<d2l-activity-text-editor

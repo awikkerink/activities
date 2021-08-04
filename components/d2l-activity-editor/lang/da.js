@@ -118,6 +118,9 @@ export default {
 	"grades.selectboxDescriptionExample": "F.eks. \"Meget god\" eller \"B+\"", // Example of selectbox grade type
 	"grades.newGradeScheme": "Karakteroversigt", // Label for the grade scheme
 	"grades.defaultGradeScheme": "--Standard-- ({schemeName})", // name of default grade scheme
+	"grades.creatingNewNumericGradeItem": "Opretter nyt numerisk karakterelement {newGradeName}", // Aria text for new grade we are creating
+	"grades.creatingNewSelectboxGradeItem": "Opretter nyt karakterelement for afkrydsningsfelt {newGradeName}", // Aria text for new grade we are creating
+	"grades.linkingToGradeItem": "Linker til eksisterende karakterelement {gradeName}", // Aria text for grade item we are linking to
 
 	"attachments.addGoogleDriveLink": "Vedhæft fra Google Drev", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "Upload af fil", // Tooltip for a button that opens a file upload dialog
@@ -139,7 +142,12 @@ export default {
 	"content.name": "Navn", // Text label for name input field
 	"content.emptyNameField": "Navn er påkrævet.", // Error text that appears below name field when it is left empty
 	"content.description": "Beskrivelse", // Text label for description input field
-	"content.pageContent": "Sideindhold", // Text label for page content input field (HTML files)
+	"content.pageContent": "Sideindhold", // Text label for page content input field (html files)
+	"content.selectTemplate": "Vælg skabelon", // The label text for the subtle-button for selecting an html template
+	"content.htmlTemplatesLoading": "Indlæser ...", // Message displayed while list of html templates is loading
+	"content.noHtmlTemplates": "Ingen tilgængelige skabeloner", // Message displayed in dropdown when no html templates are found
+	"content.defaultHtmlTemplateHeader": "HTML-filskabeloner", // The text to display as the default header for the html template select dropdown
+	"content.browseForHtmlTemplate": "Søg efter en skabelon", // Text for button to browse for an html template
 	"content.availabilityHeader": "Datoer for tilgængelighed", // availability header
 	"content.saveError": "Dit indholdselement blev ikke gemt. Ret de felter, der er markeret med rødt.", // Error message to inform the user that there was a problem saving the content item, instructing them to correct invalid fields
 	"content.displayOptions": "Visningsindstillinger", // Text label for display options
@@ -157,5 +165,9 @@ export default {
 	"content.openInNewWindow": "Åbn i nyt vindue", // The label text for the subtle-button for opening a LTI link in a new window
 	"content.externalActivity": "Ekstern aktivitet", // The label text for the external activity section on the LTI link page
 	"content.externalActivityOpened": "Åbn aktiviteten i et nyt vindue for at få vist dens indhold.", // Text for displaying underneath the LTI link jump logo
-	"content.externalActivityEmbeddedNotAllowed": "Denne eksterne aktivitet understøtter ikke indlejring. Den kan kun ses ved at åbne den i et nyt vindue." // Text that replaces the LTI display options if embedding is not allowed
+	"content.externalActivityEmbeddedNotAllowed": "Denne eksterne aktivitet understøtter ikke indlejring. Den kan kun ses ved at åbne den i et nyt vindue.", // Text that replaces the LTI display options if embedding is not allowed
+	"content.confirmDialogTitle": "Dit eksisterende indhold bliver slettet.", // The text for the title of the replace html template confirmation dialog
+	"content.confirmDialogBody": "Er du sikker på, at du vil erstatte dit eksisterende indhold med denne skabelon?", // The text for the body of the replace html template confirmation dialog
+	"content.confirmDialogActionOption": "Erstat", // The text for the confirmation action to replace content
+	"content.confirmDialogCancelOption": "Annuller" // The text for the cancel action to not replace content
 };

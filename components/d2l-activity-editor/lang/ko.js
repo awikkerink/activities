@@ -118,6 +118,9 @@ export default {
 	"grades.selectboxDescriptionExample": "예: \"매우 좋음\" 또는 \"B+\"", // Example of selectbox grade type
 	"grades.newGradeScheme": "평점 제도", // Label for the grade scheme
 	"grades.defaultGradeScheme": "-- 기본값 --({schemeName})", // name of default grade scheme
+	"grades.creatingNewNumericGradeItem": "새 숫자 평점 항목 {newGradeName} 생성 중", // Aria text for new grade we are creating
+	"grades.creatingNewSelectboxGradeItem": "새 선택 상자 평점 항목 {newGradeName} 생성 중", // Aria text for new grade we are creating
+	"grades.linkingToGradeItem": "기존 평점 항목 {gradeName}에 연결 중", // Aria text for grade item we are linking to
 
 	"attachments.addGoogleDriveLink": "Google Drive에서 첨부", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "파일 업로드", // Tooltip for a button that opens a file upload dialog
@@ -139,7 +142,12 @@ export default {
 	"content.name": "이름", // Text label for name input field
 	"content.emptyNameField": "이름이 필요합니다.", // Error text that appears below name field when it is left empty
 	"content.description": "설명", // Text label for description input field
-	"content.pageContent": "페이지 콘텐츠", // Text label for page content input field (HTML files)
+	"content.pageContent": "페이지 콘텐츠", // Text label for page content input field (html files)
+	"content.selectTemplate": "템플릿 선택", // The label text for the subtle-button for selecting an html template
+	"content.htmlTemplatesLoading": "로드 중...", // Message displayed while list of html templates is loading
+	"content.noHtmlTemplates": "사용 가능한 템플릿이 없음", // Message displayed in dropdown when no html templates are found
+	"content.defaultHtmlTemplateHeader": "HTML 파일 템플릿", // The text to display as the default header for the html template select dropdown
+	"content.browseForHtmlTemplate": "템플릿 찾아보기", // Text for button to browse for an html template
 	"content.availabilityHeader": "사용 가능 날짜", // availability header
 	"content.saveError": "콘텐츠 항목이 저장되지 않았습니다. 빨간색으로 표시된 필드를 수정하십시오.", // Error message to inform the user that there was a problem saving the content item, instructing them to correct invalid fields
 	"content.displayOptions": "표시 옵션", // Text label for display options
@@ -157,5 +165,9 @@ export default {
 	"content.openInNewWindow": "새 창에서 열기", // The label text for the subtle-button for opening a LTI link in a new window
 	"content.externalActivity": "외부 활동", // The label text for the external activity section on the LTI link page
 	"content.externalActivityOpened": "콘텐츠를 보려면 새 창에서 활동을 엽니다.", // Text for displaying underneath the LTI link jump logo
-	"content.externalActivityEmbeddedNotAllowed": "이 외부 활동은 임베드 기능을 지원하지 않습니다. 새 창에서 열기만 하면 볼 수 있습니다." // Text that replaces the LTI display options if embedding is not allowed
+	"content.externalActivityEmbeddedNotAllowed": "이 외부 활동은 임베드 기능을 지원하지 않습니다. 새 창에서 열기만 하면 볼 수 있습니다.", // Text that replaces the LTI display options if embedding is not allowed
+	"content.confirmDialogTitle": "기존 콘텐츠가 삭제됩니다.", // The text for the title of the replace html template confirmation dialog
+	"content.confirmDialogBody": "사용자의 기존 콘텐츠를 이 템플릿으로 바꾸시겠습니까?", // The text for the body of the replace html template confirmation dialog
+	"content.confirmDialogActionOption": "바꾸기", // The text for the confirmation action to replace content
+	"content.confirmDialogCancelOption": "취소" // The text for the cancel action to not replace content
 };

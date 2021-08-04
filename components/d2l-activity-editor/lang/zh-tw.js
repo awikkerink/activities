@@ -118,6 +118,9 @@ export default {
 	"grades.selectboxDescriptionExample": "例如：「非常好」或「B+」", // Example of selectbox grade type
 	"grades.newGradeScheme": "計分方式", // Label for the grade scheme
 	"grades.defaultGradeScheme": "--預設-- ({schemeName})", // name of default grade scheme
+	"grades.creatingNewNumericGradeItem": "建立新的數字成績項目 {newGradeName}", // Aria text for new grade we are creating
+	"grades.creatingNewSelectboxGradeItem": "建立新的分級格成績項目 {newGradeName}", // Aria text for new grade we are creating
+	"grades.linkingToGradeItem": "連結至現有成績項目 {gradeName}", // Aria text for grade item we are linking to
 
 	"attachments.addGoogleDriveLink": "從 Google 雲端硬碟附加", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "檔案上傳", // Tooltip for a button that opens a file upload dialog
@@ -139,7 +142,12 @@ export default {
 	"content.name": "名稱", // Text label for name input field
 	"content.emptyNameField": "名稱為必填。", // Error text that appears below name field when it is left empty
 	"content.description": "說明", // Text label for description input field
-	"content.pageContent": "頁面內容", // Text label for page content input field (HTML files)
+	"content.pageContent": "頁面內容", // Text label for page content input field (html files)
+	"content.selectTemplate": "選取範本", // The label text for the subtle-button for selecting an html template
+	"content.htmlTemplatesLoading": "正在載入...", // Message displayed while list of html templates is loading
+	"content.noHtmlTemplates": "沒有可用的範本", // Message displayed in dropdown when no html templates are found
+	"content.defaultHtmlTemplateHeader": "HTML 檔案範本", // The text to display as the default header for the html template select dropdown
+	"content.browseForHtmlTemplate": "瀏覽範本", // Text for button to browse for an html template
 	"content.availabilityHeader": "可用情況日期", // availability header
 	"content.saveError": "您的內容項目尚未儲存。請修正以紅色顯示的欄位。", // Error message to inform the user that there was a problem saving the content item, instructing them to correct invalid fields
 	"content.displayOptions": "顯示選項", // Text label for display options
@@ -157,5 +165,9 @@ export default {
 	"content.openInNewWindow": "在新視窗中開啟", // The label text for the subtle-button for opening a LTI link in a new window
 	"content.externalActivity": "外部活動", // The label text for the external activity section on the LTI link page
 	"content.externalActivityOpened": "在新視窗中開啟活動以檢視內容。", // Text for displaying underneath the LTI link jump logo
-	"content.externalActivityEmbeddedNotAllowed": "此外部活動不支援內嵌。只有開啟新視窗才能檢視此資訊。" // Text that replaces the LTI display options if embedding is not allowed
+	"content.externalActivityEmbeddedNotAllowed": "此外部活動不支援內嵌。只有開啟新視窗才能檢視此資訊。", // Text that replaces the LTI display options if embedding is not allowed
+	"content.confirmDialogTitle": "您現有的內容將會遭到刪除。", // The text for the title of the replace html template confirmation dialog
+	"content.confirmDialogBody": "是否確定要使用此範本取代您現有的內容？", // The text for the body of the replace html template confirmation dialog
+	"content.confirmDialogActionOption": "取代", // The text for the confirmation action to replace content
+	"content.confirmDialogCancelOption": "取消" // The text for the cancel action to not replace content
 };
