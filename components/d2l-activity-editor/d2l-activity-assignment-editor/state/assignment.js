@@ -38,13 +38,11 @@ export class Assignment {
 
 	load(entity) {
 		this._entity = entity;
-		console.log("entity");
-		console.log(entity);
 		this.submissionAndCompletionProps = new SubmissionAndCompletionProps({
 			allowableFileTypeOptions: entity.allowableFileTypeOptions(),
 			allowableFileType: entity.allowableFileType().value,
 			canEditAllowableFileType: entity.canEditAllowableFileType(),
-			customAllowableFileTypes: entity.customAllowableFileTypes() && entity.customAllowableFileTypes().value,
+			customAllowableFileTypes: entity.customAllowableFileTypes(),
 			submissionTypeOptions: entity.submissionTypeOptions(),
 			submissionType: entity.submissionType().value,
 			canEditSubmissionType: entity.canEditSubmissionType(),
@@ -153,7 +151,6 @@ export class Assignment {
 		this.submissionAndCompletionProps.setCompletionType(value);
 	}
 	setCustomAllowableFileTypes(value) {
-		console.log("1");
 		this.submissionAndCompletionProps.setCustomAllowableFileTypes(value);
 	}
 
@@ -219,7 +216,8 @@ export class Assignment {
 		if (this.canEditInstructions) {
 			data.instructions = this.instructions;
 		}
-		if (this.submissionAndCompletionProps.allowableFileType === '5') {
+		const allowableFileTypeCustomValue = '5';
+		if (this.submissionAndCompletionProps.allowableFileType === allowableFileTypeCustomValue) {
 			data.customAllowableFileTypes = this.submissionAndCompletionProps.customAllowableFileTypes;
 		}
 		if (this.submissionAndCompletionProps.canEditCompletionType) {

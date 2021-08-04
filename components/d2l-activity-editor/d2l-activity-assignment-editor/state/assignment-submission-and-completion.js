@@ -38,8 +38,6 @@ export class SubmissionAndCompletionProps {
 		this.completionType = value;
 	}
 	setCustomAllowableFileTypes(value) {
-		console.log("2");
-		console.log(value);
 		this.customAllowableFileTypes = value;
 	}
 	setFilesSubmissionLimit(value) {

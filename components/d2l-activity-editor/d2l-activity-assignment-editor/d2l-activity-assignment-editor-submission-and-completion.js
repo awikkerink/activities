@@ -70,11 +70,11 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	constructor() {
 		super(store);
 		this.saveOrder = 2000;
+		this.allowableFileTypeCustomValue = '5'; // Custom allowable file type value
 	}
 
 	render() {
 		const assignment = store.get(this.href);
-		console.log(assignment);
 		return html`
 			<d2l-activity-accordion-collapse ?skeleton="${this.skeleton}">
 				<span slot="header">
@@ -457,7 +457,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 			return html``;
 		}
 
-		if (assignment.submissionAndCompletionProps.allowableFileType === '5') {
+		if (assignment.submissionAndCompletionProps.allowableFileType === this.allowableFileTypeCustomValue) {
 			return html`
 				<div>
 					<p class="d2l-body-small">${this.localize('customFiletypesNotification')}</p>
@@ -468,6 +468,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 					label="${this.localize('customFiletypes')}"
 					label-hidden
 					maxlength="1024"
+					value="${assignment.submissionAndCompletionProps.customAllowableFileTypes}"
 					@change="${this._saveCustomAllowableFileTypes}"
 					placeholder="${this.localize('customFiletypesPlaceholder')}"
 					prevent-submit
@@ -492,14 +493,17 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		`;
 	}
 	_saveAllowableFileTypeOnChange(event) {
-		store.get(this.href).setAllowableFileType(event.target.value);
+		const storeHref = store.get(this.href);
+		storeHref.setAllowableFileType(event.target.value);
+		if (event.target.value === this.allowableFileTypeCustomValue) {
+			storeHref.setCustomAllowableFileTypes('');
+		}
 	}
 	_saveCompletionTypeOnChange(event) {
 		store.get(this.href).setCompletionType(event.target.value);
 	}
 	_saveCustomAllowableFileTypes(event) {
-		console.log(event.target.value);
-		console.log(store.get(this.href).setCustomAllowableFileTypes(event.target.value));
+		store.get(this.href).setCustomAllowableFileTypes(event.target.value);
 	}
 	_saveSubmissionTypeOnChange(event) {
 		store.get(this.href).setSubmissionType(event.target.value);
