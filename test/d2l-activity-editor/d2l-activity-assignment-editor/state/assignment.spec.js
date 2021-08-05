@@ -96,6 +96,7 @@ describe('Assignment ', function() {
 				getAssignmentTypeSelectedGroupCategoryName: () => null,
 				canEditSubmissionsRule: () => true,
 				submissionsRule: () => 'keepall',
+				customAllowableFileTypes: () => '',
 				notificationEmail: () => '',
 				canEditNotificationEmail: () => true,
 				getSubmissionsRuleOptions: () => [
