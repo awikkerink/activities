@@ -168,7 +168,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	}
 
 	_renderAllowableFileTypesDropdown(assignment) {
-		if (!assignment || !assignment.submissionAndCompletionProps || !assignment.submissionAndCompletionProps.showAllowableFileTypes) {
+		if (!assignment || !assignment.submissionAndCompletionProps || !assignment.submissionAndCompletionProps.showFilesSubmissionOptions) {
 			return html``;
 		}
 
@@ -247,7 +247,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	_renderAssignmentFilesSubmissionLimit(assignment) {
 		if (!assignment ||
 			!assignment.submissionAndCompletionProps ||
-			!assignment.submissionAndCompletionProps.showFilesSubmissionLimit) {
+			!assignment.submissionAndCompletionProps.showFilesSubmissionOptions) {
 			return html``;
 		}
 

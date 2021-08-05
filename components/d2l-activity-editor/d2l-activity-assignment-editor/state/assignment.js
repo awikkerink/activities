@@ -215,7 +215,7 @@ export class Assignment {
 		if (this.submissionAndCompletionProps.canEditCompletionType) {
 			data.completionType = this.submissionAndCompletionProps.completionType;
 		}
-		if (this.submissionAndCompletionProps.showFilesSubmissionLimit) {
+		if (this.submissionAndCompletionProps.showFilesSubmissionOptions) {
 			data.filesSubmissionLimit = this.submissionAndCompletionProps.filesSubmissionLimit;
 		}
 		if (this.submissionAndCompletionProps.showSubmissionsRule) {

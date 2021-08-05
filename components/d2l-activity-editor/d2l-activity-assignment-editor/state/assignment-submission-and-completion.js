@@ -48,11 +48,7 @@ export class SubmissionAndCompletionProps {
 		this._setValidCompletionTypeForSubmissionType();
 	}
 
-	get showAllowableFileTypes() {
-		return this.submissionTypeOptions
-			.find(x => String(x.value) === '0' && `${x.value}` === `${this.submissionType}`);
-	}
-	get showFilesSubmissionLimit() {
+	get showFilesSubmissionOptions() {
 		return this.submissionTypeOptions
 			.find(x => String(x.value) === '0' && `${x.value}` === `${this.submissionType}`);
 	}
@@ -133,8 +129,7 @@ decorate(SubmissionAndCompletionProps, {
 	completionTypeOptions: observable,
 	canEditCompletionType: observable,
 	// computed
-	showAllowableFileTypes: computed,
-	showFilesSubmissionLimit: computed,
+	showFilesSubmissionOptions: computed,
 	showSubmissionsRule: computed,
 	// actions
 	setSubmissionsRule: action,
