@@ -40,7 +40,7 @@ export class Assignment {
 		this._entity = entity;
 		this.submissionAndCompletionProps = new SubmissionAndCompletionProps({
 			allowableFileTypeOptions: entity.allowableFileTypeOptions(),
-			allowableFileType: entity.allowableFileType().value,
+			allowableFileType: entity.allowableFileType() ? entity.allowableFileType().value : undefined,
 			canEditAllowableFileType: entity.canEditAllowableFileType(),
 			submissionTypeOptions: entity.submissionTypeOptions(),
 			submissionType: entity.submissionType().value,
