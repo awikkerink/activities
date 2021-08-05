@@ -168,12 +168,12 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	}
 
 	_renderAllowableFileTypesDropdown(assignment) {
-		if (!assignment || !assignment.submissionAndCompletionProps || !assignment.submissionAndCompletionProps.showAllowableFileTypes) {
+		if (!assignment || !assignment.submissionAndCompletionProps) {
 			return html``;
 		}
 
 		let allowableFileTypeContent = html``;
-		if (assignment.submissionAndCompletionProps.canEditAllowableFileType) {
+		if (assignment.submissionAndCompletionProps.canEditSubmissionType) {
 			allowableFileTypeContent = html`<select
 										id="assignment-allowable-filetypes"
 										aria-labelledby="assignment-allowable-filetypes-label"
