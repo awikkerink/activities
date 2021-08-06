@@ -142,7 +142,12 @@ export default {
 	"content.name": "Nom", // Text label for name input field
 	"content.emptyNameField": "Le nom est obligatoire.", // Error text that appears below name field when it is left empty
 	"content.description": "Description", // Text label for description input field
-	"content.pageContent": "Contenu de la page", // Text label for page content input field (HTML files)
+	"content.pageContent": "Contenu de la page", // Text label for page content input field (html files)
+	"content.selectTemplate": "Sélectionnez un modèle", // The label text for the subtle-button for selecting an html template
+	"content.htmlTemplatesLoading": "Téléchargement en cours…", // Message displayed while list of html templates is loading
+	"content.noHtmlTemplates": "Aucun modèle disponible", // Message displayed in dropdown when no html templates are found
+	"content.defaultHtmlTemplateHeader": "Modèles de fichiers HTML", // The text to display as the default header for the html template select dropdown
+	"content.browseForHtmlTemplate": "Naviguer vers le modèle", // Text for button to browse for an html template
 	"content.availabilityHeader": "Dates de disponibilité", // availability header
 	"content.saveError": "Votre élément de contenu n’a pas été enregistré. Veuillez corriger les champs indiqués en rouge.", // Error message to inform the user that there was a problem saving the content item, instructing them to correct invalid fields
 	"content.displayOptions": "Options d’affichage", // Text label for display options
@@ -160,5 +165,9 @@ export default {
 	"content.openInNewWindow": "Ouvrir dans une nouvelle fenêtre", // The label text for the subtle-button for opening a LTI link in a new window
 	"content.externalActivity": "Activité externe", // The label text for the external activity section on the LTI link page
 	"content.externalActivityOpened": "Ouvrir l’activité dans une nouvelle fenêtre pour en afficher le contenu.", // Text for displaying underneath the LTI link jump logo
-	"content.externalActivityEmbeddedNotAllowed": "Cette activité externe ne prend pas en charge l’intégration. Il est possible de l’afficher uniquement en ouvrant une nouvelle fenêtre." // Text that replaces the LTI display options if embedding is not allowed
+	"content.externalActivityEmbeddedNotAllowed": "Cette activité externe ne prend pas en charge l’intégration. Il est possible de l’afficher uniquement en ouvrant une nouvelle fenêtre.", // Text that replaces the LTI display options if embedding is not allowed
+	"content.confirmDialogTitle": "Votre contenu existant sera supprimé.", // The text for the title of the replace html template confirmation dialog
+	"content.confirmDialogBody": "Êtes-vous certain de vouloir remplacer votre contenu existant par ce modèle?", // The text for the body of the replace html template confirmation dialog
+	"content.confirmDialogActionOption": "Remplacer", // The text for the confirmation action to replace content
+	"content.confirmDialogCancelOption": "Annuler" // The text for the cancel action to not replace content
 };
