@@ -42,6 +42,7 @@ export class Assignment {
 			allowableFileTypeOptions: entity.allowableFileTypeOptions(),
 			allowableFileType: entity.allowableFileType() ? entity.allowableFileType().value : undefined,
 			canEditAllowableFileType: entity.canEditAllowableFileType(),
+			customAllowableFileTypes: entity.customAllowableFileTypes(),
 			submissionTypeOptions: entity.submissionTypeOptions(),
 			submissionType: entity.submissionType().value,
 			canEditSubmissionType: entity.canEditSubmissionType(),
@@ -149,6 +150,9 @@ export class Assignment {
 	setCompletionType(value) {
 		this.submissionAndCompletionProps.setCompletionType(value);
 	}
+	setCustomAllowableFileTypes(value) {
+		this.submissionAndCompletionProps.setCustomAllowableFileTypes(value);
+	}
 
 	setDefaultScoringRubric(rubricId) {
 		if (rubricId) {
@@ -212,6 +216,10 @@ export class Assignment {
 		if (this.canEditInstructions) {
 			data.instructions = this.instructions;
 		}
+		const allowableFileTypeCustomValue = '5';
+		if (this.submissionAndCompletionProps.allowableFileType === allowableFileTypeCustomValue) {
+			data.customAllowableFileTypes = this.submissionAndCompletionProps.customAllowableFileTypes;
+		}
 		if (this.submissionAndCompletionProps.canEditCompletionType) {
 			data.completionType = this.submissionAndCompletionProps.completionType;
 		}
@@ -234,6 +242,7 @@ decorate(Assignment, {
 	name: observable,
 	canEditName: observable,
 	allowableFileType: observable,
+	customAllowableFileTypes: observable,
 	instructions: observable,
 	canEditInstructions: observable,
 	instructionsRichTextEditorConfig: observable,
@@ -264,6 +273,7 @@ decorate(Assignment, {
 	setAnnotationToolsAvailable: action,
 	setSubmissionType: action,
 	setAllowableFileType: action,
+	setCustomAllowableFileTypes: action,
 	setTurnitin: action,
 	setCompletionType: action,
 	save: action,
