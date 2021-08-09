@@ -31,7 +31,8 @@ class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMi
 	static get properties() {
 		return {
 			activityUsageHref: { type: String, attribute: 'activity-usage-href' },
-			newactivityhrefs: { type: Array }
+			newactivityhrefs: { type: Array },
+			_importedActivityHrefs: { type: Array }
 		};
 	}
 	static get styles() {
@@ -88,6 +89,8 @@ class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMi
 
 		this.telemetryId = 'quiz';
 		this.type = 'quiz';
+
+		this._importedActivityHrefs = [];
 	}
 
 	render() {
@@ -185,12 +188,14 @@ class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMi
 				?skeleton="${this.skeleton}"
 				href="${this.activityUsageHref}"
 				.token="${this.token}"
-				quiz-href="${this.href}">
+				quiz-href="${this.href}"
+				@d2l-activity-collection-refresh="${this._onRefresh}">
 			</d2l-activity-quiz-editor-action-bar>
 			<d2l-activity-quiz-question-editor
 				href="${this.activityUsageHref}"
 				.token="${this.token}"
-				.newactivityhrefs=${this.newactivityhrefs}>
+				.newactivityhrefs=${this.newactivityhrefs}
+				.importedActivityHrefs=${this._importedActivityHrefs}>
 			</d2l-activity-quiz-question-editor>
 		`;
 	}
@@ -228,6 +233,10 @@ class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMi
 		}
 
 		await quiz.save();
+	}
+
+	_onRefresh(e) {
+		this._importedActivityHrefs = e.detail.activities;
 	}
 
 	_openPreview() {
