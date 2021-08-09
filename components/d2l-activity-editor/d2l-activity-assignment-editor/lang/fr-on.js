@@ -3,6 +3,8 @@
 export default {
 	"hdrReleaseConditions": "Conditions de diffusion", // release conditions heading
 	"hlpReleaseConditions": "Les utilisateurs ne peuvent pas accéder à l’affectation ou la visualiser s’ils ne remplissent pas les conditions de validation.", // release conditions help
+	"allowableFiletypes": "Allowable Filetypes", // Label for the allowable filetypes field when creating/editing an assignment
+	"allowableFileTypesHelp": "Open allowable filetypes information in a new tab", // Help icon for allowable filetypes info
 	"completionType": "Identifié comme étant Terminé", // Label for the completion type field when creating/editing an assignment
 	"lblAnonymousMarking": "Attribution anonyme d’état", // Label for anonymous marking
 	"chkAnonymousMarking": "Masquer les noms des élèves lors des évaluations", // Checkbox for anonymous marking
