@@ -250,6 +250,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 			</div>
 		`;
 	}
+
 	_renderAssignmentCompletionTypeSummary() {
 		return html``;
 	}
