@@ -193,14 +193,11 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	}
 	_isInvalidFileTypes(fileTypes) {
 		const fileTypesList = fileTypes.split(',').map(type => type.trim());
-		console.log("fileTypesList");
-		console.log(fileTypesList);
+		const minimumExtensionLength = 3;
+
 		const hasInvalidFileTypes = fileTypesList.some(type => this.restrictedFileTypes.includes(type));
-		const hasInvalidLength = fileTypesList.some(type => type.length < 4);
-		console.log("hasInvalidFileTypes");
-		console.log(hasInvalidFileTypes);
-		console.log("hasInvalidLength");
-		console.log(hasInvalidLength);
+		const hasInvalidLength = fileTypesList.some(type => type.length < minimumExtensionLength);
+
 		return hasInvalidFileTypes || hasInvalidLength;
 	}
 	async _loadRestrictedFileTypes(activity) {
@@ -209,9 +206,6 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 
 		const restrictedFileTypesEntity = await this._followRelPath(relList, activityEntity);
 		this.restrictedFileTypes = restrictedFileTypesEntity.properties?.extensions;
-
-		console.log("this.restrictedFileTypes");
-		console.log(this.restrictedFileTypes);
 	}
 	_onNotificationEmailChanged(e) {
 		const assignment = store.get(this.href);
@@ -576,8 +570,6 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 			this.setError(errorProperty, invalidCustomFileTypesErrorLangterm, tooltipId);
 		} else {
 			this.clearError(errorProperty);
-			console.log("fileTypes");
-			console.log(fileTypes);
 			store.get(this.href).setCustomAllowableFileTypes(fileTypes);
 		}
 	}
