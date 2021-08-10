@@ -3,11 +3,11 @@
 export default {
 	"hdrReleaseConditions": "Release Conditions", // release conditions heading
 	"hlpReleaseConditions": "Users are not able to access or view the assignment unless they meet the release conditions.", // release conditions help
+	"allowableFiletypes": "Allowable File Extensions", // Label for the allowable filetypes field when creating/editing an assignment
+	"allowableFileTypesHelp": "Open allowable file extensions information in a new tab", // Help icon for allowable filetypes info
 	"customFiletypes": "Custom Filetypes", // ARIA label for custom filetypes field
 	"customFiletypesNotification": "Enter one or more allowable filetype extensions separated by a comma.", // text for adding custom filetypes
 	"customFiletypesPlaceholder": "example: .pdf, .txt, .html", // Placeholder for the custom filetypes field
-	"allowableFiletypes": "Allowable Filetypes", // Label for the allowable filetypes field when creating/editing an assignment
-	"allowableFileTypesHelp": "Open allowable filetypes information in a new tab", // Help icon for allowable filetypes info
 	"completionType": "Marked as completed", // Label for the completion type field when creating/editing an assignment
 	"lblAnonymousMarking": "Anonymous Marking", // Label for anonymous marking
 	"chkAnonymousMarking": "Hide student names during assessment", // Checkbox for anonymous marking
