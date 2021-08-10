@@ -71,6 +71,19 @@ class ActivityQuizAddActivityMenu extends ActivityEditorMixin(SkeletonMixin(Loca
 		this.dispatchEvent(new CustomEvent('d2l-question-activity-add-start', eventInit));
 	}
 
+	_dispatchAddItemsFromBrowseEvent(itemDetails) {
+		const eventInit = {
+			bubbles: true,
+			composed: true
+		};
+
+		if (itemDetails && itemDetails.length) {
+			eventInit.detail = { activities: itemDetails };
+		}
+
+		this.dispatchEvent(new CustomEvent('d2l-activity-collection-refresh', eventInit));
+	}
+
 	_onSelect(e) {
 		if (!e || !e.target) {
 			return;
@@ -82,7 +95,9 @@ class ActivityQuizAddActivityMenu extends ActivityEditorMixin(SkeletonMixin(Loca
 		}
 
 		let url;
+		let addFromBrowse = false;
 		if (type.includes('browse')) {
+			addFromBrowse = true;
 			url = new D2L.LP.Web.Http.UrlLocation(`/d2l/lms/question/browse/${type}`);
 		} else {
 			url = new D2L.LP.Web.Http.UrlLocation(`/d2l/lms/question/new/${type}`);
@@ -98,7 +113,11 @@ class ActivityQuizAddActivityMenu extends ActivityEditorMixin(SkeletonMixin(Loca
 		);
 
 		// "Save" handler
-		delayedResult.AddListener(itemDetails => this._dispatchAddItemEvent(itemDetails));
+		if (addFromBrowse) {
+			delayedResult.AddListener(itemDetails => this._dispatchAddItemsFromBrowseEvent(itemDetails));
+		} else {
+			delayedResult.AddListener(itemDetails => this._dispatchAddItemEvent(itemDetails));
+		}
 	}
 
 	_renderActivityType(activityType) {

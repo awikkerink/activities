@@ -4,7 +4,7 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin';
 
-class ContentEditorLtiLinkPreview extends SkeletonMixin(LocalizeActivityEditorMixin(RtlMixin(MobxLitElement))) {
+class ContentEditorLinkPreview extends SkeletonMixin(LocalizeActivityEditorMixin(RtlMixin(MobxLitElement))) {
 
 	static get properties() {
 		return {
@@ -24,7 +24,7 @@ class ContentEditorLtiLinkPreview extends SkeletonMixin(LocalizeActivityEditorMi
 					overflow: hidden;
 					width: 100%;
 				}
-				.d2l-lti-iframe-container {
+				.d2l-link-preview-iframe-container {
 					/*
 					if remaining height in content block is less than 60% of viewport height,
 					iframe height should be 60% of viewport height,
@@ -59,7 +59,7 @@ class ContentEditorLtiLinkPreview extends SkeletonMixin(LocalizeActivityEditorMi
 
 		return html`
 		<div class='d2l-margined-container'>
-			<div class='d2l-lti-iframe-container d2l-skeletize'>
+			<div class='d2l-link-preview-iframe-container d2l-skeletize'>
 				${preview}
 			</div>
 		</div>
@@ -71,4 +71,4 @@ class ContentEditorLtiLinkPreview extends SkeletonMixin(LocalizeActivityEditorMi
 	}
 }
 
-customElements.define('d2l-activity-content-lti-link-preview', ContentEditorLtiLinkPreview);
+customElements.define('d2l-activity-content-link-preview', ContentEditorLinkPreview);

@@ -7,7 +7,8 @@ const componentClass = class extends LitElement {
 		return {
 			href: { type: String, reflect: true },
 			token: { type: String },
-			newactivityhrefs: { type: Array }
+			newactivityhrefs: { type: Array },
+			importedActivityHrefs: { type: Array }
 		};
 	}
 	static get styles() {
@@ -18,7 +19,11 @@ const componentClass = class extends LitElement {
 	}
 	render() {
 		return html `
-			<d2l-activity-editor-main href="${this.href}" .token="${this.token}" .newactivityhrefs=${this.newactivityhrefs}></d2l-activity-editor-main>
+			<d2l-activity-editor-main href="${this.href}"
+									.token="${this.token}"
+									.newactivityhrefs=${this.newactivityhrefs}
+									.importedActivityHrefs=${this.importedActivityHrefs}>
+			</d2l-activity-editor-main>
 		`;
 	}
 };
