@@ -6,6 +6,7 @@ export default {
 	"customFiletypes": "Custom Filetypes", // ARIA label for custom filetypes field
 	"customFiletypesNotification": "Enter one or more allowable filetype extensions separated by a comma.", // text for adding custom filetypes
 	"customFiletypesPlaceholder": "example: .pdf, .txt, .html", // Placeholder for the custom filetypes field
+	"customFiletypesError": "Please enter valid file extensions", // Error message to inform user that their extension type is invalid
 	"allowableFiletypes": "Allowable Filetypes", // Label for the allowable filetypes field when creating/editing an assignment
 	"allowableFileTypesHelp": "Open allowable filetypes information in a new tab", // Help icon for allowable filetypes info
 	"completionType": "Marked as completed", // Label for the completion type field when creating/editing an assignment
