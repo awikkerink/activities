@@ -175,7 +175,10 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	}
 
 	_renderAllowableFileTypesDropdown(assignment) {
-		if (!assignment || !assignment.submissionAndCompletionProps || !assignment.submissionAndCompletionProps.showFilesSubmissionOptions) {
+		if (!assignment ||
+			!assignment.submissionAndCompletionProps ||
+			!assignment.submissionAndCompletionProps.showFilesSubmissionOptions ||
+			assignment.submissionAndCompletionProps.allowableFileType === 'undefined') {
 			return html``;
 		}
 
