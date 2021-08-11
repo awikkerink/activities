@@ -263,7 +263,7 @@ describe('Activity Score Grade', function() {
 
 	describe('validating', () => {
 		it('validates empty score when graded', async() => {
-			defaultEntityMock.scoreOutOf = () => '';
+			defaultEntityMock.scoreOutOf = () => null;
 			defaultEntityMock.inGrades = () => false;
 
 			const activity = new ActivityScoreGrade('token');
