@@ -57,7 +57,7 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 		super.connectedCallback();
 
 		this._richTextEnabled = this._dispatchRequestProvider('d2l-provider-html-editor-enabled');
-		this._newBrightspaceEditorRubricsEnabled = this._dispatchRequestProvider('d2l-provider-new-brightspace-editor-rubrics-enabled');
+		this._newBrightspaceEditorRubricsEnabled = this._dispatchRequestProvider('d2l-provider-html-new-editor-enabled');
 	}
 
 	render() {
