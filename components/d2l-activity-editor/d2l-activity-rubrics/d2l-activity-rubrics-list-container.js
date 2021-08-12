@@ -53,6 +53,13 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 		this._newlyCreatedPotentialAssociationHref = '';
 	}
 
+	connectedCallback() {
+		super.connectedCallback();
+
+		this._richTextEnabled = this._dispatchRequestProvider('d2l-provider-html-editor-enabled');
+		this._newBrightspaceEditorRubricsEnabled = this._dispatchRequestProvider('d2l-provider-new-brightspace-editor-rubrics-enabled');
+	}
+
 	render() {
 		const entity = associationStore.get(this.href);
 
@@ -164,6 +171,18 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 		}
 
 	}
+	_dispatchRequestProvider(key) {
+		const event = new CustomEvent('d2l-request-provider', {
+			detail: { key: key },
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+
+		this.dispatchEvent(event);
+
+		return event.detail.provider;
+	}
 	_onDialogClose(e) {
 		const editNewAssociationDialog = this.shadowRoot.querySelector('#create-new-association-dialog');
 		// only update when the dialog closes, not any nested popups that bubble a close event
@@ -238,6 +257,8 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 				<d2l-rubric-editor
 					.href="${this._newlyCreatedPotentialAssociationHref}"
 					.token="${this.token}"
+					?use-new-brightspace-editor="${this._newBrightspaceEditorRubricsEnabled}"
+					?rich-text-enabled="${this._richTextEnabled}"
 					title-dropdown-hidden
 					title-hidden>
 				</d2l-rubric-editor>`;

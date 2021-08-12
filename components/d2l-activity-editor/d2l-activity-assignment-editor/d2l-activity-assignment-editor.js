@@ -55,6 +55,10 @@ class AssignmentEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityAssi
 			 * Is Creating New
 			 */
 			isNew: { type: Boolean },
+			/**
+			 * Weather or not to use the new HTML editor in the rubrics create experience
+			 */
+			newBrightspaceEditorRubricsEnabled: { type: Boolean },
 		};
 	}
 
@@ -158,6 +162,12 @@ class AssignmentEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityAssi
 
 		if (e.detail.key === 'd2l-provider-browse-outcomes-text') {
 			e.detail.provider = this.browseOutcomesText;
+			e.stopPropagation();
+			return;
+		}
+
+		if (e.detail.key === 'd2l-provider-new-brightspace-editor-rubrics-enabled') {
+			e.detail.provider = this.newBrightspaceEditorRubricsEnabled;
 			e.stopPropagation();
 			return;
 		}

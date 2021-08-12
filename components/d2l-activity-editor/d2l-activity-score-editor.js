@@ -4,7 +4,7 @@ import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/inputs/input-radio-spacer.js';
-import '@brightspace-ui/core/components/inputs/input-text.js';
+import '@brightspace-ui/core/components/inputs/input-number';
 import '@brightspace-ui/core/components/dropdown/dropdown.js';
 import '@brightspace-ui/core/components/dropdown/dropdown-menu.js';
 import '@brightspace-ui/core/components/menu/menu.js';
@@ -222,18 +222,19 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		` : html`
 			<div id="score-info-container">
 				<div id="score-out-of-container">
-					<d2l-input-text
+					<d2l-input-number
 						id="score-out-of"
 						label="${this._createSelectboxGradeItemEnabled ? this.localize('editor.gradeOutOf') : this.localize('editor.scoreOutOf')}"
 						label-hidden
+						input-width="4rem"
+						min=0.01
+						max=9999999999
+						required
 						value="${scoreOutOf}"
-						size=4
 						@change="${this._onScoreOutOfChanged}"
 						@blur="${this._onScoreOutOfChanged}"
-						aria-invalid="${scoreOutOfError ? 'true' : ''}"
 						?disabled="${!canEditScoreOutOf}"
-						novalidate
-					></d2l-input-text>
+					></d2l-input-number>
 					${scoreOutOfError ? html`
 						<d2l-tooltip
 							id="score-tooltip"
@@ -428,11 +429,13 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		store.get(this.href).scoreAndGrade.removeFromGrades();
 		this._associateGradeSetGradebookStatus(GradebookStatus.NotInGradebook);
 	}
+
 	_setGraded() {
 		this._prefetchGradeCandidates();
 		this._prefetchGradeSchemes();
 		const scoreAndGrade = store.get(this.href).scoreAndGrade;
 		scoreAndGrade.setGraded(scoreAndGrade.canEditGrades);
+		scoreAndGrade.setScoreOutOf(null); // let's us have an empty score input as undefined is converted to 0.
 		this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 	}
 	_setNewGradeName(name) {

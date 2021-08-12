@@ -124,14 +124,13 @@ export class ActivityScoreGrade {
 		// This validation was hardcoded in the original UI implementation.
 		// It might have been better to come up with a way to represent this in the Siren representation
 		// to avoid duplicating business logic, but just copying the rules to the MobX state for now.
-		if (this.inGrades && (this.scoreOutOf || '').trim().length === 0) {
+		if (this.inGrades && (this.scoreOutOf === undefined || this.scoreOutOf === null || this.scoreOutOf === '')) {
 			this.scoreOutOfError = 'emptyScoreOutOfError';
 		}
-
-		if (this.scoreOutOf && this.scoreOutOf.length !== 0 &&
-			(isNaN(this.scoreOutOf) || this.scoreOutOf < 0.01 || this.scoreOutOf > 9999999999)) {
+		else if (this.inGrades && (typeof this.scoreOutOf === 'string' || this.scoreOutOf < 0.01 || this.scoreOutOf > 9999999999)) {
 			this.scoreOutOfError = 'invalidScoreOutOfError';
 		}
+		// when scoreOutOfError is `null`, !null = true; !"string" = false.
 		return !this.scoreOutOfError;
 	}
 

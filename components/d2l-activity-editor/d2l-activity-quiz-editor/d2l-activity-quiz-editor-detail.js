@@ -236,7 +236,9 @@ class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMi
 	}
 
 	_onRefresh(e) {
-		this._importedActivityHrefs = e.detail.activities;
+		if (e.detail) {
+			this._importedActivityHrefs = e.detail.activities;
+		}
 	}
 
 	_openPreview() {
