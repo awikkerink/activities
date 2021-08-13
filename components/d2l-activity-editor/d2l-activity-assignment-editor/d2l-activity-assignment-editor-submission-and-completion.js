@@ -504,7 +504,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	}
 
 	_renderCustomFileTypesInput(assignment, activity) {
-		if (!assignment || !assignment.submissionAndCompletionProps) {
+		if (!assignment || !assignment.submissionAndCompletionProps || !activity) {
 			return html``;
 		}
 
