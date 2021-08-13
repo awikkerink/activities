@@ -85,6 +85,8 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	render() {
 		const assignment = store.get(this.href);
 		const activity = activityStore.get(this.activityUsageHref);
+		console.log("assignment");
+		console.log(assignment);
 		return html`
 			<d2l-activity-accordion-collapse ?skeleton="${this.skeleton}">
 				<span slot="header">
@@ -507,6 +509,8 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		if (!assignment || !assignment.submissionAndCompletionProps || !activity) {
 			return html``;
 		}
+
+		console.log("Asasas");
 
 		if (assignment.submissionAndCompletionProps.allowableFileType === this.allowableFileTypeCustomValue) {
 			if (this.restrictedFileTypes.length === 0) {

@@ -1,10 +1,12 @@
 import { action, computed, configure as configureMobx, decorate, observable } from 'mobx';
+import { fetchEntity } from '../../state/fetch-entity.js';
 
 configureMobx({ enforceActions: 'observed' });
 
 export class SubmissionAndCompletionProps {
 
 	constructor(entity) {
+		this.organizationHref = entity.organizationHref;
 		this.allowableFileTypeOptions = entity.allowableFileTypeOptions;
 		this.allowableFileType = String(entity.allowableFileType);
 		this.customAllowableFileTypes = String(entity.customAllowableFileTypes);
@@ -29,6 +31,22 @@ export class SubmissionAndCompletionProps {
 			const completionType = entity.completionType;
 			this.completionTypeOptions = completionType ? [completionType] : [];
 		}
+	}
+
+	async loadRestrictedExtensions() {
+		if (!this.organizationHref) {
+			return;
+		}
+
+		const sirenEntity = await fetchEntity(this.organizationHref, this.token);
+
+		runInAction(() => {
+			const entity = new CompetenciesEntity(sirenEntity);
+			this.competenciesDialogUrl = entity.dialogUrl();
+			this.canEditCompetencies = !!this.competenciesDialogUrl;
+			this.associatedCompetenciesCount = entity.associatedCount() || 0;
+			this.unevaluatedCompetenciesCount = entity.unevaluatedCount() || 0;
+		});
 	}
 
 	setAllowableFileType(value) {
@@ -118,6 +136,7 @@ export class SubmissionAndCompletionProps {
 
 decorate(SubmissionAndCompletionProps, {
 	// props
+	organizationHref: observable,
 	allowableFileTypeOptions: observable,
 	allowableFileType: observable,
 	canEditAllowableFileType: observable,
@@ -137,6 +156,7 @@ decorate(SubmissionAndCompletionProps, {
 	showFilesSubmissionOptions: computed,
 	showSubmissionsRule: computed,
 	// actions
+	loadRestrictedExtensions: action,
 	setSubmissionsRule: action,
 	setFilesSubmissionLimit: action,
 	setCompletionType: action

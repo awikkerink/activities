@@ -29,6 +29,8 @@ export class Assignment {
 
 	async fetch() {
 		const sirenEntity = await fetchEntity(this.href, this.token);
+		console.log("sirenEntity");
+		console.log(sirenEntity);
 		if (sirenEntity) {
 			const entity = new AssignmentEntity(sirenEntity, this.token, { remove: () => { } });
 			this.load(entity);
@@ -38,7 +40,11 @@ export class Assignment {
 
 	load(entity) {
 		this._entity = entity;
+		console.log(entity);
+		console.log(entity.organizationHref());
+		console.log(entity.allowableFileTypeOptions());
 		this.submissionAndCompletionProps = new SubmissionAndCompletionProps({
+			organizationHref = entity.organizationHref(),
 			allowableFileTypeOptions: entity.allowableFileTypeOptions(),
 			allowableFileType: entity.allowableFileType() ? entity.allowableFileType().value : undefined,
 			canEditAllowableFileType: entity.canEditAllowableFileType(),
@@ -57,7 +63,6 @@ export class Assignment {
 			completionTypeValue: entity.completionTypeValue(),
 			completionType: entity.completionType()
 		});
-
 		this.name = entity.name();
 		this.canEditName = entity.canEditName();
 		this.instructions = entity.canEditInstructions() ? entity.instructionsEditorHtml() : entity.instructionsHtml();
