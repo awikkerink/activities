@@ -1,4 +1,5 @@
 import { action, computed, configure as configureMobx, decorate, observable } from 'mobx';
+import { OrganizationEntity } from 'siren-sdk/src/organizations/OrganizationEntity';
 import { fetchEntity } from '../../state/fetch-entity.js';
 
 configureMobx({ enforceActions: 'observed' });
@@ -23,6 +24,7 @@ export class SubmissionAndCompletionProps {
 		this.allCompletionTypeOptions = entity.allCompletionTypeOptions;
 		this.canEditCompletionType = entity.canEditCompletionType;
 		this.completionType = entity.completionTypeValue;
+		this.restrictedExtensions = [];
 
 		const validCompletionTypes = this._getValidCompletionTypes(this.submissionType);
 		if (this.canEditCompletionType) {
@@ -39,6 +41,8 @@ export class SubmissionAndCompletionProps {
 		}
 
 		const sirenEntity = await fetchEntity(this.organizationHref, this.token);
+		const organizationEntity = new OrganizationEntity(sirenEntity);
+		const filesHref 
 
 		runInAction(() => {
 			const entity = new CompetenciesEntity(sirenEntity);
