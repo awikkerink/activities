@@ -11,7 +11,7 @@ import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { shared as activityStore } from '../state/activity-store.js';
 import { ErrorHandlingMixin } from '../error-handling-mixin.js';
-import { fetchEntity } from './state/fetch-entity';
+import { fetchEntity } from '../state/fetch-entity';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
@@ -202,10 +202,10 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	}
 	async _loadRestrictedFileTypes(activity) {
 		const relList = [Rels.organization, Rels.Files.files, Rels.restricted];
-		const activityEntity = activity._entity?._entity || {};
+		const activityEntity = (activity._entity && activity._entity._entity) || {};
 
 		const restrictedFileTypesEntity = await this._followRelPath(relList, activityEntity);
-		this.restrictedFileTypes = restrictedFileTypesEntity.properties?.extensions;
+		this.restrictedFileTypes = (restrictedFileTypesEntity.properties && restrictedFileTypesEntity.properties.extensions) || [];
 	}
 	_onNotificationEmailChanged(e) {
 		const assignment = store.get(this.href);
