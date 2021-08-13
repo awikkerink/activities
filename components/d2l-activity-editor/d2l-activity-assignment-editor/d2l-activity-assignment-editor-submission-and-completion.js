@@ -566,7 +566,6 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	_saveCustomAllowableFileTypes(event) {
 		const fileTypes = event.target.value;
 		const errorProperty = '_customFileTypesError';
-
 		if (this._isInvalidFileTypes(fileTypes)) {
 			const invalidCustomFileTypesErrorLangterm = 'customFiletypesError';
 			const tooltipId = 'custom-filetypes-tooltip';
