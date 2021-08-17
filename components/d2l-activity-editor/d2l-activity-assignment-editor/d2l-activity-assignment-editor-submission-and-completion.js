@@ -21,7 +21,7 @@ import { selectStyles } from '@brightspace-ui/core/components/inputs/input-selec
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 import { shared as store } from './state/assignment-store.js';
 
-const allowableFileTypeDocumentationURL = 'https://documentation.brightspace.com/EN/le/assignments/learner/assignments_intro_1.htm';
+const allowableFileTypeDocumentationURL = 'https://documentation.brightspace.com/EN/le/assignments/instructor/assignments_restricted_file_extensions.htm';
 
 class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(ActivityEditorMixin(RtlMixin(ErrorHandlingMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement))))) {
 
@@ -570,7 +570,6 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	_saveCustomAllowableFileTypes(event) {
 		const fileTypes = event.target.value;
 		const errorProperty = '_customFileTypesError';
-
 		if (this._isInvalidFileTypes(fileTypes)) {
 			const invalidCustomFileTypesErrorLangterm = 'customFiletypesError';
 			const tooltipId = 'custom-filetypes-tooltip';
