@@ -2,6 +2,8 @@ import './d2l-activity-assignment-annotations-editor.js';
 import './d2l-activity-assignment-annotations-summary.js';
 import './d2l-activity-assignment-anonymous-marking-editor.js';
 import './d2l-activity-assignment-anonymous-marking-summary.js';
+import '../d2l-activity-evaluators/d2l-activity-evaluator-delegation-editor.js';
+import '../d2l-activity-evaluators/d2l-activity-evaluator-delegation-summary.js';
 import '../d2l-activity-competencies.js';
 import '../d2l-activity-competencies-summary.js';
 import '../d2l-activity-rubrics/d2l-activity-rubrics-list-wrapper.js';
@@ -51,12 +53,14 @@ class ActivityAssignmentEvaluationEditor extends SkeletonMixin(LocalizeActivityA
 				${html`<li slot="summary-items">${this._renderAnnotationsSummary()}</li>`}
 				${html`<li slot="summary-items">${this._renderAnonymousMarkingSummary()}</li>`}
 				${assignment.canEditTurnitin ? html`<li slot="summary-items">${this._renderTurnitinSummary()}</li>` : null}
+				${html`<li slot="summary-items">${this._renderEvaluatorSummary()}</li>`}
 				<span slot="components">
 					${ html`${this._renderRubricsCollectionEditor()}`}
 					${activity.canEditCompetencies ? this._renderCompetenciesOpener() : null}
 					${html`${this._renderAnnotationsEditor()}`}
 					${html`${this._renderAnonymousMarkingEditor()}`}
 					${assignment.canEditTurnitin ? html`${this._renderTurnitinEditor()}` : null}
+					${html`${this._renderEvaluatorEditor()}`}
 				</span>
 			</d2l-activity-accordion-collapse>
 		`;
@@ -157,6 +161,24 @@ class ActivityAssignmentEvaluationEditor extends SkeletonMixin(LocalizeActivityA
 				href="${this.href}"
 				.token="${this.token}">
 			</d2l-assignment-turnitin-summary>
+		`;
+	}
+
+	_renderEvaluatorSummary() {
+		return html`
+		<d2l-activity-evaluator-delegation-summary
+			.href="${this.activityUsageHref}"
+			.token="${this.token}">
+		</d2l-activity-evaluator-delegation-summary>
+		`;
+	}
+
+	_renderEvaluatorEditor() {
+		return html`
+			<d2l-activity-evaluator-delegation-editor
+				.href="${this.activityUsageHref}"
+				.token="${this.token}">
+			</d2l-activity-evaluator-delegation-editor>
 		`;
 	}
 
