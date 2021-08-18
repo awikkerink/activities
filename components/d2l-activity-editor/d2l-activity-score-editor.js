@@ -351,7 +351,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		if (this._createSelectboxGradeItemEnabled) {
 			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
 			inGrades = associateGradeEntity && associateGradeEntity.gradebookStatus !== GradebookStatus.NotInGradebook;
-			canEditGrades = associateGradeEntity.canCreateNewGrade;
+			canEditGrades = associateGradeEntity && associateGradeEntity.canCreateNewGrade;
 		} else {
 			const scoreAndGrade = store.get(this.href).scoreAndGrade;
 			inGrades = scoreAndGrade && scoreAndGrade.inGrades;
