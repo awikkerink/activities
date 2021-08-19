@@ -22,6 +22,7 @@ describe('Assignment ', function() {
 
 		AssignmentEntity.mockImplementation(() => {
 			return {
+				organizationHref: () => 'http://organizationHref.com',
 				name: () => 'Homework 101',
 				canEditName: () => true,
 				instructionsEditorHtml: () => 'These are your instructions',
