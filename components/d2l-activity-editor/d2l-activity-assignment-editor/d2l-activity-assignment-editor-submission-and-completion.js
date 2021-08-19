@@ -9,13 +9,10 @@ import { bodyCompactStyles, bodySmallStyles, labelStyles } from '@brightspace-ui
 import { css, html } from 'lit-element/lit-element.js';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
-import { shared as activityStore } from '../state/activity-store.js';
 import { ErrorHandlingMixin } from '../error-handling-mixin.js';
-import { fetchEntity } from '../state/fetch-entity';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
-import { Rels } from 'd2l-hypermedia-constants';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
@@ -30,8 +27,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		return {
 			_customFileTypesError: { type: String },
 			href: { type: String },
-			token: { type: Object },
-			activityUsageHref: { type: String }
+			token: { type: Object }
 		};
 	}
 
@@ -84,7 +80,6 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 
 	render() {
 		const assignment = store.get(this.href);
-		const activity = activityStore.get(this.activityUsageHref);
 		return html`
 			<d2l-activity-accordion-collapse ?skeleton="${this.skeleton}">
 				<span slot="header">
@@ -102,7 +97,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 					${this._renderAssignmentSubmissionType(assignment)}
 					${this._renderAssignmentFilesSubmissionLimit(assignment)}
 					${this._renderAllowableFileTypesDropdown(assignment)}
-					${this._renderCustomFileTypesInput(assignment, activity)}
+					${this._renderCustomFileTypesInput(assignment)}
 					${this._renderAssignmentSubmissionsRule(assignment)}
 					${this._renderAssignmentCompletionType(assignment)}
 					${this._renderAssignmentSubmissionNotificationEmail(assignment)}
@@ -118,27 +113,6 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		}
 
 		await assignment.save();
-	}
-	/**
-	 * Follows a list of rels beginning at a specific entity.
-	 * @async
-	 * @param {String[]} relList List of rels to follow
-	 * @param {object} entity Beginning entity
-	 * @returns {object|null|undefined} The entity at the end of the rel path. {null|undefined} if an entity in the chain is missing or doesn't have the next rel.
-	 */
-	async _followRelPath(relList, entity) {
-		if (!entity || relList.length === 0) return entity;
-
-		const source = (
-			entity.hasLinkByRel(relList[0])
-			&& entity.getLinkByRel(relList[0])
-			|| {}).href;
-
-		if (source) {
-			return await this._followRelPath(relList.slice(1), await fetchEntity(source, this.token));
-		}
-
-		return null;
 	}
 	_getAllowableFileTypeOptions(assignment) {
 		if (!assignment || !assignment.submissionAndCompletionProps || !assignment.submissionAndCompletionProps.allowableFileTypeOptions) {
@@ -192,6 +166,10 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		`;
 	}
 	_isInvalidFileTypes(fileTypes) {
+		if (!fileTypes || !this.restrictedFileTypes) {
+			return true;
+		}
+
 		const fileTypesList = fileTypes.split(',').map(type => type.trim());
 		const minimumExtensionLength = 3;
 
@@ -200,12 +178,8 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 
 		return hasInvalidFileTypes || hasInvalidLength;
 	}
-	async _loadRestrictedFileTypes(activity) {
-		const relList = [Rels.organization, Rels.Files.files, Rels.restricted];
-		const activityEntity = (activity._entity && activity._entity._entity) || {};
-
-		const restrictedFileTypesEntity = await this._followRelPath(relList, activityEntity);
-		this.restrictedFileTypes = (restrictedFileTypesEntity.properties && restrictedFileTypesEntity.properties.extensions) || [];
+	async _loadRestrictedFileTypes(assignment) {
+		this.restrictedFileTypes = await assignment.loadRestrictedExtensions() || [];
 	}
 	_onNotificationEmailChanged(e) {
 		const assignment = store.get(this.href);
@@ -503,14 +477,14 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		`;
 	}
 
-	_renderCustomFileTypesInput(assignment, activity) {
-		if (!assignment || !assignment.submissionAndCompletionProps || !activity) {
+	_renderCustomFileTypesInput(assignment) {
+		if (!assignment || !assignment.submissionAndCompletionProps) {
 			return html``;
 		}
 
 		if (assignment.submissionAndCompletionProps.allowableFileType === this.allowableFileTypeCustomValue) {
 			if (this.restrictedFileTypes.length === 0) {
-				this._loadRestrictedFileTypes(activity);
+				this._loadRestrictedFileTypes(assignment);
 			}
 			return html`
 				<div>

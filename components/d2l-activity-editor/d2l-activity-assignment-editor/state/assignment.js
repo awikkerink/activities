@@ -3,6 +3,9 @@ import { AnonymousMarkingProps } from './assignment-anonymous-marking.js';
 import { AssignmentEntity } from 'siren-sdk/src/activities/assignments/AssignmentEntity.js';
 import { AssignmentTypeProps } from './assignment-type.js';
 import { fetchEntity } from '../../state/fetch-entity.js';
+import { FilesHomeEntity } from 'siren-sdk/src/files/FilesHomeEntity';
+import { OrganizationEntity } from 'siren-sdk/src/organizations/OrganizationEntity';
+import { RestrictedEntity } from 'siren-sdk/src/files/RestrictedEntity';
 import { SubmissionAndCompletionProps } from './assignment-submission-and-completion.js';
 
 configureMobx({ enforceActions: 'observed' });
@@ -38,6 +41,7 @@ export class Assignment {
 
 	load(entity) {
 		this._entity = entity;
+		this.organizationHref = entity.getOrganizationHref(),
 		this.submissionAndCompletionProps = new SubmissionAndCompletionProps({
 			allowableFileTypeOptions: entity.allowableFileTypeOptions(),
 			allowableFileType: entity.allowableFileType() ? entity.allowableFileType().value : undefined,
@@ -57,7 +61,6 @@ export class Assignment {
 			completionTypeValue: entity.completionTypeValue(),
 			completionType: entity.completionType()
 		});
-
 		this.name = entity.name();
 		this.canEditName = entity.canEditName();
 		this.instructions = entity.canEditInstructions() ? entity.instructionsEditorHtml() : entity.instructionsHtml();
@@ -104,9 +107,36 @@ export class Assignment {
 		});
 	}
 
+	async loadRestrictedExtensions() {
+		if (!this.organizationHref) {
+			return;
+		}
+		const sirenOrganizationEntity = await fetchEntity(this.organizationHref, this.token);
+		const organizationEntity = new OrganizationEntity(sirenOrganizationEntity);
+
+		const filesUrl = organizationEntity.filesUrl();
+		if (!filesUrl) {
+			return;
+		}
+		const sirenFilesEntity = await fetchEntity(filesUrl, this.token);
+		const filesHomeEntity = new FilesHomeEntity(sirenFilesEntity);
+
+		const restrictedUrl = filesHomeEntity.restrictedUrl();
+		if (!restrictedUrl) {
+			return;
+		}
+		const sirenRestrictedEntity = await fetchEntity(restrictedUrl, this.token);
+		const restrictedEntity = new RestrictedEntity(sirenRestrictedEntity);
+
+		const restrictedExtensions = restrictedEntity.extensions();
+
+		return restrictedExtensions;
+	}
+
 	resetDefaultScoringRubricId() {
 		this.defaultScoringRubricId = '-1';
 	}
+
 	async save() {
 		if (!this._entity) {
 			return;
@@ -238,6 +268,7 @@ export class Assignment {
 
 decorate(Assignment, {
 	// props
+	organizationHref: observable,
 	submissionAndCompletionProps: observable,
 	name: observable,
 	canEditName: observable,
@@ -267,6 +298,7 @@ decorate(Assignment, {
 	showNotificationEmail: computed,
 	// actions
 	load: action,
+	loadRestrictedExtensions: action,
 	setName: action,
 	setInstructions: action,
 	setAnonymousMarking: action,
