@@ -55,7 +55,7 @@ export class ActivityUsage extends WorkingCopy {
 		]);
 	}
 
-	async loadCompetencies(bypassCache) {//
+	async loadCompetencies(bypassCache) {
 		if (!this.competenciesHref) {
 			return;
 		}

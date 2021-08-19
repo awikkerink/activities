@@ -56,7 +56,6 @@ class AssignmentEditorSecondary extends AsyncContainerMixin(SkeletonMixin(RtlMix
 
 		const submissionCompletionCategorizationAccordian = html`
 			<d2l-activity-assignment-editor-submission-and-completion-editor
-				.activityUsageHref="${this.activityUsageHref}"
 				href="${this.href}"
 				.token="${this.token}"
 				?skeleton="${this.skeleton}">
