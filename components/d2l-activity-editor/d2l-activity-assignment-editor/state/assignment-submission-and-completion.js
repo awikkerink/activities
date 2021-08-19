@@ -21,7 +21,6 @@ export class SubmissionAndCompletionProps {
 		this.allCompletionTypeOptions = entity.allCompletionTypeOptions;
 		this.canEditCompletionType = entity.canEditCompletionType;
 		this.completionType = entity.completionTypeValue;
-		this.restrictedExtensions = [];
 
 		const validCompletionTypes = this._getValidCompletionTypes(this.submissionType);
 		if (this.canEditCompletionType) {
@@ -119,7 +118,6 @@ export class SubmissionAndCompletionProps {
 
 decorate(SubmissionAndCompletionProps, {
 	// props
-	organizationHref: observable,
 	allowableFileTypeOptions: observable,
 	allowableFileType: observable,
 	canEditAllowableFileType: observable,

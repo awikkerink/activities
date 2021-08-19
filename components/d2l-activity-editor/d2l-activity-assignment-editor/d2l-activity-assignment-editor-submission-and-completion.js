@@ -167,7 +167,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 	}
 	_isInvalidFileTypes(fileTypes) {
 		if (!fileTypes || !this.restrictedFileTypes) {
-			return;
+			return true;
 		}
 
 		const fileTypesList = fileTypes.split(',').map(type => type.trim());
