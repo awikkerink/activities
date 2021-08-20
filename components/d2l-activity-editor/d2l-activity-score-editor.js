@@ -26,6 +26,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	static get properties() {
 		return {
 			activityName: { type: String },
+			disableResetToUngraded: { type: Boolean },
 			_focusUngraded: { type: Boolean },
 			_createSelectboxGradeItemEnabled: { type: Boolean },
 			_associateGradeHref: { type: String }
@@ -164,6 +165,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	constructor() {
 		super(store);
 		this.saveOrder = 500;
+		this.disableResetToUngraded = false;
 	}
 
 	connectedCallback() {
@@ -266,6 +268,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 									${this._addOrRemoveMenuItem()}
 									<d2l-menu-item
 										text="${this.localize('editor.setUngraded')}"
+										?disabled="${this.disableResetToUngraded}"
 										@d2l-menu-item-select="${this._setUngraded}"
 									></d2l-menu-item>
 								</d2l-menu>

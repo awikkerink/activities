@@ -158,7 +158,8 @@ class AssignmentEditorDetail extends AsyncContainerMixin(SkeletonMixin(SaveStatu
 						?skeleton="${this.skeleton}"
 						.href="${this.activityUsageHref}"
 						.token="${this.token}"
-						.activityName="${name}">
+						.activityName="${name}"
+						.disableResetToUngraded="${hasSubmissions}">
 					</d2l-activity-score-editor>
 				</div>
 
