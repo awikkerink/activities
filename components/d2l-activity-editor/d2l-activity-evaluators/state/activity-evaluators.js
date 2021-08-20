@@ -1,4 +1,5 @@
 import { action, configure as configureMobx, decorate, observable, toJS } from 'mobx';
+import { performSirenAction } from 'siren-sdk/src/es6/SirenAction';
 import { fetchEntity } from '../../state/fetch-entity.js';
 
 configureMobx({ enforceActions: 'observed' });
@@ -49,10 +50,10 @@ export class ActivityEvaluators {
 		let allEvaluators = await fetchEntity(evaluatorsHref, this.token, false);
 		let allStudents = await fetchEntity(studentsHref, this.token, false);
 
-		let mappingEntity = await fetchEntity(mappingHref, this.token, false);
+		this._mappingEntity = await fetchEntity(mappingHref, this.token, false);
 
-		let ruleInfo = mappingEntity.properties.ruleInfo;
-		let ruleType  = mappingEntity.properties.ruleType;
+		let ruleInfo = this._mappingEntity.properties.ruleInfo;
+		let ruleType  = this._mappingEntity.properties.ruleType;
 
 
 
@@ -94,7 +95,7 @@ export class ActivityEvaluators {
 
 
 		if(ruleInfo){
-			this.ruleInfo = JSON.parse(mappingEntity.properties.ruleInfo);
+			this.ruleInfo = JSON.parse(this._mappingEntity.properties.ruleInfo);
 		} else {
 			this.ruleInfo = null;
 		};
@@ -112,14 +113,14 @@ export class ActivityEvaluators {
 		} else {
 
 			this.ruleInfo.forEach( y => {
-				y.forEach( z => {
+				y.EvaluatorActors.forEach( z => {
 					let id = z.split("_").pop();
 
 					if(!this.mapping[id]) {
 						this.mapping[id] = [];
 					}
 
-					this.mapping[id].push(y);
+					this.mapping[id].push(y.StudentActor.split("_").pop());
 				});
 			});
 		}
@@ -140,8 +141,39 @@ export class ActivityEvaluators {
 		return toJS(this.evaluatorsMap);
 	}
 
-	async save() {
+	async save(map) {
+		let apiMap = [];
 
+		this.studentsMap.forEach( x => {
+			let evaluatorList = [];
+			map.forEach( y => {
+				if(y[1].includes(x.id)){
+					evaluatorList.push("user_"+y[0]);
+				}
+			})
+
+			apiMap.push({
+				"StudentActor": "user_" + x.id,
+				"EvaluatorActors": evaluatorList
+			});
+
+
+		})
+
+		const action = this._mappingEntity.getActionByName('set-evaluator-mapping');
+		const fields  = [
+			{
+				name: 'ruleType',
+			 	value: '69e86870-0157-426a-a2bd-80fa1b6ed23c'
+			},{
+				name: 'ruleInfo',
+				value: JSON.stringify(apiMap)
+			}
+		];
+
+		console.log(map)
+
+		await performSirenAction(this.token, action, fields, true);
 	}
 }
 
