@@ -35,6 +35,14 @@ class ActivityEvaluatorDelegationSummary
 		super(store);
 	}
 
+	_renderEvaluators(evaluators) {
+
+
+
+
+
+	}
+
 	render() {
 
 		const entity = store.get(this.href);
@@ -42,7 +50,12 @@ class ActivityEvaluatorDelegationSummary
 			return html``;
 		}
 
-		return html` Using default evaluators `;
+		let students = entity.getStudents();
+		let evaluators = entity.getEvaluators();
+
+		const itemTemplate = [];
+
+		return html`${itemTemplate}`;
 	}
 
 }
