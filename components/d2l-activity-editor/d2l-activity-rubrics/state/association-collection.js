@@ -2,6 +2,7 @@ import { action, configure as configureMobx, decorate, observable, runInAction }
 import { Association } from 'siren-sdk/src/activities/Association.js';
 import { Associations } from 'siren-sdk/src/activities/Associations.js';
 import { fetchEntity } from '../../state/fetch-entity.js';
+import { RubricEntity } from 'siren-sdk/src/rubrics/RubricEntity.js';
 
 configureMobx({ enforceActions: 'observed' });
 
@@ -41,15 +42,22 @@ export class AssociationCollection {
 	}
 
 	async addDefaultScoringRubricOption(rubricHref) {
-		if (rubricHref) {
-			const rubricEntity = await fetchEntity(rubricHref, this.token);
-			const rubricId = this.getRubricIdFromHref(rubricHref);
+		if (!rubricHref) {
+			return;
+		}
 
-			const rubricAlreadyAnOption = this.defaultScoringRubricOptions.some(option => option.value === rubricId);
+		const sirenEntity = await fetchEntity(rubricHref, this.token);
+		const rubricEntity = new RubricEntity(sirenEntity);
 
-			if (rubricEntity && !rubricAlreadyAnOption) {
-				runInAction(() => this.defaultScoringRubricOptions.push({ title: rubricEntity.properties.name, value: rubricId }));
-			}
+		if (!rubricEntity || rubricEntity.isTextOnly()) {
+			return;
+		}
+
+		const rubricId = rubricEntity.rubricId();
+		const rubricAlreadyAnOption = this.defaultScoringRubricOptions.some(option => option.value === rubricId);
+
+		if (!rubricAlreadyAnOption) {
+			runInAction(() => this.defaultScoringRubricOptions.push({ title: rubricEntity.name(), value: rubricId }));
 		}
 	}
 	addPotentialAssociationToMap(rubricHref, formattedEntity) {
