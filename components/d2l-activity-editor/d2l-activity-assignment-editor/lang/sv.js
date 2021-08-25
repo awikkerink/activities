@@ -3,6 +3,12 @@
 export default {
 	"hdrReleaseConditions": "Publiceringsvillkor", // release conditions heading
 	"hlpReleaseConditions": "Användarna kan inte få åtkomst till eller visa tilldelningen om de inte uppfyller publiceringsvillkoren.", // release conditions help
+	"allowableFiletypes": "Tillåtna filtillägg", // Label for the allowable filetypes field when creating/editing an assignment
+	"allowableFileTypesHelp": "Öppna information om tillåtna filtillägg i en ny flik", // Help icon for allowable filetypes info
+	"customFiletypes": "Anpassade filtyper", // ARIA label for custom filetypes field
+	"customFiletypesNotification": "Ange ett eller flera tillåtna filtillägg avgränsade med kommatecken.", // text for adding custom filetypes
+	"customFiletypesPlaceholder": "exempel: .pdf, .txt, .html", // Placeholder for the custom filetypes field
+	"customFiletypesError": "Ange giltiga filtillägg", // Error message to inform user that their extension type is invalid
 	"completionType": "Markerad som slutförd", // Label for the completion type field when creating/editing an assignment
 	"lblAnonymousMarking": "Anonym märkning", // Label for anonymous marking
 	"chkAnonymousMarking": "Dölj elevens namn vid bedömningen", // Checkbox for anonymous marking

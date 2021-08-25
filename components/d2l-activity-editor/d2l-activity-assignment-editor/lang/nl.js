@@ -3,6 +3,12 @@
 export default {
 	"hdrReleaseConditions": "Releasevoorwaarden", // release conditions heading
 	"hlpReleaseConditions": "Gebruikers hebben geen toegang tot de opdracht en kunnen deze niet bekijken tenzij ze aan de releasevoorwaarden voldoen.", // release conditions help
+	"allowableFiletypes": "Toegestane bestandsextensies", // Label for the allowable filetypes field when creating/editing an assignment
+	"allowableFileTypesHelp": "Open informatie over toegestane bestandsextensies in een nieuw tabblad", // Help icon for allowable filetypes info
+	"customFiletypes": "Aangepaste bestandstypen", // ARIA label for custom filetypes field
+	"customFiletypesNotification": "Voer een of meer toegestane bestandsextensies in, gescheiden door een komma.", // text for adding custom filetypes
+	"customFiletypesPlaceholder": "voorbeeld: .pdf, .txt, .html", // Placeholder for the custom filetypes field
+	"customFiletypesError": "Voer geldige bestandsextensies in", // Error message to inform user that their extension type is invalid
 	"completionType": "Gemarkeerd als voltooid", // Label for the completion type field when creating/editing an assignment
 	"lblAnonymousMarking": "Anonieme beoordeling", // Label for anonymous marking
 	"chkAnonymousMarking": "De namen van studenten verbergen tijdens de evaluatie", // Checkbox for anonymous marking

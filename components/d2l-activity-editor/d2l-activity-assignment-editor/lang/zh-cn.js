@@ -3,6 +3,12 @@
 export default {
 	"hdrReleaseConditions": "发布条件", // release conditions heading
 	"hlpReleaseConditions": "除非满足发布条件，否则用户将无法访问或查看作业。", // release conditions help
+	"allowableFiletypes": "允许的文件扩展名：", // Label for the allowable filetypes field when creating/editing an assignment
+	"allowableFileTypesHelp": "在新选项卡中打开允许的文件扩展名信息", // Help icon for allowable filetypes info
+	"customFiletypes": "自定义文件类型", // ARIA label for custom filetypes field
+	"customFiletypesNotification": "输入一个或多个允许的文件扩展名，以逗号分隔。", // text for adding custom filetypes
+	"customFiletypesPlaceholder": "示例：.pdf、.txt、.html", // Placeholder for the custom filetypes field
+	"customFiletypesError": "请输入有效的文件扩展名", // Error message to inform user that their extension type is invalid
 	"completionType": "标记为已完成", // Label for the completion type field when creating/editing an assignment
 	"lblAnonymousMarking": "匿名标记", // Label for anonymous marking
 	"chkAnonymousMarking": "评估时隐藏学生姓名", // Checkbox for anonymous marking

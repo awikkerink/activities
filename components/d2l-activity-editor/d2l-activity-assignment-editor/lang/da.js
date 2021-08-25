@@ -3,6 +3,12 @@
 export default {
 	"hdrReleaseConditions": "Betingelser for offentliggørelse", // release conditions heading
 	"hlpReleaseConditions": "Brugere kan ikke få adgang til eller få vist opgaven, medmindre de opfylder betingelserne for offentliggørelse.", // release conditions help
+	"allowableFiletypes": "Tilladte filtyper", // Label for the allowable filetypes field when creating/editing an assignment
+	"allowableFileTypesHelp": "Åbn oplysninger om tilladte filtyper i en ny fane", // Help icon for allowable filetypes info
+	"customFiletypes": "Brugerdefinerede filtyper", // ARIA label for custom filetypes field
+	"customFiletypesNotification": "Indtast et eller flere tilladte filtypenavne adskilt af et komma.", // text for adding custom filetypes
+	"customFiletypesPlaceholder": "eksempel: .pdf, .txt, .html", // Placeholder for the custom filetypes field
+	"customFiletypesError": "Indtast gyldige filtypenavne", // Error message to inform user that their extension type is invalid
 	"completionType": "Markeret som fuldført", // Label for the completion type field when creating/editing an assignment
 	"lblAnonymousMarking": "Anonym markering", // Label for anonymous marking
 	"chkAnonymousMarking": "Skjul navne på elever under vurderingen", // Checkbox for anonymous marking

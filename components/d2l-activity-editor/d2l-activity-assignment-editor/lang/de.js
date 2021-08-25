@@ -3,6 +3,12 @@
 export default {
 	"hdrReleaseConditions": "Freigabebedingungen", // release conditions heading
 	"hlpReleaseConditions": "Benutzer können nur dann auf die Übung zugreifen oder sie anzeigen, wenn sie die Freigabebedingungen erfüllen.", // release conditions help
+	"allowableFiletypes": "Zulässige Dateierweiterungen", // Label for the allowable filetypes field when creating/editing an assignment
+	"allowableFileTypesHelp": "Öffnen Sie die Informationen zu zulässigen Dateierweiterungen auf einer neuen Registerkarte", // Help icon for allowable filetypes info
+	"customFiletypes": "Benutzerdefinierte Dateitypen", // ARIA label for custom filetypes field
+	"customFiletypesNotification": "Geben Sie eine oder mehrere zulässige Dateierweiterungen durch Komma getrennt ein.", // text for adding custom filetypes
+	"customFiletypesPlaceholder": "Beispiel: .pdf, .txt, .html", // Placeholder for the custom filetypes field
+	"customFiletypesError": "Geben Sie gültige Dateierweiterungen ein", // Error message to inform user that their extension type is invalid
 	"completionType": "Als „abgeschlossen“ markiert", // Label for the completion type field when creating/editing an assignment
 	"lblAnonymousMarking": "Anonyme Markierung", // Label for anonymous marking
 	"chkAnonymousMarking": "Teilnehmernamen bei Bewertung verbergen", // Checkbox for anonymous marking
