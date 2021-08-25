@@ -2,12 +2,12 @@ import '../../shared-components/d2l-activity-content-editor-title.js';
 import '../d2l-activity-content-file-loading.js';
 import '@brightspace-ui/core/components/menu/menu-item-separator.js';
 import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
-import { ContentFileEntity, FILE_TYPES } from 'siren-sdk/src/activities/content/ContentFileEntity.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { activityContentEditorStyles } from '../../shared-components/d2l-activity-content-editor-styles.js';
 import { ActivityEditorMixin } from '../../../mixins/d2l-activity-editor-mixin.js';
 import { activityHtmlEditorStyles } from '../../shared-components/d2l-activity-html-editor-styles.js';
 import { ContentEditorConstants } from '../../constants';
+import { ContentFileEntity } from 'siren-sdk/src/activities/content/ContentFileEntity.js';
 import { shared as contentFileStore } from '../state/content-file-store.js';
 import { ContentHtmlFileTemplatesEntity } from 'siren-sdk/src/activities/content/ContentHtmlFileTemplatesEntity.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
@@ -34,16 +34,13 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 			htmlFileTemplates: { type: Array },
 			pageContent: { typeof: Text },
 			sortHTMLTemplatesByName: { type: Boolean },
+			contentFileActions: { type: Object }
 		};
 	}
 
 	static get styles() {
 		return [
 			super.styles,
-			labelStyles,
-			activityContentEditorStyles,
-			activityHtmlEditorStyles,
-			bodySmallStyles,
 			css`
 				.d2l-page-content-label-select-template-container {
 					align-items: center;
@@ -79,7 +76,6 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 
 	connectedCallback() {
 		super.connectedCallback();
-		this.saveTitle = this.saveTitle.bind(this);
 	}
 
 	render() {
@@ -95,15 +91,15 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 		return html`
 			<d2l-activity-content-editor-title
 				.entity=${contentFileEntity}
-				.onSave=${this.saveTitle}
+				.onSave=${this.contentFileActions.saveTitle}
 				?skeleton="${this.skeleton}"
 			>
 			</d2l-activity-content-editor-title>
 			<d2l-activity-content-editor-due-date
 				.href="${this.activityUsageHref}"
 				.token="${this.token}"
-				?skeleton="${this.skeleton}"
-				expanded="true"
+				?skeleton=${this.skeleton}
+				?expanded=${true}
 			>
 			</d2l-activity-content-editor-due-date>
 			<div id="content-page-content-container">
@@ -111,15 +107,6 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 			</div>
 			${this._renderTemplateReplacementConfirmationdialog()}
 		`;
-	}
-
-	async cancelCreate() {
-		const contentFileEntity = contentFileStore.getContentFileActivity(this.href);
-		if (!contentFileEntity) {
-			return;
-		}
-
-		await contentFileEntity.cancelCreate();
 	}
 
 	hasPendingChanges() {
@@ -152,14 +139,6 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 		});
 
 		await this.dispatchEvent(event);
-	}
-
-	saveTitle(title) {
-		const contentFileActivity = contentFileStore.getContentFileActivity(this.href);
-		if (!contentFileActivity) {
-			return;
-		}
-		contentFileActivity.setTitle(title);
 	}
 
 	_getHtmlTemplateLoadingMenuItem() {
@@ -354,26 +333,13 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 	</d2l-dropdown-button-subtle>`;
 	}
 
-	_renderUnknownLoadingFileType() {
-		return html`
-			<d2l-activity-content-file-loading
-				.href="${this.href}"
-				.token="${this.token}"
-			></d2l-activity-content-file-loading>
-		`;
-	}
-
 	_saveOnChange(jobName) {
 		this._debounceJobs[jobName] && this._debounceJobs[jobName].flush();
 	}
 
 	_savePageContent(htmlContent) {
-		const contentFileEntity = contentFileStore.getContentFileActivity(this.href);
-		if (!contentFileEntity) {
-			return;
-		}
-		contentFileEntity.setPageContent(htmlContent);
 		this.pageContent = htmlContent;
+		this.contentFileActions.savePageContent(htmlContent);
 	}
 
 	_tryOverwriteContent(htmlContent) {

@@ -4,22 +4,17 @@ import '@brightspace-ui/core/components/menu/menu-item-separator.js';
 import './html-files/d2l-activity-content-html-file-detail.js';
 import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { ContentFileEntity, FILE_TYPES } from 'siren-sdk/src/activities/content/ContentFileEntity.js';
-import { css, html } from 'lit-element/lit-element.js';
 import { activityContentEditorStyles } from '../shared-components/d2l-activity-content-editor-styles.js';
 import { ActivityEditorMixin } from '../../mixins/d2l-activity-editor-mixin.js';
 import { activityHtmlEditorStyles } from '../shared-components/d2l-activity-html-editor-styles.js';
-import { ContentEditorConstants } from '../constants';
 import { shared as contentFileStore } from './state/content-file-store.js';
-import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ErrorHandlingMixin } from '../../error-handling-mixin.js';
+import { html } from 'lit-element/lit-element.js';
 import { LocalizeActivityEditorMixin } from '../../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
-import { timeOut } from '@polymer/polymer/lib/utils/async.js';
-
-const editorKeyInitial = 'content-page-content';
 
 class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivityEditorMixin(EntityMixinLit(RtlMixin(ActivityEditorMixin(MobxLitElement)))))) {
 
@@ -39,17 +34,6 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 			activityContentEditorStyles,
 			activityHtmlEditorStyles,
 			bodySmallStyles,
-			css`
-				.d2l-page-content-label-select-template-container {
-					align-items: center;
-					display: flex;
-					justify-content: space-between;
-					margin-bottom: 6px;
-				}
-				.d2l-menu-item-span {
-					padding: 15px 20px;
-				}
-			`,
 		];
 	}
 
@@ -59,9 +43,7 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 		this._setEntityType(ContentFileEntity);
 		this.skeleton = true;
 		this.saveOrder = 500;
-		this.pageContent = null;
-		this.editorKey = editorKeyInitial;
-		this.replacementContent = null;
+		this.contentFileActions = {};
 
 		const context = JSON.parse(document.documentElement.getAttribute('data-he-context'));
 		this.orgUnitId = context ? context.orgUnitId : '';
@@ -70,6 +52,12 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 	connectedCallback() {
 		super.connectedCallback();
 		this.saveTitle = this.saveTitle.bind(this);
+		this.savePageContent = this.savePageContent.bind(this);
+
+		this.contentFileActions = {
+			saveTitle: this.saveTitle,
+			savePageContent: this.savePageContent,
+		};
 	}
 
 	render() {
@@ -77,7 +65,6 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 
 		if (contentFileEntity) {
 			this.skeleton = false;
-			this.pageContent = contentFileEntity.fileContent;
 
 			switch (contentFileEntity.fileType) {
 				case FILE_TYPES.html:
@@ -86,7 +73,9 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 							.href=${this.href}
 							.token=${this.token}
 							.activityUsageHref=${this.activityUsageHref}
+							.contentFileActions=${this.contentFileActions}
 							?skeleton=${this.skeleton}
+							?sortHTMLTemplatesByName=${this.sortHTMLTemplatesByName}
 						>
 						</d2l-activity-content-html-file-detail>
 					`;
@@ -105,36 +94,12 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 		await contentFileEntity.cancelCreate();
 	}
 
-	hasPendingChanges() {
-		const contentFileActivity = contentFileStore.getContentFileActivity(this.href);
-		if (!contentFileActivity) {
-			return false;
-		}
-		return contentFileActivity.dirty;
-	}
-
-	async save() {
-		const contentFileActivity = contentFileStore.getContentFileActivity(this.href);
-
-		if (!contentFileActivity) {
+	savePageContent(pageContent) {
+		const contentFileEntity = contentFileStore.getContentFileActivity(this.href);
+		if (!contentFileEntity) {
 			return;
 		}
-
-		this._saveOnChange('htmlContent');
-
-		const originalActivityUsageHref = this.activityUsageHref;
-		const updatedEntity = await contentFileActivity.save();
-		const event = new CustomEvent('d2l-content-working-copy-committed', {
-			detail: {
-				originalActivityUsageHref: originalActivityUsageHref,
-				updatedActivityUsageHref: updatedEntity.getActivityUsageHref()
-			},
-			bubbles: true,
-			composed: true,
-			cancelable: true
-		});
-
-		await this.dispatchEvent(event);
+		contentFileEntity.setPageContent(pageContent);
 	}
 
 	saveTitle(title) {
@@ -145,20 +110,6 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 		contentFileActivity.setTitle(title);
 	}
 
-	_onPageContentChange(e) {
-		const htmlContent = e.detail.content;
-		this._savePageContent(htmlContent);
-	}
-
-	_onPageContentChangeDebounced(e) {
-		const htmlContent = e.detail.content;
-		this._debounceJobs.description = Debouncer.debounce(
-			this._debounceJobs.description,
-			timeOut.after(ContentEditorConstants.DEBOUNCE_TIMEOUT),
-			() => this._savePageContent(htmlContent)
-		);
-	}
-
 	_renderUnknownLoadingFileType() {
 		return html`
 			<d2l-activity-content-file-loading
@@ -166,30 +117,6 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 				.token="${this.token}"
 			></d2l-activity-content-file-loading>
 		`;
-	}
-
-	_saveOnChange(jobName) {
-		this._debounceJobs[jobName] && this._debounceJobs[jobName].flush();
-	}
-
-	_savePageContent(htmlContent) {
-		const contentFileEntity = contentFileStore.getContentFileActivity(this.href);
-		if (!contentFileEntity) {
-			return;
-		}
-		contentFileEntity.setPageContent(htmlContent);
-		this.pageContent = htmlContent;
-	}
-
-	_tryOverwriteContent(htmlContent) {
-		const contentFileEntity = contentFileStore.getContentFileActivity(this.href);
-
-		if (contentFileEntity.empty) {
-			this._savePageContent(htmlContent);
-		} else {
-			this.replacementContent = htmlContent;
-			this._openReplaceHtmlTemplateDialog();
-		}
 	}
 }
 
