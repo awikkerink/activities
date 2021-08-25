@@ -170,13 +170,13 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 			return true;
 		}
 
-		const fileTypesList = fileTypes.split(',').map(type => type.trim());
-		const minimumExtensionLength = 3;
+		const fileTypesList = fileTypes.split(',').map(fileType => fileType.trim().toLowerCase());
+		const isValidExtensionFormat = new RegExp(/^\.[a-zA-Z0-9]+$/);
 
-		const hasInvalidFileTypes = fileTypesList.some(type => this.restrictedFileTypes.includes(type) || !type.includes('.'));
-		const hasInvalidLength = fileTypesList.some(type => type.length < minimumExtensionLength);
+		const hasInvalidFormat = fileTypesList.some(fileType => !isValidExtensionFormat.test(fileType));
+		const hasRestrictedFileType = fileTypesList.some(fileType => this.restrictedFileTypes.includes(fileType));
 
-		return hasInvalidFileTypes || hasInvalidLength;
+		return hasInvalidFormat || hasRestrictedFileType;
 	}
 	async _loadRestrictedFileTypes(assignment) {
 		this.restrictedFileTypes = await assignment.loadRestrictedExtensions() || [];
