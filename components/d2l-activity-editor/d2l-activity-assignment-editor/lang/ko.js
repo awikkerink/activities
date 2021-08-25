@@ -3,6 +3,12 @@
 export default {
 	"hdrReleaseConditions": "릴리스 조건", // release conditions heading
 	"hlpReleaseConditions": "사용자는 릴리스 조건을 충족하지 않는 한 과제에 접근하거나 볼 수 없습니다.", // release conditions help
+	"allowableFiletypes": "허용 가능한 파일 확장자", // Label for the allowable filetypes field when creating/editing an assignment
+	"allowableFileTypesHelp": "새 탭에서 허용 가능한 파일 확장자 정보를 엽니다.", // Help icon for allowable filetypes info
+	"customFiletypes": "사용자 정의 파일 유형", // ARIA label for custom filetypes field
+	"customFiletypesNotification": "쉼표로 구분된 하나 이상의 허용 가능한 파일 확장자를 입력합니다.", // text for adding custom filetypes
+	"customFiletypesPlaceholder": "예: .pdf, .txt, .html", // Placeholder for the custom filetypes field
+	"customFiletypesError": "올바른 파일 확장자를 입력하십시오.", // Error message to inform user that their extension type is invalid
 	"completionType": "완료됨으로 표시됨", // Label for the completion type field when creating/editing an assignment
 	"lblAnonymousMarking": "익명 표시", // Label for anonymous marking
 	"chkAnonymousMarking": "평가 중 학생 이름 숨김", // Checkbox for anonymous marking

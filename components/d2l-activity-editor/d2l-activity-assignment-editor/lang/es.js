@@ -3,6 +3,12 @@
 export default {
 	"hdrReleaseConditions": "Condiciones de publicación", // release conditions heading
 	"hlpReleaseConditions": "Los usuarios no pueden acceder ni ver la asignación, a menos que cumplan con las condiciones de publicación.", // release conditions help
+	"allowableFiletypes": "Extensiones de archivo permitidas", // Label for the allowable filetypes field when creating/editing an assignment
+	"allowableFileTypesHelp": "Abra la información de extensiones de archivo permitidas en una nueva pestaña", // Help icon for allowable filetypes info
+	"customFiletypes": "Filetypes personalizados", // ARIA label for custom filetypes field
+	"customFiletypesNotification": "Ingrese una o más extensiones de archivo permitidas separadas por una coma.", // text for adding custom filetypes
+	"customFiletypesPlaceholder": "ejemplo: .pdf, .txt, .html", // Placeholder for the custom filetypes field
+	"customFiletypesError": "Ingrese extensiones de archivo válidas", // Error message to inform user that their extension type is invalid
 	"completionType": "Marcar como finalizada", // Label for the completion type field when creating/editing an assignment
 	"lblAnonymousMarking": "Marca de anónimo", // Label for anonymous marking
 	"chkAnonymousMarking": "Ocultar nombres de los estudiantes durante la evaluación", // Checkbox for anonymous marking

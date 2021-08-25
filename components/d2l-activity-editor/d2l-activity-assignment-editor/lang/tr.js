@@ -3,6 +3,12 @@
 export default {
 	"hdrReleaseConditions": "Sürüm Koşulları", // release conditions heading
 	"hlpReleaseConditions": "Kullanıcılar, sürüm koşullarını yerine getirmedikçe ödeve erişemez veya ödevi görüntüleyemez.", // release conditions help
+	"allowableFiletypes": "İzin Verilen Dosya Uzantıları", // Label for the allowable filetypes field when creating/editing an assignment
+	"allowableFileTypesHelp": "İzin verilen dosya uzantısı bilgilerini yeni bir sekmede aç", // Help icon for allowable filetypes info
+	"customFiletypes": "Özel Dosya Türleri", // ARIA label for custom filetypes field
+	"customFiletypesNotification": "Virgülle ayrılmış bir veya daha fazla izin verilen dosya uzantısı girin.", // text for adding custom filetypes
+	"customFiletypesPlaceholder": "örnek: .pdf, .txt, .html", // Placeholder for the custom filetypes field
+	"customFiletypesError": "Lütfen geçerli dosya uzantıları girin", // Error message to inform user that their extension type is invalid
 	"completionType": "Tamamlandı olarak işaretlendi", // Label for the completion type field when creating/editing an assignment
 	"lblAnonymousMarking": "Anonim İşaretleme", // Label for anonymous marking
 	"chkAnonymousMarking": "Değerlendirme sırasında öğrenci adlarını gizle", // Checkbox for anonymous marking

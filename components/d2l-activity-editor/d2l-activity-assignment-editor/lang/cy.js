@@ -3,6 +3,12 @@
 export default {
 	"hdrReleaseConditions": "Amodau Rhyddhau", // release conditions heading
 	"hlpReleaseConditions": "Ni all defnyddwyr gyrchu na gweld yr aseiniad oni bai eu bod yn cwrdd â'r amodau rhyddhau.", // release conditions help
+	"allowableFiletypes": "Estyniadau Ffeil a Ganiateir", // Label for the allowable filetypes field when creating/editing an assignment
+	"allowableFileTypesHelp": "Agorwch wybodaeth estyniadau ffeiliau a ganiateir mewn tab newydd", // Help icon for allowable filetypes info
+	"customFiletypes": "Mathau o Ffeiliau Personol", // ARIA label for custom filetypes field
+	"customFiletypesNotification": "Rhowch un neu fwy o estyniadau ffeil a ganiateir wedi'u gwahanu ag atalnod.", // text for adding custom filetypes
+	"customFiletypesPlaceholder": "enghraifft: .pdf, .txt, .html", // Placeholder for the custom filetypes field
+	"customFiletypesError": "Rhowch estyniadau ffeil dilys", // Error message to inform user that their extension type is invalid
 	"completionType": "Marciwyd wedi’i gwblhau", // Label for the completion type field when creating/editing an assignment
 	"lblAnonymousMarking": "Marcio Dienw", // Label for anonymous marking
 	"chkAnonymousMarking": "Cuddio enwau myfyrwyr yn ystod asesiad", // Checkbox for anonymous marking
