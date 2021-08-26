@@ -3,6 +3,12 @@
 export default {
 	"hdrReleaseConditions": "發佈條件", // release conditions heading
 	"hlpReleaseConditions": "除非滿足發佈條件，否則使用者無法存取或檢視作業。", // release conditions help
+	"allowableFiletypes": "可允許的副檔名", // Label for the allowable filetypes field when creating/editing an assignment
+	"allowableFileTypesHelp": "在新頁籤中開啟可允許的副檔名資訊", // Help icon for allowable filetypes info
+	"customFiletypes": "自訂檔案類型", // ARIA label for custom filetypes field
+	"customFiletypesNotification": "輸入一個或多個可允許的副檔名，並以逗號分隔。", // text for adding custom filetypes
+	"customFiletypesPlaceholder": "範例：.pdf、.txt、.html", // Placeholder for the custom filetypes field
+	"customFiletypesError": "請輸入有效的副檔名", // Error message to inform user that their extension type is invalid
 	"completionType": "已標示為完成", // Label for the completion type field when creating/editing an assignment
 	"lblAnonymousMarking": "匿名標記", // Label for anonymous marking
 	"chkAnonymousMarking": "在評量期間隱藏學生姓名", // Checkbox for anonymous marking
