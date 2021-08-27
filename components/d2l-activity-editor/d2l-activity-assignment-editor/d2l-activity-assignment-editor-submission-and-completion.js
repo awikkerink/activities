@@ -9,6 +9,7 @@ import { bodyCompactStyles, bodySmallStyles, labelStyles } from '@brightspace-ui
 import { css, html } from 'lit-element/lit-element.js';
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
+import { ErrorHandlingMixin } from '../error-handling-mixin.js';
 import { LocalizeActivityAssignmentEditorMixin } from './mixins/d2l-activity-assignment-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { radioStyles } from '@brightspace-ui/core/components/inputs/input-radio-styles.js';
@@ -16,15 +17,17 @@ import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 import { shared as store } from './state/assignment-store.js';
-const allowableFileTypeDocumentationURL = 'https://documentation.brightspace.com/EN/le/assignments/learner/assignments_intro_1.htm';
 
-class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(ActivityEditorMixin(RtlMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement)))) {
+const allowableFileTypeDocumentationURL = 'https://documentation.brightspace.com/EN/le/assignments/instructor/assignments_restricted_file_extensions.htm';
+
+class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(ActivityEditorMixin(RtlMixin(ErrorHandlingMixin(LocalizeActivityAssignmentEditorMixin(MobxLitElement))))) {
 
 	static get properties() {
 
 		return {
+			_customFileTypesError: { type: String },
 			href: { type: String },
-			token: { type: Object },
+			token: { type: Object }
 		};
 	}
 
@@ -72,6 +75,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		super(store);
 		this.saveOrder = 2000;
 		this.allowableFileTypeCustomValue = '5'; // Custom allowable file type value
+		this.restrictedFileTypes = [];
 	}
 
 	render() {
@@ -160,6 +164,22 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		return html`
 			${assignment.submissionAndCompletionProps.submissionTypeOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.submissionAndCompletionProps.submissionType}>${option.title}</option>`)}
 		`;
+	}
+	_isInvalidFileTypes(fileTypes) {
+		if (!fileTypes || !this.restrictedFileTypes) {
+			return true;
+		}
+
+		const fileTypesList = fileTypes.split(',').map(fileType => fileType.trim().toLowerCase());
+		const isValidExtensionFormat = new RegExp(/^\.[a-zA-Z0-9]+$/);
+
+		const hasInvalidFormat = fileTypesList.some(fileType => !isValidExtensionFormat.test(fileType));
+		const hasRestrictedFileType = fileTypesList.some(fileType => this.restrictedFileTypes.includes(fileType));
+
+		return hasInvalidFormat || hasRestrictedFileType;
+	}
+	async _loadRestrictedFileTypes(assignment) {
+		this.restrictedFileTypes = await assignment.loadRestrictedExtensions() || [];
 	}
 	_onNotificationEmailChanged(e) {
 		const assignment = store.get(this.href);
@@ -463,6 +483,9 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		}
 
 		if (assignment.submissionAndCompletionProps.allowableFileType === this.allowableFileTypeCustomValue) {
+			if (this.restrictedFileTypes.length === 0) {
+				this._loadRestrictedFileTypes(assignment);
+			}
 			return html`
 				<div>
 					<p class="d2l-body-small">${this.localize('customFiletypesNotification')}</p>
@@ -472,15 +495,22 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 					id="custom-filetype-input"
 					label="${this.localize('customFiletypes')}"
 					label-hidden
-					maxlength="1024"
+					maxlength="64"
 					value="${assignment.submissionAndCompletionProps.customAllowableFileTypes}"
 					@change="${this._saveCustomAllowableFileTypes}"
+					aria-invalid="${this._customFileTypesError ? 'true' : ''}"
 					placeholder="${this.localize('customFiletypesPlaceholder')}"
 					prevent-submit
 					required
 					novalidate>
 				</d2l-input-text>
-			`;
+				${this._customFileTypesError ?
+		html`<d2l-tooltip id="custom-filetypes-tooltip" for="custom-filetype-input" state="error" align="start" offset="10">
+				${this._customFileTypesError}
+				</d2l-tooltip>`
+		:
+		html``}
+				`;
 		} else {
 			return html``;
 		}
@@ -508,7 +538,17 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 		store.get(this.href).setCompletionType(event.target.value);
 	}
 	_saveCustomAllowableFileTypes(event) {
-		store.get(this.href).setCustomAllowableFileTypes(event.target.value);
+		const fileTypes = event.target.value;
+		const errorProperty = '_customFileTypesError';
+		if (this._isInvalidFileTypes(fileTypes)) {
+			const invalidCustomFileTypesErrorLangterm = 'customFiletypesError';
+			const tooltipId = 'custom-filetypes-tooltip';
+
+			this.setError(errorProperty, invalidCustomFileTypesErrorLangterm, tooltipId);
+		} else {
+			this.clearError(errorProperty);
+			store.get(this.href).setCustomAllowableFileTypes(fileTypes);
+		}
 	}
 	_saveSubmissionTypeOnChange(event) {
 		store.get(this.href).setSubmissionType(event.target.value);

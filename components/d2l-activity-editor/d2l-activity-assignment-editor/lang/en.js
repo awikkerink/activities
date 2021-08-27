@@ -8,6 +8,7 @@ export default {
 	"customFiletypes": "Custom Filetypes", // ARIA label for custom filetypes field
 	"customFiletypesNotification": "Enter one or more allowable file extensions separated by a comma.", // text for adding custom filetypes
 	"customFiletypesPlaceholder": "example: .pdf, .txt, .html", // Placeholder for the custom filetypes field
+	"customFiletypesError": "Please enter valid file extensions", // Error message to inform user that their extension type is invalid
 	"completionType": "Marked as completed", // Label for the completion type field when creating/editing an assignment
 	"lblAnonymousMarking": "Anonymous Marking", // Label for anonymous marking
 	"chkAnonymousMarking": "Hide student names during assessment", // Checkbox for anonymous marking
