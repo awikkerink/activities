@@ -486,6 +486,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 			if (this.restrictedFileTypes.length === 0) {
 				this._loadRestrictedFileTypes(assignment);
 			}
+
 			return html`
 				<div>
 					<p class="d2l-body-small">${this.localize('customFiletypesNotification')}</p>
