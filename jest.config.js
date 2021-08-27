@@ -9,6 +9,6 @@ module.exports = {
 		'^.+\\.jsx?$': './jest.babel.config.js'
 	},
 	transformIgnorePatterns: [
-		'node_modules/(?!(siren-sdk|d2l-polymer-siren-behaviors|d2l-fetch)/)'
+		'node_modules/(?!(siren-sdk|d2l-polymer-siren-behaviors|d2l-fetch|@brightspace-ui)/)'
 	],
 };
