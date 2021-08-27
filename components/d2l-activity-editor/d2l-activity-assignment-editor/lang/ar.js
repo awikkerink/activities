@@ -3,6 +3,12 @@
 export default {
 	"hdrReleaseConditions": "شروط الإصدار", // release conditions heading
 	"hlpReleaseConditions": "لا يمكن للمستخدمين الوصول إلى الفرض أو عرضه إلا إذا كانوا يستوفون شروط الإصدار.", // release conditions help
+	"allowableFiletypes": "ملحقات الملف المسموح بها", // Label for the allowable filetypes field when creating/editing an assignment
+	"allowableFileTypesHelp": "فتح معلومات ملحقات الملف المسموح بها في علامة تبويب جديدة", // Help icon for allowable filetypes info
+	"customFiletypes": "أنواع الملف المخصصة", // ARIA label for custom filetypes field
+	"customFiletypesNotification": "أدخل امتدادات ملف واحدة أو أكثر مسموح بها مفصولة بفاصلة.", // text for adding custom filetypes
+	"customFiletypesPlaceholder": "مثال: ‎.pdf‏، ‎.txt‏، ‎.html", // Placeholder for the custom filetypes field
+	"customFiletypesError": "يُرجى إدخال ملحقات ملف صالحة", // Error message to inform user that their extension type is invalid
 	"completionType": "وضع علامة كمكتمل", // Label for the completion type field when creating/editing an assignment
 	"lblAnonymousMarking": "وضع علامة كمجهول", // Label for anonymous marking
 	"chkAnonymousMarking": "إخفاء أسماء التلاميذ أثناء التقييم", // Checkbox for anonymous marking

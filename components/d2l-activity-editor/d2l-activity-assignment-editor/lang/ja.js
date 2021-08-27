@@ -3,6 +3,12 @@
 export default {
 	"hdrReleaseConditions": "リリース条件", // release conditions heading
 	"hlpReleaseConditions": "ユーザーは、リリース条件を満たしていない限り、ドロップボックスツールにアクセスできず、ドロップボックスツールを表示することもできません。", // release conditions help
+	"allowableFiletypes": "使用できるファイル拡張子", // Label for the allowable filetypes field when creating/editing an assignment
+	"allowableFileTypesHelp": "使用できるファイル拡張子の情報を新しいタブで開く", // Help icon for allowable filetypes info
+	"customFiletypes": "カスタムファイルタイプ", // ARIA label for custom filetypes field
+	"customFiletypesNotification": "1 つ以上の使用できるファイル拡張子をカンマ区切りで入力します。", // text for adding custom filetypes
+	"customFiletypesPlaceholder": "例: .pdf, .txt, .html", // Placeholder for the custom filetypes field
+	"customFiletypesError": "有効なファイル拡張子を入力してください", // Error message to inform user that their extension type is invalid
 	"completionType": "完了としてマーク済み", // Label for the completion type field when creating/editing an assignment
 	"lblAnonymousMarking": "匿名マーキング", // Label for anonymous marking
 	"chkAnonymousMarking": "評価中に受講者の名前を表示しない", // Checkbox for anonymous marking
