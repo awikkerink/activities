@@ -1,17 +1,34 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
+import { formatDateTimeInISO, getLocalDateTimeFromUTCDateTime, parseISODateTime } from '@brightspace-ui/core/helpers/dateTime.js';
+import { convertLocalToUTCDateTime } from '@brightspace-ui/intl/lib/dateTime.js';
 
 configureMobx({ enforceActions: 'observed' });
 
 export class ActivityDates {
 
 	constructor(entity) {
-		this.dueDate = entity.dueDate();
-		this.startDate = entity.startDate();
-		this.endDate = entity.endDate();
+		this.dueDate = this.fixManualEndOfDay(entity.dueDate());
+		this.startDate = this.fixManualEndOfDay(entity.startDate());
+		this.endDate = this.fixManualEndOfDay(entity.endDate());
 		this.canEditDates = entity.canEditDates();
 		this.dueDateErrorTerm = null;
 		this.startDateErrorTerm = null;
 		this.endDateErrorTerm = null;
+	}
+
+	// 11:59:00 (manually entered) becomes "end of day" (11:59:59) so date/time validation treats them the same
+	fixManualEndOfDay(date) {
+		const localDate = getLocalDateTimeFromUTCDateTime(date);
+		const parsedLocalDate = parseISODateTime(localDate);
+
+		const isManualEndOfDay = parsedLocalDate.hours === 23 && parsedLocalDate.minutes === 59 && parsedLocalDate.seconds === 0;
+		if (isManualEndOfDay) {
+			parsedLocalDate.seconds = 59;
+			const parsedUtcDate = convertLocalToUTCDateTime(parsedLocalDate);
+			return formatDateTimeInISO(parsedUtcDate);
+		}
+
+		return date;
 	}
 
 	setCanEditDates(value) {
