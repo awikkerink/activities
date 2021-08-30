@@ -41,6 +41,10 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 	static get styles() {
 		return [
 			super.styles,
+			activityHtmlEditorStyles,
+			activityContentEditorStyles,
+			bodySmallStyles,
+			labelStyles,
 			css`
 				.d2l-page-content-label-select-template-container {
 					align-items: center;

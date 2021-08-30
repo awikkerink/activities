@@ -4,13 +4,13 @@ import '@brightspace-ui/core/components/menu/menu-item-separator.js';
 import './html-files/d2l-activity-content-html-file-detail.js';
 import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { ContentFileEntity, FILE_TYPES } from 'siren-sdk/src/activities/content/ContentFileEntity.js';
+import { css, html } from 'lit-element/lit-element.js';
 import { activityContentEditorStyles } from '../shared-components/d2l-activity-content-editor-styles.js';
 import { ActivityEditorMixin } from '../../mixins/d2l-activity-editor-mixin.js';
 import { activityHtmlEditorStyles } from '../shared-components/d2l-activity-html-editor-styles.js';
 import { shared as contentFileStore } from './state/content-file-store.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ErrorHandlingMixin } from '../../error-handling-mixin.js';
-import { html } from 'lit-element/lit-element.js';
 import { LocalizeActivityEditorMixin } from '../../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
@@ -34,6 +34,13 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 			activityContentEditorStyles,
 			activityHtmlEditorStyles,
 			bodySmallStyles,
+			css`
+				d2l-activity-content-html-file-detail {
+					display: flex;
+					flex-direction: column;
+					height: inherit;
+				}
+			`
 		];
 	}
 

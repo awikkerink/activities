@@ -41,6 +41,7 @@ class ContentFileLoading extends SkeletonMixin(MobxLitElement) {
 	render() {
 		return html`
 			<div class="d2l-activity-label-container d2l-label-text d2l-skeletize">&nbsp;</div>
+			<div class="d2l-activity-label-container d2l-label-text d2l-skeletize">&nbsp;</div>
 			<div class="d2l-file-content-load d2l-skeletize">&nbsp;</div>
 		`;
 	}
