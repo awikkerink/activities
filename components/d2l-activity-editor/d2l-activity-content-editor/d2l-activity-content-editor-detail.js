@@ -3,6 +3,7 @@ import './shared-components/d2l-activity-content-editor-due-date.js';
 import './lti-link/d2l-activity-content-lti-link-detail.js';
 import './web-link/d2l-activity-content-web-link-detail.js';
 import './content-file/d2l-activity-content-file-detail.js';
+import './scorm/d2l-activity-content-scorm-activity-detail.js';
 import 'd2l-loading-spinner/d2l-loading-spinner.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { CONTENT_TYPES } from 'siren-sdk/src/activities/content/ContentEntity.js';
@@ -94,6 +95,17 @@ class ContentEditorDetail extends MobxLitElement {
 					.activityUsageHref="${this.href}"
 				>
 				</d2l-activity-content-file-detail>
+			`;
+		}
+
+		if (entityType === CONTENT_TYPES.scormActivity) {
+			return html `
+				<d2l-activity-content-scorm-activity-detail
+					.href="${contentActivityHref}"
+					.token="${this.token}"
+					.activityUsageHref="${this.href}"
+				>
+				</d2l-activity-content-scorm-activity-detail>
 			`;
 		}
 
