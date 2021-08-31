@@ -18,6 +18,9 @@ export class ActivityDates {
 
 	// 11:59:00 (manually entered) becomes "end of day" (11:59:59) so date/time validation treats them the same
 	fixManualEndOfDay(date) {
+		if(!date) {
+			return date;
+		}
 		const localDate = getLocalDateTimeFromUTCDateTime(date);
 		const parsedLocalDate = parseISODateTime(localDate);
 
