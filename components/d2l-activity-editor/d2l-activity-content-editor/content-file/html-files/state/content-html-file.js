@@ -1,31 +1,18 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { ContentFileEntity, FILE_TYPES } from 'siren-sdk/src/activities/content/ContentFileEntity.js';
 import { ContentHtmlFileEntity } from 'siren-sdk/src/activities/content/ContentHtmlFileEntity.js';
-import { fetchEntity } from '../../../state/fetch-entity.js';
+import { fetchEntity } from '../../../../state/fetch-entity.js';
 import { FileEntity } from 'siren-sdk/src/files/FileEntity.js';
-// TODO: Explore idea of using this shared WorkingCopy
-// import { WorkingCopy } from '../../../state/working-copy.js';
+import { ContentFile } from '../../state/content-file.js';
 
 configureMobx({ enforceActions: 'observed' });
 
-export class ContentFile {
+export class ContentHtmlFile extends ContentFile {
 
 	constructor(href, token) {
-		this.href = href;
-		this.token = token;
-		this.title = '';
-		this.activityUsageHref = '';
-		this.persistedFileContent = '';
-		this.fileContent = '';
-		this.fileType = null;
-	}
-
-	async cancelCreate() {
-		await this._contentFileEntity.deleteFile();
-	}
-
-	get dirty() {
-		return !(this._contentFileEntity.equals(this._makeContentFileData()) && this._contentEquals());
+		super(href, token);
+		this.htmlTemplatesHref = null;
+		this.fontSize = null;
 	}
 
 	get empty() {
@@ -60,14 +47,11 @@ export class ContentFile {
 	}
 
 	load(contentFileEntity, fileContent) {
-		this._contentFileEntity = contentFileEntity;
-		this.href = contentFileEntity.self();
-		this.activityUsageHref = contentFileEntity.getActivityUsageHref();
-		this.title = contentFileEntity.title();
-		this.persistedFileContent = fileContent;
-		this.fileContent = fileContent;
-		this.fileType = contentFileEntity.getFileType();
-		this.fileHref = contentFileEntity.getFileHref();
+		super.load(contentFileEntity, fileContent);
+
+		const htmlFileEntity = new ContentHtmlFileEntity(contentFileEntity._entity, this.token, { remove: () => { } });
+		this.htmlTemplatesHref = htmlFileEntity.getHtmlTemplatesHref();
+		this.fontSize = htmlFileEntity.fontSize();
 	}
 
 	async save() {
@@ -147,7 +131,7 @@ export class ContentFile {
 	}
 }
 
-decorate(ContentFile, {
+decorate(ContentHtmlFile, {
 	// props
 	title: observable,
 	fileHref: observable,

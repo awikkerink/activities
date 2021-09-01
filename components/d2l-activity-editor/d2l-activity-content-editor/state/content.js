@@ -2,10 +2,13 @@ import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { CONTENT_TYPES, ContentEntity } from 'siren-sdk/src/activities/content/ContentEntity.js';
 import { shared as contentFileStore } from '../content-file/state/content-file-store.js';
 import { fetchEntity } from '../../state/fetch-entity.js';
+import { shared as htmlFileStore } from '../content-file/html-files/state/content-html-file-store.js';
 import { shared as ltiLinkStore } from '../lti-link/state/content-lti-link-store.js';
 import { shared as moduleStore } from '../module/state/content-module-store.js';
 import { shared as scormActivityStore } from '../scorm/state/content-scorm-activity-store.js';
 import { shared as webLinkStore } from '../web-link/state/content-web-link-store.js';
+import { ContentFile } from '../content-file/state/content-file.js';
+import { FILE_TYPES } from 'siren-sdk/src/activities/content/ContentFileEntity';
 
 configureMobx({ enforceActions: 'observed' });
 
@@ -43,13 +46,24 @@ export class Content {
 			ltiLinkStore.fetchContentLTILinkActivity(this.contentActivityHref, this.token);
 		} else if (this.entityType === CONTENT_TYPES.contentFile) {
 			this.contentActivityHref = contentEntity.getContentFileHref();
-			contentFileStore.fetchContentFileActivity(this.contentActivityHref, this.token);
+			await this._loadContentFileTypes();
 		} else if (this.entityType === CONTENT_TYPES.scormActivity) {
 			this.contentActivityHref = contentEntity.getScormActivityHref();
 			scormActivityStore.fetchContentScormActivity(this.contentActivityHref, this.token);
 		}
 
 		this.lessonViewPageHref = contentEntity.getLessonViewPageHref();
+	}
+
+	async _loadContentFileTypes() {
+		const contentFile = await contentFileStore.fetchContentFileActivity(this.contentActivityHref, this.token);
+
+		switch (contentFile.fileType) {
+			case FILE_TYPES.html: {
+				htmlFileStore.fetchContentHtmlFileActivity(this.contentActivityHref, this.token);
+				break;
+			}
+		}
 	}
 }
 decorate(Content, {
