@@ -39,7 +39,7 @@ export default {
 	"autoSetGradedHelpDialogConfirmationText": "OK", // copy that appears on the autoSetGraded help dialog confirmation button
 	"autoSetGradedHelpDialogParagraph1": "With this feature turned on, the auto-evaluated attempt results will be published and appear to learners.", // content for paragraph 1 of autoSetGraded help dialog
 	"autoSetGradedHelpDialogParagraph2": "Note: If questions cannot be evaluated by the system (e.g. written response questions), those questions will be automatically scored with a zero until manual evaluation.", // content for paragraph 2 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph3": "Placeholder", // content for paragraph 3 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph3": "", // content for paragraph 3 of autoSetGraded help dialog
 	"disableAlertsHelpDialogTitle": "Information: Disable Email, Instant Messages and Alerts within Brightspace", // title that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogContent": "If you turn on this option, learners cannot access the Brightspace Email, Instant Messages, or their alerts if they have a quiz attempt in progress.", // content that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogConfirmationText": "OK", // copy that appears on the disable alerts help dialog confirmation button
