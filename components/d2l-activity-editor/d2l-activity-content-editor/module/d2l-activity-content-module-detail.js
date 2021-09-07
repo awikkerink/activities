@@ -22,7 +22,8 @@ class ContentModuleDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActiv
 
 	static get properties() {
 		return {
-			activityUsageHref: { type: String }
+			activityUsageHref: { type: String },
+			descriptionRichText: { type: String }
 		};
 	}
 
@@ -50,11 +51,15 @@ class ContentModuleDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActiv
 
 	render() {
 		const moduleEntity = moduleStore.getContentModuleActivity(this.href);
-		let descriptionRichText = undefined;
 
 		if (moduleEntity) {
-			this.skeleton = false;
-			descriptionRichText = moduleEntity.descriptionRichText;
+			// THIS IS BAD. We can't send the new editor our value until it is done initializing.
+			// Otherwise we will render a blank editor due to the way it blocks updates and our initial
+			// value getting "swallowed" when we try to send it before it is ready.
+			setTimeout(() => {
+				this.skeleton = false;
+				this.descriptionRichText = moduleEntity.descriptionRichText;
+			}, 2000);
 		}
 
 		const newEditorEvent = new CustomEvent('d2l-request-provider', {
@@ -91,7 +96,7 @@ class ContentModuleDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActiv
 					<d2l-activity-text-editor
 						.ariaLabel="${this.localize('content.description')}"
 						.key="content-description"
-						.value="${descriptionRichText}"
+						.value="${this.descriptionRichText}"
 						@d2l-activity-text-editor-change="${activityTextEditorChange}"
 						.richtextEditorConfig="${{}}"
 						html-editor-height="100%"
