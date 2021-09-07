@@ -50,7 +50,6 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 				<li slot="summary-items">${this._renderAutoSetGradedSummary()}</li>
 
 				<div class="d2l-editor" slot="components">
-					${this._renderAutoSetGradedSubHeader()}
 					${this._renderAutomaticGradesEditor()}
 				</div>
 			</d2l-activity-accordion-collapse>
