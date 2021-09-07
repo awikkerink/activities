@@ -121,6 +121,14 @@ class ContentScormActivityDetail extends SkeletonMixin(ErrorHandlingMixin(Locali
 		`;
 	}
 
+	hasPendingChanges() {
+		const scormActivityEntity = contentScormActivityStore.getContentScormActivity(this.href);
+		if (!scormActivityEntity) {
+			return false;
+		}
+		return scormActivityEntity.dirty;
+	}
+
 	async save() {
 		const scormActivityEntity = contentScormActivityStore.getContentScormActivity(this.href);
 

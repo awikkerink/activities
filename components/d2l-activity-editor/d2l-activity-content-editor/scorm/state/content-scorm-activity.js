@@ -15,6 +15,10 @@ export class ContentScormActivity {
 		this.lastModified = null;
 	}
 
+	get dirty() {
+		return !this._contentScormActivity.equals(this._makeScormActivityData());
+	}
+
 	async fetch() {
 		const sirenEntity = await fetchEntity(this.href, this.token);
 		if (sirenEntity) {
@@ -52,12 +56,24 @@ export class ContentScormActivity {
 	setTitle(value) {
 		this.title = value;
 	}
+
+	_makeScormActivityData() {
+		/* NOTE: if you add fields here, please make sure you update the corresponding equals method in siren-sdk.
+			The cancel workflow is making use of that to detect changes.
+		*/
+		return {
+			title: this.title,
+			isExternalResource: this.isExternalResource
+		};
+	}
 }
 
 decorate(ContentScormActivity, {
 	// props
 	title: observable,
+	isExternalResource: observable,
 	// actions
 	load: action,
 	setTitle: action,
+	setExternalResource: action
 });
