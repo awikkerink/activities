@@ -47,14 +47,10 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 					${this.localize('hdrEvaluationAndFeedback')}
 				</span>
 
-				<li slot="summary-items">${this._renderAutoSetGradedSummary()}</li>
-
 				<div class="d2l-editor" slot="components">
 					${this._renderAutomaticGradesEditor()}
 				</div>
 			</d2l-activity-accordion-collapse>
-
-			${this._renderDialog()}
 		`;
 	}
 
@@ -72,50 +68,12 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 	`;
 	}
 
-	_renderAutoSetGradedSubHeader() {
-		return html`
-			<div>
-				<span>
-					<div class="d2l-label-text">
-						${this.localize('subHdrAutomaticGrades')}
-					</div>
-				</span>
-				<span>
-					<d2l-button-icon
-						text="${this.localize('autoSetGradedAccessibleHelpText')}"
-						icon="tier1:help"
-						@click="${this.open}">
-					</d2l-button-icon>
-				</span>
-			</div>
-		`;
-	}
 	_renderAutoSetGradedSummary() {
 		return html`
 			<d2l-activity-quiz-auto-set-graded-summary
 				href="${this.href}"
 				.token="${this.token}">
 			</d2l-activity-quiz-auto-set-graded-summary>
-		`;
-	}
-	_renderDialog() {
-		return html`
-			<d2l-dialog
-				?opened="${this.opened}"
-				@d2l-dialog-close="${this.handleClose}"
-				title-text="${this.localize('autoSetGradedHelpDialogTitle')}">
-					<div>
-						<p>${this.localize('autoSetGradedHelpDialogParagraph1')}</p>
-						<p>${this.localize('autoSetGradedHelpDialogParagraph2')}</p>
-						<p>${this.localize('autoSetGradedHelpDialogParagraph3')}</p>
-					</div>
-					<d2l-button
-						data-dialog-action="done"
-						slot="footer"
-						primary>
-						${this.localize('autoSetGradedHelpDialogConfirmationText')}
-					</d2l-button>
-			</d2l-dialog>
 		`;
 	}
 
