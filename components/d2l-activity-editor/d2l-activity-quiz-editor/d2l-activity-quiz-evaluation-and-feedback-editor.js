@@ -47,6 +47,8 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 					${this.localize('hdrEvaluationAndFeedback')}
 				</span>
 
+				<li slot="summary-items">${this._renderAutoSetGradedSummary()}</li>
+
 				<div class="d2l-editor" slot="components">
 					${this._renderAutomaticGradesEditor()}
 				</div>
@@ -67,6 +69,7 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 			</d2l-activity-quiz-auto-set-graded-editor>
 	`;
 	}
+
 
 	_renderAutoSetGradedSummary() {
 		return html`

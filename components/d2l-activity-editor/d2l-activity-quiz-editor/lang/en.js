@@ -31,7 +31,7 @@ export default {
 	"hdrEvaluationAndFeedback": "Evaluation & Feedback", // evaluation/feedback accordion header
 	"subHdrAutomaticGrades": "Automatic Grade", // Title for automatic grade tool
 	"autoSetGradedDescription": "Auto-publish attempt results immediately upon completion", // description for automatic grade checkbox
-	"autoSetGradedSummary": "Automatically grade", // summary for auto set graded checkbox
+	"autoSetGradedSummary": "Auto-publish results", // summary for auto set graded checkbox
 	"passwordDescription": "Only users who enter this password will be granted access to write this quiz.", // description for password input
 	"hlpSubmissionNotificationEmail": "Enter an email or multiple emails separated by a comma, to receive notifications when a quiz is attempted.", // description for email notification input
 	"autoSetGradedAccessibleHelpText": "Get help on - Automatic Grade", // accessible help text for autoSetGraded question mark button
