@@ -70,7 +70,6 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 	`;
 	}
 
-
 	_renderAutoSetGradedSummary() {
 		return html`
 			<d2l-activity-quiz-auto-set-graded-summary
