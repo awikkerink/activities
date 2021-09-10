@@ -73,11 +73,20 @@ class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMi
 					right: 0.6rem;
 				}
 				#score-and-duedate-container {
+					display: flex;
+					flex-wrap: wrap;
 					padding-bottom: 0;
 				}
 				d2l-alert {
 					margin-bottom: 10px;
 					max-width: 100%;
+				}
+				#score-container {
+					margin-right: 40px;
+				}
+				:host([dir="rtl"]) #score-container {
+					margin-left: 40px;
+					margin-right: 0;
 				}
 			`
 		];
@@ -147,6 +156,17 @@ class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMi
 			</div>
 
 			<div id="score-and-duedate-container">
+				<div id="score-container" class="d2l-editor-layout-section">
+					<div class="d2l-activity-label-container d2l-label-text d2l-skeletize">
+						${this.localize('gradeOutOf')}
+					</div>
+					<d2l-activity-score-editor
+						?skeleton="${this.skeleton}"
+						.href="${this.activityUsageHref}"
+						.token="${this.token}"
+						.activityName="${name}">
+					</d2l-activity-score-editor>
+				</div>
 				<div id="duedate-container" class="d2l-editor-layout-section">
 					<d2l-activity-due-date-editor
 						?skeleton="${this.skeleton}"
