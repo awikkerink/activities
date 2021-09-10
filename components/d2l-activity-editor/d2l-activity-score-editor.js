@@ -179,7 +179,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		});
 		this.dispatchEvent(event);
 
-		this._createSelectboxGradeItemEnabled = event.detail.provider;
+		this._createSelectboxGradeItemEnabled = typeof this._createSelectboxGradeItemEnabled === 'undefined' || event.detail.provider;
 		this.checkoutOnLoad = this._createSelectboxGradeItemEnabled;
 	}
 

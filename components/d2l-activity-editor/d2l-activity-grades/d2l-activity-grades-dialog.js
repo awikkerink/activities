@@ -87,7 +87,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 		});
 		this.dispatchEvent(event);
 
-		this._createSelectboxGradeItemEnabled = event.detail.provider;
+		this._createSelectboxGradeItemEnabled = typeof this._createSelectboxGradeItemEnabled === 'undefined' || event.detail.provider;
 		if (!this._createSelectboxGradeItemEnabled) {
 			this.checkoutOnLoad = false;
 		}
