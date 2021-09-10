@@ -133,5 +133,6 @@ export default {
 	"headerAndFooter": "Header and footer added", // Header and footer summary text for closed accordion
 	"createNewLabel": "Create New", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "Add Existing", // Label for button to open menu for adding pre-existing items to the quiz.
-	"addQuestionsLabel": "New Question" // Label for button to open menu for adding new questions to the quiz.
+	"addQuestionsLabel": "New Question", // Label for button to open menu for adding new questions to the quiz.
+	"gradeOutOf": "Grade Out Of" // Label for the grade-out-of field when creating/editing an activity
 };
