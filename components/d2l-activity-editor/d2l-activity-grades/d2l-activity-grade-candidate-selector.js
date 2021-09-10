@@ -48,7 +48,7 @@ class ActivityGradeCandidateSelector extends ActivityEditorMixin(LocalizeActivit
 		});
 		this.dispatchEvent(event);
 
-		this._createSelectboxGradeItemEnabled = event.detail.provider;
+		this._createSelectboxGradeItemEnabled = typeof this._createSelectboxGradeItemEnabled === 'undefined' || event.detail.provider;
 	}
 
 	render() {
