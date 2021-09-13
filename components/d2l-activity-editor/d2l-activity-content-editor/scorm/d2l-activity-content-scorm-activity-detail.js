@@ -69,9 +69,11 @@ class ContentScormActivityDetail extends SkeletonMixin(ErrorHandlingMixin(Locali
 
 		if (scormActivityEntity) {
 			this.skeleton = false;
-			title = `${this.localize('content.scormActivity')}: ${scormActivityEntity.title}`;
-			if (scormActivityEntity.lastEdited) {
-				subTitle = `${this.localize('content.lastEdited')} ${new Date(Date.parse(scormActivityEntity.lastEdited)).toUTCString()}`;
+			title = `${this.localize('content.scormActivity')}: ${scormActivityEntity.contentServiceName}`;
+			if (scormActivityEntity.contentServiceLastModified) {
+				const date = new Date(Date.parse(scormActivityEntity.contentServiceLastModified))
+					.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' });
+				subTitle = `${this.localize('content.lastEdited')} ${date}`;
 			}
 		}
 

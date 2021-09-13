@@ -12,7 +12,8 @@ export class ContentScormActivity {
 		this.title = '';
 		this.link = '';
 		this.isExternalResource = false;
-		this.lastModified = null;
+		this.contentServiceName = null;
+		this.contentServiceLastModified = null;
 	}
 
 	get dirty() {
@@ -35,8 +36,10 @@ export class ContentScormActivity {
 		this._contentScormActivity = scormActivity;
 		this.title = scormActivity.title();
 		this.isExternalResource = scormActivity.isExternalResource();
-		this.lastEdited = scormActivity.lastModified();
 		this.link = scormActivity.url();
+		this.contentServiceName = scormActivity.contentServiceName();
+		// TODO: Parse date
+		this.contentServiceLastModified = scormActivity.contentServiceLastModified();
 	}
 
 	async save() {
