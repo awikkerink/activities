@@ -1,6 +1,7 @@
 import '../d2l-activity-accordion-collapse.js';
 import './d2l-activity-quiz-auto-set-graded-editor.js';
 import './d2l-activity-quiz-auto-set-graded-summary.js';
+import './d2l-activity-quiz-submission-view-core.js';
 import '@brightspace-ui/core/components/button/button-icon.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
 import { css, html } from 'lit-element/lit-element.js';
@@ -12,6 +13,7 @@ import { labelStyles } from '@brightspace-ui/core/components/typography/styles.j
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
+
 
 class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(LocalizeActivityQuizEditorMixin(SkeletonMixin(ActivityEditorMixin(ActivityEditorDialogMixin(MobxLitElement))))) {
 
@@ -52,6 +54,10 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 				<div class="d2l-editor" slot="components">
 					${this._renderAutomaticGradesEditor()}
 				</div>
+
+				<div class ="d2l-editor" slot ="components">
+					${this._renderSubmissionView()}
+				<div>
 			</d2l-activity-accordion-collapse>
 		`;
 	}
@@ -78,8 +84,19 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 			</d2l-activity-quiz-auto-set-graded-summary>
 		`;
 	}
-
+	
+	_renderSubmissionView(){
+		return html`
+		<d2l-activity-quiz-submission-view-core
+			href = "${this.href}"
+			.token="${this.token}">
+		</d2l-activity-quiz-submission-view-core>
+	`;
+	}
 }
+
+
+
 
 customElements.define(
 	'd2l-activity-quiz-evaluation-and-feedback-editor',

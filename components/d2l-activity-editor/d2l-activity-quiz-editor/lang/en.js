@@ -134,5 +134,11 @@ export default {
 	"headerAndFooter": "Header and footer added", // Header and footer summary text for closed accordion
 	"createNewLabel": "Create New", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "Add Existing", // Label for button to open menu for adding pre-existing items to the quiz.
-	"addQuestionsLabel": "New Question" // Label for button to open menu for adding new questions to the quiz.
+	"addQuestionsLabel": "New Question", // Label for button to open menu for adding new questions to the quiz.
+	"submissionViewHeading1": "When published, display to learners:", // Label for Submission view checkbox
+	"submissionViewHeading2": "and", // Label for submission view dropdown 
+	"submissionViewDropdown1": "Placeholder 1", //Placeholder label for dropdown menu
+	"submissionViewDropdown2": "Placeholder 2", //Placeholder label for dropdown menu
+	"submissionViewCheckbox": "Attempt grade", // Submission view checkbox
+	"submissionViewButton1": "Customize quiz results display" // Submission view button
 };
