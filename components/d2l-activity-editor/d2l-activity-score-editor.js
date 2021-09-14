@@ -179,7 +179,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		});
 		this.dispatchEvent(event);
 
-		this._createSelectboxGradeItemEnabled = event.detail.provider;
+		this._createSelectboxGradeItemEnabled = typeof this._createSelectboxGradeItemEnabled === 'undefined' || event.detail.provider;
 		this.checkoutOnLoad = this._createSelectboxGradeItemEnabled;
 	}
 
@@ -188,22 +188,24 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 
 		let gradeUnits;
 		let inGrades;
+		let canSeeGrades;
 
 		if (this._createSelectboxGradeItemEnabled) {
 			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
 			gradeUnits = this.localize('grades.gradeUnits');
 			inGrades = associateGradeEntity && associateGradeEntity.gradebookStatus !== GradebookStatus.NotInGradebook;
+			canSeeGrades = !!associateGradeEntity;
 		} else {
 			gradeUnits = activity && activity.scoreAndGrade && activity.scoreAndGrade.gradeType;
 			inGrades = activity && activity.scoreAndGrade && activity.scoreAndGrade.inGrades;
+			canSeeGrades = activity && activity.scoreAndGrade && activity.scoreAndGrade.canSeeGrades;
 		}
 
 		const {
 			scoreOutOf,
 			scoreOutOfError,
 			canEditScoreOutOf,
-			isUngraded,
-			canSeeGrades
+			isUngraded
 		} = activity && activity.scoreAndGrade || {};
 
 		this._focusUngraded = isUngraded;

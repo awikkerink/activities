@@ -141,4 +141,5 @@ export default {
 	"submissionViewDropdown2": "Placeholder 2", //Placeholder label for dropdown menu
 	"submissionViewCheckbox": "Attempt grade", // Submission view checkbox
 	"submissionViewButton1": "Customize quiz results display" // Submission view button
+	"gradeOutOf": "Grade Out Of" // Label for the grade-out-of field when creating/editing an activity
 };
