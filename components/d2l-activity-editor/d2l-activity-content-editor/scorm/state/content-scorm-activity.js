@@ -38,7 +38,6 @@ export class ContentScormActivity {
 		this.isExternalResource = scormActivity.isExternalResource();
 		this.link = scormActivity.url();
 		this.contentServiceName = scormActivity.contentServiceName();
-		// TODO: Parse date
 		this.contentServiceLastModified = scormActivity.contentServiceLastModified();
 	}
 
