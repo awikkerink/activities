@@ -20,7 +20,7 @@ class ActivityQuizSubmissionViewsContainer
             checkboxStyles,
             css`
                 .d2l-label-text {
-                    padding-bottom: 10px;     
+                    padding-bottom: 10px;
                 }
             `
         ];
