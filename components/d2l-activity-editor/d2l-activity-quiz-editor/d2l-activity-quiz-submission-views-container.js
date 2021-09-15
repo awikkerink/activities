@@ -11,70 +11,70 @@ import { shared as store } from './state/quiz-store';
 
 
 class ActivityQuizSubmissionViewsContainer 
-    extends ActivityEditorWorkingCopyDialogMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
+	extends ActivityEditorWorkingCopyDialogMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
    
-    static get styles() {
-        return [
-            labelStyles,
-            selectStyles,
-            checkboxStyles,
-            css`
-                .d2l-label-text {
-                    padding-bottom: 10px;
-                }
-            `
-        ];
-    }
+	static get styles() {
+		return [
+			labelStyles,
+			selectStyles,
+			checkboxStyles,
+			css`
+				.d2l-label-text {
+					padding-bottom: 10px;
+				}
+			`
+		];
+	}
 
-    constructor() {
-        super(store);
-    }
+	constructor() {
+		super(store);
+	}
 
-    render() {
-        return html`
-            <div class="d2l-label-text">
-                ${this.localize('submissionViewHeading1')}
-            </div>
+	render() {
+		return html`
+			<div class="d2l-label-text">
+				${this.localize('submissionViewHeading1')}
+			</div>
 
-            <d2l-input-checkbox-spacer
-                class="d2l-body-small">
-            </d2l-input-checkbox-spacer>
+			<d2l-input-checkbox-spacer
+				class="d2l-body-small">
+			</d2l-input-checkbox-spacer>
 
-            <d2l-input-checkbox 
-                ?checked=""
-                @change=""
-                ariaLabel="${this.localize('submissionViewCheckboxLabel')}"
-                ?disabled="">
-                <label> ${this.localize('submissionViewCheckboxLabel')} </label>
-            </d2l-input-checkbox>
+			<d2l-input-checkbox 
+				?checked=""
+				@change=""
+				ariaLabel="${this.localize('submissionViewCheckboxLabel')}"
+				?disabled="">
+				<label> ${this.localize('submissionViewCheckboxLabel')} </label>
+			</d2l-input-checkbox>
 
-            <div class="d2l-label-text">
-                ${this.localize('submissionViewHeading2')}
-            </div>
+			<div class="d2l-label-text">
+				${this.localize('submissionViewHeading2')}
+			</div>
 
-            <div>
-                <select
-                    id="submission-view-editor"
-                    class="d2l-input-select d2l-block-select"
-                    @change="">
+			<div>
+				<select
+					id="submission-view-editor"
+					class="d2l-input-select d2l-block-select"
+					@change="">
 
-                    <option value="">API Placeholder 1</option>
-                    <option value="">API Placeholder 2</option>
-                </select>
-            </div>
+					<option value="">API Placeholder 1</option>
+					<option value="">API Placeholder 2</option>
+				</select>
+			</div>
 
-            <div>
-                <d2l-button-subtle
-                    text=${this.localize('submissionViewButtonText')}
-                    @click=""
-                    h-align="text">
-                </d2l-button-subtle>
-            </div>     
-        `;
-    }
+			<div>
+				<d2l-button-subtle
+					text=${this.localize('submissionViewButtonText')}
+					@click=""
+					h-align="text">
+				</d2l-button-subtle>
+			</div>     
+		`;
+	}
 }
 
 customElements.define(
-    'd2l-activity-quiz-submission-views-container',
-    ActivityQuizSubmissionViewsContainer
+	'd2l-activity-quiz-submission-views-container',
+	ActivityQuizSubmissionViewsContainer
 );
