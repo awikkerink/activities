@@ -78,7 +78,8 @@ export default {
 	"btnAttemptConditions": "Attempt Conditions", // Label for Attempt Conditions button in Attempts dialog
 	"rioAccessibileHelpText": "Get help on - Retake Incorrect Only", // accessible help text for RIO question mark button
 	"rioDialogTitle": "Information: Retake Incorrect Questions Only", // Title for RIO help dialog
-	"rioDialogParagraph": "When this setting is selected, learners who attempt a quiz more than once can only answer questions that were incorrect on the previous attempt. If you are using Automatic grading, Written Response questions will be marked as 0 and included in future attempts until they are graded manually.", // content for RIO dialog
+	"rioDialogParagraph": "When this setting is selected, learners who attempt a quiz more than once can only answer questions that were incorrect on the previous attempt.", // content for RIO dialog
+	"rioDialogParagraph2": "If you are using Auto-publishing, Written Response questions will be marked as 0 and included in future attempts until they are graded manually.", // second paragraph for RIO dialog
 	"rioDialogConfirmationText": "OK", // copy that appears on the RIO help dialog confirmation button
 	"ipRestrictionDialogDescription": "Only learners coming from IP addresses that meet the defined restrictions can write the quiz.", // guidelines for IP restrictions dialog
 	"btnIpRestrictionsDialogAdd": "Add", // text for IP restrictions dialog "Add" button
