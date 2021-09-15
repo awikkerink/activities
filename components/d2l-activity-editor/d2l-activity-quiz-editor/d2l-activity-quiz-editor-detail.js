@@ -31,7 +31,6 @@ class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMi
 	static get properties() {
 		return {
 			activityUsageHref: { type: String, attribute: 'activity-usage-href' },
-			newactivityhrefs: { type: Array },
 			_importedActivityHrefs: { type: Array }
 		};
 	}
@@ -214,7 +213,6 @@ class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMi
 			<d2l-activity-quiz-question-editor
 				href="${this.activityUsageHref}"
 				.token="${this.token}"
-				.newactivityhrefs=${this.newactivityhrefs}
 				.importedActivityHrefs=${this._importedActivityHrefs}>
 			</d2l-activity-quiz-question-editor>
 		`;

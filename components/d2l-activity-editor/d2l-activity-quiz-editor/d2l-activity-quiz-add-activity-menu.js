@@ -57,21 +57,7 @@ class ActivityQuizAddActivityMenu extends ActivityEditorMixin(SkeletonMixin(Loca
 		`;
 	}
 
-	_dispatchAddItemEvent(itemDetails) {
-		const eventInit = {
-			bubbles: true,
-			composed: true
-		};
-
-		if (itemDetails && itemDetails.length) {
-			const activityUsageHrefs = itemDetails.map(q => q.href);
-			eventInit.detail = { activities: activityUsageHrefs };
-		}
-
-		this.dispatchEvent(new CustomEvent('d2l-question-activity-add-start', eventInit));
-	}
-
-	_dispatchAddItemsFromBrowseEvent(itemDetails) {
+	_dispatchAddItemsEvent(itemDetails) {
 		const eventInit = {
 			bubbles: true,
 			composed: true
@@ -95,9 +81,7 @@ class ActivityQuizAddActivityMenu extends ActivityEditorMixin(SkeletonMixin(Loca
 		}
 
 		let url;
-		let addFromBrowse = false;
 		if (type.includes('browse')) {
-			addFromBrowse = true;
 			url = new D2L.LP.Web.Http.UrlLocation(`/d2l/lms/question/browse/${type}`);
 		} else {
 			url = new D2L.LP.Web.Http.UrlLocation(`/d2l/lms/question/new/${type}`);
@@ -113,11 +97,7 @@ class ActivityQuizAddActivityMenu extends ActivityEditorMixin(SkeletonMixin(Loca
 		);
 
 		// "Save" handler
-		if (addFromBrowse) {
-			delayedResult.AddListener(itemDetails => this._dispatchAddItemsFromBrowseEvent(itemDetails));
-		} else {
-			delayedResult.AddListener(itemDetails => this._dispatchAddItemEvent(itemDetails));
-		}
+		delayedResult.AddListener(itemDetails => this._dispatchAddItemsEvent(itemDetails));
 	}
 
 	_renderActivityType(activityType) {
