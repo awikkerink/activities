@@ -83,7 +83,10 @@ class ActivityQuizAddActivityMenu extends ActivityEditorMixin(SkeletonMixin(Loca
 		let url;
 		if (type.includes('browse')) {
 			url = new D2L.LP.Web.Http.UrlLocation(`/d2l/lms/question/browse/${type}`);
-		} else {
+		} else if (type.includes('upload')) {
+			url = new D2L.LP.Web.Http.UrlLocation(`/d2l/lms/question/upload/${type}`);
+		}
+		else {
 			url = new D2L.LP.Web.Http.UrlLocation(`/d2l/lms/question/new/${type}`);
 		}
 
