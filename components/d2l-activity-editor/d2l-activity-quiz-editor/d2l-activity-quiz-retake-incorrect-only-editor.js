@@ -68,8 +68,8 @@ class ActivityQuizRetakeIncorrectOnlyEditor
 				?opened="${this.opened}"
 				@d2l-dialog-close="${this.handleClose}"
 				title-text="${this.localize('rioDialogTitle')}">
-					<p> ${this.localize('rioDialogParagraph')} </p>
-					<p> ${this.localize('rioDialogParagraph2')} </p>
+					<p>${this.localize('rioDialogParagraph')}</p>
+					<p>${this.localize('rioDialogParagraph2')}</p>
 					<d2l-button
 						data-dialog-action="done"
 						slot="footer"
