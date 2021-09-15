@@ -14,7 +14,6 @@ import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 
-
 class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(LocalizeActivityQuizEditorMixin(SkeletonMixin(ActivityEditorMixin(ActivityEditorDialogMixin(MobxLitElement))))) {
 
 	static get properties() {
@@ -84,8 +83,8 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 			</d2l-activity-quiz-auto-set-graded-summary>
 		`;
 	}
-	
-	_renderSubmissionView(){
+
+	_renderSubmissionView() {
 		return html`
 		<d2l-activity-quiz-submission-views-container
 			href = "${this.href}"
@@ -94,9 +93,6 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 	`;
 	}
 }
-
-
-
 
 customElements.define(
 	'd2l-activity-quiz-evaluation-and-feedback-editor',

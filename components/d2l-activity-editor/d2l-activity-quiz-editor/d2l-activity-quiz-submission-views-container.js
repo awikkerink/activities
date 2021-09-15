@@ -1,18 +1,17 @@
 import '@brightspace-ui/core/components/dialog/dialog.js';
-import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
-import { checkboxStyles } from '../styles/checkbox-styles.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorWorkingCopyDialogMixin } from '../mixins/d2l-activity-editor-working-copy-dialog-mixin';
+import { checkboxStyles } from '../styles/checkbox-styles.js';
+import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 import { shared as store } from './state/quiz-store';
 
-
-class ActivityQuizSubmissionViewsContainer 
+class ActivityQuizSubmissionViewsContainer
 	extends ActivityEditorWorkingCopyDialogMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
-   
+
 	static get styles() {
 		return [
 			labelStyles,
