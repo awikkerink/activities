@@ -72,7 +72,7 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 				href="${this.href}"
 				.token="${this.token}">
 			</d2l-activity-quiz-auto-set-graded-editor>
-	`;
+		`;
 	}
 
 	_renderAutoSetGradedSummary() {
@@ -86,11 +86,11 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 
 	_renderSubmissionView() {
 		return html`
-		<d2l-activity-quiz-submission-views-container
-			href = "${this.href}"
-			.token="${this.token}">
-		</d2l-activity-quiz-submission-views-container>
-	`;
+			<d2l-activity-quiz-submission-views-container
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-submission-views-container>
+		`;
 	}
 }
 

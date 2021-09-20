@@ -35,16 +35,12 @@ class ActivityQuizSubmissionViewsContainer
 				${this.localize('submissionViewHeading1')}
 			</div>
 
-			<d2l-input-checkbox-spacer
-				class="d2l-body-small">
-			</d2l-input-checkbox-spacer>
-
 			<d2l-input-checkbox 
 				?checked=""
 				@change=""
 				ariaLabel="${this.localize('submissionViewCheckboxLabel')}"
 				?disabled="">
-				<label> ${this.localize('submissionViewCheckboxLabel')} </label>
+				${this.localize('submissionViewCheckboxLabel')}
 			</d2l-input-checkbox>
 
 			<div class="d2l-label-text">
