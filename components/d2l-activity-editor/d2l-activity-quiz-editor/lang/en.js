@@ -135,5 +135,9 @@ export default {
 	"createNewLabel": "Create New", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "Add Existing", // Label for button to open menu for adding pre-existing items to the quiz.
 	"addQuestionsLabel": "New Question", // Label for button to open menu for adding new questions to the quiz.
+	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading2": "and", // Label for submission view dropdown in submission view container. 
+	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container. 
+	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container. 
 	"gradeOutOf": "Grade Out Of" // Label for the grade-out-of field when creating/editing an activity
 };

@@ -1,6 +1,7 @@
 import '../d2l-activity-accordion-collapse.js';
 import './d2l-activity-quiz-auto-set-graded-editor.js';
 import './d2l-activity-quiz-auto-set-graded-summary.js';
+import './d2l-activity-quiz-submission-views-container.js';
 import '@brightspace-ui/core/components/button/button-icon.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
 import { css, html } from 'lit-element/lit-element.js';
@@ -52,6 +53,10 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 				<div class="d2l-editor" slot="components">
 					${this._renderAutomaticGradesEditor()}
 				</div>
+
+				<div class="d2l-editor" slot="components">
+					${this._renderSubmissionView()}
+				<div>
 			</d2l-activity-accordion-collapse>
 		`;
 	}
@@ -67,7 +72,7 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 				href="${this.href}"
 				.token="${this.token}">
 			</d2l-activity-quiz-auto-set-graded-editor>
-	`;
+		`;
 	}
 
 	_renderAutoSetGradedSummary() {
@@ -79,6 +84,14 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 		`;
 	}
 
+	_renderSubmissionView() {
+		return html`
+			<d2l-activity-quiz-submission-views-container
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-submission-views-container>
+		`;
+	}
 }
 
 customElements.define(
