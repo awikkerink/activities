@@ -12,7 +12,7 @@ export class ContentScormActivity {
 		this.title = '';
 		this.link = '';
 		this.isExternalResource = false;
-		this.contentServiceName = null;
+		this.contentServiceName = '';
 		this.contentServiceLastModified = null;
 	}
 
