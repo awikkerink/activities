@@ -384,17 +384,20 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	_associateGradeSetGradebookStatus(gradebookStatus) {
 		if (!this._createSelectboxGradeItemEnabled) return;
 		const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
-		associateGradeEntity && associateGradeEntity.setGradebookStatus(gradebookStatus);
+		const promise = associateGradeEntity && associateGradeEntity.setGradebookStatus(gradebookStatus);
+		this.pendingUpdates.push(promise);
 	}
 	_associateGradeSetGradeName(name) {
 		if (!this._createSelectboxGradeItemEnabled) return;
 		const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
-		associateGradeEntity && associateGradeEntity.setGradeName(name);
+		const promise = associateGradeEntity && associateGradeEntity.setGradeName(name);
+		this.pendingUpdates.push(promise);
 	}
 	_associateGradeSetMaxPoints(maxPoints) {
 		if (!this._createSelectboxGradeItemEnabled) return;
 		const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
-		associateGradeEntity && associateGradeEntity.setGradeMaxPoints(maxPoints);
+		const promise = associateGradeEntity && associateGradeEntity.setGradeMaxPoints(maxPoints);
+		this.pendingUpdates.push(promise);
 	}
 	_chooseFromGrades() {
 		this._prefetchGradeCandidates();
