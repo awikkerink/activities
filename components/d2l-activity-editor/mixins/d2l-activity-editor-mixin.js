@@ -95,7 +95,7 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 
 			// Refetch entity in case presence of the check in action has changed,
 			// but make sure all updates have completed before refetching
-			if(this.pendingUpdates) {
+			if (this.pendingUpdates) {
 				await Promise.all(this.pendingUpdates);
 			}
 			await entity.fetch(true);
