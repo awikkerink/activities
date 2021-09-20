@@ -39,6 +39,12 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 			},
 			checkedOutHref: {
 				type: String
+			},
+			/**
+			 * Any pending promises before working-copy checkin can occur
+			 */
+			pendingUpdates: {
+				type: Array
 			}
 		};
 	}
@@ -48,6 +54,7 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 		this._container = null;
 		this.store = store;
 		this.saveOrder = 1000;
+		this.pendingUpdates = [];
 	}
 
 	connectedCallback() {
@@ -101,6 +108,7 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 			await entity.fetch(true);
 
 			await entity.checkin(this.store, true);
+			this.pendingUpdates = [];
 		}
 	}
 

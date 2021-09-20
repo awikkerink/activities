@@ -27,7 +27,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		return {
 			activityName: { type: String },
 			disableResetToUngraded: { type: Boolean },
-			pendingUpdates: { type: Array },
 			_focusUngraded: { type: Boolean },
 			_createSelectboxGradeItemEnabled: { type: Boolean },
 			_associateGradeHref: { type: String }
@@ -167,7 +166,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		super(store);
 		this.saveOrder = 500;
 		this.disableResetToUngraded = false;
-		this.pendingUpdates = [];
 	}
 
 	connectedCallback() {
@@ -340,7 +338,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			}
 		}
 		await super.save();
-		this.pendingUpdates = [];
 	}
 
 	updateSelectedGrade() {
