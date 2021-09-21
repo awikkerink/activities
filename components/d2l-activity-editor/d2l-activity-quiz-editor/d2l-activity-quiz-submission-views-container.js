@@ -10,7 +10,6 @@ import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 import { shared as store } from './state/quiz-store';
 
-
 class ActivityQuizSubmissionViewsContainer
 	extends ActivityEditorWorkingCopyDialogMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
 
