@@ -8,6 +8,7 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 import { shared as store } from './state/quiz-store';
+import './d2l-activity-quiz-submission-views-dialog.js';
 
 class ActivityQuizSubmissionViewsContainer
 	extends ActivityEditorWorkingCopyDialogMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
@@ -57,14 +58,34 @@ class ActivityQuizSubmissionViewsContainer
 					<option value="">API Placeholder 2</option>
 				</select>
 			</div>
-
+			
 			<div>
 				<d2l-button-subtle
 					text=${this.localize('submissionViewButtonText')}
-					@click=""
+					@click="${this.open}" 
 					h-align="text">
 				</d2l-button-subtle>
-			</div>     
+			</div> 
+			${this._renderDialog()}
+		`;
+	}
+
+	_renderDialog() {
+		return html`
+			<d2l-dialog-fullscreen
+				?opened="${this.opened}"
+				@d2l-dialog-close="${this.handleClose}"
+				id="quiz-manage-timing-dialog"
+				title-text = ${this.localize('submissionViewButtonText')}>
+
+				<d2l-activity-quiz-submission-views-dialog
+					href="${this.href}"
+					.token="${this.token}">
+				</d2l-activity-quiz-submission-views-dialog>
+
+				<d2l-button slot="footer" primary @click="${this.handleClose}" ?disabled="${this.isSaving}">${this.localize('manageAttemptsDialogConfirmationText')}</d2l-button>
+				<d2l-button slot="footer" data-dialog-action ?disabled="${this.isSaving}">${this.localize('manageAttemptsDialogCancelText')}</d2l-button>
+			</d2l-dialog-fullscreen>
 		`;
 	}
 }
