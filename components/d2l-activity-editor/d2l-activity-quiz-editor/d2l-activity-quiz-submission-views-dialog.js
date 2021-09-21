@@ -1,4 +1,4 @@
-import { css, html } from 'lit-element/lit-element.js';
+import { html } from 'lit-element/lit-element.js';
 import { ActivityEditorDialogMixin } from '../mixins/d2l-activity-editor-dialog-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { shared as store } from './state/quiz-store';
