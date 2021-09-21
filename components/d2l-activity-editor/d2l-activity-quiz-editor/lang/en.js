@@ -143,5 +143,7 @@ export default {
 	"submissionViewsHelpDialogtitle": "Information: Quiz results display", // Title for help dialog on submission view customization screen. 
 	"submissionViewsHelpDialogParagraph1": "Quiz results display determine how learners can view their published quiz attempt results, both immediately following submission, or later when reviewing their attempt.", // Paragraph 1 for help dialog on submission view customization screen.
 	"submissionViewsHelpDialogParagraph2": "The Primary View is shown to learners as the default, and Additional Views will override the Primary View based on the set parameters.", // Paragraph 2 for help dialog on submission view customization screen.
-	"submissionViewsHelpDialogConfirmation": "OK" //Text for closing the information Dialog for customization in submission views.
+	"submissionViewsHelpDialogConfirmation": "OK", //Text for closing the information Dialog for customization in submission views.
+	"submissionViewsHelpDialogConfirmationMain": "OK", //Text for closing the main Dialog for customization in submission views.
+	"submissionViewsHelpDialogCancelMain": "Cancel" // Text for cancelling changes on the main Dialog for customization in submission views.
 };

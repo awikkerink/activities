@@ -76,15 +76,15 @@ class ActivityQuizSubmissionViewsContainer
 				?opened="${this.opened}"
 				@d2l-dialog-close="${this.handleClose}"
 				id="quiz-manage-timing-dialog"
-				title-text = ${this.localize('submissionViewButtonText')}>
+				title-text=${this.localize('submissionViewButtonText')}>
 
 				<d2l-activity-quiz-submission-views-dialog
 					href="${this.href}"
 					.token="${this.token}">
 				</d2l-activity-quiz-submission-views-dialog>
 
-				<d2l-button slot="footer" primary @click="${this.handleClose}" ?disabled="${this.isSaving}">${this.localize('manageAttemptsDialogConfirmationText')}</d2l-button>
-				<d2l-button slot="footer" data-dialog-action ?disabled="${this.isSaving}">${this.localize('manageAttemptsDialogCancelText')}</d2l-button>
+				<d2l-button slot="footer" primary @click="${this.handleClose}" ?disabled="${this.isSaving}">${this.localize('submissionViewsHelpDialogConfirmationMain')}</d2l-button>
+				<d2l-button slot="footer" data-dialog-action ?disabled="${this.isSaving}">${this.localize('submissionViewsHelpDialogCancelMain')}</d2l-button>
 			</d2l-dialog-fullscreen>
 		`;
 	}
