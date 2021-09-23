@@ -47,6 +47,7 @@ export class ActivityUsage extends WorkingCopy {
 		this.associationsHref = entity.getDirectRubricAssociationsHref();
 		this.specializationHref = entity.specializationHref();
 		this.associateGradeHref = entity.associateGradeHref();
+		this.scoringHref = entity.scoringHref();
 
 		await Promise.all([
 			this._loadSpecialAccess(entity),
@@ -223,6 +224,7 @@ decorate(ActivityUsage, {
 	competenciesDialogUrl: observable,
 	specialAccess: observable,
 	associateGradeHref: observable,
+	scoringHref: observable,
 	// actions
 	load: action,
 	setDraftStatus: action,

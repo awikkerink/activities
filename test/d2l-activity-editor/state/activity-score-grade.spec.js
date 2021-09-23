@@ -39,8 +39,7 @@ describe('Activity Score Grade', function() {
 			gradeHref: () => 'http://test-grade-href',
 			gradeCandidatesHref: () => 'http://grade-candidate-collection-href',
 			newGradeCandidatesHref: () => undefined,
-			isNewGradeCandidate: () => false,
-			fetchLinkedScoreOutOfEntity: () => null
+			isNewGradeCandidate: () => false
 		};
 	});
 
@@ -74,15 +73,6 @@ describe('Activity Score Grade', function() {
 			await activity.fetch(defaultEntityMock);
 
 			expect(activity.createNewGrade).to.be.false;
-		});
-
-		it('initializes scoreOutOf with value provided by fetchLinkedScoreOutOfEntity', async() => {
-			defaultEntityMock.fetchLinkedScoreOutOfEntity = () => {
-				defaultEntityMock.scoreOutOf = () => '1234';
-			};
-			const activity = new ActivityScoreGrade('token');
-			await activity.fetch(defaultEntityMock);
-			expect(activity.scoreOutOf).to.equal('1234');
 		});
 	});
 

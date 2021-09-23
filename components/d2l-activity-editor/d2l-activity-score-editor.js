@@ -10,7 +10,7 @@ import '@brightspace-ui/core/components/dropdown/dropdown-menu.js';
 import '@brightspace-ui/core/components/menu/menu.js';
 import '@brightspace-ui/core/components/menu/menu-item.js';
 import 'd2l-tooltip/d2l-tooltip';
-import { sharedAssociateGrade as associateGradeStore, shared as store } from './state/activity-store.js';
+import { sharedAssociateGrade as associateGradeStore, sharedScoring as scoringStore, shared as store } from './state/activity-store.js';
 import { bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
@@ -29,7 +29,8 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			disableResetToUngraded: { type: Boolean },
 			_focusUngraded: { type: Boolean },
 			_createSelectboxGradeItemEnabled: { type: Boolean },
-			_associateGradeHref: { type: String }
+			_associateGradeHref: { type: String },
+			_scoringHref: { type: String }
 		};
 	}
 
@@ -189,24 +190,29 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		let gradeUnits;
 		let inGrades;
 		let canSeeGrades;
+		let isUngraded;
+		let scoreOutOf;
+		let scoreOutOfError;
+		let canEditScoreOutOf;
 
 		if (this._createSelectboxGradeItemEnabled) {
 			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
+			const scoringEntity = scoringStore.get(this._scoringHref);
 			gradeUnits = this.localize('grades.gradeUnits');
 			inGrades = associateGradeEntity && associateGradeEntity.gradebookStatus !== GradebookStatus.NotInGradebook;
 			canSeeGrades = !!associateGradeEntity;
+			scoreOutOf = scoringEntity && scoringEntity.scoreOutOf;
+			isUngraded = associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NotInGradebook && !scoreOutOf;
+			canEditScoreOutOf = scoringEntity && scoringEntity.canUpdateScoring;
 		} else {
 			gradeUnits = activity && activity.scoreAndGrade && activity.scoreAndGrade.gradeType;
 			inGrades = activity && activity.scoreAndGrade && activity.scoreAndGrade.inGrades;
 			canSeeGrades = activity && activity.scoreAndGrade && activity.scoreAndGrade.canSeeGrades;
+			isUngraded = activity && activity.scoreAndGrade && activity.scoreAndGrade.isUngraded;
+			scoreOutOf = activity && activity.scoreAndGrade && activity.scoreAndGrade.scoreOutOf;
+			scoreOutOfError =  activity && activity.scoreAndGrade && activity.scoreAndGrade.scoreOutOfError;
+			canEditScoreOutOf = activity && activity.scoreAndGrade && activity.scoreAndGrade.canEditScoreOutOf;
 		}
-
-		const {
-			scoreOutOf,
-			scoreOutOfError,
-			canEditScoreOutOf,
-			isUngraded
-		} = activity && activity.scoreAndGrade || {};
 
 		this._focusUngraded = isUngraded;
 
@@ -293,10 +299,14 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		if ((changedProperties.has('href') || changedProperties.has('token')) &&
 			this.href && this.token) {
 
-			this.store && this._fetch(() => {
-				const fetch = this.store.fetch(this.href, this.token);
-				fetch.then(() => {
+			store && this._fetch(() => {
+				const fetch = store.fetch(this.href, this.token);
+				fetch.then((activity) => {
 					this._setNewGradeName(this.activityName);
+					this._scoringHref = activity.scoringHref;
+					scoringStore && this._fetch(() => {
+						scoringStore.fetch(this._scoringHref, this.token);
+					});
 				});
 			});
 		}
@@ -331,13 +341,19 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		if (this._createSelectboxGradeItemEnabled) {
 			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
 			if (associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NewGrade) {
-				const activity = store.get(this.href);
-				const scoreOutOf = activity && activity.scoreAndGrade && activity.scoreAndGrade.scoreOutOf;
+				const scoring = scoringStore.get(this._scoringHref);
+				const scoreOutOf = scoring && scoring.scoreOutOf;
 				this._associateGradeSetMaxPoints(scoreOutOf);
 				this._associateGradeSetGradeName(this.activityName);
 			}
 		}
+
 		await super.save();
+
+		if (this._createSelectboxGradeItemEnabled) {
+			const scoring = scoringStore.get(this._scoringHref);
+			await scoring.save();
+		}
 	}
 
 	updateSelectedGrade() {
@@ -411,19 +427,28 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		const entity = associateGradeStore.get(this._associateGradeHref);
 		entity.fetch(true);
 	}
-	_onScoreOutOfChanged() {
+	_onScoreOutOfChanged(e) {
 		const activity = store.get(this.href);
 		if (activity === undefined) {
 			return;
 		}
 
-		const scoreAndGrade = activity.scoreAndGrade;
-		const scoreOutOf = this.shadowRoot.querySelector('#score-out-of').value;
-		if (scoreOutOf === scoreAndGrade.scoreOutOf) {
-			return;
+		const scoreOutOf = e.target.value;
+
+		if (!this._createSelectboxGradeItemEnabled) {
+			const scoreAndGrade = activity.scoreAndGrade;
+			if (scoreOutOf === scoreAndGrade.scoreOutOf) {
+				return;
+			}
+			scoreAndGrade.setScoreOutOf(scoreOutOf);
+		} else {
+			const scoring = scoringStore.get(this._scoringHref);
+			if (scoreOutOf === scoring.scoreOutOf) {
+				return;
+			}
+			scoring.setScoreOutOf(scoreOutOf);
 		}
 
-		scoreAndGrade.setScoreOutOf(scoreOutOf);
 	}
 	_prefetchGradeCandidates() {
 		const entity = associateGradeStore.get(this._associateGradeHref);
@@ -441,20 +466,34 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	_setGraded() {
 		this._prefetchGradeCandidates();
 		this._prefetchGradeSchemes();
-		const scoreAndGrade = store.get(this.href).scoreAndGrade;
-		scoreAndGrade.setGraded(scoreAndGrade.canEditGrades);
-		scoreAndGrade.setScoreOutOf(null); // let's us have an empty score input as undefined is converted to 0.
+		if (!this._createSelectboxGradeItemEnabled) {
+			const scoreAndGrade = store.get(this.href).scoreAndGrade;
+			scoreAndGrade.setGraded(scoreAndGrade.canEditGrades);
+			scoreAndGrade.setScoreOutOf(null); // let's us have an empty score input as undefined is converted to 0.
+		} else {
+			const scoring = scoringStore.get(this._scoringHref);
+			scoring.setScoreOutOf(null);
+		}
 		this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 	}
 	_setNewGradeName(name) {
 		const activity = store.get(this.href);
 		if (activity) {
 			activity.scoreAndGrade.setNewGradeName(name);
+			if (this._createSelectboxGradeItemEnabled) {
+				const scoring = scoringStore.get(this._scoringHref);
+				scoring && scoring.setNewGradeName(name);
+			}
 		}
 	}
 
 	_setUngraded() {
-		store.get(this.href).scoreAndGrade.setUngraded();
+		if (!this._createSelectboxGradeItemEnabled) {
+			store.get(this.href).scoreAndGrade.setUngraded();
+		} else {
+			const scoring = scoringStore.get(this._scoringHref);
+			scoring.setScoreOutOf('');
+		}
 		this._associateGradeSetGradebookStatus(GradebookStatus.NotInGradebook);
 	}
 }

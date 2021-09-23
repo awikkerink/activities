@@ -53,8 +53,8 @@ describe('Activity Usage', function() {
 			competenciesDialogUrl: () => competenciesDialogUrl,
 			specialAccessHref: () => null,
 			specializationHref: () => null,
-			fetchLinkedScoreOutOfEntity: () => null,
-			associateGradeHref: () => null
+			associateGradeHref: () => null,
+			scoringHref: () => null
 		};
 	}
 
