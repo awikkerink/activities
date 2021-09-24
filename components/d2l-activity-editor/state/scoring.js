@@ -10,6 +10,10 @@ export class Scoring {
 		this.token = token;
 	}
 
+	async dirty() {
+		return !this._entity.equals(this._makeEntityData());
+	}
+
 	async fetch(bypassCache) {
 		const sirenEntity = await fetchEntity(this.href, this.token, bypassCache);
 
@@ -36,10 +40,6 @@ export class Scoring {
 
 		await this._entity.save(this._makeEntityData());
 		await this.fetch();
-	}
-
-	async dirty() {
-		return !this._entity.equals(this._makeEntityData());
 	}
 
 	setNewGradeName(name) {
