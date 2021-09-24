@@ -356,6 +356,14 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		}
 	}
 
+	hasPendingChanges() {
+		const scoring = scoringStore.get(this._scoringHref);
+		if (!scoring) {
+			return false;
+		}
+		return scoring.dirty();
+	}
+
 	updateSelectedGrade() {
 		if (this._createSelectboxGradeItemEnabled) {
 			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);

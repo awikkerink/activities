@@ -38,6 +38,10 @@ export class Scoring {
 		await this.fetch();
 	}
 
+	async dirty() {
+		return !this._entity.equals(this._makeEntityData());
+	}
+
 	setNewGradeName(name) {
 		this.newGradeName = name;
 	}
@@ -48,8 +52,7 @@ export class Scoring {
 
 	_makeEntityData() {
 		return {
-			scoreOutOf: this.scoreOutOf,
-			gradeMaxPoints: this.gradeMaxPoints
+			scoreOutOf: this.scoreOutOf
 		};
 	}
 }
