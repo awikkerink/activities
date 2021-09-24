@@ -337,6 +337,14 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		}
 	}
 
+	hasPendingChanges() {
+		const scoring = scoringStore.get(this._scoringHref);
+		if (!scoring) {
+			return false;
+		}
+		return scoring.dirty();
+	}
+
 	async save() {
 		if (this._createSelectboxGradeItemEnabled) {
 			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
@@ -354,14 +362,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			const scoring = scoringStore.get(this._scoringHref);
 			await scoring.save();
 		}
-	}
-
-	hasPendingChanges() {
-		const scoring = scoringStore.get(this._scoringHref);
-		if (!scoring) {
-			return false;
-		}
-		return scoring.dirty();
 	}
 
 	updateSelectedGrade() {
