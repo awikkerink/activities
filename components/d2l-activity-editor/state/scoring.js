@@ -28,7 +28,7 @@ export class Scoring {
 
 	async load(entity) {
 		this._entity = entity;
-		this.scoreOutOf = entity.scoreOutOf() ? entity.scoreOutOf().toString() : '';
+		this.scoreOutOf = entity.scoreOutOf();
 		this.gradeMaxPoints = entity.gradeMaxPoints();
 		this.canUpdateScoring = entity.canUpdateScoring();
 	}
