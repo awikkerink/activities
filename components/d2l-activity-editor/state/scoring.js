@@ -10,6 +10,10 @@ export class Scoring {
 		this.token = token;
 	}
 
+	addToGrades() {
+		this.canUpdateScoring = true;
+	}
+
 	async dirty() {
 		return !this._entity.equals(this._makeEntityData());
 	}
@@ -40,10 +44,6 @@ export class Scoring {
 
 		await this._entity.save(this._makeEntityData());
 		await this.fetch();
-	}
-
-	addToGrades() {
-		this.canUpdateScoring = true;
 	}
 
 	setNewGradeName(name) {
