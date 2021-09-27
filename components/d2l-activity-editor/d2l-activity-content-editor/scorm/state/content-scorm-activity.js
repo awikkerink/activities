@@ -37,8 +37,8 @@ export class ContentScormActivity {
 		this.title = scormActivity.title();
 		this.isExternalResource = scormActivity.isExternalResource();
 		this.link = scormActivity.url();
-		this.contentServiceName = scormActivity.contentServiceName();
-		this.contentServiceLastModified = scormActivity.contentServiceLastModified();
+		this.contentServiceTitle = scormActivity.contentServiceTitle();
+		this.contentServiceUpdatedAt = scormActivity.contentServiceUpdatedAt();
 	}
 
 	async save() {
