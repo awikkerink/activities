@@ -10,6 +10,10 @@ export class Scoring {
 		this.token = token;
 	}
 
+	addToGrades() {
+		this.canUpdateScoring = true;
+	}
+
 	async dirty() {
 		return !this._entity.equals(this._makeEntityData());
 	}
@@ -28,8 +32,8 @@ export class Scoring {
 
 	async load(entity) {
 		this._entity = entity;
-		this.scoreOutOf = entity.scoreOutOf();
-		this.gradeMaxPoints = entity.gradeMaxPoints();
+		this.scoreOutOf = entity.gradeMaxPoints() ? entity.gradeMaxPoints() : entity.scoreOutOf();
+		this.totalPoints = entity.scoreOutOf();
 		this.canUpdateScoring = entity.canUpdateScoring();
 	}
 
@@ -60,11 +64,12 @@ export class Scoring {
 decorate(Scoring, {
 	// props
 	scoreOutOf: observable,
-	gradeMaxPoints: observable,
+	totalPoints: observable,
 	canUpdateScoring: observable,
 	newGradeName: observable,
 	// actions
 	load: action,
+	addToGrades: action,
 	setScoreOutOf: action,
 	setNewGradeName: action
 });

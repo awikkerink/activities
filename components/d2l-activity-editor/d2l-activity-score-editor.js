@@ -27,6 +27,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		return {
 			activityName: { type: String },
 			disableResetToUngraded: { type: Boolean },
+			allowUngraded: { type: Boolean },
 			_focusUngraded: { type: Boolean },
 			_createSelectboxGradeItemEnabled: { type: Boolean },
 			_associateGradeHref: { type: String },
@@ -167,6 +168,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		super(store);
 		this.saveOrder = 500;
 		this.disableResetToUngraded = false;
+		this.allowUngraded = true;
 	}
 
 	connectedCallback() {
@@ -194,6 +196,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		let scoreOutOf;
 		let scoreOutOfError;
 		let canEditScoreOutOf;
+		let canEditGradebookStatus;
 
 		if (this._createSelectboxGradeItemEnabled) {
 			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
@@ -204,6 +207,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			scoreOutOf = scoringEntity && scoringEntity.scoreOutOf;
 			isUngraded = associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NotInGradebook && !scoreOutOf;
 			canEditScoreOutOf = scoringEntity && scoringEntity.canUpdateScoring;
+			canEditGradebookStatus = associateGradeEntity && associateGradeEntity.canCreateNewGrade;
 		} else {
 			gradeUnits = activity && activity.scoreAndGrade && activity.scoreAndGrade.gradeType;
 			inGrades = activity && activity.scoreAndGrade && activity.scoreAndGrade.inGrades;
@@ -212,6 +216,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			scoreOutOf = activity && activity.scoreAndGrade && activity.scoreAndGrade.scoreOutOf;
 			scoreOutOfError =  activity && activity.scoreAndGrade && activity.scoreAndGrade.scoreOutOfError;
 			canEditScoreOutOf = activity && activity.scoreAndGrade && activity.scoreAndGrade.canEditScoreOutOf;
+			canEditGradebookStatus = canEditScoreOutOf;
 		}
 
 		this._focusUngraded = isUngraded;
@@ -219,7 +224,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		const inGradesTerm = this._createSelectboxGradeItemEnabled ? this.localize('editor.inGradebook') : this.localize('editor.inGrades');
 		const notInGradesTerm = this._createSelectboxGradeItemEnabled ? this.localize('editor.notInGradebook') : this.localize('editor.notInGrades');
 
-		return isUngraded || this.skeleton ? html`
+		return (this.allowUngraded && isUngraded) || this.skeleton ? html`
 			<div id="ungraded-button-container" class="d2l-skeletize">
 				<button id="ungraded" class="d2l-input"
 					@click="${this._setGraded}"
@@ -261,8 +266,8 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 				${canSeeGrades ? html`
 					<div id="grade-info-container">
 						<div id="divider"></div>
-						<d2l-dropdown ?disabled="${!canEditScoreOutOf}">
-							<button class="d2l-label-text d2l-grade-info d2l-dropdown-opener" ?disabled="${!canEditScoreOutOf}">
+						<d2l-dropdown ?disabled="${!canEditGradebookStatus}">
+							<button class="d2l-label-text d2l-grade-info d2l-dropdown-opener" ?disabled="${!canEditGradebookStatus}">
 								${inGrades ? html`<d2l-icon icon="tier1:grade"></d2l-icon>` : null}
 								<div>${inGrades ? inGradesTerm : notInGradesTerm}</div>
 								<d2l-icon icon="tier1:chevron-down"></d2l-icon>
@@ -274,11 +279,11 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 										@d2l-menu-item-select="${this._chooseFromGrades}"
 									></d2l-menu-item>
 									${this._addOrRemoveMenuItem()}
-									<d2l-menu-item
+									${this.allowUngraded ? html`<d2l-menu-item
 										text="${this.localize('editor.setUngraded')}"
 										?disabled="${this.disableResetToUngraded}"
 										@d2l-menu-item-select="${this._setUngraded}"
-									></d2l-menu-item>
+									></d2l-menu-item>` : null}
 								</d2l-menu>
 							</d2l-dropdown-menu>
 						</d2l-dropdown>
@@ -404,6 +409,10 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		this._prefetchGradeSchemes();
 		store.get(this.href).scoreAndGrade.addToGrades();
 		this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
+		if (this._createSelectboxGradeItemEnabled) {
+			const scoring = scoringStore.get(this._scoringHref);
+			scoring && scoring.addToGrades();
+		}
 	}
 	_associateGradeSetGradebookStatus(gradebookStatus) {
 		if (!this._createSelectboxGradeItemEnabled) return;
