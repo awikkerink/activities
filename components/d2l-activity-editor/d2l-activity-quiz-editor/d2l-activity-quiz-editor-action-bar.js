@@ -51,14 +51,14 @@ class ActivityQuizEditorActionBar extends ActivityEditorMixin(SkeletonMixin(RtlM
 			return html``;
 		}
 		const scoring = scoringStore.get(entity.scoringHref);
-		const scoreOutOf = scoring && scoring.scoreOutOf;
+		const totalPoints = scoring && scoring.totalPoints;
 		return html`
 			<div class='d2l-action-bar-container d2l-skeletize'>
 				<d2l-activity-quiz-add-activity-menu
 					href="${this.quizHref}"
 					.token="${this.token}"
 				></d2l-activity-quiz-add-activity-menu>
-				${scoreOutOf ? html`<div class='d2l-body-standard d2l-quiz-score-out-of'>${this.localize('totalPoints', { scoreOutOf })}</div>` : null }
+				${totalPoints ? html`<div class='d2l-body-standard d2l-quiz-score-out-of'>${this.localize('totalPoints', { scoreOutOf: totalPoints })}</div>` : null }
 			</div>
 		`;
 	}

@@ -28,8 +28,8 @@ export class Scoring {
 
 	async load(entity) {
 		this._entity = entity;
-		this.scoreOutOf = entity.scoreOutOf();
-		this.gradeMaxPoints = entity.gradeMaxPoints();
+		this.scoreOutOf = entity.gradeMaxPoints() ? entity.gradeMaxPoints() : entity.scoreOutOf();
+		this.totalPoints = entity.scoreOutOf();
 		this.canUpdateScoring = entity.canUpdateScoring();
 	}
 
@@ -40,6 +40,10 @@ export class Scoring {
 
 		await this._entity.save(this._makeEntityData());
 		await this.fetch();
+	}
+
+	addToGrades() {
+		this.canUpdateScoring = true;
 	}
 
 	setNewGradeName(name) {
@@ -60,11 +64,12 @@ export class Scoring {
 decorate(Scoring, {
 	// props
 	scoreOutOf: observable,
-	gradeMaxPoints: observable,
+	totalPoints: observable,
 	canUpdateScoring: observable,
 	newGradeName: observable,
 	// actions
 	load: action,
+	addToGrades: action,
 	setScoreOutOf: action,
 	setNewGradeName: action
 });
