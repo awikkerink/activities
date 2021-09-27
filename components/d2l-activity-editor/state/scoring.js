@@ -10,6 +10,10 @@ export class Scoring {
 		this.token = token;
 	}
 
+	async dirty() {
+		return !this._entity.equals(this._makeEntityData());
+	}
+
 	async fetch(bypassCache) {
 		const sirenEntity = await fetchEntity(this.href, this.token, bypassCache);
 
@@ -24,7 +28,7 @@ export class Scoring {
 
 	async load(entity) {
 		this._entity = entity;
-		this.scoreOutOf = entity.scoreOutOf() ? entity.scoreOutOf().toString() : '';
+		this.scoreOutOf = entity.scoreOutOf();
 		this.gradeMaxPoints = entity.gradeMaxPoints();
 		this.canUpdateScoring = entity.canUpdateScoring();
 	}
@@ -48,8 +52,7 @@ export class Scoring {
 
 	_makeEntityData() {
 		return {
-			scoreOutOf: this.scoreOutOf,
-			gradeMaxPoints: this.gradeMaxPoints
+			scoreOutOf: this.scoreOutOf
 		};
 	}
 }
