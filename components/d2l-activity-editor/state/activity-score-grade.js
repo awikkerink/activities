@@ -1,5 +1,4 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
-import { fetchEntity } from './fetch-entity.js';
 import { GradeCandidateCollection } from '../d2l-activity-grades/state/grade-candidate-collection.js';
 
 configureMobx({ enforceActions: 'observed' });
@@ -14,9 +13,8 @@ export class ActivityScoreGrade {
 		this.inGrades = true;
 	}
 
-	async fetch(entity, bypassCache) {
-		await entity.fetchLinkedScoreOutOfEntity(fetchEntity, bypassCache);
-		this.load(entity);
+	async fetch(entity) {
+		await this.load(entity);
 	}
 
 	async fetchGradeCandidates() {
@@ -35,9 +33,8 @@ export class ActivityScoreGrade {
 		this.newGradeCandidatesCollection = new GradeCandidateCollection(this.newGradeCandidatesHref, this.token);
 		await this.newGradeCandidatesCollection.fetch(true);
 	}
-	async fetchUpdatedScoreOutOf(entity, bypassCache) {
-		await entity.fetchLinkedScoreOutOfEntity(fetchEntity, bypassCache);
-		this.loadScoreOutOf(entity);
+	async fetchUpdatedScoreOutOf(entity) {
+		await this.loadScoreOutOf(entity);
 	}
 
 	getAssociatedGradeEntity() {

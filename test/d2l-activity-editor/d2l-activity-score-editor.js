@@ -28,8 +28,7 @@ describe.skip('d2l-activity-score-editor', function() {
 			gradeHref: () => '',
 			gradeCandidatesHref: () => '',
 			newGradeCandidatesHref: () => undefined,
-			isNewGradeCandidate: () => false,
-			fetchLinkedScoreOutOfEntity: () => null
+			isNewGradeCandidate: () => false
 		});
 		href = 'http://activity/1';
 

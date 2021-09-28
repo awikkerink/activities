@@ -39,6 +39,12 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 			},
 			checkedOutHref: {
 				type: String
+			},
+			/**
+			 * Any pending promises before working-copy checkin can occur
+			 */
+			pendingUpdates: {
+				type: Array
 			}
 		};
 	}
@@ -48,6 +54,7 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 		this._container = null;
 		this.store = store;
 		this.saveOrder = 1000;
+		this.pendingUpdates = [];
 	}
 
 	connectedCallback() {
@@ -93,10 +100,15 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 			const entity = this.store.get(this.checkedOutHref);
 			if (!entity) return;
 
-			// Refetch entity in case presence of the check in action has changed
+			// Refetch entity in case presence of the check in action has changed,
+			// but make sure all updates have completed before refetching
+			if (this.pendingUpdates) {
+				await Promise.all(this.pendingUpdates);
+			}
 			await entity.fetch(true);
 
 			await entity.checkin(this.store, true);
+			this.pendingUpdates = [];
 		}
 	}
 

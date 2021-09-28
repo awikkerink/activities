@@ -7,7 +7,6 @@ const componentClass = class extends LitElement {
 		return {
 			href: { type: String, reflect: true },
 			token: { type: String },
-			newactivityhrefs: { type: Array },
 			importedActivityHrefs: { type: Array }
 		};
 	}
@@ -21,7 +20,6 @@ const componentClass = class extends LitElement {
 		return html `
 			<d2l-activity-editor-main href="${this.href}"
 									.token="${this.token}"
-									.newactivityhrefs=${this.newactivityhrefs}
 									.importedActivityHrefs=${this.importedActivityHrefs}>
 			</d2l-activity-editor-main>
 		`;

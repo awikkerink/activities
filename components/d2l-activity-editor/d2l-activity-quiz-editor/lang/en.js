@@ -30,16 +30,16 @@ export default {
 	"hlpReleaseConditions": "Users are not able to access or view the quiz unless they meet the release conditions.", // release conditions help
 	"hdrEvaluationAndFeedback": "Evaluation & Feedback", // evaluation/feedback accordion header
 	"subHdrAutomaticGrades": "Automatic Grade", // Title for automatic grade tool
-	"autoSetGradedDescription": "Allow attempt to be set as graded immediately upon completion", // description for automatic grade checkbox
-	"autoSetGradedSummary": "Automatically grade", // summary for auto set graded checkbox
+	"autoSetGradedDescription": "Auto-publish attempt results immediately upon completion", // description for automatic grade checkbox
+	"autoSetGradedSummary": "Auto-publish results", // summary for auto set graded checkbox
 	"passwordDescription": "Only users who enter this password will be granted access to write this quiz.", // description for password input
 	"hlpSubmissionNotificationEmail": "Enter an email or multiple emails separated by a comma, to receive notifications when a quiz is attempted.", // description for email notification input
 	"autoSetGradedAccessibleHelpText": "Get help on - Automatic Grade", // accessible help text for autoSetGraded question mark button
-	"autoSetGradedHelpDialogTitle": "Information: Automatic Grade", // title that appears when the autoSetGraded help dialog is rendered
+	"autoSetGradedHelpDialogTitle": "Information: Auto-publish attempt results immediately upon completion", // title that appears when the autoSetGraded help dialog is rendered
 	"autoSetGradedHelpDialogConfirmationText": "OK", // copy that appears on the autoSetGraded help dialog confirmation button
-	"autoSetGradedHelpDialogParagraph1": "When this setting is turned on users can see their score as soon as they submit their attempt. The score displayed is only what the system can auto-grade.", // content for paragraph 1 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph2": "This setting must be turned on for grades to be automatically sent to the grade book, and for the default submission view to be released to users when they complete an attempt.", // content for paragraph 2 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph3": "Note: Written Response questions will be marked as 0 until manually graded.", // content for paragraph 3 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph1": "With this feature turned on, the auto-evaluated attempt results will be published and appear to learners.", // content for paragraph 1 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph2": "Note: If questions cannot be evaluated by the system (e.g. written response questions), those questions will be automatically scored with a zero until manual evaluation.", // content for paragraph 2 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph3": "", // content for paragraph 3 of autoSetGraded help dialog
 	"disableAlertsHelpDialogTitle": "Information: Disable Email, Instant Messages and Alerts within Brightspace", // title that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogContent": "If you turn on this option, learners cannot access the Brightspace Email, Instant Messages, or their alerts if they have a quiz attempt in progress.", // content that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogConfirmationText": "OK", // copy that appears on the disable alerts help dialog confirmation button
@@ -47,7 +47,7 @@ export default {
 	"disableRightClickAccessibleHelpText": "Get help on - Disable Right Click", // accessible help text for disable right click question mark button
 	"disableRightClickHelpDialogTitle": "Information: Disable Right Click", // title that appears when the disable right click help dialog is rendered
 	"disableRightClickHelpDialogParagraph1": "This feature prohibits learners from printing quiz questions by right-clicking on a question while an attempt is in progress. But learners will still be able to screen capture the quiz through other technologies outside of the browser.", // content for paragraph 1 of disable right click help dialog
-	"disableRightClickHelpDialogParagraph2": "Certain accessibility workflows will be blocked because the learner cannot copy and paste the question text.", // content for paragraph 2 of disable right click help dialog
+	"disableRightClickHelpDialogParagraph2": "Certain accessibility workflows will be blocked because the learner cannot copy and paste the question text. Individual users can be granted the ability to right-click on a quiz even when this feature is enabled for a quiz by enabling “Always Allow Right Click” in that user’s Accommodations.", // content for paragraph 2 of disable right click help dialog
 	"disableRightClickHelpDialogConfirmationText": "OK", // copy that appears on the disable right click help dialog confirmation button
 	"manageTimingDialogConfirmationText": "OK", // copy that appears on the Timing dialog confirmation button
 	"manageTimingDialogCancelText": "Cancel", // copy that appears on the Timing dialog cancel button
@@ -78,7 +78,8 @@ export default {
 	"btnAttemptConditions": "Attempt Conditions", // Label for Attempt Conditions button in Attempts dialog
 	"rioAccessibileHelpText": "Get help on - Retake Incorrect Only", // accessible help text for RIO question mark button
 	"rioDialogTitle": "Information: Retake Incorrect Questions Only", // Title for RIO help dialog
-	"rioDialogParagraph": "When this setting is selected, learners who attempt a quiz more than once can only answer questions that were incorrect on the previous attempt. If you are using Automatic grading, Written Response questions will be marked as 0 and included in future attempts until they are graded manually.", // content for RIO dialog
+	"rioDialogParagraph": "When this setting is selected, learners who attempt a quiz more than once can only answer questions that were incorrect on the previous attempt.", // content for RIO dialog
+	"rioDialogParagraph2": "If you are using Auto-publishing, Written Response questions will be marked as 0 and included in future attempts until they are graded manually.", // second paragraph for RIO dialog
 	"rioDialogConfirmationText": "OK", // copy that appears on the RIO help dialog confirmation button
 	"ipRestrictionDialogDescription": "Only learners coming from IP addresses that meet the defined restrictions can write the quiz.", // guidelines for IP restrictions dialog
 	"btnIpRestrictionsDialogAdd": "Add", // text for IP restrictions dialog "Add" button
@@ -133,5 +134,10 @@ export default {
 	"headerAndFooter": "Header and footer added", // Header and footer summary text for closed accordion
 	"createNewLabel": "Create New", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "Add Existing", // Label for button to open menu for adding pre-existing items to the quiz.
-	"addQuestionsLabel": "New Question" // Label for button to open menu for adding new questions to the quiz.
+	"addQuestionsLabel": "New Question", // Label for button to open menu for adding new questions to the quiz.
+	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading2": "and", // Label for submission view dropdown in submission view container. 
+	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container. 
+	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container. 
+	"gradeOutOf": "Grade Out Of" // Label for the grade-out-of field when creating/editing an activity
 };
