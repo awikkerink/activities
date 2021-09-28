@@ -96,6 +96,9 @@ export default {
 	"hdrIpRestrictionsHelpDialogP2": "Example IP address: 155.55.5.15", // IP restrictions help dialog paragraph 2
 	"hdrIpRestrictionsHelpDialogP3": "To include an individual accepted IP address, only specify the IP Range Start value.", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "Note: The IP Range Start value must be smaller than the IP Range End value.", // IP restrictions help dialog paragraph 4
+	"hdrSpecialAccess": "Special Access", // special access heading,
+	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
+	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "Get help on - IP restrictions", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "Attempt Conditions", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "For a learner to qualify for another attempt, set a minimum and/or maximum percentage value between 0 to 100 that must be acheived on the previous attempt.", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -136,8 +139,8 @@ export default {
 	"addExistingLabel": "Add Existing", // Label for button to open menu for adding pre-existing items to the quiz.
 	"addQuestionsLabel": "New Question", // Label for button to open menu for adding new questions to the quiz.
 	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
-	"submissionViewHeading2": "and", // Label for submission view dropdown in submission view container. 
-	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container. 
-	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container. 
+	"submissionViewHeading2": "and", // Label for submission view dropdown in submission view container.
+	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
 	"gradeOutOf": "Grade Out Of" // Label for the grade-out-of field when creating/editing an activity
 };

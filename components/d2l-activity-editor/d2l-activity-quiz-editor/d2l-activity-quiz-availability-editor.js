@@ -7,6 +7,9 @@ import './d2l-activity-ip-restrictions-summary.js';
 import './d2l-activity-quiz-password-summary';
 import './d2l-activity-quiz-password-editor.js';
 import './d2l-activity-quiz-ip-restrictions-container.js';
+import '../d2l-activity-special-access-editor.js';
+import '../d2l-activity-special-access-summary.js';
+
 import { accordionStyles } from '../styles/accordion-styles';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
@@ -59,12 +62,14 @@ class ActivityQuizAvailabilityEditor extends ActivityEditorMixin(AsyncContainerM
 
 				<li slot="summary-items">${this._renderAvailabilityDatesSummary()}</li>
 				<li slot="summary-items">${this._renderReleaseConditionSummary()}</li>
+				<li slot="summary-items">${this._renderSpecialAccessSummary()}</li>
 				<li slot="summary-items">${this._renderPasswordSummary()}</li>
 				<li slot="summary-items">${this._renderIpRestrictionsSummary()}</li>
 
 				<span slot="components">
 					${this._renderAvailabilityDatesEditor()}
 					${this._renderReleaseConditionEditor()}
+					${this._renderSpecialAccessEditor()}
 					${this._renderPasswordEditor()}
 					${this._renderIpRestrictionEditor()}
 				</span>
@@ -170,6 +175,37 @@ class ActivityQuizAvailabilityEditor extends ActivityEditorMixin(AsyncContainerM
 				href="${this.activityUsageHref}"
 				.token="${this.token}">
 			</d2l-activity-usage-conditions-summary>
+		`;
+	}
+
+	_renderSpecialAccessEditor() {
+		const activity = store.get(this.activityUsageHref);
+
+		if (!activity || !activity.specialAccess) {
+			return html``;
+		}
+
+		return html`
+			<div class="d2l-editor">
+				<div class="d2l-label-text">
+					${this.localize('hdrSpecialAccess')}
+				</div>
+				<d2l-activity-special-access-editor
+					description="${this.localize('hlpSpecialAccess')}"
+					access-restricted-text="${this.localize('specialAccessRestrictedText')}"
+					href="${this.activityUsageHref}"
+					.token="${this.token}">
+				</d2l-activity-special-access-editor>
+			</div>
+		`;
+	}
+
+	_renderSpecialAccessSummary() {
+		return html`
+			<d2l-activity-special-access-summary
+				href="${this.activityUsageHref}"
+				.token="${this.token}">
+			</d2l-activity-special-access-summary>
 		`;
 	}
 
