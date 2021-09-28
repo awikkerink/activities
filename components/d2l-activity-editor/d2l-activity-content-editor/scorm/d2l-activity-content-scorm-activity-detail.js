@@ -142,7 +142,7 @@ class ContentScormActivityDetail extends SkeletonMixin(ErrorHandlingMixin(Locali
 	}
 
 	saveGradeOptions() {
-		// TODO: Implement for writing grades
+		// TODO: Implement this for writing grades
 	}
 
 	saveLinkOptions(isExternalResource) {
