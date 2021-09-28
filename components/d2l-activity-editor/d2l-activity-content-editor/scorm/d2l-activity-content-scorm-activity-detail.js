@@ -54,7 +54,7 @@ class ContentScormActivityDetail extends SkeletonMixin(ErrorHandlingMixin(Locali
 		});
 		this.dispatchEvent(event);
 
-		this._createSelectboxGradeItemEnabled = typeof this._createSelectboxGradeItemEnabled === 'undefined' || event.detail.provider;
+		this._createSelectboxGradeItemEnabled = event.detail.provider;
 
 		this.saveTitle = this.saveTitle.bind(this);
 		this.saveLinkOptions = this.saveLinkOptions.bind(this);
@@ -142,7 +142,7 @@ class ContentScormActivityDetail extends SkeletonMixin(ErrorHandlingMixin(Locali
 	}
 
 	saveGradeOptions() {
-		// TODO: Implement for writing grades
+		// TODO: Implement this for writing grades
 	}
 
 	saveLinkOptions(isExternalResource) {
