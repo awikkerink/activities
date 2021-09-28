@@ -13,7 +13,8 @@ class ActivitySpecialAccessEditor extends ActivityEditorMixin(RtlMixin(LocalizeA
 	static get properties() {
 
 		return {
-			description: { type: String }
+			description: { type: String },
+			accessRestrictedText: { type: String, attribute: 'access-restricted-text' }
 		};
 	}
 
@@ -116,10 +117,9 @@ class ActivitySpecialAccessEditor extends ActivityEditorMixin(RtlMixin(LocalizeA
 			`;
 		}
 
-		const specialAccessTypeDescription = html`${this.localize(isRestricted ?
-			'editor.specialAccessRestrictedText' :
-			'editor.specialAccessNotRestrictedText'
-		)}`;
+		const specialAccessTypeDescription = html`${isRestricted ?
+			this.accessRestrictedText || this.localize('editor.specialAccessRestrictedText') :
+			this.localize('editor.specialAccessNotRestrictedText')}`;
 
 		let userCountText = html`${this.localize('editor.specialAccessCount', { count: userCount })}`;
 
