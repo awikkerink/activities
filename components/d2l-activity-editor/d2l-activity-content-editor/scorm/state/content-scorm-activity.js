@@ -12,8 +12,8 @@ export class ContentScormActivity {
 		this.title = '';
 		this.link = '';
 		this.isExternalResource = false;
-		this.contentServiceName = '';
-		this.contentServiceLastModified = null;
+		this.contentServiceTitle = '';
+		this.contentServiceUpdatedAt = null;
 	}
 
 	get dirty() {
