@@ -97,7 +97,7 @@ export default {
 	"hdrIpRestrictionsHelpDialogP3": "To include an individual accepted IP address, only specify the IP Range Start value.", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "Note: The IP Range Start value must be smaller than the IP Range End value.", // IP restrictions help dialog paragraph 4
 	"hdrSpecialAccess": "Special Access", // special access heading,
-	"hlpSpecialAccess": "Special Access allows assignments to be available to only a select group of users or individualized due dates for certain users.", // special access help
+	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
 	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "Get help on - IP restrictions", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "Attempt Conditions", // Header for Attempts Conditions section in Attempts dialog
