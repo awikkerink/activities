@@ -18,11 +18,11 @@ class ActivityQuizSubmissionViewsDialog
 				icon="tier1:help"
 				@click="${this.open}">
 			</d2l-button-icon>
-			${this._renderDialog()}
+			${this._renderHelpDialog()}
 		`;
 	}
 
-	_renderDialog() {
+	_renderHelpDialog() {
 		return html`
 			<d2l-dialog
 				?opened="${this.opened}"
