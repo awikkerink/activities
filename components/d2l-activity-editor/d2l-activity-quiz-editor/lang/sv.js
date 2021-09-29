@@ -30,16 +30,16 @@ export default {
 	"hlpReleaseConditions": "Användarna kan inte få åtkomst till eller visa förhöret om de inte uppfyller publiceringsvillkoren.", // release conditions help
 	"hdrEvaluationAndFeedback": "Utvärdering och återkoppling", // evaluation/feedback accordion header
 	"subHdrAutomaticGrades": "Automatiskt betyg", // Title for automatic grade tool
-	"autoSetGradedDescription": "Tillåt att försöket anges som betygsatt direkt vid avslut", // description for automatic grade checkbox
-	"autoSetGradedSummary": "Betygsätt automatiskt", // summary for auto set graded checkbox
+	"autoSetGradedDescription": "Publicera försöksresultat automatiskt när de har slutförts", // description for automatic grade checkbox
+	"autoSetGradedSummary": "Publicera resultat automatiskt", // summary for auto set graded checkbox
 	"passwordDescription": "Endast användare som anger detta lösenord ges åtkomst till förhöret.", // description for password input
 	"hlpSubmissionNotificationEmail": "Ange en e-postadress eller flera e-postadresser avgränsade med kommatecken för att få aviseringar vid förhörsförsök.", // description for email notification input
 	"autoSetGradedAccessibleHelpText": "Få hjälp med – automatiskt betyg", // accessible help text for autoSetGraded question mark button
-	"autoSetGradedHelpDialogTitle": "Information: Automatiskt betyg", // title that appears when the autoSetGraded help dialog is rendered
+	"autoSetGradedHelpDialogTitle": "Information: Publicera försöksresultaten automatiskt när de har slutförts", // title that appears when the autoSetGraded help dialog is rendered
 	"autoSetGradedHelpDialogConfirmationText": "OK", // copy that appears on the autoSetGraded help dialog confirmation button
-	"autoSetGradedHelpDialogParagraph1": "När denna inställning är på kan användare se sina poäng direkt efter att de har lämnat in sitt försök. Poängen som visas är bara de som systemet kan betygsätta automatiskt.", // content for paragraph 1 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph2": "Denna inställning ska vara på för att betyg ska skickas automatiskt till betygsboken och för att standardvyn för inlämning ska publiceras för användare när de slutför ett försök.", // content for paragraph 2 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph3": "Obs! Frågor med skriftligt svar markeras som 0 tills de betygsätts manuellt.", // content for paragraph 3 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph1": "Om du aktiverar den här funktionen utvärderas och visas försöksresultat för eleverna automatiskt när de har slutfört försöken.", // content for paragraph 1 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph2": "Obs! Frågor som inte går att utvärdera i systemet (som frågor med skriftligt svar) får automatiskt resultatet 0 tills de har utvärderats manuellt.", // content for paragraph 2 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph3": "", // content for paragraph 3 of autoSetGraded help dialog
 	"disableAlertsHelpDialogTitle": "Information: Avaktivera e-post, snabbmeddelanden och aviseringar i Brightspace", // title that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogContent": "Om du aktiverar detta alternativ har eleverna inte åtkomst till e-post för Brightspace, snabbmeddelanden eller larm om de har ett pågående förhörsförsök.", // content that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogConfirmationText": "OK", // copy that appears on the disable alerts help dialog confirmation button
@@ -78,7 +78,8 @@ export default {
 	"btnAttemptConditions": "Försöksvillkor", // Label for Attempt Conditions button in Attempts dialog
 	"rioAccessibileHelpText": "Få hjälp med – Besvara endast felaktiga frågor", // accessible help text for RIO question mark button
 	"rioDialogTitle": "Information: Besvara endast felaktiga frågor på nytt", // Title for RIO help dialog
-	"rioDialogParagraph": "När den här inställningen är vald kan elever som försöker göra ett förhör mer än en gång bara svara på frågor som var felaktiga vid det tidigare försöket. Om du använder automatiskt betyg markeras frågor med skriftliga svar som 0 och tas med i kommande försök tills de betygsätts manuellt.", // content for RIO dialog
+	"rioDialogParagraph": "När den här inställningen är vald kan elever som försöker göra ett förhör mer än en gång bara svara på frågor som var felaktiga vid det tidigare försöket.", // content for RIO dialog
+	"rioDialogParagraph2": "Om du använder Automatisk publicering får frågor med skriftliga svar betyget 0 och tas med i kommande försök tills frågorna har betygsatts manuellt.", // second paragraph for RIO dialog
 	"rioDialogConfirmationText": "OK", // copy that appears on the RIO help dialog confirmation button
 	"ipRestrictionDialogDescription": "Endast elever med IP-adresser som uppfyller de definierade begränsningarna kan delta i förhöret.", // guidelines for IP restrictions dialog
 	"btnIpRestrictionsDialogAdd": "Lägg till", // text for IP restrictions dialog "Add" button
@@ -95,6 +96,9 @@ export default {
 	"hdrIpRestrictionsHelpDialogP2": "Exempel på IP-adress: 155.55.5.15", // IP restrictions help dialog paragraph 2
 	"hdrIpRestrictionsHelpDialogP3": "Ange bara värdet för Start på IP-intervall för att inkludera en individuellt godkänd IP-adress.", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "Obs! Värdet för Start på IP-intervall måste vara mindre än värdet för Slut på IP-intervall.", // IP restrictions help dialog paragraph 4
+	"hdrSpecialAccess": "Specialåtkomst", // special access heading,
+	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
+	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "Få hjälp med – IP-begränsningar", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "Försöksvillkor", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "Ange ett minsta och/eller högsta procentvärde mellan 0 och 100 som måste uppnås för att eleven ska vara berättigad till ett nytt försök.", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -133,5 +137,10 @@ export default {
 	"headerAndFooter": "Sidhuvud och sidfot har lagts till", // Header and footer summary text for closed accordion
 	"createNewLabel": "Skapa ny", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "Lägg till befintligt", // Label for button to open menu for adding pre-existing items to the quiz.
-	"addQuestionsLabel": "Ny fråga" // Label for button to open menu for adding new questions to the quiz.
+	"addQuestionsLabel": "Ny fråga", // Label for button to open menu for adding new questions to the quiz.
+	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading2": "och", // Label for submission view dropdown in submission view container.
+	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "Betyg av" // Label for the grade-out-of field when creating/editing an activity
 };

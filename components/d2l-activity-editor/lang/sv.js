@@ -169,5 +169,8 @@ export default {
 	"content.confirmDialogTitle": "Det befintliga innehållet raderas.", // The text for the title of the replace html template confirmation dialog
 	"content.confirmDialogBody": "Är du säker på att du vill ersätta befintligt innehåll med den här mallen?", // The text for the body of the replace html template confirmation dialog
 	"content.confirmDialogActionOption": "Ersätt", // The text for the confirmation action to replace content
-	"content.confirmDialogCancelOption": "Avbryt" // The text for the cancel action to not replace content
+	"content.confirmDialogCancelOption": "Avbryt", // The text for the cancel action to not replace content
+	"content.useEmbeddedPlayer": "Använd den inbyggda spelaren", // The text for using the embedded player
+	"content.scormActivity": "SCORM-paket", // The label for the name of the SCORM package
+	"content.lastEdited": "Redigerades" // The date when the entity was last edited
 };

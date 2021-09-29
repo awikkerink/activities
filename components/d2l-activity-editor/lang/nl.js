@@ -169,5 +169,8 @@ export default {
 	"content.confirmDialogTitle": "Uw bestaande inhoud wordt verwijderd.", // The text for the title of the replace html template confirmation dialog
 	"content.confirmDialogBody": "Weet u zeker dat u uw bestaande inhoud wilt vervangen door deze sjabloon?", // The text for the body of the replace html template confirmation dialog
 	"content.confirmDialogActionOption": "Vervangen", // The text for the confirmation action to replace content
-	"content.confirmDialogCancelOption": "Annuleren" // The text for the cancel action to not replace content
+	"content.confirmDialogCancelOption": "Annuleren", // The text for the cancel action to not replace content
+	"content.useEmbeddedPlayer": "Geïntegreerde speler gebruiken", // The text for using the embedded player
+	"content.scormActivity": "SCORM-pakket", // The label for the name of the SCORM package
+	"content.lastEdited": "Laatst bewerkt" // The date when the entity was last edited
 };

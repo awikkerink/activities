@@ -169,5 +169,8 @@ export default {
 	"content.confirmDialogTitle": "سيتم حذف المحتوى الحالي.", // The text for the title of the replace html template confirmation dialog
 	"content.confirmDialogBody": "هل تريد فعلاً استبدال المحتوى الحالي بهذا القالب؟", // The text for the body of the replace html template confirmation dialog
 	"content.confirmDialogActionOption": "استبدال", // The text for the confirmation action to replace content
-	"content.confirmDialogCancelOption": "إلغاء" // The text for the cancel action to not replace content
+	"content.confirmDialogCancelOption": "إلغاء", // The text for the cancel action to not replace content
+	"content.useEmbeddedPlayer": "استخدام مشغّل مضمّن", // The text for using the embedded player
+	"content.scormActivity": "حزمة النموذج المرجعي لمكونات المحتوى التشاركي (SCORM)", // The label for the name of the SCORM package
+	"content.lastEdited": "التحرير الأخير" // The date when the entity was last edited
 };

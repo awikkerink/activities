@@ -30,16 +30,16 @@ export default {
 	"hlpReleaseConditions": "ユーザーはリリース条件を満たしていない限り、クイズにアクセスできず、クイズを表示することもできません。", // release conditions help
 	"hdrEvaluationAndFeedback": "評価とフィードバック", // evaluation/feedback accordion header
 	"subHdrAutomaticGrades": "自動成績評価", // Title for automatic grade tool
-	"autoSetGradedDescription": "試行終了時に成績評価をすぐ許可", // description for automatic grade checkbox
-	"autoSetGradedSummary": "自動成績評価", // summary for auto set graded checkbox
+	"autoSetGradedDescription": "完了後直ちに試行の結果を自動公開", // description for automatic grade checkbox
+	"autoSetGradedSummary": "結果の自動公開", // summary for auto set graded checkbox
 	"passwordDescription": "このパスワードを入力したユーザーだけにクイズの書き込みアクセスが認められます。", // description for password input
 	"hlpSubmissionNotificationEmail": "クイズが試行されたときに通知を受け取るには、1 つの電子メールを入力するか複数の電子メールをカンマで区切って入力します。", // description for email notification input
 	"autoSetGradedAccessibleHelpText": "ヘルプの表示 - 自動成績評価", // accessible help text for autoSetGraded question mark button
-	"autoSetGradedHelpDialogTitle": "情報: 自動成績評価", // title that appears when the autoSetGraded help dialog is rendered
+	"autoSetGradedHelpDialogTitle": "情報: 完了後直ちに試行の結果を自動公開", // title that appears when the autoSetGraded help dialog is rendered
 	"autoSetGradedHelpDialogConfirmationText": "OK", // copy that appears on the autoSetGraded help dialog confirmation button
-	"autoSetGradedHelpDialogParagraph1": "この設定をオンにすると、ユーザーは試行を送信すると同時に自分のスコアを確認できます。表示されるスコアは、システムで自動成績評価できるものに限られます。", // content for paragraph 1 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph2": "試行が終了した時点で、成績をグレードブック（成績表）に自動送信し、デフォルトの送信物のビューをユーザーにリリースできるようにするには、この設定をオンにする必要があります。", // content for paragraph 2 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph3": "注意: 手動で成績評価されるまで、記述回答式の質問は 0 とマークされます。", // content for paragraph 3 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph1": "この機能をオンにすると、自動評価された試行の結果が公開され、受講者に表示されます。", // content for paragraph 1 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph2": "注意: 質問がシステムによって評価されない場合（記述回答式質問など）、これらの質問は、手動評価まで自動的に 0 点とされます。", // content for paragraph 2 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph3": "", // content for paragraph 3 of autoSetGraded help dialog
 	"disableAlertsHelpDialogTitle": "情報: Brightspace 内の電子メール、ページャー、アラートの無効化", // title that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogContent": "このオプションをオンにすると、クイズの試行が進行中である間、受講者は Brightspace 電子メール、ページャー、アラートにアクセスできなくなります。", // content that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogConfirmationText": "OK", // copy that appears on the disable alerts help dialog confirmation button
@@ -78,7 +78,8 @@ export default {
 	"btnAttemptConditions": "試行の条件", // Label for Attempt Conditions button in Attempts dialog
 	"rioAccessibileHelpText": "ヘルプの表示 - 不正解のみの再受験", // accessible help text for RIO question mark button
 	"rioDialogTitle": "情報: 不正解の質問のみの再受験", // Title for RIO help dialog
-	"rioDialogParagraph": "この設定を選択すると、クイズに 2 回以上挑戦した受講者は、前回の挑戦で不正解だった質問にしか答えることができません。自動成績評価を使用している場合、記述回答式の質問は 0 とマークされ、手動で成績評価されるまで今後の試行に含まれます。", // content for RIO dialog
+	"rioDialogParagraph": "この設定を選択すると、クイズに 2 回以上挑戦した受講者は、前回の挑戦で不正解だった質問にしか答えることができません。", // content for RIO dialog
+	"rioDialogParagraph2": "自動公開を使用している場合、記述回答式の質問は 0 とマークされ、手動で成績評価されるまで今後の試行に含まれます。", // second paragraph for RIO dialog
 	"rioDialogConfirmationText": "OK", // copy that appears on the RIO help dialog confirmation button
 	"ipRestrictionDialogDescription": "定義済みの制限を満たす IP アドレスを使用してアクセスした受講者のみがクイズに書き込めます。", // guidelines for IP restrictions dialog
 	"btnIpRestrictionsDialogAdd": "追加", // text for IP restrictions dialog "Add" button
@@ -95,6 +96,9 @@ export default {
 	"hdrIpRestrictionsHelpDialogP2": "IP アドレスの例: 155.55.5.15", // IP restrictions help dialog paragraph 2
 	"hdrIpRestrictionsHelpDialogP3": "個別の許可される IP アドレスを含めるには、IP 範囲の開始値のみを指定します。", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "注: IP 範囲の開始値は、IP 範囲の終了値より小さくする必要があります。", // IP restrictions help dialog paragraph 4
+	"hdrSpecialAccess": "特殊なアクセス", // special access heading,
+	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
+	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "ヘルプの表示 - IP 制限", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "試行の条件", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "受講者が別の試行を受ける資格を得るには、前回の試行で達成する必要がある最小、最大のパーセンテージ値を 0～100 の間で設定します。", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -133,5 +137,10 @@ export default {
 	"headerAndFooter": "ヘッダーとフッターを追加しました", // Header and footer summary text for closed accordion
 	"createNewLabel": "新規作成", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "既存の追加", // Label for button to open menu for adding pre-existing items to the quiz.
-	"addQuestionsLabel": "新規の質問" // Label for button to open menu for adding new questions to the quiz.
+	"addQuestionsLabel": "新規の質問", // Label for button to open menu for adding new questions to the quiz.
+	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading2": "と", // Label for submission view dropdown in submission view container.
+	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "満点の成績" // Label for the grade-out-of field when creating/editing an activity
 };

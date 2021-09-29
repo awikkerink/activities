@@ -30,16 +30,16 @@ export default {
 	"hlpReleaseConditions": "사용자는 릴리스 조건을 충족하지 않는 한 퀴즈에 접근하거나 볼 수 없습니다.", // release conditions help
 	"hdrEvaluationAndFeedback": "평가 및 피드백", // evaluation/feedback accordion header
 	"subHdrAutomaticGrades": "자동 평점", // Title for automatic grade tool
-	"autoSetGradedDescription": "완료 직후 시도를 평점 산정됨으로 설정되도록 허용", // description for automatic grade checkbox
-	"autoSetGradedSummary": "자동 평점", // summary for auto set graded checkbox
+	"autoSetGradedDescription": "완료 즉시 시도 결과 자동 게시", // description for automatic grade checkbox
+	"autoSetGradedSummary": "결과 자동 게시", // summary for auto set graded checkbox
 	"passwordDescription": "이 비밀번호를 입력한 사용자에게만 이 퀴즈를 작성할 수 있는 접근 권한이 부여됩니다.", // description for password input
 	"hlpSubmissionNotificationEmail": "퀴즈를 시도할 때 알림을 받으려면 이메일 또는 여러 이메일을 쉼표로 구분하여 입력하십시오.", // description for email notification input
 	"autoSetGradedAccessibleHelpText": "도움말 보기 - 자동 평점", // accessible help text for autoSetGraded question mark button
-	"autoSetGradedHelpDialogTitle": "정보: 자동 평점", // title that appears when the autoSetGraded help dialog is rendered
+	"autoSetGradedHelpDialogTitle": "정보: 완료 즉시 시도 결과 자동 게시", // title that appears when the autoSetGraded help dialog is rendered
 	"autoSetGradedHelpDialogConfirmationText": "확인", // copy that appears on the autoSetGraded help dialog confirmation button
-	"autoSetGradedHelpDialogParagraph1": "이 설정을 활성화하면 사용자가 시도를 제출하는 즉시 자신의 점수를 볼 수 있습니다. 시스템이 자동으로 평점을 산정할 수 있는 경우에만 점수가 표시됩니다.", // content for paragraph 1 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph2": "평점 기록부로 자동 전송될 평점, 그리고 사용자가 시도를 완료할 때 사용자에게 공개될 기본 제출 보기에 대해 이 설정이 활성화되어야 합니다.", // content for paragraph 2 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph3": "참고: 서면 응답 질문은 수동으로 평점 산정될 때까지 0으로 표시됩니다.", // content for paragraph 3 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph1": "이 기능을 켜면 자동 평가된 시도 결과가 게시되어 학습자에게 나타납니다.", // content for paragraph 1 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph2": "참고: 시스템에서 질문을 평가할 수 없는 경우(예: 서면 응답 질문), 이러한 질문은 수동 평가까지 0으로 자동 채점됩니다.", // content for paragraph 2 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph3": "", // content for paragraph 3 of autoSetGraded help dialog
 	"disableAlertsHelpDialogTitle": "정보: Brightspace 내에서 이메일, 인스턴트 메시지 및 알림을 비활성화합니다", // title that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogContent": "이 옵션을 활성화하면 학습자가 퀴즈를 진행하는 동안에는 Brightspace 이메일, 인스턴트 메시지 또는 알림에 접근할 수 없습니다.", // content that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogConfirmationText": "확인", // copy that appears on the disable alerts help dialog confirmation button
@@ -78,7 +78,8 @@ export default {
 	"btnAttemptConditions": "시도 조건", // Label for Attempt Conditions button in Attempts dialog
 	"rioAccessibileHelpText": "도움말 보기 - 틀린 질문만 다시 풀기", // accessible help text for RIO question mark button
 	"rioDialogTitle": "정보: 틀린 질문만 다시 풀기", // Title for RIO help dialog
-	"rioDialogParagraph": "이 설정을 선택하면 퀴즈를 두 번 이상 시도하는 학습자는 이전 시도에서 잘못된 질문에만 답변할 수 있습니다. 자동 평점 기능을 사용하는 경우 서면 응답 질문은 0으로 표시되며 수동으로 평점 산정될 때까지 향후 시도에 포함됩니다.", // content for RIO dialog
+	"rioDialogParagraph": "이 설정을 선택하면 퀴즈를 두 번 이상 시도하는 학습자는 이전 시도에서 잘못된 질문에만 답변할 수 있습니다.", // content for RIO dialog
+	"rioDialogParagraph2": "자동 게시 기능을 사용하는 경우 서면 응답 질문은 0으로 표시되며 수동으로 평점 산정될 때까지 향후 시도에 포함됩니다.", // second paragraph for RIO dialog
 	"rioDialogConfirmationText": "확인", // copy that appears on the RIO help dialog confirmation button
 	"ipRestrictionDialogDescription": "정의된 제한 사항을 충족하는 IP 주소에서 오는 학습자만 퀴즈를 작성할 수 있습니다.", // guidelines for IP restrictions dialog
 	"btnIpRestrictionsDialogAdd": "추가", // text for IP restrictions dialog "Add" button
@@ -95,6 +96,9 @@ export default {
 	"hdrIpRestrictionsHelpDialogP2": "IP 주소 예: 155.55.5.15", // IP restrictions help dialog paragraph 2
 	"hdrIpRestrictionsHelpDialogP3": "허용된 개별 IP 주소를 포함하려면 IP 범위 시작 값만 지정합니다.", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "참고: IP 범위 시작 값은 IP 범위 끝 값보다 작아야 합니다.", // IP restrictions help dialog paragraph 4
+	"hdrSpecialAccess": "특별 접근", // special access heading,
+	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
+	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "도움말 보기 - IP 제한", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "시도 조건", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "학습자가 다른 시도를 할 자격을 갖추려면 이전 시도에서 달성해야 하는 최소 및/또는 최대 백분율 값을 0에서 100 사이로 설정해야 합니다.", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -133,5 +137,10 @@ export default {
 	"headerAndFooter": "머리글 및 바닥글 추가됨", // Header and footer summary text for closed accordion
 	"createNewLabel": "새로 만들기", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "기존 항목 추가", // Label for button to open menu for adding pre-existing items to the quiz.
-	"addQuestionsLabel": "새 질문" // Label for button to open menu for adding new questions to the quiz.
+	"addQuestionsLabel": "새 질문", // Label for button to open menu for adding new questions to the quiz.
+	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading2": "및", // Label for submission view dropdown in submission view container.
+	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "평점 기준 만점" // Label for the grade-out-of field when creating/editing an activity
 };

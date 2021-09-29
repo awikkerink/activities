@@ -169,5 +169,8 @@ export default {
 	"content.confirmDialogTitle": "Ihre vorhandenen Inhalte werden gelöscht.", // The text for the title of the replace html template confirmation dialog
 	"content.confirmDialogBody": "Möchten Sie Ihre vorhandenen Inhalte wirklich durch diese Vorlage ersetzen?", // The text for the body of the replace html template confirmation dialog
 	"content.confirmDialogActionOption": "Ersetzen", // The text for the confirmation action to replace content
-	"content.confirmDialogCancelOption": "Abbrechen" // The text for the cancel action to not replace content
+	"content.confirmDialogCancelOption": "Abbrechen", // The text for the cancel action to not replace content
+	"content.useEmbeddedPlayer": "Integrierten Player verwenden", // The text for using the embedded player
+	"content.scormActivity": "SCORM-Paket", // The label for the name of the SCORM package
+	"content.lastEdited": "Letzte Bearbeitung" // The date when the entity was last edited
 };

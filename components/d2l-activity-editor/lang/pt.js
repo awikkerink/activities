@@ -169,5 +169,8 @@ export default {
 	"content.confirmDialogTitle": "O conteúdo atual será excluído.", // The text for the title of the replace html template confirmation dialog
 	"content.confirmDialogBody": "Tem certeza de que deseja substituir o conteúdo atual por este modelo?", // The text for the body of the replace html template confirmation dialog
 	"content.confirmDialogActionOption": "Substituir", // The text for the confirmation action to replace content
-	"content.confirmDialogCancelOption": "Cancelar" // The text for the cancel action to not replace content
+	"content.confirmDialogCancelOption": "Cancelar", // The text for the cancel action to not replace content
+	"content.useEmbeddedPlayer": "Usar o player integrado", // The text for using the embedded player
+	"content.scormActivity": "Pacote de Modelo de referência do objeto de courseware compartilhável (SCORM)", // The label for the name of the SCORM package
+	"content.lastEdited": "Última edição" // The date when the entity was last edited
 };

@@ -169,5 +169,8 @@ export default {
 	"content.confirmDialogTitle": "Bydd eich cynnwys presennol yn cael ei ddileu.", // The text for the title of the replace html template confirmation dialog
 	"content.confirmDialogBody": "Ydych chi’n siŵr eich bod am ddisodli eich cynnwys presennol â’r templed hwn?", // The text for the body of the replace html template confirmation dialog
 	"content.confirmDialogActionOption": "Amnewid", // The text for the confirmation action to replace content
-	"content.confirmDialogCancelOption": "Canslo" // The text for the cancel action to not replace content
+	"content.confirmDialogCancelOption": "Canslo", // The text for the cancel action to not replace content
+	"content.useEmbeddedPlayer": "Defnyddio chwaraeydd wedi’i fewnblannu", // The text for using the embedded player
+	"content.scormActivity": "Pecyn SCORM", // The label for the name of the SCORM package
+	"content.lastEdited": "Golygwyd diwethaf" // The date when the entity was last edited
 };

@@ -169,5 +169,8 @@ export default {
 	"content.confirmDialogTitle": "기존 콘텐츠가 삭제됩니다.", // The text for the title of the replace html template confirmation dialog
 	"content.confirmDialogBody": "사용자의 기존 콘텐츠를 이 템플릿으로 바꾸시겠습니까?", // The text for the body of the replace html template confirmation dialog
 	"content.confirmDialogActionOption": "바꾸기", // The text for the confirmation action to replace content
-	"content.confirmDialogCancelOption": "취소" // The text for the cancel action to not replace content
+	"content.confirmDialogCancelOption": "취소", // The text for the cancel action to not replace content
+	"content.useEmbeddedPlayer": "임베드된 플레이어 사용", // The text for using the embedded player
+	"content.scormActivity": "SCORM 패키지", // The label for the name of the SCORM package
+	"content.lastEdited": "최종 편집" // The date when the entity was last edited
 };

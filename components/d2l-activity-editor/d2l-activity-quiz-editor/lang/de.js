@@ -30,16 +30,16 @@ export default {
 	"hlpReleaseConditions": "Benutzer können nur dann auf den Test zugreifen oder ihn anzeigen, wenn sie die Freigabebedingungen erfüllen.", // release conditions help
 	"hdrEvaluationAndFeedback": "Bewertung und Feedback", // evaluation/feedback accordion header
 	"subHdrAutomaticGrades": "Automatisch benoten", // Title for automatic grade tool
-	"autoSetGradedDescription": "Zulassen, dass Versuch direkt bei Beendigung als benotet festgelegt wird", // description for automatic grade checkbox
-	"autoSetGradedSummary": "Automatisch benoten", // summary for auto set graded checkbox
+	"autoSetGradedDescription": "Versuchsergebnisse sofort nach Abschluss automatisch veröffentlichen", // description for automatic grade checkbox
+	"autoSetGradedSummary": "Ergebnisse automatisch veröffentlichen", // summary for auto set graded checkbox
 	"passwordDescription": "Nur Benutzer, die dieses Passwort eingeben, erhalten Zugang zum Test.", // description for password input
 	"hlpSubmissionNotificationEmail": "Geben Sie eine oder mehrere E-Mail-Adresse(n) durch Kommas getrennt ein, um Benachrichtigungen zu erhalten, wenn ein Test versucht wird.", // description for email notification input
 	"autoSetGradedAccessibleHelpText": "Hilfe zu – Automatisch benoten", // accessible help text for autoSetGraded question mark button
-	"autoSetGradedHelpDialogTitle": "Informationen: Automatisch benoten", // title that appears when the autoSetGraded help dialog is rendered
+	"autoSetGradedHelpDialogTitle": "Information: Versuchsergebnisse sofort nach Abschluss automatisch veröffentlichen", // title that appears when the autoSetGraded help dialog is rendered
 	"autoSetGradedHelpDialogConfirmationText": "OK", // copy that appears on the autoSetGraded help dialog confirmation button
-	"autoSetGradedHelpDialogParagraph1": "Wenn diese Einstellung aktiviert wird, können die Benutzer ihre Punktzahl sehen, sobald sie ihren Versuch absenden. Es werden nur Punktzahlen angezeigt, die vom System automatisch benotet werden können.", // content for paragraph 1 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph2": "Diese Einstellung muss aktiviert werden, wenn Noten automatisch an das Notenbuch gesendet werden sollen, und wenn die Ansicht „Standardabsendung“ für Benutzer beim Absolvieren eines Versuchs freigegeben werden soll.", // content for paragraph 2 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph3": "Hinweis: Fragen mit schriftlicher Antwort werden mit „0“ markiert, bis sie manuell benotet werden.", // content for paragraph 3 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph1": "Wenn diese Funktion aktiviert ist, werden die automatisch bewerteten Versuchsergebnisse veröffentlicht und den Lernern angezeigt.", // content for paragraph 1 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph2": "Hinweis: Wenn Fragen vom System nicht beurteilt werden können (z. B. Fragen mit schriftlicher Antwort), werden diese Fragen bis zur manuellen Bewertung automatisch mit Null bewertet.", // content for paragraph 2 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph3": "", // content for paragraph 3 of autoSetGraded help dialog
 	"disableAlertsHelpDialogTitle": "Informationen: E-Mails, Sofortnachrichten und Benachrichtigungen in Brightspace deaktivieren", // title that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogContent": "Wenn Sie diese Option aktivieren, können die Lerner nicht auf E-Mails, Sofortnachrichten oder ihre Benachrichtigungen in Brightspace zugreifen, wenn sie einen Test versuchen.", // content that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogConfirmationText": "OK", // copy that appears on the disable alerts help dialog confirmation button
@@ -78,7 +78,8 @@ export default {
 	"btnAttemptConditions": "Bedingungen für Versuch", // Label for Attempt Conditions button in Attempts dialog
 	"rioAccessibileHelpText": "Hilfe zu – Nur falsch beantwortete Fragen wiederholen", // accessible help text for RIO question mark button
 	"rioDialogTitle": "Informationen: Nur falsch beantwortete Fragen wiederholen", // Title for RIO help dialog
-	"rioDialogParagraph": "Wenn diese Einstellung ausgewählt ist, können Lerner, die mehrmals an einem Test teilnehmen, nur Fragen beantworten, die beim vorherigen Versuch falsch beantwortet wurden. Wenn Sie die automatische Benotung verwenden, werden Fragen mit schriftlicher Antwort mit „0“ markiert und in zukünftige Versuche einbezogen, bis sie manuell benotet werden.", // content for RIO dialog
+	"rioDialogParagraph": "Wenn diese Einstellung ausgewählt ist, können Lerner, die mehrmals an einem Test teilnehmen, nur Fragen beantworten, die beim vorherigen Versuch falsch beantwortet wurden.", // content for RIO dialog
+	"rioDialogParagraph2": "Wenn Sie die automatische Veröffentlichung verwenden, werden Fragen mit schriftlicher Antwort mit „0“ markiert und in zukünftige Versuche einbezogen, bis sie manuell benotet werden.", // second paragraph for RIO dialog
 	"rioDialogConfirmationText": "OK", // copy that appears on the RIO help dialog confirmation button
 	"ipRestrictionDialogDescription": "Nur Lerner mit IP-Adressen, die die festgelegten Einschränkungen erfüllen, können am Test teilnehmen.", // guidelines for IP restrictions dialog
 	"btnIpRestrictionsDialogAdd": "Hinzufügen", // text for IP restrictions dialog "Add" button
@@ -95,6 +96,9 @@ export default {
 	"hdrIpRestrictionsHelpDialogP2": "Beispiel-IP-Adresse: 155.55.5.15", // IP restrictions help dialog paragraph 2
 	"hdrIpRestrictionsHelpDialogP3": "Wenn Sie eine einzelne akzeptierte IP-Adresse einbeziehen möchten, geben Sie nur den Startwert des IP-Bereichs an.", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "Hinweis: Der Startwert des IP-Bereichs muss kleiner als der Endwert des IP-Bereichs sein.", // IP restrictions help dialog paragraph 4
+	"hdrSpecialAccess": "Beschränkter Zugriff", // special access heading,
+	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
+	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "Hilfe zu – IP-Beschränkungen", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "Bedingungen für Versuch", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "Legen Sie einen minimalen und/oder maximalen Prozentwert zwischen 0 und 100 fest, der beim vorherigen Versuch erreicht werden muss, damit sich ein Lerner für einen weiteren Versuch qualifiziert.", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -133,5 +137,10 @@ export default {
 	"headerAndFooter": "Kopf- und Fußzeile hinzugefügt", // Header and footer summary text for closed accordion
 	"createNewLabel": "Neu erstellen", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "Vorhandene hinzufügen", // Label for button to open menu for adding pre-existing items to the quiz.
-	"addQuestionsLabel": "Neue Frage" // Label for button to open menu for adding new questions to the quiz.
+	"addQuestionsLabel": "Neue Frage", // Label for button to open menu for adding new questions to the quiz.
+	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading2": "und", // Label for submission view dropdown in submission view container.
+	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "Note aus" // Label for the grade-out-of field when creating/editing an activity
 };

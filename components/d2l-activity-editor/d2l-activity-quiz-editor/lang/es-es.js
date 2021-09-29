@@ -30,16 +30,16 @@ export default {
 	"hlpReleaseConditions": "Los usuarios no pueden acceder ni ver el cuestionario a menos que cumplan las condiciones de publicación.", // release conditions help
 	"hdrEvaluationAndFeedback": "Evaluación y comentarios", // evaluation/feedback accordion header
 	"subHdrAutomaticGrades": "Calificación automática", // Title for automatic grade tool
-	"autoSetGradedDescription": "permitir que se vea el intento como calificado inmediatamente después de finalizar", // description for automatic grade checkbox
-	"autoSetGradedSummary": "Calificación automática", // summary for auto set graded checkbox
+	"autoSetGradedDescription": "Publicar automáticamente los resultados del intento inmediatamente después de la finalización", // description for automatic grade checkbox
+	"autoSetGradedSummary": "Publicar automáticamente los resultados", // summary for auto set graded checkbox
 	"passwordDescription": "Solo los usuarios que introduzcan esta contraseña podrán escribir este cuestionario.", // description for password input
 	"hlpSubmissionNotificationEmail": "Introduzca un correo electrónico o varios correos electrónicos separados por una coma para recibir notificaciones cuando se intente realizar un cuestionario.", // description for email notification input
 	"autoSetGradedAccessibleHelpText": "Obtener ayuda sobre calificación automática", // accessible help text for autoSetGraded question mark button
-	"autoSetGradedHelpDialogTitle": "Información: Calificación automática", // title that appears when the autoSetGraded help dialog is rendered
+	"autoSetGradedHelpDialogTitle": "Información: Los resultados del intento de publicación automática se producen inmediatamente después de la finalización", // title that appears when the autoSetGraded help dialog is rendered
 	"autoSetGradedHelpDialogConfirmationText": "Aceptar", // copy that appears on the autoSetGraded help dialog confirmation button
-	"autoSetGradedHelpDialogParagraph1": "Cuando se activa esta opción, los usuarios pueden ver su puntuación en cuanto envían su intento. La puntuación que se muestra es solo la que el sistema puede calificar automáticamente.", // content for paragraph 1 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph2": "Esta opción debe estar activada para que las calificaciones se envíen automáticamente en el cuaderno de calificaciones y para que la vista Entrega predeterminada esté disponible para los usuarios cuando realicen un intento.", // content for paragraph 2 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph3": "Nota: Las preguntas de respuesta escrita se marcarán como 0 hasta que se califiquen manualmente.", // content for paragraph 3 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph1": "Con esta función activada, los resultados del intento evaluado automáticamente se publicará y se mostrará a los estudiantes.", // content for paragraph 1 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph2": "Nota: Si el sistema no puede evaluar las preguntas (p. ej., preguntas de respuesta escritas), dichas preguntas se puntuarán automáticamente con un cero hasta la evaluación manual.", // content for paragraph 2 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph3": "", // content for paragraph 3 of autoSetGraded help dialog
 	"disableAlertsHelpDialogTitle": "Información: Desactivación del correo electrónico, mensajería instantánea y alertas en Brightspace", // title that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogContent": "Si habilita esta opción, los estudiantes no podrán acceder al correo electrónico de Brightspace, a la mensajería instantánea ni a sus alertas cuando estén realizando un intento de cuestionario.", // content that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogConfirmationText": "Aceptar", // copy that appears on the disable alerts help dialog confirmation button
@@ -78,7 +78,8 @@ export default {
 	"btnAttemptConditions": "Condiciones de intentos", // Label for Attempt Conditions button in Attempts dialog
 	"rioAccessibileHelpText": "Obtener ayuda sobre cómo repetir solo las incorrectas", // accessible help text for RIO question mark button
 	"rioDialogTitle": "Información: Repetir solo preguntas incorrectas", // Title for RIO help dialog
-	"rioDialogParagraph": "Cuando se selecciona esta opción, los estudiantes que intenten realizar un cuestionario más de una vez solo podrán responder a las preguntas incorrectas del intento anterior. Si utiliza la calificación automática, las preguntas de respuesta escrita se marcarán como 0 y se incluirán en futuros intentos hasta que se puntúen manualmente.", // content for RIO dialog
+	"rioDialogParagraph": "Cuando se selecciona esta opción, los estudiantes que intenten realizar un cuestionario más de una vez solo podrán responder a las preguntas incorrectas del intento anterior.", // content for RIO dialog
+	"rioDialogParagraph2": "Si utiliza la publicación automática, las preguntas de respuesta escrita se marcarán como 0 y se incluirán en futuros intentos hasta que se puntúen manualmente.", // second paragraph for RIO dialog
 	"rioDialogConfirmationText": "Aceptar", // copy that appears on the RIO help dialog confirmation button
 	"ipRestrictionDialogDescription": "Solo los estudiantes que se conecten desde las direcciones IP que cumplan las restricciones definidas podrán escribir el cuestionario.", // guidelines for IP restrictions dialog
 	"btnIpRestrictionsDialogAdd": "Agregar", // text for IP restrictions dialog "Add" button
@@ -95,6 +96,9 @@ export default {
 	"hdrIpRestrictionsHelpDialogP2": "Ejemplo de dirección IP: 155.55.5.15", // IP restrictions help dialog paragraph 2
 	"hdrIpRestrictionsHelpDialogP3": "Para incluir una dirección IP individual aceptada, especifique solo el valor de inicio del intervalo IP.", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "Nota: El valor de inicio del intervalo IP debe ser menor que el valor final del intervalo de IP.", // IP restrictions help dialog paragraph 4
+	"hdrSpecialAccess": "Acceso especial", // special access heading,
+	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
+	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "Obtenga ayuda sobre restricciones por dirección IP", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "Condiciones de intentos", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "Para que un estudiante pueda optar a otro intento, establezca un valor promedio mínimo o máximo entre 0 y 100 que se debe obtener en el intento anterior.", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -133,5 +137,10 @@ export default {
 	"headerAndFooter": "Encabezado y pie de página añadidos", // Header and footer summary text for closed accordion
 	"createNewLabel": "Crear nuevo", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "Añadir existente", // Label for button to open menu for adding pre-existing items to the quiz.
-	"addQuestionsLabel": "Nueva pregunta" // Label for button to open menu for adding new questions to the quiz.
+	"addQuestionsLabel": "Nueva pregunta", // Label for button to open menu for adding new questions to the quiz.
+	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading2": "y", // Label for submission view dropdown in submission view container.
+	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "Calificación de" // Label for the grade-out-of field when creating/editing an activity
 };

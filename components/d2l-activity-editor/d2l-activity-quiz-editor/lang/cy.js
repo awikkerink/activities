@@ -30,16 +30,16 @@ export default {
 	"hlpReleaseConditions": "Ni all defnyddwyr gyrchu na gweld y cwis oni bai eu bod yn cwrdd â'r amodau rhyddhau.", // release conditions help
 	"hdrEvaluationAndFeedback": "Gwerthuso ac Adborth", // evaluation/feedback accordion header
 	"subHdrAutomaticGrades": "Gradd Awtomatig", // Title for automatic grade tool
-	"autoSetGradedDescription": "Caniatáu i gais gael ei gosod wedi'i graddio yn syth ar ôl ei chwblhau", // description for automatic grade checkbox
-	"autoSetGradedSummary": "Graddio'n awtomatig", // summary for auto set graded checkbox
+	"autoSetGradedDescription": "Awto-gyhoeddi canlyniadau ymgais yn syth ar ôl eu cwblhau", // description for automatic grade checkbox
+	"autoSetGradedSummary": "Awto-gyhoeddi canlyniadau", // summary for auto set graded checkbox
 	"passwordDescription": "Dim ond defnyddwyr sy'n nodi'r cyfrinair hwn fydd yn cael mynediad i ysgrifennu'r cwis hwn.", // description for password input
 	"hlpSubmissionNotificationEmail": "Rhowch e-bost neu fwy nag un e-bost sydd wedi'u gwahanu gan atalnodau, i dderbyn hysbysiadau pan geisir cwis.", // description for email notification input
 	"autoSetGradedAccessibleHelpText": "Mynnwch help ar - Gradd Awtomatig", // accessible help text for autoSetGraded question mark button
-	"autoSetGradedHelpDialogTitle": "Gwybodaeth: Gradd Awtomatig", // title that appears when the autoSetGraded help dialog is rendered
+	"autoSetGradedHelpDialogTitle": "Gwybodaeth: Awto-gyhoeddi canlyniadau ymgais yn syth ar ôl eu cwblhau", // title that appears when the autoSetGraded help dialog is rendered
 	"autoSetGradedHelpDialogConfirmationText": "IAWN", // copy that appears on the autoSetGraded help dialog confirmation button
-	"autoSetGradedHelpDialogParagraph1": "Pan fydd y gosodiad hwn wedi'i droi ymlaen gall defnyddwyr weld eu sgôr cyn gynted ag y byddant yn cyflwyno eu hymgais. Y sgôr a ddangosir yw'r hyn y gall y system ei raddio'n awtomatig yn unig.", // content for paragraph 1 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph2": "Rhaid troi'r gosodiad hwn ymlaen er mwyn anfon graddau yn awtomatig i'r llyfr graddau, ac er mwyn i'r wedd gyflwyno ddiofyn gael ei rhyddhau i ddefnyddwyr pan fyddant yn cwblhau cais.", // content for paragraph 2 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph3": "Sylwer: Bydd cwestiynau Ymateb Ysgrifenedig yn cael eu marcio fel 0 nes eu bod wedi'u graddio â llaw.", // content for paragraph 3 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph1": "Gyda’r nodwedd hon wedi’i throi ymlaen, bydd canlyniadau’r ymgais a werthuswyd yn awtomatig yn cael eu cyhoeddi ac yn ymddangos i ddysgwyr.", // content for paragraph 1 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph2": "Noder: Os na all y system werthuso cwestiynau (e.e. cwestiynau ymateb ysgrifenedig), bydd y cwestiynau hynny yn cael eu sgorio'n awtomatig gyda sero tan werthusiad â llaw.", // content for paragraph 2 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph3": "", // content for paragraph 3 of autoSetGraded help dialog
 	"disableAlertsHelpDialogTitle": "Gwybodaeth: Analluogi E-byst, Negeseuon Sydyn a Rhybuddion o fewn Brightspace", // title that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogContent": "Os bydd y dewis hwn wedi'i droi ymlaen, ni all dysgwyr gyrchu'r E-bost Brightspace, Negeseuon Sydyn, na'u rhybuddion os oes ganddynt gais cwis ar y gweill.", // content that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogConfirmationText": "IAWN", // copy that appears on the disable alerts help dialog confirmation button
@@ -78,7 +78,8 @@ export default {
 	"btnAttemptConditions": "Amodau Ceisiadau", // Label for Attempt Conditions button in Attempts dialog
 	"rioAccessibileHelpText": "Mynnwch help ar - Ail-wneud Anghywir yn Unig", // accessible help text for RIO question mark button
 	"rioDialogTitle": "Gwybodaeth: Ail-wneud Cwestiynau Anghywir yn Unig", // Title for RIO help dialog
-	"rioDialogParagraph": "Pan ddewisir y gosodiad hwn, dim ond cwestiynau a oedd yn anghywir ar yr ymgais flaenorol y gall dysgwyr sy'n rhoi cynnig ar gwis fwy nag unwaith eu hateb. Os ydych chi'n defnyddio graddio Awtomatig, bydd cwestiynau Ymateb Ysgrifenedig yn cael eu marcio fel 0 a'u cynnwys mewn ymgeisiadau yn y dyfodol nes eu bod yn cael eu graddio â llaw.", // content for RIO dialog
+	"rioDialogParagraph": "Pan ddewisir y gosodiad hwn, dim ond cwestiynau a oedd yn anghywir ar yr ymgais flaenorol y gall dysgwyr sy'n rhoi cynnig ar gwis fwy nag unwaith eu hateb.", // content for RIO dialog
+	"rioDialogParagraph2": "Os ydych chi'n defnyddio Awto-gyhoeddi, bydd cwestiynau Ymateb Ysgrifenedig yn cael eu marcio fel 0 a'u cynnwys mewn ymgeisiadau yn y dyfodol nes eu bod yn cael eu graddio â llaw.", // second paragraph for RIO dialog
 	"rioDialogConfirmationText": "IAWN", // copy that appears on the RIO help dialog confirmation button
 	"ipRestrictionDialogDescription": "Dim ond dysgwyr sy'n dod o gyfeiriadau IP sy'n cwrdd â’r cyfyngiadau diffiniedig all ysgrifennu'r cwis.", // guidelines for IP restrictions dialog
 	"btnIpRestrictionsDialogAdd": "Ychwanegu", // text for IP restrictions dialog "Add" button
@@ -95,6 +96,9 @@ export default {
 	"hdrIpRestrictionsHelpDialogP2": "Cyfeiriad IP enghreifftiol: 155.55.5.15", // IP restrictions help dialog paragraph 2
 	"hdrIpRestrictionsHelpDialogP3": "I gynnwys cyfeiriad IP a dderbynir gan unigolyn, dim ond nodi’r gwerth Cychwyn Ystod IP.", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "Sylwer: Rhaid i’r gwerth Cychwyn Ystod IP fod yn llai na’r gwerth Diwedd Ystod IP.", // IP restrictions help dialog paragraph 4
+	"hdrSpecialAccess": "Mynediad Arbennig", // special access heading,
+	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
+	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "Mynnwch help ar - Cyfyngiadau IP", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "Amodau Ceisiadau", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "Er mwyn i ddysgwr fod yn gymwys ar gyfer cais arall, gosodwch werth canrannol lleiaf a/neu uchaf rhwng 0 a 100 y mae’n rhaid ei gyflawni ar y cais flaenorol.", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -133,5 +137,10 @@ export default {
 	"headerAndFooter": "Ychwanegwyd pennawd a throedyn", // Header and footer summary text for closed accordion
 	"createNewLabel": "Creu Newydd", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "Ychwanegu’r Presennol", // Label for button to open menu for adding pre-existing items to the quiz.
-	"addQuestionsLabel": "Cwestiwn Newydd" // Label for button to open menu for adding new questions to the quiz.
+	"addQuestionsLabel": "Cwestiwn Newydd", // Label for button to open menu for adding new questions to the quiz.
+	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading2": "a", // Label for submission view dropdown in submission view container.
+	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "Gradd Allan O" // Label for the grade-out-of field when creating/editing an activity
 };

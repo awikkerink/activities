@@ -30,16 +30,16 @@ export default {
 	"hlpReleaseConditions": "Öğrenciler, sürüm koşullarını yerine getirmedikçe sınava erişemez veya sınavı görüntüleyemez.", // release conditions help
 	"hdrEvaluationAndFeedback": "Değerlendirme ve geri bildirim", // evaluation/feedback accordion header
 	"subHdrAutomaticGrades": "Otomatik Not", // Title for automatic grade tool
-	"autoSetGradedDescription": "Tamamlandıktan hemen sonra denemenin notlandırılmış olarak ayarlanmasına izin ver", // description for automatic grade checkbox
-	"autoSetGradedSummary": "Otomatik olarak notlandır", // summary for auto set graded checkbox
+	"autoSetGradedDescription": "Tamamlandıktan hemen sonra deneme sonuçlarını otomatik yayınla", // description for automatic grade checkbox
+	"autoSetGradedSummary": "Sonuçları otomatik yayınla", // summary for auto set graded checkbox
 	"passwordDescription": "Yalnızca bu parolayı giren kullanıcılara bu sınavı yazma erişimi verilecektir.", // description for password input
 	"hlpSubmissionNotificationEmail": "Bir sınav denemesi yapıldığında bildirim almak için bir e-posta adresi veya virgülle ayırarak birden çok e-posta adresi girin.", // description for email notification input
 	"autoSetGradedAccessibleHelpText": "Otomatik Not hakkında yardım alın", // accessible help text for autoSetGraded question mark button
-	"autoSetGradedHelpDialogTitle": "Bilgi: Otomatik Not", // title that appears when the autoSetGraded help dialog is rendered
+	"autoSetGradedHelpDialogTitle": "Bilgi: Tamamlandıktan hemen sonra deneme sonuçlarını otomatik yayınla", // title that appears when the autoSetGraded help dialog is rendered
 	"autoSetGradedHelpDialogConfirmationText": "Tamam", // copy that appears on the autoSetGraded help dialog confirmation button
-	"autoSetGradedHelpDialogParagraph1": "Bu ayar açık olduğunda kullanıcılar denemelerini gönderdikleri anda puanlarını görebilir. Görüntülenen puan yalnızca sistemin otomatik olarak notlandırabildiği puandır.", // content for paragraph 1 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph2": "Notların otomatik olarak not defterine gönderilmesi ve kullanıcılar bir denemeyi tamamladıklarında varsayılan gönderim görünümünün sunulması için bu ayar açık olmalıdır.", // content for paragraph 2 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph3": "Not: Yazılı Yanıt soruları, manuel olarak notlandırılana kadar 0 olarak işaretlenir.", // content for paragraph 3 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph1": "Bu özellik açıkken otomatik değerlendirme denemesi sonuçları yayınlanır ve öğrencilere görünür.", // content for paragraph 1 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph2": "Not: Sorular sistem tarafından değerlendirilemiyorsa (ör. Yazılı yanıt içeren sorular) manuel değerlendirmeye kadar bu sorular otomatik olarak sıfır olarak puanlanır.", // content for paragraph 2 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph3": "", // content for paragraph 3 of autoSetGraded help dialog
 	"disableAlertsHelpDialogTitle": "Bilgi: Brightspace'teki E-posta, Anlık Mesajlar ve Uyarıları Devre Dışı Bırakma", // title that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogContent": "Bu seçeneği etkinleştirdiğinizde öğrenciler, devam eden bir denemeleri varken Brightspace E-postalarına, Anlık Mesajlarına veya uyarılarına erişemezler.", // content that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogConfirmationText": "Tamam", // copy that appears on the disable alerts help dialog confirmation button
@@ -78,7 +78,8 @@ export default {
 	"btnAttemptConditions": "Deneme Koşulları", // Label for Attempt Conditions button in Attempts dialog
 	"rioAccessibileHelpText": "Yalnızca Yanlış Soruları Yeniden Alma hakkında yardım alın", // accessible help text for RIO question mark button
 	"rioDialogTitle": "Bilgi: Yalnızca Yanlış Yanıtlanan Soruları Yeniden Alma", // Title for RIO help dialog
-	"rioDialogParagraph": "Bu ayar seçildiğinde bir sınavı birden fazla kez deneyen öğrenciler yalnızca önceki denemede yanlış yanıt verdikleri soruları yanıtlayabilir. Otomatik notlandırma kullanıyorsanız Yazılı Yanıt soruları 0 olarak işaretlenir ve manuel olarak notlandırılana kadar sonraki denemelere dahil edilir.", // content for RIO dialog
+	"rioDialogParagraph": "Bu ayar seçildiğinde bir sınavı birden fazla kez deneyen öğrenciler yalnızca önceki denemede yanlış yanıt verdikleri soruları yanıtlayabilir.", // content for RIO dialog
+	"rioDialogParagraph2": "Otomatik yayınlama kullanıyorsanız Yazılı Yanıt içeren sorular 0 olarak puanlanır ve manuel olarak notlandırılana kadar sonraki denemelere dahil edilir.", // second paragraph for RIO dialog
 	"rioDialogConfirmationText": "Tamam", // copy that appears on the RIO help dialog confirmation button
 	"ipRestrictionDialogDescription": "Yalnızca tanımlanan kısıtlamalara uyan IP adreslerinden bağlanan öğrenciler sınava katılabilecektir.", // guidelines for IP restrictions dialog
 	"btnIpRestrictionsDialogAdd": "Ekle", // text for IP restrictions dialog "Add" button
@@ -95,6 +96,9 @@ export default {
 	"hdrIpRestrictionsHelpDialogP2": "Örnek IP adresi: 155.55.5.15", // IP restrictions help dialog paragraph 2
 	"hdrIpRestrictionsHelpDialogP3": "Tek bir IP adresini kabul etmek için yalnızca IP Aralığı Başlangıcı değerini belirtin.", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "Not: IP Aralığı Başlangıcı değeri, IP Aralığı Sonu değerinden küçük olmalıdır.", // IP restrictions help dialog paragraph 4
+	"hdrSpecialAccess": "Özel Erişim", // special access heading,
+	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
+	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "IP kısıtlamaları hakkında yardım alın", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "Deneme Koşulları", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "Bir öğrencinin başka bir denemeye hak kazanması için bir önceki denemede ulaşması gereken, 0 ile 100 arasında minimum ve/veya maksimum bir yüzdelik değer belirleyin.", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -133,5 +137,10 @@ export default {
 	"headerAndFooter": "Üstbilgi ve altbilgi eklendi", // Header and footer summary text for closed accordion
 	"createNewLabel": "Yeni Oluştur", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "Mevcut Olanı Ekle", // Label for button to open menu for adding pre-existing items to the quiz.
-	"addQuestionsLabel": "Yeni Soru" // Label for button to open menu for adding new questions to the quiz.
+	"addQuestionsLabel": "Yeni Soru", // Label for button to open menu for adding new questions to the quiz.
+	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading2": "ve", // Label for submission view dropdown in submission view container.
+	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "Şu Not Üzerinden Notlandır:" // Label for the grade-out-of field when creating/editing an activity
 };

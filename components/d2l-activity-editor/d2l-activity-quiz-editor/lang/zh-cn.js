@@ -30,16 +30,16 @@ export default {
 	"hlpReleaseConditions": "除非满足发布条件，否则用户将无法访问或查看测验。", // release conditions help
 	"hdrEvaluationAndFeedback": "评估和反馈", // evaluation/feedback accordion header
 	"subHdrAutomaticGrades": "自动分级", // Title for automatic grade tool
-	"autoSetGradedDescription": "允许完成尝试后立即将其设置为已分级", // description for automatic grade checkbox
-	"autoSetGradedSummary": "自动分级", // summary for auto set graded checkbox
+	"autoSetGradedDescription": "在完成后，立即显示自动发布尝试结果", // description for automatic grade checkbox
+	"autoSetGradedSummary": "自动发布结果", // summary for auto set graded checkbox
 	"passwordDescription": "只有输入此密码的用户才有权填写此测验。", // description for password input
 	"hlpSubmissionNotificationEmail": "输入一个或多个电子邮件地址（用逗号分隔），以在尝试测验时接收通知。", // description for email notification input
 	"autoSetGradedAccessibleHelpText": "获取此主题的帮助 - 自动分级", // accessible help text for autoSetGraded question mark button
-	"autoSetGradedHelpDialogTitle": "信息：自动分级", // title that appears when the autoSetGraded help dialog is rendered
+	"autoSetGradedHelpDialogTitle": "信息：在完成后，立即显示自动发布尝试结果", // title that appears when the autoSetGraded help dialog is rendered
 	"autoSetGradedHelpDialogConfirmationText": "确定", // copy that appears on the autoSetGraded help dialog confirmation button
-	"autoSetGradedHelpDialogParagraph1": "打开此设置后，用户在提交尝试后可以立即看到其分数。显示的分数仅为系统可以自动分级的分数。", // content for paragraph 1 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph2": "此设置必须打开，这样用户完成尝试时，等级将自动发送到成绩簿，并向用户发布默认提交视图。", // content for paragraph 2 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph3": "注意：书面答题问题将标记为 0，直至手动评分。", // content for paragraph 3 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph1": "启用此功能后，系统将公布自动评估的尝试结果并向学员显示。", // content for paragraph 1 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph2": "注意：如果系统无法评估问题（例如书面论述题），则在手动评估之前，这些问题将自动评分为零。", // content for paragraph 2 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph3": "", // content for paragraph 3 of autoSetGraded help dialog
 	"disableAlertsHelpDialogTitle": "信息：在 Brightspace 内禁用电子邮件，即时消息和警报", // title that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogContent": "如果启用此选项，如果学员在进行测验尝试，其将无法访问 Brightspace 电子邮件、即时消息其提醒。", // content that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogConfirmationText": "确定", // copy that appears on the disable alerts help dialog confirmation button
@@ -78,7 +78,8 @@ export default {
 	"btnAttemptConditions": "尝试条件", // Label for Attempt Conditions button in Attempts dialog
 	"rioAccessibileHelpText": "获取有关此主题的帮助 - 仅重考答错的问题", // accessible help text for RIO question mark button
 	"rioDialogTitle": "信息：仅重考答错的问题", // Title for RIO help dialog
-	"rioDialogParagraph": "选择此设置后，多次尝试测验的学员将仅能回答之前尝试时答错的问题。如果您使用的是自动评分，则书面答题问题将标记为 0 且包含在未来尝试中，直至它们手动评分。", // content for RIO dialog
+	"rioDialogParagraph": "选择此设置后，多次尝试测验的学员将仅能回答之前尝试时答错的问题。", // content for RIO dialog
+	"rioDialogParagraph2": "如果您使用的是自动发布，则书面论述题将标记为 0 分且包含在未来尝试中，直至它们得到手动评分。", // second paragraph for RIO dialog
 	"rioDialogConfirmationText": "确定", // copy that appears on the RIO help dialog confirmation button
 	"ipRestrictionDialogDescription": "只有来自符合规定限制的 IP 地址的学员才能填写测验。", // guidelines for IP restrictions dialog
 	"btnIpRestrictionsDialogAdd": "添加", // text for IP restrictions dialog "Add" button
@@ -95,6 +96,9 @@ export default {
 	"hdrIpRestrictionsHelpDialogP2": "IP 地址示例：155.55.5.15", // IP restrictions help dialog paragraph 2
 	"hdrIpRestrictionsHelpDialogP3": "要包括单个可接受的 IP 地址，只需指定“IP 范围起始”值即可。", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "注意：“IP 范围起始”值必须小于“IP 范围结束”值。", // IP restrictions help dialog paragraph 4
+	"hdrSpecialAccess": "特殊访问权限", // special access heading,
+	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
+	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "获取有关此主题的帮助 - IP 限制", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "尝试条件", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "要使学员有资格进行另一次尝试，请设置介于 0 到 100 之间的最小和/或最大百分比值，并且上一次尝试必须达到此限制条件。", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -133,5 +137,10 @@ export default {
 	"headerAndFooter": "已添加页眉和页脚", // Header and footer summary text for closed accordion
 	"createNewLabel": "新建", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "添加现有", // Label for button to open menu for adding pre-existing items to the quiz.
-	"addQuestionsLabel": "新问题" // Label for button to open menu for adding new questions to the quiz.
+	"addQuestionsLabel": "新问题", // Label for button to open menu for adding new questions to the quiz.
+	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading2": "和", // Label for submission view dropdown in submission view container.
+	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "成绩超出" // Label for the grade-out-of field when creating/editing an activity
 };
