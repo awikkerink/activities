@@ -22,7 +22,7 @@ class ActivityQuizSubmissionViewsContainer
 					padding-bottom: 10px;
 				}
 
-				#button_with_padding {
+				#manage-submission-views-button {
 					padding-top: 5px;
 				}
 			`
@@ -64,7 +64,7 @@ class ActivityQuizSubmissionViewsContainer
 
 			<div>
 				<d2l-button-subtle
-					id="button_with_padding"
+					id="manage-submission-views-button"
 					text=${this.localize('submissionViewButtonText')}
 					@click=""
 					h-align="text">
