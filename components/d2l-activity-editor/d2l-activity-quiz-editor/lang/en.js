@@ -47,7 +47,7 @@ export default {
 	"disableRightClickAccessibleHelpText": "Get help on - Disable Right Click", // accessible help text for disable right click question mark button
 	"disableRightClickHelpDialogTitle": "Information: Disable Right Click", // title that appears when the disable right click help dialog is rendered
 	"disableRightClickHelpDialogParagraph1": "This feature prohibits learners from printing quiz questions by right-clicking on a question while an attempt is in progress. But learners will still be able to screen capture the quiz through other technologies outside of the browser.", // content for paragraph 1 of disable right click help dialog
-	"disableRightClickHelpDialogParagraph2": "Certain accessibility workflows will be blocked because the learner cannot copy and paste the question text.", // content for paragraph 2 of disable right click help dialog
+	"disableRightClickHelpDialogParagraph2": "Certain accessibility workflows will be blocked because the learner cannot copy and paste the question text. Individual users can be granted the ability to right-click on a quiz even when this feature is enabled for a quiz by enabling “Always Allow Right Click” in that user’s Accommodations.", // content for paragraph 2 of disable right click help dialog
 	"disableRightClickHelpDialogConfirmationText": "OK", // copy that appears on the disable right click help dialog confirmation button
 	"manageTimingDialogConfirmationText": "OK", // copy that appears on the Timing dialog confirmation button
 	"manageTimingDialogCancelText": "Cancel", // copy that appears on the Timing dialog cancel button
@@ -96,6 +96,9 @@ export default {
 	"hdrIpRestrictionsHelpDialogP2": "Example IP address: 155.55.5.15", // IP restrictions help dialog paragraph 2
 	"hdrIpRestrictionsHelpDialogP3": "To include an individual accepted IP address, only specify the IP Range Start value.", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "Note: The IP Range Start value must be smaller than the IP Range End value.", // IP restrictions help dialog paragraph 4
+	"hdrSpecialAccess": "Special Access", // special access heading,
+	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
+	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "Get help on - IP restrictions", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "Attempt Conditions", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "For a learner to qualify for another attempt, set a minimum and/or maximum percentage value between 0 to 100 that must be acheived on the previous attempt.", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -147,3 +150,4 @@ export default {
 	"submissionViewsHelpDialogConfirmationMain": "OK", //Text for closing the main Dialog for customization in submission views.
 	"submissionViewsHelpDialogCancelMain": "Cancel" // Text for cancelling changes on the main Dialog for customization in submission views.
 };
+

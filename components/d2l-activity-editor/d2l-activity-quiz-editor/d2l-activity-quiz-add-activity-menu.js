@@ -113,7 +113,15 @@ class ActivityQuizAddActivityMenu extends ActivityEditorMixin(SkeletonMixin(Loca
 	}
 
 	_renderAddExisting(types) {
-		const externalTypes = types.filter(type => type.isExternal());
+		let externalTypes = types.filter(type => type.isExternal());
+		externalTypes = externalTypes.sort((elem1) => {
+			if (elem1.type().includes('upload')) {
+				return -1;
+			} else {
+				return 1;
+			}
+		});
+
 		const disabled = !externalTypes || !externalTypes.length;
 		const content = externalTypes.map(type => this._renderActivityType(type));
 

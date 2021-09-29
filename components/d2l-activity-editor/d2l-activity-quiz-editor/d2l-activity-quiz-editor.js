@@ -1,13 +1,13 @@
 import './d2l-activity-quiz-editor-detail.js';
 import './d2l-activity-quiz-editor-secondary.js';
 import '../d2l-activity-editor.js';
+import { sharedScoring as scoringStore, shared as store } from '../state/activity-store.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { AsyncContainerMixin } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { html } from 'lit-element/lit-element.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
-import { shared as store } from '../state/activity-store.js';
 
 class QuizEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityQuizEditorMixin(ActivityEditorMixin(MobxLitElement)))) {
 
@@ -92,7 +92,8 @@ class QuizEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityQuizEditor
 	_refreshTotalPoints() {
 		const activity = store.get(this.href);
 		if (activity) {
-			activity.fetchScoreAndGradeScoreOutOf(true);
+			const scoring = scoringStore.get(activity.scoringHref);
+			scoring && scoring.fetch(true);
 		}
 	}
 }

@@ -5,7 +5,7 @@ import '@brightspace-ui/core/components/button/button.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/inputs/input-radio-spacer.js';
-import { sharedAssociateGrade as associateGradeStore, shared as store } from '../state/activity-store.js';
+import { sharedAssociateGrade as associateGradeStore, sharedScoring as scoringStore, shared as store } from '../state/activity-store.js';
 import { css, html } from 'lit-element/lit-element';
 import { GradebookStatus, GradeType } from 'siren-sdk/src/activities/associateGrade/AssociateGradeEntity.js';
 import { ActivityEditorWorkingCopyDialogMixin } from '../mixins/d2l-activity-editor-working-copy-dialog-mixin.js';
@@ -255,12 +255,19 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			return html``;
 		}
 
-		const scoreAndGrade = store.get(this.href).scoreAndGrade;
-		const {
-			scoreOutOf,
-			scoreOutOfError,
-			newGradeName
-		} = scoreAndGrade;
+		let scoreOutOf;
+		let scoreOutOfError;
+		let newGradeName;
+		if (!this._createSelectboxGradeItemEnabled) {
+			const scoreAndGrade = store.get(this.href).scoreAndGrade;
+			scoreOutOf = scoreAndGrade && scoreAndGrade.scoreOutOf;
+			scoreOutOfError = scoreAndGrade && scoreAndGrade.scoreOutOfError;
+			newGradeName = scoreAndGrade && scoreAndGrade.newGradeName;
+		} else {
+			const scoring = scoringStore.get(activity.scoringHref);
+			scoreOutOf = scoring && scoring.scoreOutOf;
+			newGradeName = scoring && scoring.newGradeName;
+		}
 
 		const hasGradeCandidates = this._hasGradeCandidates;
 		const canCreateNewGrade = this._canCreateNewGrade;
@@ -336,14 +343,14 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			await entity.saving; // Wait for activity usage entity PATCH requests to complete before checking in
 
 			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
+			const baseEntity = store.get(this.href);
+			const scoring = scoringStore.get(baseEntity.scoringHref);
 			if (this._createNewRadioChecked) {
 				const localizeTerm = associateGradeEntity.gradeType === GradeType.Selectbox ? 'grades.creatingNewSelectboxGradeItem' : 'grades.creatingNewNumericGradeItem';
-				const scoreAndGrade = store.get(this.href).scoreAndGrade;
-				announce(`${this.localize(localizeTerm, { newGradeName: scoreAndGrade.newGradeName })}`);
+				announce(`${this.localize(localizeTerm, { newGradeName: scoring.newGradeName })}`);
 			} else {
 				const gradeCandidateCollection = associateGradeEntity && associateGradeEntity.gradeCandidateCollection;
-				const baseEntity = store.get(this.href);
-				baseEntity.scoreAndGrade.setScoreOutOf(gradeCandidateCollection.selected.maxPoints.toString());
+				scoring.setScoreOutOf(gradeCandidateCollection.selected.maxPoints);
 				announce(`${this.localize('grades.linkingToGradeItem', { gradeName: gradeCandidateCollection.selected.name })}`);
 			}
 
