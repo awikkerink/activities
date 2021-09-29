@@ -27,7 +27,7 @@ class ActivityQuizSubmissionViewsDialog
 			<d2l-dialog
 				?opened="${this.opened}"
 				@d2l-dialog-close="${this.handleClose}"
-				title-text="${this.localize('submissionViewsHelpDialogtitle')}">
+				title-text="${this.localize('submissionViewsHelpDialogTitle')}">
 
 				<div>
 					<p>${this.localize('submissionViewsHelpDialogParagraph1')}</p>
@@ -35,7 +35,7 @@ class ActivityQuizSubmissionViewsDialog
 				</div>
 
 				<d2l-button
-					data-dialog-action="done"
+					data-dialog-action
 					slot="footer"
 					primary>
 					${this.localize('submissionViewsHelpDialogConfirmation')}
