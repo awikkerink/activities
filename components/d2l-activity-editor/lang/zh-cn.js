@@ -169,5 +169,8 @@ export default {
 	"content.confirmDialogTitle": "您的现有内容将被删除。", // The text for the title of the replace html template confirmation dialog
 	"content.confirmDialogBody": "您是否确定要使用此模板替换现有内容？", // The text for the body of the replace html template confirmation dialog
 	"content.confirmDialogActionOption": "替换", // The text for the confirmation action to replace content
-	"content.confirmDialogCancelOption": "取消" // The text for the cancel action to not replace content
+	"content.confirmDialogCancelOption": "取消", // The text for the cancel action to not replace content
+	"content.useEmbeddedPlayer": "使用嵌入式播放器", // The text for using the embedded player
+	"content.scormActivity": "SCORM 安装包", // The label for the name of the SCORM package
+	"content.lastEdited": "上次编辑" // The date when the entity was last edited
 };

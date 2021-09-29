@@ -30,16 +30,16 @@ export default {
 	"hlpReleaseConditions": "لا يمكن للمستخدمين الوصول إلى الاختبار أو عرضه إلا إذا كانوا يستوفون شروط الإصدار.", // release conditions help
 	"hdrEvaluationAndFeedback": "التقييم والملاحظات", // evaluation/feedback accordion header
 	"subHdrAutomaticGrades": "علامة تلقائية", // Title for automatic grade tool
-	"autoSetGradedDescription": "السماح بتعيين المحاولة كمحاولة يتم وضع علامة عليها بعد الإكمال مباشرة", // description for automatic grade checkbox
-	"autoSetGradedSummary": "علامة تلقائية", // summary for auto set graded checkbox
+	"autoSetGradedDescription": "نشر نتائج المحاولات تلقائيًا فور إكمالها", // description for automatic grade checkbox
+	"autoSetGradedSummary": "نشر النتائج تلقائيًا", // summary for auto set graded checkbox
 	"passwordDescription": "سيتم منح المستخدمين الذين يُدخلون كلمة المرور هذه فقط إمكانية الوصول لكتابة هذا الاختبار.", // description for password input
 	"hlpSubmissionNotificationEmail": "أدخل عنوان بريد إلكتروني أو عناوين بريد إلكتروني متعددة مفصولة بفاصلة لتلقي إعلامات عند محاولة إجراء الاختبار.", // description for email notification input
 	"autoSetGradedAccessibleHelpText": "الحصول على تعليمات حول - العلامات التلقائية", // accessible help text for autoSetGraded question mark button
-	"autoSetGradedHelpDialogTitle": "المعلومات: العلامات التلقائية", // title that appears when the autoSetGraded help dialog is rendered
+	"autoSetGradedHelpDialogTitle": "المعلومات: نشر نتائج المحاولات تلقائيًا فور إكمالها", // title that appears when the autoSetGraded help dialog is rendered
 	"autoSetGradedHelpDialogConfirmationText": "موافق", // copy that appears on the autoSetGraded help dialog confirmation button
-	"autoSetGradedHelpDialogParagraph1": "عند تشغيل هذا الإعداد، يمكن للمستخدمين رؤية درجاتهم فور إرسال محاولتهم. مجموع الدرجات المعروض هو فقط ما يمكن للنظام وضع علامة عليه تلقائيًا.", // content for paragraph 1 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph2": "يجب تشغيل هذا الإعداد لإرسال العلامات تلقائيًا إلى دفتر العلامات، ولإصدار عرض الإرسال الافتراضي للمستخدمين عند إكمال أي محاولة.", // content for paragraph 2 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph3": "ملاحظة: سيتم وضع علامة 0 على أسئلة الإجابة المكتوبة حتى يتم وضع علامة عليها يدويًا.", // content for paragraph 3 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph1": "عند تشغيل هذه الميزة، سيتم نشر نتائج المحاولة التي يتم تقييمها تلقائيًا وإظهارها للمتعلّمين.", // content for paragraph 1 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph2": "ملاحظة: إذا لم يتمكّن النظام من تقييم الأسئلة (على سبيل المثال الأسئلة ذات الإجابة المكتوبة)، فسيتم تلقائيًا وضع مجموع درجات يبلغ صفرًا لهذه الأسئلة إلى أن يتم إجراء التقييم اليدوي.", // content for paragraph 2 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph3": "", // content for paragraph 3 of autoSetGraded help dialog
 	"disableAlertsHelpDialogTitle": "المعلومات: تعطيل البريد الإلكتروني والرسائل الفورية والتنبيهات في Brightspace", // title that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogContent": "في حال تشغيل هذا الخيار، لن يتمكّن المتعلّمون من الوصول إلى البريد الإلكتروني في Brightspace أو الرسائل الفورية أو إلى تنبيهاتهما إذا كانوا يجرون محاولة اختبار.", // content that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogConfirmationText": "موافق", // copy that appears on the disable alerts help dialog confirmation button
@@ -78,7 +78,8 @@ export default {
 	"btnAttemptConditions": "شروط المحاولات", // Label for Attempt Conditions button in Attempts dialog
 	"rioAccessibileHelpText": "الحصول على تعليمات حول - إعادة الإجابة عن الأسئلة غير الصحيحة فقط", // accessible help text for RIO question mark button
 	"rioDialogTitle": "المعلومات: إعادة الإجابة عن الأسئلة غير الصحيحة فقط", // Title for RIO help dialog
-	"rioDialogParagraph": "عند تحديد هذا الإعداد، يمكن للمتعلّمين الذين يحاولون إجراء اختبار أكثر من مرة الإجابة فقط عن الأسئلة غير الصحيحة في المحاولة السابقة. إذا كنت تستخدم وضع العلامات التلقائي، فسيتم وضع علامة 0 على أسئلة الإجابة المكتوبة وسيتم تضمينها في المحاولات المستقبلية حتى يتم وضع علامة عليها يدويًا.", // content for RIO dialog
+	"rioDialogParagraph": "عند تحديد هذا الإعداد، يمكن للمتعلّمين الذين يحاولون إجراء اختبار أكثر من مرة الإجابة فقط عن الأسئلة التي أجابوا عنها بشكل خاطئ في المحاولة السابقة.", // content for RIO dialog
+	"rioDialogParagraph2": "إذا كنت تستخدم النشر التلقائي، فسيتم وضع علامة 0 على أسئلة الإجابة المكتوبة وسيتم تضمينها في المحاولات المستقبلية حتى يتم وضع علامة عليها يدويًا.", // second paragraph for RIO dialog
 	"rioDialogConfirmationText": "موافق", // copy that appears on the RIO help dialog confirmation button
 	"ipRestrictionDialogDescription": "يمكن للمتعلّمين القادمين من عناوين IP التي تفي بالقيود المحددة فقط كتابة الاختبار.", // guidelines for IP restrictions dialog
 	"btnIpRestrictionsDialogAdd": "إضافة", // text for IP restrictions dialog "Add" button
@@ -95,6 +96,9 @@ export default {
 	"hdrIpRestrictionsHelpDialogP2": "مثال على عنوان IP:‏ 155.55.5.15", // IP restrictions help dialog paragraph 2
 	"hdrIpRestrictionsHelpDialogP3": "لتضمين عنوان IP فردي مقبول، حدد قيمة بداية نطاق IP فقط.", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "ملاحظة: يجب أن تكون قيمة بداية نطاق IP أصغر من قيمة نهاية نطاق IP.", // IP restrictions help dialog paragraph 4
+	"hdrSpecialAccess": "الوصول الخاص", // special access heading,
+	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
+	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "الحصول على تعليمات حول - قيود IP", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "شروط المحاولات", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "ليتأهل المتعلّم لإجراء محاولة أخرى، يجب تعيين حد أدنى و/أو حد أقصى لقيمة النسبة المئوية بين 0 إلى 100 والتي يجب بلوغها في المحاولة السابقة.", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -133,5 +137,10 @@ export default {
 	"headerAndFooter": "تمت إضافة الرأس والتذييل", // Header and footer summary text for closed accordion
 	"createNewLabel": "إنشاء عناصر جديدة", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "إضافة العناصر الموجودة", // Label for button to open menu for adding pre-existing items to the quiz.
-	"addQuestionsLabel": "سؤال جديد" // Label for button to open menu for adding new questions to the quiz.
+	"addQuestionsLabel": "سؤال جديد", // Label for button to open menu for adding new questions to the quiz.
+	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading2": "و", // Label for submission view dropdown in submission view container.
+	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "العلامة من أصل" // Label for the grade-out-of field when creating/editing an activity
 };

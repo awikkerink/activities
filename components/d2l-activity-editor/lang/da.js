@@ -169,5 +169,8 @@ export default {
 	"content.confirmDialogTitle": "Dit eksisterende indhold bliver slettet.", // The text for the title of the replace html template confirmation dialog
 	"content.confirmDialogBody": "Er du sikker på, at du vil erstatte dit eksisterende indhold med denne skabelon?", // The text for the body of the replace html template confirmation dialog
 	"content.confirmDialogActionOption": "Erstat", // The text for the confirmation action to replace content
-	"content.confirmDialogCancelOption": "Annuller" // The text for the cancel action to not replace content
+	"content.confirmDialogCancelOption": "Annuller", // The text for the cancel action to not replace content
+	"content.useEmbeddedPlayer": "Brug integreret afspiller", // The text for using the embedded player
+	"content.scormActivity": "SCORM-pakke", // The label for the name of the SCORM package
+	"content.lastEdited": "Sidst redigeret" // The date when the entity was last edited
 };

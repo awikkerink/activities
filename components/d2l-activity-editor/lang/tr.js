@@ -169,5 +169,8 @@ export default {
 	"content.confirmDialogTitle": "Mevcut içeriğiniz silinecek.", // The text for the title of the replace html template confirmation dialog
 	"content.confirmDialogBody": "Mevcut içeriğinizi bu şablonla değiştirmek istediğinizden emin misiniz?", // The text for the body of the replace html template confirmation dialog
 	"content.confirmDialogActionOption": "Değiştir", // The text for the confirmation action to replace content
-	"content.confirmDialogCancelOption": "İptal" // The text for the cancel action to not replace content
+	"content.confirmDialogCancelOption": "İptal", // The text for the cancel action to not replace content
+	"content.useEmbeddedPlayer": "Dahili oynatıcıyı kullan", // The text for using the embedded player
+	"content.scormActivity": "SCORM Paketi", // The label for the name of the SCORM package
+	"content.lastEdited": "Son düzenleme tarihi" // The date when the entity was last edited
 };

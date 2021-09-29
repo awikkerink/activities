@@ -30,16 +30,16 @@ export default {
 	"hlpReleaseConditions": "Les utilisateurs ne peuvent pas accéder au questionnaire ni l’afficher, sauf s’ils remplissent les conditions de diffusion.", // release conditions help
 	"hdrEvaluationAndFeedback": "Évaluation et réactions", // evaluation/feedback accordion header
 	"subHdrAutomaticGrades": "Noter automatiquement", // Title for automatic grade tool
-	"autoSetGradedDescription": "Permettre de signaler immédiatement l’état Noté de la tentative, une fois terminé", // description for automatic grade checkbox
-	"autoSetGradedSummary": "Noter automatiquement", // summary for auto set graded checkbox
+	"autoSetGradedDescription": "Publier automatiquement et immédiatement les résultats des tentatives une fois qu’elles sont terminées", // description for automatic grade checkbox
+	"autoSetGradedSummary": "Publier automatiquement les résultats", // summary for auto set graded checkbox
 	"passwordDescription": "Seuls les utilisateurs qui saisissent ce mot de passe se verront accorder le droit de répondre au questionnaire.", // description for password input
 	"hlpSubmissionNotificationEmail": "Saisissez une ou plusieurs adresses e-mails séparées par une virgule pour recevoir des notifications lors de réponses à un questionnaire.", // description for email notification input
 	"autoSetGradedAccessibleHelpText": "Obtenir de l’aide sur - Notation automatique", // accessible help text for autoSetGraded question mark button
-	"autoSetGradedHelpDialogTitle": "Information : notation automatique", // title that appears when the autoSetGraded help dialog is rendered
+	"autoSetGradedHelpDialogTitle": "Information : publier automatiquement et immédiatement les résultats des tentatives une fois qu’elles sont terminées", // title that appears when the autoSetGraded help dialog is rendered
 	"autoSetGradedHelpDialogConfirmationText": "OK", // copy that appears on the autoSetGraded help dialog confirmation button
-	"autoSetGradedHelpDialogParagraph1": "Ce paramètre activé, les utilisateurs peuvent voir leur note dès qu’ils soumettent leur tentative. La note affichée est la seule que le système peut évaluer automatiquement.", // content for paragraph 1 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph2": "Ce paramètre doit être activé pour que les notes soient automatiquement envoyées dans le livret de notes et pour que la vue Soumission par défaut soit diffusée aux utilisateurs lorsqu’ils achèvent une tentative.", // content for paragraph 2 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph3": "Remarque : les questions dont la réponse est écrite seront notées 0 jusqu’à ce qu’elles soient notées manuellement.", // content for paragraph 3 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph1": "Lorsque cette fonctionnalité est activée, les résultats des tentatives évaluées automatiquement sont publiés et sont visibles pour les apprenants.", // content for paragraph 1 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph2": "Remarque : si les questions ne peuvent pas être évaluées par le système (par exemple, les questions à réponse écrite), elles obtiendront automatiquement la note de zéro jusqu’à l’évaluation manuelle.", // content for paragraph 2 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph3": "", // content for paragraph 3 of autoSetGraded help dialog
 	"disableAlertsHelpDialogTitle": "Information : désactiver l’e-mail, les messages instantanés et les alertes dans Brightspace", // title that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogContent": "L’activation de cette option rend impossible l’accès à l’e-mail, aux messages instantanés ou aux alertes de Brightspace lorsqu’un apprenant est en train de répondre à un questionnaire.", // content that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogConfirmationText": "OK", // copy that appears on the disable alerts help dialog confirmation button
@@ -78,7 +78,8 @@ export default {
 	"btnAttemptConditions": "Conditions pour les tentatives", // Label for Attempt Conditions button in Attempts dialog
 	"rioAccessibileHelpText": "Obtenir de l’aide sur - Recommencer pour les questions dont la réponse est incorrecte uniquement", // accessible help text for RIO question mark button
 	"rioDialogTitle": "Information : recommencer pour les questions dont la réponse est incorrecte uniquement", // Title for RIO help dialog
-	"rioDialogParagraph": "Lorsque ce paramètre est sélectionné, les apprenants qui tentent plusieurs fois de répondre à un questionnaire ne peuvent répondre qu’aux questions dont la réponse était incorrecte lors de la tentative précédente. Si vous utilisez la notation automatique, les questions dont la réponse est écrite seront notées 0 et incluses dans les tentatives ultérieures jusqu’à ce qu’elles soient notées manuellement.", // content for RIO dialog
+	"rioDialogParagraph": "Lorsque ce paramètre est sélectionné, les apprenants qui tentent plusieurs fois de répondre à un questionnaire ne peuvent répondre qu’aux questions dont la réponse était incorrecte lors de la tentative précédente.", // content for RIO dialog
+	"rioDialogParagraph2": "Si vous utilisez la publication automatique, les questions dont la réponse est écrite seront notées 0 et incluses dans les tentatives ultérieures jusqu’à ce qu’elles soient notées manuellement.", // second paragraph for RIO dialog
 	"rioDialogConfirmationText": "OK", // copy that appears on the RIO help dialog confirmation button
 	"ipRestrictionDialogDescription": "Seuls les apprenants provenant des adresses IP qui répondent aux restrictions définies peuvent répondre au questionnaire.", // guidelines for IP restrictions dialog
 	"btnIpRestrictionsDialogAdd": "Ajouter", // text for IP restrictions dialog "Add" button
@@ -95,6 +96,9 @@ export default {
 	"hdrIpRestrictionsHelpDialogP2": "Exemple d’adresse IP : 155.55.5.15", // IP restrictions help dialog paragraph 2
 	"hdrIpRestrictionsHelpDialogP3": "Pour inclure une adresse IP individuelle acceptée, il suffit de spécifier la valeur de l’adresse IP de début de la plage.", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "Remarque : la valeur de l’adresse IP de début de la plage doit être inférieure à la valeur de l’adresse IP de fin de la plage.", // IP restrictions help dialog paragraph 4
+	"hdrSpecialAccess": "Accès spécial", // special access heading,
+	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
+	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "Obtenir de l’aide sur - Restrictions d’adresse IP", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "Conditions pour les tentatives", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "Pour qu’un apprenant puisse bénéficier d’une nouvelle tentative, définissez un pourcentage minimum et/ou maximum entre 0 et 100 à atteindre lors de la tentative précédente.", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -133,5 +137,10 @@ export default {
 	"headerAndFooter": "En-tête et bas de page ajoutés", // Header and footer summary text for closed accordion
 	"createNewLabel": "Créer", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "Ajouter un élément existant", // Label for button to open menu for adding pre-existing items to the quiz.
-	"addQuestionsLabel": "Nouvelle question" // Label for button to open menu for adding new questions to the quiz.
+	"addQuestionsLabel": "Nouvelle question", // Label for button to open menu for adding new questions to the quiz.
+	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading2": "et", // Label for submission view dropdown in submission view container.
+	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "Note sur" // Label for the grade-out-of field when creating/editing an activity
 };

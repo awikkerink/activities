@@ -30,16 +30,16 @@ export default {
 	"hlpReleaseConditions": "除非滿足發佈條件，否則使用者無法存取或檢視測驗。", // release conditions help
 	"hdrEvaluationAndFeedback": "評估與意見反應", // evaluation/feedback accordion header
 	"subHdrAutomaticGrades": "自動評分", // Title for automatic grade tool
-	"autoSetGradedDescription": "允許在完成後立即將嘗試設為已評分", // description for automatic grade checkbox
-	"autoSetGradedSummary": "自動評分", // summary for auto set graded checkbox
+	"autoSetGradedDescription": "完成後立即自動發佈嘗試結果", // description for automatic grade checkbox
+	"autoSetGradedSummary": "自動發佈結果", // summary for auto set graded checkbox
 	"passwordDescription": "只有輸入此密碼的使用者，才能獲得授予填寫此測驗的權限。", // description for password input
 	"hlpSubmissionNotificationEmail": "輸入一個電子郵件或以逗點分隔的多個電子郵件，以便在嘗試測驗時收到通知。", // description for email notification input
 	"autoSetGradedAccessibleHelpText": "取得說明 - 自動評分", // accessible help text for autoSetGraded question mark button
-	"autoSetGradedHelpDialogTitle": "資訊：自動評分", // title that appears when the autoSetGraded help dialog is rendered
+	"autoSetGradedHelpDialogTitle": "資訊：完成後立即自動發佈嘗試結果", // title that appears when the autoSetGraded help dialog is rendered
 	"autoSetGradedHelpDialogConfirmationText": "確定", // copy that appears on the autoSetGraded help dialog confirmation button
-	"autoSetGradedHelpDialogParagraph1": "此設定開啟時，使用者可以在提交其嘗試後立即查看分數。僅會顯示系統可以自動評分的分數。", // content for paragraph 1 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph2": "必須開啟此設定，才能讓分數自動傳送到成績單，並在使用者完成嘗試後發佈預設提交檢視給使用者。", // content for paragraph 2 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph3": "注意：書面回應問題將會標記為 0，直到對其手動評分為止。", // content for paragraph 3 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph1": "開啟此功能後，將會發佈自動評估的嘗試結果並向學習者顯示。", // content for paragraph 1 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph2": "注意：如果系統無法評估問題 (例如書面回應問題)，那些問題在人工評估之前會自動評分為零。", // content for paragraph 2 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph3": "", // content for paragraph 3 of autoSetGraded help dialog
 	"disableAlertsHelpDialogTitle": "資訊：停用 Brightspace 中的電子郵件、微服務和警示", // title that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogContent": "如果您開啟此選項，當學習者有進行中的測驗嘗試時，就無法存取 Brightspace 電子郵件、微服務或其警示。", // content that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogConfirmationText": "確定", // copy that appears on the disable alerts help dialog confirmation button
@@ -78,7 +78,8 @@ export default {
 	"btnAttemptConditions": "嘗試條件", // Label for Attempt Conditions button in Attempts dialog
 	"rioAccessibileHelpText": "取得說明 - 僅重考不正確的部分", // accessible help text for RIO question mark button
 	"rioDialogTitle": "資訊：僅重考不正確的問題", // Title for RIO help dialog
-	"rioDialogParagraph": "選取此設定時，嘗試測驗多於一次的學習者只能回答上一次嘗試時不正確的問題。如果您正在使用自動評分，書面回應問題將會標記為 0 並納入未來嘗試中，直到對其手動評分為止。", // content for RIO dialog
+	"rioDialogParagraph": "選取此設定時，嘗試測驗多於一次的學習者只能回答上一次嘗試時不正確的問題。", // content for RIO dialog
+	"rioDialogParagraph2": "如果您正在使用自動發佈，書面回應問題將會標記為 0 並納入未來嘗試中，直到對其手動評分為止。", // second paragraph for RIO dialog
 	"rioDialogConfirmationText": "確定", // copy that appears on the RIO help dialog confirmation button
 	"ipRestrictionDialogDescription": "只有 IP 位址符合限制定義的學習者可以填寫測驗。", // guidelines for IP restrictions dialog
 	"btnIpRestrictionsDialogAdd": "新增", // text for IP restrictions dialog "Add" button
@@ -95,6 +96,9 @@ export default {
 	"hdrIpRestrictionsHelpDialogP2": "IP 位址範例：155.55.5.15", // IP restrictions help dialog paragraph 2
 	"hdrIpRestrictionsHelpDialogP3": "若要包含個別可接受的 IP 位址，只需指定「IP 範圍開始」值。", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "注意：IP 範圍開始值必須小於「IP 範圍結束」值。", // IP restrictions help dialog paragraph 4
+	"hdrSpecialAccess": "特殊存取權限", // special access heading,
+	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
+	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "取得說明 - IP 限制", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "嘗試條件", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "為了讓學習者符合另一次嘗試的資格，請在 0 到 100 之間設定最小及/或最大百分比值，前一次嘗試必須達到此範圍。", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -133,5 +137,10 @@ export default {
 	"headerAndFooter": "頁首與頁尾已新增", // Header and footer summary text for closed accordion
 	"createNewLabel": "建立新的", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "新增現有的", // Label for button to open menu for adding pre-existing items to the quiz.
-	"addQuestionsLabel": "新問題" // Label for button to open menu for adding new questions to the quiz.
+	"addQuestionsLabel": "新問題", // Label for button to open menu for adding new questions to the quiz.
+	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading2": "和", // Label for submission view dropdown in submission view container.
+	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "成績總分" // Label for the grade-out-of field when creating/editing an activity
 };

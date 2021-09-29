@@ -30,16 +30,16 @@ export default {
 	"hlpReleaseConditions": "Gebruikers hebben geen toegang tot de test en kunnen deze niet bekijken tenzij ze aan de releasevoorwaarden voldoen.", // release conditions help
 	"hdrEvaluationAndFeedback": "Evaluatie en feedback", // evaluation/feedback accordion header
 	"subHdrAutomaticGrades": "Automatische score", // Title for automatic grade tool
-	"autoSetGradedDescription": "Toestaan dat poging onmiddellijk wordt beoordeeld na voltooiing", // description for automatic grade checkbox
-	"autoSetGradedSummary": "Automatische score", // summary for auto set graded checkbox
+	"autoSetGradedDescription": "Resultaten van automatische publicatiepoging direct na voltooiing", // description for automatic grade checkbox
+	"autoSetGradedSummary": "Resultaten automatisch publiceren", // summary for auto set graded checkbox
 	"passwordDescription": "Alleen gebruikers die dit wachtwoord opgeven, krijgen toegang om de test af te leggen.", // description for password input
 	"hlpSubmissionNotificationEmail": "Voer een e-mailadres of meerdere e-mailadressen in, gescheiden door een komma, om meldingen te ontvangen wanneer een test wordt gedaan.", // description for email notification input
 	"autoSetGradedAccessibleHelpText": "Hulp krijgen bij - Automatische score", // accessible help text for autoSetGraded question mark button
-	"autoSetGradedHelpDialogTitle": "Informatie: Automatische score", // title that appears when the autoSetGraded help dialog is rendered
+	"autoSetGradedHelpDialogTitle": "Informatie: resultaten van automatische publicatiepoging direct na voltooiing", // title that appears when the autoSetGraded help dialog is rendered
 	"autoSetGradedHelpDialogConfirmationText": "OK", // copy that appears on the autoSetGraded help dialog confirmation button
-	"autoSetGradedHelpDialogParagraph1": "Als deze instelling is ingeschakeld, zien gebruikers hun score zodra ze hun poging hebben ingediend. De weergegeven score is alleen de automatische beoordeling van het systeem.", // content for paragraph 1 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph2": "Schakel deze instelling in om scores automatisch naar het scorerapport te verzenden en om de standaardindieningsweergave vrij te geven aan gebruikers wanneer ze een poging voltooien.", // content for paragraph 2 of autoSetGraded help dialog
-	"autoSetGradedHelpDialogParagraph3": "Opmerking: vragen met een schriftelijke respons worden gemarkeerd als 0 totdat ze handmatig worden beoordeeld.", // content for paragraph 3 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph1": "Als deze functie is ingeschakeld, worden de resultaten van de automatisch geëvalueerde poging gepubliceerd en weergegeven voor cursisten.", // content for paragraph 1 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph2": "Opmerking: Als vragen niet door het systeem kunnen worden geëvalueerd (bijv. vragen met een schriftelijke respons), krijgen deze vragen automatisch een nul als score totdat ze handmatig worden geëvalueerd.", // content for paragraph 2 of autoSetGraded help dialog
+	"autoSetGradedHelpDialogParagraph3": "", // content for paragraph 3 of autoSetGraded help dialog
 	"disableAlertsHelpDialogTitle": "Informatie: E-mail, chatberichten en meldingen uitschakelen in Brightspace", // title that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogContent": "Als u deze optie inschakelt, hebben cursisten geen toegang tot de Brightspace-e-mail, Chatberichten en hun meldingen als ze bezig zijn met een test.", // content that appears when the disable alerts help dialog is rendered
 	"disableAlertsHelpDialogConfirmationText": "OK", // copy that appears on the disable alerts help dialog confirmation button
@@ -78,7 +78,8 @@ export default {
 	"btnAttemptConditions": "Voorwaarden voor pogingen", // Label for Attempt Conditions button in Attempts dialog
 	"rioAccessibileHelpText": "Krijg hulp bij - Opnieuw doen, alleen onjuist", // accessible help text for RIO question mark button
 	"rioDialogTitle": "Informatie: Alleen onjuiste vragen opnieuw beantwoorden", // Title for RIO help dialog
-	"rioDialogParagraph": "Als deze instelling is geselecteerd, kunnen cursisten die een quiz vaker dan één keer uitvoeren, alleen vragen beantwoorden die bij de vorige poging onjuist waren. Als u Automatische score gebruikt, worden vragen met een schriftelijke respons gemarkeerd als 0 en opgenomen in toekomstige pogingen totdat ze handmatig worden beoordeeld.", // content for RIO dialog
+	"rioDialogParagraph": "Als deze instelling is geselecteerd, kunnen cursisten die een quiz vaker dan één keer uitvoeren, alleen vragen beantwoorden die bij de vorige poging onjuist waren.", // content for RIO dialog
+	"rioDialogParagraph2": "Als u Automatisch publiceren gebruikt, worden vragen met een schriftelijke respons gemarkeerd als 0 en opgenomen in toekomstige pogingen totdat ze handmatig worden beoordeeld.", // second paragraph for RIO dialog
 	"rioDialogConfirmationText": "OK", // copy that appears on the RIO help dialog confirmation button
 	"ipRestrictionDialogDescription": "Alleen cursisten die een IP-adres hebben dat aan de gedefinieerde beperkingen voldoet, kunnen de test schrijven.", // guidelines for IP restrictions dialog
 	"btnIpRestrictionsDialogAdd": "Toevoegen", // text for IP restrictions dialog "Add" button
@@ -95,6 +96,9 @@ export default {
 	"hdrIpRestrictionsHelpDialogP2": "Voorbeeld van een IP-adres: 155.55.5.15", // IP restrictions help dialog paragraph 2
 	"hdrIpRestrictionsHelpDialogP3": "Als u een afzonderlijk geaccepteerd IP-adres wilt opnemen, geeft u alleen de beginwaarde voor het IP-bereik op.", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "Opmerking: De beginwaarde van het IP-bereik moet lager zijn dan de eindwaarde van het IP-bereik.", // IP restrictions help dialog paragraph 4
+	"hdrSpecialAccess": "Speciale toegang", // special access heading,
+	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
+	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "Hulp krijgen bij - IP-beperkingen", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "Voorwaarden voor pogingen", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "Om een cursist in aanmerking te laten komen voor een andere poging, stelt u een minimum- en/of maximumpercentage in tussen 0 en 100 die bij de vorige poging moet worden bereikt.", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -133,5 +137,10 @@ export default {
 	"headerAndFooter": "Kop- en voettekst toegevoegd", // Header and footer summary text for closed accordion
 	"createNewLabel": "Nieuwe maken", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "Bestaand toevoegen", // Label for button to open menu for adding pre-existing items to the quiz.
-	"addQuestionsLabel": "Nieuwe vraag" // Label for button to open menu for adding new questions to the quiz.
+	"addQuestionsLabel": "Nieuwe vraag", // Label for button to open menu for adding new questions to the quiz.
+	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading2": "en", // Label for submission view dropdown in submission view container.
+	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "Score" // Label for the grade-out-of field when creating/editing an activity
 };

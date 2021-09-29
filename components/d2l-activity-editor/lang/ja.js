@@ -169,5 +169,8 @@ export default {
 	"content.confirmDialogTitle": "既存のコンテンツは削除されます。", // The text for the title of the replace html template confirmation dialog
 	"content.confirmDialogBody": "既存のコンテンツをこのテンプレートに置き換えてもよろしいですか？", // The text for the body of the replace html template confirmation dialog
 	"content.confirmDialogActionOption": "置換", // The text for the confirmation action to replace content
-	"content.confirmDialogCancelOption": "キャンセル" // The text for the cancel action to not replace content
+	"content.confirmDialogCancelOption": "キャンセル", // The text for the cancel action to not replace content
+	"content.useEmbeddedPlayer": "埋め込まれたプレーヤーの使用", // The text for using the embedded player
+	"content.scormActivity": "SCORM パッケージ", // The label for the name of the SCORM package
+	"content.lastEdited": "最後の編集日" // The date when the entity was last edited
 };
