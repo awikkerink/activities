@@ -28,6 +28,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			activityName: { type: String },
 			disableResetToUngraded: { type: Boolean },
 			allowUngraded: { type: Boolean },
+			hasActivityScore: { type: Boolean },
 			_focusUngraded: { type: Boolean },
 			_createSelectboxGradeItemEnabled: { type: Boolean },
 			_associateGradeHref: { type: String },
@@ -169,6 +170,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		this.saveOrder = 500;
 		this.disableResetToUngraded = false;
 		this.allowUngraded = true;
+		this.hasActivityScore = true;
 	}
 
 	connectedCallback() {
@@ -204,10 +206,15 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			gradeUnits = this.localize('grades.gradeUnits');
 			inGrades = associateGradeEntity && associateGradeEntity.gradebookStatus !== GradebookStatus.NotInGradebook;
 			canSeeGrades = !!associateGradeEntity;
-			scoreOutOf = scoringEntity && scoringEntity.scoreOutOf;
 			isUngraded = associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NotInGradebook && !scoreOutOf;
-			canEditScoreOutOf = scoringEntity && scoringEntity.canUpdateScoring;
 			canEditGradebookStatus = associateGradeEntity && associateGradeEntity.canCreateNewGrade;
+			if(this.hasActivityScore) {
+				scoreOutOf = scoringEntity && scoringEntity.scoreOutOf;
+				canEditScoreOutOf = scoringEntity && scoringEntity.canUpdateScoring;
+			} else {
+				scoreOutOf = scoringEntity && (inGrades ? scoringEntity.scoreOutOf : scoringEntity.totalPoints);
+				canEditScoreOutOf = inGrades && scoringEntity && scoringEntity.canUpdateScoring;
+			}
 		} else {
 			gradeUnits = activity && activity.scoreAndGrade && activity.scoreAndGrade.gradeType;
 			inGrades = activity && activity.scoreAndGrade && activity.scoreAndGrade.inGrades;
@@ -328,7 +335,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 
 		changedProperties.forEach((oldValue, propName) => {
 			if (propName === '_focusUngraded' && typeof oldValue !== 'undefined') {
-				const toFocus = this._focusUngraded ?
+				const toFocus = this._focusUngraded && this.allowUngraded ?
 					this.shadowRoot.querySelector('#ungraded') :
 					this.shadowRoot.querySelector('#score-out-of');
 				toFocus.focus();
@@ -409,10 +416,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		this._prefetchGradeSchemes();
 		store.get(this.href).scoreAndGrade.addToGrades();
 		this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
-		if (this._createSelectboxGradeItemEnabled) {
-			const scoring = scoringStore.get(this._scoringHref);
-			scoring && scoring.addToGrades();
-		}
 	}
 	_associateGradeSetGradebookStatus(gradebookStatus) {
 		if (!this._createSelectboxGradeItemEnabled) return;

@@ -164,6 +164,7 @@ class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMi
 						.href="${this.activityUsageHref}"
 						.token="${this.token}"
 						.allowUngraded="${false}"
+						.hasActivityScore="${false}"
 						.activityName="${name}">
 					</d2l-activity-score-editor>
 				</div>
