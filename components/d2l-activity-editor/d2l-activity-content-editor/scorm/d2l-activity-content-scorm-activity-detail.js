@@ -93,7 +93,8 @@ class ContentScormActivityDetail extends SkeletonMixin(ErrorHandlingMixin(Locali
 					?skeleton="${this.skeleton}"
 					.href="${this.activityUsageHref}"
 					.token="${this.token}"
-					.activityName="${''}">
+					.activityName="${''}"
+					.hasActivityScore="${false}">
 				</d2l-activity-score-editor>
 			</div>
 

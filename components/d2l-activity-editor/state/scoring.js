@@ -10,10 +10,6 @@ export class Scoring {
 		this.token = token;
 	}
 
-	addToGrades() {
-		this.canUpdateScoring = true;
-	}
-
 	async dirty() {
 		return !this._entity.equals(this._makeEntityData());
 	}
@@ -69,7 +65,6 @@ decorate(Scoring, {
 	newGradeName: observable,
 	// actions
 	load: action,
-	addToGrades: action,
 	setScoreOutOf: action,
 	setNewGradeName: action
 });
