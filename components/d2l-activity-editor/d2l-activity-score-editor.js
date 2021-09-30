@@ -213,7 +213,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 				canEditScoreOutOf = scoringEntity && scoringEntity.canUpdateScoring;
 			} else {
 				scoreOutOf = scoringEntity && (inGrades ? scoringEntity.scoreOutOf : scoringEntity.totalPoints);
-				canEditScoreOutOf = inGrades && scoringEntity && scoringEntity.canUpdateScoring;
+				canEditScoreOutOf = inGrades;
 			}
 		} else {
 			gradeUnits = activity && activity.scoreAndGrade && activity.scoreAndGrade.gradeType;
