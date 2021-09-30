@@ -208,7 +208,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			canSeeGrades = !!associateGradeEntity;
 			isUngraded = associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NotInGradebook && !scoreOutOf;
 			canEditGradebookStatus = associateGradeEntity && associateGradeEntity.canCreateNewGrade;
-			if(this.hasActivityScore) {
+			if (this.hasActivityScore) {
 				scoreOutOf = scoringEntity && scoringEntity.scoreOutOf;
 				canEditScoreOutOf = scoringEntity && scoringEntity.canUpdateScoring;
 			} else {
