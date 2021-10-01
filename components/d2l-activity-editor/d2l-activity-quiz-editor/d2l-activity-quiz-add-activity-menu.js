@@ -81,6 +81,7 @@ class ActivityQuizAddActivityMenu extends ActivityEditorMixin(SkeletonMixin(Loca
 		}
 
 		let url;
+		let delayedResult;
 		if (type.includes('browse')) {
 			url = new D2L.LP.Web.Http.UrlLocation(`/d2l/lms/question/browse/${type}`);
 		} else if (type.includes('upload')) {
@@ -90,15 +91,32 @@ class ActivityQuizAddActivityMenu extends ActivityEditorMixin(SkeletonMixin(Loca
 			url = new D2L.LP.Web.Http.UrlLocation(`/d2l/lms/question/new/${type}`);
 		}
 
-		const delayedResult = D2L.LP.Web.UI.Legacy.MasterPages.Dialog.OpenFullscreen(
-			/*             location: */ url,
-			/*          srcCallback: */ 'SrcCallBack',
-			/*      responseDataKey: */ 'result',
-			/*              buttons: */ [],
-			/* forceTriggerOnCancel: */ false,
-			/*            titleText: */ ''
-		);
-
+		if (type.includes('upload')) {
+			delayedResult = D2L.LP.Web.UI.Legacy.MasterPages.Dialog.Open(
+				/*               opener: */ e.target,
+				/*             location: */ url,
+				/*          srcCallback: */ 'SrcCallBack',
+				/*       resizeCallback: */ 'resizeCallBack',
+				/*      responseDataKey: */ 'result',
+				/*                width: */ 600,
+				/*               height: */ 575,
+				/*            closeText: */ '',
+				/*              buttons: */ [],
+				/* forceTriggerOnCancel: */ false,
+				/*            titleText: */ '',
+				/*    byPassOpenerFocus: */ false
+			);
+		} else {
+			delayedResult = D2L.LP.Web.UI.Legacy.MasterPages.Dialog.OpenFullscreen(
+				/*             location: */ url,
+				/*          srcCallback: */ 'SrcCallBack',
+				/*      responseDataKey: */ 'result',
+				/*              buttons: */ [],
+				/* forceTriggerOnCancel: */ false,
+				/*            titleText: */ ''
+			);
+		}
+		
 		// "Save" handler
 		delayedResult.AddListener(itemDetails => this._dispatchAddItemsEvent(itemDetails));
 	}
