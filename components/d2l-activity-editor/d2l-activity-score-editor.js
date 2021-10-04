@@ -211,10 +211,10 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			isUngraded = associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NotInGradebook && !scoreOutOf;
 			canEditGradebookStatus = associateGradeEntity && associateGradeEntity.canCreateNewGrade;
 			if (this.hasActivityScore) {
-				scoreOutOf = scoringEntity && scoringEntity.scoreOutOf;
+				scoreOutOf = scoringEntity && scoringEntity.gradeMaxPoints;
 				canEditScoreOutOf = scoringEntity && scoringEntity.canUpdateScoring;
 			} else {
-				scoreOutOf = scoringEntity && (inGrades ? scoringEntity.scoreOutOf : scoringEntity.totalPoints);
+				scoreOutOf = scoringEntity && (inGrades ? scoringEntity.gradeMaxPoints : scoringEntity.scoreOutOf);
 				canEditScoreOutOf = inGrades;
 			}
 		} else {
@@ -374,8 +374,8 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
 			if (associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NewGrade) {
 				const scoring = scoringStore.get(this._scoringHref);
-				const scoreOutOf = scoring && scoring.scoreOutOf;
-				this._associateGradeSetMaxPoints(scoreOutOf);
+				const gradeMaxPoints = scoring && scoring.gradeMaxPoints;
+				this._associateGradeSetMaxPoints(gradeMaxPoints);
 				this._associateGradeSetGradeName(this.activityName);
 			}
 		}
@@ -480,10 +480,10 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			scoreAndGrade.setScoreOutOf(scoreOutOf);
 		} else {
 			const scoring = scoringStore.get(this._scoringHref);
-			if (scoreOutOf === scoring.scoreOutOf) {
+			if (scoreOutOf === scoring.gradeMaxPoints) {
 				return;
 			}
-			scoring.setScoreOutOf(scoreOutOf);
+			scoring.setGradeMaxPoints(scoreOutOf);
 		}
 
 	}
@@ -509,7 +509,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			scoreAndGrade.setScoreOutOf(null); // let's us have an empty score input as undefined is converted to 0.
 		} else {
 			const scoring = scoringStore.get(this._scoringHref);
-			scoring.setScoreOutOf(null);
+			scoring.setGradeMaxPoints(null);
 		}
 		this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 	}
@@ -529,7 +529,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			store.get(this.href).scoreAndGrade.setUngraded();
 		} else {
 			const scoring = scoringStore.get(this._scoringHref);
-			scoring.setScoreOutOf('');
+			scoring.setGradeMaxPoints('');
 		}
 		this._associateGradeSetGradebookStatus(GradebookStatus.NotInGradebook);
 	}
