@@ -42,12 +42,12 @@ export class Scoring {
 		await this.fetch();
 	}
 
-	setNewGradeName(name) {
-		this.newGradeName = name;
-	}
-
 	setGradeMaxPoints(score) {
 		this.gradeMaxPoints = score;
+	}
+
+	setNewGradeName(name) {
+		this.newGradeName = name;
 	}
 
 	_makeEntityData() {
