@@ -64,7 +64,8 @@ class ActivityEditNewGrade extends ActivityEditorMixin(LocalizeActivityEditorMix
 			schemesIsEmpty,
 			gradeCategoryCollection,
 			selectedCategoryHref,
-			isDefaultSchemeSelected
+			isDefaultSchemeSelected,
+			hasSelectboxType
 		} = associateGradeEntity;
 
 		const categoriesEmpty = gradeCategoryCollection.gradeCategories.length === 0;
@@ -90,7 +91,7 @@ class ActivityEditNewGrade extends ActivityEditorMixin(LocalizeActivityEditorMix
 			</d2l-button-subtle>
 			<d2l-button-subtle
 				?hidden="${!showChangeTypeAndSchemeButton}"
-				text="${this.localize('grades.changeNewGradeTypeAndScheme')}"
+				text="${hasSelectboxType ? this.localize('grades.changeNewGradeTypeAndScheme') : this.localize('grades.chooseNewGradeScheme')}"
 				@click="${this.showTypes}">
 			</d2l-button-subtle>
 		</div>
