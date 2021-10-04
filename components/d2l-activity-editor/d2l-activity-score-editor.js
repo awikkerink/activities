@@ -26,12 +26,13 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	static get properties() {
 		return {
 			activityName: { type: String },
-			disableResetToUngraded: { type: Boolean },
 			allowUngraded: { type: Boolean },
+			disableNotInGradebook: { type: Boolean },
+			disableResetToUngraded: { type: Boolean },
 			hasActivityScore: { type: Boolean },
-			_focusUngraded: { type: Boolean },
-			_createSelectboxGradeItemEnabled: { type: Boolean },
 			_associateGradeHref: { type: String },
+			_createSelectboxGradeItemEnabled: { type: Boolean },
+			_focusUngraded: { type: Boolean },
 			_scoringHref: { type: String }
 		};
 	}
@@ -168,6 +169,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	constructor() {
 		super(store);
 		this.saveOrder = 500;
+		this.disableNotInGradebook = false;
 		this.disableResetToUngraded = false;
 		this.allowUngraded = true;
 		this.hasActivityScore = true;
@@ -231,7 +233,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		const inGradesTerm = this._createSelectboxGradeItemEnabled ? this.localize('editor.inGradebook') : this.localize('editor.inGrades');
 		const notInGradesTerm = this._createSelectboxGradeItemEnabled ? this.localize('editor.notInGradebook') : this.localize('editor.notInGrades');
 
-		return (this.allowUngraded && isUngraded) || this.skeleton ? html`
+		return this.skeleton ? html`
 			<div id="ungraded-button-container" class="d2l-skeletize">
 				<button id="ungraded" class="d2l-input"
 					@click="${this._setGraded}"
@@ -243,7 +245,17 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			</div>
 		` : html`
 			<div id="score-info-container">
-				<div id="score-out-of-container">
+				${this.allowUngraded && isUngraded ? html`
+					<div id="ungraded-button-container" class="d2l-skeletize">
+						<button id="ungraded" class="d2l-input"
+							@click="${this._setGraded}"
+							aria-label="${this.localize('editor.addAGrade')}"
+							?disabled="${!canEditScoreOutOf}"
+						>
+							${this.localize('editor.ungraded')}
+						</button>
+					</div>
+				` : html`<div id="score-out-of-container">
 					<d2l-input-number
 						id="score-out-of"
 						label="${this._createSelectboxGradeItemEnabled ? this.localize('editor.gradeOutOf') : this.localize('editor.scoreOutOf')}"
@@ -269,7 +281,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 						</d2l-tooltip>
 					` : null}
 					<div class="d2l-body-compact d2l-grade-type-text">${gradeUnits}</div>
-				</div>
+				</div>`}
 				${canSeeGrades ? html`
 					<div id="grade-info-container">
 						<div id="divider"></div>
@@ -399,17 +411,22 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			canEditGrades = scoreAndGrade && scoreAndGrade.canEditGrades;
 		}
 
-		return inGrades ? html`
-			<d2l-menu-item
-				text="${this._createSelectboxGradeItemEnabled ? this.localize('editor.notInGradebook') : this.localize('editor.removeFromGrades')}"
-				@d2l-menu-item-select="${this._removeFromGrades}"
-			></d2l-menu-item>
-		` : canEditGrades ? html`
-			<d2l-menu-item
-				text="${this._createSelectboxGradeItemEnabled ? this.localize('editor.addToGradebook') : this.localize('editor.addToGrades')}"
-				@d2l-menu-item-select="${this._addToGrades}"
-			></d2l-menu-item>
-		` : null;
+		if (inGrades) {
+			return !this.disableNotInGradebook ? html`
+				<d2l-menu-item
+					text="${this._createSelectboxGradeItemEnabled ? this.localize('editor.notInGradebook') : this.localize('editor.removeFromGrades')}"
+					@d2l-menu-item-select="${this._removeFromGrades}"
+				></d2l-menu-item>
+			` : null;
+		} else if (canEditGrades) {
+			return html`
+				<d2l-menu-item
+					text="${this._createSelectboxGradeItemEnabled ? this.localize('editor.addToGradebook') : this.localize('editor.addToGrades')}"
+					@d2l-menu-item-select="${this._addToGrades}"
+				></d2l-menu-item>
+			`;
+		}
+		return null;
 	}
 	_addToGrades() {
 		this._prefetchGradeCandidates();

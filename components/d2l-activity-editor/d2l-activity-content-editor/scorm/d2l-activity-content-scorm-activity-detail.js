@@ -1,6 +1,7 @@
 import '../shared-components/d2l-activity-content-editor-title.js';
 import './d2l-activity-content-scorm-activity-display-options.js';
 import './d2l-activity-content-scorm-external-activity.js';
+import { shared as activityStore, sharedScoring as scoringStore } from '../../state/activity-store.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { activityContentEditorStyles } from '../shared-components/d2l-activity-content-editor-styles';
 import { ActivityEditorMixin } from '../../mixins/d2l-activity-editor-mixin.js';
@@ -65,11 +66,13 @@ class ContentScormActivityDetail extends SkeletonMixin(ErrorHandlingMixin(Locali
 		const scormActivityEntity = contentScormActivityStore.getContentScormActivity(this.href);
 
 		let title = '';
+		let entityTitle = '';
 		let subTitle = null;
 
 		if (scormActivityEntity) {
 			this.skeleton = false;
 			title = `${this.localize('content.scormActivity')}: ${scormActivityEntity.contentServiceTitle}`;
+			entityTitle = scormActivityEntity.title;
 			if (scormActivityEntity.contentServiceUpdatedAt) {
 				const date = new Date(Date.parse(scormActivityEntity.contentServiceUpdatedAt))
 					.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -93,8 +96,9 @@ class ContentScormActivityDetail extends SkeletonMixin(ErrorHandlingMixin(Locali
 					?skeleton="${this.skeleton}"
 					.href="${this.activityUsageHref}"
 					.token="${this.token}"
-					.activityName="${''}"
-					.hasActivityScore="${false}">
+					.activityName="${entityTitle}"
+					.hasActivityScore="${false}"
+					.disableNotInGradebook="${true}">
 				</d2l-activity-score-editor>
 			</div>
 
@@ -140,6 +144,15 @@ class ContentScormActivityDetail extends SkeletonMixin(ErrorHandlingMixin(Locali
 		}
 
 		await scormActivityEntity.save();
+
+		const activityUsageEntity = activityStore.get(this.activityUsageHref);
+
+		if (!activityUsageEntity) {
+			return;
+		}
+
+		const scoring = scoringStore.get(activityUsageEntity.scoringHref);
+		await scoring && scoring.fetch(true);
 	}
 
 	saveGradeOptions() {
