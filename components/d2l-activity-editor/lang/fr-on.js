@@ -169,5 +169,8 @@ export default {
 	"content.confirmDialogTitle": "Votre contenu existant sera supprimé.", // The text for the title of the replace html template confirmation dialog
 	"content.confirmDialogBody": "Êtes-vous certain de vouloir remplacer votre contenu existant par ce modèle?", // The text for the body of the replace html template confirmation dialog
 	"content.confirmDialogActionOption": "Remplacer", // The text for the confirmation action to replace content
-	"content.confirmDialogCancelOption": "Annuler" // The text for the cancel action to not replace content
+	"content.confirmDialogCancelOption": "Annuler", // The text for the cancel action to not replace content
+	"content.useEmbeddedPlayer": "Utiliser le lecteur intégré", // The text for using the embedded player
+	"content.scormActivity": "Progiciel SCORM", // The label for the name of the SCORM package
+	"content.lastEdited": "Dernière modification" // The date when the entity was last edited
 };
