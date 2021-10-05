@@ -1,7 +1,5 @@
 import './d2l-activity-rubrics-list-editor';
 import 'd2l-associations/add-associations.js';
-import 'd2l-rubric/d2l-rubric';
-import 'd2l-rubric/d2l-rubric-title';
 import 'd2l-rubric/d2l-rubric-editor.js';
 import '@brightspace-ui/core/components/dialog/dialog-fullscreen.js';
 import '@brightspace-ui/core/components/dropdown/dropdown.js';
