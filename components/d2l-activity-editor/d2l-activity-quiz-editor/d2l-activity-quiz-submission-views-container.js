@@ -23,8 +23,8 @@ class ActivityQuizSubmissionViewsContainer
 					padding-bottom: 10px;
 				}
 
-				#manage-submission-views-button {
-					padding-top: 5px;
+				.d2l-quiz-submission-views-open-dialog-button {
+					margin-top: 5px;
 				}
 			`
 		];
@@ -35,6 +35,14 @@ class ActivityQuizSubmissionViewsContainer
 	}
 
 	render() {
+		return html`
+			${this._renderAccordionView()}
+			${this._renderDialogOpener()}
+			${this._renderDialog()}
+		`;
+	}
+
+	_renderAccordionView() {
 		return html`
 			<div class="d2l-label-text">
 				${this.localize('submissionViewHeading1')}
@@ -55,30 +63,24 @@ class ActivityQuizSubmissionViewsContainer
 					id="submission-view-editor"
 					class="d2l-input-select d2l-block-select"
 					@change="">
-
 					<option value="">API Placeholder 1</option>
 					<option value="">API Placeholder 2</option>
 				</select>
 			</div>
-			<div>
-				<d2l-button-subtle
-					id="manage-submission-views-button"
-					text=${this.localize('submissionViewButtonText')}
-					@click="${this.open}"
-					h-align="text">
-				</d2l-button-subtle>
-			</div>
-			${this._renderDialog()}
 		`;
 	}
 
 	_renderDialog() {
+		const showSpinnerWhenLoading = true;
+		const width = 900;
 		return html`
 			<d2l-dialog-fullscreen
-				?opened="${this.opened}"
-				@d2l-dialog-close="${this.handleClose}"
 				id="quiz-submission-views-editor"
-				title-text=${this.localize('submissionViewButtonText')}>
+				title-text=${this.localize('submissionViewButtonText')}
+				?async="${showSpinnerWhenLoading}"
+				?opened="${this.opened}"
+				width="${width}"
+				@d2l-dialog-close="${this.handleClose}">
 				${this._renderDialogEditor()}
 				<d2l-button slot="footer" primary @click="${this.handleClose}" ?disabled="${this.isSaving}">${this.localize('submissionViewsDialogConfirmationMain')}</d2l-button>
 				<d2l-button slot="footer" data-dialog-action ?disabled="${this.isSaving}">${this.localize('submissionViewsDialogCancelMain')}</d2l-button>
@@ -87,11 +89,29 @@ class ActivityQuizSubmissionViewsContainer
 	}
 
 	_renderDialogEditor() {
+		const entity = store.get(this.dialogHref);
+		if (!entity) return html``;
+
+		const {
+			submissionViewsHref
+		} = entity || {};
+
 		return html`
 			<d2l-activity-quiz-submission-views-editor
-				href="${this.href}"
+				href="${submissionViewsHref}"
 				.token="${this.token}">
 			</d2l-activity-quiz-submission-views-editor>
+		`;
+	}
+
+	_renderDialogOpener() {
+		return html`
+			<d2l-button-subtle
+				class="d2l-quiz-submission-views-open-dialog-button"
+				text=${this.localize('submissionViewButtonText')}
+				@click="${this.openDialog}"
+				h-align="text">
+			</d2l-button-subtle>
 		`;
 	}
 }

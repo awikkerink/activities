@@ -13,6 +13,7 @@ import { labelStyles } from '@brightspace-ui/core/components/typography/styles.j
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
+import { shared as store } from './state/quiz-store';
 
 class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(LocalizeActivityQuizEditorMixin(SkeletonMixin(ActivityEditorMixin(ActivityEditorDialogMixin(MobxLitElement))))) {
 
@@ -38,6 +39,11 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 		];
 	}
 
+	constructor() {
+		super(store);
+		this.checkoutOnLoad = true;
+	}
+
 	render() {
 		return html`
 			<d2l-activity-accordion-collapse
@@ -56,7 +62,7 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 
 				<div class="d2l-editor" slot="components">
 					${this._renderSubmissionView()}
-				<div>
+				</div>
 			</d2l-activity-accordion-collapse>
 		`;
 	}
