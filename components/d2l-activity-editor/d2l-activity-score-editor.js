@@ -161,6 +161,10 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 				color: inherit;
 				font-family: inherit;
 			}
+			.d2l-blur {
+				filter: opacity(60%);
+				transition: 1s -webkit-filter linear;
+			}
 			`
 		];
 	}
@@ -276,7 +280,8 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 					<div id="grade-info-container">
 						<div id="divider"></div>
 						<d2l-dropdown ?disabled="${!canEditGradebookStatus}">
-							<button class="d2l-label-text d2l-grade-info d2l-dropdown-opener" ?disabled="${!canEditGradebookStatus || isGradebookStatusChanging}" }>
+							<button class="d2l-label-text d2l-grade-info d2l-dropdown-opener ${isGradebookStatusChanging ? 'd2l-blur' : ''}"
+								?disabled="${!canEditGradebookStatus || isGradebookStatusChanging}" }>
 								${inGrades ? html`<d2l-icon icon="tier1:grade"></d2l-icon>` : null}
 								<div>${inGrades ? inGradesTerm : notInGradesTerm}</div>
 								<d2l-icon icon="tier1:chevron-down"></d2l-icon>
