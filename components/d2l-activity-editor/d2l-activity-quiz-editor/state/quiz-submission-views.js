@@ -24,7 +24,8 @@ export class QuizSubmissionViews {
 	}
 
 	load(entity) {
-		this._entity = entity;
+        this._entity = entity;
+        this.canAddView = entity.canAddView();
 	}
 
 	async updateProperty(updateFunc) {
@@ -44,7 +45,8 @@ export class QuizSubmissionViews {
 }
 
 decorate(QuizSubmissionViews, {
-	// props
+    // props
+    canAddView: observable,
 	saving: observable,
 	// actions
 	load: action
