@@ -35,7 +35,7 @@ class ActivityQuizSubmissionViewsContainer
 
 	_renderAccordionView() {
 		const entity = store.get(this.checkedOutHref);
-		if(!entity) return html``;
+		if (!entity) return html``;
 
 		const {
 			submissionViewsHref
