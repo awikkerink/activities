@@ -3,6 +3,7 @@ import { Quiz } from './quiz.js';
 import { QuizAttempts } from './quiz-attempts.js';
 import { QuizIpRestrictions } from './quiz-ipRestrictions.js';
 import { QuizTiming } from './quiz-timing.js';
+import { QuizSubmissionViews } from './quiz-submission-views.js';
 
 export class QuizStore extends ObjectStore {
 	constructor() {
@@ -27,7 +28,14 @@ export class QuizAttemptsStore extends ObjectStore {
 	}
 }
 
+export class QuizSubmissionViewsStore extends ObjectStore {
+	constructor() {
+		super(QuizSubmissionViews);
+	}
+}
+
 export const shared = new QuizStore();
 export const sharedIpRestrictions = new QuizIpRestrictionsStore();
 export const sharedTiming = new QuizTimingStore();
 export const sharedAttempts = new QuizAttemptsStore();
+export const sharedSubmissionViews = new QuizSubmissionViewsStore();
