@@ -23,7 +23,7 @@ class ActivityQuizSubmissionViewsContainer
 					padding-bottom: 10px;
 				}
 
-				.quiz-submission-views-open-dialog-button {
+				.d2l-quiz-submission-views-open-dialog-button {
 					margin-top: 5px;
 				}
 			`
@@ -63,7 +63,6 @@ class ActivityQuizSubmissionViewsContainer
 					id="submission-view-editor"
 					class="d2l-input-select d2l-block-select"
 					@change="">
-
 					<option value="">API Placeholder 1</option>
 					<option value="">API Placeholder 2</option>
 				</select>
@@ -108,7 +107,7 @@ class ActivityQuizSubmissionViewsContainer
 	_renderDialogOpener() {
 		return html`
 			<d2l-button-subtle
-				class="quiz-submission-views-open-dialog-button"
+				class="d2l-quiz-submission-views-open-dialog-button"
 				text=${this.localize('submissionViewButtonText')}
 				@click="${this.openDialog}"
 				h-align="text">

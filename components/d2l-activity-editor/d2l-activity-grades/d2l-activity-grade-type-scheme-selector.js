@@ -62,12 +62,13 @@ class ActivityGradeTypeSchemeSelector extends ActivityEditorMixin(LocalizeActivi
 			canEditNewGrade,
 			gradeType,
 			gradeSchemeCollection,
-			selectedSchemeHref
+			selectedSchemeHref,
+			hasSelectboxType
 		} = associateGrade;
 
 		return html`
 			<div id="d2l-activity-grade-type-scheme-selector">
-				<div id="d2l-activity-grade-type-selector">
+				<div id="d2l-activity-grade-type-selector" ?hidden="${!hasSelectboxType}">
 					<d2l-input-fieldset label=${this.localize('grades.newGradeType')}>
 						<label class="d2l-input-radio-label ${!canEditNewGrade ? 'd2l-input-radio-label-disabled' : ''}">
 							<input

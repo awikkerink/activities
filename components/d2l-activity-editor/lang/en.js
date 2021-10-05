@@ -82,6 +82,11 @@ export default {
 	"editor.inGradebook": "In Gradebook", // New state of the grades field when there is a score, and an associated grade item
 	"editor.notInGradebook": "Not in Gradebook", // New state of the grades field when there is a score, but no associated grade item
 	"editor.addToGradebook": "Add to Gradebook", // New menu item for adding grade association
+	"editor.beforeStartDate": "Before start:", //Text for before start availability date type
+	"editor.afterEndDate": "After end:", //Text for after end availability date type
+	"editor.lblVisibleWithAccessRestricted": "Visible with access restricted", //Text for after end availability date type
+	"editor.lblVisibleWithSubmissionRestricted": "Visible with submission restricted", //Text for after end availability date type
+	"editor.lblHidden": "Hidden", //Text for after end availability date type
 
 	"rubrics.btnAddRubric": "Add rubric", //text for add rubric button
 	"rubrics.btnCreateNew": "Create New", //Text for create new dropdown
@@ -109,6 +114,7 @@ export default {
 	"grades.newGradeItemCategory": "Grade Category", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "No Category", // Category dropdown text for not selecting a category
 	"grades.changeNewGradeTypeAndScheme": "Change Grade Type & Scheme", // Label for change type and scheme button
+	"grades.chooseNewGradeScheme": "Choose Grade Scheme", // Label for choose grade scheme button (when there is only one type)
 	"grades.newGradeType": "Grade Type", // Label for the grade type
 	"grades.newGradeTypeNumeric": "Numeric", // Label for numeric grade type radio option
 	"grades.newGradeTypeSelectbox": "Selectbox", // Label for selectbox grade type radio option

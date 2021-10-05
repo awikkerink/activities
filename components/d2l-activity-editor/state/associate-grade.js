@@ -71,6 +71,7 @@ export class AssociateGrade {
 		this.gradebookStatus = entity.gradebookStatus();
 		this.gradeName = entity.gradeName();
 		this.maxPoints = entity.maxPoints();
+		this.hasSelectboxType = entity.hasSelectboxType();
 		this.canCreateNewGrade = entity.canCreateNewGrade();
 		this.canEditNewGrade = entity.canEditNewGrade();
 		this.selectedSchemeHref = entity.selectedSchemeHref();
@@ -129,6 +130,7 @@ decorate(AssociateGrade, {
 	canCreateNewGrade: observable,
 	canEditNewGrade: observable,
 	canGetSchemes: observable,
+	hasSelectboxType: observable,
 	gradebookStatus: observable,
 	gradeName: observable,
 	maxPoints: observable,

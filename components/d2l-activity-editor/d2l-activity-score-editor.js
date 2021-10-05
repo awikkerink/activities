@@ -208,7 +208,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			gradeUnits = this.localize('grades.gradeUnits');
 			inGrades = associateGradeEntity && associateGradeEntity.gradebookStatus !== GradebookStatus.NotInGradebook;
 			canSeeGrades = !!associateGradeEntity;
-			isUngraded = associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NotInGradebook && !scoreOutOf;
 			canEditGradebookStatus = associateGradeEntity && associateGradeEntity.canCreateNewGrade;
 			if (this.hasActivityScore) {
 				scoreOutOf = scoringEntity && scoringEntity.gradeMaxPoints;
@@ -217,6 +216,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 				scoreOutOf = scoringEntity && (inGrades ? scoringEntity.gradeMaxPoints : scoringEntity.scoreOutOf);
 				canEditScoreOutOf = inGrades;
 			}
+			isUngraded = associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NotInGradebook && !scoreOutOf;
 		} else {
 			gradeUnits = activity && activity.scoreAndGrade && activity.scoreAndGrade.gradeType;
 			inGrades = activity && activity.scoreAndGrade && activity.scoreAndGrade.inGrades;
@@ -370,9 +370,11 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	}
 
 	async save() {
+		let isNewGrade = false;
 		if (this._createSelectboxGradeItemEnabled) {
 			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
-			if (associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NewGrade) {
+			isNewGrade = associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NewGrade;
+			if (isNewGrade) {
 				const scoring = scoringStore.get(this._scoringHref);
 				const gradeMaxPoints = scoring && scoring.gradeMaxPoints;
 				this._associateGradeSetMaxPoints(gradeMaxPoints);
@@ -380,10 +382,14 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			}
 		}
 
-		await super.save();
+		await super.save(this._createSelectboxGradeItemEnabled);
 
 		if (this._createSelectboxGradeItemEnabled) {
-			const scoring = scoringStore.get(this._scoringHref);
+			await associateGradeStore.get(this._associateGradeHref).fetch(true);
+			let scoring = scoringStore.get(this._scoringHref);
+			if (isNewGrade) {
+				scoring = await scoring.fetch(true);
+			}
 			await scoring.save();
 		}
 	}
