@@ -114,6 +114,7 @@ export default {
 	"grades.newGradeItemCategory": "Grade Category", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "No Category", // Category dropdown text for not selecting a category
 	"grades.changeNewGradeTypeAndScheme": "Change Grade Type & Scheme", // Label for change type and scheme button
+	"grades.chooseNewGradeScheme": "Choose Grade Scheme", // Label for choose grade scheme button (when there is only one type)
 	"grades.newGradeType": "Grade Type", // Label for the grade type
 	"grades.newGradeTypeNumeric": "Numeric", // Label for numeric grade type radio option
 	"grades.newGradeTypeSelectbox": "Selectbox", // Label for selectbox grade type radio option
