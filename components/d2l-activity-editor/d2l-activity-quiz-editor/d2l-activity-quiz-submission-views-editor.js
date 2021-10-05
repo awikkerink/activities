@@ -4,7 +4,7 @@ import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { shared as store } from './state/quiz-store';
 
-class ActivityQuizSubmissionViewsDialog
+class ActivityQuizSubmissionViewsEditor
 	extends ActivityEditorDialogMixin(LocalizeActivityQuizEditorMixin(MobxLitElement)) {
 
 	constructor() {
@@ -23,17 +23,19 @@ class ActivityQuizSubmissionViewsDialog
 	}
 
 	_renderHelpDialog() {
+		const showSpinnerWhenLoading = true;
+		const width = 900;
 		return html`
 			<d2l-dialog
+				?async="${showSpinnerWhenLoading}"
 				?opened="${this.opened}"
+				width="${width}"
 				@d2l-dialog-close="${this.handleClose}"
 				title-text="${this.localize('submissionViewsHelpDialogTitle')}">
-
 				<div>
 					<p>${this.localize('submissionViewsHelpDialogParagraph1')}</p>
 					<p>${this.localize('submissionViewsHelpDialogParagraph2')}</p>
 				</div>
-
 				<d2l-button
 					data-dialog-action
 					slot="footer"
@@ -46,6 +48,6 @@ class ActivityQuizSubmissionViewsDialog
 }
 
 customElements.define(
-	'd2l-activity-quiz-submission-views-dialog',
-	ActivityQuizSubmissionViewsDialog
+	'd2l-activity-quiz-submission-views-editor',
+	ActivityQuizSubmissionViewsEditor
 );
