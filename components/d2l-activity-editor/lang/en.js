@@ -82,6 +82,11 @@ export default {
 	"editor.inGradebook": "In Gradebook", // New state of the grades field when there is a score, and an associated grade item
 	"editor.notInGradebook": "Not in Gradebook", // New state of the grades field when there is a score, but no associated grade item
 	"editor.addToGradebook": "Add to Gradebook", // New menu item for adding grade association
+	"editor.beforeStartDate": "Before start:", //Text for before start availability date type
+	"editor.afterEndDate": "After end:", //Text for after end availability date type
+	"editor.lblVisibleWithAccessRestricted": "Visible with access restricted", //Text for after end availability date type
+	"editor.lblVisibleWithSubmissionRestricted": "Visible with submission restricted", //Text for after end availability date type
+	"editor.lblHidden": "Hidden", //Text for after end availability date type
 
 	"rubrics.btnAddRubric": "Add rubric", //text for add rubric button
 	"rubrics.btnCreateNew": "Create New", //Text for create new dropdown
