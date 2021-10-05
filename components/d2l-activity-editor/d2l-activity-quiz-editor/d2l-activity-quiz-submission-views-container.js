@@ -1,5 +1,5 @@
 import '@brightspace-ui/core/components/dialog/dialog.js';
-import './d2l-activity-quiz-submission-views-dialog.js';
+import './d2l-activity-quiz-submission-views-editor.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorWorkingCopyDialogMixin } from '../mixins/d2l-activity-editor-working-copy-dialog-mixin';
 import { checkboxStyles } from '../styles/checkbox-styles.js';
@@ -39,8 +39,7 @@ class ActivityQuizSubmissionViewsContainer
 			<div class="d2l-label-text">
 				${this.localize('submissionViewHeading1')}
 			</div>
-
-			<d2l-input-checkbox 
+			<d2l-input-checkbox
 				?checked=""
 				@change=""
 				ariaLabel="${this.localize('submissionViewCheckboxLabel')}"
@@ -51,7 +50,6 @@ class ActivityQuizSubmissionViewsContainer
 			<div class="d2l-label-text">
 				${this.localize('submissionViewHeading2')}
 			</div>
-
 			<div>
 				<select
 					id="submission-view-editor"
@@ -62,15 +60,14 @@ class ActivityQuizSubmissionViewsContainer
 					<option value="">API Placeholder 2</option>
 				</select>
 			</div>
-			
 			<div>
 				<d2l-button-subtle
 					id="manage-submission-views-button"
 					text=${this.localize('submissionViewButtonText')}
-					@click="${this.open}" 
+					@click="${this.open}"
 					h-align="text">
 				</d2l-button-subtle>
-			</div> 
+			</div>
 			${this._renderDialog()}
 		`;
 	}
@@ -80,17 +77,21 @@ class ActivityQuizSubmissionViewsContainer
 			<d2l-dialog-fullscreen
 				?opened="${this.opened}"
 				@d2l-dialog-close="${this.handleClose}"
-				id="quiz-submission-views-dialog"
+				id="quiz-submission-views-editor"
 				title-text=${this.localize('submissionViewButtonText')}>
-
-				<d2l-activity-quiz-submission-views-dialog
-					href="${this.href}"
-					.token="${this.token}">
-				</d2l-activity-quiz-submission-views-dialog>
-
+				${this._renderDialogEditor()}
 				<d2l-button slot="footer" primary @click="${this.handleClose}" ?disabled="${this.isSaving}">${this.localize('submissionViewsDialogConfirmationMain')}</d2l-button>
 				<d2l-button slot="footer" data-dialog-action ?disabled="${this.isSaving}">${this.localize('submissionViewsDialogCancelMain')}</d2l-button>
 			</d2l-dialog-fullscreen>
+		`;
+	}
+
+	_renderDialogEditor() {
+		return html`
+			<d2l-activity-quiz-submission-views-editor
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-quiz-submission-views-editor>
 		`;
 	}
 }
