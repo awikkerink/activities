@@ -199,6 +199,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		let scoreOutOfError;
 		let canEditScoreOutOf;
 		let canEditGradebookStatus;
+		let isGradebookStatusChanging;
 
 		if (this._createSelectboxGradeItemEnabled) {
 			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
@@ -208,6 +209,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			canSeeGrades = !!associateGradeEntity;
 			isUngraded = associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NotInGradebook && !scoreOutOf;
 			canEditGradebookStatus = associateGradeEntity && associateGradeEntity.canCreateNewGrade;
+			isGradebookStatusChanging = associateGradeEntity && associateGradeEntity.gradebookStatusChanging;
 			if (this.hasActivityScore) {
 				scoreOutOf = scoringEntity && scoringEntity.scoreOutOf;
 				canEditScoreOutOf = scoringEntity && scoringEntity.canUpdateScoring;
@@ -274,7 +276,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 					<div id="grade-info-container">
 						<div id="divider"></div>
 						<d2l-dropdown ?disabled="${!canEditGradebookStatus}">
-							<button class="d2l-label-text d2l-grade-info d2l-dropdown-opener" ?disabled="${!canEditGradebookStatus}">
+							<button class="d2l-label-text d2l-grade-info d2l-dropdown-opener" ?disabled="${!canEditGradebookStatus || isGradebookStatusChanging}" }>
 								${inGrades ? html`<d2l-icon icon="tier1:grade"></d2l-icon>` : null}
 								<div>${inGrades ? inGradesTerm : notInGradesTerm}</div>
 								<d2l-icon icon="tier1:chevron-down"></d2l-icon>
