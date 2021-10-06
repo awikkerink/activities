@@ -246,30 +246,31 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		` : html`
 			<div id="score-info-container">
 				<div id="score-out-of-container">
-					<d2l-input-number
-						id="score-out-of"
-						label="${this._createSelectboxGradeItemEnabled ? this.localize('editor.gradeOutOf') : this.localize('editor.scoreOutOf')}"
-						label-hidden
-						input-width="4rem"
-						min=0.01
-						max=9999999999
-						required
-						value="${scoreOutOf}"
-						@change="${this._onScoreOutOfChanged}"
-						@blur="${this._onScoreOutOfChanged}"
-						?disabled="${!canEditScoreOutOf}"
-					></d2l-input-number>
-					${scoreOutOfError ? html`
-						<d2l-tooltip
-							id="score-tooltip"
-							for="score-out-of"
-							position="bottom"
-							showing
-							align="start"
-						>
-							${scoreOutOfError ? html`<span>${this.localize(`editor.${scoreOutOfError}`)}</span>` : null}
-						</d2l-tooltip>
-					` : null}
+					${canEditScoreOutOf ? html`
+						<d2l-input-number
+							id="score-out-of"
+							label="${this._createSelectboxGradeItemEnabled ? this.localize('editor.gradeOutOf') : this.localize('editor.scoreOutOf')}"
+							label-hidden
+							input-width="4rem"
+							min=0.01
+							max=9999999999
+							required
+							value="${scoreOutOf}"
+							@change="${this._onScoreOutOfChanged}"
+							@blur="${this._onScoreOutOfChanged}"
+						></d2l-input-number>
+						${scoreOutOfError ? html`
+							<d2l-tooltip
+								id="score-tooltip"
+								for="score-out-of"
+								position="bottom"
+								showing
+								align="start"
+							>
+								${scoreOutOfError ? html`<span>${this.localize(`editor.${scoreOutOfError}`)}</span>` : null}
+							</d2l-tooltip>
+						` : null}
+					` : html`<div>${scoreOutOf}</div>`}
 					<div class="d2l-body-compact d2l-grade-type-text">${gradeUnits}</div>
 				</div>
 				${canSeeGrades ? html`
