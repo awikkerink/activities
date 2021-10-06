@@ -121,6 +121,7 @@ class ActivityQuizIpRestrictionsEditor extends ActivityEditorMixin(ActivityEdito
 
 		return entity.ipRestrictions.map((restriction, index) => {
 			const { start, end } = restriction;
+			const indexForLabel = index + 1;
 
 			return html`
 				<tr>
@@ -129,12 +130,16 @@ class ActivityQuizIpRestrictionsEditor extends ActivityEditorMixin(ActivityEdito
 							class="d2l-ip-input"
 							@input="${this._generateHandler(this._handleChange, index)}"
 							value="${start || ''}"
+							label="${this.localize('ipRestrictionsTableStartRangeLabel', { index: indexForLabel })}"
+							label-hidden
 							name="start">
 						</d2l-input-text>
 					</td>
 					<td>
 						<d2l-input-text
 							class="d2l-ip-input"
+							label="${this.localize('ipRestrictionsTableEndRangeLabel', { index: indexForLabel })}"
+							label-hidden
 							@input="${this._generateHandler(this._handleChange, index)}"
 							value="${end || ''}"
 							name="end">
@@ -143,7 +148,7 @@ class ActivityQuizIpRestrictionsEditor extends ActivityEditorMixin(ActivityEdito
 					<td>
 						<d2l-button-icon
 							icon="d2l-tier1:delete"
-							aria-label="delete"
+							text="${this.localize('ipRestrictionsTableDeleteRangeLabel')}"
 							@click="${this._generateHandler(this._deleteIp, index)}">
 						</d2l-button-icon>
 					</td>
