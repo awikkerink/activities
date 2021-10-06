@@ -56,6 +56,7 @@ export class Quiz extends WorkingCopy {
 		this.footerRichTextEditorConfig = entity.footerRichTextEditorConfig();
 		this.originalFooterIsEmpty = entity.originalFooterIsEmpty();
 		this.ipRestrictionsHref = entity.ipRestrictionsHref();
+		this.submissionViewsHref = entity.submissionViewsHref();
 
 		const types = await entity.activityTypes();
 		runInAction(() => {
@@ -173,6 +174,7 @@ decorate(Quiz, {
 	footerRichTextEditorConfig: observable,
 	originalFooterIsEmpty: observable,
 	activityTypes: observable,
+	submissionViewsHref: observable,
 	// actions
 	load: action,
 	setName: action,

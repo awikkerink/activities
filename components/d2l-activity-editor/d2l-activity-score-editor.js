@@ -26,12 +26,13 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	static get properties() {
 		return {
 			activityName: { type: String },
-			disableResetToUngraded: { type: Boolean },
 			allowUngraded: { type: Boolean },
+			disableNotInGradebook: { type: Boolean },
+			disableResetToUngraded: { type: Boolean },
 			hasActivityScore: { type: Boolean },
-			_focusUngraded: { type: Boolean },
-			_createSelectboxGradeItemEnabled: { type: Boolean },
 			_associateGradeHref: { type: String },
+			_createSelectboxGradeItemEnabled: { type: Boolean },
+			_focusUngraded: { type: Boolean },
 			_scoringHref: { type: String }
 		};
 	}
@@ -172,6 +173,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	constructor() {
 		super(store);
 		this.saveOrder = 500;
+		this.disableNotInGradebook = false;
 		this.disableResetToUngraded = false;
 		this.allowUngraded = true;
 		this.hasActivityScore = true;
@@ -211,16 +213,16 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			gradeUnits = this.localize('grades.gradeUnits');
 			inGrades = associateGradeEntity && associateGradeEntity.gradebookStatus !== GradebookStatus.NotInGradebook;
 			canSeeGrades = !!associateGradeEntity;
-			isUngraded = associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NotInGradebook && !scoreOutOf;
 			canEditGradebookStatus = associateGradeEntity && associateGradeEntity.canCreateNewGrade;
 			isGradebookStatusChanging = associateGradeEntity && associateGradeEntity.gradebookStatusChanging;
 			if (this.hasActivityScore) {
-				scoreOutOf = scoringEntity && scoringEntity.scoreOutOf;
+				scoreOutOf = scoringEntity && scoringEntity.gradeMaxPoints;
 				canEditScoreOutOf = scoringEntity && scoringEntity.canUpdateScoring;
 			} else {
-				scoreOutOf = scoringEntity && (inGrades ? scoringEntity.scoreOutOf : scoringEntity.totalPoints);
-				canEditScoreOutOf = inGrades && scoringEntity && scoringEntity.canUpdateScoring;
+				scoreOutOf = scoringEntity && (inGrades ? scoringEntity.gradeMaxPoints : scoringEntity.scoreOutOf);
+				canEditScoreOutOf = inGrades || this.disableNotInGradebook;
 			}
+			isUngraded = associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NotInGradebook && !scoreOutOf;
 		} else {
 			gradeUnits = activity && activity.scoreAndGrade && activity.scoreAndGrade.gradeType;
 			inGrades = activity && activity.scoreAndGrade && activity.scoreAndGrade.inGrades;
@@ -250,30 +252,31 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		` : html`
 			<div id="score-info-container">
 				<div id="score-out-of-container">
-					<d2l-input-number
-						id="score-out-of"
-						label="${this._createSelectboxGradeItemEnabled ? this.localize('editor.gradeOutOf') : this.localize('editor.scoreOutOf')}"
-						label-hidden
-						input-width="4rem"
-						min=0.01
-						max=9999999999
-						required
-						value="${scoreOutOf}"
-						@change="${this._onScoreOutOfChanged}"
-						@blur="${this._onScoreOutOfChanged}"
-						?disabled="${!canEditScoreOutOf}"
-					></d2l-input-number>
-					${scoreOutOfError ? html`
-						<d2l-tooltip
-							id="score-tooltip"
-							for="score-out-of"
-							position="bottom"
-							showing
-							align="start"
-						>
-							${scoreOutOfError ? html`<span>${this.localize(`editor.${scoreOutOfError}`)}</span>` : null}
-						</d2l-tooltip>
-					` : null}
+					${canEditScoreOutOf ? html`
+						<d2l-input-number
+							id="score-out-of"
+							label="${this._createSelectboxGradeItemEnabled ? this.localize('editor.gradeOutOf') : this.localize('editor.scoreOutOf')}"
+							label-hidden
+							input-width="4rem"
+							min=0.01
+							max=9999999999
+							required
+							value="${scoreOutOf}"
+							@change="${this._onScoreOutOfChanged}"
+							@blur="${this._onScoreOutOfChanged}"
+						></d2l-input-number>
+						${scoreOutOfError ? html`
+							<d2l-tooltip
+								id="score-tooltip"
+								for="score-out-of"
+								position="bottom"
+								showing
+								align="start"
+							>
+								${scoreOutOfError ? html`<span>${this.localize(`editor.${scoreOutOfError}`)}</span>` : null}
+							</d2l-tooltip>
+						` : null}
+					` : html`<div>${scoreOutOf}</div>`}
 					<div class="d2l-body-compact d2l-grade-type-text">${gradeUnits}</div>
 				</div>
 				${canSeeGrades ? html`
@@ -365,20 +368,26 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	}
 
 	async save() {
+		let isNewGrade = false;
 		if (this._createSelectboxGradeItemEnabled) {
 			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
-			if (associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NewGrade) {
+			isNewGrade = associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NewGrade;
+			if (isNewGrade) {
 				const scoring = scoringStore.get(this._scoringHref);
-				const scoreOutOf = scoring && scoring.scoreOutOf;
-				this._associateGradeSetMaxPoints(scoreOutOf);
+				const gradeMaxPoints = scoring && scoring.gradeMaxPoints;
+				this._associateGradeSetMaxPoints(gradeMaxPoints);
 				this._associateGradeSetGradeName(this.activityName);
 			}
 		}
 
-		await super.save();
+		await super.save(this._createSelectboxGradeItemEnabled);
 
 		if (this._createSelectboxGradeItemEnabled) {
-			const scoring = scoringStore.get(this._scoringHref);
+			await associateGradeStore.get(this._associateGradeHref).fetch(true);
+			let scoring = scoringStore.get(this._scoringHref);
+			if (isNewGrade) {
+				scoring = await scoring.fetch(true);
+			}
 			await scoring.save();
 		}
 	}
@@ -406,17 +415,22 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			canEditGrades = scoreAndGrade && scoreAndGrade.canEditGrades;
 		}
 
-		return inGrades ? html`
-			<d2l-menu-item
-				text="${this._createSelectboxGradeItemEnabled ? this.localize('editor.notInGradebook') : this.localize('editor.removeFromGrades')}"
-				@d2l-menu-item-select="${this._removeFromGrades}"
-			></d2l-menu-item>
-		` : canEditGrades ? html`
-			<d2l-menu-item
-				text="${this._createSelectboxGradeItemEnabled ? this.localize('editor.addToGradebook') : this.localize('editor.addToGrades')}"
-				@d2l-menu-item-select="${this._addToGrades}"
-			></d2l-menu-item>
-		` : null;
+		if (inGrades) {
+			return !this.disableNotInGradebook ? html`
+				<d2l-menu-item
+					text="${this._createSelectboxGradeItemEnabled ? this.localize('editor.notInGradebook') : this.localize('editor.removeFromGrades')}"
+					@d2l-menu-item-select="${this._removeFromGrades}"
+				></d2l-menu-item>
+			` : null;
+		} else if (canEditGrades) {
+			return html`
+				<d2l-menu-item
+					text="${this._createSelectboxGradeItemEnabled ? this.localize('editor.addToGradebook') : this.localize('editor.addToGrades')}"
+					@d2l-menu-item-select="${this._addToGrades}"
+				></d2l-menu-item>
+			`;
+		}
+		return null;
 	}
 	_addToGrades() {
 		this._prefetchGradeCandidates();
@@ -470,10 +484,10 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			scoreAndGrade.setScoreOutOf(scoreOutOf);
 		} else {
 			const scoring = scoringStore.get(this._scoringHref);
-			if (scoreOutOf === scoring.scoreOutOf) {
+			if (scoreOutOf === scoring.gradeMaxPoints) {
 				return;
 			}
-			scoring.setScoreOutOf(scoreOutOf);
+			scoring.setGradeMaxPoints(scoreOutOf);
 		}
 
 	}
@@ -499,7 +513,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			scoreAndGrade.setScoreOutOf(null); // let's us have an empty score input as undefined is converted to 0.
 		} else {
 			const scoring = scoringStore.get(this._scoringHref);
-			scoring.setScoreOutOf(null);
+			scoring.setGradeMaxPoints(null);
 		}
 		this._associateGradeSetGradebookStatus(GradebookStatus.NewGrade);
 	}
@@ -519,7 +533,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			store.get(this.href).scoreAndGrade.setUngraded();
 		} else {
 			const scoring = scoringStore.get(this._scoringHref);
-			scoring.setScoreOutOf('');
+			scoring.setGradeMaxPoints('');
 		}
 		this._associateGradeSetGradebookStatus(GradebookStatus.NotInGradebook);
 	}

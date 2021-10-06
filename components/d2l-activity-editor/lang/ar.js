@@ -68,7 +68,7 @@ export default {
 	"editor.saveSuccessful": "تم الحفظ بنجاح", // alert message after a successful save
 	"editor.specialAccessRestrictedText": "يمكن فقط للمستخدمين الذين يتمتعون بإمكانية وصول خاص رؤية هذا المجلد", // restricted special access description
 	"editor.specialAccessNotRestrictedText": "يمكن للمستخدمين إجراء عملية الإرسال خارج تواريخ التوفّر الاعتيادية", // not restricted special access description
-	"editor.specialAccessCount": "يتمتع {count, plural, =1 {مستخدم واحد} other ‏{{count} من المستخدمين}} بإمكانية وصول خاص", // Label for number of special access users
+	"editor.specialAccessCount": "يتمتع {count, plural, =1 {مستخدم واحد} other {{count} من المستخدمين}} بإمكانية وصول خاص", // Label for number of special access users
 	"editor.noUsersWithSpecialAccess": "ما من مستخدمين", // text label when there are no users with special access
 	"editor.specialAccessDialogTitle": "إدارة إمكانية الوصول الخاص", // Dialog title
 	"editor.specialAccessHidden": "تم الإخفاء بواسطة الوصول الخاص", // Warning label that the activity is restricted but is being hidden from all users by special access rules

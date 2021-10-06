@@ -41,6 +41,7 @@ describe('Quiz', function() {
 				attemptsHref: () => 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/attempts?workingCopyId=4321',
 				timingHref: () => 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234',
 				ipRestrictionsHref: () => 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/37/ip',
+				submissionViewsHref: () => 'https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/37/submissionviews',
 				canEditPassword: () => true,
 				password: () => 'hello',
 				canPreviewQuiz: () => true,
@@ -93,6 +94,7 @@ describe('Quiz', function() {
 		expect(quiz.previewHref).to.equal('http://test.desire2learn.d2l/d2l/lms/quizzing/user/quiz_summary.d2l?ou=6606&qi=46&isprv=1&fromQB=1&bp=1');
 		expect(quiz.timingHref).to.equal('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/22/timing?workingCopyId=1234');
 		expect(quiz.ipRestrictionsHref).to.equal('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/37/ip');
+		expect(quiz.submissionViewsHref).to.equal('https://afe99802-9130-4320-a770-8d138b941e74.quizzes.api.proddev.d2l/6606/quizzes/37/submissionviews');
 		expect(quiz.canPreviewQuiz).to.equal(true);
 		expect(quiz.description).to.equal('This is a description');
 		expect(quiz.descriptionIsDisplayed).to.equal(true);
