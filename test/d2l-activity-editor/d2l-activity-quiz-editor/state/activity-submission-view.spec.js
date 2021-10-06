@@ -32,7 +32,7 @@ describe('Activity Submission View', function() {
 		beforeEach(() => {
 			sirenEntity = sinon.stub();
 
-			QuizSubmissionViewsEntity.mockImplementation(() => {
+			QuizSubmissionViewEntity.mockImplementation(() => {
 				return defaultEntityMock();
 			});
 
@@ -59,7 +59,7 @@ describe('Activity Submission View', function() {
 		});
 
 		it('fetches readonly entity', async() => {
-			const submissionView = new QuizSubmissionViews('http://1', 'token');
+			const submissionView = new QuizSubmissionView('http://1', 'token');
 			await submissionView.fetch();
 
 			expect(submissionView.isPrimaryView).to.be.true;
