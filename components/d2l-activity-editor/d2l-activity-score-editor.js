@@ -214,7 +214,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 				canEditScoreOutOf = scoringEntity && scoringEntity.canUpdateScoring;
 			} else {
 				scoreOutOf = scoringEntity && (inGrades ? scoringEntity.gradeMaxPoints : scoringEntity.scoreOutOf);
-				canEditScoreOutOf = inGrades;
+				canEditScoreOutOf = inGrades || this.disableNotInGradebook;
 			}
 			isUngraded = associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NotInGradebook && !scoreOutOf;
 		} else {
@@ -233,7 +233,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		const inGradesTerm = this._createSelectboxGradeItemEnabled ? this.localize('editor.inGradebook') : this.localize('editor.inGrades');
 		const notInGradesTerm = this._createSelectboxGradeItemEnabled ? this.localize('editor.notInGradebook') : this.localize('editor.notInGrades');
 
-		return this.skeleton ? html`
+		return (this.allowUngraded && isUngraded) || this.skeleton ? html`
 			<div id="ungraded-button-container" class="d2l-skeletize">
 				<button id="ungraded" class="d2l-input"
 					@click="${this._setGraded}"
@@ -245,17 +245,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			</div>
 		` : html`
 			<div id="score-info-container">
-				${this.allowUngraded && isUngraded ? html`
-					<div id="ungraded-button-container" class="d2l-skeletize">
-						<button id="ungraded" class="d2l-input"
-							@click="${this._setGraded}"
-							aria-label="${this.localize('editor.addAGrade')}"
-							?disabled="${!canEditScoreOutOf}"
-						>
-							${this.localize('editor.ungraded')}
-						</button>
-					</div>
-				` : html`<div id="score-out-of-container">
+				<div id="score-out-of-container">
 					<d2l-input-number
 						id="score-out-of"
 						label="${this._createSelectboxGradeItemEnabled ? this.localize('editor.gradeOutOf') : this.localize('editor.scoreOutOf')}"
@@ -281,7 +271,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 						</d2l-tooltip>
 					` : null}
 					<div class="d2l-body-compact d2l-grade-type-text">${gradeUnits}</div>
-				</div>`}
+				</div>
 				${canSeeGrades ? html`
 					<div id="grade-info-container">
 						<div id="divider"></div>
