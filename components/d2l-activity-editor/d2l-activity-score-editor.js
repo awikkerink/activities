@@ -163,8 +163,8 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 				font-family: inherit;
 			}
 			.d2l-blur {
-				filter: opacity(50%);
-				transition: filter 1s ease-out;
+				filter: opacity(60%);
+				transition: filter 1s linear;
 			}
 			`
 		];
