@@ -69,6 +69,7 @@ export class AssociateGrade {
 	async load(entity) {
 		this._entity = entity;
 		this.gradebookStatus = entity.gradebookStatus();
+		this.gradebookStatusChanging = false;
 		this.gradeName = entity.gradeName();
 		this.maxPoints = entity.maxPoints();
 		this.hasSelectboxType = entity.hasSelectboxType();
@@ -92,7 +93,9 @@ export class AssociateGrade {
 
 	async setGradebookStatus(newStatus) {
 		this.gradebookStatus = newStatus;
+		this.gradebookStatusChanging = true;
 		await this._updateProperty(() => this._entity.setGradebookStatus(newStatus));
+		this.gradebookStatusChanging = false;
 	}
 
 	setGradeMaxPoints(maxPoints) {
@@ -132,6 +135,7 @@ decorate(AssociateGrade, {
 	canGetSchemes: observable,
 	hasSelectboxType: observable,
 	gradebookStatus: observable,
+	gradebookStatusChanging: observable,
 	gradeName: observable,
 	maxPoints: observable,
 	gradeType: observable,
