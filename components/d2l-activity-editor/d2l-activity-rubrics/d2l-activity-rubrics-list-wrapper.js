@@ -24,10 +24,11 @@ class ActivityRubricsListWrapper
 		}
 		return html`
 			<d2l-activity-rubrics-list-container
-				.href="${entity.associationsHref}"
+				.href="${entity.directAssociationsHref}"
 				.token="${this.token}"
 				.activityUsageHref=${this.href}
-				.assignmentHref=${this.assignmentHref}>
+				.assignmentHref=${this.assignmentHref}
+				.associationsHref=${entity.associationsHref}>
 			</d2l-activity-rubrics-list-container>
 		`;
 	}

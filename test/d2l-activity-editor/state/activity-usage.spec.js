@@ -43,6 +43,7 @@ describe('Activity Usage', function() {
 			gradeCandidatesHref: () => '',
 			conditionsHref: () => undefined,
 			canEditReleaseConditions: () => true,
+			getRubricAssociationsHref: () => undefined,
 			getDirectRubricAssociationsHref: () => undefined,
 			newGradeCandidatesHref: () => undefined,
 			isNewGradeCandidate: () => false,
