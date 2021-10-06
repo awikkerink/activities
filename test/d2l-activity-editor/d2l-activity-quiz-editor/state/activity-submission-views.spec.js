@@ -10,13 +10,15 @@ describe('Activity Submission Views', function() {
 
 	function defaultEntityMock() {
 		return {
-			canAddView: () => true
+			canAddView: () => true,
+			linkedSubmissionViews: () => null
 		};
 	}
 
 	function readOnlyEntityMock() {
 		return {
-			canAddView: () => false
+			canAddView: () => false,
+			linkedSubmissionViews: () => null
 		};
 	}
 
@@ -28,7 +30,7 @@ describe('Activity Submission Views', function() {
 
 	let sirenEntity;
 
-	describe('Submission View', () => {
+	describe('Submission Views', () => {
 		beforeEach(() => {
 			sirenEntity = sinon.stub();
 

@@ -1,5 +1,6 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { fetchEntity } from '../../state/fetch-entity.js';
+import { QuizSubmissionView } from './quiz-submission-view.js';
 import { QuizSubmissionViewsEntity } from 'siren-sdk/src/activities/quizzes/submissionViews/QuizSubmissionViewsEntity.js';
 
 configureMobx({ enforceActions: 'observed' });
@@ -18,29 +19,33 @@ export class QuizSubmissionViews {
 			const entity = new QuizSubmissionViewsEntity(sirenEntity, this.token, {
 				remove: () => { },
 			});
-			this.load(entity);
+			await this.load(entity);
 		}
 		return this;
 	}
 
-	load(entity) {
+	async load(entity, bypassCache) {
 		this._entity = entity;
 		this.canAddView = entity.canAddView();
+		await Promise.all([
+			this._loadSubmissionViews(entity, bypassCache)
+		]);
 	}
 
-	async updateProperty(updateFunc) {
-		this.saving = updateFunc();
-		const entity = await this.saving;
-		this.saving = null;
-		// The siren-sdk function called to perform an action first checks that the entity has permission to do so.
-		// If the entity lacks permission, the function returns `undefined`, otherwise it returns a reconstructed siren-sdk submission views entity.
-		// If `undefined` is returned, it likely means the UI is out of sync with the entity state, and disallowed actions can be performed.
-		// In this case, we should attempt to reload the MobX object, so that the UI state is in sync again.
-		if (!entity) {
-			this.fetch();
+	async _loadSubmissionViews(entity, bypassCache) {
+		if (!bypassCache && this.submissionViews) return;
+		const linkedViewEntities = entity.linkedSubmissionViews();
+		if (!linkedViewEntities || linkedViewEntities.length === 0) {
 			return;
 		}
-		this._entity = entity;
+
+		const fetchLinkedViewsPromises = [];
+		linkedViewEntities.forEach(linkedEntity => {
+			const submissionView = new QuizSubmissionView(linkedEntity.href, this.token);
+			fetchLinkedViewsPromises.push(submissionView.fetch(bypassCache));
+		});
+		const views = await Promise.all(fetchLinkedViewsPromises);
+		this.submissionViews = views;
 	}
 }
 
@@ -48,6 +53,7 @@ decorate(QuizSubmissionViews, {
 	// props
 	canAddView: observable,
 	saving: observable,
+	submissionViews: observable,
 	// actions
 	load: action
 });

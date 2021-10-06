@@ -21,6 +21,7 @@ class ActivityQuizSubmissionViewsEditor
 
 		return html`
 			${this._renderDescriptionText()}
+			${this._temporarilyRenderEverything(entity)}
 		`;
 	}
 
@@ -56,6 +57,18 @@ class ActivityQuizSubmissionViewsEditor
 					${this.localize('submissionViewsHelpDialogConfirmation')}
 				</d2l-button>
 			</d2l-dialog>
+		`;
+	}
+
+	_temporarilyRenderEverything(entity) {
+		const submissionViews = entity && entity.submissionViews;
+		if (!submissionViews) return html``;
+
+		return html`
+			${submissionViews.map(view => {
+				const { isPrimaryView } = view;
+				return html`<p>isPrimaryView: ${isPrimaryView}</p>`;
+			})}
 		`;
 	}
 }
