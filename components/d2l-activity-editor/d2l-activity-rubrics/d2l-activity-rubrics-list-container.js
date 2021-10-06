@@ -27,7 +27,8 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 		return {
 			_newlyCreatedPotentialAssociationHref: { type: String },
 			activityUsageHref: { type: String },
-			assignmentHref: { type: String }
+			assignmentHref: { type: String },
+			associationsHref: { type: String }
 		};
 	}
 
@@ -79,7 +80,7 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 
 			${this._renderAddRubricDropdown(entity)}
 
-			${this._renderDefaultScoringRubric(entity)}
+			${this._renderDefaultScoringRubric()}
 
 			<d2l-dialog-fullscreen
 				id="create-new-association-dialog"
@@ -110,6 +111,17 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 			</d2l-dialog>
 		`;
 	}
+
+	updated(changedProperties) {
+		super.updated(changedProperties);
+
+		if ((changedProperties.has('associationsHref') || changedProperties.has('token')) &&
+			this.associationsHref && this.token) {
+
+			associationStore.fetch(this.associationsHref, this.token);
+		}
+	}
+
 	_attachRubric() {
 		const entity = associationStore.get(this.href);
 
@@ -221,8 +233,8 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 		`;
 
 	}
-	_renderDefaultScoringRubric(entity) {
-
+	_renderDefaultScoringRubric() {
+		const entity = associationStore.get(this.associationsHref);
 		const assignment = assignmentStore.get(this.assignmentHref);
 		if (!entity || !assignment) {
 			return html``;

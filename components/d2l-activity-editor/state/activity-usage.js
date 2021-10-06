@@ -44,7 +44,8 @@ export class ActivityUsage extends WorkingCopy {
 		this.isError = false;
 		this.dates = new ActivityDates(entity);
 		this.scoreAndGrade = new ActivityScoreGrade(this.token);
-		this.associationsHref = entity.getDirectRubricAssociationsHref();
+		this.associationsHref = entity.getRubricAssociationsHref();
+		this.directAssociationsHref = entity.getDirectRubricAssociationsHref();
 		this.specializationHref = entity.specializationHref();
 		this.associateGradeHref = entity.associateGradeHref();
 		this.scoringHref = entity.scoringHref();
@@ -214,6 +215,7 @@ decorate(ActivityUsage, {
 	scoreAndGrade: observable,
 	dates: observable,
 	associationsHref: observable,
+	directAssociationsHref: observable,
 	alignmentsHref: observable,
 	specializationHref: observable,
 	canUpdateAlignments: observable,
