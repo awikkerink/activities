@@ -23,7 +23,7 @@ export class QuizSubmissionViews {
 		}
 		return this;
 	}
-	
+
 	getPrimarySubmissionView() {
 		return this.submissionViews.find(view => view.isPrimaryView);
 	}
