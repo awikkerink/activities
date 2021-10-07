@@ -1,4 +1,6 @@
 import '@brightspace-ui/core/components/alert/alert.js';
+import '@brightspace-ui/core/components/button/button-icon.js';
+import '@brightspace-ui/core/components/dialog/dialog.js';
 import '@brightspace-ui/core/components/inputs/input-text.js';
 import '@brightspace-hmc/foundation-components/components/activity/editor/d2l-activity-editor-main.js';
 import 'd2l-tooltip/d2l-tooltip';
@@ -12,6 +14,7 @@ import './d2l-activity-quiz-question-editor.js';
 import './d2l-activity-quiz-editor-action-bar.js';
 
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
+import { ActivityEditorDialogMixin } from '../mixins/d2l-activity-editor-dialog-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { ActivityQuizEditorTelemetryMixin } from '../d2l-activity-quiz-editor/mixins/d2l-activity-quiz-editor-telemetry-mixin.js';
 import { css } from 'lit-element/lit-element.js';
@@ -26,7 +29,7 @@ import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton
 
 import { shared as store } from './state/quiz-store.js';
 
-class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMixin(AsyncContainerMixin(SkeletonMixin(LocalizeActivityQuizEditorMixin(RtlMixin(MobxLitElement)))))) {
+class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMixin(AsyncContainerMixin(SkeletonMixin(LocalizeActivityQuizEditorMixin(RtlMixin(ActivityEditorDialogMixin(MobxLitElement))))))) {
 
 	static get properties() {
 		return {
@@ -158,7 +161,13 @@ class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMi
 				<div id="score-container" class="d2l-editor-layout-section">
 					<div class="d2l-activity-label-container d2l-label-text d2l-skeletize">
 						${this.localize('gradeOutOf')}
+						<d2l-button-icon
+							text="${this.localize('gradeOutOfAccessibleHelpText')}"
+							icon="tier1:help"
+							@click="${this.open}">
+						</d2l-button-icon>
 					</div>
+					${this._renderDialog()}
 					<d2l-activity-score-editor
 						?skeleton="${this.skeleton}"
 						.href="${this.activityUsageHref}"
@@ -268,6 +277,26 @@ class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMi
 		}
 
 		window.open(quiz.previewHref);
+	}
+
+	_renderDialog() {
+		return html`
+			<d2l-dialog
+				?opened="${this.opened}"
+				@d2l-dialog-close="${this.handleClose}"
+				title-text="${this.localize('gradeOutOfHelpDialogTitle')}">
+					<div>
+						<p>${this.localize('gradeOutOfHelpDialogParagraph1')}</p>
+						<p>${this.localize('gradeOutOfHelpDialogParagraph2')}</p>
+					</div>
+					<d2l-button
+						data-dialog-action="done"
+						slot="footer"
+						primary>
+						${this.localize('gradeOutOfHelpDialogConfirmationText')}
+					</d2l-button>
+			</d2l-dialog>
+		`;
 	}
 
 	_saveDescriptionOnChange(e) {
