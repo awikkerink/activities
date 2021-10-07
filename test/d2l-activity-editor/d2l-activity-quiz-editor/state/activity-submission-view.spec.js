@@ -45,7 +45,7 @@ describe('Activity Submission View', function() {
 					'value': 'correct-questions',
 					'selected': false
 				}
-			  ]
+			]
 		};
 	}
 
