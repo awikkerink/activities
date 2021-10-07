@@ -10,13 +10,70 @@ describe('Activity Submission View', function() {
 
 	function defaultEntityMock() {
 		return {
-			isPrimaryView: () => true
+			canUpdateShowStandards: () => true,
+			canUpdateShowAttemptScore: () => true,
+			canUpdateShowStatsClassAverage: () => true,
+			canUpdateShowStatsScoreDistribution: () => true,
+			isPrimaryView: () => true,
+			showStandards: () => true,
+			showAttemptScore: () => true,
+			showStatsClassAverage: () => true,
+			showStatsScoreDistribution: () => true,
+			canUpdateMessage: () => true,
+			messageText: () => 'hello',
+			messageHtml: () => '<p>hello</p>',
+			canUpdateHideShowQuestions: () => true,
+			hideQuestions: () => true,
+			canUpdateShowCorrectAnswers: () => true,
+			canUpdateShowLearnerResponses: () => true,
+			canUpdateShowQuestions: () => true,
+			canUpdateShowQuestionScore: () => true,
+			showCorrectAnswers: () => true,
+			showLearnerResponses: () => true,
+			showQuestionScore: () => true,
+			showQuestionsType: () => 'all-questions',
+			showQuestionsOptions: () => [
+				{
+					'value': 'all-questions',
+					'selected': true
+				},
+				{
+					'value': 'incorrect-questions',
+					'selected': false
+				},
+				{
+					'value': 'correct-questions',
+					'selected': false
+				}
+			]
 		};
 	}
 
 	function readOnlyEntityMock() {
 		return {
-			isPrimaryView: () => true
+			canUpdateShowStandards: () => false,
+			canUpdateShowAttemptScore: () => false,
+			canUpdateShowStatsClassAverage: () => false,
+			canUpdateShowStatsScoreDistribution: () => false,
+			isPrimaryView: () => true,
+			showStandards: () => true,
+			showAttemptScore: () => true,
+			showStatsClassAverage: () => true,
+			showStatsScoreDistribution: () => true,
+			canUpdateMessage: () => false,
+			messageText: () => 'hello',
+			messageHtml: () => '<p>hello</p>',
+			canUpdateHideShowQuestions: () => false,
+			hideQuestions: () => true,
+			canUpdateShowCorrectAnswers: () => false,
+			canUpdateShowLearnerResponses: () => false,
+			canUpdateShowQuestions: () => false,
+			canUpdateShowQuestionScore: () => false,
+			showCorrectAnswers: () => true,
+			showLearnerResponses: () => true,
+			showQuestionScore: () => true,
+			showQuestionsType: () => 'all-questions',
+			showQuestionsOptions: () => undefined
 		};
 	}
 
@@ -43,7 +100,29 @@ describe('Activity Submission View', function() {
 			const submissionView = new QuizSubmissionView('http://1', 'token');
 			await submissionView.fetch();
 
+			expect(submissionView.canUpdateShowStandards).to.be.true;
+			expect(submissionView.canUpdateShowAttemptScore).to.be.true;
+			expect(submissionView.canUpdateShowStatsClassAverage).to.be.true;
+			expect(submissionView.canUpdateShowStatsScoreDistribution).to.be.true;
 			expect(submissionView.isPrimaryView).to.be.true;
+			expect(submissionView.showStandards).to.be.true;
+			expect(submissionView.showAttemptScore).to.be.true;
+			expect(submissionView.showStatsClassAverage).to.be.true;
+			expect(submissionView.showStatsScoreDistribution).to.be.true;
+			expect(submissionView.canUpdateMessage).to.be.true;
+			expect(submissionView.messageText).to.equal('hello');
+			expect(submissionView.messageHtml).to.equal('<p>hello</p>');
+			expect(submissionView.canUpdateHideShowQuestions).to.be.true;
+			expect(submissionView.hideQuestions).to.be.true;
+			expect(submissionView.canUpdateShowCorrectAnswers).to.be.true;
+			expect(submissionView.canUpdateShowLearnerResponses).to.be.true;
+			expect(submissionView.canUpdateShowQuestions).to.be.true;
+			expect(submissionView.canUpdateShowQuestionScore).to.be.true;
+			expect(submissionView.showCorrectAnswers).to.be.true;
+			expect(submissionView.showLearnerResponses).to.be.true;
+			expect(submissionView.showQuestionScore).to.be.true;
+			expect(submissionView.showQuestionsType).to.equal('all-questions');
+			expect(submissionView.showQuestionsOptions.length).to.equal(3);
 		});
 	});
 
@@ -62,7 +141,29 @@ describe('Activity Submission View', function() {
 			const submissionView = new QuizSubmissionView('http://1', 'token');
 			await submissionView.fetch();
 
+			expect(submissionView.canUpdateShowStandards).to.be.false;
+			expect(submissionView.canUpdateShowAttemptScore).to.be.false;
+			expect(submissionView.canUpdateShowStatsClassAverage).to.be.false;
+			expect(submissionView.canUpdateShowStatsScoreDistribution).to.be.false;
 			expect(submissionView.isPrimaryView).to.be.true;
+			expect(submissionView.showStandards).to.be.true;
+			expect(submissionView.showAttemptScore).to.be.true;
+			expect(submissionView.showStatsClassAverage).to.be.true;
+			expect(submissionView.showStatsScoreDistribution).to.be.true;
+			expect(submissionView.canUpdateMessage).to.be.false;
+			expect(submissionView.messageText).to.equal('hello');
+			expect(submissionView.messageHtml).to.equal('<p>hello</p>');
+			expect(submissionView.canUpdateHideShowQuestions).to.be.false;
+			expect(submissionView.hideQuestions).to.be.true;
+			expect(submissionView.canUpdateShowCorrectAnswers).to.be.false;
+			expect(submissionView.canUpdateShowLearnerResponses).to.be.false;
+			expect(submissionView.canUpdateShowQuestions).to.be.false;
+			expect(submissionView.canUpdateShowQuestionScore).to.be.false;
+			expect(submissionView.showCorrectAnswers).to.be.true;
+			expect(submissionView.showLearnerResponses).to.be.true;
+			expect(submissionView.showQuestionScore).to.be.true;
+			expect(submissionView.showQuestionsType).to.equal('all-questions');
+			expect(submissionView.showQuestionsOptions).to.be.undefined;
 		});
 	});
 });
