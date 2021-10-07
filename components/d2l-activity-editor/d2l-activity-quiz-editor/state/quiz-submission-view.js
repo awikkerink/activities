@@ -5,6 +5,14 @@ import { QuizSubmissionViewEntity } from 'siren-sdk/src/activities/quizzes/submi
 
 configureMobx({ enforceActions: 'observed' });
 
+const accordionDropdownValues = {
+	noQuestions: 'no-questions',
+	incorrectQuestionsWithCorrectAnswers: 'incorrect-questions-with-correct-answers',
+	incorrectQuestionsWithoutCorrectAnswers: 'incorrect-questions-without-correct-answers',
+	allQuestionsWithCorrectAnswers: 'all-questions-with-correct-answers',
+	allQuestionsWithoutCorrectAnswers: 'all-questions-without-correct-answers'
+};
+
 export class QuizSubmissionView {
 	constructor(href, token) {
 		this.href = href;
@@ -69,27 +77,27 @@ export class QuizSubmissionView {
 	_generateAccordionDropdownOptions() {
 		const options = [
 			{
-				value: JSON.stringify({'hideQuestions': true}),
+				value: accordionDropdownValues.noQuestions,
 				selected: this.hideQuestions,
 				langtermTitle: 'submissionViewsAccordionDropdownNoQuestions'
 			},
 			{
-				value: JSON.stringify({'showQuestionsType': Classes.quizzes.submissionView.showQuestions.incorrectQuestions, 'showCorrectAnswers': true}),
+				value: accordionDropdownValues.incorrectQuestionsWithCorrectAnswers,
 				selected: !this.hideQuestions && this.showQuestionsType === Classes.quizzes.submissionView.showQuestions.incorrectQuestions && this.showCorrectAnswers,
 				langtermTitle: 'submissionViewsAccordionDropdownIncorrectQuestionsWithCorrectAnswers'
 			},
 			{
-				value: JSON.stringify({'showQuestionsType': Classes.quizzes.submissionView.showQuestions.incorrectQuestions, 'showCorrectAnswers': false}),
+				value: accordionDropdownValues.incorrectQuestionsWithoutCorrectAnswers,
 				selected: !this.hideQuestions && this.showQuestionsType === Classes.quizzes.submissionView.showQuestions.incorrectQuestions && !this.showCorrectAnswers,
 				langtermTitle: 'submissionViewsAccordionDropdownIncorrectQuestionsWithoutCorrectAnswers'
 			},
 			{
-				value: JSON.stringify({'showQuestionsType': Classes.quizzes.submissionView.showQuestions.allQuestions, 'showCorrectAnswers': true}),
+				value: accordionDropdownValues.allQuestionsWithCorrectAnswers,
 				selected: !this.hideQuestions && this.showQuestionsType === Classes.quizzes.submissionView.showQuestions.allQuestions && this.showCorrectAnswers,
 				langtermTitle: 'submissionViewsAccordionDropdownAllQuestionsWithCorrectAnswers'
 			},
 			{
-				value: JSON.stringify({'showQuestionsType': Classes.quizzes.submissionView.showQuestions.allQuestions, 'showCorrectAnswers': false}),
+				value: accordionDropdownValues.allQuestionsWithoutCorrectAnswers,
 				selected: !this.hideQuestions && this.showQuestionsType === Classes.quizzes.submissionView.showQuestions.allQuestions && !this.showCorrectAnswers,
 				langtermTitle: 'submissionViewsAccordionDropdownAllQuestionsWithoutCorrectAnswers'
 			}
