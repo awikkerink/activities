@@ -1,4 +1,5 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
+import { Classes } from 'siren-sdk/src/hypermedia-constants';
 import { fetchEntity } from '../../state/fetch-entity.js';
 import { QuizSubmissionViewEntity } from 'siren-sdk/src/activities/quizzes/submissionViews/QuizSubmissionViewEntity.js';
 
@@ -47,6 +48,7 @@ export class QuizSubmissionView {
 		this.showQuestionScore = entity.showQuestionScore();
 		this.showQuestionsType = entity.showQuestionsType();
 		this.showQuestionsOptions = entity.showQuestionsOptions();
+		this.accordionDropdownOptions = this._generateAccordionDropdownOptions();
 	}
 
 	async updateProperty(updateFunc) {
@@ -62,6 +64,37 @@ export class QuizSubmissionView {
 			return;
 		}
 		this._entity = entity;
+	}
+
+	_generateAccordionDropdownOptions() {
+		const options = [
+			{
+				value: JSON.stringify({'hideQuestions': true}),
+				selected: this.hideQuestions,
+				langtermTitle: 'submissionViewsAccordionDropdownNoQuestions'
+			},
+			{
+				value: JSON.stringify({'showQuestionsType': Classes.quizzes.submissionView.showQuestions.incorrectQuestions, 'showCorrectAnswers': true}),
+				selected: !this.hideQuestions && this.showQuestionsType === Classes.quizzes.submissionView.showQuestions.incorrectQuestions && this.showCorrectAnswers,
+				langtermTitle: 'submissionViewsAccordionDropdownIncorrectQuestionsWithCorrectAnswers'
+			},
+			{
+				value: JSON.stringify({'showQuestionsType': Classes.quizzes.submissionView.showQuestions.incorrectQuestions, 'showCorrectAnswers': false}),
+				selected: !this.hideQuestions && this.showQuestionsType === Classes.quizzes.submissionView.showQuestions.incorrectQuestions && !this.showCorrectAnswers,
+				langtermTitle: 'submissionViewsAccordionDropdownIncorrectQuestionsWithoutCorrectAnswers'
+			},
+			{
+				value: JSON.stringify({'showQuestionsType': Classes.quizzes.submissionView.showQuestions.allQuestions, 'showCorrectAnswers': true}),
+				selected: !this.hideQuestions && this.showQuestionsType === Classes.quizzes.submissionView.showQuestions.allQuestions && this.showCorrectAnswers,
+				langtermTitle: 'submissionViewsAccordionDropdownAllQuestionsWithCorrectAnswers'
+			},
+			{
+				value: JSON.stringify({'showQuestionsType': Classes.quizzes.submissionView.showQuestions.allQuestions, 'showCorrectAnswers': false}),
+				selected: !this.hideQuestions && this.showQuestionsType === Classes.quizzes.submissionView.showQuestions.allQuestions && !this.showCorrectAnswers,
+				langtermTitle: 'submissionViewsAccordionDropdownAllQuestionsWithoutCorrectAnswers'
+			}
+		];
+		return options;
 	}
 }
 
@@ -90,6 +123,7 @@ decorate(QuizSubmissionView, {
 	showQuestionScore: observable,
 	showQuestionsType: observable,
 	showQuestionsOptions: observable,
+	accordionDropdownOptions: observable,
 	// actions
 	load: action
 });
