@@ -154,6 +154,7 @@ export default {
 	"submissionViewsAccordionDropdownIncorrectQuestionsWithoutCorrectAnswers": "Incorrect questions only, without correct answers", // Option in dropdown to decide what to display to learner.
 	"submissionViewsAccordionDropdownAllQuestionsWithCorrectAnswers": "All questions, with correct answers", // Option in dropdown to decide what to display to learner.
 	"submissionViewsAccordionDropdownAllQuestionsWithoutCorrectAnswers": "All questions, without correct answers", // Option in dropdown to decide what to display to learner.
-	"primaryView": "Primary View" // Label
+	"primaryView": "Primary View", // Label
+	"additonalViewComesIntoEffect": "Additional view comes into effect" // Label
 };
 

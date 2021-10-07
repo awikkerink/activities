@@ -33,8 +33,8 @@ class ActivityQuizSubmissionViewsAccordionEditor
 					padding-bottom: 10px;
 				}
 				#submission-view-editor {
-					width: 100%;
 					margin-bottom: 1rem;
+					width: 100%;
 				}
 			`
 		];
@@ -128,9 +128,11 @@ class ActivityQuizSubmissionViewsAccordionEditor
 
 	_renderTile(view) {
 		// WIP
-		let title = 'title';
+		let title;
 		if (view.isPrimaryView) {
 			title = this.localize('primaryView');
+		} else {
+			title = this.localize('additonalViewComesIntoEffect');
 		}
 		return html`
 			<div class="d2l-activity-quiz-submission-views-accordion-editor-tile">
