@@ -1,8 +1,17 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
+import { Classes } from 'siren-sdk/src/hypermedia-constants';
 import { fetchEntity } from '../../state/fetch-entity.js';
 import { QuizSubmissionViewEntity } from 'siren-sdk/src/activities/quizzes/submissionViews/QuizSubmissionViewEntity.js';
 
 configureMobx({ enforceActions: 'observed' });
+
+const accordionDropdownValues = {
+	noQuestions: 'no-questions',
+	incorrectQuestionsWithCorrectAnswers: 'incorrect-questions-with-correct-answers',
+	incorrectQuestionsWithoutCorrectAnswers: 'incorrect-questions-without-correct-answers',
+	allQuestionsWithCorrectAnswers: 'all-questions-with-correct-answers',
+	allQuestionsWithoutCorrectAnswers: 'all-questions-without-correct-answers'
+};
 
 export class QuizSubmissionView {
 	constructor(href, token) {
@@ -47,6 +56,7 @@ export class QuizSubmissionView {
 		this.showQuestionScore = entity.showQuestionScore();
 		this.showQuestionsType = entity.showQuestionsType();
 		this.showQuestionsOptions = entity.showQuestionsOptions();
+		this.accordionDropdownOptions = this._generateAccordionDropdownOptions();
 	}
 
 	async updateProperty(updateFunc) {
@@ -62,6 +72,37 @@ export class QuizSubmissionView {
 			return;
 		}
 		this._entity = entity;
+	}
+
+	_generateAccordionDropdownOptions() {
+		const options = [
+			{
+				value: accordionDropdownValues.noQuestions,
+				selected: this.hideQuestions,
+				langtermTitle: 'submissionViewsAccordionDropdownNoQuestions'
+			},
+			{
+				value: accordionDropdownValues.incorrectQuestionsWithCorrectAnswers,
+				selected: !this.hideQuestions && this.showQuestionsType === Classes.quizzes.submissionView.showQuestions.incorrectQuestions && this.showCorrectAnswers,
+				langtermTitle: 'submissionViewsAccordionDropdownIncorrectQuestionsWithCorrectAnswers'
+			},
+			{
+				value: accordionDropdownValues.incorrectQuestionsWithoutCorrectAnswers,
+				selected: !this.hideQuestions && this.showQuestionsType === Classes.quizzes.submissionView.showQuestions.incorrectQuestions && !this.showCorrectAnswers,
+				langtermTitle: 'submissionViewsAccordionDropdownIncorrectQuestionsWithoutCorrectAnswers'
+			},
+			{
+				value: accordionDropdownValues.allQuestionsWithCorrectAnswers,
+				selected: !this.hideQuestions && this.showQuestionsType === Classes.quizzes.submissionView.showQuestions.allQuestions && this.showCorrectAnswers,
+				langtermTitle: 'submissionViewsAccordionDropdownAllQuestionsWithCorrectAnswers'
+			},
+			{
+				value: accordionDropdownValues.allQuestionsWithoutCorrectAnswers,
+				selected: !this.hideQuestions && this.showQuestionsType === Classes.quizzes.submissionView.showQuestions.allQuestions && !this.showCorrectAnswers,
+				langtermTitle: 'submissionViewsAccordionDropdownAllQuestionsWithoutCorrectAnswers'
+			}
+		];
+		return options;
 	}
 }
 
@@ -90,6 +131,7 @@ decorate(QuizSubmissionView, {
 	showQuestionScore: observable,
 	showQuestionsType: observable,
 	showQuestionsOptions: observable,
+	accordionDropdownOptions: observable,
 	// actions
 	load: action
 });
