@@ -128,7 +128,7 @@ class ActivityQuizSubmissionViewsAccordionEditor
 
 	_renderTile(view) {
 		// WIP
-		let title = "title";
+		let title = 'title';
 		if (view.isPrimaryView) {
 			title = this.localize('primaryView');
 		}
