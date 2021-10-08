@@ -73,7 +73,7 @@ export class QuizSubmissionView {
 
 		let newShowQuestionsValue;
 		let newShowCorrectAnswersValue;
-		switch(value) {
+		switch (value) {
 			case accordionDropdownValues.incorrectQuestionsWithCorrectAnswers:
 				newShowQuestionsValue = Classes.quizzes.submissionView.showQuestions.incorrectQuestions;
 				newShowCorrectAnswersValue = true;

@@ -24,13 +24,13 @@ export class QuizSubmissionViews {
 		return this;
 	}
 
+	getPrimarySubmissionView() {
+		return this.submissionViews.find(view => view.isPrimaryView);
+	}
+
 	getSubmissionViewByHref(href) {
 		if (!this.submissionViews) return;
 		return this.submissionViews.find(view => view.href === href);
-	}
-
-	getPrimarySubmissionView() {
-		return this.submissionViews.find(view => view.isPrimaryView);
 	}
 
 	async load(entity, bypassCache) {
