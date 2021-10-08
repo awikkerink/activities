@@ -1,3 +1,4 @@
+import './d2l-activity-quiz-submission-views-dialog-card.js';
 import { ActivityEditorDialogMixin } from '../mixins/d2l-activity-editor-dialog-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { html } from 'lit-element/lit-element.js';
@@ -64,9 +65,10 @@ class ActivityQuizSubmissionViewsEditor
 		const submissionViews = entity && entity.submissionViews;
 		if (!submissionViews) return html``;
 
-		// since this is temporary anyways, leaving it all on one line to get around linter
 		return html`
-			${submissionViews.map(view => { const { isPrimaryView } = view; return html`<p>isPrimaryView: ${isPrimaryView}</p>`; })}
+			${submissionViews.map(view => {
+				return html`<d2l-activity-quiz-submission-views-dialog-card href="${this.href}" view-href="${view.href}" .token="${this.token}"></d2l-activity-quiz-submission-views-dialog-card>`;
+			})}
 		`;
 	}
 }
