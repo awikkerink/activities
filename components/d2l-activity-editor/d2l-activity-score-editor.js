@@ -219,7 +219,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 				scoreOutOf = scoringEntity && scoringEntity.gradeMaxPoints;
 				canEditScoreOutOf = scoringEntity && scoringEntity.canUpdateScoring;
 			} else {
-				scoreOutOf = scoringEntity && (inGrades ? scoringEntity.gradeMaxPoints : scoringEntity.scoreOutOf);
+				scoreOutOf = scoringEntity && (inGrades && scoringEntity.gradeMaxPoints ? scoringEntity.gradeMaxPoints : scoringEntity.scoreOutOf);
 				canEditScoreOutOf = inGrades || this.disableNotInGradebook;
 			}
 			gradeUnits = scoreOutOf === 1 ? this.localize('grades.gradeUnitsSingular') : this.localize('grades.gradeUnits');
@@ -512,6 +512,10 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	_removeFromGrades() {
 		store.get(this.href).scoreAndGrade.removeFromGrades();
 		this._associateGradeSetGradebookStatus(GradebookStatus.NotInGradebook);
+		if (this._createSelectboxGradeItemEnabled && !this.hasActivityScore) {
+			const scoring = scoringStore.get(this._scoringHref);
+			scoring.setGradeMaxPoints('');
+		}
 	}
 
 	_setGraded() {
