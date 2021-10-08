@@ -111,7 +111,7 @@ export class QuizSubmissionView {
 			this.fetch();
 			return;
 		}
-		this._entity = entity;
+		this.load(entity);
 	}
 
 	_generateAccordionDropdownOptions() {
