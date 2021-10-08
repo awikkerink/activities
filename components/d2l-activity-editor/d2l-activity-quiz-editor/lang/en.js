@@ -158,6 +158,11 @@ export default {
 	"submissionViewsAccordionDropdownAllQuestionsWithCorrectAnswers": "All questions, with correct answers", // Option in dropdown to decide what to display to learner.
 	"submissionViewsAccordionDropdownAllQuestionsWithoutCorrectAnswers": "All questions, without correct answers", // Option in dropdown to decide what to display to learner.
 	"primaryView": "Primary View", // Label
-	"additonalViewComesIntoEffect": "Additional view comes into effect" // Label
+	"additonalViewComesIntoEffect": "Additional view comes into effect", // Label
+	"gradeOutOfAccessibleHelpText": "Get help on - Grade Out Of", // accessible help text for gradeOutOf question mark button
+	"gradeOutOfHelpDialogTitle": "Information: Grade Out Of", // title that appears when the gradeOutOf help dialog is rendered
+	"gradeOutOfHelpDialogConfirmationText": "OK", // text that appears on the gradeOutOf help dialog confirmation button
+	"gradeOutOfHelpDialogParagraph1": "If the quiz is \"Not in Gradebook\", Grade Out Of reflects the total points of the questions.", // content for paragraph 1 of gradeOutOf help dialog
+	"gradeOutOfHelpDialogParagraph2": "If the quiz is \"In Gradebook\", Grade Out Of is the maximum points or weight in the Grades tool.", // content for paragraph 2 of gradeOutOf help dialog
 };
 
