@@ -59,6 +59,46 @@ export class QuizSubmissionView {
 		this.accordionDropdownOptions = this._generateAccordionDropdownOptions();
 	}
 
+	setShowAttemptScore(value) {
+		this.showAttemptScore = value;
+		this.updateProperty(() => this._entity.setShowAttemptScore(value));
+	}
+
+	setShowQuestionsAndCorrectAnswers(value) {
+		if (value === accordionDropdownValues.noQuestions) {
+			this.hideQuestions = true;
+			this.updateProperty(() => this._entity.setHideShowQuestions(true));
+			return;
+		}
+
+		let newShowQuestionsValue;
+		let newShowCorrectAnswersValue;
+		switch (value) {
+			case accordionDropdownValues.incorrectQuestionsWithCorrectAnswers:
+				newShowQuestionsValue = Classes.quizzes.submissionView.showQuestions.incorrectQuestions;
+				newShowCorrectAnswersValue = true;
+				break;
+			case accordionDropdownValues.incorrectQuestionsWithoutCorrectAnswers:
+				newShowQuestionsValue = Classes.quizzes.submissionView.showQuestions.incorrectQuestions;
+				newShowCorrectAnswersValue = false;
+				break;
+			case accordionDropdownValues.allQuestionsWithCorrectAnswers:
+				newShowQuestionsValue = Classes.quizzes.submissionView.showQuestions.allQuestions;
+				newShowCorrectAnswersValue = true;
+				break;
+			case accordionDropdownValues.allQuestionsWithoutCorrectAnswers:
+				newShowQuestionsValue = Classes.quizzes.submissionView.showQuestions.allQuestions;
+				newShowCorrectAnswersValue = false;
+				break;
+			default:
+				return;
+		}
+
+		this.showQuestionsType = newShowQuestionsValue;
+		this.showCorrectAnswers = newShowCorrectAnswersValue;
+		this.updateProperty(() => this._entity.setShowQuestionsAndCorrectAnswers(newShowQuestionsValue, newShowCorrectAnswersValue));
+	}
+
 	async updateProperty(updateFunc) {
 		this.saving = updateFunc();
 		const entity = await this.saving;
@@ -71,7 +111,7 @@ export class QuizSubmissionView {
 			this.fetch();
 			return;
 		}
-		this._entity = entity;
+		this.load(entity);
 	}
 
 	_generateAccordionDropdownOptions() {
@@ -133,5 +173,7 @@ decorate(QuizSubmissionView, {
 	showQuestionsOptions: observable,
 	accordionDropdownOptions: observable,
 	// actions
-	load: action
+	load: action,
+	setShowAttemptScore: action,
+	setShowQuestionsAndCorrectAnswers: action
 });

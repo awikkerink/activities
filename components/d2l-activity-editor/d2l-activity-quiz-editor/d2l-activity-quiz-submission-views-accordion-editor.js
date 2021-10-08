@@ -73,7 +73,7 @@ class ActivityQuizSubmissionViewsAccordionEditor
 					id="submission-view-editor"
 					class="d2l-input-select d2l-block-select"
 					@change="${this._onDropdownChange}"
-					?disabled="${canEditDropdown}">
+					?disabled="${!canEditDropdown}">
 					${accordionDropdownOptions.map(option => html`
 						<option value="${option.value}" ?selected="${option.selected}">${this.localize(option.langtermTitle)}</option>
 					`)};
@@ -83,13 +83,15 @@ class ActivityQuizSubmissionViewsAccordionEditor
 	}
 
 	_onDropdownChange(e) {
-		//e && e.target.value
-		return e;
+		const entity = store.get(this.href);
+		const primaryView = entity && entity.getPrimarySubmissionView();
+		primaryView && primaryView.setShowQuestionsAndCorrectAnswers(e.target.value);
 	}
 
 	_onShowAttemptScoreChange(e) {
-		//e && e.target.checked
-		return e;
+		const entity = store.get(this.href);
+		const primaryView = entity && entity.getPrimarySubmissionView();
+		primaryView && primaryView.setShowAttemptScore(e.target.checked);
 	}
 
 	_renderPrimaryView(view) {
