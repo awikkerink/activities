@@ -93,9 +93,13 @@ export class AssociateGrade {
 
 	async setGradebookStatus(newStatus) {
 		this.gradebookStatus = newStatus;
-		this.gradebookStatusChanging = true;
+		runInAction(() => {
+			this.gradebookStatusChanging = true;
+		});
 		await this._updateProperty(() => this._entity.setGradebookStatus(newStatus));
-		this.gradebookStatusChanging = false;
+		runInAction(() => {
+			this.gradebookStatusChanging = false;
+		});
 	}
 
 	setGradeMaxPoints(maxPoints) {
