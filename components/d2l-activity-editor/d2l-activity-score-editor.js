@@ -210,7 +210,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		if (this._createSelectboxGradeItemEnabled) {
 			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
 			const scoringEntity = scoringStore.get(this._scoringHref);
-			gradeUnits = this.localize('grades.gradeUnits');
 			inGrades = associateGradeEntity && associateGradeEntity.gradebookStatus !== GradebookStatus.NotInGradebook;
 			canSeeGrades = !!associateGradeEntity;
 			canEditGradebookStatus = associateGradeEntity && associateGradeEntity.canCreateNewGrade;
@@ -222,6 +221,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 				scoreOutOf = scoringEntity && (inGrades ? scoringEntity.gradeMaxPoints : scoringEntity.scoreOutOf);
 				canEditScoreOutOf = inGrades || this.disableNotInGradebook;
 			}
+			gradeUnits = scoreOutOf === 1 ? this.localize('grades.gradeUnitsSingular') : this.localize('grades.gradeUnits');
 			isUngraded = associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NotInGradebook && !scoreOutOf;
 		} else {
 			gradeUnits = activity && activity.scoreAndGrade && activity.scoreAndGrade.gradeType;
