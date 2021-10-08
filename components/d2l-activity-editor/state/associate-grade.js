@@ -93,9 +93,7 @@ export class AssociateGrade {
 
 	async setGradebookStatus(newStatus) {
 		this.gradebookStatus = newStatus;
-		runInAction(() => {
-			this.gradebookStatusChanging = true;
-		});
+		this.gradebookStatusChanging = true;
 		await this._updateProperty(() => this._entity.setGradebookStatus(newStatus));
 		runInAction(() => {
 			this.gradebookStatusChanging = false;
