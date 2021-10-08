@@ -24,9 +24,9 @@ export class QuizSubmissionViews {
 		return this;
 	}
 
-	getSubmissionView(href) {
+	getSubmissionViewByHref(href) {
 		if (!this.submissionViews) return;
-		return this.submissionViews.find(view => view.href = href);
+		return this.submissionViews.find(view => view.href === href);
 	}
 
 	getPrimarySubmissionView() {
