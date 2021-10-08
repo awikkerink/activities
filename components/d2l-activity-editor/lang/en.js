@@ -110,6 +110,7 @@ export default {
 	"grades.weight": "Weight: {weight}", // Text label for displaying weight of a grade
 	"grades.gradeItem": "Grade Item", //ARIA label for grade-item picker when linking an activity to an existing grade item
 	"grades.gradeUnits": "points", // unit label for GradeOutOf value (e.g. 10 points)
+	"grades.gradeUnitsSingular": "point", // unit label for GradeOutOf value when value is 1
 	"grades.chooseNewGradeItemCategory": "Choose Grade Category", // Label for add category button
 	"grades.newGradeItemCategory": "Grade Category", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "No Category", // Category dropdown text for not selecting a category
