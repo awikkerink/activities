@@ -173,6 +173,13 @@ export default {
 	"submissionViewDialogCardSubmissionViewAnswerHeader" : "Answers", // Submission view dialog card, answers heading. 
 	"submissionViewDialogCardSubmissionViewResponseHeader": "Learner's Responses", // Submission view dialog card, learners responses heading. 
 	"submissionViewDialogCardButtonOptionEditView": "Edit View", // Submission view dialog card, OK button text.
-	"submissionViewDialogCardButtonOptionDeleteView": "Delete View" // Submission view dialog card, Cancel button text.
+	"submissionViewDialogCardButtonOptionDeleteView": "Delete View", // Submission view dialog card, Cancel button text.
+	"gradeOutOfAccessibleHelpText": "Get help on - Grade Out Of", // accessible help text for gradeOutOf question mark button
+	"gradeOutOfHelpDialogTitle": "Information: Grade Out Of", // title that appears when the gradeOutOf help dialog is rendered
+	"gradeOutOfHelpDialogConfirmationText": "OK", // text that appears on the gradeOutOf help dialog confirmation button
+	"gradeOutOfHelpDialogParagraph1": "If the quiz is \"Not in Gradebook\", Grade Out Of reflects the total points of the questions.", // content for paragraph 1 of gradeOutOf help dialog
+	"gradeOutOfHelpDialogParagraph2": "If the quiz is \"In Gradebook\", Grade Out Of is the maximum points or weight in the Grades tool.", // content for paragraph 2 of gradeOutOf help dialog
+	"submissionViewsAccordionSummary" : "{count, plural, =1 {1 result display} other {{count} result displays}}", // number of submission views summary shown in collapsed accordion
+
 };
 

@@ -97,7 +97,7 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 	}
 	async save(createSelectboxGradeItemEnabled) {
 		if (this.checkoutOnLoad) {
-			const entity = this.store.get(this.checkedOutHref);
+			const entity = this.store && this.store.get(this.checkedOutHref);
 			if (!entity) return;
 
 			// Refetch entity in case presence of the check in action has changed,

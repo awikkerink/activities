@@ -33,6 +33,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			_associateGradeHref: { type: String },
 			_createSelectboxGradeItemEnabled: { type: Boolean },
 			_focusUngraded: { type: Boolean },
+			_focusInput: { type: Boolean },
 			_scoringHref: { type: String }
 		};
 	}
@@ -210,7 +211,6 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		if (this._createSelectboxGradeItemEnabled) {
 			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
 			const scoringEntity = scoringStore.get(this._scoringHref);
-			gradeUnits = this.localize('grades.gradeUnits');
 			inGrades = associateGradeEntity && associateGradeEntity.gradebookStatus !== GradebookStatus.NotInGradebook;
 			canSeeGrades = !!associateGradeEntity;
 			canEditGradebookStatus = associateGradeEntity && associateGradeEntity.canCreateNewGrade;
@@ -219,9 +219,10 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 				scoreOutOf = scoringEntity && scoringEntity.gradeMaxPoints;
 				canEditScoreOutOf = scoringEntity && scoringEntity.canUpdateScoring;
 			} else {
-				scoreOutOf = scoringEntity && (inGrades ? scoringEntity.gradeMaxPoints : scoringEntity.scoreOutOf);
+				scoreOutOf = scoringEntity && (inGrades && scoringEntity.gradeMaxPoints ? scoringEntity.gradeMaxPoints : scoringEntity.scoreOutOf);
 				canEditScoreOutOf = inGrades || this.disableNotInGradebook;
 			}
+			gradeUnits = scoreOutOf === 1 ? this.localize('grades.gradeUnitsSingular') : this.localize('grades.gradeUnits');
 			isUngraded = associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NotInGradebook && !scoreOutOf;
 		} else {
 			gradeUnits = activity && activity.scoreAndGrade && activity.scoreAndGrade.gradeType;
@@ -235,6 +236,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		}
 
 		this._focusUngraded = isUngraded;
+		this._focusInput = inGrades;
 
 		const inGradesTerm = this._createSelectboxGradeItemEnabled ? this.localize('editor.inGradebook') : this.localize('editor.inGrades');
 		const notInGradesTerm = this._createSelectboxGradeItemEnabled ? this.localize('editor.notInGradebook') : this.localize('editor.notInGrades');
@@ -344,11 +346,19 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		}
 
 		changedProperties.forEach((oldValue, propName) => {
-			if (propName === '_focusUngraded' && typeof oldValue !== 'undefined') {
-				const toFocus = this._focusUngraded && this.allowUngraded ?
-					this.shadowRoot.querySelector('#ungraded') :
-					this.shadowRoot.querySelector('#score-out-of');
-				toFocus.focus();
+			if (propName === '_focusUngraded'
+				&& typeof oldValue !== 'undefined'
+				&& this._focusUngraded
+				&& this.allowUngraded
+			) {
+				const toFocus = this.shadowRoot.querySelector('#ungraded');
+				toFocus && toFocus.focus();
+			} else if (propName === '_focusInput'
+				&& typeof oldValue !== 'undefined'
+				&& this._focusInput
+			) {
+				const toFocus = this.shadowRoot.querySelector('#score-out-of');
+				toFocus && toFocus.focus();
 			} else if (propName === 'activityName') {
 				this._setNewGradeName(this.activityName);
 			}
@@ -502,6 +512,10 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 	_removeFromGrades() {
 		store.get(this.href).scoreAndGrade.removeFromGrades();
 		this._associateGradeSetGradebookStatus(GradebookStatus.NotInGradebook);
+		if (this._createSelectboxGradeItemEnabled && !this.hasActivityScore) {
+			const scoring = scoringStore.get(this._scoringHref);
+			scoring.setGradeMaxPoints('');
+		}
 	}
 
 	_setGraded() {
