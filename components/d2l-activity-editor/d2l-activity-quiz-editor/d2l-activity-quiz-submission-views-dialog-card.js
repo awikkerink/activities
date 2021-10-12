@@ -22,6 +22,7 @@ class ActivityQuizSubmissionViewsDialogCard
 				}
 				
 				#questions-box {
+
 					display: inline-block;
 					padding-left: 0;
 				}
@@ -89,19 +90,19 @@ class ActivityQuizSubmissionViewsDialogCard
 				<div>${this.localize(attemptText)}</div>
 			</div>
 			<div>
-				<div id="questions-box"> 
+				<div id="questions-box">
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewQuestionsHeader')}
 					</div>
 					<div>${this.localize(questionText)}</div>
 				</div>
-				<div id="answers-box"> 
+				<div id="answers-box">
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewAnswerHeader')}
 					</div>
 					<div>${this.localize(answersText)}</div>
 				</div>
-				<div id="responses-box"> 
+				<div id="responses-box">
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewResponseHeader')}
 					</div>

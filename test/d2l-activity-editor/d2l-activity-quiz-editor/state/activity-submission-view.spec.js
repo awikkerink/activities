@@ -20,8 +20,8 @@ describe('Activity Submission View', function() {
 			showStatsClassAverage: () => true,
 			showStatsScoreDistribution: () => true,
 			canUpdateMessage: () => true,
-			messageText: () => 'hello',
-			messageHtml: () => '<p>hello</p>',
+			message: () => '<p>hello</p>',
+			isMessageRichtext: () => true,
 			canUpdateHideShowQuestions: () => true,
 			hideQuestions: () => true,
 			canUpdateShowCorrectAnswers: () => true,
@@ -61,8 +61,8 @@ describe('Activity Submission View', function() {
 			showStatsClassAverage: () => true,
 			showStatsScoreDistribution: () => true,
 			canUpdateMessage: () => false,
-			messageText: () => 'hello',
-			messageHtml: () => '<p>hello</p>',
+			message: () => '<p>hello</p>',
+			isMessageRichtext: () => true,
 			canUpdateHideShowQuestions: () => false,
 			hideQuestions: () => true,
 			canUpdateShowCorrectAnswers: () => false,
@@ -110,8 +110,8 @@ describe('Activity Submission View', function() {
 			expect(submissionView.showStatsClassAverage).to.be.true;
 			expect(submissionView.showStatsScoreDistribution).to.be.true;
 			expect(submissionView.canUpdateMessage).to.be.true;
-			expect(submissionView.messageText).to.equal('hello');
-			expect(submissionView.messageHtml).to.equal('<p>hello</p>');
+			expect(submissionView.message).to.equal('<p>hello</p>');
+			expect(submissionView.isMessageRichtext).to.be.true;
 			expect(submissionView.canUpdateHideShowQuestions).to.be.true;
 			expect(submissionView.hideQuestions).to.be.true;
 			expect(submissionView.canUpdateShowCorrectAnswers).to.be.true;
@@ -151,8 +151,8 @@ describe('Activity Submission View', function() {
 			expect(submissionView.showStatsClassAverage).to.be.true;
 			expect(submissionView.showStatsScoreDistribution).to.be.true;
 			expect(submissionView.canUpdateMessage).to.be.false;
-			expect(submissionView.messageText).to.equal('hello');
-			expect(submissionView.messageHtml).to.equal('<p>hello</p>');
+			expect(submissionView.message).to.equal('<p>hello</p>');
+			expect(submissionView.isMessageRichtext).to.be.true;
 			expect(submissionView.canUpdateHideShowQuestions).to.be.false;
 			expect(submissionView.hideQuestions).to.be.true;
 			expect(submissionView.canUpdateShowCorrectAnswers).to.be.false;
