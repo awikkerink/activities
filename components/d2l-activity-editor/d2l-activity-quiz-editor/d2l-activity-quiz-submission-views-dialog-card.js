@@ -8,22 +8,22 @@ import { sharedSubmissionViews as store } from './state/quiz-store';
 
 class ActivityQuizSubmissionViewsDialogCard
 	extends ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
-		
+
 	static get styles() {
 		return [
 			labelStyles,
 			css`
-				:host {					
+				:host {
 					border: 1px solid var(--d2l-color-gypsum);
-					border-radius: 6px;			
+					border-radius: 6px;
 					display: inline-block;
-					width: 100%;
 					padding: 10px;
+					width: 100%;
 				}
 				
 				#questions-box {
 					display: inline-block;
-					padding-left: 0px;
+					padding-left: 0;
 				}
 
 				#answers-box {
