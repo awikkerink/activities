@@ -21,20 +21,15 @@ class ActivityQuizSubmissionViewsDialogCard
 					width: 100%;
 				}
 
-				#questions-box {
-
+				#questions-answers-response-box {
 					display: inline-block;
 					padding-left: 0;
+					padding-right: 20px;
 				}
 
-				#answers-box {
-					display: inline-block;
+				:host([dir="rtl"]) #questions-answers-response-box {
 					padding-left: 20px;
-				}
-
-				#responses-box {
-					display: inline-block;
-					padding-left: 20px;
+					padding-right: 0;
 				}
 
 				.d2l-label-text {
@@ -90,19 +85,19 @@ class ActivityQuizSubmissionViewsDialogCard
 				<div>${this.localize(attemptText)}</div>
 			</div>
 			<div>
-				<div id="questions-box">
+				<div id="questions-answers-response-box">
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewQuestionsHeader')}
 					</div>
 					<div>${this.localize(questionText)}</div>
 				</div>
-				<div id="answers-box">
+				<div id="questions-answers-response-box">
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewAnswerHeader')}
 					</div>
 					<div>${this.localize(answersText)}</div>
 				</div>
-				<div id="responses-box">
+				<div id="questions-answers-response-box">
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewResponseHeader')}
 					</div>
