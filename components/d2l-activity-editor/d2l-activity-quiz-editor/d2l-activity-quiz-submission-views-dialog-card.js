@@ -17,16 +17,16 @@ class ActivityQuizSubmissionViewsDialogCard
 					border-radius: 6px;
 					box-sizing: border-box;
 					display: inline-block;
+					padding: 10px;
 					position: relative;
 					transition: transform 300ms ease-out 50ms, box-shadow 0.2s;
-					z-index: 0;
 					width: 100%;
-					padding: 10px;
+					z-index: 0;
 				}
-				
+
 				#custom_box1 {
 					display: inline-block;
-					padding-left: 0px;
+					padding-left: 0;
 				}
 
 				#custom_box2 {
