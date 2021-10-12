@@ -2,6 +2,7 @@ import '../d2l-activity-accordion-collapse.js';
 import './d2l-activity-quiz-auto-set-graded-editor.js';
 import './d2l-activity-quiz-auto-set-graded-summary.js';
 import './d2l-activity-quiz-submission-views-container.js';
+import './d2l-activity-quiz-submission-views-summary.js';
 import '@brightspace-ui/core/components/button/button-icon.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
 import { css, html } from 'lit-element/lit-element.js';
@@ -15,7 +16,7 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 import { shared as store } from './state/quiz-store';
 
-class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(LocalizeActivityQuizEditorMixin(SkeletonMixin(ActivityEditorMixin(ActivityEditorDialogMixin(MobxLitElement))))) {
+class ActivityQuizEvaluationAndFeedbackEditor extends ActivityEditorMixin(AsyncContainerMixin(LocalizeActivityQuizEditorMixin(SkeletonMixin(ActivityEditorDialogMixin(MobxLitElement))))) {
 
 	static get properties() {
 
@@ -55,6 +56,7 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 				</span>
 
 				<li slot="summary-items">${this._renderAutoSetGradedSummary()}</li>
+				<li slot="summary-items">${this._renderSubmissionViewsSummary()}</li>
 
 				<div class="d2l-editor" slot="components">
 					${this._renderAutomaticGradesEditor()}
@@ -96,6 +98,18 @@ class ActivityQuizEvaluationAndFeedbackEditor extends AsyncContainerMixin(Locali
 				href="${this.href}"
 				.token="${this.token}">
 			</d2l-activity-quiz-submission-views-container>
+		`;
+	}
+
+	_renderSubmissionViewsSummary() {
+		const entity = this.checkedOutHref && store.get(this.checkedOutHref);
+		const submissionViewsHref = entity && entity.submissionViewsHref;
+		if (!submissionViewsHref) return html``;
+		return html`
+			<d2l-activity-quiz-submission-views-summary
+				href="${submissionViewsHref}"
+				.token="${this.token}">
+			</d2l-activity-quiz-submission-views-summary>
 		`;
 	}
 }
