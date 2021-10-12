@@ -172,7 +172,7 @@ export default {
 	"submissionViewDialogCardSubmissionViewQuestionsHeader": "Questions", // Submission view dialog card, questions heading. 
 	"submissionViewDialogCardSubmissionViewAnswerHeader" : "Answers", // Submission view dialog card, answers heading. 
 	"submissionViewDialogCardSubmissionViewResponseHeader": "Learner's Responses", // Submission view dialog card, learners responses heading. 
-	"submissionViewDialogCardButtonOptionOK": "OK", // Submission view dialog card, OK button text.
-	"submissionViewDialogCardButtonOptionCancel": "Cancel" // Submission view dialog card, Cancel button text.
+	"submissionViewDialogCardButtonOptionEditView": "Edit View", // Submission view dialog card, OK button text.
+	"submissionViewDialogCardButtonOptionDeleteView": "Delete View" // Submission view dialog card, Cancel button text.
 };
 

@@ -113,10 +113,10 @@ class ActivityQuizSubmissionViewsDialogCard
 					<div>${this.localize(response_text)}</div>
 				</div>
 			</div>
-			<d2l-button ?disabled="${this.isSaving}">${this.localize('submissionViewDialogCardButtonOptionOK')}</d2l-button>
+			<d2l-button ?disabled="${this.isSaving}">${this.localize('submissionViewDialogCardButtonOptionEditView')}</d2l-button>
 			<d2l-button-subtle
 				class="d2l-quiz-submission-views-open-dialog-button"
-				text=${this.localize('submissionViewDialogCardButtonOptionCancel')}>
+				text=${this.localize('submissionViewDialogCardButtonOptionDeleteView')}>
 			</d2l-button-subtle>
         `
 	}
