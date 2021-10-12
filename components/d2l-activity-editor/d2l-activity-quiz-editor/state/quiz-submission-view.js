@@ -43,8 +43,8 @@ export class QuizSubmissionView {
 		this.showStatsClassAverage = entity.showStatsClassAverage();
 		this.showStatsScoreDistribution = entity.showStatsScoreDistribution();
 		this.canUpdateMessage = entity.canUpdateMessage();
-		this.messageText = entity.messageText();
-		this.messageHtml = entity.messageHtml();
+		this.message = entity.message();
+		this.isMessageRichtext = entity.isMessageRichtext();
 		this.canUpdateHideShowQuestions = entity.canUpdateHideShowQuestions();
 		this.hideQuestions = entity.hideQuestions();
 		this.canUpdateShowCorrectAnswers = entity.canUpdateShowCorrectAnswers();
@@ -57,6 +57,11 @@ export class QuizSubmissionView {
 		this.showQuestionsType = entity.showQuestionsType();
 		this.showQuestionsOptions = entity.showQuestionsOptions();
 		this.accordionDropdownOptions = this._generateAccordionDropdownOptions();
+	}
+
+	setMessage(value) {
+		this.message = value;
+		this.updateProperty(() => this._entity.setMessage(value));
 	}
 
 	setShowAttemptScore(value) {
@@ -158,8 +163,8 @@ decorate(QuizSubmissionView, {
 	showStatsClassAverage: observable,
 	showStatsScoreDistribution: observable,
 	canUpdateMessage: observable,
-	messageText: observable,
-	messageHtml: observable,
+	message: observable,
+	isMessageRichtext: observable,
 	canUpdateHideShowQuestions: observable,
 	hideQuestions: observable,
 	canUpdateShowCorrectAnswers: observable,
