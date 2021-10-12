@@ -71,7 +71,7 @@ class ActivityQuizSubmissionViewsDialogCard
 		}
 
 		const entity = viewsEntity.getSubmissionViewByHref(this.viewHref);
-		const { isPrimaryView, messageText, showAttemptScore, showQuestionsType, showLearnerResponses, showCorrectAnswers } = entity;
+		const { isPrimaryView, showAttemptScore, showQuestionsType, showLearnerResponses, showCorrectAnswers } = entity;
 		
 		const card_header = (isPrimaryView) ? 'primaryView' : 'additonalViewComesIntoEffect';
         const attempt_text = (showAttemptScore) ? 'submissionViewDialogCardAttemptScoreTrueText' : 'submissionViewDialogCardAttemptScoreFalseText';
@@ -79,13 +79,15 @@ class ActivityQuizSubmissionViewsDialogCard
 		const display_text = (showCorrectAnswers) ? 'submissionViewDialogCardShowAnswersTrueText': 'submissionViewDialogCardShowAnswersFalseText';
 		const response_text = (showLearnerResponses) ? 'submissionViewDialogCardShowResponsesTrueText' : 'submissionViewDialogCardShowResponsesFalseText';
 
+		const hardcoded_message = "Your Quiz has been submitted Successfully.";
+
 		return html`
 			<b>${this.localize(card_header)}</b>
 			<div>
 				<div class="d2l-label-text">
 					${this.localize('submissionViewDialogCardSubmissionViewMessageHeader')}
 				</div>
-				<div>${messageText}</div>
+				<div>${hardcoded_message}</div>
 			</div>
 			<div>
 				<div class="d2l-label-text">
