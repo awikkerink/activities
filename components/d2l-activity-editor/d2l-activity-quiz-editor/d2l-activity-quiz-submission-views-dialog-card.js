@@ -20,7 +20,7 @@ class ActivityQuizSubmissionViewsDialogCard
 					padding: 10px;
 					width: 100%;
 				}
-				
+
 				#questions-box {
 
 					display: inline-block;
@@ -66,7 +66,7 @@ class ActivityQuizSubmissionViewsDialogCard
 
 		const entity = viewsEntity.getSubmissionViewByHref(this.viewHref);
 		const { isPrimaryView, showAttemptScore, showQuestionsType, showLearnerResponses, showCorrectAnswers } = entity;
-		
+
 		const cardHeader = isPrimaryView ? 'primaryView' : 'additonalViewComesIntoEffect';
         const attemptText = showAttemptScore ? 'submissionViewDialogCardAttemptScoreTrueText' : 'submissionViewDialogCardAttemptScoreFalseText';
         const questionText = showQuestionsType ? 'submissionViewDialogCardShowQuestionsTrueText' : 'submissionViewDialogCardShowQuestionsFalseText';
