@@ -1,5 +1,6 @@
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { css, html } from 'lit-element/lit-element.js';
+import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
@@ -7,43 +8,35 @@ import { sharedSubmissionViews as store } from './state/quiz-store';
 
 class ActivityQuizSubmissionViewsDialogCard
 	extends ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
-
+		
 	static get styles() {
 		return [
+			labelStyles,
 			css`
-				:host {
-					background-color: #ffffff;
+				:host {					
 					border: 1px solid var(--d2l-color-gypsum);
-					border-radius: 6px;
-					box-sizing: border-box;
+					border-radius: 6px;			
 					display: inline-block;
-					position: relative;
-					transition: transform 300ms ease-out 50ms, box-shadow 0.2s;
-					z-index: 0;
 					width: 100%;
 					padding: 10px;
 				}
 				
-				#custom_box1 {
+				#questions-box {
 					display: inline-block;
 					padding-left: 0px;
 				}
 
-				#custom_box2 {
+				#answers-box {
 					display: inline-block;
 					padding-left: 20px;
 				}
 
-				#custom_box3 {
+				#responses-box {
 					display: inline-block;
 					padding-left: 20px;
 				}
 
 				.d2l-label-text {
-					font-size: 0.7rem;
-					font-weight: 700;
-					letter-spacing: 0.2px;
-					line-height: 1rem;
 					padding-top: 15px;
 				}
 			`
@@ -73,46 +66,46 @@ class ActivityQuizSubmissionViewsDialogCard
 		const entity = viewsEntity.getSubmissionViewByHref(this.viewHref);
 		const { isPrimaryView, showAttemptScore, showQuestionsType, showLearnerResponses, showCorrectAnswers } = entity;
 		
-		const card_header = (isPrimaryView) ? 'primaryView' : 'additonalViewComesIntoEffect';
-        const attempt_text = (showAttemptScore) ? 'submissionViewDialogCardAttemptScoreTrueText' : 'submissionViewDialogCardAttemptScoreFalseText';
-        const question_text = (showQuestionsType) ? 'submissionViewDialogCardShowQuestionsTrueText' : 'submissionViewDialogCardShowQuestionsFalseText';
-		const display_text = (showCorrectAnswers) ? 'submissionViewDialogCardShowAnswersTrueText': 'submissionViewDialogCardShowAnswersFalseText';
-		const response_text = (showLearnerResponses) ? 'submissionViewDialogCardShowResponsesTrueText' : 'submissionViewDialogCardShowResponsesFalseText';
+		const cardHeader = isPrimaryView ? 'primaryView' : 'additonalViewComesIntoEffect';
+        const attemptText = showAttemptScore ? 'submissionViewDialogCardAttemptScoreTrueText' : 'submissionViewDialogCardAttemptScoreFalseText';
+        const questionText = showQuestionsType ? 'submissionViewDialogCardShowQuestionsTrueText' : 'submissionViewDialogCardShowQuestionsFalseText';
+		const answersText = showCorrectAnswers ? 'submissionViewDialogCardShowAnswersTrueText': 'submissionViewDialogCardShowAnswersFalseText';
+		const responseText = showLearnerResponses ? 'submissionViewDialogCardShowResponsesTrueText' : 'submissionViewDialogCardShowResponsesFalseText';
 
-		const hardcoded_message = "Your Quiz has been submitted Successfully.";
+		const hardcodedMessage = "Your Quiz has been submitted Successfully.";
 
 		return html`
-			<b>${this.localize(card_header)}</b>
+			<b>${this.localize(cardHeader)}</b>
 			<div>
 				<div class="d2l-label-text">
 					${this.localize('submissionViewDialogCardSubmissionViewMessageHeader')}
 				</div>
-				<div>${hardcoded_message}</div>
+				<div>${hardcodedMessage}</div>
 			</div>
 			<div>
 				<div class="d2l-label-text">
 					${this.localize('submissionViewDialogCardSubmissionViewGradeHeader')}
 				</div>
-				<div>${this.localize(attempt_text)}</div>
+				<div>${this.localize(attemptText)}</div>
 			</div>
 			<div>
-				<div id="custom_box1"> 
+				<div id="questions-box"> 
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewQuestionsHeader')}
 					</div>
-					<div>${this.localize(question_text)}</div>
+					<div>${this.localize(questionText)}</div>
 				</div>
-				<div id="custom_box2"> 
+				<div id="answers-box"> 
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewAnswerHeader')}
 					</div>
-					<div>${this.localize(display_text)}</div>
+					<div>${this.localize(answersText)}</div>
 				</div>
-				<div id="custom_box3"> 
+				<div id="responses-box"> 
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewResponseHeader')}
 					</div>
-					<div>${this.localize(response_text)}</div>
+					<div>${this.localize(responseText)}</div>
 				</div>
 			</div>
 			<d2l-button ?disabled="${this.isSaving}">${this.localize('submissionViewDialogCardButtonOptionEditView')}</d2l-button>
