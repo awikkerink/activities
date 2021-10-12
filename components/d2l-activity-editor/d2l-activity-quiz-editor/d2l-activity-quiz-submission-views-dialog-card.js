@@ -71,15 +71,13 @@ class ActivityQuizSubmissionViewsDialogCard
 		}
 
 		const entity = viewsEntity.getSubmissionViewByHref(this.viewHref);
-		const { isPrimaryView, showAttemptScore, showQuestionsType, showLearnerResponses, showCorrectAnswers } = entity;
-		
+		const { message, isPrimaryView, showAttemptScore, showQuestionsType, showLearnerResponses, showCorrectAnswers } = entity;
+
 		const card_header = (isPrimaryView) ? 'primaryView' : 'additonalViewComesIntoEffect';
         const attempt_text = (showAttemptScore) ? 'submissionViewDialogCardAttemptScoreTrueText' : 'submissionViewDialogCardAttemptScoreFalseText';
         const question_text = (showQuestionsType) ? 'submissionViewDialogCardShowQuestionsTrueText' : 'submissionViewDialogCardShowQuestionsFalseText';
 		const display_text = (showCorrectAnswers) ? 'submissionViewDialogCardShowAnswersTrueText': 'submissionViewDialogCardShowAnswersFalseText';
 		const response_text = (showLearnerResponses) ? 'submissionViewDialogCardShowResponsesTrueText' : 'submissionViewDialogCardShowResponsesFalseText';
-
-		const hardcoded_message = "Your Quiz has been submitted Successfully.";
 
 		return html`
 			<b>${this.localize(card_header)}</b>
@@ -87,7 +85,7 @@ class ActivityQuizSubmissionViewsDialogCard
 				<div class="d2l-label-text">
 					${this.localize('submissionViewDialogCardSubmissionViewMessageHeader')}
 				</div>
-				<div>${hardcoded_message}</div>
+				<div>${message}</div>
 			</div>
 			<div>
 				<div class="d2l-label-text">
@@ -96,19 +94,19 @@ class ActivityQuizSubmissionViewsDialogCard
 				<div>${this.localize(attempt_text)}</div>
 			</div>
 			<div>
-				<div id="custom_box1"> 
+				<div id="custom_box1">
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewQuestionsHeader')}
 					</div>
 					<div>${this.localize(question_text)}</div>
 				</div>
-				<div id="custom_box2"> 
+				<div id="custom_box2">
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewAnswerHeader')}
 					</div>
 					<div>${this.localize(display_text)}</div>
 				</div>
-				<div id="custom_box3"> 
+				<div id="custom_box3">
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewResponseHeader')}
 					</div>
