@@ -48,11 +48,24 @@ class ActivityQuizSubmissionViewsDialogCard
 				.d2l-activity-quiz-submission-views-dialog-card-header {
 					background-color: var(--d2l-color-regolith);
 					border-bottom: 1px solid var(--d2l-color-gypsum);
-					padding: 5px 30px 5px 30px;
+					padding: 5px 30px;
+				}
+
+				.d2l-activity-quiz-submission-views-dialog-card-header-text {
+					font-weight: 700;
+					font-size: 80%;
 				}
 
 				.d2l-activity-quiz-submission-views-dialog-card-contents {
-					padding: 10px 30px 10px 30px;
+					padding: 10px 30px;
+				}
+
+				.d2l-activity-quiz-submission-views-dialog-card-message-header {
+					padding-top: 20px;
+				}
+
+				.d2l-activity-quiz-submission-views-dialog-edit-button {
+					padding: 20px 0;
 				}
 			`
 		];
@@ -83,11 +96,14 @@ class ActivityQuizSubmissionViewsDialogCard
 
 		return html`
 			<div class="d2l-activity-quiz-submission-views-dialog-card-header">
-				<b style="font-size: 80%;">${this.localize(cardHeader)}</b>
+				<div class="d2l-activity-quiz-submission-views-dialog-card-header-text">
+					${this.localize(cardHeader)}
+				</div>
 			</div>
 			<div class="d2l-activity-quiz-submission-views-dialog-card-contents">
 				<div>
-					<div class="d2l-label-text" style="padding-top: 20px;">
+					<div class="d2l-label-text
+					d2l-activity-quiz-submission-views-dialog-card-message-header">
 						${this.localize('submissionViewDialogCardSubmissionViewMessageHeader')}
 					</div>
 					<div>${message}</div>
@@ -118,7 +134,8 @@ class ActivityQuizSubmissionViewsDialogCard
 						<div>${this.localize(responseText)}</div>
 					</div>
 				</div>
-				<d2l-button style="padding: 20px 0 20px 0;" ?disabled="${this.isSaving}">
+				<d2l-button class="d2l-activity-quiz-submission-views-dialog-edit-button"
+					?disabled="${this.isSaving}">
 					${this.localize('submissionViewDialogCardButtonOptionEditView')}
 				</d2l-button>
 				${isPrimaryView ? html`` : html`
