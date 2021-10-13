@@ -54,12 +54,9 @@ class ActivityQuizSubmissionViewsDialogCard
 
 	render() {
 		const viewsEntity = store.get(this.href);
-		if (!viewsEntity || !this.viewHref) {
-			return html``;
-		}
+		if (!viewsEntity || !this.viewHref) return html``;
 
 		const entity = viewsEntity.getSubmissionViewByHref(this.viewHref);
-
 		if (!entity) return html``;
 
 		return this._renderReadonlyView(entity);
@@ -108,17 +105,15 @@ class ActivityQuizSubmissionViewsDialogCard
 					<div>${this.localize(responseText)}</div>
 				</div>
 			</div>
-
 			<d2l-button ?disabled="${this.isSaving}">
 				${this.localize('submissionViewDialogCardButtonOptionEditView')}
 			</d2l-button>
 			${isPrimaryView ? html`` : html`
 				<d2l-button-subtle
-					class="d2l-quiz-submission-views-open-dialog-button"
 					text=${this.localize('submissionViewDialogCardButtonOptionDeleteView')}>
 				</d2l-button-subtle>
 			`}
-        `;
+		`;
 	}
 }
 
