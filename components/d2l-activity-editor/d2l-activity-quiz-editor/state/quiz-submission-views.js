@@ -41,6 +41,10 @@ export class QuizSubmissionViews {
 		]);
 	}
 
+	removeView(href) {
+		this.submissionViews = this.submissionViews.filter(view => view.href !== href);
+	}
+
 	async _loadSubmissionViews(entity, bypassCache) {
 		if (!bypassCache && this.submissionViews) return;
 		const linkedViewEntities = entity.linkedSubmissionViews();
@@ -64,5 +68,6 @@ decorate(QuizSubmissionViews, {
 	saving: observable,
 	submissionViews: observable,
 	// actions
-	load: action
+	load: action,
+	removeView: action
 });

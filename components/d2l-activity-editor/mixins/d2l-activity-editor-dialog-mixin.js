@@ -22,7 +22,7 @@ export const ActivityEditorDialogMixin = superclass => class extends superclass 
 				bubbles: true,
 				composed: true,
 				cancelable: true,
-				detail: e.detail
+				detail: e && e.detail
 			});
 			this.dispatchEvent(event);
 		}

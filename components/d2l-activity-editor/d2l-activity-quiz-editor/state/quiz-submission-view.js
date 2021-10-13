@@ -19,6 +19,10 @@ export class QuizSubmissionView {
 		this.token = token;
 	}
 
+	async deleteSubmissionView() {
+		await this._entity.deleteSubmissionView();
+	}
+
 	async fetch(bypassCache) {
 		const sirenEntity = await fetchEntity(this.href, this.token, bypassCache);
 
@@ -56,6 +60,9 @@ export class QuizSubmissionView {
 		this.showQuestionScore = entity.showQuestionScore();
 		this.showQuestionsType = entity.showQuestionsType();
 		this.showQuestionsOptions = entity.showQuestionsOptions();
+		this.canDeleteSubmissionView = entity.canDeleteSubmissionView();
+
+		// run after rest of entity properties are loaded
 		this.accordionDropdownOptions = this._generateAccordionDropdownOptions();
 	}
 
@@ -187,11 +194,13 @@ decorate(QuizSubmissionView, {
 	showQuestionsType: observable,
 	showQuestionsOptions: observable,
 	accordionDropdownOptions: observable,
+	canDeleteSubmissionView: observable,
 	// actions
 	load: action,
 	setMessage: action,
 	setShowAttemptScore: action,
 	setShowQuestionsAndCorrectAnswers: action,
 	setShowStatsClassAverage: action,
-	setShowStatsScoreDistribution: action
+	setShowStatsScoreDistribution: action,
+	deleteSubmissionView: action
 });
