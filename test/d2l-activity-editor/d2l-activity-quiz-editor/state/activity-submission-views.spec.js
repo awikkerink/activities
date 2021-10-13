@@ -11,14 +11,14 @@ describe('Activity Submission Views', function() {
 	function defaultEntityMock() {
 		return {
 			canAddView: () => true,
-			linkedSubmissionViews: () => null
+			linkedSubmissionViews: () => [ { href: 'http://100' }, { href: 'http://200' } ]
 		};
 	}
 
 	function readOnlyEntityMock() {
 		return {
 			canAddView: () => false,
-			linkedSubmissionViews: () => null
+			linkedSubmissionViews: () => [ { href: 'http://100' }, { href: 'http://200' } ]
 		};
 	}
 
@@ -46,6 +46,36 @@ describe('Activity Submission Views', function() {
 			await submissionViews.fetch();
 
 			expect(submissionViews.canAddView).to.be.true;
+			expect(submissionViews.submissionViews.length).to.equal(2);
+		});
+
+		describe('remove view', () => {
+			it('does not modify views collection if view href is not found', async() => {
+				const submissionViews = new QuizSubmissionViews('http://1', 'token');
+				await submissionViews.fetch();
+
+				expect(submissionViews.submissionViews.length).to.equal(2);
+				submissionViews.removeView('already removed');
+				expect(submissionViews.submissionViews.length).to.equal(2);
+			});
+
+			it('removes view from collection if view href is found', async() => {
+				const submissionViews = new QuizSubmissionViews('http://1', 'token');
+				await submissionViews.fetch();
+
+				expect(submissionViews.submissionViews.length).to.equal(2);
+				submissionViews.removeView('http://200');
+				expect(submissionViews.submissionViews.length).to.equal(1);
+			});
+		});
+
+		it('remove view', async() => {
+			const submissionViews = new QuizSubmissionViews('http://1', 'token');
+			await submissionViews.fetch();
+
+			expect(submissionViews.submissionViews.length).to.equal(2);
+			submissionViews.removeView('already removed');
+			expect(submissionViews.submissionViews.length).to.equal(1);
 		});
 	});
 
@@ -65,6 +95,7 @@ describe('Activity Submission Views', function() {
 			await submissionViews.fetch();
 
 			expect(submissionViews.canAddView).to.be.false;
+			expect(submissionViews.submissionViews.length).to.equal(2);
 		});
 	});
 });

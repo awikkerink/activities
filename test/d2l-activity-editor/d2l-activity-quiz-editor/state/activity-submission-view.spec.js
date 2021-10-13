@@ -10,6 +10,7 @@ describe('Activity Submission View', function() {
 
 	function defaultEntityMock() {
 		return {
+			canDeleteSubmissionView: () => true,
 			canUpdateShowStandards: () => true,
 			canUpdateShowAttemptScore: () => true,
 			canUpdateShowStatsClassAverage: () => true,
@@ -51,6 +52,7 @@ describe('Activity Submission View', function() {
 
 	function readOnlyEntityMock() {
 		return {
+			canDeleteSubmissionView: () => false,
 			canUpdateShowStandards: () => false,
 			canUpdateShowAttemptScore: () => false,
 			canUpdateShowStatsClassAverage: () => false,
@@ -100,6 +102,7 @@ describe('Activity Submission View', function() {
 			const submissionView = new QuizSubmissionView('http://1', 'token');
 			await submissionView.fetch();
 
+			expect(submissionView.canDeleteSubmissionView).to.be.true;
 			expect(submissionView.canUpdateShowStandards).to.be.true;
 			expect(submissionView.canUpdateShowAttemptScore).to.be.true;
 			expect(submissionView.canUpdateShowStatsClassAverage).to.be.true;
@@ -141,6 +144,7 @@ describe('Activity Submission View', function() {
 			const submissionView = new QuizSubmissionView('http://1', 'token');
 			await submissionView.fetch();
 
+			expect(submissionView.canDeleteSubmissionView).to.be.false;
 			expect(submissionView.canUpdateShowStandards).to.be.false;
 			expect(submissionView.canUpdateShowAttemptScore).to.be.false;
 			expect(submissionView.canUpdateShowStatsClassAverage).to.be.false;
