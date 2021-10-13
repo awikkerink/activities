@@ -1,5 +1,5 @@
-import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { css, html } from 'lit-element/lit-element.js';
+import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -8,6 +8,16 @@ import { sharedSubmissionViews as store } from './state/quiz-store';
 
 class ActivityQuizSubmissionViewsDialogCard
 	extends ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
+
+	static get properties() {
+		return {
+			viewHref: {
+				attribute: 'view-href',
+				reflect: true,
+				type: String
+			}
+		};
+	}
 
 	static get styles() {
 		return [
@@ -21,13 +31,12 @@ class ActivityQuizSubmissionViewsDialogCard
 					width: 100%;
 				}
 
-				#questions-answers-response-box {
+				.d2l-activity-quiz-submission-views-dialog-card-readonly-view-field {
 					display: inline-block;
-					padding-left: 0;
 					padding-right: 20px;
 				}
 
-				:host([dir="rtl"]) #questions-answers-response-box {
+				:host([dir="rtl"]) .d2l-activity-quiz-submission-views-dialog-card-readonly-view-field {
 					padding-left: 20px;
 					padding-right: 0;
 				}
@@ -37,16 +46,6 @@ class ActivityQuizSubmissionViewsDialogCard
 				}
 			`
 		];
-	}
-
-	static get properties() {
-		return {
-			viewHref: {
-				attribute: 'view-href',
-				reflect: true,
-				type: String
-			  }
-		};
 	}
 
 	constructor() {
@@ -63,12 +62,12 @@ class ActivityQuizSubmissionViewsDialogCard
 		const { isPrimaryView, showAttemptScore, showQuestionsType, showLearnerResponses, showCorrectAnswers } = entity;
 
 		const cardHeader = isPrimaryView ? 'primaryView' : 'additonalViewComesIntoEffect';
-        const attemptText = showAttemptScore ? 'submissionViewDialogCardAttemptScoreTrueText' : 'submissionViewDialogCardAttemptScoreFalseText';
-        const questionText = showQuestionsType ? 'submissionViewDialogCardShowQuestionsTrueText' : 'submissionViewDialogCardShowQuestionsFalseText';
-		const answersText = showCorrectAnswers ? 'submissionViewDialogCardShowAnswersTrueText': 'submissionViewDialogCardShowAnswersFalseText';
+		const attemptText = showAttemptScore ? 'submissionViewDialogCardAttemptScoreTrueText' : 'submissionViewDialogCardAttemptScoreFalseText';
+		const questionText = showQuestionsType ? 'submissionViewDialogCardShowQuestionsTrueText' : 'submissionViewDialogCardShowQuestionsFalseText';
+		const answersText = showCorrectAnswers ? 'submissionViewDialogCardShowAnswersTrueText' : 'submissionViewDialogCardShowAnswersFalseText';
 		const responseText = showLearnerResponses ? 'submissionViewDialogCardShowResponsesTrueText' : 'submissionViewDialogCardShowResponsesFalseText';
 
-		const hardcodedMessage = "Your Quiz has been submitted Successfully.";
+		const hardcodedMessage = 'Your Quiz has been submitted Successfully.';
 
 		return html`
 			<b>${this.localize(cardHeader)}</b>
@@ -85,19 +84,19 @@ class ActivityQuizSubmissionViewsDialogCard
 				<div>${this.localize(attemptText)}</div>
 			</div>
 			<div>
-				<div id="questions-answers-response-box">
+				<div class="d2l-activity-quiz-submission-views-dialog-card-readonly-view-field">
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewQuestionsHeader')}
 					</div>
 					<div>${this.localize(questionText)}</div>
 				</div>
-				<div id="questions-answers-response-box">
+				<div class="d2l-activity-quiz-submission-views-dialog-card-readonly-view-field">
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewAnswerHeader')}
 					</div>
 					<div>${this.localize(answersText)}</div>
 				</div>
-				<div id="questions-answers-response-box">
+				<div class="d2l-activity-quiz-submission-views-dialog-card-readonly-view-field">
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewResponseHeader')}
 					</div>
@@ -109,7 +108,7 @@ class ActivityQuizSubmissionViewsDialogCard
 				class="d2l-quiz-submission-views-open-dialog-button"
 				text=${this.localize('submissionViewDialogCardButtonOptionDeleteView')}>
 			</d2l-button-subtle>
-        `
+        `;
 	}
 }
 

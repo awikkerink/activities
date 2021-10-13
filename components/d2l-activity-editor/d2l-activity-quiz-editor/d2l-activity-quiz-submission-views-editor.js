@@ -66,9 +66,9 @@ class ActivityQuizSubmissionViewsEditor
 		if (!submissionViews) return html``;
 
 		return html`
-			${submissionViews.map(view => {
-				return html`<d2l-activity-quiz-submission-views-dialog-card href="${this.href}" view-href="${view.href}" .token="${this.token}"></d2l-activity-quiz-submission-views-dialog-card>`;
-			})}
+			${submissionViews.map(view => html`
+				<d2l-activity-quiz-submission-views-dialog-card href="${this.href}" view-href="${view.href}" .token="${this.token}"></d2l-activity-quiz-submission-views-dialog-card>
+			`)}
 		`;
 	}
 }
