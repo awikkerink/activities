@@ -451,8 +451,8 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 				></d2l-menu-item>
 			`;
 		}
-		return null;
 	}
+
 	_addToGrades() {
 		this._prefetchGradeCandidates();
 		this._prefetchGradeSchemes();
