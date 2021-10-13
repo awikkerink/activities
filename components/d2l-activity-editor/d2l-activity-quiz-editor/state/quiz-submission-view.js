@@ -104,6 +104,16 @@ export class QuizSubmissionView {
 		this.updateProperty(() => this._entity.setShowQuestionsAndCorrectAnswers(newShowQuestionsValue, newShowCorrectAnswersValue));
 	}
 
+	setShowStatsClassAverage(value) {
+		this.showStatsClassAverage = value;
+		this.updateProperty(() => this._entity.setShowStatsClassAverage(value));
+	}
+
+	setShowStatsScoreDistribution(value) {
+		this.showStatsScoreDistribution = value;
+		this.updateProperty(() => this._entity.setShowStatsScoreDistribution(value));
+	}
+
 	async updateProperty(updateFunc) {
 		this.saving = updateFunc();
 		const entity = await this.saving;
@@ -179,6 +189,9 @@ decorate(QuizSubmissionView, {
 	accordionDropdownOptions: observable,
 	// actions
 	load: action,
+	setMessage: action,
 	setShowAttemptScore: action,
-	setShowQuestionsAndCorrectAnswers: action
+	setShowQuestionsAndCorrectAnswers: action,
+	setShowStatsClassAverage: action,
+	setShowStatsScoreDistribution: action
 });

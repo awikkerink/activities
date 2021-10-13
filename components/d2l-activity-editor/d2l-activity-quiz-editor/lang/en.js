@@ -167,11 +167,11 @@ export default {
 	"submissionViewDialogCardShowAnswersFalseText": "Not displayed", // Submission view dialog card, text appearing when not all answers are displayed.
 	"submissionViewDialogCardShowResponsesTrueText": "Displayed", // Submission view dialog card, text appearing when learners responses are displayed.
 	"submissionViewDialogCardShowResponsesFalseText": "Not displayed", // Submission view dialog card, text appearing when learners responses are not displayed.
-	"submissionViewDialogCardSubmissionViewMessageHeader": "Message", // Submission view dialog card, message heading. 
-	"submissionViewDialogCardSubmissionViewGradeHeader": "Grade", // Submission view dialog card, grade heading. 
-	"submissionViewDialogCardSubmissionViewQuestionsHeader": "Questions", // Submission view dialog card, questions heading. 
-	"submissionViewDialogCardSubmissionViewAnswerHeader" : "Answers", // Submission view dialog card, answers heading. 
-	"submissionViewDialogCardSubmissionViewResponseHeader": "Learner's Responses", // Submission view dialog card, learners responses heading. 
+	"submissionViewDialogCardSubmissionViewMessageHeader": "Message", // Submission view dialog card, message heading.
+	"submissionViewDialogCardSubmissionViewGradeHeader": "Grade", // Submission view dialog card, grade heading.
+	"submissionViewDialogCardSubmissionViewQuestionsHeader": "Questions", // Submission view dialog card, questions heading.
+	"submissionViewDialogCardSubmissionViewAnswerHeader" : "Answers", // Submission view dialog card, answers heading.
+	"submissionViewDialogCardSubmissionViewResponseHeader": "Learner's Responses", // Submission view dialog card, learners responses heading.
 	"submissionViewDialogCardButtonOptionEditView": "Edit View", // Submission view dialog card, OK button text.
 	"submissionViewDialogCardButtonOptionDeleteView": "Delete View", // Submission view dialog card, Cancel button text.
 	"gradeOutOfAccessibleHelpText": "Get help on - Grade Out Of", // accessible help text for gradeOutOf question mark button
@@ -180,6 +180,11 @@ export default {
 	"gradeOutOfHelpDialogParagraph1": "If the quiz is \"Not in Gradebook\", Grade Out Of reflects the total points of the questions.", // content for paragraph 1 of gradeOutOf help dialog
 	"gradeOutOfHelpDialogParagraph2": "If the quiz is \"In Gradebook\", Grade Out Of is the maximum points or weight in the Grades tool.", // content for paragraph 2 of gradeOutOf help dialog
 	"submissionViewsAccordionSummary" : "{count, plural, =1 {1 result display} other {{count} result displays}}", // number of submission views summary shown in collapsed accordion
-
+	"submissionViewsDialogEditorGradeCheckbox": "Display attempt grade for evaluated questions", // submission views dialog editor edit display attempt score checkbox
+	"statistics": "Statistics", //Label
+	"submissionViewsDialogEditorClassAverageCheckbox": "Display class average", // submission views dialog editor edit display class average checkbox
+	"submissionViewsDialogEditorGradeDistributionCheckbox": "Display grade distribution", // submission views dialog editor edit display grade distribution checkbox
+	"quizSubmissionViewsDialogCardUpdate": "Update", // submission views dialog card Update button
+	"quizSubmissionViewsDialogCardCancel": "Cancel" // submission views dialog card Cancel button
 };
 
