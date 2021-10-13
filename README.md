@@ -6,17 +6,16 @@ Web components to be used with activities entities!
 
 After cloning the repo, run `npm install` to install dependencies.
 
-If you don't have it already, install the [Polymer CLI](https://www.polymer-project.org/3.0/docs/tools/polymer-cli) globally:
+
+### Running the demos
+
+Start a [@web/dev-server](https://modern-web.dev/docs/dev-server/overview/) that hosts the demo pages:
 
 ```shell
-npm install -g polymer-cli
+npm start
 ```
 
-To start a [local web server](https://www.polymer-project.org/3.0/docs/tools/polymer-cli-commands#serve) that hosts the demo page and the tests:
-
-```shell
-polymer serve
-```
+### Linting
 
 To lint ([eslint](http://eslint.org/) and [Polymer lint](https://www.polymer-project.org/3.0/docs/tools/polymer-cli-commands#lint)):
 
@@ -25,6 +24,9 @@ npm run lint
 ```
 
 *Note: You may likely run into memory issues when running the linter. To resolve this on Windows, add an environment variable called `NODE_OPTIONS` with value `--max_old_space_size=10240`. Then (re)start a Powershell Terminal as Admin, navigate to the root of this repo, and then run the lint command above.
+
+
+### Testing
 
 To run unit tests locally using [Jest](https://jestjs.io/):
 
