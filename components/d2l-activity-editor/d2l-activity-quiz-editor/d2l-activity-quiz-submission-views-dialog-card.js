@@ -13,6 +13,11 @@ class ActivityQuizSubmissionViewsDialogCard
 
 	static get properties() {
 		return {
+			quizHref: {
+				attribute: 'quiz-href',
+				reflect: true,
+				type: String
+			},
 			viewHref: {
 				attribute: 'view-href',
 				reflect: true,
