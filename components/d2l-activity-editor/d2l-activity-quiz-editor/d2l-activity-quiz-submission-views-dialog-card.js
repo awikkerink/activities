@@ -59,7 +59,14 @@ class ActivityQuizSubmissionViewsDialogCard
 		}
 
 		const entity = viewsEntity.getSubmissionViewByHref(this.viewHref);
-		const { isPrimaryView, showAttemptScore, showQuestionsType, showLearnerResponses, showCorrectAnswers } = entity;
+
+		if (!entity) return html``;
+
+		return this._renderReadonlyView(entity);
+	}
+
+	_renderReadonlyView(entity) {
+		const { message, isPrimaryView, showAttemptScore, showQuestionsType, showLearnerResponses, showCorrectAnswers } = entity;
 
 		const cardHeader = isPrimaryView ? 'primaryView' : 'additonalViewComesIntoEffect';
 		const attemptText = showAttemptScore ? 'submissionViewDialogCardAttemptScoreTrueText' : 'submissionViewDialogCardAttemptScoreFalseText';
@@ -67,15 +74,13 @@ class ActivityQuizSubmissionViewsDialogCard
 		const answersText = showCorrectAnswers ? 'submissionViewDialogCardShowAnswersTrueText' : 'submissionViewDialogCardShowAnswersFalseText';
 		const responseText = showLearnerResponses ? 'submissionViewDialogCardShowResponsesTrueText' : 'submissionViewDialogCardShowResponsesFalseText';
 
-		const hardcodedMessage = 'Your Quiz has been submitted Successfully.';
-
 		return html`
 			<b>${this.localize(cardHeader)}</b>
 			<div>
 				<div class="d2l-label-text">
 					${this.localize('submissionViewDialogCardSubmissionViewMessageHeader')}
 				</div>
-				<div>${hardcodedMessage}</div>
+				<div>${message}</div>
 			</div>
 			<div>
 				<div class="d2l-label-text">
@@ -103,11 +108,16 @@ class ActivityQuizSubmissionViewsDialogCard
 					<div>${this.localize(responseText)}</div>
 				</div>
 			</div>
-			<d2l-button ?disabled="${this.isSaving}">${this.localize('submissionViewDialogCardButtonOptionEditView')}</d2l-button>
-			<d2l-button-subtle
-				class="d2l-quiz-submission-views-open-dialog-button"
-				text=${this.localize('submissionViewDialogCardButtonOptionDeleteView')}>
-			</d2l-button-subtle>
+
+			<d2l-button ?disabled="${this.isSaving}">
+				${this.localize('submissionViewDialogCardButtonOptionEditView')}
+			</d2l-button>
+			${isPrimaryView ? html`` : html`
+				<d2l-button-subtle
+					class="d2l-quiz-submission-views-open-dialog-button"
+					text=${this.localize('submissionViewDialogCardButtonOptionDeleteView')}>
+				</d2l-button-subtle>
+			`}
         `;
 	}
 }
