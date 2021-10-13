@@ -53,10 +53,7 @@ describe('Activity Submission Views', function() {
 			let views;
 			beforeEach(() => {
 				const view1 = new QuizSubmissionView('http://100', 'token');
-				view1.href = 'http://100';
-
 				const view2 = new QuizSubmissionView('http://200', 'token');
-				view2.href = 'http://200';
 
 				views = [view1, view2];
 			});
