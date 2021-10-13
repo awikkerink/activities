@@ -128,6 +128,11 @@ export default {
 	"grades.creatingNewNumericGradeItem": "Creating new numeric grade item {newGradeName}", // Aria text for new grade we are creating
 	"grades.creatingNewSelectboxGradeItem": "Creating new selectbox grade item {newGradeName}", // Aria text for new grade we are creating
 	"grades.linkingToGradeItem": "Linking to existing grade item {gradeName}", // Aria text for grade item we are linking to
+	"grades.gradeOutOfMenuItem": "What is Grade Out Of?", // menu item to launch gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogTitle": "Information: Grade Out Of", // title that appears when the gradeOutOf help dialog is rendered
+	"grades.gradeOutOfHelpDialogConfirmationText": "OK", // text that appears on the gradeOutOf help dialog confirmation button
+	"grades.gradeOutOfHelpDialogParagraph1": "If the quiz is \"Not in Gradebook\", Grade Out Of reflects the total points of the questions.", // content for paragraph 1 of gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogParagraph2": "If the quiz is \"In Gradebook\", Grade Out Of is the maximum points or weight in the Grades tool.", // content for paragraph 2 of gradeOutOf help dialog
 
 	"attachments.addGoogleDriveLink": "Attach from Google Drive", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "File Upload", // Tooltip for a button that opens a file upload dialog
