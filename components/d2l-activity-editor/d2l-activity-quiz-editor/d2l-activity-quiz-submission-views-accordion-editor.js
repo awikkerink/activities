@@ -49,8 +49,8 @@ class ActivityQuizSubmissionViewsAccordionEditor
 				}
 
 				:host([dir="rtl"]) .d2l-activity-quiz-submission-views-accordion-editor-remove-view-button {
-					right: initial;
 					left: 0;
+					right: initial;
 				}
 			`
 		];
