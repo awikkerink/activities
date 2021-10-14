@@ -56,8 +56,8 @@ class ActivityQuizSubmissionViewsDialogCard
 					padding-right: 0;
 				}
 
-				.d2l-label-text {
-					padding-top: 30px;
+				.d2l-activity-quiz-submission-views-dialog-card-contents > div {
+					padding: 10px 0 20px;
 				}
 
 				.d2l-activity-quiz-submission-views-dialog-card-header {
@@ -72,18 +72,11 @@ class ActivityQuizSubmissionViewsDialogCard
 				}
 
 				.d2l-activity-quiz-submission-views-dialog-card-contents {
-					padding: 10px 30px;
+					padding: 20px 30px;
 				}
 
-				.d2l-activity-quiz-submission-views-dialog-card-message-header {
-					padding-top: 20px;
-				}
-
-				.d2l-activity-quiz-submission-views-dialog-edit-button {
-					padding: 20px 0;
-				}
-				.d2l-activity-quic-submission-views-dialog-card-editor-footer-buttons {
-					margin-top: 30px;
+				.d2l-activity-quiz-submission-views-dialog-card-contents .d2l-activity-quiz-submission-views-dialog-card-footer-buttons {
+					padding: 10px 0 0;
 				}
 			`
 		];
@@ -94,14 +87,8 @@ class ActivityQuizSubmissionViewsDialogCard
 	}
 
 	render() {
-		const viewsEntity = store.get(this.href);
-		if (!viewsEntity || !this.viewHref) return html``;
-
-		const entity = viewsEntity.getSubmissionViewByHref(this.viewHref);
-		if (!entity) return html``;
-
 		return html`
-			${this._editing ? this._renderEditView() : this._renderReadonlyView(entity)}
+			${this._editing ? this._renderEditView() : this._renderReadonlyView()}
 		`;
 	}
 
@@ -141,24 +128,23 @@ class ActivityQuizSubmissionViewsDialogCard
 	}
 
 	_renderEditView() {
-		const checkedOutEntity = quizStore.get(this._checkedOutHref);
-		if (!checkedOutEntity || !this._checkedOutHref || !this._editHref) return html``;
+		const checkedOutEntity = this._checkedOutHref && quizStore.get(this._checkedOutHref);
 
-		const viewsEntity = store.get(checkedOutEntity.submissionViewsHref);
-		if (!viewsEntity) return html``;
+		const viewsHref = checkedOutEntity && checkedOutEntity.submissionViewsHref;
+		const viewsEntity = viewsHref && store.get(viewsHref);
 
-		const entity = viewsEntity.getSubmissionViewByHref(this._editHref);
+		const entity = viewsEntity && this._editHref && viewsEntity.getSubmissionViewByHref(this._editHref);
 		if (!entity) return html``;
 
 		return html`
 			${this._renderCardHeader(entity)}
 			<div class="d2l-activity-quiz-submission-views-dialog-card-contents">
 				<d2l-activity-quiz-submission-views-dialog-card-editor
-					href="${checkedOutEntity.submissionViewsHref}"
+					href="${viewsHref}"
 					.token="${this.token}"
 					edit-href="${this._editHref}">
 				</d2l-activity-quiz-submission-views-dialog-card-editor>
-				<div class="d2l-activity-quic-submission-views-dialog-card-editor-footer-buttons">
+				<div class="d2l-activity-quiz-submission-views-dialog-card-footer-buttons">
 					<d2l-button ?disabled="${this.isSaving}">
 						${this.localize('quizSubmissionViewsDialogCardUpdate')}
 					</d2l-button>
@@ -171,7 +157,11 @@ class ActivityQuizSubmissionViewsDialogCard
 		`;
 	}
 
-	_renderReadonlyView(entity) {
+	_renderReadonlyView() {
+		const viewsEntity = this.href && store.get(this.href);
+		const entity = viewsEntity && this.viewHref && viewsEntity.getSubmissionViewByHref(this.viewHref);
+		if (!entity) return html``;
+
 		const { message, isPrimaryView, showAttemptScore, showQuestionsType, showLearnerResponses, showCorrectAnswers } = entity;
 
 		const attemptText = showAttemptScore ? 'submissionViewDialogCardAttemptScoreTrueText' : 'submissionViewDialogCardAttemptScoreFalseText';
@@ -183,8 +173,7 @@ class ActivityQuizSubmissionViewsDialogCard
 			${this._renderCardHeader(entity)}
 			<div class="d2l-activity-quiz-submission-views-dialog-card-contents">
 				<div>
-					<div class="d2l-label-text
-					d2l-activity-quiz-submission-views-dialog-card-message-header">
+					<div class="d2l-label-text d2l-activity-quiz-submission-views-dialog-card-message-header">
 						${this.localize('submissionViewDialogCardSubmissionViewMessageHeader')}
 					</div>
 					<div>${message}</div>
@@ -215,16 +204,18 @@ class ActivityQuizSubmissionViewsDialogCard
 						<div>${this.localize(responseText)}</div>
 					</div>
 				</div>
-				<d2l-button class="d2l-activity-quiz-submission-views-dialog-edit-button"
-					?disabled="${this.isSaving}"
-					@click="${this._onClickEdit}">
-					${this.localize('submissionViewDialogCardButtonOptionEditView')}
-				</d2l-button>
-				${isPrimaryView ? html`` : html`
-					<d2l-button-subtle
-						text=${this.localize('submissionViewDialogCardButtonOptionDeleteView')}>
-					</d2l-button-subtle>
-				`}
+				<div class="d2l-activity-quiz-submission-views-dialog-card-footer-buttons">
+					<d2l-button
+						?disabled="${this.isSaving}"
+						@click="${this._onClickEdit}">
+						${this.localize('submissionViewDialogCardButtonOptionEditView')}
+					</d2l-button>
+					${isPrimaryView ? html`` : html`
+						<d2l-button-subtle
+							text=${this.localize('submissionViewDialogCardButtonOptionDeleteView')}>
+						</d2l-button-subtle>
+					`}
+				</div>
 			</div>
 		`;
 	}

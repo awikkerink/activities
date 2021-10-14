@@ -28,10 +28,7 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 			checkboxStyles,
 			css`
 				.d2l-activity-quiz-submission-views-dialog-card-editor > div {
-					margin-bottom: 20px;
-				}
-				.d2l-label-text {
-					padding-bottom: 10px;
+					padding: 10px 0 20px;
 				}
 			`
 		];
