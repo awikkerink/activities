@@ -13,6 +13,7 @@ import 'd2l-tooltip/d2l-tooltip';
 import { sharedAssociateGrade as associateGradeStore, sharedScoring as scoringStore, shared as store } from './state/activity-store.js';
 import { bodyCompactStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element';
+import { ActivityEditorDialogMixin } from './mixins/d2l-activity-editor-dialog-mixin.js';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
 import { GradebookStatus } from 'siren-sdk/src/activities/associateGrade/AssociateGradeEntity.js';
 import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles.js';
@@ -21,7 +22,7 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 
-class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActivityEditorMixin(RtlMixin(MobxLitElement)))) {
+class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActivityEditorMixin(RtlMixin(ActivityEditorDialogMixin(MobxLitElement))))) {
 
 	static get properties() {
 		return {
@@ -30,6 +31,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			disableNotInGradebook: { type: Boolean },
 			disableResetToUngraded: { type: Boolean },
 			hasActivityScore: { type: Boolean },
+			hasGradeHelp: { type: Boolean },
 			_associateGradeHref: { type: String },
 			_createSelectboxGradeItemEnabled: { type: Boolean },
 			_focusUngraded: { type: Boolean },
@@ -178,6 +180,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 		this.disableResetToUngraded = false;
 		this.allowUngraded = true;
 		this.hasActivityScore = true;
+		this.hasGradeHelp = false;
 	}
 
 	connectedCallback() {
@@ -220,7 +223,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 				canEditScoreOutOf = scoringEntity && scoringEntity.canUpdateScoring;
 			} else {
 				scoreOutOf = scoringEntity && (inGrades && scoringEntity.gradeMaxPoints ? scoringEntity.gradeMaxPoints : scoringEntity.scoreOutOf);
-				canEditScoreOutOf = inGrades || this.disableNotInGradebook;
+				canEditScoreOutOf = (canEditGradebookStatus && inGrades) || this.disableNotInGradebook;
 			}
 			gradeUnits = scoreOutOf === 1 ? this.localize('grades.gradeUnitsSingular') : this.localize('grades.gradeUnits');
 			isUngraded = associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NotInGradebook && !scoreOutOf;
@@ -284,9 +287,9 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 				${canSeeGrades ? html`
 					<div id="grade-info-container">
 						<div id="divider"></div>
-						<d2l-dropdown ?disabled="${!canEditGradebookStatus}">
+						<d2l-dropdown ?disabled="${!this.hasGradeHelp && !canEditGradebookStatus}">
 							<button class="d2l-label-text d2l-grade-info d2l-dropdown-opener ${isGradebookStatusChanging ? 'd2l-blur' : ''}"
-								?disabled="${!canEditGradebookStatus || isGradebookStatusChanging}" }>
+								?disabled="${(!this.hasGradeHelp && !canEditGradebookStatus) || isGradebookStatusChanging}" }>
 								${inGrades ? html`<d2l-icon icon="tier1:grade"></d2l-icon>` : null}
 								<div>${inGrades ? inGradesTerm : notInGradesTerm}</div>
 								<d2l-icon icon="tier1:chevron-down"></d2l-icon>
@@ -295,17 +298,23 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 								<d2l-menu label="${inGrades ? inGradesTerm : notInGradesTerm}">
 									<d2l-menu-item
 										text="${this._createSelectboxGradeItemEnabled ? this.localize('editor.editLinkExisting') : this.localize('editor.chooseFromGrades')}"
+										?disabled=${this.hasGradeHelp && !canEditGradebookStatus}
 										@d2l-menu-item-select="${this._chooseFromGrades}"
 									></d2l-menu-item>
 									${this._addOrRemoveMenuItem()}
 									${this.allowUngraded ? html`<d2l-menu-item
 										text="${this.localize('editor.setUngraded')}"
-										?disabled="${this.disableResetToUngraded}"
+										?disabled="${this.disableResetToUngraded || (this.hasGradeHelp && !canEditGradebookStatus)}"
 										@d2l-menu-item-select="${this._setUngraded}"
+									></d2l-menu-item>` : null}
+									${this.hasGradeHelp ? html`<d2l-menu-item
+										text="${this.localize('grades.gradeOutOfMenuItem')}"
+										@d2l-menu-item-select="${this.open}"
 									></d2l-menu-item>` : null}
 								</d2l-menu>
 							</d2l-dropdown-menu>
 						</d2l-dropdown>
+						${this._renderHelpDialog()}
 						<d2l-activity-grades-dialog
 							href="${this.href}"
 							.token="${this.token}"
@@ -429,19 +438,21 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			return !this.disableNotInGradebook ? html`
 				<d2l-menu-item
 					text="${this._createSelectboxGradeItemEnabled ? this.localize('editor.notInGradebook') : this.localize('editor.removeFromGrades')}"
+					?disabled=${this.hasGradeHelp && !canEditGrades}
 					@d2l-menu-item-select="${this._removeFromGrades}"
 				></d2l-menu-item>
 			` : null;
-		} else if (canEditGrades) {
+		} else {
 			return html`
 				<d2l-menu-item
 					text="${this._createSelectboxGradeItemEnabled ? this.localize('editor.addToGradebook') : this.localize('editor.addToGrades')}"
+					?disabled=${this.hasGradeHelp && !canEditGrades}
 					@d2l-menu-item-select="${this._addToGrades}"
 				></d2l-menu-item>
 			`;
 		}
-		return null;
 	}
+
 	_addToGrades() {
 		this._prefetchGradeCandidates();
 		this._prefetchGradeSchemes();
@@ -517,7 +528,25 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			scoring.setGradeMaxPoints('');
 		}
 	}
-
+	_renderHelpDialog() {
+		return html`
+			<d2l-dialog
+				?opened="${this.opened}"
+				@d2l-dialog-close="${this.handleClose}"
+				title-text="${this.localize('grades.gradeOutOfHelpDialogTitle')}">
+					<div>
+						<p>${this.localize('grades.gradeOutOfHelpDialogParagraph1')}</p>
+						<p>${this.localize('grades.gradeOutOfHelpDialogParagraph2')}</p>
+					</div>
+					<d2l-button
+						data-dialog-action="done"
+						slot="footer"
+						primary>
+						${this.localize('grades.gradeOutOfHelpDialogConfirmationText')}
+					</d2l-button>
+			</d2l-dialog>
+		`;
+	}
 	_setGraded() {
 		this._prefetchGradeCandidates();
 		this._prefetchGradeSchemes();
