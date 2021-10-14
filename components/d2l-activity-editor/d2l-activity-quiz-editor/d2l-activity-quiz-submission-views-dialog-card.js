@@ -61,14 +61,14 @@ class ActivityQuizSubmissionViewsDialogCard
 					padding: 10px 0 20px;
 				}
 
-				.d2l-heading-4 {
+				.d2l-activity-quiz-submission-views-dialog-card-header-text {
 					margin: 0;
 				}
 
 				.d2l-activity-quiz-submission-views-dialog-card-header {
 					background-color: var(--d2l-color-regolith);
 					border-bottom: 1px solid var(--d2l-color-gypsum);
-					padding: 5px 30px;
+					padding: 7px 30px;
 				}
 
 				.d2l-activity-quiz-submission-views-dialog-card-contents {
