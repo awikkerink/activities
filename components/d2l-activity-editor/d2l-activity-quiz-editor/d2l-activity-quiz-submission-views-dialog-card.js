@@ -1,6 +1,6 @@
 import { css, html } from 'lit-element/lit-element.js';
+import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
-import { heading4Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
@@ -21,7 +21,7 @@ class ActivityQuizSubmissionViewsDialogCard
 
 	static get styles() {
 		return [
-			heading4Styles,
+			bodySmallStyles,
 			labelStyles,
 			css`
 				:host {
@@ -46,8 +46,10 @@ class ActivityQuizSubmissionViewsDialogCard
 					padding-top: 30px;
 				}
 
-				.d2l-heading-4 {
-					margin: 0;
+				.d2l-body-small {
+					color: #000000;
+					font-weight: 700;
+					padding: 5px 0;
 				}
 
 				.d2l-activity-quiz-submission-views-dialog-card-header {
@@ -96,7 +98,7 @@ class ActivityQuizSubmissionViewsDialogCard
 
 		return html`
 			<div class="d2l-activity-quiz-submission-views-dialog-card-header">
-				<div class="d2l-heading-4">
+				<div class="d2l-body-small">
 					${this.localize(cardHeader)}
 				</div>
 			</div>
