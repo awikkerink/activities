@@ -136,6 +136,10 @@ export class QuizSubmissionView {
 		this.load(entity);
 	}
 
+	viewId() {
+		return new URL(this.href).pathname.split('submissionviews/')[1];
+	}
+
 	_generateAccordionDropdownOptions() {
 		const options = [
 			{
