@@ -128,25 +128,45 @@ class ActivityQuizSubmissionViewsDialogCard
 		this._editing = false;
 	}
 
+	_renderCardHeader(entity) {
+		const { isPrimaryView } = entity;
+		const cardHeader = isPrimaryView ? 'primaryView' : 'additonalViewComesIntoEffect';
+		return html`
+			<div class="d2l-activity-quiz-submission-views-dialog-card-header">
+				<div class="d2l-activity-quiz-submission-views-dialog-card-header-text">
+					${this.localize(cardHeader)}
+				</div>
+			</div>
+		`;
+	}
+
 	_renderEditView() {
 		const checkedOutEntity = quizStore.get(this._checkedOutHref);
 		if (!checkedOutEntity || !this._checkedOutHref || !this._editHref) return html``;
 
+		const viewsEntity = store.get(checkedOutEntity.submissionViewsHref);
+		if (!viewsEntity) return html``;
+
+		const entity = viewsEntity.getSubmissionViewByHref(this._editHref);
+		if (!entity) return html``;
+
 		return html`
-			<d2l-activity-quiz-submission-views-dialog-card-editor
-				href="${checkedOutEntity.submissionViewsHref}"
-				.token="${this.token}"
-				quiz-href="${this._checkedOutHref}"
-				edit-href="${this._editHref}">
-			</d2l-activity-quiz-submission-views-dialog-card-editor>
-			<div class="d2l-activity-quic-submission-views-dialog-card-editor-footer-buttons">
-				<d2l-button ?disabled="${this.isSaving}">
-					${this.localize('quizSubmissionViewsDialogCardUpdate')}
-				</d2l-button>
-				<d2l-button-subtle
-					text=${this.localize('quizSubmissionViewsDialogCardCancel')}
-					@click="${this._onCancel}">
-				</d2l-button-subtle>
+			${this._renderCardHeader(entity)}
+			<div class="d2l-activity-quiz-submission-views-dialog-card-contents">
+				<d2l-activity-quiz-submission-views-dialog-card-editor
+					href="${checkedOutEntity.submissionViewsHref}"
+					.token="${this.token}"
+					edit-href="${this._editHref}">
+				</d2l-activity-quiz-submission-views-dialog-card-editor>
+				<div class="d2l-activity-quic-submission-views-dialog-card-editor-footer-buttons">
+					<d2l-button ?disabled="${this.isSaving}">
+						${this.localize('quizSubmissionViewsDialogCardUpdate')}
+					</d2l-button>
+					<d2l-button-subtle
+						text=${this.localize('quizSubmissionViewsDialogCardCancel')}
+						@click="${this._onCancel}">
+					</d2l-button-subtle>
+				</div>
 			</div>
 		`;
 	}
@@ -154,18 +174,13 @@ class ActivityQuizSubmissionViewsDialogCard
 	_renderReadonlyView(entity) {
 		const { message, isPrimaryView, showAttemptScore, showQuestionsType, showLearnerResponses, showCorrectAnswers } = entity;
 
-		const cardHeader = isPrimaryView ? 'primaryView' : 'additonalViewComesIntoEffect';
 		const attemptText = showAttemptScore ? 'submissionViewDialogCardAttemptScoreTrueText' : 'submissionViewDialogCardAttemptScoreFalseText';
 		const questionText = showQuestionsType ? 'submissionViewDialogCardShowQuestionsTrueText' : 'submissionViewDialogCardShowQuestionsFalseText';
 		const answersText = showCorrectAnswers ? 'submissionViewDialogCardShowAnswersTrueText' : 'submissionViewDialogCardShowAnswersFalseText';
 		const responseText = showLearnerResponses ? 'submissionViewDialogCardShowResponsesTrueText' : 'submissionViewDialogCardShowResponsesFalseText';
 
 		return html`
-			<div class="d2l-activity-quiz-submission-views-dialog-card-header">
-				<div class="d2l-activity-quiz-submission-views-dialog-card-header-text">
-					${this.localize(cardHeader)}
-				</div>
-			</div>
+			${this._renderCardHeader(entity)}
 			<div class="d2l-activity-quiz-submission-views-dialog-card-contents">
 				<div>
 					<div class="d2l-label-text
