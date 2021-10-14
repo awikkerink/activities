@@ -36,20 +36,20 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 	}
 
 	_onShowAttemptScoreChange(e) {
-		const entity = store.get(this.href);
-		if (!entity) return html``;
+		const view = store.get(this.href);
+		if (!view) return html``;
 		view && view.setShowAttemptScore(e.target.checked);
 	}
 
 	_onShowStatsClassAverageChange(e) {
-		const entity = store.get(this.href);
-		if (!entity) return html``;
+		const view = store.get(this.href);
+		if (!view) return html``;
 		view && view.setShowStatsClassAverage(e.target.checked);
 	}
 
 	_onShowStatsScoreDistributionChange(e) {
-		const entity = store.get(this.href);
-		if (!entity) return html``;
+		const view = store.get(this.href);
+		if (!view) return html``;
 		view && view.setShowStatsScoreDistributionChange(e.target.checked);
 	}
 
@@ -57,7 +57,6 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 		const {
 			canUpdateMessage,
 			message,
-			isMessageRichtext,
 			canUpdateShowAttemptScore,
 			showAttemptScore,
 			canUpdateShowStatsClassAverage,
@@ -71,7 +70,7 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewMessageHeader')}
 					</div>
-					<i>html-editor or text editor goes here!</i>
+					<textarea ?disabled="${!canUpdateMessage}">TEMPORARY - ${message}</textarea>
 				</div>
 				<div>
 					<div class="d2l-label-text">

@@ -36,6 +36,17 @@ class ActivityQuizSubmissionViewsEditor
 		`;
 	}
 
+	_renderCards(entity) {
+		const linkedSubmissionViews = entity && entity.linkedSubmissionViews;
+		if (!linkedSubmissionViews) return html``;
+
+		return html`
+			${linkedSubmissionViews.map(view => html`
+				<d2l-activity-quiz-submission-views-dialog-card href="${view.href}" quiz-href="${this.quizHref}" .token="${this.token}"></d2l-activity-quiz-submission-views-dialog-card>
+			`)}
+		`;
+	}
+
 	_renderDescriptionText() {
 		return html`
 			<div>
@@ -68,17 +79,6 @@ class ActivityQuizSubmissionViewsEditor
 					${this.localize('submissionViewsHelpDialogConfirmation')}
 				</d2l-button>
 			</d2l-dialog>
-		`;
-	}
-
-	_renderCards(entity) {
-		const linkedSubmissionViews = entity && entity.linkedSubmissionViews;
-		if (!linkedSubmissionViews) return html``;
-
-		return html`
-			${linkedSubmissionViews.map(view => html`
-				<d2l-activity-quiz-submission-views-dialog-card href="${view.href}" quiz-href="${this.quizHref}" .token="${this.token}"></d2l-activity-quiz-submission-views-dialog-card>
-			`)}
 		`;
 	}
 }

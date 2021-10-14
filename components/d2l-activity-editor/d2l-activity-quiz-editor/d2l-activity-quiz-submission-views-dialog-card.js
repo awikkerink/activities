@@ -1,7 +1,7 @@
 import './d2l-activity-quiz-submission-views-dialog-card-editor.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { heading4Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
-import { shared as quizStore, sharedSubmissionViews as submissionViewsStore, sharedSubmissionView as store } from './state/quiz-store';
+import { shared as quizStore, sharedSubmissionView as store, sharedSubmissionViews as submissionViewsStore } from './state/quiz-store';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -84,6 +84,11 @@ class ActivityQuizSubmissionViewsDialogCard
 		`;
 	}
 
+	_onCancel() {
+		this._editHref = '';
+		this._editing = false;
+	}
+
 	async _onClickEdit() {
 		const viewEntity = store.get(this.href);
 		const viewId = viewEntity.viewId();
@@ -99,11 +104,6 @@ class ActivityQuizSubmissionViewsDialogCard
 		await store.fetch(this._editHref);
 
 		this._editing = true;
-	}
-
-	_onCancel() {
-		this._editHref = '';
-		this._editing = false;
 	}
 
 	_renderCardHeader(entity) {
