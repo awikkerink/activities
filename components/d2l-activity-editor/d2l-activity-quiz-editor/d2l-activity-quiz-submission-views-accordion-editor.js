@@ -1,4 +1,5 @@
 import '@brightspace-ui/core/components/colors/colors.js';
+import '@brightspace-ui/core/components/icons/icon.js';
 import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
@@ -23,18 +24,33 @@ class ActivityQuizSubmissionViewsAccordionEditor
 				.d2l-label-text {
 					padding-bottom: 10px;
 				}
+
 				.d2l-activity-quiz-submission-views-accordion-editor-tile {
 					border: 1px solid var(--d2l-color-gypsum);
 					border-radius: 6px;
 					margin-bottom: 10px;
-					padding: 0.5rem;
+					padding: 7px 0.5rem 0.5rem;
+					position: relative;
 				}
+
 				.d2l-activity-quiz-submission-views-accordion-editor-primary-container {
 					padding-bottom: 10px;
 				}
+
 				#submission-view-editor {
 					margin-bottom: 1rem;
 					width: 100%;
+				}
+
+				.d2l-activity-quiz-submission-views-accordion-editor-remove-view-button {
+					position: absolute;
+					right: 0;
+					top: 0;
+				}
+
+				:host([dir="rtl"]) .d2l-activity-quiz-submission-views-accordion-editor-remove-view-button {
+					left: 0;
+					right: initial;
 				}
 			`
 		];
@@ -55,6 +71,16 @@ class ActivityQuizSubmissionViewsAccordionEditor
 			${submissionViews.map(view => html`${this._renderSubmissionView(view)}`)}
 		`;
 
+	}
+
+	async _deleteView(e) {
+		const viewHref = e.target.dataset.key;
+		const viewsEntity = store.get(this.href);
+		const entity = viewsEntity && viewsEntity.getSubmissionViewByHref(viewHref);
+		entity && entity.deleteSubmissionView();
+
+		// Optimistic UI - Remove view from collection
+		viewsEntity.removeView(viewHref);
 	}
 
 	_generateDropdown(view) {
@@ -129,21 +155,79 @@ class ActivityQuizSubmissionViewsAccordionEditor
 	}
 
 	_renderTile(view) {
-		// WIP
-		let title;
-		if (view.isPrimaryView) {
-			title = this.localize('primaryView');
-		} else {
-			title = this.localize('additonalViewComesIntoEffect');
-		}
+		const { isPrimaryView, canDeleteSubmissionView } = view;
+		const title = isPrimaryView ? this.localize('primaryView') : this.localize('additonalViewComesIntoEffect');
+
 		return html`
 			<div class="d2l-activity-quiz-submission-views-accordion-editor-tile">
+				${ canDeleteSubmissionView ? html`
+					<d2l-button-icon
+						class="d2l-activity-quiz-submission-views-accordion-editor-remove-view-button"
+						text="${this.localize('deleteViewWithTitle', 'message', view.message)}"
+						icon="tier1:close-small"
+						data-key="${view.href}"
+						@click="${this._deleteView}">
+					</d2l-button-icon>
+				` : html`` }
 				<div>
 					<span class="d2l-label-text">${title}: </span>
-					<span class="d2l-body-small"></span>
+					${isPrimaryView ? html`` : html`<div class="d2l-body-small"></div>`}
+					<div class="d2l-body-small">${this._tileDescription(view)}</div>
 				</div>
-		</div>
+			</div>
 		`;
+	}
+
+	_tileDescription(view) {
+		function _noQuestionsTileDescription(view) {
+			return view.showAttemptScore ? 'gradeVisibleNoQuestions' : 'noQuestions';
+		}
+
+		function _allQuestionsTileDescription(view) {
+			if (view.showAttemptScore && view.showLearnerResponses) {
+				return view.showCorrectAnswers ? 'gradeVisibleAllQuestionsWithCorrectAnswersLearnersResponses' : 'gradeVisibleAllQuestionsLearnersResponses';
+			} else if (view.showAttemptScore) {
+				return view.showCorrectAnswers ? 'gradeVisibleAllQuestionsWithCorrectAnswers' : 'gradeVisibleAllQuestions';
+			} else if (view.showLearnerResponses) {
+				return view.showCorrectAnswers ? 'allQuestionsWithCorrectAnswersLearnersResponses' : 'allQuestionsLearnersResponses';
+			} else {
+				return view.showCorrectAnswers ? 'allQuestionsWithCorrectAnswers' : 'allQuestions';
+			}
+		}
+
+		function _incorrectQuestionsTileDescription(view) {
+			if (view.showAttemptScore && view.showLearnerResponses) {
+				return view.showCorrectAnswers ? 'gradeVisibleIncorrectQuestionsWithCorrectAnswersLearnersResponses' : 'gradeVisibleIncorrectQuestionsLearnersResponses';
+			} else if (view.showAttemptScore) {
+				return view.showCorrectAnswers ? 'gradeVisibleIncorrectQuestionsWithCorrectAnswers' : 'gradeVisibleIncorrectQuestions';
+			} else if (view.showLearnerResponses) {
+				return view.showCorrectAnswers ? 'incorrectQuestionsWithCorrectAnswersLearnersResponses' : 'incorrectQuestionsLearnersResponses';
+			} else {
+				return view.showCorrectAnswers ? 'incorrectQuestionsWithCorrectAnswers' : 'incorrectQuestions';
+			}
+		}
+
+		function _correctQuestionsTileDescription(view) {
+			if (view.showAttemptScore && view.showLearnerResponses) {
+				return view.showCorrectAnswers ? 'gradeVisibleCorrectQuestionsWithCorrectAnswersLearnersResponses' : 'gradeVisibleCorrectQuestionsLearnersResponses';
+			} else if (view.showAttemptScore) {
+				return view.showCorrectAnswers ? 'gradeVisibleCorrectQuestionsWithCorrectAnswers' : 'gradeVisibleCorrectQuestions';
+			} else if (view.showLearnerResponses) {
+				return view.showCorrectAnswers ? 'correctQuestionsWithCorrectAnswersLearnersResponses' : 'correctQuestionsLearnersResponses';
+			} else {
+				return view.showCorrectAnswers ? 'correctQuestionsWithCorrectAnswers' : 'correctQuestions';
+			}
+		}
+
+		if (view.hideQuestions) {
+			return this.localize(_noQuestionsTileDescription(view));
+		} else if (view.showQuestionsType === Classes.quizzes.submissionView.showQuestions.allQuestions) {
+			return this.localize(_allQuestionsTileDescription(view));
+		} else if (view.showQuestionsType === Classes.quizzes.submissionView.showQuestions.incorrectQuestions) {
+			return this.localize(_incorrectQuestionsTileDescription(view));
+		} else if (view.showQuestionsType === Classes.quizzes.submissionView.showQuestions.correctQuestions) {
+			return this.localize(_correctQuestionsTileDescription(view));
+		}
 	}
 }
 
