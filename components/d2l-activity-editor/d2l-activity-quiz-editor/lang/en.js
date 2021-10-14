@@ -144,7 +144,7 @@ export default {
 	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
 	"submissionViewHeading2": "and", // Label for submission view dropdown in submission view container.
 	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
-	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
+	"submissionViewButtonText": "Customize quiz results displays", // Text for the button at the bottom of the submission view container.
 	"gradeOutOf": "Grade Out Of", // Label for the grade-out-of field when creating/editing an activity
 	"submissionViewsHelpDialogTitle": "Information: Quiz results display", // Title for help dialog on submission view customization screen.
 	"submissionViewsHelpDialogParagraph1": "Quiz results display determine how learners can view their published quiz attempt results, both immediately following submission, or later when reviewing their attempt.", // Paragraph 1 for help dialog on submission view customization screen.
