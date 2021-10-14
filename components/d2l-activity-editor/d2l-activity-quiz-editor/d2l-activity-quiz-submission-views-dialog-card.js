@@ -1,7 +1,7 @@
 import './d2l-activity-quiz-submission-views-dialog-card-editor.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { heading4Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
-import { shared as quizStore, sharedSubmissionViews as store } from './state/quiz-store';
+import { shared as quizStore, sharedSubmissionViews as submissionViewsStore, sharedSubmissionView as store } from './state/quiz-store';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -17,15 +17,7 @@ class ActivityQuizSubmissionViewsDialogCard
 				reflect: true,
 				type: String
 			},
-			viewHref: {
-				attribute: 'view-href',
-				reflect: true,
-				type: String
-			},
 			_editHref: {
-				type: String
-			},
-			_checkedOutHref: {
 				type: String
 			},
 			_editing: {
@@ -93,31 +85,30 @@ class ActivityQuizSubmissionViewsDialogCard
 	}
 
 	async _onClickEdit() {
-		const viewsEntity = store.get(this.href);
-		const viewEntity = viewsEntity.getSubmissionViewByHref(this.viewHref);
+		const viewEntity = store.get(this.href);
 		const viewId = viewEntity.viewId();
 
 		const quizEntity = quizStore.get(this.quizHref);
-		this._checkedOutHref = await quizEntity.checkout(quizStore, true);
+		const checkedOutHref = await quizEntity.checkout(quizStore, true);
 
-		const checkedOutEntity = quizStore.get(this._checkedOutHref);
-		const submissionViewsEntity = await store.fetch(checkedOutEntity.submissionViewsHref);
+		const checkedOutEntity = quizStore.get(checkedOutHref);
+		const submissionViewsEntity = await submissionViewsStore.fetch(checkedOutEntity.submissionViewsHref);
 
-		const matchingEditView = submissionViewsEntity.submissionViews.find(view => view.viewId() === viewId);
+		const matchingEditView = submissionViewsEntity.linkedSubmissionViews.find(view => view.viewId() === viewId);
 		this._editHref = matchingEditView.href;
+		await store.fetch(this._editHref);
 
 		this._editing = true;
 	}
 
 	_onCancel() {
-		this._checkedOutHref = '';
 		this._editHref = '';
 		this._editing = false;
 	}
 
 	_renderCardHeader(entity) {
 		const { isPrimaryView } = entity;
-		const cardHeader = isPrimaryView ? 'primaryView' : 'additonalViewComesIntoEffect';
+		const cardHeader = isPrimaryView ? 'primaryView' : 'additionalViewComesIntoEffect';
 		return html`
 			<div class="d2l-activity-quiz-submission-views-dialog-card-header">
 				<div class="d2l-activity-quiz-submission-views-dialog-card-header-text d2l-heading-4">
@@ -128,21 +119,15 @@ class ActivityQuizSubmissionViewsDialogCard
 	}
 
 	_renderEditView() {
-		const checkedOutEntity = this._checkedOutHref && quizStore.get(this._checkedOutHref);
-
-		const viewsHref = checkedOutEntity && checkedOutEntity.submissionViewsHref;
-		const viewsEntity = viewsHref && store.get(viewsHref);
-
-		const entity = viewsEntity && this._editHref && viewsEntity.getSubmissionViewByHref(this._editHref);
+		const entity = this._editHref && store.get(this._editHref);
 		if (!entity) return html``;
 
 		return html`
 			${this._renderCardHeader(entity)}
 			<div class="d2l-activity-quiz-submission-views-dialog-card-contents">
 				<d2l-activity-quiz-submission-views-dialog-card-editor
-					href="${viewsHref}"
-					.token="${this.token}"
-					edit-href="${this._editHref}">
+					href="${this._editHref}"
+					.token="${this.token}">
 				</d2l-activity-quiz-submission-views-dialog-card-editor>
 				<div class="d2l-activity-quiz-submission-views-dialog-card-footer-buttons">
 					<d2l-button ?disabled="${this.isSaving}">
@@ -158,8 +143,7 @@ class ActivityQuizSubmissionViewsDialogCard
 	}
 
 	_renderReadonlyView() {
-		const viewsEntity = this.href && store.get(this.href);
-		const entity = viewsEntity && this.viewHref && viewsEntity.getSubmissionViewByHref(this.viewHref);
+		const entity = store.get(this.href);
 		if (!entity) return html``;
 
 		const { message, isPrimaryView, showAttemptScore, showQuestionsType, showLearnerResponses, showCorrectAnswers } = entity;

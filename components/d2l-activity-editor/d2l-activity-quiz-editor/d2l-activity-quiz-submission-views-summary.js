@@ -14,8 +14,8 @@ class ActivityQuizSubmissionViewsSummary
 
 	render() {
 		const entity = store.get(this.href);
-		if (!entity || !entity.submissionViews) return html``;
-		return html`${this.localize('submissionViewsAccordionSummary', 'count', entity.submissionViews.length)}`;
+		if (!entity || !entity.linkedSubmissionViews) return html``;
+		return html`${this.localize('submissionViewsAccordionSummary', 'count', entity.linkedSubmissionViews.length)}`;
 	}
 }
 

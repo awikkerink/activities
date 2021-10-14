@@ -6,20 +6,10 @@ import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
-import { sharedSubmissionViews as store } from './state/quiz-store';
+import { sharedSubmissionView as store } from './state/quiz-store';
 
 class ActivityQuizSubmissionViewsDialogCardEditor
 	extends ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
-
-	static get properties() {
-		return {
-			editHref: {
-				attribute: 'edit-href',
-				reflect: true,
-				type: String
-			}
-		};
-	}
 
 	static get styles() {
 		return [
@@ -39,30 +29,27 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 	}
 
 	render() {
-		const viewsEntity = store.get(this.href);
-		if (!viewsEntity) return html``;
-
-		const entity = viewsEntity.getSubmissionViewByHref(this.editHref);
+		const entity = store.get(this.href);
 		if (!entity) return html``;
 
 		return this._renderEditView(entity);
 	}
 
 	_onShowAttemptScoreChange(e) {
-		const viewsEntity = store.get(this.href);
-		const view = viewsEntity && viewsEntity.getSubmissionViewByHref(this.editHref);
+		const entity = store.get(this.href);
+		if (!entity) return html``;
 		view && view.setShowAttemptScore(e.target.checked);
 	}
 
 	_onShowStatsClassAverageChange(e) {
-		const viewsEntity = store.get(this.href);
-		const view = viewsEntity && viewsEntity.getSubmissionViewByHref(this.editHref);
+		const entity = store.get(this.href);
+		if (!entity) return html``;
 		view && view.setShowStatsClassAverage(e.target.checked);
 	}
 
 	_onShowStatsScoreDistributionChange(e) {
-		const viewsEntity = store.get(this.href);
-		const view = viewsEntity && viewsEntity.getSubmissionViewByHref(this.editHref);
+		const entity = store.get(this.href);
+		if (!entity) return html``;
 		view && view.setShowStatsScoreDistributionChange(e.target.checked);
 	}
 

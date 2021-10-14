@@ -39,7 +39,7 @@ class ActivityQuizSubmissionViewsContainer
 
 		const {
 			submissionViewsHref
-		} = entity || {};
+		} = entity;
 
 		return html`
 			<d2l-activity-quiz-submission-views-accordion-editor

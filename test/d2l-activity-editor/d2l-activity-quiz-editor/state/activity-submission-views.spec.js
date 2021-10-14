@@ -62,22 +62,22 @@ describe('Activity Submission Views', function() {
 				const submissionViews = new QuizSubmissionViews('http://1', 'token');
 				await submissionViews.fetch();
 
-				submissionViews.submissionViews = views;
+				submissionViews.linkedSubmissionViews = views;
 
-				expect(submissionViews.submissionViews.length).to.equal(2);
+				expect(submissionViews.linkedSubmissionViews.length).to.equal(2);
 				submissionViews.removeView('already removed');
-				expect(submissionViews.submissionViews.length).to.equal(2);
+				expect(submissionViews.linkedSubmissionViews.length).to.equal(2);
 			});
 
 			it('removes view from collection if view href is found', async() => {
 				const submissionViews = new QuizSubmissionViews('http://1', 'token');
 				await submissionViews.fetch();
 
-				submissionViews.submissionViews = views;
+				submissionViews.linkedSubmissionViews = views;
 
-				expect(submissionViews.submissionViews.length).to.equal(2);
+				expect(submissionViews.linkedSubmissionViews.length).to.equal(2);
 				submissionViews.removeView('http://200');
-				expect(submissionViews.submissionViews.length).to.equal(1);
+				expect(submissionViews.linkedSubmissionViews.length).to.equal(1);
 			});
 		});
 	});

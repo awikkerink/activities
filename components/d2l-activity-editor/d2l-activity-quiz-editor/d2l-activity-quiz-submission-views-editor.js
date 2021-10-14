@@ -72,12 +72,12 @@ class ActivityQuizSubmissionViewsEditor
 	}
 
 	_renderCards(entity) {
-		const submissionViews = entity && entity.submissionViews;
-		if (!submissionViews) return html``;
+		const linkedSubmissionViews = entity && entity.linkedSubmissionViews;
+		if (!linkedSubmissionViews) return html``;
 
 		return html`
-			${submissionViews.map(view => html`
-				<d2l-activity-quiz-submission-views-dialog-card href="${this.href}" quiz-href="${this.quizHref}" view-href="${view.href}" .token="${this.token}"></d2l-activity-quiz-submission-views-dialog-card>
+			${linkedSubmissionViews.map(view => html`
+				<d2l-activity-quiz-submission-views-dialog-card href="${view.href}" quiz-href="${this.quizHref}" .token="${this.token}"></d2l-activity-quiz-submission-views-dialog-card>
 			`)}
 		`;
 	}
