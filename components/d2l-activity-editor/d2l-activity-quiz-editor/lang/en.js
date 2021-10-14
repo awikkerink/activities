@@ -159,6 +159,21 @@ export default {
 	"submissionViewsAccordionDropdownAllQuestionsWithoutCorrectAnswers": "All questions, without correct answers", // Option in dropdown to decide what to display to learner.
 	"primaryView": "Primary View", // Label
 	"additonalViewComesIntoEffect": "Additional view comes into effect", // Label
-	"submissionViewsAccordionSummary" : "{count, plural, =1 {1 result display} other {{count} result displays}}", // number of submission views summary shown in collapsed accordion
+	"submissionViewDialogCardAttemptScoreTrueText": "Attempt grade displayed for evaluated questions", // Submission view dialog card, text appearing when attempted grades are displayed.
+	"submissionViewDialogCardAttemptScoreFalseText": "Not displayed", // Submission view dialog card, text appearing when attempted grades are not displayed.
+	"submissionViewDialogCardShowQuestionsTrueText": "All questions displayed", // Submission view dialog card, text appearing when all questions are displayed.
+	"submissionViewDialogCardShowQuestionsFalseText": "Incorrect only displayed", // Submission view dialog card, text appearing when incorrect questions are displayed.
+	"submissionViewDialogCardShowAnswersTrueText": "All answers displayed", // Submission view dialog card, text appearing when all answers are displayed.
+	"submissionViewDialogCardShowAnswersFalseText": "Not displayed", // Submission view dialog card, text appearing when not all answers are displayed.
+	"submissionViewDialogCardShowResponsesTrueText": "Displayed", // Submission view dialog card, text appearing when learners responses are displayed.
+	"submissionViewDialogCardShowResponsesFalseText": "Not displayed", // Submission view dialog card, text appearing when learners responses are not displayed.
+	"submissionViewDialogCardSubmissionViewMessageHeader": "Message", // Submission view dialog card, message heading.
+	"submissionViewDialogCardSubmissionViewGradeHeader": "Grade", // Submission view dialog card, grade heading.
+	"submissionViewDialogCardSubmissionViewQuestionsHeader": "Questions", // Submission view dialog card, questions heading.
+	"submissionViewDialogCardSubmissionViewAnswerHeader" : "Answers", // Submission view dialog card, answers heading.
+	"submissionViewDialogCardSubmissionViewResponseHeader": "Learner's Responses", // Submission view dialog card, learners responses heading.
+	"submissionViewDialogCardButtonOptionEditView": "Edit View", // Submission view dialog card, OK button text.
+	"submissionViewDialogCardButtonOptionDeleteView": "Delete View", // Submission view dialog card, Cancel button text.
+	"submissionViewsAccordionSummary" : "{count, plural, =1 {1 result display} other {{count} result displays}}" // number of submission views summary shown in collapsed accordion
 };
 
