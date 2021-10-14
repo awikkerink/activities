@@ -144,7 +144,7 @@ export default {
 	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
 	"submissionViewHeading2": "and", // Label for submission view dropdown in submission view container.
 	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
-	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
+	"submissionViewButtonText": "Customize quiz results displays", // Text for the button at the bottom of the submission view container.
 	"gradeOutOf": "Grade Out Of", // Label for the grade-out-of field when creating/editing an activity
 	"submissionViewsHelpDialogTitle": "Information: Quiz results display", // Title for help dialog on submission view customization screen.
 	"submissionViewsHelpDialogParagraph1": "Quiz results display determine how learners can view their published quiz attempt results, both immediately following submission, or later when reviewing their attempt.", // Paragraph 1 for help dialog on submission view customization screen.
@@ -174,11 +174,6 @@ export default {
 	"submissionViewDialogCardSubmissionViewResponseHeader": "Learner's Responses", // Submission view dialog card, learners responses heading.
 	"submissionViewDialogCardButtonOptionEditView": "Edit View", // Submission view dialog card, OK button text.
 	"submissionViewDialogCardButtonOptionDeleteView": "Delete View", // Submission view dialog card, Cancel button text.
-	"gradeOutOfAccessibleHelpText": "Get help on - Grade Out Of", // accessible help text for gradeOutOf question mark button
-	"gradeOutOfHelpDialogTitle": "Information: Grade Out Of", // title that appears when the gradeOutOf help dialog is rendered
-	"gradeOutOfHelpDialogConfirmationText": "OK", // text that appears on the gradeOutOf help dialog confirmation button
-	"gradeOutOfHelpDialogParagraph1": "If the quiz is \"Not in Gradebook\", Grade Out Of reflects the total points of the questions.", // content for paragraph 1 of gradeOutOf help dialog
-	"gradeOutOfHelpDialogParagraph2": "If the quiz is \"In Gradebook\", Grade Out Of is the maximum points or weight in the Grades tool.", // content for paragraph 2 of gradeOutOf help dialog
 	"submissionViewsAccordionSummary" : "{count, plural, =1 {1 result display} other {{count} result displays}}", // number of submission views summary shown in collapsed accordion
 	"submissionViewsDialogEditorGradeCheckbox": "Display attempt grade for evaluated questions", // submission views dialog editor edit display attempt score checkbox
 	"statistics": "Statistics", //Label

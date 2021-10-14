@@ -1,8 +1,8 @@
 import './d2l-activity-quiz-submission-views-dialog-card-editor.js';
 import { css, html } from 'lit-element/lit-element.js';
+import { heading4Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { shared as quizStore, sharedSubmissionViews as store } from './state/quiz-store';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
-import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
@@ -36,6 +36,7 @@ class ActivityQuizSubmissionViewsDialogCard
 
 	static get styles() {
 		return [
+			heading4Styles,
 			labelStyles,
 			css`
 				:host {
@@ -60,15 +61,14 @@ class ActivityQuizSubmissionViewsDialogCard
 					padding: 10px 0 20px;
 				}
 
+				.d2l-heading-4 {
+					margin: 0;
+				}
+
 				.d2l-activity-quiz-submission-views-dialog-card-header {
 					background-color: var(--d2l-color-regolith);
 					border-bottom: 1px solid var(--d2l-color-gypsum);
 					padding: 5px 30px;
-				}
-
-				.d2l-activity-quiz-submission-views-dialog-card-header-text {
-					font-weight: 700;
-					font-size: 80%;
 				}
 
 				.d2l-activity-quiz-submission-views-dialog-card-contents {
@@ -120,7 +120,7 @@ class ActivityQuizSubmissionViewsDialogCard
 		const cardHeader = isPrimaryView ? 'primaryView' : 'additonalViewComesIntoEffect';
 		return html`
 			<div class="d2l-activity-quiz-submission-views-dialog-card-header">
-				<div class="d2l-activity-quiz-submission-views-dialog-card-header-text">
+				<div class="d2l-activity-quiz-submission-views-dialog-card-header-text d2l-heading-4">
 					${this.localize(cardHeader)}
 				</div>
 			</div>
@@ -172,12 +172,15 @@ class ActivityQuizSubmissionViewsDialogCard
 		return html`
 			${this._renderCardHeader(entity)}
 			<div class="d2l-activity-quiz-submission-views-dialog-card-contents">
-				<div>
-					<div class="d2l-label-text d2l-activity-quiz-submission-views-dialog-card-message-header">
-						${this.localize('submissionViewDialogCardSubmissionViewMessageHeader')}
+				${message ? html`
+					<div>
+						<div class="d2l-label-text
+						d2l-activity-quiz-submission-views-dialog-card-message-header">
+							${this.localize('submissionViewDialogCardSubmissionViewMessageHeader')}
+						</div>
+						<div>${message}</div>
 					</div>
-					<div>${message}</div>
-				</div>
+					` : html``}
 				<div>
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewGradeHeader')}
