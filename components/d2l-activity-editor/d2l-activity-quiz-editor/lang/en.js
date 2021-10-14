@@ -174,6 +174,32 @@ export default {
 	"submissionViewDialogCardSubmissionViewResponseHeader": "Learner's Responses", // Submission view dialog card, learners responses heading.
 	"submissionViewDialogCardButtonOptionEditView": "Edit View", // Submission view dialog card, OK button text.
 	"submissionViewDialogCardButtonOptionDeleteView": "Delete View", // Submission view dialog card, Cancel button text.
-	"submissionViewsAccordionSummary" : "{count, plural, =1 {1 result display} other {{count} result displays}}" // number of submission views summary shown in collapsed accordion
+	"submissionViewsAccordionSummary" : "{count, plural, =1 {1 result display} other {{count} result displays}}", // number of submission views summary shown in collapsed accordion
+	"allQuestionsWithCorrectAnswers": "Grade invisible, show all questions with correct answers", // summarize list of selected options in comma separated list
+	"allQuestions": "Grade invisible, show all questions", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsWithCorrectAnswers": "Grade visible, show all questions with correct answers", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestions": "Grade visible, show all questions", // summarize list of selected options in comma separated list
+	"allQuestionsWithCorrectAnswersLearnersResponses": "Grade invisible, show all questions with correct answers, and learner's responses", // summarize list of selected options in comma separated list
+	"allQuestionsLearnersResponses": "Grade invisible, show all questions, and learner's responses", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsWithCorrectAnswersLearnersResponses": "Grade visible, show all questions with correct answers, and learner's responses", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsLearnersResponses": "Grade visible, show all questions, and learner's responses", // summarize list of selected options in comma separated list
+	"incorrectQuestionsWithCorrectAnswers": "Grade invisible, show incorrect questions only with correct answers", // summarize list of selected options in comma separated list
+	"incorrectQuestions": "Grade invisible, show incorrect questions only", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsWithCorrectAnswers": "Grade visible, show incorrect questions only with correct answers", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestions": "Grade visible, show incorrect questions only", // summarize list of selected options in comma separated list
+	"incorrectQuestionsWithCorrectAnswersLearnersResponses": "Grade invisible, show incorrect questions only with correct answers, and learner's responses", // summarize list of selected options in comma separated list
+	"incorrectQuestionsLearnersResponses": "Grade invisible, show incorrect questions only, and learner's responses", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsWithCorrectAnswersLearnersResponses": "Grade visible, show incorrect questions only with correct answers, and learner's responses", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsLearnersResponses": "Grade visible, show incorrect questions only, and learner's responses", // summarize list of selected options in comma separated list
+	"correctQuestionsWithCorrectAnswers": "Grade invisible, show correct questions only with correct answers", // summarize list of selected options in comma separated list
+	"correctQuestions": "Grade invisible, show correct questions only", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsWithCorrectAnswers": "Grade visible, show correct questions only with correct answers", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestions": "Grade visible, show correct questions only", // summarize list of selected options in comma separated list
+	"correctQuestionsWithCorrectAnswersLearnersResponses": "Grade invisible, show correct questions only with correct answers, and learner's responses", // summarize list of selected options in comma separated list
+	"correctQuestionsLearnersResponses": "Grade invisible, show correct questions only, and learner's responses", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsWithCorrectAnswersLearnersResponses": "Grade visible, show correct questions only with correct answers, and learner's responses", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsLearnersResponses": "Grade visible, show correct questions only, and learner's responses", // summarize list of selected options in comma separated list
+	"noQuestions": "Grade invisible, don't show questions", // summarize list of selected options in comma separated list
+	"gradeVisibleNoQuestions": "Grade visible, don't show questions", // summarize list of selected options in comma separated list
+	"deleteViewWithTitle": "Delete view: {message}" // aria-label for delete view button with view message/title
 };
-
