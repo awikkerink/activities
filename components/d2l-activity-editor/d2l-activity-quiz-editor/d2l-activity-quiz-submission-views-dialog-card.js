@@ -31,7 +31,7 @@ class ActivityQuizSubmissionViewsDialogCard
 			heading4Styles,
 			labelStyles,
 			css`
-				:host {
+				.d2l-activity-quiz-submission-views-dialog-card {
 					border: 1px solid var(--d2l-color-gypsum);
 					border-radius: 6px;
 					display: inline-block;
@@ -79,8 +79,14 @@ class ActivityQuizSubmissionViewsDialogCard
 	}
 
 	render() {
+		const href = this._editing ? this._editHref : this.href;
+		const entity = store.get(href);
+		if (!entity) return html``;
+
 		return html`
-			${this._editing ? this._renderEditView() : this._renderReadonlyView()}
+			<div class="d2l-activity-quiz-submission-views-dialog-card">
+				${this._editing ? this._renderEditView(entity) : this._renderReadonlyView(entity)}
+			</div>
 		`;
 	}
 
@@ -118,10 +124,7 @@ class ActivityQuizSubmissionViewsDialogCard
 		`;
 	}
 
-	_renderEditView() {
-		const entity = this._editHref && store.get(this._editHref);
-		if (!entity) return html``;
-
+	_renderEditView(entity) {
 		return html`
 			${this._renderCardHeader(entity)}
 			<div class="d2l-activity-quiz-submission-views-dialog-card-contents">
@@ -142,10 +145,7 @@ class ActivityQuizSubmissionViewsDialogCard
 		`;
 	}
 
-	_renderReadonlyView() {
-		const entity = store.get(this.href);
-		if (!entity) return html``;
-
+	_renderReadonlyView(entity) {
 		const { message, isPrimaryView, showAttemptScore, showQuestionsType, showLearnerResponses, showCorrectAnswers } = entity;
 
 		const attemptText = showAttemptScore ? 'submissionViewDialogCardAttemptScoreTrueText' : 'submissionViewDialogCardAttemptScoreFalseText';
