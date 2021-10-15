@@ -68,19 +68,18 @@ export class QuizSubmissionView {
 
 	setMessage(value) {
 		this.message = value;
-		this.updateProperty(() => this._entity.setMessage(value));
+		return this.updateProperty(() => this._entity.setMessage(value));
 	}
 
 	setShowAttemptScore(value) {
 		this.showAttemptScore = value;
-		this.updateProperty(() => this._entity.setShowAttemptScore(value));
+		return this.updateProperty(() => this._entity.setShowAttemptScore(value));
 	}
 
 	setShowQuestionsAndCorrectAnswers(value) {
 		if (value === accordionDropdownValues.noQuestions) {
 			this.hideQuestions = true;
-			this.updateProperty(() => this._entity.setHideShowQuestions(true));
-			return;
+			return this.updateProperty(() => this._entity.setHideShowQuestions(true));
 		}
 
 		let newShowQuestionsValue;
@@ -108,17 +107,17 @@ export class QuizSubmissionView {
 
 		this.showQuestionsType = newShowQuestionsValue;
 		this.showCorrectAnswers = newShowCorrectAnswersValue;
-		this.updateProperty(() => this._entity.setShowQuestionsAndCorrectAnswers(newShowQuestionsValue, newShowCorrectAnswersValue));
+		return this.updateProperty(() => this._entity.setShowQuestionsAndCorrectAnswers(newShowQuestionsValue, newShowCorrectAnswersValue));
 	}
 
 	setShowStatsClassAverage(value) {
 		this.showStatsClassAverage = value;
-		this.updateProperty(() => this._entity.setShowStatsClassAverage(value));
+		return this.updateProperty(() => this._entity.setShowStatsClassAverage(value));
 	}
 
 	setShowStatsScoreDistribution(value) {
 		this.showStatsScoreDistribution = value;
-		this.updateProperty(() => this._entity.setShowStatsScoreDistribution(value));
+		return this.updateProperty(() => this._entity.setShowStatsScoreDistribution(value));
 	}
 
 	async updateProperty(updateFunc) {

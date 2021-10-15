@@ -27,12 +27,12 @@ class ActivityQuizSubmissionViewsContainer
 
 	connectedCallback() {
 		super.connectedCallback();
-		this.addEventListener('d2l-activity-quiz-submission-views-accordion-editor-tile-removed', this._onTileRemoved);
+		this.addEventListener('d2l-activity-quiz-submission-views-accordion-editor-changed', this._refetchQuiz);
 	}
 
 	disconnectedCallback() {
 		super.disconnectedCallback();
-		this.removeEventListener('d2l-activity-quiz-submission-views-accordion-editor-tile-removed', this._onTileRemoved);
+		this.removeEventListener('d2l-activity-quiz-submission-views-accordion-editor-changed', this._refetchQuiz);
 	}
 
 	render() {
@@ -43,11 +43,14 @@ class ActivityQuizSubmissionViewsContainer
 		`;
 	}
 
-	async _onTileRemoved(e) {
-		if (!e || !e.detail || !e.detail.promise) return;
+	async _refetchQuiz(e) {
+		if (e && e.detail && e.detail.promise) {
+			await e.detail.promise;
+		}
 
-		await e.detail.promise;
 		const entity = store.get(this.checkedOutHref);
+
+		// Refetch entity to refresh check-in action
 		entity && entity.fetch(true);
 	}
 
