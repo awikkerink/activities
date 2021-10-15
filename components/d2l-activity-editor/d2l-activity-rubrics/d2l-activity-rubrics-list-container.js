@@ -125,12 +125,14 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 
 	_attachRubric() {
 		const entity = associationStore.get(this.href);
+		const associations = associationStore.get(this.associationsHref);
 
 		if (!entity) {
 			return;
 		}
 
 		entity.addAssociations([this._newlyCreatedPotentialAssociation]);
+		associations.addAssociations([this._newlyCreatedPotentialAssociation]);
 
 		this._closeEditNewAssociationDialog();
 		announce(this.localize('rubrics.txtRubricAdded'));
@@ -140,9 +142,12 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 	}
 	_closeAttachRubricDialog(e) {
 		const entity = associationStore.get(this.href);
+		const associations = associationStore.get(this.associationsHref);
+
 		if (e && e.detail && e.detail.associations) {
 
 			entity.addAssociations(e.detail.associations);
+			associations.addAssociations(e.detail.associations);
 
 			announce(this.localize('rubrics.txtRubricAdded'));
 		}
