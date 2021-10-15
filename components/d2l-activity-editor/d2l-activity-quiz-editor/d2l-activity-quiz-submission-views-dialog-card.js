@@ -1,11 +1,10 @@
-import './d2l-activity-quiz-submission-views-dialog-card-editor.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { heading4Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
-import { shared as quizStore, sharedSubmissionView as store, sharedSubmissionViews as submissionViewsStore } from './state/quiz-store';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
+import { sharedSubmissionView as store } from './state/quiz-store';
 
 class ActivityQuizSubmissionViewsDialogCard
 	extends ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
@@ -16,12 +15,6 @@ class ActivityQuizSubmissionViewsDialogCard
 				attribute: 'quiz-href',
 				reflect: true,
 				type: String
-			},
-			_editHref: {
-				type: String
-			},
-			_editing: {
-				type: Boolean
 			}
 		};
 	}
@@ -79,37 +72,14 @@ class ActivityQuizSubmissionViewsDialogCard
 	}
 
 	render() {
-		const href = this._editing ? this._editHref : this.href;
-		const entity = store.get(href);
+		const entity = store.get(this.href);
 		if (!entity) return html``;
 
 		return html`
 			<div class="d2l-activity-quiz-submission-views-dialog-card">
-				${this._editing ? this._renderEditView(entity) : this._renderReadonlyView(entity)}
+				${this._renderReadonlyView(entity)}
 			</div>
 		`;
-	}
-
-	_onCancel() {
-		this._editHref = '';
-		this._editing = false;
-	}
-
-	async _onClickEdit() {
-		const viewEntity = store.get(this.href);
-		const viewId = viewEntity.viewId();
-
-		const quizEntity = quizStore.get(this.quizHref);
-		const checkedOutHref = await quizEntity.checkout(quizStore, true);
-
-		const checkedOutEntity = quizStore.get(checkedOutHref);
-		const submissionViewsEntity = await submissionViewsStore.fetch(checkedOutEntity.submissionViewsHref);
-
-		const matchingEditView = submissionViewsEntity.linkedSubmissionViews.find(view => view.viewId() === viewId);
-		this._editHref = matchingEditView.href;
-		await store.fetch(this._editHref);
-
-		this._editing = true;
 	}
 
 	_renderCardHeader(entity) {
@@ -119,27 +89,6 @@ class ActivityQuizSubmissionViewsDialogCard
 			<div class="d2l-activity-quiz-submission-views-dialog-card-header">
 				<div class="d2l-activity-quiz-submission-views-dialog-card-header-text d2l-heading-4">
 					${this.localize(cardHeader)}
-				</div>
-			</div>
-		`;
-	}
-
-	_renderEditView(entity) {
-		return html`
-			${this._renderCardHeader(entity)}
-			<div class="d2l-activity-quiz-submission-views-dialog-card-contents">
-				<d2l-activity-quiz-submission-views-dialog-card-editor
-					href="${this._editHref}"
-					.token="${this.token}">
-				</d2l-activity-quiz-submission-views-dialog-card-editor>
-				<div class="d2l-activity-quiz-submission-views-dialog-card-footer-buttons">
-					<d2l-button ?disabled="${this.isSaving}">
-						${this.localize('quizSubmissionViewsDialogCardUpdate')}
-					</d2l-button>
-					<d2l-button-subtle
-						text=${this.localize('quizSubmissionViewsDialogCardCancel')}
-						@click="${this._onCancel}">
-					</d2l-button-subtle>
 				</div>
 			</div>
 		`;
@@ -193,8 +142,7 @@ class ActivityQuizSubmissionViewsDialogCard
 				</div>
 				<div class="d2l-activity-quiz-submission-views-dialog-card-footer-buttons">
 					<d2l-button
-						?disabled="${this.isSaving}"
-						@click="${this._onClickEdit}">
+						?disabled="${this.isSaving}">
 						${this.localize('submissionViewDialogCardButtonOptionEditView')}
 					</d2l-button>
 					${isPrimaryView ? html`` : html`
