@@ -14,6 +14,10 @@ export class QuizLinkedSubmissionView {
 		this.href = entity.href();
 		this.isPrimaryView = entity.isPrimaryView();
 	}
+
+	viewId() {
+		return new URL(this.href).pathname.split('submissionviews/')[1];
+	}
 }
 
 decorate(QuizLinkedSubmissionView, {

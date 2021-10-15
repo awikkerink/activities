@@ -126,6 +126,10 @@ export class QuizSubmissionView {
 		this.load(entity);
 	}
 
+	viewId() {
+		return new URL(this.href).pathname.split('submissionviews/')[1];
+	}
+
 	_generateAccordionDropdownOptions() {
 		const options = [
 			{
@@ -187,6 +191,7 @@ decorate(QuizSubmissionView, {
 	canDeleteSubmissionView: observable,
 	// actions
 	load: action,
+	setMessage: action,
 	setShowAttemptScore: action,
 	setShowQuestionsAndCorrectAnswers: action,
 	deleteSubmissionView: action
