@@ -83,7 +83,8 @@ class QuizEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityQuizEditor
 				<d2l-activity-quiz-editor-secondary
 					.href="${specializationHref}"
 					.token="${this.token}"
-					activity-usage-href="${this.href}">
+					activity-usage-href="${this.href}"
+					?isnew="${this.isNew}">
 				</d2l-activity-quiz-editor-secondary>
 			</div>
 		`;

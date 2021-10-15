@@ -5,15 +5,18 @@ import './d2l-activity-quiz-evaluation-and-feedback-editor.js';
 import '@brightspace-ui/core/components/colors/colors.js';
 import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
+import { shared as store } from './state/quiz-store';
 
-class QuizEditorSecondary extends AsyncContainerMixin(SkeletonMixin(RtlMixin(LitElement))) {
+class QuizEditorSecondary extends ActivityEditorMixin(AsyncContainerMixin(SkeletonMixin(RtlMixin(LitElement)))) {
 
 	static get properties() {
 		return {
 			activityUsageHref: { type: String, attribute: 'activity-usage-href' },
+			isNew: { type: Boolean, attribute: 'isnew' }
 		};
 	}
 
@@ -41,7 +44,7 @@ class QuizEditorSecondary extends AsyncContainerMixin(SkeletonMixin(RtlMixin(Lit
 	}
 
 	constructor() {
-		super();
+		super(store);
 		this._debounceJobs = {};
 		this.skeleton = true;
 	}
@@ -95,7 +98,15 @@ class QuizEditorSecondary extends AsyncContainerMixin(SkeletonMixin(RtlMixin(Lit
 		if (changedProperties.has('asyncState')) {
 			this.skeleton = this.asyncState !== asyncStates.complete;
 		}
-	}
 
+		if ((changedProperties.has('isNew')
+			|| changedProperties.has('href')
+			|| changedProperties.has('token')
+			|| changedProperties.has('asyncState'))
+			&& this.isNew && this.href && this.token && this.asyncState === asyncStates.complete) {
+
+			store.get(this.href).setAutoSetGraded(true);
+		}
+	}
 }
 customElements.define('d2l-activity-quiz-editor-secondary', QuizEditorSecondary);
