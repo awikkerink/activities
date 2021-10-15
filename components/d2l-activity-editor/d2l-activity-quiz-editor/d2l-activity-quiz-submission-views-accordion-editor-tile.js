@@ -69,11 +69,13 @@ class ActivityQuizSubmissionViewsAccordionEditorTile
 
 	_deleteView() {
 		const entity = store.get(this.href);
-		entity && entity.deleteSubmissionView();
-
+		const promise = entity && entity.deleteSubmissionView();
 		this.dispatchEvent(new CustomEvent('d2l-activity-quiz-submission-views-accordion-editor-tile-removed', {
 			bubbles: true,
-			composed: true
+			composed: true,
+			detail: {
+				promise
+			}
 		}));
 	}
 
