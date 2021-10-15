@@ -39,7 +39,7 @@ class ActivityQuizSubmissionViewsContainer
 
 		const {
 			submissionViewsHref
-		} = entity || {};
+		} = entity;
 
 		return html`
 			<d2l-activity-quiz-submission-views-accordion-editor
@@ -78,6 +78,7 @@ class ActivityQuizSubmissionViewsContainer
 		return html`
 			<d2l-activity-quiz-submission-views-editor
 				href="${submissionViewsHref}"
+				quiz-href="${this.dialogHref}"
 				.token="${this.token}">
 			</d2l-activity-quiz-submission-views-editor>
 		`;

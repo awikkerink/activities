@@ -1,6 +1,6 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { fetchEntity } from '../../state/fetch-entity.js';
-import { QuizSubmissionView } from './quiz-submission-view.js';
+import { QuizLinkedSubmissionView } from './quiz-linked-submission-view';
 import { QuizSubmissionViewsEntity } from 'siren-sdk/src/activities/quizzes/submissionViews/QuizSubmissionViewsEntity.js';
 
 configureMobx({ enforceActions: 'observed' });
@@ -19,46 +19,19 @@ export class QuizSubmissionViews {
 			const entity = new QuizSubmissionViewsEntity(sirenEntity, this.token, {
 				remove: () => { },
 			});
-			await this.load(entity);
+			this.load(entity);
 		}
 		return this;
 	}
 
-	getPrimarySubmissionView() {
-		return this.submissionViews.find(view => view.isPrimaryView);
-	}
-
-	getSubmissionViewByHref(href) {
-		if (!this.submissionViews) return;
-		return this.submissionViews.find(view => view.href === href);
-	}
-
-	async load(entity, bypassCache) {
+	load(entity) {
 		this._entity = entity;
 		this.canAddView = entity.canAddView();
-		await Promise.all([
-			this._loadSubmissionViews(entity, bypassCache)
-		]);
+		this.linkedSubmissionViews = (entity.linkedSubmissionViews() || []).map(view => new QuizLinkedSubmissionView(view));
 	}
 
 	removeView(href) {
-		this.submissionViews = this.submissionViews.filter(view => view.href !== href);
-	}
-
-	async _loadSubmissionViews(entity, bypassCache) {
-		if (!bypassCache && this.submissionViews) return;
-		const linkedViewEntities = entity.linkedSubmissionViews();
-		if (!linkedViewEntities || linkedViewEntities.length === 0) {
-			return;
-		}
-
-		const fetchLinkedViewsPromises = [];
-		linkedViewEntities.forEach(linkedEntity => {
-			const submissionView = new QuizSubmissionView(linkedEntity.href, this.token);
-			fetchLinkedViewsPromises.push(submissionView.fetch(bypassCache));
-		});
-		const views = await Promise.all(fetchLinkedViewsPromises);
-		this.submissionViews = views;
+		this.linkedSubmissionViews = this.linkedSubmissionViews.filter(view => view.href !== href);
 	}
 }
 
@@ -66,7 +39,7 @@ decorate(QuizSubmissionViews, {
 	// props
 	canAddView: observable,
 	saving: observable,
-	submissionViews: observable,
+	linkedSubmissionViews: observable,
 	// actions
 	load: action,
 	removeView: action

@@ -10,6 +10,16 @@ import { sharedSubmissionViews as store } from './state/quiz-store';
 class ActivityQuizSubmissionViewsEditor
 	extends ActivityEditorMixin(RtlMixin(ActivityEditorDialogMixin(LocalizeActivityQuizEditorMixin(MobxLitElement)))) {
 
+	static get properties() {
+		return {
+			quizHref: {
+				attribute: 'quiz-href',
+				reflect: true,
+				type: String
+			}
+		};
+	}
+
 	constructor() {
 		super(store);
 	}
@@ -22,7 +32,18 @@ class ActivityQuizSubmissionViewsEditor
 
 		return html`
 			${this._renderDescriptionText()}
-			${this._temporarilyRenderEverything(entity)}
+			${this._renderCards(entity)}
+		`;
+	}
+
+	_renderCards(entity) {
+		const linkedSubmissionViews = entity && entity.linkedSubmissionViews;
+		if (!linkedSubmissionViews) return html``;
+
+		return html`
+			${linkedSubmissionViews.map(view => html`
+				<d2l-activity-quiz-submission-views-dialog-card href="${view.href}" quiz-href="${this.quizHref}" .token="${this.token}"></d2l-activity-quiz-submission-views-dialog-card>
+			`)}
 		`;
 	}
 
@@ -58,17 +79,6 @@ class ActivityQuizSubmissionViewsEditor
 					${this.localize('submissionViewsHelpDialogConfirmation')}
 				</d2l-button>
 			</d2l-dialog>
-		`;
-	}
-
-	_temporarilyRenderEverything(entity) {
-		const submissionViews = entity && entity.submissionViews;
-		if (!submissionViews) return html``;
-
-		return html`
-			${submissionViews.map(view => html`
-				<d2l-activity-quiz-submission-views-dialog-card href="${this.href}" view-href="${view.href}" .token="${this.token}"></d2l-activity-quiz-submission-views-dialog-card>
-			`)}
 		`;
 	}
 }
