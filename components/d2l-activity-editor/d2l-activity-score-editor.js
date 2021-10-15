@@ -414,7 +414,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 				scoring = await scoring.fetch(true);
 				scoring.setGradeMaxPoints(maxPoints);
 			}
-			if(isNewGrade || isExistingGrade || this.hasActivityScore) {
+			if (isNewGrade || isExistingGrade || this.hasActivityScore) {
 				await scoring.save();
 			}
 			await scoring.fetch(true);
