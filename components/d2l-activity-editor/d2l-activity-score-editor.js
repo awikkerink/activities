@@ -388,9 +388,11 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 
 	async save() {
 		let isNewGrade = false;
+		let isExistingGrade = false;
 		if (this._createSelectboxGradeItemEnabled) {
 			const associateGradeEntity = associateGradeStore.get(this._associateGradeHref);
 			isNewGrade = associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.NewGrade;
+			isExistingGrade = associateGradeEntity && associateGradeEntity.gradebookStatus === GradebookStatus.ExistingGrade;
 			if (isNewGrade) {
 				const scoring = scoringStore.get(this._scoringHref);
 				const gradeMaxPoints = scoring && scoring.gradeMaxPoints;
@@ -407,7 +409,15 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			if (isNewGrade) {
 				scoring = await scoring.fetch(true);
 			}
-			await scoring.save();
+			if (isExistingGrade) {
+				const maxPoints = scoring.gradeMaxPoints;
+				scoring = await scoring.fetch(true);
+				scoring.setGradeMaxPoints(maxPoints);
+			}
+			if(isNewGrade || isExistingGrade || this.hasActivityScore) {
+				await scoring.save();
+			}
+			await scoring.fetch(true);
 		}
 	}
 

@@ -265,7 +265,7 @@ class ActivityGradesDialog extends ActivityEditorWorkingCopyDialogMixin(Localize
 			newGradeName = scoreAndGrade && scoreAndGrade.newGradeName;
 		} else {
 			const scoring = scoringStore.get(activity.scoringHref);
-			scoreOutOf = scoring && scoring.gradeMaxPoints;
+			scoreOutOf = scoring && scoring.gradeMaxPoints ? scoring.gradeMaxPoints : scoring.scoreOutOf;
 			newGradeName = scoring && scoring.newGradeName;
 		}
 
