@@ -3,13 +3,14 @@ import { css, html } from 'lit-element/lit-element.js';
 import { heading4Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { shared as quizStore, sharedSubmissionView as store, sharedSubmissionViews as submissionViewsStore } from './state/quiz-store';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
+import { ActivityEditorWorkingCopyMixin } from '../mixins/d2l-activity-editor-working-copy-mixin.js';
 import { Classes } from 'siren-sdk/src/hypermedia-constants';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 
 class ActivityQuizSubmissionViewsDialogCard
-	extends ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
+	extends ActivityEditorWorkingCopyMixin(ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement)))) {
 
 	static get properties() {
 		return {
@@ -28,6 +29,9 @@ class ActivityQuizSubmissionViewsDialogCard
 			},
 			_editing: {
 				type: Boolean
+			},
+			_editViewQuizHref: {
+				type: String
 			}
 		};
 	}
@@ -96,17 +100,7 @@ class ActivityQuizSubmissionViewsDialogCard
 		`;
 	}
 
-	_onCancel() {
-		this._editHref = '';
-		this._editing = false;
-
-		this.dispatchEvent(new CustomEvent('d2l-activity-quiz-submission-views-dialog-edit-end', {
-			bubbles: true,
-			composed: true
-		}));
-	}
-
-	async _onClickEdit() {
+	async _enterEditMode() {
 		this.dispatchEvent(new CustomEvent('d2l-activity-quiz-submission-views-dialog-edit-start', {
 			bubbles: true,
 			composed: true
@@ -115,10 +109,9 @@ class ActivityQuizSubmissionViewsDialogCard
 		const viewEntity = store.get(this.href);
 		const viewId = viewEntity.viewId();
 
-		const quizEntity = quizStore.get(this.quizHref);
-		const checkedOutHref = await quizEntity.checkout(quizStore, true);
+		this._editViewQuizHref = await this.checkout(quizStore, this.quizHref);
 
-		const checkedOutEntity = quizStore.get(checkedOutHref);
+		const checkedOutEntity = quizStore.get(this._editViewQuizHref);
 		const submissionViewsEntity = await submissionViewsStore.fetch(checkedOutEntity.submissionViewsHref);
 
 		const matchingEditView = submissionViewsEntity.linkedSubmissionViews.find(view => view.viewId() === viewId);
@@ -126,6 +119,24 @@ class ActivityQuizSubmissionViewsDialogCard
 		await store.fetch(this._editHref);
 
 		this._editing = true;
+	}
+
+	_exitEditMode() {
+		this._editHref = '';
+		this._editViewQuizHref = '';
+		this._editing = false;
+
+		this.dispatchEvent(new CustomEvent('d2l-activity-quiz-submission-views-dialog-edit-end', {
+			bubbles: true,
+			composed: true
+		}));
+	}
+
+	async _onUpdate() {
+		const result = await this.checkin(quizStore, this._editViewQuizHref);
+		if (result) {
+			this._exitEditMode();
+		}
 	}
 
 	_renderCardHeader(entity) {
@@ -149,12 +160,15 @@ class ActivityQuizSubmissionViewsDialogCard
 					.token="${this.token}">
 				</d2l-activity-quiz-submission-views-dialog-card-editor>
 				<div class="d2l-activity-quiz-submission-views-dialog-card-footer-buttons">
-					<d2l-button ?disabled="${this.isSaving}">
+					<d2l-button
+						?disabled="${this.isSaving}"
+						@click="${this._onUpdate}">
 						${this.localize('quizSubmissionViewsDialogCardUpdate')}
 					</d2l-button>
 					<d2l-button-subtle
+						?disabled="${this.isSaving}"
 						text=${this.localize('quizSubmissionViewsDialogCardCancel')}
-						@click="${this._onCancel}">
+						@click="${this._exitEditMode}">
 					</d2l-button-subtle>
 				</div>
 			</div>
@@ -225,7 +239,7 @@ class ActivityQuizSubmissionViewsDialogCard
 				<div class="d2l-activity-quiz-submission-views-dialog-card-footer-buttons">
 					<d2l-button
 						?disabled="${disableReadonlyButtons}"
-						@click="${this._onClickEdit}">
+						@click="${this._enterEditMode}">
 						${this.localize('submissionViewDialogCardButtonOptionEditView')}
 					</d2l-button>
 					${isPrimaryView ? html`` : html`
