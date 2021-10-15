@@ -7,6 +7,7 @@ import { activityContentEditorStyles } from '../../shared-components/d2l-activit
 import { ActivityEditorMixin } from '../../../mixins/d2l-activity-editor-mixin.js';
 import { activityHtmlEditorStyles } from '../../shared-components/d2l-activity-html-editor-styles.js';
 import { ContentEditorConstants } from '../../constants';
+import { ContentHtmlFileEntity } from 'siren-sdk/src/activities/content/ContentHtmlFileEntity.js';
 import { ContentFileEntity } from 'siren-sdk/src/activities/content/ContentFileEntity.js';
 import { shared as contentFileStore } from '../state/content-file-store.js';
 import { ContentHtmlFileTemplatesEntity } from 'siren-sdk/src/activities/content/ContentHtmlFileTemplatesEntity.js';
@@ -31,10 +32,8 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 	static get properties() {
 		return {
 			activityUsageHref: { type: String },
-			htmlFileTemplates: { type: Array },
-			pageContent: { typeof: Text },
 			sortHTMLTemplatesByName: { type: Boolean },
-			contentFileActions: { type: Object }
+			entity: { type: Object }
 		};
 	}
 
@@ -62,7 +61,7 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 	constructor() {
 		super(contentFileStore);
 		this._debounceJobs = {};
-		this._setEntityType(ContentFileEntity);
+		this._setEntityType(ContentHtmlFileEntity);
 		this.skeleton = true;
 		this.saveOrder = 500;
 		this.htmlTemplatesHref = null;
@@ -80,37 +79,59 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 
 	connectedCallback() {
 		super.connectedCallback();
+		this.testfetch(this.entity._contentFileEntity._entity);
 	}
 
 	render() {
-		const contentFileEntity = contentFileStore.getContentFileActivity(this.href);
+		const newEditorEvent = new CustomEvent('d2l-request-provider', {
+			detail: { key: 'd2l-provider-html-new-editor-enabled' },
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
 
-		if (contentFileEntity) {
-			this.skeleton = false;
-			this.pageContent = contentFileEntity.fileContent;
-			this.htmlTemplatesHref = contentFileEntity.htmlTemplatesHref;
-			this.fontSize = contentFileEntity.fontSize ? `${contentFileEntity.fontSize}pt` : this.fontSize;
-		}
+		this.dispatchEvent(newEditorEvent);
+		const htmlNewEditorEnabled = newEditorEvent.detail.provider;
+
+		//@d2l-activity-text-editor-change for the new editor is on blur, while the old editor is on change
+		//we don't want the debouncer on the new editor in case the user clicks directly onto a button from the editor
+		const activityTextEditorChange = htmlNewEditorEnabled ? this._onPageContentChange : this._onPageContentChangeDebounced;
 
 		return html`
-			<d2l-activity-content-editor-title
-				.entity=${contentFileEntity}
-				.onSave=${this.contentFileActions.saveTitle}
-				?skeleton="${this.skeleton}"
-			>
-			</d2l-activity-content-editor-title>
-			<d2l-activity-content-editor-due-date
-				.href="${this.activityUsageHref}"
-				.token="${this.token}"
-				?skeleton=${this.skeleton}
-				?expanded=${true}
-			>
-			</d2l-activity-content-editor-due-date>
-			<div id="content-page-content-container">
-				${this._renderHtmlEditor()}
+		<div id="content-page-content-container">
+			<div class="d2l-page-content-label-select-template-container">
+				<label class="d2l-label-text d2l-skeletize">
+					${this.localize('content.pageContent')}
+				</label>
+				${this._renderTemplateSelectDropdown()}
 			</div>
-			${this._renderTemplateReplacementConfirmationdialog()}
-		`;
+			<div class="d2l-skeletize ${htmlNewEditorEnabled ? 'd2l-new-html-editor-container' : ''}">
+				<d2l-activity-text-editor
+					.ariaLabel="${this.localize('content.pageContent')}"
+					.key=${this.editorKey}
+					.value="${this.pageContent}"
+					@d2l-activity-text-editor-change="${activityTextEditorChange}"
+					.richtextEditorConfig="${{}}"
+					html-editor-height="100%"
+					full-page
+					full-page-font-size=${this.fontSize}
+					full-page-font-family="Verdana"
+				>
+				</d2l-activity-text-editor>
+			</div>
+			<d2l-dialog-confirm
+					title-text="${this.localize('content.confirmDialogTitle')}"
+					text="${this.localize('content.confirmDialogBody')}"
+					@d2l-dialog-close=${this._handleReplaceHtmlTemplateDialogClose}
+				>
+					<d2l-button slot="footer" primary data-dialog-action="yes">
+						${this.localize('content.confirmDialogActionOption')}
+					</d2l-button>
+					<d2l-button slot="footer" data-dialog-action="no">
+						${this.localize('content.confirmDialogCancelOption')}
+					</d2l-button>
+				</d2l-dialog-confirm>
+			</div>`;
 	}
 
 	hasPendingChanges() {
@@ -132,6 +153,10 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 
 		const originalActivityUsageHref = this.activityUsageHref;
 		const updatedEntity = await contentFileActivity.save();
+
+		const htmlEntity = new ContentHtmlFileEntity(this.contentFileActivity, this.token, { remove: () => { } });
+		await htmlEntity.setHtmlFileHtmlContent(this.pageContent);
+
 		const event = new CustomEvent('d2l-content-working-copy-committed', {
 			detail: {
 				originalActivityUsageHref: originalActivityUsageHref,
@@ -228,7 +253,9 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 	}
 
 	_onPageContentChange(e) {
+		
 		const htmlContent = e.detail.content;
+		console.log(htmlContent);
 		this._savePageContent(htmlContent);
 	}
 
@@ -246,43 +273,6 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 		dialog.opened = true;
 	}
 
-	_renderHtmlEditor() {
-		const newEditorEvent = new CustomEvent('d2l-request-provider', {
-			detail: { key: 'd2l-provider-html-new-editor-enabled' },
-			bubbles: true,
-			composed: true,
-			cancelable: true
-		});
-
-		this.dispatchEvent(newEditorEvent);
-		const htmlNewEditorEnabled = newEditorEvent.detail.provider;
-
-		//@d2l-activity-text-editor-change for the new editor is on blur, while the old editor is on change
-		//we don't want the debouncer on the new editor in case the user clicks directly onto a button from the editor
-		const activityTextEditorChange = htmlNewEditorEnabled ? this._onPageContentChange : this._onPageContentChangeDebounced;
-
-		return html`
-			<div class="d2l-page-content-label-select-template-container">
-				<label class="d2l-label-text d2l-skeletize">
-					${this.localize('content.pageContent')}
-				</label>
-				${this._renderTemplateSelectDropdown()}
-			</div>
-			<div class="d2l-skeletize ${htmlNewEditorEnabled ? 'd2l-new-html-editor-container' : ''}">
-				<d2l-activity-text-editor
-					.ariaLabel="${this.localize('content.pageContent')}"
-					.key=${this.editorKey}
-					.value="${this.pageContent}"
-					@d2l-activity-text-editor-change="${activityTextEditorChange}"
-					.richtextEditorConfig="${{}}"
-					html-editor-height="100%"
-					full-page
-					full-page-font-size=${this.fontSize}
-					full-page-font-family="Verdana"
-				>
-				</d2l-activity-text-editor>
-			</div>`;
-	}
 
 	_renderHtmlTemplates() {
 		if (this.htmlFileTemplates.length === 0) {
@@ -290,23 +280,6 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 		}
 
 		return this.htmlFileTemplates.map((template) => html`<d2l-menu-item text=${template.title()} key=${template.getFileDataLocationHref()}></d2l-menu-item>`);
-	}
-
-	_renderTemplateReplacementConfirmationdialog() {
-		return html`
-			<d2l-dialog-confirm
-				title-text="${this.localize('content.confirmDialogTitle')}"
-				text="${this.localize('content.confirmDialogBody')}"
-				@d2l-dialog-close=${this._handleReplaceHtmlTemplateDialogClose}
-			>
-				<d2l-button slot="footer" primary data-dialog-action="yes">
-					${this.localize('content.confirmDialogActionOption')}
-				</d2l-button>
-				<d2l-button slot="footer" data-dialog-action="no">
-					${this.localize('content.confirmDialogCancelOption')}
-				</d2l-button>
-			</d2l-dialog-confirm>
-		`;
 	}
 
 	_renderTemplateSelectDropdown() {
@@ -321,7 +294,7 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 		}
 
 		return html`
-		<d2l-dropdown-button-subtle
+	<d2l-dropdown-button-subtle
 			text=${this.localize('content.selectTemplate')}
 			class="d2l-skeletize"
 			@click=${this._handleClickSelectTemplateButton}
@@ -343,7 +316,6 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 
 	_savePageContent(htmlContent) {
 		this.pageContent = htmlContent;
-		this.contentFileActions.savePageContent(htmlContent);
 	}
 
 	_tryOverwriteContent(htmlContent) {
@@ -356,6 +328,53 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 			this._openReplaceHtmlTemplateDialog();
 		}
 	}
+
+	async _checkout(contentFileEntity) {
+		if (!contentFileEntity) {
+			return;
+		}
+
+		const sirenEntity = await contentFileEntity.checkout();
+		if (!sirenEntity) {
+			return contentFileEntity;
+		}
+
+		return new ContentFileEntity(sirenEntity, this.token, { remove: () => { } });;
+	}
+
+	
+	async testfetch(sirenEntity) {
+	
+			let entity = new ContentFileEntity(sirenEntity, this.token, { remove: () => { } });
+			let fileContent = '';
+
+			entity = await this._checkout(entity);
+
+			this.htmlTemplatesHref = entity.getHtmlTemplatesHref();
+			
+			if(fileEntityHref) {
+			const fileEntityResponse = await fetchEntity(fileEntityHref, this.token);
+				const fileEntity = new FileEntity(fileEntityResponse, this.token, { remove: () => { } });
+				const fileContentFetchResponse = await window.d2lfetch.fetch(fileEntity.getFileDataLocationHref());
+
+				if (fileContentFetchResponse.ok) {
+					fileContent = await fileContentFetchResponse.text();
+				}
+
+				this.pageContent = fileContent;
+				const test = new CustomEvent('d2l-loaded-file', {
+					bubbles: true,
+					composed: true,
+					cancelable: true
+				});
+		
+				this.dispatchEvent(test);
+				this.skeleton = false;
+			}
+			
+		
+	}
+
 }
 
 customElements.define('d2l-activity-content-html-file-detail', ContentHtmlFileDetail);

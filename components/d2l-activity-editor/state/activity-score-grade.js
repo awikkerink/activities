@@ -15,7 +15,7 @@ export class ActivityScoreGrade {
 	}
 
 	async fetch(entity, bypassCache) {
-		await entity.fetchLinkedScoreOutOfEntity(fetchEntity, bypassCache);
+		//await entity.fetchLinkedScoreOutOfEntity(fetchEntity, bypassCache);
 		this.load(entity);
 	}
 

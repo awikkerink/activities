@@ -42,40 +42,18 @@ export class ContentFile {
 		const sirenEntity = await fetchEntity(this.href, this.token);
 		if (sirenEntity) {
 			let entity = new ContentFileEntity(sirenEntity, this.token, { remove: () => { } });
-			let fileContent = '';
-
-			entity = await this._checkout(entity);
-
-			const fileEntityHref = entity.getFileHref();
-			if (entity.getFileType() === FILE_TYPES.html && fileEntityHref) {
-				const fileEntityResponse = await fetchEntity(fileEntityHref, this.token);
-				const fileEntity = new FileEntity(fileEntityResponse, this.token, { remove: () => { } });
-				const fileContentFetchResponse = await window.d2lfetch.fetch(fileEntity.getFileDataLocationHref());
-				if (fileContentFetchResponse.ok) {
-					fileContent = await fileContentFetchResponse.text();
-				}
-			}
-
-			this.load(entity, fileContent);
+			this.load(entity);
 		}
 		return this;
 	}
 
-	load(contentFileEntity, fileContent) {
+	load(contentFileEntity) {
 		this._contentFileEntity = contentFileEntity;
 		this.href = contentFileEntity.self();
 		this.activityUsageHref = contentFileEntity.getActivityUsageHref();
 		this.title = contentFileEntity.title();
-		this.persistedFileContent = fileContent;
-		this.fileContent = fileContent;
 		this.fileType = contentFileEntity.getFileType();
 		this.fileHref = contentFileEntity.getFileHref();
-
-		if (this.fileType === FILE_TYPES.html) {
-			const htmlFileEntity = new ContentHtmlFileEntity(contentFileEntity._entity, this.token, { remove: () => { } });
-			this.htmlTemplatesHref = htmlFileEntity.getHtmlTemplatesHref();
-			this.fontSize = htmlFileEntity.fontSize();
-		}
 	}
 
 	async save() {
@@ -84,17 +62,9 @@ export class ContentFile {
 		}
 
 		await this._contentFileEntity.setFileTitle(this.title);
-		let fileContent = '';
-
-		if (this._contentFileEntity.getFileType() === FILE_TYPES.html) {
-			const htmlEntity = new ContentHtmlFileEntity(this._contentFileEntity, this.token, { remove: () => { } });
-			await htmlEntity.setHtmlFileHtmlContent(this.fileContent);
-			fileContent = this.fileContent;
-		}
-
 		const committedContentFileEntity = await this._commit(this._contentFileEntity);
 		const editableContentFileEntity = await this._checkout(committedContentFileEntity);
-		this.load(editableContentFileEntity, fileContent);
+		this.load(editableContentFileEntity);
 		return this._contentFileEntity;
 	}
 
