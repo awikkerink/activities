@@ -183,12 +183,13 @@ export class AssociationCollection {
 	removeDefaultScoringRubricOption(rubricHref, assignment) {
 		if (rubricHref && assignment) {
 			const rubricId = this.getRubricIdFromHref(rubricHref);
+			// typeof assignment.defaultScoringRubricId is `string`, rubricId is `string`
 			if (assignment.defaultScoringRubricId === rubricId) {
 				assignment.resetDefaultScoringRubricId();
 			}
 
 			this.defaultScoringRubricOptions = this.defaultScoringRubricOptions.filter(
-				option => option.value !== rubricId
+				option => String(option.value) !== rubricId // see DE45624
 			);
 		}
 	}
