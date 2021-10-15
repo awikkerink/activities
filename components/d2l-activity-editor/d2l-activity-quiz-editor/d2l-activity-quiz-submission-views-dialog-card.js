@@ -12,6 +12,11 @@ class ActivityQuizSubmissionViewsDialogCard
 
 	static get properties() {
 		return {
+			dialogInEditState: {
+				attribute: 'dialog-in-edit-state',
+				reflect: true,
+				type: Boolean
+			},
 			quizHref: {
 				attribute: 'quiz-href',
 				reflect: true,
@@ -93,9 +98,19 @@ class ActivityQuizSubmissionViewsDialogCard
 	_onCancel() {
 		this._editHref = '';
 		this._editing = false;
+
+		this.dispatchEvent(new CustomEvent('d2l-activity-quiz-submission-views-dialog-edit-end', {
+			bubbles: true,
+			composed: true
+		}));
 	}
 
 	async _onClickEdit() {
+		this.dispatchEvent(new CustomEvent('d2l-activity-quiz-submission-views-dialog-edit-start', {
+			bubbles: true,
+			composed: true
+		}));
+
 		const viewEntity = store.get(this.href);
 		const viewId = viewEntity.viewId();
 
@@ -153,6 +168,8 @@ class ActivityQuizSubmissionViewsDialogCard
 		const answersText = showCorrectAnswers ? 'submissionViewDialogCardShowAnswersTrueText' : 'submissionViewDialogCardShowAnswersFalseText';
 		const responseText = showLearnerResponses ? 'submissionViewDialogCardShowResponsesTrueText' : 'submissionViewDialogCardShowResponsesFalseText';
 
+		const disableReadonlyButtons = this.dialogInEditState;
+
 		return html`
 			${this._renderCardHeader(entity)}
 			<div class="d2l-activity-quiz-submission-views-dialog-card-contents">
@@ -193,12 +210,13 @@ class ActivityQuizSubmissionViewsDialogCard
 				</div>
 				<div class="d2l-activity-quiz-submission-views-dialog-card-footer-buttons">
 					<d2l-button
-						?disabled="${this.isSaving}"
+						?disabled="${disableReadonlyButtons}"
 						@click="${this._onClickEdit}">
 						${this.localize('submissionViewDialogCardButtonOptionEditView')}
 					</d2l-button>
 					${isPrimaryView ? html`` : html`
 						<d2l-button-subtle
+							?disabled="${disableReadonlyButtons}"
 							text=${this.localize('submissionViewDialogCardButtonOptionDeleteView')}>
 						</d2l-button-subtle>
 					`}

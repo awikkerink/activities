@@ -16,12 +16,27 @@ class ActivityQuizSubmissionViewsEditor
 				attribute: 'quiz-href',
 				reflect: true,
 				type: String
+			},
+			dialogInEditState: {
+				type: Boolean
 			}
 		};
 	}
 
 	constructor() {
 		super(store);
+	}
+
+	connectedCallback() {
+		super.connectedCallback();
+		this.addEventListener('d2l-activity-quiz-submission-views-dialog-edit-start', this._onEnteringEditState);
+		this.addEventListener('d2l-activity-quiz-submission-views-dialog-edit-end', this._onEndingEditState);
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		this.removeEventListener('d2l-activity-quiz-submission-views-dialog-edit-start', this._onEnteringEditState);
+		this.removeEventListener('d2l-activity-quiz-submission-views-dialog-edit-end', this._onEndingEditState);
 	}
 
 	render() {
@@ -36,13 +51,26 @@ class ActivityQuizSubmissionViewsEditor
 		`;
 	}
 
+	_onEndingEditState() {
+		this.dialogInEditState = false;
+	}
+
+	_onEnteringEditState() {
+		this.dialogInEditState = true;
+	}
+
 	_renderCards(entity) {
 		const linkedSubmissionViews = entity && entity.linkedSubmissionViews;
 		if (!linkedSubmissionViews) return html``;
 
 		return html`
 			${linkedSubmissionViews.map(view => html`
-				<d2l-activity-quiz-submission-views-dialog-card href="${view.href}" quiz-href="${this.quizHref}" .token="${this.token}"></d2l-activity-quiz-submission-views-dialog-card>
+				<d2l-activity-quiz-submission-views-dialog-card
+					href="${view.href}"
+					quiz-href="${this.quizHref}"
+					?dialog-in-edit-state="${this.dialogInEditState}"
+					.token="${this.token}">
+				</d2l-activity-quiz-submission-views-dialog-card>
 			`)}
 		`;
 	}
