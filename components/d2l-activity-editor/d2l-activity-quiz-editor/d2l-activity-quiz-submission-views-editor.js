@@ -51,12 +51,12 @@ class ActivityQuizSubmissionViewsEditor
 		`;
 	}
 
-	_onEnteringEditState() {
-		this.dialogInEditState = true;
-	}
-
 	_onEndingEditState() {
 		this.dialogInEditState = false;
+	}
+
+	_onEnteringEditState() {
+		this.dialogInEditState = true;
 	}
 
 	_renderCards(entity) {
