@@ -161,8 +161,10 @@ export default {
 	"additionalViewComesIntoEffect": "Additional view comes into effect", // Label
 	"submissionViewDialogCardAttemptScoreTrueText": "Attempt grade displayed for evaluated questions", // Submission view dialog card, text appearing when attempted grades are displayed.
 	"submissionViewDialogCardAttemptScoreFalseText": "Not displayed", // Submission view dialog card, text appearing when attempted grades are not displayed.
-	"submissionViewDialogCardShowQuestionsTrueText": "All questions displayed", // Submission view dialog card, text appearing when all questions are displayed.
-	"submissionViewDialogCardShowQuestionsFalseText": "Incorrect only displayed", // Submission view dialog card, text appearing when incorrect questions are displayed.
+	"submissionViewDialogCardQuestionsNotDisplayed": "Not displayed", // Submission view dialog card, text appearing when no questions are displayed.
+	"submissionViewDialogCardQuestionsAllDisplayed": "All questions displayed", // Submission view dialog card, text appearing when all questions are displayed.
+	"submissionViewDialogCardQuestionsIncorrectOnlyDisplayed": "Incorrect only displayed", // Submission view dialog card, text appearing when incorrect questions only are displayed.
+	"submissionViewDialogCardQuestionsCorrectOnlyDisplayed": "Correct only displayed", // Submission view dialog card, text appearing when correct questions only are displayed.
 	"submissionViewDialogCardShowAnswersTrueText": "All answers displayed", // Submission view dialog card, text appearing when all answers are displayed.
 	"submissionViewDialogCardShowAnswersFalseText": "Not displayed", // Submission view dialog card, text appearing when not all answers are displayed.
 	"submissionViewDialogCardShowResponsesTrueText": "Displayed", // Submission view dialog card, text appearing when learners responses are displayed.

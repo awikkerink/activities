@@ -3,6 +3,7 @@ import { css, html } from 'lit-element/lit-element.js';
 import { heading4Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { shared as quizStore, sharedSubmissionView as store, sharedSubmissionViews as submissionViewsStore } from './state/quiz-store';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
+import { Classes } from 'siren-sdk/src/hypermedia-constants';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
@@ -161,10 +162,23 @@ class ActivityQuizSubmissionViewsDialogCard
 	}
 
 	_renderReadonlyView(entity) {
-		const { message, isPrimaryView, showAttemptScore, showQuestionsType, showLearnerResponses, showCorrectAnswers } = entity;
+		const { message, isPrimaryView, hideQuestions, showAttemptScore, showQuestionsType, showLearnerResponses, showCorrectAnswers } = entity;
 
 		const attemptText = showAttemptScore ? 'submissionViewDialogCardAttemptScoreTrueText' : 'submissionViewDialogCardAttemptScoreFalseText';
-		const questionText = showQuestionsType ? 'submissionViewDialogCardShowQuestionsTrueText' : 'submissionViewDialogCardShowQuestionsFalseText';
+		let questionText = 'submissionViewDialogCardQuestionsNotDisplayed';
+		if (!hideQuestions) {
+			switch(showQuestionsType) {
+				case Classes.quizzes.submissionView.showQuestions.allQuestions:
+					questionText = 'submissionViewDialogCardQuestionsAllDisplayed';
+					break;
+				case Classes.quizzes.submissionView.showQuestions.incorrectQuestions:
+					questionText = 'submissionViewDialogCardQuestionsIncorrectOnlyDisplayed';
+					break;
+				case Classes.quizzes.submissionView.showQuestions.correctQuestions:
+					questionText = 'submissionViewDialogCardQuestionsCorrectOnlyDisplayed';
+					break;
+			}
+		}
 		const answersText = showCorrectAnswers ? 'submissionViewDialogCardShowAnswersTrueText' : 'submissionViewDialogCardShowAnswersFalseText';
 		const responseText = showLearnerResponses ? 'submissionViewDialogCardShowResponsesTrueText' : 'submissionViewDialogCardShowResponsesFalseText';
 
