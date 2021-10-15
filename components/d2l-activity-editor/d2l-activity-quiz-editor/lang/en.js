@@ -175,6 +175,8 @@ export default {
 	"submissionViewDialogCardButtonOptionEditView": "Edit View", // Submission view dialog card, OK button text.
 	"submissionViewDialogCardButtonOptionDeleteView": "Delete View", // Submission view dialog card, Cancel button text.
 	"submissionViewsAccordionSummary" : "{count, plural, =1 {1 result display} other {{count} result displays}}", // number of submission views summary shown in collapsed accordion
+	"quizSubmissionViewsDialogCardUpdate": "Update", // submission views dialog card Update button
+	"quizSubmissionViewsDialogCardCancel": "Cancel", // submission views dialog card Cancel button
 	"allQuestionsWithCorrectAnswers": "Grade invisible, show all questions with correct answers", // summarize list of selected options in comma separated list
 	"allQuestions": "Grade invisible, show all questions", // summarize list of selected options in comma separated list
 	"gradeVisibleAllQuestionsWithCorrectAnswers": "Grade visible, show all questions with correct answers", // summarize list of selected options in comma separated list
