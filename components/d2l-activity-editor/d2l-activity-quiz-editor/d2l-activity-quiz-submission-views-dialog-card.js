@@ -167,7 +167,7 @@ class ActivityQuizSubmissionViewsDialogCard
 		const attemptText = showAttemptScore ? 'submissionViewDialogCardAttemptScoreTrueText' : 'submissionViewDialogCardAttemptScoreFalseText';
 		let questionText = 'submissionViewDialogCardQuestionsNotDisplayed';
 		if (!hideQuestions) {
-			switch(showQuestionsType) {
+			switch (showQuestionsType) {
 				case Classes.quizzes.submissionView.showQuestions.allQuestions:
 					questionText = 'submissionViewDialogCardQuestionsAllDisplayed';
 					break;
