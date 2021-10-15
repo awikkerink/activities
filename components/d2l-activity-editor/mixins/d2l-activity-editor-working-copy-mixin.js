@@ -62,6 +62,7 @@ export const ActivityEditorWorkingCopyMixin = superclass => class extends superc
 			return;
 		}
 
+		this.resetWorkingCopyProps();
 		return true;
 	}
 
