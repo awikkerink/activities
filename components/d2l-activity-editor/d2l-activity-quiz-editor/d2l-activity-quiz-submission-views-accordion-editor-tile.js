@@ -69,11 +69,21 @@ class ActivityQuizSubmissionViewsAccordionEditorTile
 
 	_deleteView() {
 		const entity = store.get(this.href);
-		entity && entity.deleteSubmissionView();
-
+		const promise = entity && entity.deleteSubmissionView();
 		this.dispatchEvent(new CustomEvent('d2l-activity-quiz-submission-views-accordion-editor-tile-removed', {
 			bubbles: true,
 			composed: true
+		}));
+		this._dispatchEditorChangedEvent(promise);
+	}
+
+	_dispatchEditorChangedEvent(promise) {
+		this.dispatchEvent(new CustomEvent('d2l-activity-quiz-submission-views-accordion-editor-changed', {
+			bubbles: true,
+			composed: true,
+			detail: {
+				promise
+			}
 		}));
 	}
 
@@ -103,12 +113,14 @@ class ActivityQuizSubmissionViewsAccordionEditorTile
 
 	_onDropdownChange(e) {
 		const entity = store.get(this.href);
-		entity && entity.setShowQuestionsAndCorrectAnswers(e.target.value);
+		const promise = entity && entity.setShowQuestionsAndCorrectAnswers(e.target.value);
+		this._dispatchEditorChangedEvent(promise);
 	}
 
 	_onShowAttemptScoreChange(e) {
 		const entity = store.get(this.href);
-		entity && entity.setShowAttemptScore(e.target.checked);
+		const promise = entity && entity.setShowAttemptScore(e.target.checked);
+		this._dispatchEditorChangedEvent(promise);
 	}
 
 	_renderPrimaryView(view) {

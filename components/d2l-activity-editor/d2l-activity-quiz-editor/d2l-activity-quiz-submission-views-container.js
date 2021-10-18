@@ -25,12 +25,33 @@ class ActivityQuizSubmissionViewsContainer
 		super(store);
 	}
 
+	connectedCallback() {
+		super.connectedCallback();
+		this.addEventListener('d2l-activity-quiz-submission-views-accordion-editor-changed', this._refetchQuiz);
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		this.removeEventListener('d2l-activity-quiz-submission-views-accordion-editor-changed', this._refetchQuiz);
+	}
+
 	render() {
 		return html`
 			${this._renderAccordionView()}
 			${this._renderDialogOpener()}
 			${this._renderDialog()}
 		`;
+	}
+
+	async _refetchQuiz(e) {
+		if (e && e.detail && e.detail.promise) {
+			await e.detail.promise;
+		}
+
+		const entity = store.get(this.checkedOutHref);
+
+		// Refetch entity to refresh check-in action
+		entity && entity.fetch(true);
 	}
 
 	_renderAccordionView() {

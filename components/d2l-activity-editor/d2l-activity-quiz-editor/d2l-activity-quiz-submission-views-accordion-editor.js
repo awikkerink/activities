@@ -44,10 +44,10 @@ class ActivityQuizSubmissionViewsAccordionEditor
 	_onTileRemoved(e) {
 		if (!e || !e.target || !e.target.href) return;
 
-		const views = store.get(this.href);
+		const entity = store.get(this.href);
 
 		// Optimistic UI - Remove view from collection
-		views && views.removeView(e.target.href);
+		entity.removeView(e.target.href);
 	}
 
 	_renderSubmissionView(view) {
