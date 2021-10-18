@@ -7,6 +7,7 @@ import { activityContentEditorStyles } from '../shared-components/d2l-activity-c
 import { ActivityEditorMixin } from '../../mixins/d2l-activity-editor-mixin.js';
 import { ContentScormActivityEntity } from 'siren-sdk/src/activities/content/ContentScormActivityEntity.js';
 import { shared as contentScormActivityStore } from './state/content-scorm-activity-store.js';
+import { editorLayoutStyles } from '../../styles/activity-editor-styles.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ErrorHandlingMixin } from '../../error-handling-mixin.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
@@ -28,12 +29,31 @@ class ContentScormActivityDetail extends SkeletonMixin(ErrorHandlingMixin(Locali
 			super.styles,
 			labelStyles,
 			activityContentEditorStyles,
+			editorLayoutStyles,
 			css`
 				.d2l-activity-label-container {
-					margin-bottom: 6px;
+					margin-bottom: 8px;
 				}
 				d2l-activity-content-external-activity {
 					margin-top: 36px;
+				}
+				#score-and-duedate-container {
+					display: flex;
+					flex-wrap: wrap;
+					padding-bottom: 0;
+				}
+				#score-container {
+					margin-right: 40px;
+				}
+				:host([dir="rtl"]) #score-container {
+					margin-left: 40px;
+					margin-right: 0;
+				}
+				.d2l-grade-type-text {
+					margin: 0 0.75rem 0 0.2rem;
+				}
+				:host([dir="rtl"]) .d2l-grade-type-text {
+					margin: 0 0.2rem 0 0.75rem;
 				}
 			`
 		];
@@ -88,27 +108,28 @@ class ContentScormActivityDetail extends SkeletonMixin(ErrorHandlingMixin(Locali
 			>
 			</d2l-activity-content-editor-title>
 
-			<div id="score-container" class="d2l-editor-layout-section">
-				<div class="d2l-activity-label-container d2l-label-text d2l-skeletize">
-					${this._createSelectboxGradeItemEnabled ? this.localize('editor.gradeOutOf') : this.localize('editor.scoreOutOf')}
+			<div id="score-and-duedate-container">
+				<div id="score-container" class="d2l-editor-layout-section">
+					<div class="d2l-activity-label-container d2l-label-text d2l-skeletize">
+						${this.localize('editor.gradeOutOf')}
+					</div>
+					<d2l-activity-score-editor
+						?skeleton="${this.skeleton}"
+						.href="${this.activityUsageHref}"
+						.token="${this.token}"
+						.activityName="${entityTitle}"
+						.hasActivityScore="${false}"
+						.disableNotInGradebook="${true}">
+					</d2l-activity-score-editor>
 				</div>
-				<d2l-activity-score-editor
-					?skeleton="${this.skeleton}"
-					.href="${this.activityUsageHref}"
-					.token="${this.token}"
-					.activityName="${entityTitle}"
-					.hasActivityScore="${false}"
-					.disableNotInGradebook="${true}">
-				</d2l-activity-score-editor>
+				<div id="duedate-container" class="d2l-editor-layout-section">
+					<d2l-activity-due-date-editor
+						?skeleton="${this.skeleton}"
+						.href="${this.activityUsageHref}"
+						.token="${this.token}">
+					</d2l-activity-due-date-editor>
+				</div>
 			</div>
-
-			<d2l-activity-content-editor-due-date
-				.href="${this.activityUsageHref}"
-				.token="${this.token}"
-				?skeleton="${this.skeleton}"
-				?expanded=${true}
-			>
-			</d2l-activity-content-editor-due-date>
 
 			<d2l-activity-content-scorm-activity-display-options
 				.entity=${scormActivityEntity}

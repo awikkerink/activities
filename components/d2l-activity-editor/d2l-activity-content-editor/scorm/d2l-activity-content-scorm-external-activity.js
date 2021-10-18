@@ -2,7 +2,7 @@
 import '@brightspace-ui/core/components/button/button-subtle.js';
 import './d2l-activity-content-scorm-activity-jump-icon.js';
 import '../shared-components/d2l-activity-content-link-preview.js';
-import { bodyCompactStyles, bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
+import { bodyCompactStyles, bodySmallStyles, heading4Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { LocalizeActivityEditorMixin } from '../../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -28,23 +28,33 @@ class ActivityContentScormExternalActivity extends SkeletonMixin(LocalizeActivit
 			labelStyles,
 			bodyCompactStyles,
 			bodySmallStyles,
+			heading4Styles,
 			css`
 				.d2l-external-activity-title-container {
-					align-content: flex-end;
+					align-content: flex-start;
+					align-items: center;
+					background-color: var(--d2l-color-regolith);
+					border: 1px solid var(--d2l-color-mica);
+					border-width: 1px 0;
 					display: flex;
+					height: 60px;
 					justify-content: space-between;
+					max-height: 60px;
+					overflow: hidden;
+					padding: 0 24px;
 				}
 				.d2l-external-activity-container {
 					margin-top: 36px;
 				}
 				.d2l-external-activity-outer-frame {
+					border: 1px solid var(--d2l-color-mica);
 					display: flex;
 					flex-direction: column;
 					height: 100%;
 					justify-content: flex-start;
 				}
-				.d2l-external-activity-inner-frame {
-					margin-top: 6px;
+				.d2l-external-activity-subtitle {
+					padding: 12px 0;
 				}
 			`
 		];
@@ -70,7 +80,8 @@ class ActivityContentScormExternalActivity extends SkeletonMixin(LocalizeActivit
 								</d2l-activity-content-scorm-activity-jump-icon>`
 							: html`
 								<d2l-activity-content-link-preview
-									.entity=${this.entity}>
+									.entity=${this.entity}
+								>
 								</d2l-activity-content-link-preview>`
 						}
 					</div>
@@ -96,7 +107,7 @@ class ActivityContentScormExternalActivity extends SkeletonMixin(LocalizeActivit
 	_renderSubTitle() {
 		return this.subTitle
 			? html`
-				<p class="d2l-body-small d2l-skeletize">
+				<p class="d2l-body-small d2l-skeletize d2l-external-activity-subtitle">
 					${this.subTitle}
 				</p>`
 			: html``;
@@ -106,12 +117,9 @@ class ActivityContentScormExternalActivity extends SkeletonMixin(LocalizeActivit
 		return this.title
 			? html`
 				<div class="d2l-skeletize-container d2l-external-activity-title-container">
-					<div>
-						<label class="d2l-label-text d2l-skeletize">
+						<label class="d2l-label-text d2l-heading-4 d2l-skeletize">
 							${this.title}
 						</label>
-						${this._renderSubTitle()}
-					</div>
 					<d2l-button-subtle
 						text="${this.localize('content.openInNewWindow')}"
 						icon="tier1:new-window"
@@ -119,7 +127,9 @@ class ActivityContentScormExternalActivity extends SkeletonMixin(LocalizeActivit
 						class="d2l-skeletize"
 					>
 					</d2l-button-subtle>
-				</div>`
+				</div>
+				${this._renderSubTitle()}
+			`
 			: html``;
 	}
 }
