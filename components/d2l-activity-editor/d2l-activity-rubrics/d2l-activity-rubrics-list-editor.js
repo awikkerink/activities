@@ -18,7 +18,6 @@ class ActivityRubricsListEditor extends ActivityEditorMixin(LocalizeActivityEdit
 	static get properties() {
 		return {
 			assignmentHref: { type: String },
-			associationsHref: { type: String },
 			_associationBeingDeleted: { type: String }
 		};
 	}
@@ -90,16 +89,14 @@ class ActivityRubricsListEditor extends ActivityEditorMixin(LocalizeActivityEdit
 			return;
 		}
 
-		const entity = store.get(this.href);
+		const entity = store.get(this.href); // directAssociations
 		const assignment = assignmentStore.get(this.assignmentHref);
-		const associationsDirect = store.get(this.associationsHref);
 
 		if (!entity || !assignment) {
 			return;
 		}
 
 		entity.deleteAssociation(rubricHref, assignment);
-		associationsDirect.deleteAssociation(rubricHref, assignment);
 		announce(this.localize('rubrics.txtRubricRemoved'));
 	}
 

@@ -4,6 +4,7 @@ import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/ty
 import { css, html } from 'lit-element/lit-element';
 import { accordionStyles } from './styles/accordion-styles';
 import { ActivityEditorMixin } from './mixins/d2l-activity-editor-mixin.js';
+import associationStore from '../../components/d2l-activity-editor/d2l-activity-rubrics/state/association-collection-store.js';
 import { LocalizeActivityEditorMixin } from './mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
@@ -110,10 +111,22 @@ class ActivityCompetencies extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 		);
 
 		// "Close" button handler
-		delayedResult.AddListener(() => store.get(this.href).loadCompetencies(true));
+		delayedResult.AddListener(() => {
+			store.get(this.href).loadCompetencies(true);
+			this._refetchIndirectAssociations();
+		});
 
 		// "X" abort handler
-		delayedResult.AddReleaseListener(() => store.get(this.href).loadCompetencies(true));
+		delayedResult.AddReleaseListener(() => {
+			store.get(this.href).loadCompetencies(true);
+			this._refetchIndirectAssociations();
+		});
+	}
+
+	_refetchIndirectAssociations() {
+		const indirectAssociationHref =  store.get(this.href).indirectAssociationsHref;
+		const indirectAssociations = associationStore.get(indirectAssociationHref);
+		indirectAssociations.fetch(true);
 	}
 
 	_renderCountText(count) {
