@@ -61,14 +61,59 @@ export class QuizSubmissionView {
 		this.showQuestionsType = entity.showQuestionsType();
 		this.showQuestionsOptions = entity.showQuestionsOptions();
 		this.canDeleteSubmissionView = entity.canDeleteSubmissionView();
+		this.canUpdateAttemptRestrictions = entity.canUpdateAttemptRestrictions();
+		this.canUpdateIpRestrictions = entity.canUpdateIpRestrictions();
+		this.canUpdateTimeLimit = entity.canUpdateTimeLimit();
+		this.attemptRestrictions = entity.attemptRestrictions();
+		this.ipRestrictions = entity.ipRestrictions();
+		this.timeLimit = entity.timeLimit();
+		this.canUpdateReleaseDate = entity.canUpdateReleaseDate();
+		this.releaseDate = entity.releaseDate();
+		this.canUpdateTimeLimitNumber = entity.canUpdateTimeLimitNumber();
+		this.timeLimitNumber = entity.timeLimitNumber();
+		this.canUpdateAttemptRestrictionNumber = entity.canUpdateAttemptRestrictionNumber();
+		this.canUpdateGradeRestrictions = entity.canUpdateGradeRestrictions();
+		this.attemptRestrictionNumber = entity.attemptRestrictionNumber();
+		this.gradeRestrictions = entity.gradeRestrictions();
+		this.canUpdateGradeRestrictionsMinMaxGrade = entity.canUpdateGradeRestrictionsMinMaxGrade();
+		this.gradeRestrictionsMinMaxGrade = entity.gradeRestrictionsMinMaxGrade();
 
 		// run after rest of entity properties are loaded
 		this.accordionDropdownOptions = this._generateAccordionDropdownOptions();
 	}
 
+	setAttemptRestrictionNumber(value) {
+		this.attemptRestrictionNumber = value;
+		return this.updateProperty(() => this._entity.setAttemptRestrictionNumber(value));
+	}
+
+	setAttemptRestrictions(value) {
+		this.attemptRestrictions = value;
+		return this.updateProperty(() => this._entity.setAttemptRestrictions(value));
+	}
+
+	setGradeRestrictions(value) {
+		this.attemptRestrictionNumber = value;
+		return this.updateProperty(() => this._entity.setGradeRestrictions(value));
+	}
+
+	setIpRestrictions(value) {
+		this.ipRestrictions = value;
+		return this.updateProperty(() => this._entity.setIpRestrictions(value));
+	}
+
 	setMessage(value) {
 		this.message = value;
 		return this.updateProperty(() => this._entity.setMessage(value));
+	}
+
+	setMinMaxGrade(min, max) {
+		return this.updateProperty(() => this._entity.setMinMaxGrade(min, max));
+	}
+
+	setReleaseDate(value) {
+		this.releaseDate = value;
+		return this.updateProperty(() => this._entity.setReleaseDate(value));
 	}
 
 	setShowAttemptScore(value) {
@@ -118,6 +163,16 @@ export class QuizSubmissionView {
 	setShowStatsScoreDistribution(value) {
 		this.showStatsScoreDistribution = value;
 		return this.updateProperty(() => this._entity.setShowStatsScoreDistribution(value));
+	}
+
+	setTimeLimit(value) {
+		this.timeLimit = value;
+		return this.updateProperty(() => this._entity.setTimeLimit(value));
+	}
+
+	setTimeLimitNumber(value) {
+		this.timeLimitNumber = value;
+		return this.updateProperty(() => this._entity.setTimeLimitNumber(value));
 	}
 
 	async updateProperty(updateFunc) {
@@ -198,6 +253,22 @@ decorate(QuizSubmissionView, {
 	showQuestionsOptions: observable,
 	accordionDropdownOptions: observable,
 	canDeleteSubmissionView: observable,
+	canUpdateAttemptRestrictions: observable,
+	canUpdateIpRestrictions: observable,
+	canUpdateTimeLimit: observable,
+	attemptRestrictions: observable,
+	ipRestrictions: observable,
+	timeLimit: observable,
+	canUpdateReleaseDate: observable,
+	releaseDate: observable,
+	canUpdateTimeLimitNumber: observable,
+	timeLimitNumber: observable,
+	canUpdateAttemptRestrictionNumber: observable,
+	canUpdateGradeRestrictions: observable,
+	attemptRestrictionNumber: observable,
+	gradeRestrictions: observable,
+	canUpdateGradeRestrictionsMinMaxGrade: observable,
+	gradeRestrictionsMinMaxGrade: observable,
 	// actions
 	load: action,
 	setMessage: action,
@@ -205,5 +276,13 @@ decorate(QuizSubmissionView, {
 	setShowQuestionsAndCorrectAnswers: action,
 	setShowStatsClassAverage: action,
 	setShowStatsScoreDistribution: action,
-	deleteSubmissionView: action
+	deleteSubmissionView: action,
+	setAttemptRestrictions: action,
+	setIpRestrictions: action,
+	setTimeLimit: action,
+	setReleaseDate: action,
+	setTimeLimitNumber: action,
+	setAttemptRestrictionNumber: action,
+	setGradeRestrictions: action,
+	setMinMaxGrade: action
 });
