@@ -31,7 +31,8 @@ class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMi
 	static get properties() {
 		return {
 			activityUsageHref: { type: String, attribute: 'activity-usage-href' },
-			_importedActivityHrefs: { type: Array }
+			_importedActivityHrefs: { type: Array },
+			_addedActivityHrefs: { type: Array }
 		};
 	}
 	static get styles() {
@@ -99,6 +100,7 @@ class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMi
 		this.type = 'quiz';
 
 		this._importedActivityHrefs = [];
+		this._addedActivityHrefs = [];
 	}
 
 	render() {
@@ -216,7 +218,8 @@ class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMi
 			<d2l-activity-quiz-question-editor
 				href="${this.activityUsageHref}"
 				.token="${this.token}"
-				.importedActivityHrefs=${this._importedActivityHrefs}>
+				.addedActivityHrefs="${this._addedActivityHrefs}"
+				.importedActivityHrefs="${this._importedActivityHrefs}">
 			</d2l-activity-quiz-question-editor>
 		`;
 	}
@@ -258,7 +261,12 @@ class QuizEditorDetail extends ActivityQuizEditorTelemetryMixin(ActivityEditorMi
 
 	_onRefresh(e) {
 		if (e.detail) {
-			this._importedActivityHrefs = e.detail.activities;
+			if (e.detail.activities.type.includes('browse') || e.detail.activities.type.includes('upload')) {
+				this._importedActivityHrefs = e.detail.activities;
+			}
+			else {
+				this._addedActivityHrefs = e.detail.activities;
+			}
 		}
 	}
 

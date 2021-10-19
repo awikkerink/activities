@@ -100,7 +100,10 @@ class ActivityQuizAddActivityMenu extends ActivityEditorMixin(SkeletonMixin(Loca
 		);
 
 		// "Save" handler
-		delayedResult.AddListener(itemDetails => this._dispatchAddItemsEvent(itemDetails));
+		delayedResult.AddListener(itemDetails => {
+			itemDetails.type = type;
+			this._dispatchAddItemsEvent(itemDetails);
+		});
 	}
 
 	_renderActivityType(activityType) {
