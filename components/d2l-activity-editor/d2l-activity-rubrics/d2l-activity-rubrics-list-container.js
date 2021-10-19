@@ -253,7 +253,7 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 		const indirectAssociations = associationStore.get(this.indirectAssociationsHref);
 		const assignment = assignmentStore.get(this.assignmentHref);
 
-		if (!entity || !assignment) {
+		if (!entity || !assignment || !indirectAssociations) {
 			return html``;
 		}
 
