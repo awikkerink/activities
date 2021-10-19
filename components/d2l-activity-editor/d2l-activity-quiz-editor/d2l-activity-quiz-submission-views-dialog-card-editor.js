@@ -1,12 +1,15 @@
+import '../d2l-activity-text-editor.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { checkboxStyles } from '@brightspace-ui/core/components/inputs/input-checkbox';
+import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 import { sharedSubmissionView as store } from './state/quiz-store';
+import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
 class ActivityQuizSubmissionViewsDialogCardEditor
 	extends ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
@@ -26,6 +29,7 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 
 	constructor() {
 		super(store);
+		this._debounceJobs = {};
 	}
 
 	render() {
@@ -53,6 +57,35 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 		view && view.setShowStatsScoreDistributionChange(e.target.checked);
 	}
 
+	_saveMessage(value) {
+		store.get(this.href).setMessage(value);
+	}
+
+	_debounce(debounceJobs, fn, interval) {
+		const isFirstChange = !debounceJobs;
+		debounceJobs = Debouncer.debounce(
+			debounceJobs,
+			timeOut.after(interval),
+			() => fn()
+		);
+
+		if (isFirstChange) {
+			debounceJobs.flush();
+		}
+	}
+
+	_saveMessageOnChange(e) {
+		const updatedMessage = e.detail.content;
+		const oldMessage = store.get(this.href).message;
+		if (updatedMessage != oldMessage) {
+			this._debounce(
+				this._debounceJobs.instructions,
+				() => this._saveMessage(updatedMessage),
+				500
+			);
+		}
+	}
+
 	_renderEditView(entity) {
 		const {
 			canUpdateMessage,
@@ -70,8 +103,15 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewMessageHeader')}
 					</div>
-					<textarea ?disabled="${!canUpdateMessage}">TEMPORARY - ${message}</textarea>
 				</div>
+
+				<d2l-activity-text-editor
+					htmlEditorType="inline"
+					html-editor-height="2rem"
+					html-editor-max-height= "5"
+					@d2l-activity-text-editor-change="${this._saveMessageOnChange}">
+				</d2l-activity-text-editor>
+
 				<div>
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewGradeHeader')}

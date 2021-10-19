@@ -13,6 +13,7 @@ class ActivityTextEditor extends LitElement {
 			ariaLabel: { type: String },
 			key: { type: String },
 			htmlEditorHeight: { type: String, attribute: 'html-editor-height' },
+			htmlEditorMaxHeight: {type: String, attribute: 'html-editor-max-height'},
 			htmlEditorType: { type: String },
 			fullPage: { type: Boolean, attribute: 'full-page' },
 			fullPageFontSize: { type: String, attribute: 'full-page-font-size' },
@@ -57,6 +58,7 @@ class ActivityTextEditor extends LitElement {
 						?disabled="${this.disabled}"
 						@d2l-activity-html-editor-change="${this._onRichtextChange}"
 						html-editor-height=${ifDefined(this.htmlEditorHeight)}
+						html-editor-max-height=${ifDefined(this.htmlEditorMaxHeight)}
 						?full-page="${this.fullPage}"
 						full-page-font-size="${ifDefined(this.fullPageFontSize)}"
 						full-page-font-family="${ifDefined(this.fullPageFontFamily)}">
@@ -73,6 +75,7 @@ class ActivityTextEditor extends LitElement {
 						@d2l-activity-html-editor-change="${this._onRichtextChange}"
 						.richtextEditorConfig="${this.richtextEditorConfig}">
 					</d2l-activity-html-editor>
+					<p> old editor shown </p>
 				`;
 			}
 		} else {
