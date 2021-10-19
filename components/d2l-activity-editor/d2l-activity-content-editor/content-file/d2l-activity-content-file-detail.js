@@ -2,6 +2,7 @@ import '../shared-components/d2l-activity-content-editor-title.js';
 import './d2l-activity-content-file-loading.js';
 import '@brightspace-ui/core/components/menu/menu-item-separator.js';
 import './html-files/d2l-activity-content-html-file-detail.js';
+import './media-files/d2l-activity-content-media-file-detail.js';
 import { ContentFileEntity, FILE_TYPES } from 'siren-sdk/src/activities/content/ContentFileEntity.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../../mixins/d2l-activity-editor-mixin.js';
@@ -44,11 +45,6 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 		this.skeleton = true;
 	}
 
-	connectedCallback() {
-		super.connectedCallback();
-		this.saveTitle = this.saveTitle.bind(this);
-	}
-
 	render() {
 		const contentFileEntity = contentFileStore.getContentFileActivity(this.href);
 
@@ -57,40 +53,43 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 				<d2l-loading-spinner size="80"></d2l-loading-spinner>
 			`;
 		}
+
+		if(contentFileEntity.fileType == FILE_TYPES.html) {
+			return html`
+				<d2l-activity-content-html-file-detail
+					.href=${this.href}
+					.token=${this.token}
+					.activityUsageHref=${this.activityUsageHref}
+					?sortHTMLTemplatesByName=${this.sortHTMLTemplatesByName}
+				>
+					${this._renderTitle()}
+					${this._renderDueDate()}
+				</d2l-activity-content-html-file-detail>` 
+		}
+
+		if(contentFileEntity.fileType == FILE_TYPES.audio || contentFileEntity.fileType == FILE_TYPES.video) {
+				return html`
+				<d2l-activity-content-media-file-detail
+					.href=${this.href}
+					.token=${this.token}
+					.activityUsageHref=${this.activityUsageHref}
+				>
+					${this._renderTitle()}
+					${this._renderDueDate()}
+				</d2l-activity-content-media-file-detail>` 
+		}
+
+		this.skeleton = false;
 		
 		return html`
-			<d2l-activity-content-editor-title
-				.entity=${contentFileEntity}
-				.onSave=${this.saveTitle}
-				?skeleton="${this.skeleton}"
-			>
-			</d2l-activity-content-editor-title>
-
-			<d2l-activity-content-editor-due-date
-				.href="${this.activityUsageHref}"
-				.token="${this.token}"
-				?skeleton=${this.skeleton}
-				?expanded=${true}
-			>
-			</d2l-activity-content-editor-due-date>
-
-			${contentFileEntity.fileType == FILE_TYPES.html
-			? html`
-			<d2l-activity-content-html-file-detail
-				.href=${this.href}
-				.token=${this.token}
-				.activityUsageHref=${this.activityUsageHref}
-				.entity=${contentFileEntity}
-				.store=${contentFileStore}
-				?sortHTMLTemplatesByName=${this.sortHTMLTemplatesByName}
-			>
-			</d2l-activity-content-html-file-detail>` 
-			: null}
-		`		
+			${this._renderTitle()}
+			${this._renderDueDate()}
+		`;
 	}
 
 	connectedCallback() {
 		super.connectedCallback();
+		this.saveTitle = this.saveTitle.bind(this);
 		this.addEventListener('d2l-loaded-file', () => {this.skeleton = false});
 	}
 
@@ -113,6 +112,43 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 			return;
 		}
 		contentFileActivity.setTitle(title);
+	}
+
+	hasPendingChanges() {
+		const contentFileActivity = contentFileStore.getContentFileActivity(this.href);
+		if (!contentFileActivity) {
+			return false;
+		}
+		return contentFileActivity.dirty;
+	}
+
+	_renderTitle() {
+		const contentFileActivity = contentFileStore.getContentFileActivity(this.href);
+
+		return html`
+			<div slot="title">
+				<d2l-activity-content-editor-title
+					.entity=${contentFileActivity}
+					.onSave=${this.saveTitle}
+					?skeleton="${this.skeleton}"
+				>
+				</d2l-activity-content-editor-title>
+			</div>
+		`;	
+	}
+
+	_renderDueDate() {
+		return html`
+			<div slot="due-date">
+				<d2l-activity-content-editor-due-date
+					.href="${this.activityUsageHref}"
+					.token="${this.token}"
+					?skeleton=${this.skeleton}
+					?expanded=${true}
+				>
+				</d2l-activity-content-editor-due-date>
+			</div>
+		`;
 	}
 }
 

@@ -9,7 +9,7 @@ import { activityHtmlEditorStyles } from '../../shared-components/d2l-activity-h
 import { ContentEditorConstants } from '../../constants';
 import { ContentHtmlFileEntity } from 'siren-sdk/src/activities/content/ContentHtmlFileEntity.js';
 import { ContentFileEntity } from 'siren-sdk/src/activities/content/ContentFileEntity.js';
-import { shared as contentFileStore } from '../state/content-file-store.js';
+import { shared as contentFileStore } from './state/content-html-file-store.js';
 import { ContentHtmlFileTemplatesEntity } from 'siren-sdk/src/activities/content/ContentHtmlFileTemplatesEntity.js';
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
@@ -33,7 +33,8 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 		return {
 			activityUsageHref: { type: String },
 			sortHTMLTemplatesByName: { type: Boolean },
-			entity: { type: Object }
+			entity: { type: Object },
+			htmlFileTemplates: { type: Array }
 		};
 	}
 
@@ -79,10 +80,24 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 
 	connectedCallback() {
 		super.connectedCallback();
-		this.testfetch(this.entity._contentFileEntity._entity);
 	}
 
 	render() {
+		const contentFileEntity = contentFileStore.getContentHtmlFileActivity(this.href);
+
+		if (contentFileEntity) {
+			this.pageContent = contentFileEntity.fileContent;
+			this.htmlTemplatesHref = contentFileEntity.htmlTemplatesHref;
+
+			this.skeleton = false;
+			const loadedFileEvent = new CustomEvent('d2l-loaded-file', {
+				bubbles: false,
+				composed: true,
+				cancelable: true
+			});
+			this.dispatchEvent(loadedFileEvent);	
+		} 
+
 		const newEditorEvent = new CustomEvent('d2l-request-provider', {
 			detail: { key: 'd2l-provider-html-new-editor-enabled' },
 			bubbles: true,
@@ -98,6 +113,8 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 		const activityTextEditorChange = htmlNewEditorEnabled ? this._onPageContentChange : this._onPageContentChangeDebounced;
 
 		return html`
+		<slot name="title"></slot>
+		<slot name="due-date"></slot>
 		<div id="content-page-content-container">
 			<div class="d2l-page-content-label-select-template-container">
 				<label class="d2l-label-text d2l-skeletize">
@@ -135,7 +152,7 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 	}
 
 	hasPendingChanges() {
-		const contentFileActivity = contentFileStore.getContentFileActivity(this.href);
+		const contentFileActivity = contentFileStore.getContentHtmlFileActivity(this.href);
 		if (!contentFileActivity) {
 			return false;
 		}
@@ -143,7 +160,7 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 	}
 
 	async save() {
-		const contentFileActivity = contentFileStore.getContentFileActivity(this.href);
+		const contentFileActivity = contentFileStore.getContentHtmlFileActivity(this.href);
 
 		if (!contentFileActivity) {
 			return;
@@ -153,10 +170,6 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 
 		const originalActivityUsageHref = this.activityUsageHref;
 		const updatedEntity = await contentFileActivity.save();
-
-		const htmlEntity = new ContentHtmlFileEntity(this.contentFileActivity, this.token, { remove: () => { } });
-		await htmlEntity.setHtmlFileHtmlContent(this.pageContent);
-
 		const event = new CustomEvent('d2l-content-working-copy-committed', {
 			detail: {
 				originalActivityUsageHref: originalActivityUsageHref,
@@ -253,9 +266,7 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 	}
 
 	_onPageContentChange(e) {
-		
 		const htmlContent = e.detail.content;
-		console.log(htmlContent);
 		this._savePageContent(htmlContent);
 	}
 
@@ -294,20 +305,20 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 		}
 
 		return html`
-	<d2l-dropdown-button-subtle
-			text=${this.localize('content.selectTemplate')}
-			class="d2l-skeletize"
-			@click=${this._handleClickSelectTemplateButton}
-		>
+			<d2l-dropdown-button-subtle
+					text=${this.localize('content.selectTemplate')}
+					class="d2l-skeletize"
+					@click=${this._handleClickSelectTemplateButton}
+				>
 
-		<d2l-dropdown-menu align="end">
-			<d2l-menu label="${label}" @d2l-menu-item-select=${this._handleClickTemplateMenuItem}>
-				<d2l-menu-item text=${this.localize('content.browseForHtmlTemplate')} key=${browseTemplateKey}></d2l-menu-item>
-				<d2l-menu-item-separator></d2l-menu-item-separator>
-				${this.htmlFileTemplatesLoaded ? this._renderHtmlTemplates() : this._getHtmlTemplateLoadingMenuItem()}
-			</d2l-menu>
-		</d2l-dropdown-menu>
-	</d2l-dropdown-button-subtle>`;
+				<d2l-dropdown-menu align="end">
+					<d2l-menu label="${label}" @d2l-menu-item-select=${this._handleClickTemplateMenuItem}>
+						<d2l-menu-item text=${this.localize('content.browseForHtmlTemplate')} key=${browseTemplateKey}></d2l-menu-item>
+						<d2l-menu-item-separator></d2l-menu-item-separator>
+						${this.htmlFileTemplatesLoaded ? this._renderHtmlTemplates() : this._getHtmlTemplateLoadingMenuItem()}
+					</d2l-menu>
+				</d2l-dropdown-menu>
+			</d2l-dropdown-button-subtle>`;
 	}
 
 	_saveOnChange(jobName) {
@@ -315,11 +326,16 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 	}
 
 	_savePageContent(htmlContent) {
+		const contentFileEntity = contentFileStore.getContentHtmlFileActivity(this.href);
+		if (!contentFileEntity) {
+			return;
+		}
+		contentFileEntity.setPageContent(htmlContent);
 		this.pageContent = htmlContent;
 	}
 
 	_tryOverwriteContent(htmlContent) {
-		const contentFileEntity = contentFileStore.getContentFileActivity(this.href);
+		const contentFileEntity = contentFileStore.getContentHtmlFileActivity(this.href);
 
 		if (contentFileEntity.empty) {
 			this._savePageContent(htmlContent);
@@ -341,40 +357,6 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 
 		return new ContentFileEntity(sirenEntity, this.token, { remove: () => { } });;
 	}
-
-	
-	async testfetch(sirenEntity) {
-	
-			let entity = new ContentFileEntity(sirenEntity, this.token, { remove: () => { } });
-			let fileContent = '';
-
-			entity = await this._checkout(entity);
-
-			this.htmlTemplatesHref = entity.getHtmlTemplatesHref();
-			
-			if(fileEntityHref) {
-			const fileEntityResponse = await fetchEntity(fileEntityHref, this.token);
-				const fileEntity = new FileEntity(fileEntityResponse, this.token, { remove: () => { } });
-				const fileContentFetchResponse = await window.d2lfetch.fetch(fileEntity.getFileDataLocationHref());
-
-				if (fileContentFetchResponse.ok) {
-					fileContent = await fileContentFetchResponse.text();
-				}
-
-				this.pageContent = fileContent;
-				const test = new CustomEvent('d2l-loaded-file', {
-					bubbles: true,
-					composed: true,
-					cancelable: true
-				});
-		
-				this.dispatchEvent(test);
-				this.skeleton = false;
-			}
-			
-		
-	}
-
 }
 
 customElements.define('d2l-activity-content-html-file-detail', ContentHtmlFileDetail);

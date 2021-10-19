@@ -44,6 +44,7 @@ class ContentEditorDetail extends MobxLitElement {
 
 	render() {
 		const contentEntity = store.getContentActivity(this.href);
+
 		if (!contentEntity) {
 			return html`
 				<d2l-loading-spinner size="80"></d2l-loading-spinner>

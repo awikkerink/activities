@@ -1,25 +1,29 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
-import { ContentFileEntity, FILE_TYPES } from 'siren-sdk/src/activities/content/ContentFileEntity.js';
+import { ContentFileEntity} from 'siren-sdk/src/activities/content/ContentFileEntity.js';
+import { ContentFile } from '../../state/content-file.js'
 import { ContentHtmlFileEntity } from 'siren-sdk/src/activities/content/ContentHtmlFileEntity.js';
-import { fetchEntity } from '../../../state/fetch-entity.js';
+import { fetchEntity } from '../../../../state/fetch-entity.js';
 import { FileEntity } from 'siren-sdk/src/files/FileEntity.js';
+import { shared as contentFileStore } from '../../state/content-file-store.js';
+
 // TODO: Explore idea of using this shared WorkingCopy
 // import { WorkingCopy } from '../../../state/working-copy.js';
 
 configureMobx({ enforceActions: 'observed' });
 
-export class ContentHtmlFile {
+export class ContentHtmlFile extends ContentFile {
 
 	constructor(href, token) {
+		super(href, token);
 		this.href = href;
 		this.token = token;
-		this.title = '';
 		this.activityUsageHref = '';
 		this.persistedFileContent = '';
 		this.fileContent = '';
-		this.fileType = null;
 		this.htmlTemplatesHref = null;
 		this.fontSize = null;
+		this.entity = null;
+		this.fileHrefTest = null;
 	}
 
 	async cancelCreate() {
@@ -27,25 +31,37 @@ export class ContentHtmlFile {
 	}
 
 	get dirty() {
-		return !(this._contentFileEntity.equals(this._makeContentFileData()) && this._contentEquals());
+		return !(this._contentEquals());
 	}
 
 	get empty() {
 		let innerHtml = this.fileContent.substring(this.fileContent.indexOf('<body') + 5, this.fileContent.indexOf('</body>'));
-
 		innerHtml = innerHtml.substring(innerHtml.indexOf('>') + 1);
-
 		return (/^([\s\n]|[<p>(&nbsp;)*</p>])*$/g.test(innerHtml));
 	}
 
 	async fetch() {
-		const sirenEntity = await fetchEntity(this.href, this.token);
+		console.log(contentFileStore.getContentFileActivity(this.href));
+		const sirenEntity = contentFileStore.getContentFileActivity(this.href)._contentFileEntity._entity;
+
+		this.fileHrefTest = this.href;
+
 		if (sirenEntity) {
 			let entity = new ContentFileEntity(sirenEntity, this.token, { remove: () => { } });
 			let fileContent = '';
 
-			
+			entity = await this._checkout(entity);
 
+			const fileEntityHref = entity.getFileHref();
+			if (fileEntityHref) {
+				const fileEntityResponse = await fetchEntity(fileEntityHref, this.token);
+				const fileEntity = new FileEntity(fileEntityResponse, this.token, { remove: () => { } });
+				const fileContentFetchResponse = await window.d2lfetch.fetch(fileEntity.getFileDataLocationHref());
+				if (fileContentFetchResponse.ok) {
+					fileContent = await fileContentFetchResponse.text();
+				}
+			}
+			
 			this.load(entity, fileContent);
 		}
 		return this;
@@ -55,45 +71,39 @@ export class ContentHtmlFile {
 		this._contentFileEntity = contentFileEntity;
 		this.href = contentFileEntity.self();
 		this.activityUsageHref = contentFileEntity.getActivityUsageHref();
-		this.title = contentFileEntity.title();
+		
 		this.persistedFileContent = fileContent;
 		this.fileContent = fileContent;
-		this.fileType = contentFileEntity.getFileType();
 		this.fileHref = contentFileEntity.getFileHref();
 
-		if (this.fileType === FILE_TYPES.html) {
-			const htmlFileEntity = new ContentHtmlFileEntity(contentFileEntity._entity, this.token, { remove: () => { } });
-			this.htmlTemplatesHref = htmlFileEntity.getHtmlTemplatesHref();
-			this.fontSize = htmlFileEntity.fontSize();
-		}
+
+		const htmlFileEntity = new ContentHtmlFileEntity(contentFileEntity._entity, this.token, { remove: () => { } });
+		this.htmlTemplatesHref = htmlFileEntity.getHtmlTemplatesHref();
+		this.fontSize = htmlFileEntity.fontSize();
+		
 	}
 
 	async save() {
 		if (!this._contentFileEntity) {
 			return;
 		}
+		//await contentFileStore.getContentFileActivity(this.fileHrefTest).save();
 
-		await this._contentFileEntity.setFileTitle(this.title);
-		let fileContent = '';
+		const htmlEntity = new ContentHtmlFileEntity(this._contentFileEntity, this.token, { remove: () => { } });
+		await htmlEntity.setHtmlFileHtmlContent(this.fileContent);
 
-		if (this._contentFileEntity.getFileType() === FILE_TYPES.html) {
-			const htmlEntity = new ContentHtmlFileEntity(this._contentFileEntity, this.token, { remove: () => { } });
-			await htmlEntity.setHtmlFileHtmlContent(this.fileContent);
-			fileContent = this.fileContent;
-		}
+		await contentFileStore.getContentFileActivity(this.fileHrefTest).save();
 
 		const committedContentFileEntity = await this._commit(this._contentFileEntity);
 		const editableContentFileEntity = await this._checkout(committedContentFileEntity);
-		this.load(editableContentFileEntity, fileContent);
+
+
+		this.load(editableContentFileEntity, this.fileContent);
 		return this._contentFileEntity;
 	}
 
 	setPageContent(pageContent) {
 		this.fileContent = pageContent;
-	}
-
-	setTitle(value) {
-		this.title = value;
 	}
 
 	async _checkout(contentFileEntity) {
@@ -132,16 +142,6 @@ export class ContentHtmlFile {
 		}
 
 		return this.persistedFileContent === this.fileContent;
-	}
-
-	_makeContentFileData() {
-		/* NOTE: if you add fields here, please make sure you update the corresponding equals method in siren-sdk.
-			The cancel workflow is making use of that to detect changes.
-		*/
-		return {
-			title: this.title,
-			fileHref: this.fileHref,
-		};
 	}
 }
 

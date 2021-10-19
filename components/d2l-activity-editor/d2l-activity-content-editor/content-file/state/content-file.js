@@ -15,11 +15,7 @@ export class ContentFile {
 		this.token = token;
 		this.title = '';
 		this.activityUsageHref = '';
-		this.persistedFileContent = '';
-		this.fileContent = '';
 		this.fileType = null;
-		this.htmlTemplatesHref = null;
-		this.fontSize = null;
 	}
 
 	async cancelCreate() {
@@ -27,21 +23,15 @@ export class ContentFile {
 	}
 
 	get dirty() {
-		return !(this._contentFileEntity.equals(this._makeContentFileData()) && this._contentEquals());
-	}
-
-	get empty() {
-		let innerHtml = this.fileContent.substring(this.fileContent.indexOf('<body') + 5, this.fileContent.indexOf('</body>'));
-
-		innerHtml = innerHtml.substring(innerHtml.indexOf('>') + 1);
-
-		return (/^([\s\n]|[<p>(&nbsp;)*</p>])*$/g.test(innerHtml));
+		return !(this._contentFileEntity.equals(this._makeContentFileData()));
 	}
 
 	async fetch() {
 		const sirenEntity = await fetchEntity(this.href, this.token);
+
 		if (sirenEntity) {
 			let entity = new ContentFileEntity(sirenEntity, this.token, { remove: () => { } });
+			entity = await this._checkout(entity);
 			this.load(entity);
 		}
 		return this;
@@ -52,24 +42,16 @@ export class ContentFile {
 		this.href = contentFileEntity.self();
 		this.activityUsageHref = contentFileEntity.getActivityUsageHref();
 		this.title = contentFileEntity.title();
-		this.fileType = contentFileEntity.getFileType();
 		this.fileHref = contentFileEntity.getFileHref();
+		this.fileType = contentFileEntity.getFileType();
 	}
 
 	async save() {
 		if (!this._contentFileEntity) {
 			return;
 		}
-
 		await this._contentFileEntity.setFileTitle(this.title);
-		const committedContentFileEntity = await this._commit(this._contentFileEntity);
-		const editableContentFileEntity = await this._checkout(committedContentFileEntity);
-		this.load(editableContentFileEntity);
 		return this._contentFileEntity;
-	}
-
-	setPageContent(pageContent) {
-		this.fileContent = pageContent;
 	}
 
 	setTitle(value) {
@@ -100,18 +82,6 @@ export class ContentFile {
 		}
 
 		return new ContentFileEntity(sirenEntity, this.token, { remove: () => { } });
-	}
-
-	_contentEquals() {
-		/* This check stops the discard dialog from appearing when no content
-			is added to the editor but it was clicked in. Faster than stripping
-			the html, body, etc. tags added by the new html editor
-		*/
-		if (this.persistedFileContent === '' && this.empty) {
-			return true;
-		}
-
-		return this.persistedFileContent === this.fileContent;
 	}
 
 	_makeContentFileData() {
