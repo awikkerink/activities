@@ -158,7 +158,7 @@ export default {
 	"submissionViewsAccordionDropdownAllQuestionsWithCorrectAnswers": "All questions, with correct answers", // Option in dropdown to decide what to display to learner.
 	"submissionViewsAccordionDropdownAllQuestionsWithoutCorrectAnswers": "All questions, without correct answers", // Option in dropdown to decide what to display to learner.
 	"primaryView": "Primary View", // Label
-	"additionalViewComesIntoEffect": "Additional view comes into effect", // Label
+	"additionalViewComesIntoEffect": "Additional view comes into effect:", // Label
 	"submissionViewDialogCardAttemptScoreTrueText": "Attempt grade displayed for evaluated questions", // Submission view dialog card, text appearing when attempted grades are displayed.
 	"submissionViewDialogCardAttemptScoreFalseText": "Not displayed", // Submission view dialog card, text appearing when attempted grades are not displayed.
 	"submissionViewDialogCardQuestionsNotDisplayed": "Not displayed", // Submission view dialog card, text appearing when no questions are displayed.
@@ -209,5 +209,7 @@ export default {
 	"gradeVisibleCorrectQuestionsLearnersResponses": "Grade visible, show correct questions only, and learner's responses", // summarize list of selected options in comma separated list
 	"noQuestions": "Grade invisible, don't show questions", // summarize list of selected options in comma separated list
 	"gradeVisibleNoQuestions": "Grade visible, don't show questions", // summarize list of selected options in comma separated list
-	"deleteViewWithTitle": "Delete view: {message}" // aria-label for delete view button with view message/title
+	"deleteViewWithTitle": "Delete view: {message}", // aria-label for delete view button with view message/title
+	"submissionViewReleaseDateSummary": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} }{minGrade, plural, =0 {} other {, with attempt grades above {minGrade}%}}{maxGrade, plural, =0 {} other {, with attempt grades below {maxGrade}%}}{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info
+	"submissionViewReleaseDateSummaryBothMinMaxGrades": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} } with attempt grades above {minGrade}% and below {maxGrade}%{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}" // summary of when a view is released with restriction info with both min and max grades
 };

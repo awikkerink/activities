@@ -76,7 +76,8 @@ export class QuizSubmissionView {
 		this.attemptRestrictionNumber = entity.attemptRestrictionNumber();
 		this.gradeRestrictions = entity.gradeRestrictions();
 		this.canUpdateGradeRestrictionsMinMaxGrade = entity.canUpdateGradeRestrictionsMinMaxGrade();
-		this.gradeRestrictionsMinMaxGrade = entity.gradeRestrictionsMinMaxGrade();
+		this.gradeRestrictionsMinGrade = (entity.gradeRestrictionsMinMaxGrade() || {})['min-grade'];
+		this.gradeRestrictionsMaxGrade = (entity.gradeRestrictionsMinMaxGrade() || {})['max-grade'];
 
 		// run after rest of entity properties are loaded
 		this.accordionDropdownOptions = this._generateAccordionDropdownOptions();
@@ -268,7 +269,8 @@ decorate(QuizSubmissionView, {
 	attemptRestrictionNumber: observable,
 	gradeRestrictions: observable,
 	canUpdateGradeRestrictionsMinMaxGrade: observable,
-	gradeRestrictionsMinMaxGrade: observable,
+	gradeRestrictionsMinGrade: observable,
+	gradeRestrictionsMaxGrade: observable,
 	// actions
 	load: action,
 	setMessage: action,

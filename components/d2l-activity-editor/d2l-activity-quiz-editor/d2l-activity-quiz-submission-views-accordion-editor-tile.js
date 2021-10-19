@@ -1,3 +1,4 @@
+import './d2l-activity-quiz-submission-view-release-description';
 import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/icons/icon.js';
 import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
@@ -21,7 +22,7 @@ class ActivityQuizSubmissionViewsAccordionEditorTile
 			selectStyles,
 			checkboxStyles,
 			css`
-				.d2l-label-text {
+				.d2l-activity-quiz-submission-views-accordion-editor-primary-dropdown-heading {
 					padding-bottom: 10px;
 				}
 
@@ -29,17 +30,11 @@ class ActivityQuizSubmissionViewsAccordionEditorTile
 					border: 1px solid var(--d2l-color-gypsum);
 					border-radius: 6px;
 					margin-bottom: 10px;
-					padding: 7px 0.5rem 0.5rem;
+					padding: 10px 0.5rem 0.5rem;
 					position: relative;
 				}
-
 				.d2l-activity-quiz-submission-views-accordion-editor-primary-container {
 					padding-bottom: 10px;
-				}
-
-				.d2l-activity-quiz-submission-views-accordion-editor-tile-primary-dropdown {
-					margin-bottom: 1rem;
-					width: 100%;
 				}
 
 				.d2l-activity-quiz-submission-views-accordion-editor-remove-view-button {
@@ -51,6 +46,19 @@ class ActivityQuizSubmissionViewsAccordionEditorTile
 				:host([dir="rtl"]) .d2l-activity-quiz-submission-views-accordion-editor-remove-view-button {
 					left: 0;
 					right: initial;
+				}
+
+				.d2l-activity-quiz-submission-views-accordion-editor-tile-primary-dropdown {
+					margin-bottom: 1rem;
+					width: 100%;
+				}
+
+				.d2l-activiy-quiz-submission-views-accordion-editor-tile-heading {
+					padding-bottom: 5px;
+				}
+
+				.d2l-activity-quiz-submission-views-accordion-editor-tile-release-description {
+					padding-bottom: 5px;
 				}
 			`
 		];
@@ -142,7 +150,7 @@ class ActivityQuizSubmissionViewsAccordionEditorTile
 					?disabled="${!canUpdateShowAttemptScore}">
 					${this.localize('submissionViewCheckboxLabel')}
 				</d2l-input-checkbox>
-				<div class="d2l-label-text">
+				<div class="d2l-label-text d2l-activity-quiz-submission-views-accordion-editor-primary-dropdown-heading">
 					${this.localize('submissionViewHeading2')}
 				</div>
 				${this._generateDropdown(view)}
@@ -152,7 +160,6 @@ class ActivityQuizSubmissionViewsAccordionEditorTile
 
 	_renderTile(view) {
 		const { isPrimaryView, canDeleteSubmissionView } = view;
-		const title = isPrimaryView ? this.localize('primaryView') : this.localize('additionalViewComesIntoEffect');
 
 		return html`
 			<div class="d2l-activity-quiz-submission-views-accordion-editor-tile">
@@ -165,8 +172,12 @@ class ActivityQuizSubmissionViewsAccordionEditorTile
 					</d2l-button-icon>
 				` : html`` }
 				<div>
-					<span class="d2l-label-text">${title}: </span>
-					${isPrimaryView ? html`` : html`<div class="d2l-body-small"></div>`}
+					<div class="d2l-label-text d2l-activiy-quiz-submission-views-accordion-editor-tile-heading">${isPrimaryView ? this.localize('primaryView') : this.localize('additionalViewComesIntoEffect')}</div>
+					${isPrimaryView ? html`` : html`
+						<div class="d2l-body-small d2l-activity-quiz-submission-views-accordion-editor-tile-release-description">
+							<d2l-activity-quiz-submission-view-release-description href=${this.href} .token="${this.token}"></d2l-activity-quiz-submission-view-release-description>
+						</div>
+					`}
 					<div class="d2l-body-small">${this._tileDescription(view)}</div>
 				</div>
 			</div>
