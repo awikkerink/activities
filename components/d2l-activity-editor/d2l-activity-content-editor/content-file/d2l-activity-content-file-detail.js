@@ -121,6 +121,30 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 		return contentFileActivity.dirty;
 	}
 
+	
+	async save() {
+		const contentFileActivity = contentFileStore.getContentFileActivity(this.href);
+
+		if (!contentFileActivity) {
+			return;
+		}
+
+		const originalActivityUsageHref = this.activityUsageHref;
+		const updatedEntity = await contentFileActivity.save();
+
+		const event = new CustomEvent('d2l-content-working-copy-committed', {
+			detail: {
+				originalActivityUsageHref: originalActivityUsageHref,
+				updatedActivityUsageHref: updatedEntity.getActivityUsageHref()
+			},
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+
+		await this.dispatchEvent(event);
+	}
+
 	_renderTitle() {
 		const contentFileActivity = contentFileStore.getContentFileActivity(this.href);
 

@@ -64,7 +64,7 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 		this._debounceJobs = {};
 		this._setEntityType(ContentHtmlFileEntity);
 		this.skeleton = true;
-		this.saveOrder = 500;
+		this.saveOrder = 250;
 		this.htmlTemplatesHref = null;
 		this.htmlFileTemplates = [];
 		this.firstTemplatesLoadAttempted = false;
@@ -133,20 +133,7 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 		}
 
 		this._saveOnChange('htmlContent');
-
-		const originalActivityUsageHref = this.activityUsageHref;
-		const updatedEntity = await contentFileActivity.save();
-		const event = new CustomEvent('d2l-content-working-copy-committed', {
-			detail: {
-				originalActivityUsageHref: originalActivityUsageHref,
-				updatedActivityUsageHref: updatedEntity.getActivityUsageHref()
-			},
-			bubbles: true,
-			composed: true,
-			cancelable: true
-		});
-
-		await this.dispatchEvent(event);
+		await contentFileActivity.save();
 	}
 
 	_getHtmlTemplateLoadingMenuItem() {
@@ -331,14 +318,14 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 			class="d2l-skeletize"
 			@click=${this._handleClickSelectTemplateButton}
 		>
-		<d2l-dropdown-menu align="end">
-			<d2l-menu label="${label}" @d2l-menu-item-select=${this._handleClickTemplateMenuItem}>
-				<d2l-menu-item text=${this.localize('content.browseForHtmlTemplate')} key=${browseTemplateKey}></d2l-menu-item>
-				<d2l-menu-item-separator></d2l-menu-item-separator>
-				${this.htmlFileTemplatesLoaded ? this._renderHtmlTemplates() : this._getHtmlTemplateLoadingMenuItem()}
-			</d2l-menu>
-		</d2l-dropdown-menu>
-	</d2l-dropdown-button-subtle>`;
+			<d2l-dropdown-menu align="end">
+				<d2l-menu label="${label}" @d2l-menu-item-select=${this._handleClickTemplateMenuItem}>
+					<d2l-menu-item text=${this.localize('content.browseForHtmlTemplate')} key=${browseTemplateKey}></d2l-menu-item>
+					<d2l-menu-item-separator></d2l-menu-item-separator>
+					${this.htmlFileTemplatesLoaded ? this._renderHtmlTemplates() : this._getHtmlTemplateLoadingMenuItem()}
+				</d2l-menu>
+			</d2l-dropdown-menu>
+		</d2l-dropdown-button-subtle>`;
 	}
 
 	_saveOnChange(jobName) {

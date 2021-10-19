@@ -54,6 +54,7 @@ export class ContentFile {
 		await this._contentFileEntity.setFileTitle(this.title);
 		const committedContentFileEntity = await this._commit(this._contentFileEntity);
 		const editableContentFileEntity = await this._checkout(committedContentFileEntity);
+
 		this.load(editableContentFileEntity);
 		return this._contentFileEntity;
 	}

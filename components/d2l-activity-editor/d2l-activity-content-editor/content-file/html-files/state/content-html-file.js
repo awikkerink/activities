@@ -66,16 +66,12 @@ export class ContentHtmlFile {
 		this._contentFileEntity = contentFileEntity;
 		this.href = contentFileEntity.self();
 		this.activityUsageHref = contentFileEntity.getActivityUsageHref();
-		
 		this.persistedFileContent = fileContent;
 		this.fileContent = fileContent;
 		this.fileHref = contentFileEntity.getFileHref();
-
-
 		const htmlFileEntity = new ContentHtmlFileEntity(contentFileEntity._entity, this.token, { remove: () => { } });
 		this.htmlTemplatesHref = htmlFileEntity.getHtmlTemplatesHref();
 		this.fontSize = htmlFileEntity.fontSize();
-		
 	}
 
 	async save() {
@@ -84,10 +80,9 @@ export class ContentHtmlFile {
 		}
 
 		const htmlEntity = new ContentHtmlFileEntity(this._contentFileEntity, this.token, { remove: () => { } });
-		await htmlEntity.setHtmlFileHtmlContent(this.fileContent);
+		const updatedEntity = await htmlEntity.setHtmlFileHtmlContent(this.fileContent);
 
-		const editableContentFileEntity = await contentFileStore.getContentFileActivity(this.fileHrefTest).save();
-		this.load(editableContentFileEntity, this.fileContent);
+		this.load(updatedEntity, this.fileContent);
 		return this._contentFileEntity;
 	}
 

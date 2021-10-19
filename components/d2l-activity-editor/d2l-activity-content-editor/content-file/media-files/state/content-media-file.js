@@ -1,6 +1,8 @@
 import { configure as configureMobx, decorate, observable } from 'mobx';
 import { ContentMediaFileEntity } from 'siren-sdk/src/activities/content/ContentMediaFileEntity.js';
 import { shared as contentFileStore } from '../../state/content-file-store.js';
+import { fetchEntity } from '../../../../state/fetch-entity.js';
+import { FileEntity } from 'siren-sdk/src/files/FileEntity.js';
 
 configureMobx({ enforceActions: 'observed' });
 
@@ -9,7 +11,7 @@ export class ContentMediaFile {
 	constructor(href, token) {
 		this.href = href;
 		this.token = token;
-        this.isMediaEmbedded = false;
+		this.isMediaEmbedded = false;
 		this._mediaFileEntity = null;
 	}
 
@@ -20,17 +22,28 @@ export class ContentMediaFile {
 	async fetch() {
 		const sirenEntity = contentFileStore.getContentFileActivity(this.href)._contentFileEntity._entity;
 
-		if (sirenEntity) {
-			const entity = new ContentMediaFileEntity(sirenEntity, this.token, { remove: () => { } });
-			this.load(entity);
+		if (!sirenEntity) {
+			return this;
 		}
 
+		const mediaFileEntity = new ContentMediaFileEntity(sirenEntity, this.token, { remove: () => { } });
+		const mediaFileEntityHref = mediaFileEntity.getFileHref();
+
+		if(!mediaFileEntityHref) {
+			return this;
+		}
+
+		const fileEntityResponse = await fetchEntity(mediaFileEntityHref, this.token);
+		const fileEntity = new FileEntity(fileEntityResponse, this.token, { remove: () => { } });
+
+		this.load(mediaFileEntity, fileEntity);
 		return this;
 	}
 
-	load(mediaFileEntity) {
+	load(mediaFileEntity, fileEntity) {
         this._mediaFileEntity = mediaFileEntity;
         this.isMediaEmbedded = mediaFileEntity.embedMedia();
+		this.fileLocationHref = fileEntity.getFileLocationHref();
 	}
 
 	async save() {
@@ -38,7 +51,6 @@ export class ContentMediaFile {
 			return;
 		}
 
-		await contentFileStore.getContentFileActivity(this.fileHrefTest).save();
 		return this._mediaFileEntity;
 	}
 }

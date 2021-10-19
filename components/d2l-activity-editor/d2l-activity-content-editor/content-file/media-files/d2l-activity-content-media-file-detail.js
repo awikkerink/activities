@@ -27,7 +27,7 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 		super(contentMediaFileStore);
 		this._setEntityType(ContentMediaFileEntity);
 		this.skeleton = true;
-		this.saveOrder = 500;
+		this.saveOrder = 250;
 	}
 
 	connectedCallback() {
@@ -51,7 +51,9 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 		return html`
             <slot name="title"></slot>
             <slot name="due-date"></slot>
-			<div>Here is where the media view goes</div>
+			<div>
+            
+            </div>
 		`;
 	}
 
@@ -62,6 +64,15 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 		}
 
 		await mediaFileEntity.cancelCreate();
+	}
+
+    async save() {
+		const mediaFileEntity = contentMediaFileStore.getContentMediaFileActivity(this.href);
+		if (!mediaFileEntity) {
+			return;
+		}
+
+		await mediaFileEntity.save();
 	}
 
 }
