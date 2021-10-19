@@ -1,5 +1,4 @@
 import '../shared-components/d2l-activity-content-editor-title.js';
-import './d2l-activity-content-file-loading.js';
 import '@brightspace-ui/core/components/menu/menu-item-separator.js';
 import './html-files/d2l-activity-content-html-file-detail.js';
 import './media-files/d2l-activity-content-media-file-detail.js';

@@ -1,4 +1,4 @@
-import { action, configure as configureMobx, decorate, observable } from 'mobx';
+import { configure as configureMobx, decorate, observable } from 'mobx';
 import { ContentMediaFileEntity } from 'siren-sdk/src/activities/content/ContentMediaFileEntity.js';
 import { shared as contentFileStore } from '../../state/content-file-store.js';
 
@@ -10,6 +10,11 @@ export class ContentMediaFile {
 		this.href = href;
 		this.token = token;
         this.isMediaEmbedded = false;
+		this._mediaFileEntity = null;
+	}
+
+	async cancelCreate() {
+		await this._contentFileEntity.deleteFile();
 	}
 
 	async fetch() {
@@ -36,5 +41,9 @@ export class ContentMediaFile {
 		await contentFileStore.getContentFileActivity(this.fileHrefTest).save();
 		return this._mediaFileEntity;
 	}
-
 }
+
+decorate(ContentMediaFile, {
+	// props
+	isMediaEmbedded: observable
+});

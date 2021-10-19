@@ -11,10 +11,9 @@ import { shared as contentFileStore } from '../../state/content-file-store.js';
 
 configureMobx({ enforceActions: 'observed' });
 
-export class ContentHtmlFile extends ContentFile {
+export class ContentHtmlFile {
 
 	constructor(href, token) {
-		super(href, token);
 		this.href = href;
 		this.token = token;
 		this.activityUsageHref = '';
@@ -22,7 +21,6 @@ export class ContentHtmlFile extends ContentFile {
 		this.fileContent = '';
 		this.htmlTemplatesHref = null;
 		this.fontSize = null;
-		this.entity = null;
 		this.fileHrefTest = null;
 	}
 
@@ -41,7 +39,6 @@ export class ContentHtmlFile extends ContentFile {
 	}
 
 	async fetch() {
-		console.log(contentFileStore.getContentFileActivity(this.href));
 		const sirenEntity = contentFileStore.getContentFileActivity(this.href)._contentFileEntity._entity;
 
 		this.fileHrefTest = this.href;
@@ -49,10 +46,8 @@ export class ContentHtmlFile extends ContentFile {
 		if (sirenEntity) {
 			let entity = new ContentFileEntity(sirenEntity, this.token, { remove: () => { } });
 			let fileContent = '';
-
-			entity = await this._checkout(entity);
-
 			const fileEntityHref = entity.getFileHref();
+
 			if (fileEntityHref) {
 				const fileEntityResponse = await fetchEntity(fileEntityHref, this.token);
 				const fileEntity = new FileEntity(fileEntityResponse, this.token, { remove: () => { } });
@@ -61,7 +56,7 @@ export class ContentHtmlFile extends ContentFile {
 					fileContent = await fileContentFetchResponse.text();
 				}
 			}
-			
+
 			this.load(entity, fileContent);
 		}
 		return this;
@@ -87,49 +82,17 @@ export class ContentHtmlFile extends ContentFile {
 		if (!this._contentFileEntity) {
 			return;
 		}
-		//await contentFileStore.getContentFileActivity(this.fileHrefTest).save();
 
 		const htmlEntity = new ContentHtmlFileEntity(this._contentFileEntity, this.token, { remove: () => { } });
 		await htmlEntity.setHtmlFileHtmlContent(this.fileContent);
 
-		await contentFileStore.getContentFileActivity(this.fileHrefTest).save();
-
-		const committedContentFileEntity = await this._commit(this._contentFileEntity);
-		const editableContentFileEntity = await this._checkout(committedContentFileEntity);
-
-
+		const editableContentFileEntity = await contentFileStore.getContentFileActivity(this.fileHrefTest).save();
 		this.load(editableContentFileEntity, this.fileContent);
 		return this._contentFileEntity;
 	}
 
 	setPageContent(pageContent) {
 		this.fileContent = pageContent;
-	}
-
-	async _checkout(contentFileEntity) {
-		if (!contentFileEntity) {
-			return;
-		}
-
-		const sirenEntity = await contentFileEntity.checkout();
-		if (!sirenEntity) {
-			return contentFileEntity;
-		}
-
-		return new ContentFileEntity(sirenEntity, this.token, { remove: () => { } });
-	}
-
-	async _commit(contentFileEntity) {
-		if (!contentFileEntity) {
-			return;
-		}
-
-		const sirenEntity = await contentFileEntity.commit();
-		if (!sirenEntity) {
-			return contentFileEntity;
-		}
-
-		return new ContentFileEntity(sirenEntity, this.token, { remove: () => { } });
 	}
 
 	_contentEquals() {
@@ -147,7 +110,6 @@ export class ContentHtmlFile extends ContentFile {
 
 decorate(ContentHtmlFile, {
 	// props
-	title: observable,
 	fileHref: observable,
 	// actions
 	load: action,
