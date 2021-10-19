@@ -45,6 +45,7 @@ describe('Activity Usage', function() {
 			canEditReleaseConditions: () => true,
 			getRubricAssociationsHref: () => undefined,
 			getDirectRubricAssociationsHref: () => undefined,
+			getIndirectRubricAssociationsHref: () => undefined,
 			newGradeCandidatesHref: () => undefined,
 			isNewGradeCandidate: () => false,
 			alignmentsHierarchicalHref: () => alignmentsHref,
@@ -55,6 +56,7 @@ describe('Activity Usage', function() {
 			specialAccessHref: () => null,
 			specializationHref: () => null,
 			associateGradeHref: () => null,
+			indirectAssociationsHref: () => null,
 			scoringHref: () => null
 		};
 	}
