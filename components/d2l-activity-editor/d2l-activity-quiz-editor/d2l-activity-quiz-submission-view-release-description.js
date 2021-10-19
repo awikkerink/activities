@@ -47,13 +47,6 @@ class ActivityQuizSubmissionViewReleaseDescription
 			timeLimitNumber
 		} = view;
 
-		releaseDate = "2021-01-03T04:59:59.000Z";
-		attemptRestrictions = true;
-		attemptRestrictionNumber = 5;
-		ipRestrictions = true;
-		timeLimit = true;
-		timeLimitNumber = 52;
-
 		if (!releaseDate) return html``;
 
 		if (!timeLimit) {
