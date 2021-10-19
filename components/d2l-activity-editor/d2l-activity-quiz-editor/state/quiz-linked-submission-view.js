@@ -1,11 +1,11 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
-import { QuizSubmissionViewLinkedEntity } from 'siren-sdk/src/activities/quizzes/submissionViews/QuizSubmissionViewLinkedEntity.js';
+//import { QuizSubmissionViewLinkedEntity } from 'siren-sdk/src/activities/quizzes/submissionViews/QuizSubmissionViewLinkedEntity.js';
 
 configureMobx({ enforceActions: 'observed' });
 
 export class QuizLinkedSubmissionView {
 	constructor(sirenEntity) {
-		const entity = new QuizSubmissionViewLinkedEntity(sirenEntity);
+		//const entity = new QuizSubmissionViewLinkedEntity(sirenEntity);
 		this.load(entity);
 	}
 
