@@ -46,7 +46,23 @@ describe('Activity Submission View', function() {
 					'value': 'correct-questions',
 					'selected': false
 				}
-			]
+			],
+			canUpdateAttemptRestrictions: () => true,
+			canUpdateIpRestrictions: () => true,
+			canUpdateTimeLimit: () => true,
+			attemptRestrictions: () => true,
+			ipRestrictions: () => true,
+			timeLimit: () => true,
+			canUpdateReleaseDate: () => true,
+			releaseDate: () => '2021-01-03T04:59:59.000Z',
+			canUpdateTimeLimitNumber: () => true,
+			timeLimitNumber: () => 120,
+			canUpdateAttemptRestrictionNumber: () => true,
+			canUpdateGradeRestrictions: () => true,
+			attemptRestrictionNumber: () => 2,
+			gradeRestrictions: () => true,
+			canUpdateGradeRestrictionsMinMaxGrade: () => true,
+			gradeRestrictionsMinMaxGrade: () => { return { 'min-grade': { value: 10 }, 'max-grade': { value: 50 } }; }
 		};
 	}
 
@@ -75,7 +91,23 @@ describe('Activity Submission View', function() {
 			showLearnerResponses: () => true,
 			showQuestionScore: () => true,
 			showQuestionsType: () => 'all-questions',
-			showQuestionsOptions: () => undefined
+			showQuestionsOptions: () => undefined,
+			canUpdateAttemptRestrictions: () => false,
+			canUpdateIpRestrictions: () => false,
+			canUpdateTimeLimit: () => false,
+			attemptRestrictions: () => true,
+			ipRestrictions: () => true,
+			timeLimit: () => true,
+			canUpdateReleaseDate: () => false,
+			releaseDate: () => '2021-01-03T04:59:59.000Z',
+			canUpdateTimeLimitNumber: () => false,
+			timeLimitNumber: () => 120,
+			canUpdateAttemptRestrictionNumber: () => false,
+			canUpdateGradeRestrictions: () => false,
+			attemptRestrictionNumber: () => 2,
+			gradeRestrictions: () => true,
+			canUpdateGradeRestrictionsMinMaxGrade: () => false,
+			gradeRestrictionsMinMaxGrade: () => { return { 'min-grade': { value: 10 }, 'max-grade': { value: 50 } }; }
 		};
 	}
 
@@ -126,6 +158,22 @@ describe('Activity Submission View', function() {
 			expect(submissionView.showQuestionScore).to.be.true;
 			expect(submissionView.showQuestionsType).to.equal('all-questions');
 			expect(submissionView.showQuestionsOptions.length).to.equal(3);
+			expect(submissionView.canUpdateAttemptRestrictions).to.be.true;
+			expect(submissionView.canUpdateIpRestrictions).to.be.true;
+			expect(submissionView.canUpdateTimeLimit).to.be.true;
+			expect(submissionView.attemptRestrictions).to.be.true;
+			expect(submissionView.ipRestrictions).to.be.true;
+			expect(submissionView.timeLimit).to.be.true;
+			expect(submissionView.canUpdateReleaseDate).to.be.true;
+			expect(submissionView.releaseDate).to.equal('2021-01-03T04:59:59.000Z');
+			expect(submissionView.canUpdateTimeLimitNumber).to.be.true;
+			expect(submissionView.timeLimitNumber).to.equal(120);
+			expect(submissionView.canUpdateAttemptRestrictionNumber).to.be.true;
+			expect(submissionView.canUpdateGradeRestrictions).to.be.true;
+			expect(submissionView.attemptRestrictionNumber).to.equal(2);
+			expect(submissionView.gradeRestrictions).to.be.true;
+			expect(submissionView.canUpdateGradeRestrictionsMinMaxGrade).to.be.true;
+			expect(submissionView.gradeRestrictionsMinMaxGrade).to.deep.equal({ 'min-grade': { value: 10 }, 'max-grade': { value: 50 } });
 		});
 	});
 
@@ -168,6 +216,22 @@ describe('Activity Submission View', function() {
 			expect(submissionView.showQuestionScore).to.be.true;
 			expect(submissionView.showQuestionsType).to.equal('all-questions');
 			expect(submissionView.showQuestionsOptions).to.be.undefined;
+			expect(submissionView.canUpdateAttemptRestrictions).to.be.false;
+			expect(submissionView.canUpdateIpRestrictions).to.be.false;
+			expect(submissionView.canUpdateTimeLimit).to.be.false;
+			expect(submissionView.attemptRestrictions).to.be.true;
+			expect(submissionView.ipRestrictions).to.be.true;
+			expect(submissionView.timeLimit).to.be.true;
+			expect(submissionView.canUpdateReleaseDate).to.be.false;
+			expect(submissionView.releaseDate).to.equal('2021-01-03T04:59:59.000Z');
+			expect(submissionView.canUpdateTimeLimitNumber).to.be.false;
+			expect(submissionView.timeLimitNumber).to.equal(120);
+			expect(submissionView.canUpdateAttemptRestrictionNumber).to.be.false;
+			expect(submissionView.canUpdateGradeRestrictions).to.be.false;
+			expect(submissionView.attemptRestrictionNumber).to.equal(2);
+			expect(submissionView.gradeRestrictions).to.be.true;
+			expect(submissionView.canUpdateGradeRestrictionsMinMaxGrade).to.be.false;
+			expect(submissionView.gradeRestrictionsMinMaxGrade).to.deep.equal({ 'min-grade': { value: 10 }, 'max-grade': { value: 50 } });
 		});
 	});
 });
