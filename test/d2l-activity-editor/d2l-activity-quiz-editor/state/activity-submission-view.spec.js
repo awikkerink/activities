@@ -173,7 +173,7 @@ describe('Activity Submission View', function() {
 			expect(submissionView.attemptRestrictionNumber).to.equal(2);
 			expect(submissionView.gradeRestrictions).to.be.true;
 			expect(submissionView.canUpdateGradeRestrictionsMinMaxGrade).to.be.true;
-			expect(submissionView.gradeRestrictionsMinMaxGrade).to.equal({ 'min-grade': { value: 10 }, 'max-grade': { value: 50 } });
+			expect(submissionView.gradeRestrictionsMinMaxGrade).to.deep.equal({ 'min-grade': { value: 10 }, 'max-grade': { value: 50 } });
 		});
 	});
 
@@ -231,7 +231,7 @@ describe('Activity Submission View', function() {
 			expect(submissionView.attemptRestrictionNumber).to.equal(2);
 			expect(submissionView.gradeRestrictions).to.be.true;
 			expect(submissionView.canUpdateGradeRestrictionsMinMaxGrade).to.be.false;
-			expect(submissionView.gradeRestrictionsMinMaxGrade).to.equal({ 'min-grade': { value: 10 }, 'max-grade': { value: 50 } });
+			expect(submissionView.gradeRestrictionsMinMaxGrade).to.deep.equal({ 'min-grade': { value: 10 }, 'max-grade': { value: 50 } });
 		});
 	});
 });
