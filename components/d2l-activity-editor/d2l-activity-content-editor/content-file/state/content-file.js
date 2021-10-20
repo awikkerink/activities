@@ -30,29 +30,40 @@ export class ContentFile {
 	}
 
 	get dirty() {
-		return !(this._contentFileEntity.equals(this._makeContentFileData()));
+		return !(this._contentFileEntity.equals(this._makeContentFileData()) && this._contentEquals());
+	}
+
+	get empty() {
+		let innerHtml = this.fileContent.substring(this.fileContent.indexOf('<body') + 5, this.fileContent.indexOf('</body>'));
+
+		innerHtml = innerHtml.substring(innerHtml.indexOf('>') + 1);
+
+		return (/^([\s\n]|[<p>(&nbsp;)*</p>])*$/g.test(innerHtml));
 	}
 
 	async fetch() {
 		const sirenEntity = await fetchEntity(this.href, this.token);
-		if (sirenEntity) {
-			let entity = new ContentFileEntity(sirenEntity, this.token, { remove: () => { } });
-			let fileContent = '';
 
-			entity = await this._checkout(entity);
-
-			const fileEntityHref = entity.getFileHref();
-			if (entity.getFileType() === FILE_TYPES.html && fileEntityHref) {
-				const fileEntityResponse = await fetchEntity(fileEntityHref, this.token);
-				const fileEntity = new FileEntity(fileEntityResponse, this.token, { remove: () => { } });
-				const fileContentFetchResponse = await window.d2lfetch.fetch(fileEntity.getFileDataLocationHref());
-				if (fileContentFetchResponse.ok) {
-					fileContent = await fileContentFetchResponse.text();
-				}
-			}
-
-			this.load(entity, fileContent);
+		if(!sirenEntity) {
+			return this;
 		}
+	
+		let entity = new ContentFileEntity(sirenEntity, this.token, { remove: () => { } });
+		let fileContent = '';
+
+		entity = await this._checkout(entity);
+
+		const fileEntityHref = entity.getFileHref();
+		if (entity.getFileType() === FILE_TYPES.html && fileEntityHref) {
+			const fileEntityResponse = await fetchEntity(fileEntityHref, this.token);
+			const fileEntity = new FileEntity(fileEntityResponse, this.token, { remove: () => { } });
+			const fileContentFetchResponse = await window.d2lfetch.fetch(fileEntity.getFileDataLocationHref());
+			if (fileContentFetchResponse.ok) {
+				fileContent = await fileContentFetchResponse.text();
+			}
+		}
+
+		this.load(entity, fileContent);
 		return this;
 	}
 
@@ -104,6 +115,7 @@ export class ContentFile {
 		const editableContentFileEntity = await this._checkout(committedContentFileEntity);
 		
 		this.load(editableContentFileEntity, this.fileContent);
+		return this._contentFileEntity
 	}
 
 	setPageContent(pageContent) {
@@ -138,6 +150,18 @@ export class ContentFile {
 		}
 
 		return new ContentFileEntity(sirenEntity, this.token, { remove: () => { } });
+	}
+
+	_contentEquals() {
+		/* This check stops the discard dialog from appearing when no content
+			is added to the editor but it was clicked in. Faster than stripping
+			the html, body, etc. tags added by the new html editor
+		*/
+		if (this.persistedFileContent === '' && this.empty) {
+			return true;
+		}
+
+		return this.persistedFileContent === this.fileContent;
 	}
 
 	_makeContentFileData() {

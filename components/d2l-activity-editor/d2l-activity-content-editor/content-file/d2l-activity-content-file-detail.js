@@ -53,9 +53,14 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 				<d2l-activity-content-file-loading
 					.href="${this.href}"
 					.token="${this.token}"
-				></d2l-activity-content-file-loading>
+				>
+					${this._renderTitle()}
+					${this._renderDueDate()}
+				</d2l-activity-content-file-loading>
 			`;
 		}
+
+		this.skeleton = false;
 
 		if(contentFileEntity.fileType == FILE_TYPES.html) {
 			return html`
@@ -81,8 +86,6 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 					${this._renderDueDate()}
 				</d2l-activity-content-media-file-detail>` 
 		}
-
-		this.skeleton = false;
 		
 		return html`
 			${this._renderTitle()}

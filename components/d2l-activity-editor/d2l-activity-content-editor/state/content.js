@@ -1,10 +1,10 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { CONTENT_TYPES, ContentEntity } from 'siren-sdk/src/activities/content/ContentEntity.js';
-import { FILE_TYPES } from 'siren-sdk/src/activities/content/ContentFileEntity.js';
 import { shared as contentFileStore } from '../content-file/state/content-file-store.js';
 import { fetchEntity } from '../../state/fetch-entity.js';
 import { shared as ltiLinkStore } from '../lti-link/state/content-lti-link-store.js';
 import { shared as moduleStore } from '../module/state/content-module-store.js';
+import { shared as scormActivityStore } from '../scorm/state/content-scorm-activity-store.js';
 import { shared as webLinkStore } from '../web-link/state/content-web-link-store.js';
 
 configureMobx({ enforceActions: 'observed' });
@@ -43,7 +43,10 @@ export class Content {
 			ltiLinkStore.fetchContentLTILinkActivity(this.contentActivityHref, this.token);
 		} else if (this.entityType === CONTENT_TYPES.contentFile) {
 			this.contentActivityHref = contentEntity.getContentFileHref();
-			await contentFileStore.fetchContentFileActivity(this.contentActivityHref, this.token);
+			contentFileStore.fetchContentFileActivity(this.contentActivityHref, this.token);
+		} else if (this.entityType === CONTENT_TYPES.scormActivity) {
+			this.contentActivityHref = contentEntity.getScormActivityHref();
+			scormActivityStore.fetchContentScormActivity(this.contentActivityHref, this.token);
 		}
 
 		this.lessonViewPageHref = contentEntity.getLessonViewPageHref();

@@ -1,7 +1,6 @@
 import '../shared-components/d2l-activity-content-editor-title.js';
 import '@brightspace-ui/core/components/menu/menu-item-separator.js';
 import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
-import { ContentFileEntity } from 'siren-sdk/src/activities/content/ContentFileEntity.js';
 import { ContentHtmlFileEntity } from 'siren-sdk/src/activities/content/ContentHtmlFileEntity.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { activityContentEditorStyles } from '../shared-components/d2l-activity-content-editor-styles.js';
