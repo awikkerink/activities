@@ -1,7 +1,8 @@
 import '../shared-components/d2l-activity-content-editor-title.js';
+import './d2l-activity-content-file-loading.js';
 import '@brightspace-ui/core/components/menu/menu-item-separator.js';
-import './html-files/d2l-activity-content-html-file-detail.js';
-import './media-files/d2l-activity-content-media-file-detail.js';
+import './d2l-activity-content-html-file-detail.js';
+import './d2l-activity-content-media-file-detail.js';
 import { ContentFileEntity, FILE_TYPES } from 'siren-sdk/src/activities/content/ContentFileEntity.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../../mixins/d2l-activity-editor-mixin.js';
@@ -49,7 +50,10 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 
 		if(!contentFileEntity) {
 			return html`
-				<d2l-loading-spinner size="80"></d2l-loading-spinner>
+				<d2l-activity-content-file-loading
+					.href="${this.href}"
+					.token="${this.token}"
+				></d2l-activity-content-file-loading>
 			`;
 		}
 
