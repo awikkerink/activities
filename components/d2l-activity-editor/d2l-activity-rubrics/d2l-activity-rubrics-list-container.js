@@ -28,7 +28,7 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 			_newlyCreatedPotentialAssociationHref: { type: String },
 			activityUsageHref: { type: String },
 			assignmentHref: { type: String },
-			associationsHref: { type: String }
+			indirectAssociationsHref: { type: String }
 		};
 	}
 
@@ -115,10 +115,10 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 	updated(changedProperties) {
 		super.updated(changedProperties);
 
-		if ((changedProperties.has('associationsHref') || changedProperties.has('token')) &&
-			this.associationsHref && this.token) {
+		if ((changedProperties.has('indirectAssociationsHref') || changedProperties.has('token')) &&
+			this.indirectAssociationsHref && this.token) {
 
-			associationStore.fetch(this.associationsHref, this.token);
+			associationStore.fetch(this.indirectAssociationsHref, this.token);
 		}
 	}
 
@@ -139,6 +139,7 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 	}
 	_closeAttachRubricDialog(e) {
 		const entity = associationStore.get(this.href);
+
 		if (e && e.detail && e.detail.associations) {
 
 			entity.addAssociations(e.detail.associations);
@@ -180,6 +181,20 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 			editNewAssociationDialog.opened = true;
 		}
 
+	}
+	_dedupeDefaultScoringRubricOptions(defaultScoringRubricOptions) {
+		const dedupedOptions = new Map();
+		defaultScoringRubricOptions.map((option) => {
+			dedupedOptions.set(option.value, option.title);
+		});
+		const dedupedDefaultScoringRubricOptions = [];
+		dedupedOptions.forEach((optionTitle, optionValue) => dedupedDefaultScoringRubricOptions.push(
+			{
+				title: optionTitle,
+				value: optionValue
+			})
+		);
+		return dedupedDefaultScoringRubricOptions;
 	}
 	_dispatchRequestProvider(key) {
 		const event = new CustomEvent('d2l-request-provider', {
@@ -234,14 +249,18 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 
 	}
 	_renderDefaultScoringRubric() {
-		const entity = associationStore.get(this.associationsHref);
+		const entity = associationStore.get(this.href);
+		const indirectAssociations = associationStore.get(this.indirectAssociationsHref);
 		const assignment = assignmentStore.get(this.assignmentHref);
+
 		if (!entity || !assignment) {
 			return html``;
 		}
 
+		const defaultScoringRubricOptions = this._dedupeDefaultScoringRubricOptions([...entity.defaultScoringRubricOptions, ...indirectAssociations.defaultScoringRubricOptions]);
+
 		const isReadOnly = !assignment.canEditDefaultScoringRubric;
-		if (!entity.defaultScoringRubricOptions || entity.defaultScoringRubricOptions.length <= 1) {
+		if (!defaultScoringRubricOptions || defaultScoringRubricOptions.length <= 1) {
 			return html``;
 		}
 
@@ -256,7 +275,7 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 				@change="${this._saveDefaultScoringRubricOnChange}"
 				?disabled=${isReadOnly}>
 					<option value="-1" ?selected=${'-1' === assignment.defaultScoringRubricId}>${this.localize('rubrics.noDefaultScoringRubricSelected')}</option>
-					${entity.defaultScoringRubricOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.defaultScoringRubricId}>${option.title}</option>`)}
+					${defaultScoringRubricOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.defaultScoringRubricId}>${option.title}</option>`)}
 			</select>
 		`;
 
