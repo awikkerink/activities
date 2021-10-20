@@ -15,6 +15,7 @@ class ContentFileLoading extends SkeletonMixin(MobxLitElement) {
 				display: flex;
 				flex: 1;
 				flex-direction: column;
+
 			}
 			.d2l-activity-label-container {
 				margin-bottom: 7px;
