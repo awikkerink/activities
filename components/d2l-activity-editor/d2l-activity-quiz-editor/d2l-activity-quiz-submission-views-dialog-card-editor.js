@@ -32,6 +32,13 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 		this._debounceJobs = {};
 	}
 
+	render() {
+		const entity = store.get(this.href);
+		if (!entity) return html``;
+
+		return this._renderEditView(entity);
+	}
+
 	_debounce(debounceJobs, fn, interval) {
 		const isFirstChange = !debounceJobs;
 		debounceJobs = Debouncer.debounce(
@@ -43,13 +50,6 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 		if (isFirstChange) {
 			debounceJobs.flush();
 		}
-	}
-
-	render() {
-		const entity = store.get(this.href);
-		if (!entity) return html``;
-
-		return this._renderEditView(entity);
 	}
 
 	_onShowAttemptScoreChange(e) {
@@ -72,8 +72,6 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 
 	_renderEditView(entity) {
 		const {
-			canUpdateMessage,
-			message,
 			canUpdateShowAttemptScore,
 			showAttemptScore,
 			canUpdateShowStatsClassAverage,
@@ -142,7 +140,7 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 	}
 
 	_saveMessageOnChange(e) {
-		const {canUpdateMessage, message} = store.get(this.href);
+		const { canUpdateMessage, message } = store.get(this.href);
 		const updatedMessage = e.detail.content;
 		if (canUpdateMessage && (updatedMessage !== message)) {
 			this._debounce(

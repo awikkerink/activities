@@ -15,7 +15,7 @@ class ActivityHtmlNewEditor extends ActivityEditorMixin(LocalizeActivityEditorMi
 			htmlEditorType: { type: String },
 			_filesToReplace: { type: Object },
 			htmlEditorHeight: { type: String, attribute: 'html-editor-height' },
-			htmlEditorMaxHeight: {type: String, attribute: 'html-editor-max-height'},
+			htmlEditorMaxHeight: { type: String, attribute: 'html-editor-max-height' },
 			fullPage: { type: Boolean, attribute: 'full-page' },
 			fullPageFontSize: { type: String, attribute: 'full-page-font-size' },
 			fullPageFontFamily: { type: String, attribute: 'full-page-font-family' }

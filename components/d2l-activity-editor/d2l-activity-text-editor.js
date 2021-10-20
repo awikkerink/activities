@@ -13,7 +13,7 @@ class ActivityTextEditor extends LitElement {
 			ariaLabel: { type: String },
 			key: { type: String },
 			htmlEditorHeight: { type: String, attribute: 'html-editor-height' },
-			htmlEditorMaxHeight: {type: String, attribute: 'html-editor-max-height'},
+			htmlEditorMaxHeight: { type: String, attribute: 'html-editor-max-height' },
 			htmlEditorType: { type: String },
 			fullPage: { type: Boolean, attribute: 'full-page' },
 			fullPageFontSize: { type: String, attribute: 'full-page-font-size' },
