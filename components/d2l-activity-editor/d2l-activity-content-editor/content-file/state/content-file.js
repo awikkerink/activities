@@ -16,13 +16,16 @@ export class ContentFile {
 		this.token = token;
 		this.title = '';
 		this.activityUsageHref = '';
-		this.persistedFileContent = '';
-		this.fileContent = '';
 		this.fileType = null;
+
+		//html
+		this.persistedFileContent = '';
+		this.htmlFileContent = '';
 		this.htmlTemplatesHref = null;
 		this.fontSize = null;
+
+		//media
 		this.isMediaEmbedded = false;
-		this._mediaFileEntity = null;
 	}
 
 	async cancelCreate() {
@@ -34,10 +37,8 @@ export class ContentFile {
 	}
 
 	get empty() {
-		let innerHtml = this.fileContent.substring(this.fileContent.indexOf('<body') + 5, this.fileContent.indexOf('</body>'));
-
+		let innerHtml = this.htmlFileContent.substring(this.htmlFileContent.indexOf('<body') + 5, this.htmlFileContent.indexOf('</body>'));
 		innerHtml = innerHtml.substring(innerHtml.indexOf('>') + 1);
-
 		return (/^([\s\n]|[<p>(&nbsp;)*</p>])*$/g.test(innerHtml));
 	}
 
@@ -49,31 +50,32 @@ export class ContentFile {
 		}
 	
 		let entity = new ContentFileEntity(sirenEntity, this.token, { remove: () => { } });
-		let fileContent = '';
-
 		entity = await this._checkout(entity);
-
+		
 		const fileEntityHref = entity.getFileHref();
+		let htmlFileContent = '';
+
 		if (entity.getFileType() === FILE_TYPES.html && fileEntityHref) {
 			const fileEntityResponse = await fetchEntity(fileEntityHref, this.token);
 			const fileEntity = new FileEntity(fileEntityResponse, this.token, { remove: () => { } });
 			const fileContentFetchResponse = await window.d2lfetch.fetch(fileEntity.getFileDataLocationHref());
+
 			if (fileContentFetchResponse.ok) {
-				fileContent = await fileContentFetchResponse.text();
+				htmlFileContent = await fileContentFetchResponse.text();
 			}
 		}
 
-		this.load(entity, fileContent);
+		this.load(entity, htmlFileContent);
 		return this;
 	}
 
-	load(contentFileEntity, fileContent) {
+	load(contentFileEntity, htmlFileContent) {
 		this._contentFileEntity = contentFileEntity;
 		this.href = contentFileEntity.self();
 		this.activityUsageHref = contentFileEntity.getActivityUsageHref();
 		this.title = contentFileEntity.title();
-		this.persistedFileContent = fileContent;
-		this.fileContent = fileContent;
+		this.persistedFileContent = htmlFileContent;
+		this.fileContent = htmlFileContent;
 		this.fileType = contentFileEntity.getFileType();
 		this.fileHref = contentFileEntity.getFileHref();
 
@@ -81,12 +83,9 @@ export class ContentFile {
 			const htmlFileEntity = new ContentHtmlFileEntity(contentFileEntity._entity, this.token, { remove: () => { } });
 			this.htmlTemplatesHref = htmlFileEntity.getHtmlTemplatesHref();
 			this.fontSize = htmlFileEntity.fontSize();
-		}
-
-		if(this.fileType=== FILE_TYPES.audio || this.fileType === FILE_TYPES.media) {
-			const mediaFileEntity = new ContentMediaFileEntity(contentFileEntity, this.token, { remove: () => { } });
-			this.isMediaEmbedded = mediaFileEntity.embedMedia();;
-			this._mediaFileEntity = mediaFileEntity.getFileHref();;
+		} else if(this.fileType=== FILE_TYPES.audio || this.fileType === FILE_TYPES.video) {
+			const mediaFileEntity = new ContentMediaFileEntity(contentFileEntity._entity, this.token, { remove: () => { } });
+			this.isMediaEmbedded = mediaFileEntity.embedMedia();
 		}
 	}
 
@@ -96,16 +95,18 @@ export class ContentFile {
 		}
 
 		const htmlEntity = new ContentHtmlFileEntity(this._contentFileEntity, this.token, { remove: () => { } });
-		await htmlEntity.setHtmlFileHtmlContent(this.fileContent);
+		await htmlEntity.setHtmlFileHtmlContent(this.htmlFileContent);
+		return this._contentFileEntity;
 	}
 
 	async saveMediaFile() {
 		if (!this._contentFileEntity) {
 			return;
 		}
+		return this._contentFileEntity;
 	}
 
-	async save() {
+	async saveFile() {
 		if (!this._contentFileEntity) {
 			return;
 		}
@@ -113,13 +114,13 @@ export class ContentFile {
 		await this._contentFileEntity.setFileTitle(this.title);
 		const committedContentFileEntity = await this._commit(this._contentFileEntity);
 		const editableContentFileEntity = await this._checkout(committedContentFileEntity);
-		
-		this.load(editableContentFileEntity, this.fileContent);
-		return this._contentFileEntity
+
+		this.load(editableContentFileEntity, this.htmlFileContent);
+		return this._contentFileEntity;
 	}
 
 	setPageContent(pageContent) {
-		this.fileContent = pageContent;
+		this.htmlFileContent = pageContent;
 	}
 
 	setTitle(value) {
@@ -161,7 +162,7 @@ export class ContentFile {
 			return true;
 		}
 
-		return this.persistedFileContent === this.fileContent;
+		return this.persistedFileContent === this.htmlFileContent;
 	}
 
 	_makeContentFileData() {

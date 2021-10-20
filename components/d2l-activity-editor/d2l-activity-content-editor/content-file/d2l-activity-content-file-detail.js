@@ -137,7 +137,7 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 		}
 
 		const originalActivityUsageHref = this.activityUsageHref;
-		const updatedEntity = await contentFileActivity.save();
+		const updatedEntity = await contentFileActivity.saveFile();
 
 		const event = new CustomEvent('d2l-content-working-copy-committed', {
 			detail: {
