@@ -32,6 +32,19 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 		this._debounceJobs = {};
 	}
 
+	_debounce(debounceJobs, fn, interval) {
+		const isFirstChange = !debounceJobs;
+		debounceJobs = Debouncer.debounce(
+			debounceJobs,
+			timeOut.after(interval),
+			() => fn()
+		);
+
+		if (isFirstChange) {
+			debounceJobs.flush();
+		}
+	}
+
 	render() {
 		const entity = store.get(this.href);
 		if (!entity) return html``;
@@ -55,35 +68,6 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 		const view = store.get(this.href);
 		if (!view) return html``;
 		view && view.setShowStatsScoreDistributionChange(e.target.checked);
-	}
-
-	_saveMessage(value) {
-		store.get(this.href).setMessage(value);
-	}
-
-	_debounce(debounceJobs, fn, interval) {
-		const isFirstChange = !debounceJobs;
-		debounceJobs = Debouncer.debounce(
-			debounceJobs,
-			timeOut.after(interval),
-			() => fn()
-		);
-
-		if (isFirstChange) {
-			debounceJobs.flush();
-		}
-	}
-
-	_saveMessageOnChange(e) {
-		const updatedMessage = e.detail.content;
-		const oldMessage = store.get(this.href).message;
-		if (updatedMessage != oldMessage) {
-			this._debounce(
-				this._debounceJobs.instructions,
-				() => this._saveMessage(updatedMessage),
-				500
-			);
-		}
 	}
 
 	_renderEditView(entity) {
@@ -151,6 +135,22 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 				</div>
 			</div>
 		`;
+	}
+
+	_saveMessage(value) {
+		store.get(this.href).setMessage(value);
+	}
+
+	_saveMessageOnChange(e) {
+		const {canUpdateMessage, message} = store.get(this.href);
+		const updatedMessage = e.detail.content;
+		if (canUpdateMessage && (updatedMessage !== message)) {
+			this._debounce(
+				this._debounceJobs.instructions,
+				() => this._saveMessage(updatedMessage),
+				500
+			);
+		}
 	}
 }
 
