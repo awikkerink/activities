@@ -1,4 +1,4 @@
-import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js'
+import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime.js';
 import { getDateFromISODateTime } from '@brightspace-ui/core/helpers/dateTime.js';
 import { html } from 'lit-element/lit-element.js';
@@ -35,15 +35,18 @@ class ActivityQuizSubmissionViewReleaseDescription
 	}
 
 	_generateReleaseDescription(view) {
-		let {
+		const {
 			releaseDate,
 			attemptRestrictions,
-			attemptRestrictionNumber,
 			gradeRestrictions,
 			gradeRestrictionsMinGrade,
 			gradeRestrictionsMaxGrade,
 			ipRestrictions,
-			timeLimit,
+			timeLimit
+		} = view;
+
+		let {
+			attemptRestrictionNumber,
 			timeLimitNumber
 		} = view;
 
