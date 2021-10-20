@@ -83,7 +83,7 @@ export class ContentFile {
 			const htmlFileEntity = new ContentHtmlFileEntity(contentFileEntity._entity, this.token, { remove: () => { } });
 			this.htmlTemplatesHref = htmlFileEntity.getHtmlTemplatesHref();
 			this.fontSize = htmlFileEntity.fontSize();
-		} else if(this.fileType=== FILE_TYPES.audio || this.fileType === FILE_TYPES.video) {
+		} else if (this.fileType=== FILE_TYPES.audio || this.fileType === FILE_TYPES.video) {
 			const mediaFileEntity = new ContentMediaFileEntity(contentFileEntity._entity, this.token, { remove: () => { } });
 			this.isMediaEmbedded = mediaFileEntity.embedMedia();
 		}

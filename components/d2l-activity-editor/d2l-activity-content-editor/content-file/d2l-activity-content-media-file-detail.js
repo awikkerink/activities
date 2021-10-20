@@ -58,7 +58,7 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 	}
 
     async save() {
-		const mediaFileEntity = contentFileStore.getContentMediaFileActivity(this.href);
+		const mediaFileEntity = contentFileStore.getContentFileActivity(this.href);
 		if (!mediaFileEntity) {
 			return;
 		}

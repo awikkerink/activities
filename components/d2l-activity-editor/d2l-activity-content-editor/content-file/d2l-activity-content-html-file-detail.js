@@ -81,8 +81,7 @@ class ContentHtmlFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAct
 
 		if (contentFileEntity) {
 			this.skeleton = false;
-			this.pageContent = contentFileEntity.fileContent;
-
+			this.pageContent = contentFileEntity.htmlFileContent;
 			this.htmlTemplatesHref = contentFileEntity.htmlTemplatesHref;
 			this.fontSize = contentFileEntity.fontSize ? `${contentFileEntity.fontSize}pt` : this.fontSize;
 
