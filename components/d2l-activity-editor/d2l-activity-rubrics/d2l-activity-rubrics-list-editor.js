@@ -89,7 +89,7 @@ class ActivityRubricsListEditor extends ActivityEditorMixin(LocalizeActivityEdit
 			return;
 		}
 
-		const entity = store.get(this.href);
+		const entity = store.get(this.href); // directAssociations
 		const assignment = assignmentStore.get(this.assignmentHref);
 
 		if (!entity || !assignment) {
