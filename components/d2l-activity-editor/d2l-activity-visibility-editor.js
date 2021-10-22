@@ -13,7 +13,7 @@ class ActivityVisibilityEditor extends (ActivityEditorMixin(MobxLitElement)) {
 	}
 
 	constructor() {
-		super();
+		super(store);
 		this.disabled = false;
 	}
 
@@ -39,14 +39,7 @@ class ActivityVisibilityEditor extends (ActivityEditorMixin(MobxLitElement)) {
 			</d2l-activity-visibility-editor-toggle>
 		`;
 	}
-	updated(changedProperties) {
-		super.updated(changedProperties);
 
-		if ((changedProperties.has('href') || changedProperties.has('token')) &&
-			this.href && this.token) {
-			super._fetch(() => store.fetch(this.href, this.token, this.autoSave));
-		}
-	}
 	_updateVisibility() {
 		const activity = store.get(this.href);
 		if (activity) {
