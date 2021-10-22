@@ -188,7 +188,7 @@ export class AssociationCollection {
 			}
 
 			this.defaultScoringRubricOptions = this.defaultScoringRubricOptions.filter(
-				option => option.value !== rubricId
+				option => String(option.value) !== rubricId // see DE45624
 			);
 		}
 	}
