@@ -95,7 +95,7 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 	hasPendingChanges() {
 		return false;
 	}
-	async save(createSelectboxGradeItemEnabled) {
+	async save() {
 		if (this.checkoutOnLoad) {
 			const entity = this.store && this.store.get(this.checkedOutHref);
 			if (!entity) return;
@@ -107,7 +107,7 @@ export const ActivityEditorMixin = superclass => class extends superclass {
 			}
 			await entity.fetch(true);
 
-			await entity.checkin(this.store, true, createSelectboxGradeItemEnabled);
+			await entity.checkin(this.store, true);
 			this.pendingUpdates = [];
 		}
 	}

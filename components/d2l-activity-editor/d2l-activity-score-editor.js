@@ -401,7 +401,7 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 			}
 		}
 
-		await super.save(this._createSelectboxGradeItemEnabled);
+		await super.save();
 
 		if (this._createSelectboxGradeItemEnabled) {
 			await associateGradeStore.get(this._associateGradeHref).fetch(true);
