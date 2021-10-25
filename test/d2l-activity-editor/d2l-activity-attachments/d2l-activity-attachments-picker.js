@@ -34,7 +34,9 @@ describe('d2l-activity-attachments-picker', function() {
 
 	describe('all picker buttons enabled', () => {
 		it('passes accessibility test', async() => {
-			await expect(el).to.be.accessible();
+			await expect(el).to.be.accessible({
+				ignoredRules: ['aria-allowed-attr'],
+			});
 		});
 
 		it('renders buttons', async() => {
@@ -50,7 +52,9 @@ describe('d2l-activity-attachments-picker', function() {
 		});
 
 		it('passes accessibility test', async() => {
-			await expect(el).to.be.accessible();
+			await expect(el).to.be.accessible({
+				ignoredRules: ['aria-allowed-attr'],
+			});
 		});
 
 		it('hides file button', async() => {

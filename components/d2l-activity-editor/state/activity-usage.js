@@ -18,11 +18,11 @@ export class ActivityUsage extends WorkingCopy {
 		this.token = token;
 	}
 
-	async checkin(store, refetch, createSelectboxGradeItemEnabled) {
+	async checkin(store, refetch) {
 		/* We `skipStoringResult` in the super.checkin function so that entity.load is not called.
-		 * This keeps the existing `scoreAndGrade` (out of) value instead of refetching the scoreAndGrade entity and overwriting it.
+		 * This keeps the existing `draft` value instead of refetching the activity-usage entity and overwriting it.
 		 */
-		const { sirenEntity } = await super.checkin(store, refetch, !createSelectboxGradeItemEnabled) || {};
+		const { sirenEntity } = await super.checkin(store, refetch, true) || {};
 		if (!sirenEntity) return;
 		const entity = store.get(sirenEntity.self());
 		if (entity) {
