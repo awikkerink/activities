@@ -39,7 +39,7 @@ To run unit tests locally using [Polymer test](https://www.polymer-project.org/3
 ```shell
 npm run test:polymer:local
 ```
-_When running the above command, if you are encountering an error indicating `Error: unable to get local issuer certificate` when attempting to download selenium drivers you may need to execute the following command in your windows powershell terminal to disable TLS validation: `setx NODE_TLS_REJECT_UNAUTHORIZED 0`. You may also want to set this value back to `1` when complete._
+_When running the above command, if you are encountering an error indicating `Error: unable to get local issuer certificate` when attempting to download selenium drivers, you may need to execute the following command in your windows powershell terminal to disable TLS validation: `setx NODE_TLS_REJECT_UNAUTHORIZED 0`. You may also want to set this value back to `1` when complete._
 
 To lint AND run local unit tests:
 
