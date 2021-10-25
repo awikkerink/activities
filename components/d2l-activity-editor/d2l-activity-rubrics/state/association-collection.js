@@ -81,12 +81,12 @@ export class AssociationCollection {
 
 		return newAssociation;
 	}
-	deleteAssociation(rubricHref, assignment) {
+	deleteAssociation(rubricHref, assignment, rubricIsAlsoIndirectlyAssociated) {
 
 		if (this.associationsMap.has(rubricHref)) {
 			const association = this.associationsMap.get(rubricHref);
 
-			this.removeDefaultScoringRubricOption(rubricHref, assignment);
+			this.removeDefaultScoringRubricOption(rubricHref, assignment, rubricIsAlsoIndirectlyAssociated);
 
 			if (association.isAssociating) {
 				association.isAssociating = false;
@@ -180,11 +180,11 @@ export class AssociationCollection {
 		}
 	}
 
-	removeDefaultScoringRubricOption(rubricHref, assignment) {
+	removeDefaultScoringRubricOption(rubricHref, assignment, rubricIsAlsoIndirectlyAssociated) {
 		if (rubricHref && assignment) {
 			const rubricId = this.getRubricIdFromHref(rubricHref);
 			// typeof assignment.defaultScoringRubricId is `string`, rubricId is `string`
-			if (assignment.defaultScoringRubricId === rubricId) {
+			if (assignment.defaultScoringRubricId === rubricId && !rubricIsAlsoIndirectlyAssociated) {
 				assignment.resetDefaultScoringRubricId();
 			}
 

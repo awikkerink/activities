@@ -9,6 +9,7 @@ import { fetchEvaluationCount } from './d2l-activity-rubrics-list-controller.js'
 import { LocalizeActivityEditorMixin } from '../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
+import associationStore from './state/association-collection-store.js';
 import store from './state/association-collection-store';
 
 const DELETE_ASSOCIATION_ACTION = 'delete-association';
@@ -18,6 +19,7 @@ class ActivityRubricsListEditor extends ActivityEditorMixin(LocalizeActivityEdit
 	static get properties() {
 		return {
 			assignmentHref: { type: String },
+			indirectAssociationsHref: { type: String },
 			_associationBeingDeleted: { type: String }
 		};
 	}
@@ -91,12 +93,20 @@ class ActivityRubricsListEditor extends ActivityEditorMixin(LocalizeActivityEdit
 
 		const entity = store.get(this.href); // directAssociations
 		const assignment = assignmentStore.get(this.assignmentHref);
+		const indirectAssociations = associationStore.get(this.indirectAssociationsHref);
+		const rubricId = rubricHref.split('/').pop();
+		let rubricIsAlsoIndirectlyAssociated = false;
+
+		if (indirectAssociations && indirectAssociations.defaultScoringRubricOptions) {
+			const exists = indirectAssociations.defaultScoringRubricOptions.filter(o => String(o.value) === rubricId);
+			rubricIsAlsoIndirectlyAssociated = exists.length !== 0;
+		}
 
 		if (!entity || !assignment) {
 			return;
 		}
 
-		entity.deleteAssociation(rubricHref, assignment);
+		entity.deleteAssociation(rubricHref, assignment, rubricIsAlsoIndirectlyAssociated);
 		announce(this.localize('rubrics.txtRubricRemoved'));
 	}
 
