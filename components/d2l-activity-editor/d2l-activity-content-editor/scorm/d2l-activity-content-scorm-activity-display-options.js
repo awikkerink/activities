@@ -31,6 +31,10 @@ class ContentEditorScormActivityDisplayOptions extends SkeletonMixin(ErrorHandli
 			activityContentEditorStyles,
 			bodyCompactStyles,
 			css`
+				.d2l-display-options-heading-container {
+					align-content: flex-start;
+					display: flex;
+				}
 				.d2l-display-options-text {
 					margin-bottom: 6px;
 				}
@@ -72,8 +76,8 @@ class ContentEditorScormActivityDisplayOptions extends SkeletonMixin(ErrorHandli
 
 		return html`
 		<div id="content-link-options-container">
-			<div class="d2l-display-options-text">
-				<label class="d2l-label-text d2l-skeletize">
+			<div class="d2l-display-options-heading-container">
+				<label class="d2l-label-text d2l-skeletize d2l-display-options-text">
 					${this.localize('content.displayOptions')}
 				</label>
 			</div>

@@ -91,10 +91,10 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 				align-items: center;
 			}
 			.d2l-grade-type-text {
-				margin: 0 0.75rem 0 0.6rem;
+				margin: 0 0.75rem 0 0.25rem;
 			}
 			:host([dir="rtl"]) .d2l-grade-type-text {
-				margin: 0 0.6rem 0 0.75rem;
+				margin: 0 0.25rem 0 0.75rem;
 			}
 			#divider {
 				border-left: solid 1px var(--d2l-color-galena);
