@@ -8,6 +8,7 @@ import { shared as contentFileStore } from './state/content-file-store.js';
 import { ContentMediaFileEntity } from 'siren-sdk/src/activities/content/ContentMediaFileEntity.js';
 import { EntityMixinLit } from 'siren-sdk/src/mixin/entity-mixin-lit.js';
 import { ErrorHandlingMixin } from '../../error-handling-mixin.js';
+import { getComposedActiveElement } from '@brightspace-ui/core/helpers/focus';
 import { LocalizeActivityEditorMixin } from '../../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
@@ -41,6 +42,8 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 		this._setEntityType(ContentMediaFileEntity);
 		this.skeleton = true;
 		this.saveOrder = 250;
+		const context = JSON.parse(document.documentElement.getAttribute('data-he-context'));
+		this.orgUnitId = context ? context.orgUnitId : '';
 	}
 
 	connectedCallback() {
@@ -99,9 +102,29 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 		return decodeURI(mediaFileEntity.fileLocationHref.split('/').pop());
 	}
 
-	_openDialog() {
-		// TODO: Implement the opening of a dialog
-		console.log('Opening dialog'); // eslint-disable-line no-console
+	async _openDialog() {
+		const mediaFileEntity = contentFileStore.getContentFileActivity(this.href);
+
+		// TODO: check if file is contentService, sent as a property
+		if (mediaFileEntity.isFileInContentService) {
+			// eslint-disable-next-line no-console
+			console.log('opening new dialog');
+			// TODO: Media Team will add in the new dialog here
+		} else {
+			const subTitlePath = `?subtitlePath=${mediaFileEntity.orgUnitPath}&subtitleFile=${this._getEntityName(mediaFileEntity)}`;
+			const location = `/d2l/le/content/video/subtitles/${this.orgUnitId}/OpenSubtitleDialog${subTitlePath}`;
+
+			const dialogResult = await D2L.LP.Web.UI.Desktop.MasterPages.Dialog.Open(
+				getComposedActiveElement(),
+				new D2L.LP.Web.Http.UrlLocation(location),
+			);
+
+			dialogResult.AddListener(results => {
+				if (results && results.length) {
+					// TODO: this may change with design, confirming save, etc.
+				}
+			});
+		}
 	}
 
 	_renderAttachmentView(mediaFileEntity) {

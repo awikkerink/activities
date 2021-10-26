@@ -19,6 +19,7 @@ export class ContentFile {
 		this.fileType = null;
 		this.fileHref = null;
 		this.fileLocationHref = null;
+		this.orgUnitPath = '';
 
 		//html
 		this.persistedFileContent = '';
@@ -91,6 +92,7 @@ export class ContentFile {
 		this.fileType = contentFileEntity.getFileType();
 		this.fileHref = contentFileEntity.getFileHref();
 		this.fileLocationHref = fileLocationHref;
+		this.orgUnitPath = contentFileEntity.orgUnitPath();
 
 		if (this.fileType === FILE_TYPES.html) {
 			const htmlFileEntity = new ContentHtmlFileEntity(contentFileEntity._entity, this.token, { remove: () => { } });
