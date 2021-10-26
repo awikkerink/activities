@@ -5,6 +5,7 @@ import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { shared as activityStore } from '../state/activity-store';
 import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import { shared as assignmentStore } from '../../d2l-activity-editor/d2l-activity-assignment-editor/state/assignment-store.js';
+import associationStore from './state/association-collection-store.js';
 import { fetchEvaluationCount } from './d2l-activity-rubrics-list-controller.js';
 import { LocalizeActivityEditorMixin } from '../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -18,6 +19,7 @@ class ActivityRubricsListEditor extends ActivityEditorMixin(LocalizeActivityEdit
 	static get properties() {
 		return {
 			assignmentHref: { type: String },
+			indirectAssociationsHref: { type: String },
 			_associationBeingDeleted: { type: String }
 		};
 	}
@@ -91,12 +93,20 @@ class ActivityRubricsListEditor extends ActivityEditorMixin(LocalizeActivityEdit
 
 		const entity = store.get(this.href); // directAssociations
 		const assignment = assignmentStore.get(this.assignmentHref);
+		const indirectAssociations = associationStore.get(this.indirectAssociationsHref);
+		const rubricId = rubricHref.split('/').pop();
+		let rubricIsAlsoIndirectlyAssociated = false;
+
+		if (indirectAssociations && indirectAssociations.defaultScoringRubricOptions) {
+			const exists = indirectAssociations.defaultScoringRubricOptions.filter(o => String(o.value) === rubricId);
+			rubricIsAlsoIndirectlyAssociated = exists.length !== 0;
+		}
 
 		if (!entity || !assignment) {
 			return;
 		}
 
-		entity.deleteAssociation(rubricHref, assignment);
+		entity.deleteAssociation(rubricHref, assignment, rubricIsAlsoIndirectlyAssociated);
 		announce(this.localize('rubrics.txtRubricRemoved'));
 	}
 
