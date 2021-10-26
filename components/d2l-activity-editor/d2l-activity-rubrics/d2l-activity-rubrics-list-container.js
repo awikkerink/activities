@@ -75,6 +75,7 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 				.activityUsageHref=${this.activityUsageHref}
 				.token=${this.token}
 				.assignmentHref=${this.assignmentHref}
+				.indirectAssociationsHref=${this.indirectAssociationsHref}
 			>
 			</d2l-activity-rubrics-list-editor>
 

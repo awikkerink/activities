@@ -124,7 +124,7 @@ class ActivityCompetencies extends ActivityEditorMixin(RtlMixin(LocalizeActivity
 	}
 
 	_refetchIndirectAssociations() {
-		const indirectAssociationHref =  store.get(this.href).indirectAssociationsHref;
+		const indirectAssociationHref = store.get(this.href).indirectAssociationsHref;
 		const indirectAssociations = associationStore.get(indirectAssociationHref);
 		indirectAssociations.fetch(true);
 	}
