@@ -5,11 +5,11 @@ import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { shared as activityStore } from '../state/activity-store';
 import { announce } from '@brightspace-ui/core/helpers/announce.js';
 import { shared as assignmentStore } from '../../d2l-activity-editor/d2l-activity-assignment-editor/state/assignment-store.js';
+import associationStore from './state/association-collection-store.js';
 import { fetchEvaluationCount } from './d2l-activity-rubrics-list-controller.js';
 import { LocalizeActivityEditorMixin } from '../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
-import associationStore from './state/association-collection-store.js';
 import store from './state/association-collection-store';
 
 const DELETE_ASSOCIATION_ACTION = 'delete-association';
