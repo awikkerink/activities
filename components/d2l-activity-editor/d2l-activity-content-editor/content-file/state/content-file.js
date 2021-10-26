@@ -1,6 +1,7 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { ContentFileEntity, FILE_TYPES } from 'siren-sdk/src/activities/content/ContentFileEntity.js';
 import { ContentHtmlFileEntity } from 'siren-sdk/src/activities/content/ContentHtmlFileEntity.js';
+import { ContentMediaFileEntity } from 'siren-sdk/src/activities/content/ContentMediaFileEntity.js';
 import { fetchEntity } from '../../../state/fetch-entity.js';
 import { FileEntity } from 'siren-sdk/src/files/FileEntity.js';
 // TODO: Explore idea of using this shared WorkingCopy
@@ -15,11 +16,18 @@ export class ContentFile {
 		this.token = token;
 		this.title = '';
 		this.activityUsageHref = '';
+		this.fileType = null;
+		this.fileHref = null;
+		this.fileLocationHref = null;
+
+		//html
 		this.persistedFileContent = '';
 		this.fileContent = '';
-		this.fileType = null;
 		this.htmlTemplatesHref = null;
 		this.fontSize = null;
+
+		//media
+		this.isMediaEmbedded = false;
 	}
 
 	async cancelCreate() {
@@ -40,28 +48,40 @@ export class ContentFile {
 
 	async fetch() {
 		const sirenEntity = await fetchEntity(this.href, this.token);
-		if (sirenEntity) {
-			let entity = new ContentFileEntity(sirenEntity, this.token, { remove: () => { } });
-			let fileContent = '';
 
-			entity = await this._checkout(entity);
-
-			const fileEntityHref = entity.getFileHref();
-			if (entity.getFileType() === FILE_TYPES.html && fileEntityHref) {
-				const fileEntityResponse = await fetchEntity(fileEntityHref, this.token);
-				const fileEntity = new FileEntity(fileEntityResponse, this.token, { remove: () => { } });
-				const fileContentFetchResponse = await window.d2lfetch.fetch(fileEntity.getFileDataLocationHref());
-				if (fileContentFetchResponse.ok) {
-					fileContent = await fileContentFetchResponse.text();
-				}
-			}
-
-			this.load(entity, fileContent);
+		if (!sirenEntity) {
+			return this;
 		}
+
+		let entity = new ContentFileEntity(sirenEntity, this.token, { remove: () => { } });
+		entity = await this._checkout(entity);
+
+		let fileContent = '';
+		let fileLocationHref = null;
+		const fileEntityHref = entity.getFileHref();
+
+		if (!fileEntityHref) {
+			this.load(entity, fileContent, fileLocationHref);
+			return this;
+		}
+
+		const fileEntityResponse = await fetchEntity(fileEntityHref, this.token);
+		const fileEntity = new FileEntity(fileEntityResponse, this.token, { remove: () => { } });
+
+		if (entity.getFileType() === FILE_TYPES.html) {
+			const fileContentFetchResponse = await window.d2lfetch.fetch(fileEntity.getFileDataLocationHref());
+
+			if (fileContentFetchResponse.ok) {
+				fileContent = await fileContentFetchResponse.text();
+			}
+		}
+
+		fileLocationHref = fileEntity.getFileLocationHref();
+		this.load(entity, fileContent, fileLocationHref);
 		return this;
 	}
 
-	load(contentFileEntity, fileContent) {
+	load(contentFileEntity, fileContent, fileLocationHref) {
 		this._contentFileEntity = contentFileEntity;
 		this.href = contentFileEntity.self();
 		this.activityUsageHref = contentFileEntity.getActivityUsageHref();
@@ -70,31 +90,45 @@ export class ContentFile {
 		this.fileContent = fileContent;
 		this.fileType = contentFileEntity.getFileType();
 		this.fileHref = contentFileEntity.getFileHref();
+		this.fileLocationHref = fileLocationHref;
 
 		if (this.fileType === FILE_TYPES.html) {
 			const htmlFileEntity = new ContentHtmlFileEntity(contentFileEntity._entity, this.token, { remove: () => { } });
 			this.htmlTemplatesHref = htmlFileEntity.getHtmlTemplatesHref();
 			this.fontSize = htmlFileEntity.fontSize();
+		} else if (this.fileType === FILE_TYPES.audio || this.fileType === FILE_TYPES.video) {
+			const mediaFileEntity = new ContentMediaFileEntity(contentFileEntity._entity, this.token, { remove: () => { } });
+			this.isMediaEmbedded = mediaFileEntity.embedMedia();
 		}
 	}
 
-	async save() {
+	async saveFile() {
 		if (!this._contentFileEntity) {
 			return;
 		}
 
 		await this._contentFileEntity.setFileTitle(this.title);
-		let fileContent = '';
-
-		if (this._contentFileEntity.getFileType() === FILE_TYPES.html) {
-			const htmlEntity = new ContentHtmlFileEntity(this._contentFileEntity, this.token, { remove: () => { } });
-			await htmlEntity.setHtmlFileHtmlContent(this.fileContent);
-			fileContent = this.fileContent;
-		}
-
 		const committedContentFileEntity = await this._commit(this._contentFileEntity);
 		const editableContentFileEntity = await this._checkout(committedContentFileEntity);
-		this.load(editableContentFileEntity, fileContent);
+
+		this.load(editableContentFileEntity, this.fileContent, this.fileLocationHref);
+		return this._contentFileEntity;
+	}
+
+	async saveHtmlFile() {
+		if (!this._contentFileEntity) {
+			return;
+		}
+
+		const htmlEntity = new ContentHtmlFileEntity(this._contentFileEntity, this.token, { remove: () => { } });
+		await htmlEntity.setHtmlFileHtmlContent(this.fileContent);
+		return this._contentFileEntity;
+	}
+
+	async saveMediaFile() {
+		if (!this._contentFileEntity) {
+			return;
+		}
 		return this._contentFileEntity;
 	}
 
