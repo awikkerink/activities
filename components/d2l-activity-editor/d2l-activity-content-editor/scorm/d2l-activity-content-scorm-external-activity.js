@@ -54,7 +54,9 @@ class ActivityContentScormExternalActivity extends SkeletonMixin(LocalizeActivit
 					justify-content: flex-start;
 				}
 				.d2l-external-activity-subtitle {
-					padding: 12px 0;
+					display: inline-block;
+					height: 1rem;
+					margin: 12px 0;
 				}
 			`
 		];
@@ -63,6 +65,7 @@ class ActivityContentScormExternalActivity extends SkeletonMixin(LocalizeActivit
 	constructor() {
 		super();
 		this.activityWindowPopout = null;
+		this.skeleton = true;
 	}
 
 	render() {
@@ -116,15 +119,14 @@ class ActivityContentScormExternalActivity extends SkeletonMixin(LocalizeActivit
 	_renderTitle() {
 		return this.title
 			? html`
-				<div class="d2l-skeletize-container d2l-external-activity-title-container">
-						<label class="d2l-label-text d2l-heading-4 d2l-skeletize">
+				<div class="d2l-skeletize d2l-external-activity-title-container">
+						<label class="d2l-label-text d2l-heading-4">
 							${this.title}
 						</label>
 					<d2l-button-subtle
 						text="${this.localize('content.openInNewWindow')}"
 						icon="tier1:new-window"
 						@click="${this._openPopout}"
-						class="d2l-skeletize"
 					>
 					</d2l-button-subtle>
 				</div>

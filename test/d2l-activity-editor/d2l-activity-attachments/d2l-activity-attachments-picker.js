@@ -34,6 +34,7 @@ describe('d2l-activity-attachments-picker', function() {
 
 	describe('all picker buttons enabled', () => {
 		it('passes accessibility test', async() => {
+			// TODO: Investigate to remove this (it should be temporary)
 			await expect(el).to.be.accessible({
 				ignoredRules: ['aria-allowed-attr'],
 			});
@@ -52,6 +53,7 @@ describe('d2l-activity-attachments-picker', function() {
 		});
 
 		it('passes accessibility test', async() => {
+			// TODO: Investigate to remove this (it should be temporary)
 			await expect(el).to.be.accessible({
 				ignoredRules: ['aria-allowed-attr'],
 			});
