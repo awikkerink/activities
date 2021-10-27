@@ -43,6 +43,8 @@ export class QuizSubmissionView {
 		this.canUpdateShowStatsScoreDistribution = entity.canUpdateShowStatsScoreDistribution();
 		this.isPrimaryView = entity.isPrimaryView();
 		this.showStandards = entity.showStandards();
+		this.isStandardsSupported = entity.isStandardsSupported();
+		this.standardsTitle = entity.standardsTitle();
 		this.showAttemptScore = entity.showAttemptScore();
 		this.showStatsClassAverage = entity.showStatsClassAverage();
 		this.showStatsScoreDistribution = entity.showStatsScoreDistribution();
@@ -235,6 +237,8 @@ decorate(QuizSubmissionView, {
 	canUpdateShowStatsScoreDistribution: observable,
 	isPrimaryView: observable,
 	showStandards: observable,
+	isStandardsSupported: observable,
+	standardsTitle: observable,
 	showAttemptScore: observable,
 	showStatsClassAverage: observable,
 	showStatsScoreDistribution: observable,
