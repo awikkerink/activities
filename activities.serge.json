@@ -21,7 +21,8 @@
       "sv-se sv",
       "tr-tr tr"
     ]
-  },{
+  },
+  {
     "name": "activityCard",
     "parser_plugin": {
       "plugin": "parse_js"
@@ -43,7 +44,8 @@
       "sv-se sv",
       "tr-tr tr"
     ]
-  },{
+  },
+  {
     "name": "activityDate",
     "parser_plugin": {
       "plugin": "parse_js"
@@ -65,7 +67,8 @@
       "sv-se sv",
       "tr-tr tr"
     ]
-  },{
+  },
+  {
     "name": "listItem",
     "parser_plugin": {
       "plugin": "parse_js"
@@ -87,7 +90,8 @@
       "sv-se sv",
       "tr-tr tr"
     ]
-  },{
+  },
+  {
     "name": "quickEval",
     "parser_plugin": {
       "plugin": "parse_js"
@@ -109,7 +113,8 @@
       "sv-se sv",
       "tr-tr tr"
     ]
-  },{
+  },
+  {
     "name": "activityEditor",
     "parser_plugin": {
       "plugin": "parse_js"
@@ -131,7 +136,8 @@
       "sv-se sv",
       "tr-tr tr"
     ]
-  },{
+  },
+  {
     "name": "activityCollectionEditor",
     "parser_plugin": {
       "plugin": "parse_js"
@@ -153,7 +159,8 @@
       "sv-se sv",
       "tr-tr tr"
     ]
-  },{
+  },
+  {
     "name": "assignmentActivityEditor",
     "parser_plugin": {
       "plugin": "parse_js"
@@ -175,7 +182,8 @@
       "sv-se sv",
       "tr-tr tr"
     ]
-  },{
+  },
+  {
     "name": "quickEvalWidget",
     "parser_plugin": {
       "plugin": "parse_js"
@@ -197,7 +205,8 @@
       "sv-se sv",
       "tr-tr tr"
     ]
-  },{
+  },
+  {
     "name": "workToDo",
     "parser_plugin": {
       "plugin": "parse_js"
@@ -219,7 +228,8 @@
       "sv-se sv",
       "tr-tr tr"
     ]
-  },{
+  },
+  {
     "name": "quizActivityEditor",
     "parser_plugin": {
       "plugin": "parse_js"
@@ -227,6 +237,29 @@
     "source_match": "en\\.js$",
     "source_dir": "components/d2l-activity-editor/d2l-activity-quiz-editor/lang",
     "output_file_path": "components/d2l-activity-editor/d2l-activity-quiz-editor/lang/%LANG%.js",
+    "output_lang_rewrite": [
+      "ar-sa ar",
+      "cy-gb cy",
+      "da-dk da",
+      "de-de de",
+      "es-mx es",
+      "fr-ca fr",
+      "ja-jp ja",
+      "ko-kr ko",
+      "nl-nl nl",
+      "pt-br pt",
+      "sv-se sv",
+      "tr-tr tr"
+    ]
+  },
+  {
+    "name": "activityDateTypeDialog",
+    "parser_plugin": {
+      "plugin": "parse_js"
+    },
+    "source_match": "en\\.js$",
+    "source_dir": "components/d2l-activity-date-type-dialog/lang",
+    "output_file_path": "components/d2l-activity-date-type-dialog/lang/%LANG%.js",
     "output_lang_rewrite": [
       "ar-sa ar",
       "cy-gb cy",
