@@ -82,6 +82,11 @@ export default {
 	"editor.inGradebook": "성적부에 있음", // New state of the grades field when there is a score, and an associated grade item
 	"editor.notInGradebook": "성적부에 없음", // New state of the grades field when there is a score, but no associated grade item
 	"editor.addToGradebook": "성적부에 추가", // New menu item for adding grade association
+	"editor.beforeStartDate": "시작하기 전:", //Text for before start availability date type
+	"editor.afterEndDate": "종료 후:", //Text for after end availability date type
+	"editor.lblVisibleWithAccessRestricted": "액세스가 제한된 상태로 표시됩니다.", //Text for after end availability date type
+	"editor.lblVisibleWithSubmissionRestricted": "제출이 제한된 상태로 표시됩니다.", //Text for after end availability date type
+	"editor.lblHidden": "숨김", //Text for after end availability date type
 
 	"rubrics.btnAddRubric": "루브릭 추가", //text for add rubric button
 	"rubrics.btnCreateNew": "새로 만들기", //Text for create new dropdown
@@ -105,10 +110,12 @@ export default {
 	"grades.weight": "가중치: {weight}", // Text label for displaying weight of a grade
 	"grades.gradeItem": "평점 항목", //ARIA label for grade-item picker when linking an activity to an existing grade item
 	"grades.gradeUnits": "점수", // unit label for GradeOutOf value (e.g. 10 points)
+	"grades.gradeUnitsSingular": "점수", // unit label for GradeOutOf value when value is 1
 	"grades.chooseNewGradeItemCategory": "평점 범주 선택", // Label for add category button
 	"grades.newGradeItemCategory": "평점 범주", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "범주 없음", // Category dropdown text for not selecting a category
 	"grades.changeNewGradeTypeAndScheme": "평점 유형 및 제도 변경", // Label for change type and scheme button
+	"grades.chooseNewGradeScheme": "평점 제도 선택", // Label for choose grade scheme button (when there is only one type)
 	"grades.newGradeType": "평점 유형", // Label for the grade type
 	"grades.newGradeTypeNumeric": "숫자", // Label for numeric grade type radio option
 	"grades.newGradeTypeSelectbox": "선택란", // Label for selectbox grade type radio option
@@ -121,6 +128,11 @@ export default {
 	"grades.creatingNewNumericGradeItem": "새 숫자 평점 항목 {newGradeName} 생성 중", // Aria text for new grade we are creating
 	"grades.creatingNewSelectboxGradeItem": "새 선택 상자 평점 항목 {newGradeName} 생성 중", // Aria text for new grade we are creating
 	"grades.linkingToGradeItem": "기존 평점 항목 {gradeName}에 연결 중", // Aria text for grade item we are linking to
+	"grades.gradeOutOfMenuItem": "등급 외란?", // menu item to launch gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogTitle": "정보: 등급 외(Grade Out)", // title that appears when the gradeOutOf help dialog is rendered
+	"grades.gradeOutOfHelpDialogConfirmationText": "확인", // text that appears on the gradeOutOf help dialog confirmation button
+	"grades.gradeOutOfHelpDialogParagraph1": "퀴즈가 \"성적부에 있지 않음\"인 경우, 평점 외는 질문의 총 점수를 반영합니다.", // content for paragraph 1 of gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogParagraph2": "퀴즈가 \"성적부에 있음\"인 경우, 평점 외는 평점 도구의 최대 점수 또는 가중치입니다.", // content for paragraph 2 of gradeOutOf help dialog
 
 	"attachments.addGoogleDriveLink": "Google Drive에서 첨부", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "파일 업로드", // Tooltip for a button that opens a file upload dialog
@@ -172,5 +184,8 @@ export default {
 	"content.confirmDialogCancelOption": "취소", // The text for the cancel action to not replace content
 	"content.useEmbeddedPlayer": "임베드된 플레이어 사용", // The text for using the embedded player
 	"content.scormActivity": "SCORM 패키지", // The label for the name of the SCORM package
-	"content.lastEdited": "최종 편집" // The date when the entity was last edited
+	"content.lastEdited": "최종 편집", // The date when the entity was last edited
+	"content.externalFile": "External file", // The text to use for labeling external files
+	"content.advancedEditing": 'Advanced Editing', // The text to use on the advanced editing button
+	"content.fileHasCaptions": "This file has captions in", // The text to use preceding the list of captions
 };

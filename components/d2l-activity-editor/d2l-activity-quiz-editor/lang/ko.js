@@ -47,7 +47,7 @@ export default {
 	"disableRightClickAccessibleHelpText": "도움말 보기 - 마우스 오른쪽 클릭 비활성화", // accessible help text for disable right click question mark button
 	"disableRightClickHelpDialogTitle": "정보: 마우스 오른쪽 클릭 비활성화", // title that appears when the disable right click help dialog is rendered
 	"disableRightClickHelpDialogParagraph1": "이 기능을 사용하면 학습자는 시도 중에 질문을 마우스 오른쪽 버튼으로 클릭하여 퀴즈 질문을 인쇄할 수 없습니다. 그러나 학습자는 브라우저 외부의 다른 기술을 통해 퀴즈를 화면 캡처할 수 있습니다.", // content for paragraph 1 of disable right click help dialog
-	"disableRightClickHelpDialogParagraph2": "학습자가 질문 텍스트를 복사하여 붙여넣을 수 없기 때문에 특정 접근성 워크플로가 차단됩니다.", // content for paragraph 2 of disable right click help dialog
+	"disableRightClickHelpDialogParagraph2": "학습자가 질문 텍스트를 복사하여 붙여넣을 수 없기 때문에 특정 접근성 워크플로가 차단됩니다. 개별 사용자는 해당 사용자의 합의에서 \"항상 마우스 오른쪽 클릭 허용\"을 활성화하여 퀴즈에 대해 이 기능이 활성화된 경우에도 퀴즈를 마우스 오른쪽 버튼으로 클릭할 수 있습니다.", // content for paragraph 2 of disable right click help dialog
 	"disableRightClickHelpDialogConfirmationText": "확인", // copy that appears on the disable right click help dialog confirmation button
 	"manageTimingDialogConfirmationText": "확인", // copy that appears on the Timing dialog confirmation button
 	"manageTimingDialogCancelText": "취소", // copy that appears on the Timing dialog cancel button
@@ -88,6 +88,9 @@ export default {
 	"ipRestrictionsTableStartRangeHdr": "IP 범위 시작", // text for IP restrictions table header start
 	"ipRestrictionsTableEndRangeHdr": "IP 범위 끝", // text for IP restrictions table header end
 	"ipRestrictionsTableDeleteRangeHdr": "삭제", // text for IP restrictions table header delete
+	"ipRestrictionsTableDeleteRangeLabel": "삭제", // label for IP restrictions delete button
+	"ipRestrictionsTableStartRangeLabel": "IP 범위 시작 {index}", // label for IP restrictions start range input
+	"ipRestrictionsTableEndRangeLabel": "IP 범위 종료 {index}", // label for IP restrictions end range input
 	"ipRestrictionsValidationError": "유효하지 않은 IP 주소 형식. 개요 필드를 수정하십시오. IP 주소의 예: 155.55.5.15.", // error message for invalid IP addresses
 	"ipRestrictions500Error": "문제가 발생했습니다. 다시 시도하십시오.", // error message for IP restrictions 500 response
 	"ipRestrictionsHelpTxtConfirmation": "확인", // confirmation text on IP restrictions help dialog
@@ -97,8 +100,8 @@ export default {
 	"hdrIpRestrictionsHelpDialogP3": "허용된 개별 IP 주소를 포함하려면 IP 범위 시작 값만 지정합니다.", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "참고: IP 범위 시작 값은 IP 범위 끝 값보다 작아야 합니다.", // IP restrictions help dialog paragraph 4
 	"hdrSpecialAccess": "특별 접근", // special access heading,
-	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
-	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
+	"hlpSpecialAccess": "특별 접근을 사용하면 특정 사용자 그룹 또는 특정 사용자의 개별 기한에만 퀴즈를 사용할 수 있습니다.", // special access help
+	"specialAccessRestrictedText": "특별 접근 권한이 있는 사용자만이 이 퀴즈를 볼 수 있습니다.", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "도움말 보기 - IP 제한", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "시도 조건", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "학습자가 다른 시도를 할 자격을 갖추려면 이전 시도에서 달성해야 하는 최소 및/또는 최대 백분율 값을 0에서 100 사이로 설정해야 합니다.", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -138,9 +141,75 @@ export default {
 	"createNewLabel": "새로 만들기", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "기존 항목 추가", // Label for button to open menu for adding pre-existing items to the quiz.
 	"addQuestionsLabel": "새 질문", // Label for button to open menu for adding new questions to the quiz.
-	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading1": "게시되면 학습자에게 다음을 표시:", // Label for checkbox in submission view container.
 	"submissionViewHeading2": "및", // Label for submission view dropdown in submission view container.
-	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
-	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
-	"gradeOutOf": "평점 기준 만점" // Label for the grade-out-of field when creating/editing an activity
+	"submissionViewCheckboxLabel": "시도 평점", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "퀴즈 결과 표시 사용자 지정", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "평점 기준 만점", // Label for the grade-out-of field when creating/editing an activity
+	"submissionViewsHelpDialogTitle": "정보: 퀴즈 결과 표시", // Title for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogParagraph1": "퀴즈 결과 표시는 학습자가 제출 직후 또는 나중에 자신의 시도 검토 시 게시된 퀴즈 시도 결과를 보는 방법을 결정합니다.", // Paragraph 1 for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogParagraph2": "기본 보기는 학습자에게 기본값으로 표시되며 추가 보기는 설정 매개 변수에 따라 기본 보기를 재정의합니다.", // Paragraph 2 for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogConfirmation": "확인", //Text for closing the information Dialog for customization in submission views.
+	"submissionViewsDialogConfirmationMain": "확인", //Text for closing the main Dialog for customization in submission views.
+	"submissionViewsDialogCancelMain": "취소", // Text for cancelling changes on the main Dialog for customization in submission views.
+	"submissionViewsAccordionDropdownNoQuestions": "질문 없음", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownIncorrectQuestionsWithCorrectAnswers": "잘못된 질문만, 정답 포함", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownIncorrectQuestionsWithoutCorrectAnswers": "잘못된 질문만, 정답 제외", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownAllQuestionsWithCorrectAnswers": "모든 질문, 정답 포함", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownAllQuestionsWithoutCorrectAnswers": "모든 질문, 정답 제외", // Option in dropdown to decide what to display to learner.
+	"primaryView": "기본 보기", // Label
+	"additionalViewComesIntoEffect": "Additional view comes into effect:", // Label
+	"submissionViewDialogCardAttemptScoreTrueText": "평가된 질문에 대한 시도 평점이 표시됨", // Submission view dialog card, text appearing when attempted grades are displayed.
+	"submissionViewDialogCardAttemptScoreFalseText": "표시되지 않음", // Submission view dialog card, text appearing when attempted grades are not displayed.
+	"submissionViewDialogCardQuestionsNotDisplayed": "표시되지 않음", // Submission view dialog card, text appearing when no questions are displayed.
+	"submissionViewDialogCardQuestionsAllDisplayed": "모든 질문이 표시됨", // Submission view dialog card, text appearing when all questions are displayed.
+	"submissionViewDialogCardQuestionsIncorrectOnlyDisplayed": "잘못된 질문만 표시됨", // Submission view dialog card, text appearing when incorrect questions only are displayed.
+	"submissionViewDialogCardQuestionsCorrectOnlyDisplayed": "올바른 질문만 표시됨", // Submission view dialog card, text appearing when correct questions only are displayed.
+	"submissionViewDialogCardShowAnswersTrueText": "모든 답변이 표시됨", // Submission view dialog card, text appearing when all answers are displayed.
+	"submissionViewDialogCardShowAnswersFalseText": "표시되지 않음", // Submission view dialog card, text appearing when not all answers are displayed.
+	"submissionViewDialogCardShowResponsesTrueText": "표시됨", // Submission view dialog card, text appearing when learners responses are displayed.
+	"submissionViewDialogCardShowResponsesFalseText": "표시되지 않음", // Submission view dialog card, text appearing when learners responses are not displayed.
+	"submissionViewDialogCardSubmissionViewMessageHeader": "메시지", // Submission view dialog card, message heading.
+	"submissionViewDialogCardSubmissionViewGradeHeader": "평점", // Submission view dialog card, grade heading.
+	"submissionViewDialogCardSubmissionViewQuestionsHeader": "질문", // Submission view dialog card, questions heading.
+	"submissionViewDialogCardSubmissionViewAnswerHeader" : "답변", // Submission view dialog card, answers heading.
+	"submissionViewDialogCardSubmissionViewResponseHeader": "학습자 응답", // Submission view dialog card, learners responses heading.
+	"submissionViewDialogCardButtonOptionEditView": "보기 편집", // Submission view dialog card, OK button text.
+	"submissionViewDialogCardButtonOptionDeleteView": "보기 삭제", // Submission view dialog card, Cancel button text.
+	"submissionViewsAccordionSummary" : "{count, plural, =1 {1개 결과 표시} other {{count}개 결과 표시}}", // number of submission views summary shown in collapsed accordion
+	"submissionViewsDialogEditorGradeCheckbox": "평가된 질문에 대한 시도 등급 표시", // submission views dialog editor edit display attempt score checkbox
+	"statistics": "통계", //Label
+	"submissionViewsDialogEditorClassAverageCheckbox": "학급 평균 표시", // submission views dialog editor edit display class average checkbox
+	"submissionViewsDialogEditorGradeDistributionCheckbox": "평점 분포 표시", // submission views dialog editor edit display grade distribution checkbox
+	"quizSubmissionViewsDialogCardUpdate": "업데이트", // submission views dialog card Update button
+	"quizSubmissionViewsDialogCardCancel": "취소", // submission views dialog card Cancel button
+	"allQuestionsWithCorrectAnswers": "보이지 않는 평점, 모든 질문의 정답을 표시", // summarize list of selected options in comma separated list
+	"allQuestions": "보이지 않는 평점, 모든 질문 표시", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsWithCorrectAnswers": "보이는 평점, 모든 질문의 정답을 표시", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestions": "보이는 평점, 모든 질문 표시", // summarize list of selected options in comma separated list
+	"allQuestionsWithCorrectAnswersLearnersResponses": "보이지 않는 평점, 모든 질문의 정답 표시 및 학습자의 응답 표시", // summarize list of selected options in comma separated list
+	"allQuestionsLearnersResponses": "보이지 않는 평점, 모든 질문 및 학습자의 응답 표시", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsWithCorrectAnswersLearnersResponses": "보이는 평점, 모든 질문의 정답 표시 및 학습자의 응답 표시", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsLearnersResponses": "보이는 평점, 모든 질문 및 학습자의 응답 표시", // summarize list of selected options in comma separated list
+	"incorrectQuestionsWithCorrectAnswers": "보이지 않는 평점, 잘못된 질문만 정답을 표시", // summarize list of selected options in comma separated list
+	"incorrectQuestions": "보이지 않는 평점, 잘못된 질문만 표시", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsWithCorrectAnswers": "보이는 평점, 잘못된 질문만 정답을 표시", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestions": "보이는 평점, 잘못된 질문만 표시", // summarize list of selected options in comma separated list
+	"incorrectQuestionsWithCorrectAnswersLearnersResponses": "보이지 않는 평점, 잘못된 질문만 정답을 표시 및 학습자의 응답 표시", // summarize list of selected options in comma separated list
+	"incorrectQuestionsLearnersResponses": "보이지 않는 평점, 잘못된 질문만 표시하고, 학습자의 응답 표시", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsWithCorrectAnswersLearnersResponses": "보이는 평점, 잘못된 질문만 정답을 표시 및 학습자의 응답 표시", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsLearnersResponses": "보이는 평점, 잘못된 질문만 표시하고, 학습자의 응답 표시", // summarize list of selected options in comma separated list
+	"correctQuestionsWithCorrectAnswers": "보이지 않는 평점, 올바른 질문만 정답을 표시", // summarize list of selected options in comma separated list
+	"correctQuestions": "보이지 않는 평점, 올바른 질문만 표시", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsWithCorrectAnswers": "보이는 평점, 올바른 질문만 정답을 표시", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestions": "보이는 평점, 올바른 질문만 표시", // summarize list of selected options in comma separated list
+	"correctQuestionsWithCorrectAnswersLearnersResponses": "보이지 않는 평점, 올바른 질문만 정답을 표시 및 학습자의 응답 표시", // summarize list of selected options in comma separated list
+	"correctQuestionsLearnersResponses": "보이지 않는 평점, 올바른 질문만 표시하고, 학습자의 응답 표시", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsWithCorrectAnswersLearnersResponses": "보이는 평점, 올바른 질문만 정답을 표시 및 학습자의 응답 표시", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsLearnersResponses": "보이는 평점, 올바른 질문만 표시하고, 학습자의 응답 표시", // summarize list of selected options in comma separated list
+	"noQuestions": "보이지 않는 평점, 질문이 표시되지 않음", // summarize list of selected options in comma separated list
+	"gradeVisibleNoQuestions": "보이는 평점, 질문이 표시되지 않음", // summarize list of selected options in comma separated list
+	"deleteViewWithTitle": "보기 삭제:{message}", // aria-label for delete view button with view message/title
+	"submissionViewReleaseDateSummary": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} }{minGrade, plural, =0 {} other {, with attempt grades above {minGrade}%}}{maxGrade, plural, =0 {} other {, with attempt grades below {maxGrade}%}}{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info
+	"submissionViewReleaseDateSummaryBothMinMaxGrades": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} } with attempt grades above {minGrade}% and below {maxGrade}%{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}" // summary of when a view is released with restriction info with both min and max grades
 };

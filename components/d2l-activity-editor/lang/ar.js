@@ -82,6 +82,11 @@ export default {
 	"editor.inGradebook": "مرتبط بدفتر العلامات", // New state of the grades field when there is a score, and an associated grade item
 	"editor.notInGradebook": "غير مرتبط بدفتر العلامات", // New state of the grades field when there is a score, but no associated grade item
 	"editor.addToGradebook": "إضافة إلى دفتر العلامات", // New menu item for adding grade association
+	"editor.beforeStartDate": "قبل البدء:", //Text for before start availability date type
+	"editor.afterEndDate": "بعد الانتهاء:", //Text for after end availability date type
+	"editor.lblVisibleWithAccessRestricted": "ظاهر مع تقييد الوصول", //Text for after end availability date type
+	"editor.lblVisibleWithSubmissionRestricted": "ظاهر مع تقييد الإرسال", //Text for after end availability date type
+	"editor.lblHidden": "مخفي", //Text for after end availability date type
 
 	"rubrics.btnAddRubric": "إضافة آلية تقييم", //text for add rubric button
 	"rubrics.btnCreateNew": "إنشاء جديد", //Text for create new dropdown
@@ -105,10 +110,12 @@ export default {
 	"grades.weight": "الوزن: {weight}", // Text label for displaying weight of a grade
 	"grades.gradeItem": "مادة سيتم وضع علامة عليها", //ARIA label for grade-item picker when linking an activity to an existing grade item
 	"grades.gradeUnits": "نقاط", // unit label for GradeOutOf value (e.g. 10 points)
+	"grades.gradeUnitsSingular": "نقطة", // unit label for GradeOutOf value when value is 1
 	"grades.chooseNewGradeItemCategory": "اختيار فئة العلامات", // Label for add category button
 	"grades.newGradeItemCategory": "فئة العلامات", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "لا توجد فئة", // Category dropdown text for not selecting a category
 	"grades.changeNewGradeTypeAndScheme": "تغيير نوع العلامة ونظامها", // Label for change type and scheme button
+	"grades.chooseNewGradeScheme": "اختيار نظام العلامات", // Label for choose grade scheme button (when there is only one type)
 	"grades.newGradeType": "نوع العلامات", // Label for the grade type
 	"grades.newGradeTypeNumeric": "رقمي", // Label for numeric grade type radio option
 	"grades.newGradeTypeSelectbox": "مربع اختيار", // Label for selectbox grade type radio option
@@ -121,6 +128,11 @@ export default {
 	"grades.creatingNewNumericGradeItem": "يتم إنشاء مادة رقمية جديدة سيتم وضع علامة عليها {newGradeName}", // Aria text for new grade we are creating
 	"grades.creatingNewSelectboxGradeItem": "يتم إنشاء مادة جديدة لمربع الاختيار سيتم وضع علامة عليها {newGradeName}", // Aria text for new grade we are creating
 	"grades.linkingToGradeItem": "يتم الربط بمادة متوفرة سيتم وضع علامة عليها {gradeName}", // Aria text for grade item we are linking to
+	"grades.gradeOutOfMenuItem": "ما هي العلامة من أصل؟", // menu item to launch gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogTitle": "المعلومات: العلامة من أصل", // title that appears when the gradeOutOf help dialog is rendered
+	"grades.gradeOutOfHelpDialogConfirmationText": "موافق", // text that appears on the gradeOutOf help dialog confirmation button
+	"grades.gradeOutOfHelpDialogParagraph1": "إذا كان الاختبار \"ليس في دفتر العلامات\"، فيعكس قسم \"العلامة من أصل\" إجمالي نقاط الأسئلة.", // content for paragraph 1 of gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogParagraph2": "إذا كان الاختبار \"في دفتر العلامات\"، فيشير قسم \"العلامة من أصل\" إلى الحد الأقصى للنقاط أو الترجيح في أداة العلامات.", // content for paragraph 2 of gradeOutOf help dialog
 
 	"attachments.addGoogleDriveLink": "إرفاق من Google Drive", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "تحميل ملف", // Tooltip for a button that opens a file upload dialog
@@ -172,5 +184,8 @@ export default {
 	"content.confirmDialogCancelOption": "إلغاء", // The text for the cancel action to not replace content
 	"content.useEmbeddedPlayer": "استخدام مشغّل مضمّن", // The text for using the embedded player
 	"content.scormActivity": "حزمة النموذج المرجعي لمكونات المحتوى التشاركي (SCORM)", // The label for the name of the SCORM package
-	"content.lastEdited": "التحرير الأخير" // The date when the entity was last edited
+	"content.lastEdited": "التحرير الأخير", // The date when the entity was last edited
+	"content.externalFile": "External file", // The text to use for labeling external files
+	"content.advancedEditing": 'Advanced Editing', // The text to use on the advanced editing button
+	"content.fileHasCaptions": "This file has captions in", // The text to use preceding the list of captions
 };

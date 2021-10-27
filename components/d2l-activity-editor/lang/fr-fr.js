@@ -82,6 +82,11 @@ export default {
 	"editor.inGradebook": "Dans le livret de notes", // New state of the grades field when there is a score, and an associated grade item
 	"editor.notInGradebook": "Pas dans le livret de notes", // New state of the grades field when there is a score, but no associated grade item
 	"editor.addToGradebook": "Ajouter au livret de notes", // New menu item for adding grade association
+	"editor.beforeStartDate": "Avant de commencer :", //Text for before start availability date type
+	"editor.afterEndDate": "Une fois terminé :", //Text for after end availability date type
+	"editor.lblVisibleWithAccessRestricted": "Visible avec accès restreint", //Text for after end availability date type
+	"editor.lblVisibleWithSubmissionRestricted": "Visible avec soumission restreinte", //Text for after end availability date type
+	"editor.lblHidden": "Masqué", //Text for after end availability date type
 
 	"rubrics.btnAddRubric": "Ajouter une grille d’évaluation", //text for add rubric button
 	"rubrics.btnCreateNew": "Créer", //Text for create new dropdown
@@ -105,10 +110,12 @@ export default {
 	"grades.weight": "Pondération : {weight}", // Text label for displaying weight of a grade
 	"grades.gradeItem": "Élément de note", //ARIA label for grade-item picker when linking an activity to an existing grade item
 	"grades.gradeUnits": "points", // unit label for GradeOutOf value (e.g. 10 points)
+	"grades.gradeUnitsSingular": "point", // unit label for GradeOutOf value when value is 1
 	"grades.chooseNewGradeItemCategory": "Choisir la catégorie de notes", // Label for add category button
 	"grades.newGradeItemCategory": "Catégorie de note", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "Aucune catégorie", // Category dropdown text for not selecting a category
 	"grades.changeNewGradeTypeAndScheme": "Changer le type et le barème de notation", // Label for change type and scheme button
+	"grades.chooseNewGradeScheme": "Choisir le barème de notation", // Label for choose grade scheme button (when there is only one type)
 	"grades.newGradeType": "Type de notation", // Label for the grade type
 	"grades.newGradeTypeNumeric": "Numérique", // Label for numeric grade type radio option
 	"grades.newGradeTypeSelectbox": "Zone de liste", // Label for selectbox grade type radio option
@@ -121,6 +128,11 @@ export default {
 	"grades.creatingNewNumericGradeItem": "Création d’un nouvel élément de note numérique {newGradeName}", // Aria text for new grade we are creating
 	"grades.creatingNewSelectboxGradeItem": "Création d’un nouvel élément de note de la zone de liste {newGradeName}", // Aria text for new grade we are creating
 	"grades.linkingToGradeItem": "Lien vers l’élément de note existant {gradeName}", // Aria text for grade item we are linking to
+	"grades.gradeOutOfMenuItem": "À quoi correspond la section « Note sur » ?", // menu item to launch gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogTitle": "Information : section « Note sur »", // title that appears when the gradeOutOf help dialog is rendered
+	"grades.gradeOutOfHelpDialogConfirmationText": "OK", // text that appears on the gradeOutOf help dialog confirmation button
+	"grades.gradeOutOfHelpDialogParagraph1": "Si le questionnaire indique la mention « Pas dans le livret de notes », la section « Note sur » reflète le nombre total de points obtenus sur les questions.", // content for paragraph 1 of gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogParagraph2": "Si le questionnaire indique « Dans le livret de notes », la section « Note sur » correspond au nombre maximal de points ou à la pondération dans l’outil Notes.", // content for paragraph 2 of gradeOutOf help dialog
 
 	"attachments.addGoogleDriveLink": "Joindre depuis Google Drive", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "Téléchargement du fichier", // Tooltip for a button that opens a file upload dialog
@@ -172,5 +184,8 @@ export default {
 	"content.confirmDialogCancelOption": "Annuler", // The text for the cancel action to not replace content
 	"content.useEmbeddedPlayer": "Utiliser un lecteur intégré", // The text for using the embedded player
 	"content.scormActivity": "Package SCORM", // The label for the name of the SCORM package
-	"content.lastEdited": "Dernière modification" // The date when the entity was last edited
+	"content.lastEdited": "Dernière modification", // The date when the entity was last edited
+	"content.externalFile": "External file", // The text to use for labeling external files
+	"content.advancedEditing": 'Advanced Editing', // The text to use on the advanced editing button
+	"content.fileHasCaptions": "This file has captions in", // The text to use preceding the list of captions
 };

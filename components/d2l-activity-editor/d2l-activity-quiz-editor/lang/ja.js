@@ -47,7 +47,7 @@ export default {
 	"disableRightClickAccessibleHelpText": "ヘルプの表示 - 右クリックの無効化", // accessible help text for disable right click question mark button
 	"disableRightClickHelpDialogTitle": "情報: 右クリックの無効化", // title that appears when the disable right click help dialog is rendered
 	"disableRightClickHelpDialogParagraph1": "この機能によって、受講者は試行中に質問を右クリックしてクイズの質問を印刷できなくできます。ただし、受講者はブラウザ以外の他の技術によってクイズ画面を取り込めます。", // content for paragraph 1 of disable right click help dialog
-	"disableRightClickHelpDialogParagraph2": "受講者が質問のテキストをコピーして貼り付けられないように、特定のアクセシビリティワークフローはブロックされます。", // content for paragraph 2 of disable right click help dialog
+	"disableRightClickHelpDialogParagraph2": "受講者が質問のテキストをコピーして貼り付けられないように、特定のアクセシビリティワークフローはブロックされます。個々のユーザーには、クイズに対してこの機能が有効になっている場合でも、そのユーザーの［配慮］で［常に右クリックを許可]を有効にすることで、クイズを右クリックする機能を許可できます。", // content for paragraph 2 of disable right click help dialog
 	"disableRightClickHelpDialogConfirmationText": "OK", // copy that appears on the disable right click help dialog confirmation button
 	"manageTimingDialogConfirmationText": "OK", // copy that appears on the Timing dialog confirmation button
 	"manageTimingDialogCancelText": "キャンセル", // copy that appears on the Timing dialog cancel button
@@ -88,6 +88,9 @@ export default {
 	"ipRestrictionsTableStartRangeHdr": "IP 範囲の開始", // text for IP restrictions table header start
 	"ipRestrictionsTableEndRangeHdr": "IP 範囲の終了", // text for IP restrictions table header end
 	"ipRestrictionsTableDeleteRangeHdr": "削除", // text for IP restrictions table header delete
+	"ipRestrictionsTableDeleteRangeLabel": "削除", // label for IP restrictions delete button
+	"ipRestrictionsTableStartRangeLabel": "IP 範囲の開始 {index}", // label for IP restrictions start range input
+	"ipRestrictionsTableEndRangeLabel": "IP 範囲の終了 {index}", // label for IP restrictions end range input
 	"ipRestrictionsValidationError": "無効な IP アドレス形式です。囲まれたフィールドを修正してください。IP アドレスの例: 155.55.5.15", // error message for invalid IP addresses
 	"ipRestrictions500Error": "問題が発生しました。もう一度試してください。", // error message for IP restrictions 500 response
 	"ipRestrictionsHelpTxtConfirmation": "OK", // confirmation text on IP restrictions help dialog
@@ -97,8 +100,8 @@ export default {
 	"hdrIpRestrictionsHelpDialogP3": "個別の許可される IP アドレスを含めるには、IP 範囲の開始値のみを指定します。", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "注: IP 範囲の開始値は、IP 範囲の終了値より小さくする必要があります。", // IP restrictions help dialog paragraph 4
 	"hdrSpecialAccess": "特殊なアクセス", // special access heading,
-	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
-	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
+	"hlpSpecialAccess": "特殊なアクセスを使用すると、ユーザーの選択グループに対して、または特定のユーザーに個別の期限を付与してクイズを使用可能にすることができます。", // special access help
+	"specialAccessRestrictedText": "特殊なアクセスを持つユーザーのみがこのクイズを表示できる", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "ヘルプの表示 - IP 制限", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "試行の条件", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "受講者が別の試行を受ける資格を得るには、前回の試行で達成する必要がある最小、最大のパーセンテージ値を 0～100 の間で設定します。", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -138,9 +141,75 @@ export default {
 	"createNewLabel": "新規作成", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "既存の追加", // Label for button to open menu for adding pre-existing items to the quiz.
 	"addQuestionsLabel": "新規の質問", // Label for button to open menu for adding new questions to the quiz.
-	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading1": "公開時に受講者に表示:", // Label for checkbox in submission view container.
 	"submissionViewHeading2": "と", // Label for submission view dropdown in submission view container.
-	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
-	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
-	"gradeOutOf": "満点の成績" // Label for the grade-out-of field when creating/editing an activity
+	"submissionViewCheckboxLabel": "試行成績", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "クイズ結果の表示のカスタマイズ", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "満点の成績", // Label for the grade-out-of field when creating/editing an activity
+	"submissionViewsHelpDialogTitle": "情報: クイズ結果の表示", // Title for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogParagraph1": "クイズ結果の表示は、送信直後、または後で試行をレビューするときに、公開されたクイズの試行結果を受講者がどのように表示できるかを決定します。", // Paragraph 1 for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogParagraph2": "プライマリビューがデフォルトとして受講者に表示され、追加のビューは設定されたパラメータに基づいてプライマリビューを上書きします。", // Paragraph 2 for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogConfirmation": "OK", //Text for closing the information Dialog for customization in submission views.
+	"submissionViewsDialogConfirmationMain": "OK", //Text for closing the main Dialog for customization in submission views.
+	"submissionViewsDialogCancelMain": "キャンセル", // Text for cancelling changes on the main Dialog for customization in submission views.
+	"submissionViewsAccordionDropdownNoQuestions": "質問なし", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownIncorrectQuestionsWithCorrectAnswers": "不正解の質問のみと正解", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownIncorrectQuestionsWithoutCorrectAnswers": "不正解の質問のみ（正解なし）", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownAllQuestionsWithCorrectAnswers": "すべての質問と正解", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownAllQuestionsWithoutCorrectAnswers": "すべての質問（正解なし）", // Option in dropdown to decide what to display to learner.
+	"primaryView": "プライマリビュー", // Label
+	"additionalViewComesIntoEffect": "Additional view comes into effect:", // Label
+	"submissionViewDialogCardAttemptScoreTrueText": "評価された質問に対して表示された試行成績", // Submission view dialog card, text appearing when attempted grades are displayed.
+	"submissionViewDialogCardAttemptScoreFalseText": "非表示", // Submission view dialog card, text appearing when attempted grades are not displayed.
+	"submissionViewDialogCardQuestionsNotDisplayed": "非表示", // Submission view dialog card, text appearing when no questions are displayed.
+	"submissionViewDialogCardQuestionsAllDisplayed": "すべての質問を表示", // Submission view dialog card, text appearing when all questions are displayed.
+	"submissionViewDialogCardQuestionsIncorrectOnlyDisplayed": "不正解のみを表示", // Submission view dialog card, text appearing when incorrect questions only are displayed.
+	"submissionViewDialogCardQuestionsCorrectOnlyDisplayed": "正解のみを表示", // Submission view dialog card, text appearing when correct questions only are displayed.
+	"submissionViewDialogCardShowAnswersTrueText": "すべての回答を表示", // Submission view dialog card, text appearing when all answers are displayed.
+	"submissionViewDialogCardShowAnswersFalseText": "非表示", // Submission view dialog card, text appearing when not all answers are displayed.
+	"submissionViewDialogCardShowResponsesTrueText": "表示", // Submission view dialog card, text appearing when learners responses are displayed.
+	"submissionViewDialogCardShowResponsesFalseText": "非表示", // Submission view dialog card, text appearing when learners responses are not displayed.
+	"submissionViewDialogCardSubmissionViewMessageHeader": "メッセージ", // Submission view dialog card, message heading.
+	"submissionViewDialogCardSubmissionViewGradeHeader": "成績", // Submission view dialog card, grade heading.
+	"submissionViewDialogCardSubmissionViewQuestionsHeader": "質問", // Submission view dialog card, questions heading.
+	"submissionViewDialogCardSubmissionViewAnswerHeader" : "回答", // Submission view dialog card, answers heading.
+	"submissionViewDialogCardSubmissionViewResponseHeader": "受講者の回答", // Submission view dialog card, learners responses heading.
+	"submissionViewDialogCardButtonOptionEditView": "ビューの編集", // Submission view dialog card, OK button text.
+	"submissionViewDialogCardButtonOptionDeleteView": "ビューの削除", // Submission view dialog card, Cancel button text.
+	"submissionViewsAccordionSummary" : "{count, plural, =1 {1 件の結果を表示} other {{count} 件の結果を表示}}", // number of submission views summary shown in collapsed accordion
+	"submissionViewsDialogEditorGradeCheckbox": "評価された質問の試行成績の表示", // submission views dialog editor edit display attempt score checkbox
+	"statistics": "統計", //Label
+	"submissionViewsDialogEditorClassAverageCheckbox": "クラス平均の表示", // submission views dialog editor edit display class average checkbox
+	"submissionViewsDialogEditorGradeDistributionCheckbox": "成績分布の表示", // submission views dialog editor edit display grade distribution checkbox
+	"quizSubmissionViewsDialogCardUpdate": "更新", // submission views dialog card Update button
+	"quizSubmissionViewsDialogCardCancel": "キャンセル", // submission views dialog card Cancel button
+	"allQuestionsWithCorrectAnswers": "成績を非表示にし、すべての質問と正解を表示", // summarize list of selected options in comma separated list
+	"allQuestions": "成績を非表示にし、すべての質問を表示", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsWithCorrectAnswers": "成績を表示し、すべての質問と正解を表示", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestions": "成績を表示し、すべての質問を表示", // summarize list of selected options in comma separated list
+	"allQuestionsWithCorrectAnswersLearnersResponses": "成績を非表示にし、すべての質問と正解、受講者の回答を表示", // summarize list of selected options in comma separated list
+	"allQuestionsLearnersResponses": "成績を非表示にし、すべての質問と受講者の回答を表示", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsWithCorrectAnswersLearnersResponses": "成績を表示し、すべての質問と正解、受講者の回答を表示", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsLearnersResponses": "成績を表示し、すべての質問と受講者の回答を表示", // summarize list of selected options in comma separated list
+	"incorrectQuestionsWithCorrectAnswers": "成績を非表示にし、不正解の質問のみと正解を表示", // summarize list of selected options in comma separated list
+	"incorrectQuestions": "成績を非表示にし、不正解の質問のみ表示", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsWithCorrectAnswers": "成績を表示し、不正解の質問のみと正解を表示", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestions": "成績を表示し、不正解の質問のみ表示", // summarize list of selected options in comma separated list
+	"incorrectQuestionsWithCorrectAnswersLearnersResponses": "成績を非表示にし、不正解の質問のみと正解、受講者の回答を表示", // summarize list of selected options in comma separated list
+	"incorrectQuestionsLearnersResponses": "成績を非表示にし、不正解の質問のみと受講者の回答を表示", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsWithCorrectAnswersLearnersResponses": "成績を表示し、不正解の質問のみと正解、受講者の回答を表示", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsLearnersResponses": "成績を表示し、不正解の質問のみと受講者の回答を表示", // summarize list of selected options in comma separated list
+	"correctQuestionsWithCorrectAnswers": "成績を非表示にし、正解の質問のみと正解を表示", // summarize list of selected options in comma separated list
+	"correctQuestions": "成績を非表示にし、正解の質問のみ表示", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsWithCorrectAnswers": "成績を表示し、正解の質問のみと正解を表示", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestions": "成績を表示し、正解の質問のみ表示", // summarize list of selected options in comma separated list
+	"correctQuestionsWithCorrectAnswersLearnersResponses": "成績を非表示にし、正解の質問のみと正解、受講者の回答を表示", // summarize list of selected options in comma separated list
+	"correctQuestionsLearnersResponses": "成績を非表示にし、正解の質問のみと受講者の回答を表示", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsWithCorrectAnswersLearnersResponses": "成績を表示し、正解の質問のみと正解、受講者の回答を表示", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsLearnersResponses": "成績を表示し、正解の質問のみと受講者の回答を表示", // summarize list of selected options in comma separated list
+	"noQuestions": "成績を非表示にし、質問は非表示", // summarize list of selected options in comma separated list
+	"gradeVisibleNoQuestions": "成績を表示し、質問は非表示", // summarize list of selected options in comma separated list
+	"deleteViewWithTitle": "ビューの削除: {message}", // aria-label for delete view button with view message/title
+	"submissionViewReleaseDateSummary": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} }{minGrade, plural, =0 {} other {, with attempt grades above {minGrade}%}}{maxGrade, plural, =0 {} other {, with attempt grades below {maxGrade}%}}{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info
+	"submissionViewReleaseDateSummaryBothMinMaxGrades": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} } with attempt grades above {minGrade}% and below {maxGrade}%{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}" // summary of when a view is released with restriction info with both min and max grades
 };

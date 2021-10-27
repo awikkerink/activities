@@ -82,6 +82,11 @@ export default {
 	"editor.inGradebook": "In Scorerapport", // New state of the grades field when there is a score, and an associated grade item
 	"editor.notInGradebook": "Niet in Scorerapport", // New state of the grades field when there is a score, but no associated grade item
 	"editor.addToGradebook": "Toevoegen aan Scorerapport", // New menu item for adding grade association
+	"editor.beforeStartDate": "Voor aanvang:", //Text for before start availability date type
+	"editor.afterEndDate": "Na einde:", //Text for after end availability date type
+	"editor.lblVisibleWithAccessRestricted": "Zichtbaar met beperkte toegang", //Text for after end availability date type
+	"editor.lblVisibleWithSubmissionRestricted": "Zichtbaar met beperkte indiening/poging", //Text for after end availability date type
+	"editor.lblHidden": "Verborgen", //Text for after end availability date type
 
 	"rubrics.btnAddRubric": "Rubric toevoegen", //text for add rubric button
 	"rubrics.btnCreateNew": "Nieuwe maken", //Text for create new dropdown
@@ -105,10 +110,12 @@ export default {
 	"grades.weight": "Zwaarte: {weight}", // Text label for displaying weight of a grade
 	"grades.gradeItem": "Score-onderdeel", //ARIA label for grade-item picker when linking an activity to an existing grade item
 	"grades.gradeUnits": "punten", // unit label for GradeOutOf value (e.g. 10 points)
+	"grades.gradeUnitsSingular": "punt", // unit label for GradeOutOf value when value is 1
 	"grades.chooseNewGradeItemCategory": "Scorecategorie kiezen", // Label for add category button
 	"grades.newGradeItemCategory": "Scorecategorie", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "Geen categorie", // Category dropdown text for not selecting a category
 	"grades.changeNewGradeTypeAndScheme": "Scoretype en schema wijzigen", // Label for change type and scheme button
+	"grades.chooseNewGradeScheme": "Standaard scoreschema", // Label for choose grade scheme button (when there is only one type)
 	"grades.newGradeType": "Scoretype", // Label for the grade type
 	"grades.newGradeTypeNumeric": "Numeriek", // Label for numeric grade type radio option
 	"grades.newGradeTypeSelectbox": "Selectievakje", // Label for selectbox grade type radio option
@@ -121,6 +128,11 @@ export default {
 	"grades.creatingNewNumericGradeItem": "Nieuw numeriek score-onderdeel {newGradeName} wordt gemaakt", // Aria text for new grade we are creating
 	"grades.creatingNewSelectboxGradeItem": "Nieuw score-onderdeel met selectievakje {newGradeName} wordt gemaakt", // Aria text for new grade we are creating
 	"grades.linkingToGradeItem": "Koppelen aan bestaand score-onderdeel {gradeName}", // Aria text for grade item we are linking to
+	"grades.gradeOutOfMenuItem": "Wat is een score van?", // menu item to launch gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogTitle": "Informatie: Score buiten", // title that appears when the gradeOutOf help dialog is rendered
+	"grades.gradeOutOfHelpDialogConfirmationText": "OK", // text that appears on the gradeOutOf help dialog confirmation button
+	"grades.gradeOutOfHelpDialogParagraph1": "Als de test 'Niet in cijferlijst' is, geeft de score bij 'Uit' het totale aantal punten van de vragen weer.", // content for paragraph 1 of gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogParagraph2": "Als de test \"In cijferlijst\" is, is Score-out van het maximum aantal punten of gewicht in de scoretool.", // content for paragraph 2 of gradeOutOf help dialog
 
 	"attachments.addGoogleDriveLink": "Toevoegen vanuit Google Drive", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "Bestand uploaden", // Tooltip for a button that opens a file upload dialog
@@ -172,5 +184,8 @@ export default {
 	"content.confirmDialogCancelOption": "Annuleren", // The text for the cancel action to not replace content
 	"content.useEmbeddedPlayer": "Geïntegreerde speler gebruiken", // The text for using the embedded player
 	"content.scormActivity": "SCORM-pakket", // The label for the name of the SCORM package
-	"content.lastEdited": "Laatst bewerkt" // The date when the entity was last edited
+	"content.lastEdited": "Laatst bewerkt", // The date when the entity was last edited
+	"content.externalFile": "External file", // The text to use for labeling external files
+	"content.advancedEditing": 'Advanced Editing', // The text to use on the advanced editing button
+	"content.fileHasCaptions": "This file has captions in", // The text to use preceding the list of captions
 };

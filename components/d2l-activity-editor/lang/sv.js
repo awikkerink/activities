@@ -82,6 +82,11 @@ export default {
 	"editor.inGradebook": "I betygsboken", // New state of the grades field when there is a score, and an associated grade item
 	"editor.notInGradebook": "Inte i betygsboken", // New state of the grades field when there is a score, but no associated grade item
 	"editor.addToGradebook": "Lägg till i betygsboken", // New menu item for adding grade association
+	"editor.beforeStartDate": "Före start:", //Text for before start availability date type
+	"editor.afterEndDate": "Efter slut:", //Text for after end availability date type
+	"editor.lblVisibleWithAccessRestricted": "Synlig med begränsad åtkomst", //Text for after end availability date type
+	"editor.lblVisibleWithSubmissionRestricted": "Synlig med begränsad inlämning", //Text for after end availability date type
+	"editor.lblHidden": "Dold", //Text for after end availability date type
 
 	"rubrics.btnAddRubric": "Lägg till rubricering", //text for add rubric button
 	"rubrics.btnCreateNew": "Skapa ny", //Text for create new dropdown
@@ -105,10 +110,12 @@ export default {
 	"grades.weight": "Vikt: {weight}", // Text label for displaying weight of a grade
 	"grades.gradeItem": "Betygsobjekt", //ARIA label for grade-item picker when linking an activity to an existing grade item
 	"grades.gradeUnits": "poäng", // unit label for GradeOutOf value (e.g. 10 points)
+	"grades.gradeUnitsSingular": "poäng", // unit label for GradeOutOf value when value is 1
 	"grades.chooseNewGradeItemCategory": "Välj betygskategori", // Label for add category button
 	"grades.newGradeItemCategory": "Betygskategori", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "Ingen kategori", // Category dropdown text for not selecting a category
 	"grades.changeNewGradeTypeAndScheme": "Ändra betygstyp och schema", // Label for change type and scheme button
+	"grades.chooseNewGradeScheme": "Välj betygsschema", // Label for choose grade scheme button (when there is only one type)
 	"grades.newGradeType": "Betygstyp", // Label for the grade type
 	"grades.newGradeTypeNumeric": "Numerisk", // Label for numeric grade type radio option
 	"grades.newGradeTypeSelectbox": "Markeringsruta", // Label for selectbox grade type radio option
@@ -121,6 +128,11 @@ export default {
 	"grades.creatingNewNumericGradeItem": "Skapa nytt numeriskt betygsobjekt {newGradeName}", // Aria text for new grade we are creating
 	"grades.creatingNewSelectboxGradeItem": "Skapa nytt betygsobjekt av typen markeringsruta {newGradeName}", // Aria text for new grade we are creating
 	"grades.linkingToGradeItem": "Länkar till befintligt betygsobjekt {gradeName}", // Aria text for grade item we are linking to
+	"grades.gradeOutOfMenuItem": "Vad är Betyg av?", // menu item to launch gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogTitle": "Information: Betyg av", // title that appears when the gradeOutOf help dialog is rendered
+	"grades.gradeOutOfHelpDialogConfirmationText": "OK", // text that appears on the gradeOutOf help dialog confirmation button
+	"grades.gradeOutOfHelpDialogParagraph1": "Om förhöret visar ”Inte i betygsbok” avspeglar Betyg av totalt antal poäng för frågorna.", // content for paragraph 1 of gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogParagraph2": "Om förhöret visar ”I betygsbok” är Betyg av maxpoäng eller maxvikt i verktyget Betyg.", // content for paragraph 2 of gradeOutOf help dialog
 
 	"attachments.addGoogleDriveLink": "Bifoga från Google Drive", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "Filuppladdning", // Tooltip for a button that opens a file upload dialog
@@ -172,5 +184,8 @@ export default {
 	"content.confirmDialogCancelOption": "Avbryt", // The text for the cancel action to not replace content
 	"content.useEmbeddedPlayer": "Använd den inbyggda spelaren", // The text for using the embedded player
 	"content.scormActivity": "SCORM-paket", // The label for the name of the SCORM package
-	"content.lastEdited": "Redigerades" // The date when the entity was last edited
+	"content.lastEdited": "Redigerades", // The date when the entity was last edited
+	"content.externalFile": "External file", // The text to use for labeling external files
+	"content.advancedEditing": 'Advanced Editing', // The text to use on the advanced editing button
+	"content.fileHasCaptions": "This file has captions in", // The text to use preceding the list of captions
 };

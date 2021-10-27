@@ -82,6 +82,11 @@ export default {
 	"editor.inGradebook": "In Notenbuch", // New state of the grades field when there is a score, and an associated grade item
 	"editor.notInGradebook": "Nicht in Notenbuch", // New state of the grades field when there is a score, but no associated grade item
 	"editor.addToGradebook": "Zum Notenbuch hinzufügen", // New menu item for adding grade association
+	"editor.beforeStartDate": "Vor dem Start:", //Text for before start availability date type
+	"editor.afterEndDate": "Nach Ende:", //Text for after end availability date type
+	"editor.lblVisibleWithAccessRestricted": "Sichtbar mit eingeschränktem Zugriff", //Text for after end availability date type
+	"editor.lblVisibleWithSubmissionRestricted": "Sichtbar mit eingeschränkter Abgabe", //Text for after end availability date type
+	"editor.lblHidden": "Ausgeblendet", //Text for after end availability date type
 
 	"rubrics.btnAddRubric": "Bewertungsschema hinzufügen", //text for add rubric button
 	"rubrics.btnCreateNew": "Neu erstellen", //Text for create new dropdown
@@ -105,10 +110,12 @@ export default {
 	"grades.weight": "{weight} Gewicht", // Text label for displaying weight of a grade
 	"grades.gradeItem": "Benotungsgegenstand", //ARIA label for grade-item picker when linking an activity to an existing grade item
 	"grades.gradeUnits": "Punkte", // unit label for GradeOutOf value (e.g. 10 points)
+	"grades.gradeUnitsSingular": "Punkt", // unit label for GradeOutOf value when value is 1
 	"grades.chooseNewGradeItemCategory": "Notenkategorie auswählen", // Label for add category button
 	"grades.newGradeItemCategory": "Notenkategorie", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "Keine Kategorie", // Category dropdown text for not selecting a category
 	"grades.changeNewGradeTypeAndScheme": "Notentyp und -schema ändern", // Label for change type and scheme button
+	"grades.chooseNewGradeScheme": "Notenskala auswählen", // Label for choose grade scheme button (when there is only one type)
 	"grades.newGradeType": "Notentyp", // Label for the grade type
 	"grades.newGradeTypeNumeric": "Numerisch", // Label for numeric grade type radio option
 	"grades.newGradeTypeSelectbox": "Auswahlfeld", // Label for selectbox grade type radio option
@@ -121,6 +128,11 @@ export default {
 	"grades.creatingNewNumericGradeItem": "Neuer numerischer Benotungsgegenstand „{newGradeName}“ wird erstellt", // Aria text for new grade we are creating
 	"grades.creatingNewSelectboxGradeItem": "Neuer Auswahlfeld-Benotungsgegenstand „{newGradeName}“ wird erstellt", // Aria text for new grade we are creating
 	"grades.linkingToGradeItem": "Wird mit vorhandenem Benotungsgegenstand „{gradeName}“ verknüpft", // Aria text for grade item we are linking to
+	"grades.gradeOutOfMenuItem": "Was ist „Note von“?", // menu item to launch gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogTitle": "Information: Note von", // title that appears when the gradeOutOf help dialog is rendered
+	"grades.gradeOutOfHelpDialogConfirmationText": "OK", // text that appears on the gradeOutOf help dialog confirmation button
+	"grades.gradeOutOfHelpDialogParagraph1": "Wenn der Test „Nicht im Notenbuch“ ist, gibt „Note von“ die Gesamtpunktzahl der Fragen an.", // content for paragraph 1 of gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogParagraph2": "Wenn der Test „Im Notenbuch“ ist, gibt „Note von“ die maximale Punktzahl oder Gewichtung im Noten-Tool an.", // content for paragraph 2 of gradeOutOf help dialog
 
 	"attachments.addGoogleDriveLink": "Anlage aus Google Drive hinzufügen", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "Datei-Upload", // Tooltip for a button that opens a file upload dialog
@@ -172,5 +184,8 @@ export default {
 	"content.confirmDialogCancelOption": "Abbrechen", // The text for the cancel action to not replace content
 	"content.useEmbeddedPlayer": "Integrierten Player verwenden", // The text for using the embedded player
 	"content.scormActivity": "SCORM-Paket", // The label for the name of the SCORM package
-	"content.lastEdited": "Letzte Bearbeitung" // The date when the entity was last edited
+	"content.lastEdited": "Letzte Bearbeitung", // The date when the entity was last edited
+	"content.externalFile": "External file", // The text to use for labeling external files
+	"content.advancedEditing": 'Advanced Editing', // The text to use on the advanced editing button
+	"content.fileHasCaptions": "This file has captions in", // The text to use preceding the list of captions
 };
