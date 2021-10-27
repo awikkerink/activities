@@ -47,7 +47,7 @@ export default {
 	"disableRightClickAccessibleHelpText": "Obtenga ayuda sobre: deshabilitar clic derecho", // accessible help text for disable right click question mark button
 	"disableRightClickHelpDialogTitle": "Información: deshabilitar clic derecho", // title that appears when the disable right click help dialog is rendered
 	"disableRightClickHelpDialogParagraph1": "Esta función prohíbe a los estudiantes imprimir preguntas del cuestionario haciendo clic con el botón derecho en una pregunta mientras se está realizando un intento. Sin embargo, los estudiantes podrán hacer capturas de pantalla del cuestionario con otras tecnologías fuera del navegador.", // content for paragraph 1 of disable right click help dialog
-	"disableRightClickHelpDialogParagraph2": "Se bloquearán determinados flujos de trabajo de accesibilidad, ya que el estudiante no puede copiar y pegar el texto de la pregunta.", // content for paragraph 2 of disable right click help dialog
+	"disableRightClickHelpDialogParagraph2": "Se bloquearán determinados flujos de trabajo de accesibilidad, ya que el estudiante no puede copiar y pegar el texto de la pregunta. La capacidad de hacer clic con el botón derecho en un cuestionario se puede otorgar a los usuarios individuales incluso cuando esta función esté habilitada para un cuestionario mediante la habilitación de la opción “Permitir siempre clic con el botón derecho” en los Ajustes de ese usuario.", // content for paragraph 2 of disable right click help dialog
 	"disableRightClickHelpDialogConfirmationText": "Aceptar", // copy that appears on the disable right click help dialog confirmation button
 	"manageTimingDialogConfirmationText": "Aceptar", // copy that appears on the Timing dialog confirmation button
 	"manageTimingDialogCancelText": "Cancelar", // copy that appears on the Timing dialog cancel button
@@ -88,6 +88,9 @@ export default {
 	"ipRestrictionsTableStartRangeHdr": "Inicio del rango de IP", // text for IP restrictions table header start
 	"ipRestrictionsTableEndRangeHdr": "Fin del rango de IP", // text for IP restrictions table header end
 	"ipRestrictionsTableDeleteRangeHdr": "Eliminar", // text for IP restrictions table header delete
+	"ipRestrictionsTableDeleteRangeLabel": "Eliminar", // label for IP restrictions delete button
+	"ipRestrictionsTableStartRangeLabel": "Inicio del rango de IP {index}", // label for IP restrictions start range input
+	"ipRestrictionsTableEndRangeLabel": "Fin del rango de IP {index}", // label for IP restrictions end range input
 	"ipRestrictionsValidationError": "Formato de dirección IP no válido. Corrija los campos indicados. Ejemplo de dirección IP: 155.55.5.15.", // error message for invalid IP addresses
 	"ipRestrictions500Error": "Se produjo un error. Vuelva a intentarlo.", // error message for IP restrictions 500 response
 	"ipRestrictionsHelpTxtConfirmation": "Aceptar", // confirmation text on IP restrictions help dialog
@@ -97,8 +100,8 @@ export default {
 	"hdrIpRestrictionsHelpDialogP3": "Para incluir una dirección IP individual aceptada, solo especifique el valor de Inicio del rango de IP.", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "Nota: El valor de Inicio del rango de IP debe ser menor que el valor de Fin del rango de IP.", // IP restrictions help dialog paragraph 4
 	"hdrSpecialAccess": "Acceso especial", // special access heading,
-	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
-	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
+	"hlpSpecialAccess": "El acceso especial permite que los cuestionarios estén disponibles solo para un grupo selecto de usuarios o con fechas de entrega personalizadas para ciertos usuarios.", // special access help
+	"specialAccessRestrictedText": "Solo los usuarios con acceso especial pueden ver este cuestionario", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "Obtenga ayuda sobre: restricciones por dirección IP", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "Condiciones de intento", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "Para que a un estudiante le corresponda realizar otro intento, establezca un valor porcentual mínimo o máximo entre 0 y 100 que se deberá obtener en el intento anterior.", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -138,9 +141,75 @@ export default {
 	"createNewLabel": "Crear nuevo", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "Agregar existente", // Label for button to open menu for adding pre-existing items to the quiz.
 	"addQuestionsLabel": "Nueva pregunta", // Label for button to open menu for adding new questions to the quiz.
-	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading1": "Cuando se publique, mostrar a los estudiantes:", // Label for checkbox in submission view container.
 	"submissionViewHeading2": "y", // Label for submission view dropdown in submission view container.
-	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
-	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
-	"gradeOutOf": "Calificación de" // Label for the grade-out-of field when creating/editing an activity
+	"submissionViewCheckboxLabel": "Calificación del intento", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "Personalizar visualizaciones de los resultados del cuestionario", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "Calificación de", // Label for the grade-out-of field when creating/editing an activity
+	"submissionViewsHelpDialogTitle": "Información: Visualización de resultados del cuestionario", // Title for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogParagraph1": "La visualización de los resultados del cuestionario determina cómo los estudiantes pueden ver los resultados de sus intentos publicados del cuestionario, tanto inmediatamente después enviarlo como después cuando revisan su intento.", // Paragraph 1 for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogParagraph2": "La vista principal se muestra a los estudiantes como la vista predeterminada y las vistas adicionales anularán la vista principal según los parámetros establecidos.", // Paragraph 2 for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogConfirmation": "Aceptar", //Text for closing the information Dialog for customization in submission views.
+	"submissionViewsDialogConfirmationMain": "Aceptar", //Text for closing the main Dialog for customization in submission views.
+	"submissionViewsDialogCancelMain": "Cancelar", // Text for cancelling changes on the main Dialog for customization in submission views.
+	"submissionViewsAccordionDropdownNoQuestions": "Ninguna pregunta", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownIncorrectQuestionsWithCorrectAnswers": "Solo preguntas incorrectas, con respuestas correctas", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownIncorrectQuestionsWithoutCorrectAnswers": "Solo preguntas incorrectas, sin respuestas correctas", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownAllQuestionsWithCorrectAnswers": "Todas las preguntas, con las respuestas correctas", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownAllQuestionsWithoutCorrectAnswers": "Todas las preguntas, sin las respuestas correctas", // Option in dropdown to decide what to display to learner.
+	"primaryView": "Vista principal", // Label
+	"additionalViewComesIntoEffect": "Additional view comes into effect:", // Label
+	"submissionViewDialogCardAttemptScoreTrueText": "Se muestra la calificación del intento para las preguntas evaluadas", // Submission view dialog card, text appearing when attempted grades are displayed.
+	"submissionViewDialogCardAttemptScoreFalseText": "No se muestra", // Submission view dialog card, text appearing when attempted grades are not displayed.
+	"submissionViewDialogCardQuestionsNotDisplayed": "No se muestra", // Submission view dialog card, text appearing when no questions are displayed.
+	"submissionViewDialogCardQuestionsAllDisplayed": "Se muestran todas las preguntas", // Submission view dialog card, text appearing when all questions are displayed.
+	"submissionViewDialogCardQuestionsIncorrectOnlyDisplayed": "Solo se muestra la incorrecta", // Submission view dialog card, text appearing when incorrect questions only are displayed.
+	"submissionViewDialogCardQuestionsCorrectOnlyDisplayed": "Solo se muestra la correcta", // Submission view dialog card, text appearing when correct questions only are displayed.
+	"submissionViewDialogCardShowAnswersTrueText": "Se muestran todas las respuestas", // Submission view dialog card, text appearing when all answers are displayed.
+	"submissionViewDialogCardShowAnswersFalseText": "No se muestra", // Submission view dialog card, text appearing when not all answers are displayed.
+	"submissionViewDialogCardShowResponsesTrueText": "Se muestra", // Submission view dialog card, text appearing when learners responses are displayed.
+	"submissionViewDialogCardShowResponsesFalseText": "No se muestra", // Submission view dialog card, text appearing when learners responses are not displayed.
+	"submissionViewDialogCardSubmissionViewMessageHeader": "Mensaje", // Submission view dialog card, message heading.
+	"submissionViewDialogCardSubmissionViewGradeHeader": "Calificación", // Submission view dialog card, grade heading.
+	"submissionViewDialogCardSubmissionViewQuestionsHeader": "Preguntas", // Submission view dialog card, questions heading.
+	"submissionViewDialogCardSubmissionViewAnswerHeader" : "Respuestas", // Submission view dialog card, answers heading.
+	"submissionViewDialogCardSubmissionViewResponseHeader": "Respuestas del estudiante", // Submission view dialog card, learners responses heading.
+	"submissionViewDialogCardButtonOptionEditView": "Editar vista", // Submission view dialog card, OK button text.
+	"submissionViewDialogCardButtonOptionDeleteView": "Eliminar vista", // Submission view dialog card, Cancel button text.
+	"submissionViewsAccordionSummary" : "{count, plural, =1 {1 visualización del resultado} other {{count} visualizaciones del resultado}}", // number of submission views summary shown in collapsed accordion
+	"submissionViewsDialogEditorGradeCheckbox": "Mostrar calificación del intento para preguntas evaluadas", // submission views dialog editor edit display attempt score checkbox
+	"statistics": "Estadísticas", //Label
+	"submissionViewsDialogEditorClassAverageCheckbox": "Mostrar promedio de clase", // submission views dialog editor edit display class average checkbox
+	"submissionViewsDialogEditorGradeDistributionCheckbox": "Mostrar distribución de calificaciones", // submission views dialog editor edit display grade distribution checkbox
+	"quizSubmissionViewsDialogCardUpdate": "Actualizar", // submission views dialog card Update button
+	"quizSubmissionViewsDialogCardCancel": "Cancelar", // submission views dialog card Cancel button
+	"allQuestionsWithCorrectAnswers": "Calificación invisible, mostrar todas las preguntas con respuestas correctas", // summarize list of selected options in comma separated list
+	"allQuestions": "Calificación invisible, mostrar todas las preguntas", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsWithCorrectAnswers": "Calificación visible, mostrar todas las preguntas con respuestas correctas", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestions": "Calificación visible, mostrar todas las preguntas", // summarize list of selected options in comma separated list
+	"allQuestionsWithCorrectAnswersLearnersResponses": "Calificación invisible, mostrar todas las preguntas con respuestas correctas y las respuestas del estudiante", // summarize list of selected options in comma separated list
+	"allQuestionsLearnersResponses": "Calificación invisible, mostrar todas las preguntas y las respuestas del estudiante", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsWithCorrectAnswersLearnersResponses": "Calificación visible, mostrar todas las preguntas con respuestas correctas y las respuestas del estudiante", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsLearnersResponses": "Calificación visible, mostrar todas las preguntas y las respuestas del estudiante", // summarize list of selected options in comma separated list
+	"incorrectQuestionsWithCorrectAnswers": "Calificación invisible, mostrar solo preguntas incorrectas con respuestas correctas", // summarize list of selected options in comma separated list
+	"incorrectQuestions": "Calificación invisible, mostrar solo preguntas incorrectas", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsWithCorrectAnswers": "Calificación visible, mostrar solo preguntas incorrectas con respuestas correctas", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestions": "Calificación visible, mostrar solo preguntas incorrectas", // summarize list of selected options in comma separated list
+	"incorrectQuestionsWithCorrectAnswersLearnersResponses": "Calificación invisible, mostrar solo preguntas incorrectas con respuestas correctas y respuestas del estudiante", // summarize list of selected options in comma separated list
+	"incorrectQuestionsLearnersResponses": "Calificación invisible, mostrar solo preguntas incorrectas y respuestas del estudiante", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsWithCorrectAnswersLearnersResponses": "Calificación visible, mostrar solo preguntas incorrectas con respuestas correctas y respuestas del estudiante", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsLearnersResponses": "Calificación visible, mostrar solo preguntas incorrectas y respuestas del estudiante", // summarize list of selected options in comma separated list
+	"correctQuestionsWithCorrectAnswers": "Calificación invisible, mostrar solo preguntas correctas con respuestas correctas", // summarize list of selected options in comma separated list
+	"correctQuestions": "Calificación invisible, mostrar solo preguntas correctas", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsWithCorrectAnswers": "Calificación visible, mostrar solo preguntas correctas con respuestas correctas", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestions": "Calificación visible, mostrar solo preguntas correctas", // summarize list of selected options in comma separated list
+	"correctQuestionsWithCorrectAnswersLearnersResponses": "Calificación invisible, mostrar solo preguntas correctas con respuestas correctas y respuestas del estudiante", // summarize list of selected options in comma separated list
+	"correctQuestionsLearnersResponses": "Calificación invisible, mostrar solo preguntas correctas y respuestas del estudiante", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsWithCorrectAnswersLearnersResponses": "Calificación visible, mostrar solo preguntas correctas con respuestas correctas y respuestas del estudiante", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsLearnersResponses": "Calificación visible, mostrar solo preguntas correctas y respuestas del estudiante", // summarize list of selected options in comma separated list
+	"noQuestions": "Calificación invisible, no mostrar preguntas", // summarize list of selected options in comma separated list
+	"gradeVisibleNoQuestions": "Calificación visible, no mostrar preguntas", // summarize list of selected options in comma separated list
+	"deleteViewWithTitle": "Eliminar vista: {message}", // aria-label for delete view button with view message/title
+	"submissionViewReleaseDateSummary": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} }{minGrade, plural, =0 {} other {, with attempt grades above {minGrade}%}}{maxGrade, plural, =0 {} other {, with attempt grades below {maxGrade}%}}{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info
+	"submissionViewReleaseDateSummaryBothMinMaxGrades": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} } with attempt grades above {minGrade}% and below {maxGrade}%{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}" // summary of when a view is released with restriction info with both min and max grades
 };

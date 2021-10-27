@@ -82,6 +82,11 @@ export default {
 	"editor.inGradebook": "Not Defterinde", // New state of the grades field when there is a score, and an associated grade item
 	"editor.notInGradebook": "Not Defterinde Değil", // New state of the grades field when there is a score, but no associated grade item
 	"editor.addToGradebook": "Not Defterine Ekle", // New menu item for adding grade association
+	"editor.beforeStartDate": "Başlamadan önce:", //Text for before start availability date type
+	"editor.afterEndDate": "Sondan sonra:", //Text for after end availability date type
+	"editor.lblVisibleWithAccessRestricted": "Erişim kısıtlamasıyla görünür durumda", //Text for after end availability date type
+	"editor.lblVisibleWithSubmissionRestricted": "Gönderim kısıtlamasıyla görünür durumda", //Text for after end availability date type
+	"editor.lblHidden": "Gizli", //Text for after end availability date type
 
 	"rubrics.btnAddRubric": "Rubrik ekle", //text for add rubric button
 	"rubrics.btnCreateNew": "Yeni Oluştur", //Text for create new dropdown
@@ -105,10 +110,12 @@ export default {
 	"grades.weight": "Ağırlık: {weight}", // Text label for displaying weight of a grade
 	"grades.gradeItem": "Not Öğesi", //ARIA label for grade-item picker when linking an activity to an existing grade item
 	"grades.gradeUnits": "puan", // unit label for GradeOutOf value (e.g. 10 points)
+	"grades.gradeUnitsSingular": "puan", // unit label for GradeOutOf value when value is 1
 	"grades.chooseNewGradeItemCategory": "Not Kategorisi Seç", // Label for add category button
 	"grades.newGradeItemCategory": "Not Kategorisi", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "Kategori Yok", // Category dropdown text for not selecting a category
 	"grades.changeNewGradeTypeAndScheme": "Notlandırma Türünü ve Düzenini Değiştir", // Label for change type and scheme button
+	"grades.chooseNewGradeScheme": "Not Planını Seçin", // Label for choose grade scheme button (when there is only one type)
 	"grades.newGradeType": "Not Türü", // Label for the grade type
 	"grades.newGradeTypeNumeric": "Sayısal", // Label for numeric grade type radio option
 	"grades.newGradeTypeSelectbox": "Seçim Kutusu", // Label for selectbox grade type radio option
@@ -121,6 +128,11 @@ export default {
 	"grades.creatingNewNumericGradeItem": "Yeni sayısal not öğesi {newGradeName} oluşturuluyor", // Aria text for new grade we are creating
 	"grades.creatingNewSelectboxGradeItem": "Yeni seçim kutusu notu öğesi {newGradeName} oluşturuluyor", // Aria text for new grade we are creating
 	"grades.linkingToGradeItem": "Mevcut {gradeName} not öğesine bağlanıyor", // Aria text for grade item we are linking to
+	"grades.gradeOutOfMenuItem": "\"Şu Not Üzerinden Notlandır\" nedir?", // menu item to launch gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogTitle": "Bilgi: Şu Not Üzerinden Notlandır", // title that appears when the gradeOutOf help dialog is rendered
+	"grades.gradeOutOfHelpDialogConfirmationText": "Tamam", // text that appears on the gradeOutOf help dialog confirmation button
+	"grades.gradeOutOfHelpDialogParagraph1": "Sınav \"Not Defterinde Değil\" ise \"Şu Not Üzerinden Notlandır\" bölümü soruların toplam puanını yansıtır.", // content for paragraph 1 of gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogParagraph2": "Sınav \"Not Defterinde\" ise \"Şu Not Üzerinden Notlandır\" bölümü Notlar aracındaki en fazla notu veya ağırlğı yansıtır.", // content for paragraph 2 of gradeOutOf help dialog
 
 	"attachments.addGoogleDriveLink": "Google Drive'dan Ekle", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "Dosya Yükleme", // Tooltip for a button that opens a file upload dialog
@@ -172,5 +184,8 @@ export default {
 	"content.confirmDialogCancelOption": "İptal", // The text for the cancel action to not replace content
 	"content.useEmbeddedPlayer": "Dahili oynatıcıyı kullan", // The text for using the embedded player
 	"content.scormActivity": "SCORM Paketi", // The label for the name of the SCORM package
-	"content.lastEdited": "Son düzenleme tarihi" // The date when the entity was last edited
+	"content.lastEdited": "Son düzenleme tarihi", // The date when the entity was last edited
+	"content.externalFile": "External file", // The text to use for labeling external files
+	"content.advancedEditing": 'Advanced Editing', // The text to use on the advanced editing button
+	"content.fileHasCaptions": "This file has captions in", // The text to use preceding the list of captions
 };

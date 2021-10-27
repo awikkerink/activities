@@ -82,6 +82,11 @@ export default {
 	"editor.inGradebook": "Está en el cuaderno de calificaciones", // New state of the grades field when there is a score, and an associated grade item
 	"editor.notInGradebook": "No está en el cuaderno de calificaciones", // New state of the grades field when there is a score, but no associated grade item
 	"editor.addToGradebook": "Agregar al cuaderno de calificaciones", // New menu item for adding grade association
+	"editor.beforeStartDate": "Antes comenzar:", //Text for before start availability date type
+	"editor.afterEndDate": "Después de finalizar:", //Text for after end availability date type
+	"editor.lblVisibleWithAccessRestricted": "Visible con acceso restringido", //Text for after end availability date type
+	"editor.lblVisibleWithSubmissionRestricted": "Visible con envío restringido", //Text for after end availability date type
+	"editor.lblHidden": "Oculto", //Text for after end availability date type
 
 	"rubrics.btnAddRubric": "Agregar rúbrica", //text for add rubric button
 	"rubrics.btnCreateNew": "Crear nuevo", //Text for create new dropdown
@@ -105,10 +110,12 @@ export default {
 	"grades.weight": "Ponderación: {weight}", // Text label for displaying weight of a grade
 	"grades.gradeItem": "Elemento de calificación", //ARIA label for grade-item picker when linking an activity to an existing grade item
 	"grades.gradeUnits": "puntos", // unit label for GradeOutOf value (e.g. 10 points)
+	"grades.gradeUnitsSingular": "punto", // unit label for GradeOutOf value when value is 1
 	"grades.chooseNewGradeItemCategory": "Elegir la categoría de calificación", // Label for add category button
 	"grades.newGradeItemCategory": "Categoría de calificación", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "Sin categoría", // Category dropdown text for not selecting a category
 	"grades.changeNewGradeTypeAndScheme": "Cambiar tipo y esquema de calificación", // Label for change type and scheme button
+	"grades.chooseNewGradeScheme": "Elija un esquema de calificaciones", // Label for choose grade scheme button (when there is only one type)
 	"grades.newGradeType": "Tipo de calificación", // Label for the grade type
 	"grades.newGradeTypeNumeric": "Numérica", // Label for numeric grade type radio option
 	"grades.newGradeTypeSelectbox": "Calificación con nivel", // Label for selectbox grade type radio option
@@ -121,6 +128,11 @@ export default {
 	"grades.creatingNewNumericGradeItem": "Crear un nuevo elemento de calificación numérico {newGradeName}", // Aria text for new grade we are creating
 	"grades.creatingNewSelectboxGradeItem": "Crear un nuevo elemento de calificación del tipo cuadro de selección {newGradeName}", // Aria text for new grade we are creating
 	"grades.linkingToGradeItem": "Vincular a un elemento de calificación existente {gradeName}", // Aria text for grade item we are linking to
+	"grades.gradeOutOfMenuItem": "¿Qué representa “Calificación de”?", // menu item to launch gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogTitle": "Información: Calificación de", // title that appears when the gradeOutOf help dialog is rendered
+	"grades.gradeOutOfHelpDialogConfirmationText": "Aceptar", // text that appears on the gradeOutOf help dialog confirmation button
+	"grades.gradeOutOfHelpDialogParagraph1": "Si el cuestionario se muestra como “No está en el cuaderno de calificaciones”, “Calificación de” refleja el total de puntos de las preguntas.", // content for paragraph 1 of gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogParagraph2": "Si el cuestionario se muestra como “Está en el cuaderno de calificaciones”, “Calificación de” es el máximo de puntos o ponderación en la herramienta de calificaciones.", // content for paragraph 2 of gradeOutOf help dialog
 
 	"attachments.addGoogleDriveLink": "Adjuntar desde Google Drive", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "Carga de archivos", // Tooltip for a button that opens a file upload dialog
@@ -172,5 +184,8 @@ export default {
 	"content.confirmDialogCancelOption": "Cancelar", // The text for the cancel action to not replace content
 	"content.useEmbeddedPlayer": "Usar reproductor integrado", // The text for using the embedded player
 	"content.scormActivity": "Paquete SCORM", // The label for the name of the SCORM package
-	"content.lastEdited": "Última edición" // The date when the entity was last edited
+	"content.lastEdited": "Última edición", // The date when the entity was last edited
+	"content.externalFile": "External file", // The text to use for labeling external files
+	"content.advancedEditing": 'Advanced Editing', // The text to use on the advanced editing button
+	"content.fileHasCaptions": "This file has captions in", // The text to use preceding the list of captions
 };
