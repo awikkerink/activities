@@ -125,7 +125,7 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 	}
 
 	cancelChanges() {
-		this._isValidDefaultScoringRubric();
+		this._validateDefaultScoringRubric();
 	}
 
 	_attachRubric() {
@@ -214,31 +214,6 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 
 		return event.detail.provider;
 	}
-	async _isValidDefaultScoringRubric() {
-		const entity = associationStore.get(this.href);
-		const indirectAssociations = associationStore.get(this.indirectAssociationsHref);
-		const assignment = assignmentStore.get(this.assignmentHref);
-
-		if (!entity || !assignment || !indirectAssociations) {
-			return false;
-		}
-
-		const defaultScoringRubricOptions = this._dedupeDefaultScoringRubricOptions([...entity.defaultScoringRubricOptions, ...indirectAssociations.defaultScoringRubricOptions]);
-		if (assignment.defaultScoringRubricId === '-1' || assignment.defaultScoringRubricId === null) {
-			return true; // -1: No default selected
-		}
-
-		const isDefaultScoringRubricValidOption = defaultScoringRubricOptions.some(
-			(opts) => String(opts.value) === assignment.defaultScoringRubricId
-		);
-
-		if (!isDefaultScoringRubricValidOption) {
-			// An indirectly associated rubric can be used as an option, Assignment saved, remove it, close the page and leave `defaultScoringRubricId` now invalid.
-			assignment.resetDefaultScoringRubricId();
-			await assignment._entity.save({ defaultScoringRubricId: -1 });
-		}
-		return isDefaultScoringRubricValidOption;
-	}
 	_onDialogClose(e) {
 		const editNewAssociationDialog = this.shadowRoot.querySelector('#create-new-association-dialog');
 		// only update when the dialog closes, not any nested popups that bubble a close event
@@ -295,7 +270,7 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 			return html``;
 		}
 		if (this._isFirstLoad) {
-			this._isFirstLoad = !this._isValidDefaultScoringRubric(); // On Assignment load, ensure a rubric ID is associated and hence a valid option
+			this._isFirstLoad = !this._validateDefaultScoringRubric(); // On Assignment load, ensure a rubric ID is associated and hence a valid option
 		}
 
 		if (assignment.defaultScoringRubricId === null) {
@@ -333,11 +308,9 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 			return html``;
 		}
 	}
-
 	_resizeDialog(e) {
 		e.currentTarget.resize();
 	}
-
 	_saveDefaultScoringRubricOnChange(event) {
 		const assignment = assignmentStore.get(this.assignmentHref);
 
@@ -356,6 +329,31 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 			}
 			dialog.opened = toggle;
 		}
+	}
+	async _validateDefaultScoringRubric() {
+		const entity = associationStore.get(this.href);
+		const indirectAssociations = associationStore.get(this.indirectAssociationsHref);
+		const assignment = assignmentStore.get(this.assignmentHref);
+
+		if (!entity || !assignment || !indirectAssociations) {
+			return false;
+		}
+
+		const defaultScoringRubricOptions = this._dedupeDefaultScoringRubricOptions([...entity.defaultScoringRubricOptions, ...indirectAssociations.defaultScoringRubricOptions]);
+		if (assignment.defaultScoringRubricId === '-1' || assignment.defaultScoringRubricId === null) {
+			return true; // -1: No default selected
+		}
+
+		const isDefaultScoringRubricValidOption = defaultScoringRubricOptions.some(
+			(opts) => String(opts.value) === assignment.defaultScoringRubricId
+		);
+
+		if (!isDefaultScoringRubricValidOption) {
+			// An indirectly associated rubric can be used as an option, Assignment saved, remove it, close the page and leave `defaultScoringRubricId` now invalid.
+			assignment.resetDefaultScoringRubricId();
+			await assignment._entity.save({ defaultScoringRubricId: -1 });
+		}
+		return isDefaultScoringRubricValidOption;
 	}
 
 }
