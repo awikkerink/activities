@@ -265,6 +265,10 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 			return html``;
 		}
 
+		if (assignment.defaultScoringRubricId === null) {
+			assignment.resetDefaultScoringRubricId();
+		}
+
 		return html`
 			<div class="d2l-label-text" id="assignment-default-scoring-rubric-label">
 				${this.localize('rubrics.defaultScoringRubric')}
