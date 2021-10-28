@@ -265,7 +265,7 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 			return html``;
 		}
 
-		if( assignment.defaultScoringRubricId === null ) {
+		if (assignment.defaultScoringRubricId === null) {
 			assignment.resetDefaultScoringRubricId();
 		}
 
