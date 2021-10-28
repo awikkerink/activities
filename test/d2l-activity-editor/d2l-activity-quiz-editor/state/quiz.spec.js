@@ -34,7 +34,9 @@ describe('Quiz', function() {
 				canEditDisablePagerAndAlerts: () => true,
 				isDisablePagerAndAlertsEnabled: () => false,
 				isAutoSetGradedEnabled: () => false,
+				isSyncGradebookEnabled: () => false,
 				canEditAutoSetGraded: () => true,
+				canEditSyncGradebook: () => true,
 				canEditNotificationEmail: () => true,
 				notificationEmail: () => 'hello@d2l.com',
 				previewHref: () => 'http://test.desire2learn.d2l/d2l/lms/quizzing/user/quiz_summary.d2l?ou=6606&qi=46&isprv=1&fromQB=1&bp=1',
@@ -86,6 +88,7 @@ describe('Quiz', function() {
 		expect(quiz.isPreventMovingBackwardsEnabled).to.equal(false);
 		expect(quiz.isPreventMovingBackwardsEnabled).to.equal(false);
 		expect(quiz.isAutoSetGradedEnabled).to.equal(false);
+		expect(quiz.isSyncGradebookEnabled).to.equal(false);
 		expect(quiz.notificationEmail).to.equal('hello@d2l.com');
 		expect(QuizEntity.mock.calls[0][0]).to.equal(sirenEntity);
 		expect(QuizEntity.mock.calls[0][1]).to.equal('token');
@@ -179,6 +182,15 @@ describe('Quiz', function() {
 		quiz.setAutoSetGraded(true);
 
 		expect(quiz.isAutoSetGradedEnabled).to.equal(true);
+	});
+
+	it('setSyncGradebook', async() => {
+		const quiz = new Quiz('http://quiz/1', 'token');
+		await quiz.fetch();
+
+		quiz.setSyncGradebook(true);
+
+		expect(quiz.isSyncGradebookEnabled).to.equal(true);
 	});
 
 	it('setDescription', async() => {
