@@ -26,6 +26,7 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 	static get properties() {
 		return {
 			_newlyCreatedPotentialAssociationHref: { type: String },
+			_isFirstLoad: { type: Boolean },
 			activityUsageHref: { type: String },
 			assignmentHref: { type: String },
 			indirectAssociationsHref: { type: String }
@@ -50,6 +51,7 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 		super(associationStore);
 		this._newlyCreatedPotentialAssociation = {};
 		this._newlyCreatedPotentialAssociationHref = '';
+		this._isFirstLoad = true;
 	}
 
 	connectedCallback() {
@@ -112,7 +114,6 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 			</d2l-dialog>
 		`;
 	}
-
 	updated(changedProperties) {
 		super.updated(changedProperties);
 
@@ -121,6 +122,10 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 
 			associationStore.fetch(this.indirectAssociationsHref, this.token);
 		}
+	}
+
+	cancelChanges() {
+		this._isValidDefaultScoringRubric();
 	}
 
 	_attachRubric() {
@@ -209,6 +214,31 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 
 		return event.detail.provider;
 	}
+	async _isValidDefaultScoringRubric() {
+		const entity = associationStore.get(this.href);
+		const indirectAssociations = associationStore.get(this.indirectAssociationsHref);
+		const assignment = assignmentStore.get(this.assignmentHref);
+
+		if (!entity || !assignment || !indirectAssociations) {
+			return false;
+		}
+
+		const defaultScoringRubricOptions = this._dedupeDefaultScoringRubricOptions([...entity.defaultScoringRubricOptions, ...indirectAssociations.defaultScoringRubricOptions]);
+		if (assignment.defaultScoringRubricId === '-2' || assignment.defaultScoringRubricId === '-1' || assignment.defaultScoringRubricId === '0') {
+			return true; // If the value is -2: Control not present (Legacy), -1: No default selected, 0: If `null` is ever cast to a Number
+		}
+
+		const isDefaultScoringRubricValidOption = defaultScoringRubricOptions.some(
+			(opts) => String(opts.value) === assignment.defaultScoringRubricId
+		);
+
+		if (!isDefaultScoringRubricValidOption) {
+			// An indirectly associated rubric can be used as an option, Assignment saved, remove it, close the page and leave `defaultScoringRubricId` now invalid.
+			assignment.resetDefaultScoringRubricId();
+			await assignment._entity.save({ defaultScoringRubricId: -1 });
+		}
+		return isDefaultScoringRubricValidOption;
+	}
 	_onDialogClose(e) {
 		const editNewAssociationDialog = this.shadowRoot.querySelector('#create-new-association-dialog');
 		// only update when the dialog closes, not any nested popups that bubble a close event
@@ -259,10 +289,13 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 		}
 
 		const defaultScoringRubricOptions = this._dedupeDefaultScoringRubricOptions([...entity.defaultScoringRubricOptions, ...indirectAssociations.defaultScoringRubricOptions]);
-
 		const isReadOnly = !assignment.canEditDefaultScoringRubric;
+
 		if (!defaultScoringRubricOptions || defaultScoringRubricOptions.length <= 1) {
 			return html``;
+		}
+		if (this._isFirstLoad) {
+			this._isFirstLoad = !this._isValidDefaultScoringRubric(); // On Assignment load, ensure a rubric ID is associated and hence a valid option
 		}
 
 		if (assignment.defaultScoringRubricId === null) {
