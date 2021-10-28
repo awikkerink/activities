@@ -1,3 +1,5 @@
+import '../d2l-activity-date-type-dialog/d2l-activity-date-type-dialog.js';
+import '@brightspace-ui/core/components/button/button-subtle.js';
 import '@brightspace-ui/core/components/inputs/input-date-time.js';
 import '@brightspace-ui/core/components/validation/validation-custom.js';
 import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
@@ -25,8 +27,11 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeActiv
 				padding-bottom: 20px;
 			}
 			#start-date-type-text {
-				margin-top: -20px;
+				margin-top: -16px;
 				padding-bottom: 20px;
+			}
+			#end-date-type-text {
+				margin-top: 4px;
 			}
 			.d2l-body-small {
 				margin: 0.5rem 0 1rem 0;
@@ -46,77 +51,50 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeActiv
 			endDate,
 			endDateType,
 			startDateError,
-			endDateError
+			endDateError,
+			defaultStartDateType,
+			defaultEndDateType,
+			displayInCalendar,
 		} = this._getDateValues();
 
-		if (startDateType || endDateType) {
-			return html`
-				<d2l-input-date-time
-					id="start-date-input"
-					label="${this.localize('editor.startDate')}"
-					time-default-value="startOfDay"
-					value="${startDate}"
-					@change="${this._onStartDatetimeChanged}"
-					?disabled="${!canEditDates}">
-				</d2l-input-date-time>
-				<div ?hidden=${!startDate} id="start-date-type-text">
-					<span class="d2l-body-small">${this.localize('editor.beforeStartDate')}</span>
-					<d2l-link href="#" target="_blank" small>${this.localize('editor.lblVisibleWithAccessRestricted')}</d2l-link>
-				</div>
-				<d2l-validation-custom
-					for="start-date-input"
-					@d2l-validation-custom-validate=${this._validateStartDate}
-					failure-text="${startDateError}">
-				</d2l-validation-custom>
-				<d2l-input-date-time
-					id="end-date-input"
-					label="${this.localize('editor.endDate')}"
-					time-default-value="endOfDay"
-					value="${endDate}"
-					@change="${this._onEndDatetimeChanged}"
-					?disabled="${!canEditDates}">
-				</d2l-input-date-time>
-				<div ?hidden=${!endDate} id="end-date-type-text">
-					<span class="d2l-body-small">${this.localize('editor.afterEndDate')}</span>
-					<d2l-link href="#" target="_blank" small>${this.localize('editor.lblVisibleWithAccessRestricted')}</d2l-link>
-				</div>
-				<d2l-validation-custom
-					for="end-date-input"
-					@d2l-validation-custom-validate=${this._validateEndDate}
-					failure-text="${endDateError}">
-				</d2l-validation-custom>
+		const renderDateTypeEditor = startDateType !== undefined && endDateType !== undefined;
+		const startType = (startDateType === undefined || startDateType === null)
+			? defaultStartDateType
+			: startDateType;
+		const endType = (endDateType === undefined || endDateType === null)
+			? defaultEndDateType
+			: endDateType;
 
-			`;
-		} else {
-			return html`
-				<d2l-input-date-time
-					id="start-date-input"
-					label="${this.localize('editor.startDate')}"
-					time-default-value="startOfDay"
-					value="${startDate}"
-					@change="${this._onStartDatetimeChanged}"
-					?disabled="${!canEditDates}">
-				</d2l-input-date-time>
-				<d2l-validation-custom
-					for="start-date-input"
-					@d2l-validation-custom-validate=${this._validateStartDate}
-					failure-text="${startDateError}">
-				</d2l-validation-custom>
-				<d2l-input-date-time
-					id="end-date-input"
-					label="${this.localize('editor.endDate')}"
-					time-default-value="endOfDay"
-					value="${endDate}"
-					@change="${this._onEndDatetimeChanged}"
-					?disabled="${!canEditDates}">
-				</d2l-input-date-time>
-				<d2l-validation-custom
-					for="end-date-input"
-					@d2l-validation-custom-validate=${this._validateEndDate}
-					failure-text="${endDateError}">
-				</d2l-validation-custom>
-			`;
-		}
+		return html`
+			<d2l-input-date-time
+				id="start-date-input"
+				label="${this.localize('editor.startDate')}"
+				time-default-value="startOfDay"
+				value="${startDate}"
+				@change="${this._onStartDatetimeChanged}"
+				?disabled="${!canEditDates}">
+			</d2l-input-date-time>
+			${this._renderStartDateTypeEditor(renderDateTypeEditor, startDate, startType, displayInCalendar)}
+			<d2l-validation-custom
+				for="start-date-input"
+				@d2l-validation-custom-validate=${this._validateStartDate}
+				failure-text="${startDateError}">
+			</d2l-validation-custom>
+			<d2l-input-date-time
+				id="end-date-input"
+				label="${this.localize('editor.endDate')}"
+				time-default-value="endOfDay"
+				value="${endDate}"
+				@change="${this._onEndDatetimeChanged}"
+				?disabled="${!canEditDates}">
+			</d2l-input-date-time>
+			${this._renderEndDateTypeEditor(renderDateTypeEditor, endDate, endType, displayInCalendar)}
+			<d2l-validation-custom
+				for="end-date-input"
+				@d2l-validation-custom-validate=${this._validateEndDate}
+				failure-text="${endDateError}">
+			</d2l-validation-custom>
+		`;
 	}
 
 	updated(properties) {
@@ -132,6 +110,15 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeActiv
 		}
 	}
 
+	_getDateTypeLangTerm(dateType) {
+		const dateTypeLangMap = {
+			0 : 'editor.lblVisibleWithAccessRestricted', //accessRestricted
+			1 : 'editor.lblVisibleWithSubmissionRestricted', //submissionRestricted
+			2 : 'editor.lblHidden' //hidden
+		};
+
+		return this.localize(dateTypeLangMap[dateType]);
+	}
 	_getDateValues() {
 		const datesEntity = {
 			canEditDates: true,
@@ -140,7 +127,10 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeActiv
 			endDate: null,
 			endDateType: null,
 			startDateError: null,
-			endDateError: null
+			endDateError: null,
+			defaultStartDateType: 0, //@todo: (accessRestricted) this default type should be fetched from the store once it is updated
+			defaultEndDateType: 0, //@todo: (accessRestricted) this default type should be fetched from the store once it is updated
+			displayInCalendar: false, //@todo: this value should be fetched from the store once it is updated
 		};
 
 		const entity = store.get(this.href);
@@ -165,10 +155,12 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeActiv
 		if (dates.startDate) {
 			datesEntity.startDate = dates.startDate;
 		}
+		datesEntity.startDateType = dates.startDateType;
 
 		if (dates.endDate) {
 			datesEntity.endDate = dates.endDate;
 		}
+		datesEntity.endDateType = dates.endDateType;
 
 		return datesEntity;
 	}
@@ -177,8 +169,96 @@ class ActivityAvailabilityDatesEditor extends (ActivityEditorMixin(LocalizeActiv
 		store.get(this.href).dates.setEndDate(e.target.value);
 	}
 
+	_onEndDateTypeUpdate(e) {
+		const { action, dateType, displayInCalendar } = e.detail;
+		if (action !== 'done') return;
+
+		const endDateTypeButton = this.shadowRoot.querySelector('#end-date-type-button');
+		endDateTypeButton.text = this._getDateTypeLangTerm(dateType);
+
+		// Sync display in calendar selection
+		const startDateTypeDialog = this.shadowRoot.querySelector('#start-date-type-dialog');
+		startDateTypeDialog.displayInCalendar = displayInCalendar;
+	}
+
 	_onStartDatetimeChanged(e) {
 		store.get(this.href).dates.setStartDate(e.target.value);
+	}
+
+	_onStartDateTypeUpdate(e) {
+		const { action, dateType, displayInCalendar } = e.detail;
+		if (action !== 'done') return;
+
+		const startDateTypeButton = this.shadowRoot.querySelector('#start-date-type-button');
+		startDateTypeButton.text = this._getDateTypeLangTerm(dateType);
+
+		// Sync display in calendar selection
+		const endDateTypeDialog = this.shadowRoot.querySelector('#end-date-type-dialog');
+		endDateTypeDialog.displayInCalendar = displayInCalendar;
+	}
+
+	_openEndDateTypeDialog() {
+		const dialog = this.shadowRoot.querySelector('#end-date-type-dialog');
+		dialog.opened = true;
+	}
+
+	_openStartDateTypeDialog() {
+		const dialog = this.shadowRoot.querySelector('#start-date-type-dialog');
+		dialog.opened = true;
+	}
+
+	_renderEndDateTypeEditor(renderDateTypeEditor, endDate, dateType, displayInCalendar) {
+		if (!renderDateTypeEditor) {
+			return html``;
+		}
+
+		return html`
+			<div ?hidden=${!endDate} id="end-date-type-text">
+				<span class="d2l-body-small">${this.localize('editor.afterEndDate')}</span>
+				<d2l-button-subtle
+					id="end-date-type-button"
+					@click=${this._openEndDateTypeDialog}
+					text=${this._getDateTypeLangTerm(dateType)}
+					aria-haspopup="true">
+				</d2l-button-subtle>
+			</div>
+			<d2l-activity-date-type-dialog
+				id="end-date-type-dialog"
+				@d2l-activity-date-type-dialog-closed=${this._onEndDateTypeUpdate}
+				.titleText=${this.localize('editor.availabilityEndTitle')}
+				.descriptionText=${this.localize('editor.endDescription', { assignment: this.localize('editor.assignment') })}
+				.dateType=${dateType}
+				.displayInCalendar=${displayInCalendar}
+			>
+			</d2l-activity-date-type-dialog>
+		`;
+	}
+
+	_renderStartDateTypeEditor(renderDateTypeEditor, startDate, dateType, displayInCalendar) {
+		if (!renderDateTypeEditor) {
+			return html``;
+		}
+
+		return html`
+			<div ?hidden=${!startDate} id="start-date-type-text">
+				<span class="d2l-body-small">${this.localize('editor.beforeStartDate')}</span>
+				<d2l-button-subtle
+					id="start-date-type-button"
+					@click=${this._openStartDateTypeDialog}
+					text=${this._getDateTypeLangTerm(dateType)}
+					aria-haspopup="true">
+				</d2l-button-subtle>
+			</div>
+			<d2l-activity-date-type-dialog
+				id="start-date-type-dialog"
+				@d2l-activity-date-type-dialog-closed=${this._onStartDateTypeUpdate}
+				.titleText=${this.localize('editor.availabilityStartTitle')}
+				.descriptionText=${this.localize('editor.startDescription', { assignment: this.localize('editor.assignment') })}
+				.dateType=${dateType}
+				.displayInCalendar=${displayInCalendar}
+			>
+			</d2l-activity-date-type-dialog>
+		`;
 	}
 
 	_validateEndDate(e) {
