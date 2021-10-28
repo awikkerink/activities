@@ -47,7 +47,7 @@ export default {
 	"disableRightClickAccessibleHelpText": "Sağ Tıklatmayı Devre Dışı Bırakma hakkında yardım alın", // accessible help text for disable right click question mark button
 	"disableRightClickHelpDialogTitle": "Bilgi: Sağ Tıklatmayı Devre Dışı Bırakma", // title that appears when the disable right click help dialog is rendered
 	"disableRightClickHelpDialogParagraph1": "Bu özellik, devam eden denemeleri olan öğrencilerin sorulara sağ tıklayarak soruları yazdırmalarını engeller. Ancak, öğrenciler yine de tarayıcının dışındaki diğer teknolojilerle sınav ekranını yakalayabilir.", // content for paragraph 1 of disable right click help dialog
-	"disableRightClickHelpDialogParagraph2": "Öğrenci soru metnini kopyalayıp yapıştıramadığı için bazı erişilebilirlik iş akışları engellenir.", // content for paragraph 2 of disable right click help dialog
+	"disableRightClickHelpDialogParagraph2": "Öğrenci soru metnini kopyalayıp yapıştıramadığı için bazı erişilebilirlik iş akışları engellenecektir. Bu özellik bir sınav için etkinleştirilmiş olsa dahi kullanıcının İmkanlar bölümünde \"Sağ Tıklamaya Her Zaman İzin Ver\" seçeneği etkinleştirilerek bireysel kullanıcılara bir sınava sağ tıklama yetisi verilebilir.", // content for paragraph 2 of disable right click help dialog
 	"disableRightClickHelpDialogConfirmationText": "Tamam", // copy that appears on the disable right click help dialog confirmation button
 	"manageTimingDialogConfirmationText": "Tamam", // copy that appears on the Timing dialog confirmation button
 	"manageTimingDialogCancelText": "İptal", // copy that appears on the Timing dialog cancel button
@@ -88,6 +88,9 @@ export default {
 	"ipRestrictionsTableStartRangeHdr": "IP Aralığı Başlangıcı", // text for IP restrictions table header start
 	"ipRestrictionsTableEndRangeHdr": "IP Aralığı Sonu", // text for IP restrictions table header end
 	"ipRestrictionsTableDeleteRangeHdr": "Sil", // text for IP restrictions table header delete
+	"ipRestrictionsTableDeleteRangeLabel": "Sil", // label for IP restrictions delete button
+	"ipRestrictionsTableStartRangeLabel": "IP aralığı başlangıcı {index}", // label for IP restrictions start range input
+	"ipRestrictionsTableEndRangeLabel": "IP aralığı sonu {index}", // label for IP restrictions end range input
 	"ipRestrictionsValidationError": "Geçersiz IP adresi biçimi. Lütfen işaretlenmiş alanları düzeltin. Örnek IP adresi: 155.55.5.15.", // error message for invalid IP addresses
 	"ipRestrictions500Error": "Bir sorun oluştu. Lütfen tekrar deneyin.", // error message for IP restrictions 500 response
 	"ipRestrictionsHelpTxtConfirmation": "Tamam", // confirmation text on IP restrictions help dialog
@@ -97,8 +100,8 @@ export default {
 	"hdrIpRestrictionsHelpDialogP3": "Tek bir IP adresini kabul etmek için yalnızca IP Aralığı Başlangıcı değerini belirtin.", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "Not: IP Aralığı Başlangıcı değeri, IP Aralığı Sonu değerinden küçük olmalıdır.", // IP restrictions help dialog paragraph 4
 	"hdrSpecialAccess": "Özel Erişim", // special access heading,
-	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
-	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
+	"hlpSpecialAccess": "Özel Erişim, sınavların yalnızca belirli bir kullanıcı grubu tarafından veya belirli kullanıcılar için kişiselleştirilmiş sona erme tarihlerinde kullanılabilmesini sağlar.", // special access help
+	"specialAccessRestrictedText": "Yalnızca özel erişime sahip kullanıcılar bu sınavı görebilir", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "IP kısıtlamaları hakkında yardım alın", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "Deneme Koşulları", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "Bir öğrencinin başka bir denemeye hak kazanması için bir önceki denemede ulaşması gereken, 0 ile 100 arasında minimum ve/veya maksimum bir yüzdelik değer belirleyin.", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -138,9 +141,76 @@ export default {
 	"createNewLabel": "Yeni Oluştur", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "Mevcut Olanı Ekle", // Label for button to open menu for adding pre-existing items to the quiz.
 	"addQuestionsLabel": "Yeni Soru", // Label for button to open menu for adding new questions to the quiz.
-	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading1": "Yayınlandığında katılımcılara şunu gösterin:", // Label for checkbox in submission view container.
 	"submissionViewHeading2": "ve", // Label for submission view dropdown in submission view container.
-	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
-	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
-	"gradeOutOf": "Şu Not Üzerinden Notlandır:" // Label for the grade-out-of field when creating/editing an activity
+	"submissionViewCheckboxLabel": "Deneme notu", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "Sınav sonuç ekranlarını özelleştir", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "Şu Not Üzerinden Notlandır:", // Label for the grade-out-of field when creating/editing an activity
+	"submissionViewsHelpDialogTitle": "Bilgi: Sınav sonuçları ekranı", // Title for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogParagraph1": "Sınav sonuçları ekranı, kullanıcıların yayınlanan sınav denemesi sonuçlarını nasıl görüntüleyebileceklerini (gönderi kutusu gönderiminden hemen sonra veya daha sonra denemelerini gözden geçirirken) belirler.", // Paragraph 1 for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogParagraph2": "Birincil Görünüm katılımcılara varsayılan olarak gösterilir ve Ek Görünümler ayarlanan parametrelere göre Birincil Görünümü geçersiz kılar.", // Paragraph 2 for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogConfirmation": "Tamam", //Text for closing the information Dialog for customization in submission views.
+	"submissionViewsDialogConfirmationMain": "Tamam", //Text for closing the main Dialog for customization in submission views.
+	"submissionViewsDialogCancelMain": "İptal et", // Text for cancelling changes on the main Dialog for customization in submission views.
+	"submissionViewsAccordionDropdownNoQuestions": "Soru yok", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownIncorrectQuestionsWithCorrectAnswers": "Yalnızca yanlış sorular, doğru yanıtlarla birlikte", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownIncorrectQuestionsWithoutCorrectAnswers": "Yalnızca yanlış sorular, doğru yanıtlar olmadan", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownAllQuestionsWithCorrectAnswers": "Tüm sorular, doğru yanıtlarla birlikte", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownAllQuestionsWithoutCorrectAnswers": "Tüm sorular, doğru yanıtlar olmadan", // Option in dropdown to decide what to display to learner.
+	"primaryView": "Birincil Görünüm", // Label
+	"additionalViewComesIntoEffect": "Additional view comes into effect:", // Label
+	"submissionViewDialogCardAttemptScoreTrueText": "Değerlendirilen sorular için gösterilen deneme notu", // Submission view dialog card, text appearing when attempted grades are displayed.
+	"submissionViewDialogCardAttemptScoreFalseText": "Görüntülenmiyor", // Submission view dialog card, text appearing when attempted grades are not displayed.
+	"submissionViewDialogCardQuestionsNotDisplayed": "Görüntülenmiyor", // Submission view dialog card, text appearing when no questions are displayed.
+	"submissionViewDialogCardQuestionsAllDisplayed": "Tüm sorular görüntülenir", // Submission view dialog card, text appearing when all questions are displayed.
+	"submissionViewDialogCardQuestionsIncorrectOnlyDisplayed": "Yalnızca yanlış olanlar görüntülenir", // Submission view dialog card, text appearing when incorrect questions only are displayed.
+	"submissionViewDialogCardQuestionsCorrectOnlyDisplayed": "Yalnızca doğru olanlar görüntülenir", // Submission view dialog card, text appearing when correct questions only are displayed.
+	"submissionViewDialogCardShowAnswersTrueText": "Tüm yanıtlar görüntülenir", // Submission view dialog card, text appearing when all answers are displayed.
+	"submissionViewDialogCardShowAnswersFalseText": "Görüntülenmiyor", // Submission view dialog card, text appearing when not all answers are displayed.
+	"submissionViewDialogCardShowResponsesTrueText": "Görüntülenir", // Submission view dialog card, text appearing when learners responses are displayed.
+	"submissionViewDialogCardShowResponsesFalseText": "Görüntülenmiyor", // Submission view dialog card, text appearing when learners responses are not displayed.
+	"submissionViewDialogCardSubmissionViewMessageHeader": "Mesaj", // Submission view dialog card, message heading.
+	"submissionViewDialogCardSubmissionViewGradeHeader": "Not", // Submission view dialog card, grade heading.
+	"submissionViewDialogCardSubmissionViewQuestionsHeader": "Sorular", // Submission view dialog card, questions heading.
+	"submissionViewDialogCardSubmissionViewAnswerHeader" : "Yanıtlar", // Submission view dialog card, answers heading.
+	"submissionViewDialogCardSubmissionViewResponseHeader": "Öğrencinin Yanıtları", // Submission view dialog card, learners responses heading.
+	"submissionViewDialogCardButtonOptionEditView": "Görünümü Düzenle", // Submission view dialog card, OK button text.
+	"submissionViewDialogCardButtonOptionDeleteView": "Görünümü Sil", // Submission view dialog card, Cancel button text.
+	"submissionViewsAccordionSummary" : "{count, plural, =1 {1 sonuç görüntülenir} other {{count} sonuç görüntülenir}}", // number of submission views summary shown in collapsed accordion
+	"submissionViewsDialogEditorGradeCheckbox": "Değerlendirilen sorular için deneme notunu göster", // submission views dialog editor edit display attempt score checkbox
+	"statistics": "İstatistikler", //Label
+	"submissionViewsDialogEditorClassAverageCheckbox": "Sınıf ortalamasını görüntüle", // submission views dialog editor edit display class average checkbox
+	"submissionViewsDialogEditorGradeDistributionCheckbox": "Not dağılımını göster", // submission views dialog editor edit display grade distribution checkbox
+	"quizSubmissionViewsDialogCardUpdate": "Güncelle", // submission views dialog card Update button
+	"quizSubmissionViewsDialogCardCancel": "İptal et", // submission views dialog card Cancel button
+	"allQuestionsWithCorrectAnswers": "Not görünmez, tüm soruları doğru yanıtlarla birlikte göster", // summarize list of selected options in comma separated list
+	"allQuestions": "Not görünmez, tüm soruları göster", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsWithCorrectAnswers": "Not görünür, tüm soruları doğru yanıtlarla göster", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestions": "Not görünür, tüm soruları göster", // summarize list of selected options in comma separated list
+	"allQuestionsWithCorrectAnswersLearnersResponses": "Not görünmez, tüm soruları doğru yanıtlarla ve katılımcının yanıtlarıyla birlikte göster", // summarize list of selected options in comma separated list
+	"allQuestionsLearnersResponses": "Not görünmez, tüm soruları ve katılımcının yanıtlarını göster", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsWithCorrectAnswersLearnersResponses": "Not görünür, tüm soruları doğru yanıtlarla ve katılımcının yanıtlarıyla birlikte göster", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsLearnersResponses": "Not görünür, tüm soruları ve katılımcının yanıtlarını göster", // summarize list of selected options in comma separated list
+	"incorrectQuestionsWithCorrectAnswers": "Not görünmez, yalnızca doğru yanıtlarla birlikte yanlış soruları göster", // summarize list of selected options in comma separated list
+	"incorrectQuestions": "Not görünmez, yalnızca yanlış soruları göster", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsWithCorrectAnswers": "Not görünür, yanlış soruları yalnızca doğru yanıtlarla birlikte göster", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestions": "Not görünür, yalnızca yanlış soruları göster", // summarize list of selected options in comma separated list
+	"incorrectQuestionsWithCorrectAnswersLearnersResponses": "Not görünmez, yalnızca doğru cevaplar ve katılımcının yanıtları ile birlikte yanlış soruları göster", // summarize list of selected options in comma separated list
+	"incorrectQuestionsLearnersResponses": "Not görünmez, yalnızca yanlış soruları ve katılımcının yanıtlarını göster", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsWithCorrectAnswersLearnersResponses": "Not görünür, yalnızca yanlış soruları doğru yanıtlarla ve katılımcının yanıtlarıyla birlikte göster", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsLearnersResponses": "Not görünür, yalnızca yanlış soruları ve katılımcının yanıtlarını göster", // summarize list of selected options in comma separated list
+	"correctQuestionsWithCorrectAnswers": "Not görünmez, doğru soruları yalnızca doğru yanıtlarla göster", // summarize list of selected options in comma separated list
+	"correctQuestions": "Not görünmez, yalnızca doğru soruları göster", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsWithCorrectAnswers": "Not görünür, doğru soruları yalnızca doğru yanıtlarla göster", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestions": "Not görünür, yalnızca doğru soruları göster", // summarize list of selected options in comma separated list
+	"correctQuestionsWithCorrectAnswersLearnersResponses": "Not görünmez, doğru soruları yalnızca doğru yanıtlarla ve katılımcının yanıtlarıyla birlikte gösterin", // summarize list of selected options in comma separated list
+	"correctQuestionsLearnersResponses": "Not görünmez, yalnızca doğru soruları ve katılımcının yanıtlarını göster", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsWithCorrectAnswersLearnersResponses": "Not görünür, doğru soruları yalnızca doğru cevaplarla ve katılımcının yanıtlarıyla birlikte göster", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsLearnersResponses": "Not görünür, yalnızca doğru soruları ve katılımcının yanıtlarını göster", // summarize list of selected options in comma separated list
+	"noQuestions": "Not görünmez, soruları gösterme", // summarize list of selected options in comma separated list
+	"gradeVisibleNoQuestions": "Not görünür, soruları gösterme", // summarize list of selected options in comma separated list
+	"deleteViewWithTitle": "Görünümü sil: {message}", // aria-label for delete view button with view message/title
+	"submissionViewReleaseDateSummary": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} }{minGrade, plural, =0 {} other {, with attempt grades above {minGrade}%}}{maxGrade, plural, =0 {} other {, with attempt grades below {maxGrade}%}}{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info
+	"submissionViewReleaseDateSummaryBothMinMaxGrades": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} } with attempt grades above {minGrade}% and below {maxGrade}%{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info with both min and max grades
+	"showOutcomesForTheDisplayedQuestionsCheckbox": "Show {outcomesTerm} for the displayed questions" // text for a checkbox which when checked, will show standards/outcomes for the displayed questions
 };

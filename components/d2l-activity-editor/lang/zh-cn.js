@@ -82,6 +82,16 @@ export default {
 	"editor.inGradebook": "在成绩簿中", // New state of the grades field when there is a score, and an associated grade item
 	"editor.notInGradebook": "不在成绩簿中", // New state of the grades field when there is a score, but no associated grade item
 	"editor.addToGradebook": "添加到成绩簿", // New menu item for adding grade association
+	"editor.beforeStartDate": "开始前：", //Text for before start availability date type
+	"editor.afterEndDate": "结束后：", //Text for after end availability date type
+	"editor.lblVisibleWithAccessRestricted": "可见，访问受限", //Text for after end availability date type
+	"editor.lblVisibleWithSubmissionRestricted": "可见，提交/尝试受限", //Text for after end availability date type
+	"editor.lblHidden": "隐藏", //Text for after end availability date type
+	"editor.availabilityStartTitle": "Availability: Start Date", // Dialog title for editing start date type
+	"editor.availabilityEndTitle": "Availability: End Date", // Dialog title for editing start date type
+	"editor.startDescription": "The following settings determine how the {assignment} appears to learners before the start date", // Description for start date type
+	"editor.endDescription": "The following settings determine how the {assignment} appears to learners after the end date", // Description for start date type
+	"editor.assignment": "assignment", // Langterm for assignment or dropbox
 
 	"rubrics.btnAddRubric": "添加量规", //text for add rubric button
 	"rubrics.btnCreateNew": "新建", //Text for create new dropdown
@@ -105,10 +115,12 @@ export default {
 	"grades.weight": "权重：{weight}", // Text label for displaying weight of a grade
 	"grades.gradeItem": "成绩项目", //ARIA label for grade-item picker when linking an activity to an existing grade item
 	"grades.gradeUnits": "分", // unit label for GradeOutOf value (e.g. 10 points)
+	"grades.gradeUnitsSingular": "分", // unit label for GradeOutOf value when value is 1
 	"grades.chooseNewGradeItemCategory": "选择成绩类别", // Label for add category button
 	"grades.newGradeItemCategory": "成绩类别", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "无类别", // Category dropdown text for not selecting a category
 	"grades.changeNewGradeTypeAndScheme": "更改成绩类型和方案", // Label for change type and scheme button
+	"grades.chooseNewGradeScheme": "默认等级方案", // Label for choose grade scheme button (when there is only one type)
 	"grades.newGradeType": "成绩类型", // Label for the grade type
 	"grades.newGradeTypeNumeric": "数值", // Label for numeric grade type radio option
 	"grades.newGradeTypeSelectbox": "选择框", // Label for selectbox grade type radio option
@@ -121,6 +133,11 @@ export default {
 	"grades.creatingNewNumericGradeItem": "创建新的数字成绩项目 {newGradeName}", // Aria text for new grade we are creating
 	"grades.creatingNewSelectboxGradeItem": "创建新的选择框成绩项目 {newGradeName}", // Aria text for new grade we are creating
 	"grades.linkingToGradeItem": "关联至现有成绩项目 ｛gradeName｝", // Aria text for grade item we are linking to
+	"grades.gradeOutOfMenuItem": "什么是等级超出？", // menu item to launch gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogTitle": "信息：等级超出", // title that appears when the gradeOutOf help dialog is rendered
+	"grades.gradeOutOfHelpDialogConfirmationText": "确定", // text that appears on the gradeOutOf help dialog confirmation button
+	"grades.gradeOutOfHelpDialogParagraph1": "如果测验为 \" 不在成绩单中 \" ， \" 分数超出 \" 将反映问题的总分。", // content for paragraph 1 of gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogParagraph2": "如果测验为 \" 在成绩单中 \" ， \" 分数超出 \" 是 \" 成绩 \" 工具中的最大分数或重量。", // content for paragraph 2 of gradeOutOf help dialog
 
 	"attachments.addGoogleDriveLink": "从 Google Drive 附加", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "文件上传", // Tooltip for a button that opens a file upload dialog
@@ -172,5 +189,8 @@ export default {
 	"content.confirmDialogCancelOption": "取消", // The text for the cancel action to not replace content
 	"content.useEmbeddedPlayer": "使用嵌入式播放器", // The text for using the embedded player
 	"content.scormActivity": "SCORM 安装包", // The label for the name of the SCORM package
-	"content.lastEdited": "上次编辑" // The date when the entity was last edited
+	"content.lastEdited": "上次编辑", // The date when the entity was last edited
+	"content.externalFile": "External file", // The text to use for labeling external files
+	"content.advancedEditing": 'Advanced Editing', // The text to use on the advanced editing button
+	"content.fileHasCaptions": "This file has captions in", // The text to use preceding the list of captions
 };
