@@ -11,6 +11,12 @@ import { sharedSubmissionView as store } from './state/quiz-store';
 class ActivityQuizSubmissionViewsDialogCardEditor
 	extends ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
 
+	static get properties() {
+		return {
+			_outcomesTerm: { type: String }
+		};
+	}
+
 	static get styles() {
 		return [
 			labelStyles,
@@ -28,11 +34,28 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 		super(store);
 	}
 
+	connectedCallback() {
+		super.connectedCallback();
+
+		this._outcomesTerm = this._dispatchRequestProvider('d2l-provider-outcomes-term');
+	}
+
 	render() {
 		const entity = store.get(this.href);
 		if (!entity) return html``;
 
 		return this._renderEditView(entity);
+	}
+
+	_dispatchRequestProvider(key) {
+		const event = new CustomEvent('d2l-request-provider', {
+			detail: { key: key },
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+		this.dispatchEvent(event);
+		return event.detail.provider;
 	}
 
 	_onShowAttemptScoreChange(e) {
@@ -64,6 +87,7 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 			canUpdateShowStatsScoreDistribution,
 			showStatsScoreDistribution
 		} = entity;
+
 		return html`
 			<div class="d2l-activity-quiz-submission-views-dialog-card-editor">
 				<div>
@@ -88,7 +112,7 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewQuestionsHeader')}
 					</div>
-					<i>Modifying Question options not yet implemented! (US132398)</i>
+					${this._renderHideShowQuestionsComponent(entity)}
 				</div>
 				<div>
 					<div class="d2l-label-text">
@@ -110,6 +134,29 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 					</d2l-input-checkbox>
 				</div>
 			</div>
+		`;
+	}
+
+	_renderHideShowQuestionsComponent(entity) {
+		const {
+			canUpdateShowStandards,
+			showStandards,
+			isStandardsSupported
+		} = entity;
+
+		const lowerCaseOutcomesTerm = this._outcomesTerm && this._outcomesTerm.toLowerCase();
+
+		return html`
+			<i>Modifying Question options not yet implemented! (US132398)</i>
+			${isStandardsSupported && lowerCaseOutcomesTerm ? html`
+				<d2l-input-checkbox
+					?checked=${showStandards}
+					@change="${this._onShowStatsClassAverageChange}"
+					ariaLabel="${this.localize('submissionViewsDialogEditorClassAverageCheckbox')}"
+					?disabled="${!canUpdateShowStandards}">
+					${this.localize('showOutcomesForTheDisplayedQuestionsCheckbox', 'outcomesTerm', lowerCaseOutcomesTerm)}
+				</d2l-input-checkbox>
+			` : html`` }
 		`;
 	}
 }
