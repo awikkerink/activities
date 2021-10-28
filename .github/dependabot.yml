@@ -14,3 +14,6 @@ updates:
   - dependency-name: d2l-rubric
     versions:
     - ">= 4"
+  - dependency-name: d2l-activity-alignments
+    versions:
+    - ">= 3"
