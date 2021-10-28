@@ -224,8 +224,8 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 		}
 
 		const defaultScoringRubricOptions = this._dedupeDefaultScoringRubricOptions([...entity.defaultScoringRubricOptions, ...indirectAssociations.defaultScoringRubricOptions]);
-		if (assignment.defaultScoringRubricId === '-2' || assignment.defaultScoringRubricId === '-1' || assignment.defaultScoringRubricId === '0') {
-			return true; // If the value is -2: Control not present (Legacy), -1: No default selected, 0: If `null` is ever cast to a Number
+		if (assignment.defaultScoringRubricId === '-1' || assignment.defaultScoringRubricId === null) {
+			return true; // -1: No default selected
 		}
 
 		const isDefaultScoringRubricValidOption = defaultScoringRubricOptions.some(
