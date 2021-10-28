@@ -18,7 +18,6 @@ describe('Activity Submission View', function() {
 			isPrimaryView: () => true,
 			showStandards: () => true,
 			isStandardsSupported: () => true,
-			standardsTitle: () => 'Show standards for the displayed questions',
 			showAttemptScore: () => true,
 			showStatsClassAverage: () => true,
 			showStatsScoreDistribution: () => true,
@@ -78,7 +77,6 @@ describe('Activity Submission View', function() {
 			isPrimaryView: () => true,
 			showStandards: () => true,
 			isStandardsSupported: () => true,
-			standardsTitle: () => 'Show standards for the displayed questions',
 			showAttemptScore: () => true,
 			showStatsClassAverage: () => true,
 			showStatsScoreDistribution: () => true,
@@ -146,7 +144,6 @@ describe('Activity Submission View', function() {
 			expect(submissionView.isPrimaryView).to.be.true;
 			expect(submissionView.showStandards).to.be.true;
 			expect(submissionView.isStandardsSupported).to.be.true;
-			expect(submissionView.standardsTitle).to.equal('Show standards for the displayed questions');
 			expect(submissionView.showAttemptScore).to.be.true;
 			expect(submissionView.showStatsClassAverage).to.be.true;
 			expect(submissionView.showStatsScoreDistribution).to.be.true;
@@ -207,7 +204,6 @@ describe('Activity Submission View', function() {
 			expect(submissionView.isPrimaryView).to.be.true;
 			expect(submissionView.showStandards).to.be.true;
 			expect(submissionView.isStandardsSupported).to.be.true;
-			expect(submissionView.standardsTitle).to.equal('Show standards for the displayed questions');
 			expect(submissionView.showAttemptScore).to.be.true;
 			expect(submissionView.showStatsClassAverage).to.be.true;
 			expect(submissionView.showStatsScoreDistribution).to.be.true;
