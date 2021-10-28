@@ -75,7 +75,7 @@ export class Assignment {
 		this.isOriginalityCheckEnabled = entity.isOriginalityCheckEnabled();
 		this.isGradeMarkEnabled = entity.isGradeMarkEnabled();
 		this.canEditDefaultScoringRubric = entity.canEditDefaultScoringRubric();
-		this.defaultScoringRubricId = String(entity.getDefaultScoringRubric()) || '-1';
+		this.defaultScoringRubricId = entity.getDefaultScoringRubric();
 
 		// set up anonymous marking _after_ submission type
 		this.anonymousMarkingProps = new AnonymousMarkingProps({
