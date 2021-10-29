@@ -133,8 +133,11 @@ export class Assignment {
 		return restrictedExtensions;
 	}
 
-	resetDefaultScoringRubricId() {
+	resetDefaultScoringRubricId(autoSaveIfInvalid) {
 		this.defaultScoringRubricId = '-1';
+		if (autoSaveIfInvalid && this.canEditDefaultScoringRubric) { // this should only be `true` on firstLoad or Cancel, see DE45687
+			this._entity.save({ defaultScoringRubricId: -1 });
+		}
 	}
 
 	async save() {

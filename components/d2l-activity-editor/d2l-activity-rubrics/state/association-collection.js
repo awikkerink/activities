@@ -185,7 +185,7 @@ export class AssociationCollection {
 			const rubricId = this.getRubricIdFromHref(rubricHref);
 			// typeof assignment.defaultScoringRubricId is `string`, rubricId is `string`
 			if (assignment.defaultScoringRubricId === rubricId && !rubricIsAlsoIndirectlyAssociated) {
-				assignment.resetDefaultScoringRubricId();
+				assignment.resetDefaultScoringRubricId(false);
 			}
 
 			this.defaultScoringRubricOptions = this.defaultScoringRubricOptions.filter(
