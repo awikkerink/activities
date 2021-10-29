@@ -179,7 +179,6 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 	}
 }
 
-
 customElements.define(
 	'd2l-activity-quiz-submission-views-dialog-card-editor',
 	ActivityQuizSubmissionViewsDialogCardEditor
