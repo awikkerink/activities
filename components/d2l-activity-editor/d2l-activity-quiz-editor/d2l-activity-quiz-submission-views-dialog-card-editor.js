@@ -155,6 +155,8 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 		if (updatedMessage !== message) {
 			this._saveMessage(updatedMessage);
 		}
+	}
+
 	_renderHideShowQuestionsComponent(entity) {
 		const {
 			canUpdateShowStandards,
