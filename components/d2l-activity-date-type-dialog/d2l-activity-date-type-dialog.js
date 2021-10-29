@@ -66,6 +66,10 @@ class D2LActivityDateTypeDialog extends (LocalizeActivityDateTypeDialogMixin(Lit
 					margin-bottom: 30px;
 					margin-top: 30px;
 				}
+				.d2l-no-collapse {
+					display: flex;
+					flex-direction: column;
+				}
 			`
 		];
 	}
@@ -115,7 +119,7 @@ class D2LActivityDateTypeDialog extends (LocalizeActivityDateTypeDialogMixin(Lit
 
 	_renderDateTypeOptions() {
 		return html`
-			<d2l-input-fieldset class="d2l-dialog-element">
+			<d2l-input-fieldset class="d2l-dialog-element d2l-no-collapse">
 				<label class="d2l-input-radio-label">
 					<input
 						type="radio"
