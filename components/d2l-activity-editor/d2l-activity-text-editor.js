@@ -75,7 +75,6 @@ class ActivityTextEditor extends LitElement {
 						@d2l-activity-html-editor-change="${this._onRichtextChange}"
 						.richtextEditorConfig="${this.richtextEditorConfig}">
 					</d2l-activity-html-editor>
-					<p> old editor shown </p>
 				`;
 			}
 		} else {

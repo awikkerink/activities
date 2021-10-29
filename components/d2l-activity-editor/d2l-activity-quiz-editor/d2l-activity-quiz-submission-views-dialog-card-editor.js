@@ -39,40 +39,25 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 		return this._renderEditView(entity);
 	}
 
-	_debounce(debounceJobs, fn, interval) {
-		const isFirstChange = !debounceJobs;
-		debounceJobs = Debouncer.debounce(
-			debounceJobs,
-			timeOut.after(interval),
-			() => fn()
-		);
-
-		if (isFirstChange) {
-			debounceJobs.flush();
-		}
-	}
-
 	_onShowAttemptScoreChange(e) {
 		const view = store.get(this.href);
-		if (!view) return html``;
 		view && view.setShowAttemptScore(e.target.checked);
 	}
 
 	_onShowStatsClassAverageChange(e) {
 		const view = store.get(this.href);
-		if (!view) return html``;
 		view && view.setShowStatsClassAverage(e.target.checked);
 	}
 
 	_onShowStatsScoreDistributionChange(e) {
 		const view = store.get(this.href);
-		if (!view) return html``;
 		view && view.setShowStatsScoreDistributionChange(e.target.checked);
 	}
 
 	_renderEditView(entity) {
 		const {
 			canUpdateShowAttemptScore,
+			canUpdateMessage,
 			showAttemptScore,
 			canUpdateShowStatsClassAverage,
 			showStatsClassAverage,
@@ -90,8 +75,9 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 				<d2l-activity-text-editor
 					htmlEditorType="inline"
 					html-editor-height="2rem"
-					html-editor-max-height= "5"
-					@d2l-activity-text-editor-change="${this._saveMessageOnChange}">
+					html-editor-max-height="500"
+					@d2l-activity-text-editor-change="${this._saveMessageOnChange}"
+					?disabled="${!canUpdateMessage}">
 				</d2l-activity-text-editor>
 
 				<div>
@@ -140,14 +126,10 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 	}
 
 	_saveMessageOnChange(e) {
-		const { canUpdateMessage, message } = store.get(this.href);
+		const { message } = store.get(this.href);
 		const updatedMessage = e.detail.content;
-		if (canUpdateMessage && (updatedMessage !== message)) {
-			this._debounce(
-				this._debounceJobs.instructions,
-				() => this._saveMessage(updatedMessage),
-				500
-			);
+		if (updatedMessage !== message) {
+			this._saveMessage(updatedMessage);
 		}
 	}
 }
