@@ -165,19 +165,20 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 			` : html`` }
 		`;
 	}
-}
 
-_saveMessage(value) {
-	store.get(this.href).setMessage(value);
-}
+	_saveMessage(value) {
+		store.get(this.href).setMessage(value);
+	}
 
-_saveMessageOnChange(e) {
-	const { message } = store.get(this.href);
-	const updatedMessage = e.detail.content;
-	if (updatedMessage !== message) {
-		this._saveMessage(updatedMessage);
+	_saveMessageOnChange(e) {
+		const { message } = store.get(this.href);
+		const updatedMessage = e.detail.content;
+		if (updatedMessage !== message) {
+			this._saveMessage(updatedMessage);
+		}
 	}
 }
+
 
 customElements.define(
 	'd2l-activity-quiz-submission-views-dialog-card-editor',
