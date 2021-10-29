@@ -52,8 +52,10 @@ class ActivityQuizSubmissionViewReleaseDescription
 
 		if (!releaseDate) return html``;
 
-		if (!timeLimit) {
-			timeLimitNumber = 0;
+		let timeLimitNumberValue = 0;
+
+		if (timeLimit) {
+			timeLimitNumberValue = timeLimitNumber.value;
 		}
 
 		if (!attemptRestrictions) {
@@ -79,7 +81,7 @@ class ActivityQuizSubmissionViewReleaseDescription
 			minGrade,
 			maxGrade,
 			ipRestrictions,
-			timeLimitNumber
+			timeLimitNumber: timeLimitNumberValue
 		});
 	}
 }
