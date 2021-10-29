@@ -36,7 +36,9 @@ export class Quiz extends WorkingCopy {
 		this.previewHref = entity.previewHref();
 		this.canPreviewQuiz = entity.canPreviewQuiz();
 		this.isAutoSetGradedEnabled = entity.isAutoSetGradedEnabled();
+		this.isSyncGradebookEnabled = entity.isSyncGradebookEnabled();
 		this.canEditAutoSetGraded = entity.canEditAutoSetGraded();
+		this.canEditSyncGradebook = entity.canEditSyncGradebook();
 		this.timingHref = entity.timingHref();
 		this.attemptsHref = entity.attemptsHref();
 		this.description = entity.canEditDescription() ? entity.descriptionEditorHtml() : entity.descriptionHtml();
@@ -112,6 +114,10 @@ export class Quiz extends WorkingCopy {
 		this.isShuffleEnabled = isEnabled;
 	}
 
+	setSyncGradebook(isSynced) {
+		this.isSyncGradebookEnabled = isSynced;
+	}
+
 	_makeEntityData() {
 		/* NOTE: if you add fields here, please make sure you update the corresponding equals method in siren-sdk.
 					 The cancel workflow is making use of that to detect changes.
@@ -126,6 +132,7 @@ export class Quiz extends WorkingCopy {
 			preventMovingBackwards: this.isPreventMovingBackwardsEnabled,
 			notificationEmail: this.notificationEmail,
 			autoSetGraded: this.isAutoSetGradedEnabled,
+			syncGradebook: this.isSyncGradebookEnabled,
 			description: this.description,
 			header: this.header,
 			footer: this.footer
@@ -145,6 +152,7 @@ decorate(Quiz, {
 	canEditPreventMovingBackwards: observable,
 	canEditDisablePagerAndAlerts: observable,
 	canEditAutoSetGraded: observable,
+	canEditSyncGradebook: observable,
 	isShuffleEnabled: observable,
 	hintsToolEnabled: observable,
 	password: observable,
@@ -157,6 +165,7 @@ decorate(Quiz, {
 	previewHref: observable,
 	canPreviewQuiz: observable,
 	isAutoSetGradedEnabled: observable,
+	isSyncGradebookEnabled: observable,
 	timingHref: observable,
 	attemptsHref: observable,
 	description: observable,
@@ -179,6 +188,7 @@ decorate(Quiz, {
 	load: action,
 	setName: action,
 	setShuffle: action,
+	setSyncGradebook: action,
 	setHintsToolEnabled: action,
 	setPassword: action,
 	setDisableRightClick: action,
