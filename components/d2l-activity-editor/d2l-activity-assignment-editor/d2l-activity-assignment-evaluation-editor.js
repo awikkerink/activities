@@ -4,6 +4,8 @@ import './d2l-activity-assignment-anonymous-marking-editor.js';
 import './d2l-activity-assignment-anonymous-marking-summary.js';
 import '../d2l-activity-competencies.js';
 import '../d2l-activity-competencies-summary.js';
+import '../d2l-activity-evaluators-editor/d2l-activity-evaluators-editor.js'
+import '../d2l-activity-evaluators-editor/d2l-activity-evaluators-summary.js'
 import '../d2l-activity-rubrics/d2l-activity-rubrics-list-wrapper.js';
 import '../d2l-activity-rubrics/d2l-activity-rubrics-summary-wrapper.js';
 import './d2l-assignment-turnitin-editor.js';
@@ -51,12 +53,14 @@ class ActivityAssignmentEvaluationEditor extends SkeletonMixin(LocalizeActivityA
 				${html`<li slot="summary-items">${this._renderAnnotationsSummary()}</li>`}
 				${html`<li slot="summary-items">${this._renderAnonymousMarkingSummary()}</li>`}
 				${assignment.canEditTurnitin ? html`<li slot="summary-items">${this._renderTurnitinSummary()}</li>` : null}
+				${html`<li slot="summary-items">${this._renderEvaluatorsSummary()}</li>`}
 				<span slot="components">
 					${ html`${this._renderRubricsCollectionEditor()}`}
 					${activity.canEditCompetencies ? this._renderCompetenciesOpener() : null}
 					${html`${this._renderAnnotationsEditor()}`}
 					${html`${this._renderAnonymousMarkingEditor()}`}
 					${assignment.canEditTurnitin ? html`${this._renderTurnitinEditor()}` : null}
+					${html`${this._renderEvaluatorsEditor()}`}
 				</span>
 			</d2l-activity-accordion-collapse>
 		`;
@@ -119,6 +123,22 @@ class ActivityAssignmentEvaluationEditor extends SkeletonMixin(LocalizeActivityA
 				.token="${this.token}">
 			</d2l-activity-competencies-summary>
 		`;
+	}
+	_renderEvaluatorsEditor(){
+		return html`
+		<div class="d2l-editor">
+			<d2l-activity-evaluators-editor
+				href="${this.href}"
+				.token="${this.token}">
+			</d2l-activity-evaluators-editor>
+		</div>`;
+	}
+	_renderEvaluatorsSummary(){
+		return html`
+		<d2l-activity-evaluators-summary
+			href="${this.href}"
+			.token="${this.token}">
+		</d2l-activity-evaluators-summary>`;
 	}
 	_renderRubricsCollectionEditor() {
 		return html`

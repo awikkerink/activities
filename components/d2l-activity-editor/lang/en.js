@@ -188,4 +188,9 @@ export default {
 	"content.externalFile": "External file", // The text to use for labeling external files
 	"content.advancedEditing": 'Advanced Editing', // The text to use on the advanced editing button
 	"content.fileHasCaptions": "This file has captions in", // The text to use preceding the list of captions
+
+	"evaluators.lblEvaluators": "Evaluators", //Text label for the evaluators
+	"evaluators.btnManageEvaluators": "Add/edit evaluators", //Button text to launch evaluators management dialog
+	"evaluators.txtNoEvaluatorsAdded": "No evaluators added", // evaluators summary for no evaluators
+	"evaluators.txtEvaluatorsAdded": "{count} {count, plural, =1 {evaluator} other {evaluators}} added", // evaluators summary 
 };
