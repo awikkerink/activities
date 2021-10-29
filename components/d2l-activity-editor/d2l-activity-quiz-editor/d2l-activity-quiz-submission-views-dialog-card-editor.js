@@ -2,14 +2,12 @@ import '../d2l-activity-text-editor.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { checkboxStyles } from '@brightspace-ui/core/components/inputs/input-checkbox';
-import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles.js';
 import { sharedSubmissionView as store } from './state/quiz-store';
-import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
 class ActivityQuizSubmissionViewsDialogCardEditor
 	extends ActivityEditorMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
@@ -145,18 +143,6 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 		`;
 	}
 
-	_saveMessage(value) {
-		store.get(this.href).setMessage(value);
-	}
-
-	_saveMessageOnChange(e) {
-		const { message } = store.get(this.href);
-		const updatedMessage = e.detail.content;
-		if (updatedMessage !== message) {
-			this._saveMessage(updatedMessage);
-		}
-	}
-
 	_renderHideShowQuestionsComponent(entity) {
 		const {
 			canUpdateShowStandards,
@@ -178,6 +164,18 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 				</d2l-input-checkbox>
 			` : html`` }
 		`;
+	}
+}
+
+_saveMessage(value) {
+	store.get(this.href).setMessage(value);
+}
+
+_saveMessageOnChange(e) {
+	const { message } = store.get(this.href);
+	const updatedMessage = e.detail.content;
+	if (updatedMessage !== message) {
+		this._saveMessage(updatedMessage);
 	}
 }
 
