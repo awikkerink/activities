@@ -42,24 +42,21 @@ class ActivityQuizSubmissionViewReleaseDescription
 			gradeRestrictionsMinGrade,
 			gradeRestrictionsMaxGrade,
 			ipRestrictions,
-			timeLimit
-		} = view;
-
-		let {
-			attemptRestrictionNumber,
-			timeLimitNumber
+			timeLimit,
+			timeLimitNumber,
+			attemptRestrictionNumber
 		} = view;
 
 		if (!releaseDate) return html``;
 
 		let timeLimitNumberValue = 0;
-
 		if (timeLimit) {
 			timeLimitNumberValue = timeLimitNumber.value;
 		}
 
-		if (!attemptRestrictions) {
-			attemptRestrictionNumber = 0;
+		let attemptRestrictionNumberValue = 0;
+		if (attemptRestrictions) {
+			attemptRestrictionNumberValue = attemptRestrictionNumber;
 		}
 
 		let langterm = 'submissionViewReleaseDateSummary';
@@ -77,7 +74,7 @@ class ActivityQuizSubmissionViewReleaseDescription
 
 		return this.localize(langterm, {
 			releaseDate: this._formatDateTime(releaseDate),
-			attemptRestrictionNumber,
+			attemptRestrictionNumber: attemptRestrictionNumberValue,
 			minGrade,
 			maxGrade,
 			ipRestrictions,
