@@ -75,7 +75,7 @@ export class Assignment {
 		this.isOriginalityCheckEnabled = entity.isOriginalityCheckEnabled();
 		this.isGradeMarkEnabled = entity.isGradeMarkEnabled();
 		this.canEditDefaultScoringRubric = entity.canEditDefaultScoringRubric();
-		this.defaultScoringRubricId = String(entity.getDefaultScoringRubric()) || '-1';
+		this.defaultScoringRubricId = entity.getDefaultScoringRubric();
 
 		// set up anonymous marking _after_ submission type
 		this.anonymousMarkingProps = new AnonymousMarkingProps({
@@ -133,8 +133,11 @@ export class Assignment {
 		return restrictedExtensions;
 	}
 
-	resetDefaultScoringRubricId() {
+	resetDefaultScoringRubricId(autoSaveIfInvalid) {
 		this.defaultScoringRubricId = '-1';
+		if (autoSaveIfInvalid && this.canEditDefaultScoringRubric) { // this should only be `true` on firstLoad or Cancel, see DE45687
+			this._entity.save({ defaultScoringRubricId: -1 });
+		}
 	}
 
 	async save() {

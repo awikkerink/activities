@@ -2,6 +2,7 @@ import '../shared-components/d2l-activity-content-editor-title.js';
 import './d2l-activity-content-scorm-activity-display-options.js';
 import './d2l-activity-content-scorm-external-activity.js';
 import { shared as activityStore, sharedScoring as scoringStore } from '../../state/activity-store.js';
+import { AsyncContainerMixin, asyncStates } from '@brightspace-ui/core/mixins/async-container/async-container-mixin.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { activityContentEditorStyles } from '../shared-components/d2l-activity-content-editor-styles';
 import { ActivityEditorMixin } from '../../mixins/d2l-activity-editor-mixin.js';
@@ -16,11 +17,12 @@ import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
 import { SkeletonMixin } from '@brightspace-ui/core/components/skeleton/skeleton-mixin.js';
 
-class ContentScormActivityDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivityEditorMixin(EntityMixinLit(RtlMixin(ActivityEditorMixin(MobxLitElement)))))) {
+class ContentScormActivityDetail extends AsyncContainerMixin(SkeletonMixin(ErrorHandlingMixin(LocalizeActivityEditorMixin(EntityMixinLit(RtlMixin(ActivityEditorMixin(MobxLitElement))))))) {
 
 	static get properties() {
 		return {
-			activityUsageHref: { type: String }
+			activityUsageHref: { type: String },
+			scoreEditorLoading: { type: Boolean }
 		};
 	}
 
@@ -62,6 +64,7 @@ class ContentScormActivityDetail extends SkeletonMixin(ErrorHandlingMixin(Locali
 	constructor() {
 		super(contentScormActivityStore);
 		this.skeleton = true;
+		this.scoreEditorLoading = true;
 		this._setEntityType(ContentScormActivityEntity);
 	}
 
@@ -90,13 +93,17 @@ class ContentScormActivityDetail extends SkeletonMixin(ErrorHandlingMixin(Locali
 		let subTitle = null;
 
 		if (scormActivityEntity) {
-			this.skeleton = false;
 			title = `${this.localize('content.scormActivity')}: ${scormActivityEntity.contentServiceTitle}`;
 			entityTitle = scormActivityEntity.title;
+
 			if (scormActivityEntity.contentServiceUpdatedAt) {
 				const date = new Date(Date.parse(scormActivityEntity.contentServiceUpdatedAt))
 					.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' });
 				subTitle = `${this.localize('content.lastEdited')} ${date}`;
+			}
+
+			if (!this.scoreEditorLoading) {
+				this.skeleton = false;
 			}
 		}
 
@@ -147,6 +154,14 @@ class ContentScormActivityDetail extends SkeletonMixin(ErrorHandlingMixin(Locali
 				?showActivityPreview=${true}>
 			</d2l-activity-content-external-activity>
 		`;
+	}
+
+	updated(changedProperties) {
+		super.updated(changedProperties);
+
+		if (changedProperties.has('asyncState')) {
+			this.scoreEditorLoading = this.asyncState !== asyncStates.complete;
+		}
 	}
 
 	hasPendingChanges() {

@@ -28,7 +28,11 @@ class QuizEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityQuizEditor
 			/**
 			 * Is Creating New
 			 */
-			isNew: { type: Boolean }
+			isNew: { type: Boolean },
+			/**
+			* based on the config variable d2l.Languages.Terminology.LearningOutcomes
+			*/
+			outcomesTerm: { type: String },
 		};
 	}
 
@@ -56,7 +60,8 @@ class QuizEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityQuizEditor
 				@d2l-question-updated="${this._refreshTotalPoints}"
 				@d2l-activity-collection-refresh="${this._refreshTotalPoints}"
 				@d2l-question-activity-deleted="${this._refreshTotalPoints}"
-				resizable>
+				resizable
+				@d2l-request-provider="${this._onRequestProvider}">
 
 				${this._editorTemplate}
 
@@ -88,6 +93,14 @@ class QuizEditor extends AsyncContainerMixin(RtlMixin(LocalizeActivityQuizEditor
 				</d2l-activity-quiz-editor-secondary>
 			</div>
 		`;
+	}
+
+	_onRequestProvider(e) {
+		if (e.detail.key === 'd2l-provider-outcomes-term') {
+			e.detail.provider = this.outcomesTerm;
+			e.stopPropagation();
+			return;
+		}
 	}
 
 	_refreshTotalPoints() {

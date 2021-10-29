@@ -26,9 +26,10 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 	static get properties() {
 		return {
 			_newlyCreatedPotentialAssociationHref: { type: String },
+			_isFirstLoad: { type: Boolean },
 			activityUsageHref: { type: String },
 			assignmentHref: { type: String },
-			associationsHref: { type: String }
+			indirectAssociationsHref: { type: String }
 		};
 	}
 
@@ -50,6 +51,7 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 		super(associationStore);
 		this._newlyCreatedPotentialAssociation = {};
 		this._newlyCreatedPotentialAssociationHref = '';
+		this._isFirstLoad = true;
 	}
 
 	connectedCallback() {
@@ -75,7 +77,7 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 				.activityUsageHref=${this.activityUsageHref}
 				.token=${this.token}
 				.assignmentHref=${this.assignmentHref}
-				.associationsHref=${this.associationsHref}
+				.indirectAssociationsHref=${this.indirectAssociationsHref}
 			>
 			</d2l-activity-rubrics-list-editor>
 
@@ -112,27 +114,28 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 			</d2l-dialog>
 		`;
 	}
-
 	updated(changedProperties) {
 		super.updated(changedProperties);
 
-		if ((changedProperties.has('associationsHref') || changedProperties.has('token')) &&
-			this.associationsHref && this.token) {
+		if ((changedProperties.has('indirectAssociationsHref') || changedProperties.has('token')) &&
+			this.indirectAssociationsHref && this.token) {
 
-			associationStore.fetch(this.associationsHref, this.token);
+			associationStore.fetch(this.indirectAssociationsHref, this.token);
 		}
+	}
+
+	cancelChanges() {
+		this._validateDefaultScoringRubric();
 	}
 
 	_attachRubric() {
 		const entity = associationStore.get(this.href);
-		const associations = associationStore.get(this.associationsHref);
 
 		if (!entity) {
 			return;
 		}
 
 		entity.addAssociations([this._newlyCreatedPotentialAssociation]);
-		associations.addAssociations([this._newlyCreatedPotentialAssociation]);
 
 		this._closeEditNewAssociationDialog();
 		announce(this.localize('rubrics.txtRubricAdded'));
@@ -142,12 +145,10 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 	}
 	_closeAttachRubricDialog(e) {
 		const entity = associationStore.get(this.href);
-		const associations = associationStore.get(this.associationsHref);
 
 		if (e && e.detail && e.detail.associations) {
 
 			entity.addAssociations(e.detail.associations);
-			associations.addAssociations(e.detail.associations);
 
 			announce(this.localize('rubrics.txtRubricAdded'));
 		}
@@ -186,6 +187,20 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 			editNewAssociationDialog.opened = true;
 		}
 
+	}
+	_dedupeDefaultScoringRubricOptions(defaultScoringRubricOptions) {
+		const dedupedOptions = new Map();
+		defaultScoringRubricOptions.map((option) => {
+			dedupedOptions.set(option.value, option.title);
+		});
+		const dedupedDefaultScoringRubricOptions = [];
+		dedupedOptions.forEach((optionTitle, optionValue) => dedupedDefaultScoringRubricOptions.push(
+			{
+				title: optionTitle,
+				value: optionValue
+			})
+		);
+		return dedupedDefaultScoringRubricOptions;
 	}
 	_dispatchRequestProvider(key) {
 		const event = new CustomEvent('d2l-request-provider', {
@@ -240,15 +255,26 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 
 	}
 	_renderDefaultScoringRubric() {
-		const entity = associationStore.get(this.associationsHref);
+		const entity = associationStore.get(this.href);
+		const indirectAssociations = associationStore.get(this.indirectAssociationsHref);
 		const assignment = assignmentStore.get(this.assignmentHref);
-		if (!entity || !assignment) {
+
+		if (!entity || !assignment || !indirectAssociations) {
 			return html``;
 		}
 
+		const defaultScoringRubricOptions = this._dedupeDefaultScoringRubricOptions([...entity.defaultScoringRubricOptions, ...indirectAssociations.defaultScoringRubricOptions]);
 		const isReadOnly = !assignment.canEditDefaultScoringRubric;
-		if (!entity.defaultScoringRubricOptions || entity.defaultScoringRubricOptions.length <= 1) {
+
+		if (this._isFirstLoad) {
+			this._isFirstLoad = !this._validateDefaultScoringRubric(); // On Assignment load, ensure a rubric ID is associated and hence a valid option
+		}
+		if (!defaultScoringRubricOptions || defaultScoringRubricOptions.length <= 1) {
 			return html``;
+		}
+
+		if (assignment.defaultScoringRubricId === null) {
+			assignment.resetDefaultScoringRubricId(false);
 		}
 
 		return html`
@@ -262,7 +288,7 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 				@change="${this._saveDefaultScoringRubricOnChange}"
 				?disabled=${isReadOnly}>
 					<option value="-1" ?selected=${'-1' === assignment.defaultScoringRubricId}>${this.localize('rubrics.noDefaultScoringRubricSelected')}</option>
-					${entity.defaultScoringRubricOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.defaultScoringRubricId}>${option.title}</option>`)}
+					${defaultScoringRubricOptions.map(option => html`<option value=${option.value} ?selected=${String(option.value) === assignment.defaultScoringRubricId}>${option.title}</option>`)}
 			</select>
 		`;
 
@@ -282,11 +308,9 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 			return html``;
 		}
 	}
-
 	_resizeDialog(e) {
 		e.currentTarget.resize();
 	}
-
 	_saveDefaultScoringRubricOnChange(event) {
 		const assignment = assignmentStore.get(this.assignmentHref);
 
@@ -305,6 +329,30 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 			}
 			dialog.opened = toggle;
 		}
+	}
+	_validateDefaultScoringRubric() {
+		const entity = associationStore.get(this.href);
+		const indirectAssociations = associationStore.get(this.indirectAssociationsHref);
+		const assignment = assignmentStore.get(this.assignmentHref);
+
+		if (!entity || !assignment || !indirectAssociations) {
+			return false;
+		}
+
+		const defaultScoringRubricOptions = this._dedupeDefaultScoringRubricOptions([...entity.defaultScoringRubricOptions, ...indirectAssociations.defaultScoringRubricOptions]);
+		if (assignment.defaultScoringRubricId === '-1' || assignment.defaultScoringRubricId === null) {
+			return true; // -1: No default selected
+		}
+
+		const isDefaultScoringRubricValidOption = defaultScoringRubricOptions.some(
+			(opts) => String(opts.value) === assignment.defaultScoringRubricId
+		);
+
+		if (!isDefaultScoringRubricValidOption) {
+			// An indirectly associated rubric can be used as an option, Assignment saved, remove it, close the page and leave `defaultScoringRubricId` is now invalid.
+			assignment.resetDefaultScoringRubricId(true);
+		}
+		return isDefaultScoringRubricValidOption;
 	}
 
 }

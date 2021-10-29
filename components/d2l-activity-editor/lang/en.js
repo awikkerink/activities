@@ -87,6 +87,11 @@ export default {
 	"editor.lblVisibleWithAccessRestricted": "Visible with access restricted", //Text for after end availability date type
 	"editor.lblVisibleWithSubmissionRestricted": "Visible with submission restricted", //Text for after end availability date type
 	"editor.lblHidden": "Hidden", //Text for after end availability date type
+	"editor.availabilityStartTitle": "Availability: Start Date", // Dialog title for editing start date type
+	"editor.availabilityEndTitle": "Availability: End Date", // Dialog title for editing start date type
+	"editor.startDescription": "The following settings determine how the {assignment} appears to learners before the start date", // Description for start date type
+	"editor.endDescription": "The following settings determine how the {assignment} appears to learners after the end date", // Description for start date type
+	"editor.assignment": "assignment", // Langterm for assignment or dropbox
 
 	"rubrics.btnAddRubric": "Add rubric", //text for add rubric button
 	"rubrics.btnCreateNew": "Create New", //Text for create new dropdown
@@ -184,5 +189,8 @@ export default {
 	"content.confirmDialogCancelOption": "Cancel", // The text for the cancel action to not replace content
 	"content.useEmbeddedPlayer": "Use embedded player", // The text for using the embedded player
 	"content.scormActivity": "SCORM Package", // The label for the name of the SCORM package
-	"content.lastEdited": "Last edited" // The date when the entity was last edited
+	"content.lastEdited": "Last edited", // The date when the entity was last edited
+	"content.externalFile": "External file", // The text to use for labeling external files
+	"content.advancedEditing": 'Advanced Editing', // The text to use on the advanced editing button
+	"content.fileHasCaptions": "This file has captions in", // The text to use preceding the list of captions
 };

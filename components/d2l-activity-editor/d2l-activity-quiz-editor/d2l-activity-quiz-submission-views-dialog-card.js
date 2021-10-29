@@ -1,6 +1,7 @@
+import './d2l-activity-quiz-submission-view-release-description';
 import './d2l-activity-quiz-submission-views-dialog-card-editor.js';
+import { bodySmallStyles, heading4Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html } from 'lit-element/lit-element.js';
-import { heading4Styles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { shared as quizStore, sharedSubmissionView as store, sharedSubmissionViews as submissionViewsStore } from './state/quiz-store';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { ActivityEditorWorkingCopyMixin } from '../mixins/d2l-activity-editor-working-copy-mixin.js';
@@ -38,6 +39,7 @@ class ActivityQuizSubmissionViewsDialogCard
 
 	static get styles() {
 		return [
+			bodySmallStyles,
 			heading4Styles,
 			labelStyles,
 			css`
@@ -144,8 +146,13 @@ class ActivityQuizSubmissionViewsDialogCard
 		const cardHeader = isPrimaryView ? 'primaryView' : 'additionalViewComesIntoEffect';
 		return html`
 			<div class="d2l-activity-quiz-submission-views-dialog-card-header">
-				<div class="d2l-activity-quiz-submission-views-dialog-card-header-text d2l-heading-4">
-					${this.localize(cardHeader)}
+				<div class="d2l-activity-quiz-submission-views-dialog-card-header-text">
+					<span class="d2l-heading-4">${this.localize(cardHeader)}</span>
+					<span class="d2l-body-small">
+						${!isPrimaryView ? html`
+							<d2l-activity-quiz-submission-view-release-description href=${this.href} .token="${this.token}"></d2l-activity-quiz-submission-view-release-description>
+						` : html`` }
+					</span>
 				</div>
 			</div>
 		`;
