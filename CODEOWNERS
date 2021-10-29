@@ -3,3 +3,4 @@ d2l-quick-eval/ @BrightspaceHypermediaComponents/nimbus
 d2l-quick-eval-widget/ @BrightspaceHypermediaComponents/nimbus
 /components/d2l-work-to-do/ @Brightspace/luna
 /demo/d2l-work-to-do/ @Brightspace/luna
+d2l-activity-editor/d2l-activity-score-editor.js @mdulat @mostlyfabulous
