@@ -128,7 +128,7 @@ class ActivityAssignmentEvaluationEditor extends SkeletonMixin(LocalizeActivityA
 		return html`
 		<div class="d2l-editor">
 			<d2l-activity-evaluators-editor
-				href="${this.href}"
+				href="${this.activityUsageHref}"
 				.token="${this.token}">
 			</d2l-activity-evaluators-editor>
 		</div>`;
@@ -136,7 +136,7 @@ class ActivityAssignmentEvaluationEditor extends SkeletonMixin(LocalizeActivityA
 	_renderEvaluatorsSummary(){
 		return html`
 		<d2l-activity-evaluators-summary
-			href="${this.href}"
+			href="${this.activityUsageHref}"
 			.token="${this.token}">
 		</d2l-activity-evaluators-summary>`;
 	}

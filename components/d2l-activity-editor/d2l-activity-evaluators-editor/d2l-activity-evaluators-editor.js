@@ -5,6 +5,7 @@ import { labelStyles } from '@brightspace-ui/core/components/typography/styles.j
 import { LocalizeActivityEditorMixin } from '../mixins/d2l-activity-editor-lang-mixin.js';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
+import { Rels } from 'd2l-hypermedia-constants';
 
 class ActivityEvaluatorsEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivityEditorMixin(MobxLitElement))) {
 			
@@ -30,7 +31,7 @@ class ActivityEvaluatorsEditor extends ActivityEditorMixin(RtlMixin(LocalizeActi
 	}
 
 	_openManageEvaluators(){
-		alert("Edit evaluators");
+		alert(this.href);
 	}
 
 	_renderDialogOpener() {

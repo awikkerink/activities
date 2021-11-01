@@ -191,6 +191,6 @@ export default {
 
 	"evaluators.lblEvaluators": "Evaluators", //Text label for the evaluators
 	"evaluators.btnManageEvaluators": "Add/edit evaluators", //Button text to launch evaluators management dialog
-	"evaluators.txtNoEvaluatorsAdded": "No evaluators added", // evaluators summary for no evaluators
+	"evaluators.txtNoEvaluatorsAdded": "No explicit evaluators selected", // evaluators summary for no evaluators
 	"evaluators.txtEvaluatorsAdded": "{count} {count, plural, =1 {evaluator} other {evaluators}} added", // evaluators summary 
 };
