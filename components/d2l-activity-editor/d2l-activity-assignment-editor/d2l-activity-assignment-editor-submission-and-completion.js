@@ -548,7 +548,7 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 			this.setError(errorProperty, invalidCustomFileTypesErrorLangterm, tooltipId);
 		} else {
 			this.clearError(errorProperty);
-			store.get(this.href).setCustomAllowableFileTypes(fileTypes);
+			store.get(this.href).setCustomAllowableFileTypes(fileTypes.toLowerCase());
 		}
 	}
 	_saveSubmissionTypeOnChange(event) {
