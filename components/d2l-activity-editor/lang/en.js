@@ -87,6 +87,11 @@ export default {
 	"editor.lblVisibleWithAccessRestricted": "Visible with access restricted", //Text for after end availability date type
 	"editor.lblVisibleWithSubmissionRestricted": "Visible with submission restricted", //Text for after end availability date type
 	"editor.lblHidden": "Hidden", //Text for after end availability date type
+	"editor.availabilityStartTitle": "Availability: Start Date", // Dialog title for editing start date type
+	"editor.availabilityEndTitle": "Availability: End Date", // Dialog title for editing start date type
+	"editor.startDescription": "The following settings determine how the {assignment} appears to learners before the start date", // Description for start date type
+	"editor.endDescription": "The following settings determine how the {assignment} appears to learners after the end date", // Description for start date type
+	"editor.assignment": "assignment", // Langterm for assignment or dropbox
 
 	"rubrics.btnAddRubric": "Add rubric", //text for add rubric button
 	"rubrics.btnCreateNew": "Create New", //Text for create new dropdown

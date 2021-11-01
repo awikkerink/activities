@@ -223,6 +223,9 @@ class ActivityScoreEditor extends ActivityEditorMixin(SkeletonMixin(LocalizeActi
 				canEditScoreOutOf = scoringEntity && scoringEntity.canUpdateScoring;
 			} else {
 				scoreOutOf = scoringEntity && (inGrades && scoringEntity.gradeMaxPoints ? scoringEntity.gradeMaxPoints : scoringEntity.scoreOutOf);
+				if (scoreOutOf === '' || (!inGrades && this.disableNotInGradebook)) {
+					scoreOutOf = null;
+				}
 				canEditScoreOutOf = (canEditGradebookStatus && inGrades) || this.disableNotInGradebook;
 			}
 			gradeUnits = scoreOutOf === 1 ? this.localize('grades.gradeUnitsSingular') : this.localize('grades.gradeUnits');
