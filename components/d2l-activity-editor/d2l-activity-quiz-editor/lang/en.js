@@ -147,7 +147,7 @@ export default {
 	"submissionViewButtonText": "Customize quiz results displays", // Text for the button at the bottom of the submission view container.
 	"gradeOutOf": "Grade Out Of", // Label for the grade-out-of field when creating/editing an activity
 	"submissionViewsHelpDialogTitle": "Information: Quiz results display", // Title for help dialog on submission view customization screen.
-	"submissionViewsHelpDialogParagraph1": "Quiz results display determine how learners can view their published quiz attempt results, both immediately following submission, or later when reviewing their attempt.", // Paragraph 1 for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogParagraph1": "Quiz results display determines how learners can view their published quiz attempt results, both immediately following submission, or later when reviewing their attempt.", // Paragraph 1 for help dialog on submission view customization screen.
 	"submissionViewsHelpDialogParagraph2": "The Primary View is shown to learners as the default, and Additional Views will override the Primary View based on the set parameters.", // Paragraph 2 for help dialog on submission view customization screen.
 	"submissionViewsHelpDialogConfirmation": "OK", //Text for closing the information Dialog for customization in submission views.
 	"submissionViewsDialogConfirmationMain": "OK", //Text for closing the main Dialog for customization in submission views.
