@@ -29,6 +29,8 @@ export class ContentFile {
 
 		//media
 		this.isMediaEmbedded = false;
+		this.isContentServiceResource = false;
+		this.isAdvancedEditingEnabled = false;
 	}
 
 	async cancelCreate() {
@@ -101,6 +103,8 @@ export class ContentFile {
 		} else if (this.fileType === FILE_TYPES.audio || this.fileType === FILE_TYPES.video) {
 			const mediaFileEntity = new ContentMediaFileEntity(contentFileEntity._entity, this.token, { remove: () => { } });
 			this.isMediaEmbedded = mediaFileEntity.embedMedia();
+			this.isAdvancedEditingEnabled = mediaFileEntity.isAdvancedEditingEnabled();
+			this.isContentServiceResource = mediaFileEntity.isContentServiceResource();
 		}
 	}
 
