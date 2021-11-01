@@ -106,7 +106,7 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 		const mediaFileEntity = contentFileStore.getContentFileActivity(this.href);
 
 		// TODO: check if file is contentService, sent as a property
-		if (mediaFileEntity.isFileInContentService) {
+		if (mediaFileEntity.isContentServiceResource && mediaFileEntity.isAdvancedEditingEnabled) {
 			// eslint-disable-next-line no-console
 			console.log('opening new dialog');
 			// TODO: Media Team will add in the new dialog here
