@@ -47,7 +47,7 @@ class ActivityQuizSubmissionViewsContainer
 		await this.checkinDialog(e);
 
 		if (!this.opened) { // Dialog successfully checked in
-			this._refetchQuiz(); // Refetch entity to refresh check-in action
+			await this._refetchQuiz(); // Refetch quiz entity to refresh check-in action
 			this._refetchSubmissionViews(); // Refetch submission views to display updated views data in accordion
 		}
 	}
@@ -61,11 +61,11 @@ class ActivityQuizSubmissionViewsContainer
 		entity && entity.fetch(true);
 	}
 
-	_refetchSubmissionViews() {
+	async _refetchSubmissionViews() {
 		const entity = store.get(this.checkedOutHref);
 
 		const submissionViewsEntity = submissionViewsStore.get(entity.submissionViewsHref);
-		submissionViewsEntity && submissionViewsEntity.fetch(true);
+		submissionViewsEntity && await submissionViewsEntity.fetch(true); // Wait for promise to settle in case submission views linked entities have changed
 		submissionViewsEntity && submissionViewsEntity.linkedSubmissionViews.forEach(linkedView => {
 			const linkedViewHref = linkedView.href;
 			const viewEntity = submissionViewStore.get(linkedViewHref);
