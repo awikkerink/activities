@@ -134,9 +134,17 @@ class ActivityQuizSubmissionViewsDialogCard
 		}));
 	}
 
-	async _onUpdate() {
+	async _save() {
+		const editEntity = store.get(this._editHref);
+
+		await editEntity.saving; // Wait for submissionview PATCH requests to complete before checking in
+
 		const result = await this.checkin(quizStore, this._editViewQuizHref);
+
 		if (result) {
+			const readonlyEntity = store.get(this.href);
+			readonlyEntity.fetch(this.href); // refetch view so that the readonly card displays the updated data
+
 			this._exitEditMode();
 		}
 	}
@@ -169,7 +177,7 @@ class ActivityQuizSubmissionViewsDialogCard
 				<div class="d2l-activity-quiz-submission-views-dialog-card-footer-buttons">
 					<d2l-button
 						?disabled="${this.isSaving}"
-						@click="${this._onUpdate}">
+						@click="${this._save}">
 						${this.localize('quizSubmissionViewsDialogCardUpdate')}
 					</d2l-button>
 					<d2l-button-subtle
