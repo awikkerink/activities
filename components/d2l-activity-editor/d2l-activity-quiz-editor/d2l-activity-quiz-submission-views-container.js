@@ -2,7 +2,7 @@ import '@brightspace-ui/core/components/dialog/dialog.js';
 import './d2l-activity-quiz-submission-views-accordion-editor.js';
 import './d2l-activity-quiz-submission-views-editor.js';
 import { css, html } from 'lit-element/lit-element.js';
-import { shared as store, sharedSubmissionView as submissionViewStore, sharedSubmissionViews as submissionViewsStore } from './state/quiz-store';
+import { shared as store, sharedSubmissionViews as submissionViewsStore, sharedSubmissionView as submissionViewStore } from './state/quiz-store';
 import { ActivityEditorWorkingCopyDialogMixin } from '../mixins/d2l-activity-editor-working-copy-dialog-mixin';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
