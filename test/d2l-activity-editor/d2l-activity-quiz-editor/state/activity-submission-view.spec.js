@@ -62,13 +62,13 @@ describe('Activity Submission View', function() {
 			canUpdateGradeRestrictions: () => true,
 			attemptRestrictionNumber: () => 2,
 			attemptRestrictionsOptions: () => [
-                {
-                  "value": 1,
-                  "selected": false
-                },
-                {
-                  "value": 2,
-                  "selected": true
+				{
+				  "value": 1,
+				  "selected": false
+				},
+				{
+				  "value": 2,
+				  "selected": true
 				}
 			],
 			gradeRestrictions: () => true,
