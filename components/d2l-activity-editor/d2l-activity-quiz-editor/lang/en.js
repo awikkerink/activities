@@ -33,7 +33,7 @@ export default {
 	"autoSetGradedDescription": "Auto-publish attempt results immediately upon completion", // description for automatic grade checkbox
 	"autoSetGradedSummary": "Auto-publish results", // summary for auto set graded checkbox
 	"passwordDescription": "Only users who enter this password will be granted access to write this quiz.", // description for password input
-	"hlpSubmissionNotificationEmail": "Enter an email or multiple emails separated by a comma, to receive notifications when a quiz is attempted.", // description for email notification input
+	"hlpSubmissionNotificationEmail": "To receive notifications when a quiz is attempted, enter an email address or multiple email addresses separated by a comma.", // description for email notification input
 	"autoSetGradedAccessibleHelpText": "Get help on - Automatic Grade", // accessible help text for autoSetGraded question mark button
 	"autoSetGradedHelpDialogTitle": "Information: Auto-publish attempt results immediately upon completion", // title that appears when the autoSetGraded help dialog is rendered
 	"autoSetGradedHelpDialogConfirmationText": "OK", // copy that appears on the autoSetGraded help dialog confirmation button
