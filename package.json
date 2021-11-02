@@ -57,7 +57,7 @@
     "wct-mocha": "^1.0.1",
     "whatwg-fetch": "^3.0.0"
   },
-  "version": "3.239.0",
+  "version": "3.240.0",
   "resolutions": {
     "inherits": "2.0.3",
     "samsam": "1.1.3",
