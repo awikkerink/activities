@@ -102,6 +102,17 @@ class ActivityQuizSubmissionViewsDialogCard
 		`;
 	}
 
+	_deleteView() {
+		const entity = store.get(this.href);
+		entity && entity.deleteSubmissionView();
+
+		// Optimistic UI - Remove view from collection
+		const quizEntity = quizStore.get(this.quizHref);
+		const submissionViewsHref = quizEntity.submissionViewsHref;
+		const submissionViewsEntity = submissionViewsStore.get(submissionViewsHref);
+		submissionViewsEntity.removeView(this.href);
+	}
+
 	async _enterEditMode() {
 		this.dispatchEvent(new CustomEvent('d2l-activity-quiz-submission-views-dialog-edit-start', {
 			bubbles: true,
@@ -245,6 +256,7 @@ class ActivityQuizSubmissionViewsDialogCard
 					${isPrimaryView ? html`` : html`
 						<d2l-button-subtle
 							?disabled="${disableReadonlyButtons}"
+							@click="${this._deleteView}"
 							text=${this.localize('submissionViewDialogCardButtonOptionDeleteView')}>
 						</d2l-button-subtle>
 					`}
