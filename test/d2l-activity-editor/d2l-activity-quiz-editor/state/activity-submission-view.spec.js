@@ -61,6 +61,16 @@ describe('Activity Submission View', function() {
 			canUpdateAttemptRestrictionNumber: () => true,
 			canUpdateGradeRestrictions: () => true,
 			attemptRestrictionNumber: () => 2,
+			attemptRestrictionsOptions: () => [
+                {
+                  "value": 1,
+                  "selected": false
+                },
+                {
+                  "value": 2,
+                  "selected": true
+				}
+			],
 			gradeRestrictions: () => true,
 			canUpdateGradeRestrictionsMinMaxGrade: () => true,
 			gradeRestrictionsMinMaxGrade: () => { return { 'min-grade': { value: 10 }, 'max-grade': { value: 50 } }; }
@@ -107,6 +117,7 @@ describe('Activity Submission View', function() {
 			canUpdateAttemptRestrictionNumber: () => false,
 			canUpdateGradeRestrictions: () => false,
 			attemptRestrictionNumber: () => 2,
+			attemptRestrictionsOptions: () => undefined,
 			gradeRestrictions: () => true,
 			canUpdateGradeRestrictionsMinMaxGrade: () => false,
 			gradeRestrictionsMinMaxGrade: () => { return { 'min-grade': { value: 10 }, 'max-grade': { value: 50 } }; }
@@ -174,6 +185,7 @@ describe('Activity Submission View', function() {
 			expect(submissionView.canUpdateAttemptRestrictionNumber).to.be.true;
 			expect(submissionView.canUpdateGradeRestrictions).to.be.true;
 			expect(submissionView.attemptRestrictionNumber).to.equal(2);
+			expect(submissionView.attemptRestrictionsOptions.length).to.equal(2);
 			expect(submissionView.gradeRestrictions).to.be.true;
 			expect(submissionView.canUpdateGradeRestrictionsMinMaxGrade).to.be.true;
 			expect(submissionView.gradeRestrictionsMinGrade).to.deep.equal({ value: 10 });
@@ -234,6 +246,7 @@ describe('Activity Submission View', function() {
 			expect(submissionView.canUpdateAttemptRestrictionNumber).to.be.false;
 			expect(submissionView.canUpdateGradeRestrictions).to.be.false;
 			expect(submissionView.attemptRestrictionNumber).to.equal(2);
+			expect(submissionView.attemptRestrictionsOptions).to.be.undefined;
 			expect(submissionView.gradeRestrictions).to.be.true;
 			expect(submissionView.canUpdateGradeRestrictionsMinMaxGrade).to.be.false;
 			expect(submissionView.gradeRestrictionsMinGrade).to.deep.equal({ value: 10 });
