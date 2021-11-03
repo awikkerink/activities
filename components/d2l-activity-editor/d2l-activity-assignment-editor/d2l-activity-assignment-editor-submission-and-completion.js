@@ -175,8 +175,9 @@ class ActivityAssignmentSubmissionAndCompletionEditor extends SkeletonMixin(Acti
 
 		const hasInvalidFormat = fileTypesList.some(fileType => !isValidExtensionFormat.test(fileType));
 		const hasRestrictedFileType = fileTypesList.some(fileType => this.restrictedFileTypes.includes(fileType));
+		const hasDuplicateFileType = fileTypesList.length !== Array.from(new Set(fileTypesList)).length;
 
-		return hasInvalidFormat || hasRestrictedFileType;
+		return hasInvalidFormat || hasRestrictedFileType || hasDuplicateFileType;
 	}
 	async _loadRestrictedFileTypes(assignment) {
 		this.restrictedFileTypes = await assignment.loadRestrictedExtensions() || [];
