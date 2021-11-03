@@ -1,7 +1,7 @@
 import '@brightspace-ui/core/components/button/button-icon.js';
 import '@brightspace-ui/core/components/dialog/dialog.js';
+import { shared as activityStore, sharedAssociateGrade as associateGradeStore } from '../state/activity-store.js';
 import { css, html } from 'lit-element/lit-element.js';
-import { sharedAssociateGrade as associateGradeStore, shared as activityStore } from '../state/activity-store.js';
 import { ActivityEditorDialogMixin } from '../mixins/d2l-activity-editor-dialog-mixin.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { checkboxStyles } from '../styles/checkbox-styles.js';
