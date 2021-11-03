@@ -1,6 +1,6 @@
 import '../shared-components/d2l-activity-content-external-activity-container.js';
 import '@brightspace-ui-labs/media-player/media-player.js';
-import '@d2l/d2l-attachment/components/attachment';
+import '@d2l/d2l-attachment/components/attachment.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../../mixins/d2l-activity-editor-mixin.js';
 import { bodySmallStyles } from '@brightspace-ui/core/components/typography/styles.js';
@@ -129,19 +129,24 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 
 	_renderAttachmentView(mediaFileEntity) {
 		const attachment = {
-			id: mediaFileEntity.fileLocationHref,
-			name: 'TODO',
-			url: mediaFileEntity.fileLocationHref
+			name: this._getEntityName(mediaFileEntity),
+			url: mediaFileEntity.fileLocationHref,
+			type: 'Document'
+		};
+
+		//this is only for enabling the link; actual permission checking is not handled here
+		const hasPermission = {
+			canAccess: () => true
 		};
 
 		return html`
 			<div class="d2l-media-not-embedded d2l-skeletize">
-				<d2l-labs-attachment
+				<d2l-labs-attachment-file
 					?hidden="${this.skeleton}"
-					.attachmentId="${attachment.id}"
 					.attachment="${attachment}"
+					.permission=${hasPermission}
 				>
-				</d2l-labs-attachment>
+				</d2l-labs-attachment-file>
 			</div>
 		`;
 	}
