@@ -37,6 +37,7 @@ export class Quiz extends WorkingCopy {
 		this.canPreviewQuiz = entity.canPreviewQuiz();
 		this.isAutoSetGradedEnabled = entity.isAutoSetGradedEnabled();
 		this.isSyncGradebookEnabled = entity.isSyncGradebookEnabled();
+		this.isSyncGradebookDefault = entity.isSyncGradebookDefault();
 		this.canEditAutoSetGraded = entity.canEditAutoSetGraded();
 		this.canEditSyncGradebook = entity.canEditSyncGradebook();
 		this.timingHref = entity.timingHref();
@@ -116,6 +117,7 @@ export class Quiz extends WorkingCopy {
 
 	setSyncGradebook(isSynced) {
 		this.isSyncGradebookEnabled = isSynced;
+		this.isSyncGradebookDefault = false;
 	}
 
 	_makeEntityData() {
@@ -133,6 +135,7 @@ export class Quiz extends WorkingCopy {
 			notificationEmail: this.notificationEmail,
 			autoSetGraded: this.isAutoSetGradedEnabled,
 			syncGradebook: this.isSyncGradebookEnabled,
+			syncGradebookDefault: this.isSyncGradebookDefault,
 			description: this.description,
 			header: this.header,
 			footer: this.footer
@@ -166,6 +169,7 @@ decorate(Quiz, {
 	canPreviewQuiz: observable,
 	isAutoSetGradedEnabled: observable,
 	isSyncGradebookEnabled: observable,
+	isSyncGradebookDefault: observable,
 	timingHref: observable,
 	attemptsHref: observable,
 	description: observable,
