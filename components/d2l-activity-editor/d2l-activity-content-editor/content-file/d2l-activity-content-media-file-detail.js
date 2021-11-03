@@ -156,17 +156,12 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 			return;
 		}
 
-		// TODO: Go get captions
-		const captions = ['English'];
-
-		const captionsRender = this._renderCaptionsList('content.fileHasCaptions', captions);
-
 		const mediaRender = mediaFileEntity.isMediaEmbedded
 			? this._renderMedia(mediaFileEntity.fileLocationHref)
 			: this._renderAttachmentView(mediaFileEntity);
 
 		return html`
-			${captionsRender}
+			${this._renderCaptionsList('content.fileHasCaptions', mediaFileEntity.mediaCaptions)}
 			<div class="d2l-media">
 				${mediaRender}
 			</div>
@@ -178,10 +173,14 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 			return html``;
 		}
 
+		const captionsCSV = captions.map((caption) =>
+			caption.properties.langName
+		).join(', ');
+
 		return html`
 			<div class="d2l-captions-list d2l-skeletize">
 				<span class="d2l-body-small">
-					${this.localize(langterm)}: ${captions.join(', ')}
+					${this.localize(langterm)}: ${captionsCSV}
 				</span>
 			</div>
 		`;

@@ -1,6 +1,7 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { ContentFileEntity, FILE_TYPES } from 'siren-sdk/src/activities/content/ContentFileEntity.js';
 import { ContentHtmlFileEntity } from 'siren-sdk/src/activities/content/ContentHtmlFileEntity.js';
+import { ContentMediaFileCaptionsEntity } from 'siren-sdk/src/activities/content/ContentMediaFileCaptionsEntity.js';
 import { ContentMediaFileEntity } from 'siren-sdk/src/activities/content/ContentMediaFileEntity.js';
 import { fetchEntity } from '../../../state/fetch-entity.js';
 import { FileEntity } from 'siren-sdk/src/files/FileEntity.js';
@@ -31,6 +32,7 @@ export class ContentFile {
 		this.isMediaEmbedded = false;
 		this.isContentServiceResource = false;
 		this.isAdvancedEditingEnabled = false;
+		this.mediaCaptions = [];
 	}
 
 	async cancelCreate() {
@@ -64,7 +66,7 @@ export class ContentFile {
 		const fileEntityHref = entity.getFileHref();
 
 		if (!fileEntityHref) {
-			this.load(entity, fileContent, fileLocationHref);
+			await this.load(entity, fileContent, fileLocationHref);
 			return this;
 		}
 
@@ -80,11 +82,11 @@ export class ContentFile {
 		}
 
 		fileLocationHref = fileEntity.getFileLocationHref();
-		this.load(entity, fileContent, fileLocationHref);
+		await this.load(entity, fileContent, fileLocationHref);
 		return this;
 	}
 
-	load(contentFileEntity, fileContent, fileLocationHref) {
+	async load(contentFileEntity, fileContent, fileLocationHref) {
 		this._contentFileEntity = contentFileEntity;
 		this.href = contentFileEntity.self();
 		this.activityUsageHref = contentFileEntity.getActivityUsageHref();
@@ -105,6 +107,10 @@ export class ContentFile {
 			this.isMediaEmbedded = mediaFileEntity.embedMedia();
 			this.isAdvancedEditingEnabled = mediaFileEntity.isAdvancedEditingEnabled();
 			this.isContentServiceResource = mediaFileEntity.isContentServiceResource();
+			const mediaCaptionsHref = mediaFileEntity.getMediaFileCaptionsHref();
+			const sirenResponse = await fetchEntity(mediaCaptionsHref, this.token);
+			const mediaCaptionsEntity = new ContentMediaFileCaptionsEntity(sirenResponse, this.token, { remove: () => { } });
+			this.mediaCaptions = [...mediaCaptionsEntity.getMediaFileCaptions()];
 		}
 	}
 
@@ -117,7 +123,7 @@ export class ContentFile {
 		const committedContentFileEntity = await this._commit(this._contentFileEntity);
 		const editableContentFileEntity = await this._checkout(committedContentFileEntity);
 
-		this.load(editableContentFileEntity, this.fileContent, this.fileLocationHref);
+		await this.load(editableContentFileEntity, this.fileContent, this.fileLocationHref);
 		return this._contentFileEntity;
 	}
 
