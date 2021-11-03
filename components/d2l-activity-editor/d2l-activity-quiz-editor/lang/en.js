@@ -33,7 +33,7 @@ export default {
 	"autoSetGradedDescription": "Auto-publish attempt results immediately upon completion", // description for automatic grade checkbox
 	"autoSetGradedSummary": "Auto-publish results", // summary for auto set graded checkbox
 	"passwordDescription": "Only users who enter this password will be granted access to write this quiz.", // description for password input
-	"hlpSubmissionNotificationEmail": "Enter an email or multiple emails separated by a comma, to receive notifications when a quiz is attempted.", // description for email notification input
+	"hlpSubmissionNotificationEmail": "To receive notifications when a quiz is attempted, enter an email address or multiple email addresses separated by a comma.", // description for email notification input
 	"autoSetGradedAccessibleHelpText": "Get help on - Automatic Grade", // accessible help text for autoSetGraded question mark button
 	"autoSetGradedHelpDialogTitle": "Information: Auto-publish attempt results immediately upon completion", // title that appears when the autoSetGraded help dialog is rendered
 	"autoSetGradedHelpDialogConfirmationText": "OK", // copy that appears on the autoSetGraded help dialog confirmation button
@@ -147,7 +147,7 @@ export default {
 	"submissionViewButtonText": "Customize quiz results displays", // Text for the button at the bottom of the submission view container.
 	"gradeOutOf": "Grade Out Of", // Label for the grade-out-of field when creating/editing an activity
 	"submissionViewsHelpDialogTitle": "Information: Quiz results display", // Title for help dialog on submission view customization screen.
-	"submissionViewsHelpDialogParagraph1": "Quiz results display determine how learners can view their published quiz attempt results, both immediately following submission, or later when reviewing their attempt.", // Paragraph 1 for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogParagraph1": "Quiz results display determines how learners can view their published quiz attempt results, both immediately following submission, or later when reviewing their attempt.", // Paragraph 1 for help dialog on submission view customization screen.
 	"submissionViewsHelpDialogParagraph2": "The Primary View is shown to learners as the default, and Additional Views will override the Primary View based on the set parameters.", // Paragraph 2 for help dialog on submission view customization screen.
 	"submissionViewsHelpDialogConfirmation": "OK", //Text for closing the information Dialog for customization in submission views.
 	"submissionViewsDialogConfirmationMain": "OK", //Text for closing the main Dialog for customization in submission views.

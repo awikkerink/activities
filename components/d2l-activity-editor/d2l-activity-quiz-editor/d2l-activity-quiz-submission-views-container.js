@@ -2,11 +2,11 @@ import '@brightspace-ui/core/components/dialog/dialog.js';
 import './d2l-activity-quiz-submission-views-accordion-editor.js';
 import './d2l-activity-quiz-submission-views-editor.js';
 import { css, html } from 'lit-element/lit-element.js';
+import { shared as store, sharedSubmissionViews as submissionViewsStore, sharedSubmissionView as submissionViewStore } from './state/quiz-store';
 import { ActivityEditorWorkingCopyDialogMixin } from '../mixins/d2l-activity-editor-working-copy-dialog-mixin';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
-import { shared as store } from './state/quiz-store';
 
 class ActivityQuizSubmissionViewsContainer
 	extends ActivityEditorWorkingCopyDialogMixin(RtlMixin(LocalizeActivityQuizEditorMixin(MobxLitElement))) {
@@ -43,15 +43,38 @@ class ActivityQuizSubmissionViewsContainer
 		`;
 	}
 
+	async _checkinDialog(e) {
+		await this.checkinDialog(e);
+
+		if (!this.opened) { // Dialog successfully checked in
+			await this._refetchQuiz(); // Refetch quiz entity to refresh check-in action
+			this._refetchSubmissionViews(); // Refetch submission views to display updated views data in accordion
+		}
+	}
+
 	async _refetchQuiz(e) {
 		if (e && e.detail && e.detail.promise) {
 			await e.detail.promise;
 		}
 
 		const entity = store.get(this.checkedOutHref);
-
-		// Refetch entity to refresh check-in action
 		entity && entity.fetch(true);
+	}
+
+	async _refetchSubmissionViews() {
+		const entity = store.get(this.checkedOutHref);
+
+		const submissionViewsEntity = submissionViewsStore.get(entity.submissionViewsHref);
+		submissionViewsEntity && await submissionViewsEntity.fetch(true); // Wait for promise to settle in case submission views linked entities have changed
+		submissionViewsEntity && submissionViewsEntity.linkedSubmissionViews.forEach(linkedView => {
+			const linkedViewHref = linkedView.href;
+			const viewEntity = submissionViewStore.get(linkedViewHref);
+			if (viewEntity) {
+				viewEntity.fetch(true);
+			} else {
+				submissionViewStore.fetch(linkedViewHref, this.token);
+			}
+		});
 	}
 
 	_renderAccordionView() {
@@ -82,7 +105,7 @@ class ActivityQuizSubmissionViewsContainer
 				width="${width}"
 				@d2l-dialog-close="${this.handleClose}">
 				${this._renderDialogEditor()}
-				<d2l-button slot="footer" primary @click="${this.handleClose}" ?disabled="${this.isSaving}">${this.localize('submissionViewsDialogConfirmationMain')}</d2l-button>
+				<d2l-button slot="footer" primary @click="${this._checkinDialog}" ?disabled="${this.isSaving}">${this.localize('submissionViewsDialogConfirmationMain')}</d2l-button>
 				<d2l-button slot="footer" data-dialog-action ?disabled="${this.isSaving}">${this.localize('submissionViewsDialogCancelMain')}</d2l-button>
 			</d2l-dialog-fullscreen>
 		`;

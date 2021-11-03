@@ -73,6 +73,7 @@ export class QuizSubmissionView {
 		this.canUpdateTimeLimitNumber = entity.canUpdateTimeLimitNumber();
 		this.timeLimitNumber = entity.timeLimitNumber();
 		this.canUpdateAttemptRestrictionNumber = entity.canUpdateAttemptRestrictionNumber();
+		this.attemptRestrictionsOptions = entity.attemptRestrictionsOptions();
 		this.canUpdateGradeRestrictions = entity.canUpdateGradeRestrictions();
 		this.attemptRestrictionNumber = entity.attemptRestrictionNumber();
 		this.gradeRestrictions = entity.gradeRestrictions();
@@ -273,6 +274,7 @@ decorate(QuizSubmissionView, {
 	canUpdateGradeRestrictionsMinMaxGrade: observable,
 	gradeRestrictionsMinGrade: observable,
 	gradeRestrictionsMaxGrade: observable,
+	attemptRestrictionsOptions: observable,
 	// actions
 	load: action,
 	setMessage: action,
