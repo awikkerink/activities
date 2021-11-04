@@ -267,7 +267,7 @@ export class QuizSubmissionView {
 			}
 		];
 
-		this.showQuestionsOptions.forEach(showQuestionsOption => {
+		(this.showQuestionsOptions || []).forEach(showQuestionsOption => {
 			let langtermTitle = '';
 			switch (showQuestionsOption.value) {
 				case Classes.quizzes.submissionView.showQuestions.allQuestions:
