@@ -33,7 +33,7 @@ export default {
 	"autoSetGradedDescription": "Auto-publish attempt results immediately upon completion", // description for automatic grade checkbox
 	"autoSetGradedSummary": "Auto-publish results", // summary for auto set graded checkbox
 	"passwordDescription": "Only users who enter this password will be granted access to write this quiz.", // description for password input
-	"hlpSubmissionNotificationEmail": "Enter an email or multiple emails separated by a comma, to receive notifications when a quiz is attempted.", // description for email notification input
+	"hlpSubmissionNotificationEmail": "To receive notifications when a quiz is attempted, enter an email address or multiple email addresses separated by a comma.", // description for email notification input
 	"autoSetGradedAccessibleHelpText": "Get help on - Automatic Grade", // accessible help text for autoSetGraded question mark button
 	"autoSetGradedHelpDialogTitle": "Information: Auto-publish attempt results immediately upon completion", // title that appears when the autoSetGraded help dialog is rendered
 	"autoSetGradedHelpDialogConfirmationText": "OK", // copy that appears on the autoSetGraded help dialog confirmation button
@@ -213,6 +213,12 @@ export default {
 	"submissionViewReleaseDateSummary": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} }{minGrade, plural, =0 {} other {, with attempt grades above {minGrade}%}}{maxGrade, plural, =0 {} other {, with attempt grades below {maxGrade}%}}{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info
 	"submissionViewReleaseDateSummaryBothMinMaxGrades": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} } with attempt grades above {minGrade}% and below {maxGrade}%{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info with both min and max grades
 	"showOutcomesForTheDisplayedQuestionsCheckbox": "Show {outcomesTerm} for the displayed questions", // text for a checkbox which when checked, will show standards/outcomes for the displayed questions
+	"syncGradebookDescription": "Synchronize to gradebook on publish", // description for sync to gradebook checkbox
+	"syncGradebookAccessibleHelpText": "Get help on - Synchronize to Gradebook", // accessible help text for sync to gradebook question mark button
+	"syncGradebookHelpDialogTitle": "Information: Synchronize to gradebook on publish", // title that appears when the sync to gradebook help dialog is rendered
+	"syncGradebookHelpDialogConfirmationText": "OK", // copy that appears on the sync to gradebook help dialog confirmation button
+	"syncGradebookHelpDialogParagraph1": "With this feature turned on, the learner's grade will be automatically published to the gradebook once it has been evaluated.", // content for paragraph 1 of sync to gradebook help dialog
+	"syncGradebookHelpDialogParagraph2": "This requires the quiz to be connected to the gradebook.", // content for paragraph 2 of sync to gradebook help dialog
 	"showCorrectAnswers": "Show the correct answers to the displayed questions", //text for checkbox. questions refers to the selected type of questions to display (e.g. Questions answered incorrectly)
 	"showLearnersResponses": "Show the learner's responses to the displayed questions", //text for checkbox. questions refers to the selected type of questions to display (e.g. Questions answered incorrectly)
 	"showLearnersGrade": "Show the learner's grade for the displayed questions", //text for checkbox. questions refers to the selected type of questions to display (e.g. Questions answered incorrectly)
@@ -221,4 +227,4 @@ export default {
 	"showAllQuestions": "All questions", // show all questions that were part of the submitted quiz to the learner
 	"showIncorrectQuestionsOnly": "Incorrect questions only", // show only the incorrect questions that were part of the submitted quiz to the learner
 	"showCorrectQuestionsOnly": "Correct questions only" // show only the correctly answered questions that were part of the submitted quiz to the learner
-}
+};

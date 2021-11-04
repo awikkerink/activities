@@ -1,6 +1,7 @@
 import '../d2l-activity-accordion-collapse.js';
 import './d2l-activity-quiz-auto-set-graded-editor.js';
 import './d2l-activity-quiz-auto-set-graded-summary.js';
+import './d2l-activity-quiz-sync-gradebook-editor.js';
 import './d2l-activity-quiz-submission-views-container.js';
 import './d2l-activity-quiz-submission-views-summary.js';
 import '@brightspace-ui/core/components/button/button-icon.js';
@@ -19,10 +20,8 @@ import { shared as store } from './state/quiz-store';
 class ActivityQuizEvaluationAndFeedbackEditor extends ActivityEditorMixin(AsyncContainerMixin(LocalizeActivityQuizEditorMixin(SkeletonMixin(ActivityEditorDialogMixin(MobxLitElement))))) {
 
 	static get properties() {
-
 		return {
-			href: { type: String },
-			token: { type: Object },
+			activityUsageHref: { type: String }
 		};
 	}
 
@@ -61,7 +60,9 @@ class ActivityQuizEvaluationAndFeedbackEditor extends ActivityEditorMixin(AsyncC
 				<div class="d2l-editor" slot="components">
 					${this._renderAutomaticGradesEditor()}
 				</div>
-
+				<div class="d2l-editor" slot="components">
+					${this._renderSyncGradebookEditor()}
+				</div>
 				<div class="d2l-editor" slot="components">
 					${this._renderSubmissionView()}
 				</div>
@@ -110,6 +111,16 @@ class ActivityQuizEvaluationAndFeedbackEditor extends ActivityEditorMixin(AsyncC
 				href="${submissionViewsHref}"
 				.token="${this.token}">
 			</d2l-activity-quiz-submission-views-summary>
+		`;
+	}
+
+	_renderSyncGradebookEditor() {
+		return html`
+			<d2l-activity-quiz-sync-gradebook-editor
+				.quizHref="${this.href}"
+				href="${this.activityUsageHref}"
+				.token="${this.token}">
+			</d2l-activity-quiz-sync-gradebook-editor>
 		`;
 	}
 }

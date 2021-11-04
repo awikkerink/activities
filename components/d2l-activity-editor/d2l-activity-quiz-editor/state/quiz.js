@@ -37,6 +37,7 @@ export class Quiz extends WorkingCopy {
 		this.canPreviewQuiz = entity.canPreviewQuiz();
 		this.isAutoSetGradedEnabled = entity.isAutoSetGradedEnabled();
 		this.isSyncGradebookEnabled = entity.isSyncGradebookEnabled();
+		this.isSyncGradebookDefault = entity.isSyncGradebookDefault();
 		this.canEditAutoSetGraded = entity.canEditAutoSetGraded();
 		this.canEditSyncGradebook = entity.canEditSyncGradebook();
 		this.timingHref = entity.timingHref();
@@ -118,6 +119,10 @@ export class Quiz extends WorkingCopy {
 		this.isSyncGradebookEnabled = isSynced;
 	}
 
+	unsetSyncGradebookDefault() {
+		this.isSyncGradebookDefault = false;
+	}
+
 	_makeEntityData() {
 		/* NOTE: if you add fields here, please make sure you update the corresponding equals method in siren-sdk.
 					 The cancel workflow is making use of that to detect changes.
@@ -133,6 +138,7 @@ export class Quiz extends WorkingCopy {
 			notificationEmail: this.notificationEmail,
 			autoSetGraded: this.isAutoSetGradedEnabled,
 			syncGradebook: this.isSyncGradebookEnabled,
+			syncGradebookDefault: this.isSyncGradebookDefault,
 			description: this.description,
 			header: this.header,
 			footer: this.footer
@@ -166,6 +172,7 @@ decorate(Quiz, {
 	canPreviewQuiz: observable,
 	isAutoSetGradedEnabled: observable,
 	isSyncGradebookEnabled: observable,
+	isSyncGradebookDefault: observable,
 	timingHref: observable,
 	attemptsHref: observable,
 	description: observable,
@@ -189,6 +196,7 @@ decorate(Quiz, {
 	setName: action,
 	setShuffle: action,
 	setSyncGradebook: action,
+	unsetSyncGradebookDefault: action,
 	setHintsToolEnabled: action,
 	setPassword: action,
 	setDisableRightClick: action,

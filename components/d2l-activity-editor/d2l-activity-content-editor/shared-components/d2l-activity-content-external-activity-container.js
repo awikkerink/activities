@@ -35,10 +35,15 @@ class ExternalActivityContainer extends SkeletonMixin(LocalizeActivityEditorMixi
 					display: flex;
 					height: 60px;
 					justify-content: space-between;
-					margin-bottom: 6px;
 					max-height: 60px;
 					overflow: hidden;
 					padding: 0 24px;
+				}
+				.d2l-label-overflow {
+					overflow: hidden;
+					padding-right: 6px;
+					text-overflow: ellipsis;
+					white-space: nowrap;
 				}
 			`
 		];
@@ -51,7 +56,7 @@ class ExternalActivityContainer extends SkeletonMixin(LocalizeActivityEditorMixi
 	render() {
 		return html`
 			<div class="d2l-external-activity-title-container d2l-skeletize-container">
-				<label class="d2l-label-text d2l-heading-4 d2l-skeletize">
+				<label class="d2l-label-text d2l-heading-4 d2l-skeletize d2l-label-overflow">
 					${this.localize('content.externalFile')}: ${this.entityName}
 				</label>
 

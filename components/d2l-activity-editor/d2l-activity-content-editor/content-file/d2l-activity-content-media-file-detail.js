@@ -1,6 +1,6 @@
 import '../shared-components/d2l-activity-content-external-activity-container.js';
 import '@brightspace-ui-labs/media-player/media-player.js';
-import '@d2l/d2l-attachment/components/attachment';
+import '@d2l/d2l-attachment/components/attachment.js';
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../../mixins/d2l-activity-editor-mixin.js';
 import { bodySmallStyles } from '@brightspace-ui/core/components/typography/styles.js';
@@ -27,8 +27,15 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 			super.styles,
 			bodySmallStyles,
 			css`
-				.d2l-captions-list {
-					margin-bottom: 12px;
+				.d2l-captions-list-container {
+					min-height: 28px;
+				}
+				.d2l-caption {
+					display: inline-block;
+					margin: 12px 0;
+				}
+				.d2l-media-container {
+					padding-bottom: 30px;
 				}
 				.d2l-media-not-embedded {
 					margin-top: 24px;
@@ -79,7 +86,7 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 				>
 				</d2l-button-subtle>
 			</d2l-activity-content-external-activity-container>
-			<div class="d2l-media-renderer d2l-skeltize">
+			<div class="d2l-media-renderer d2l-skeletize">
 				${this._renderAudioVideo(mediaFileEntity)}
 			</div>
 		`;
@@ -119,29 +126,37 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 				new D2L.LP.Web.Http.UrlLocation(location),
 			);
 
-			dialogResult.AddListener(results => {
-				if (results && results.length) {
-					// TODO: this may change with design, confirming save, etc.
-				}
+			dialogResult.AddListener(() => {
+				this._refetchCaptions(mediaFileEntity);
 			});
 		}
 	}
 
+	async _refetchCaptions(mediaFileEntity) {
+		await mediaFileEntity.fetchCaptions();
+		return this.requestUpdate();
+	}
+
 	_renderAttachmentView(mediaFileEntity) {
 		const attachment = {
-			id: mediaFileEntity.fileLocationHref,
-			name: 'TODO',
-			url: mediaFileEntity.fileLocationHref
+			name: this._getEntityName(mediaFileEntity),
+			url: mediaFileEntity.fileLocationHref,
+			type: 'Document'
+		};
+
+		//this is only for enabling the link; actual permission checking is not handled here
+		const hasPermission = {
+			canAccess: () => true
 		};
 
 		return html`
 			<div class="d2l-media-not-embedded d2l-skeletize">
-				<d2l-labs-attachment
+				<d2l-labs-attachment-file
 					?hidden="${this.skeleton}"
-					.attachmentId="${attachment.id}"
 					.attachment="${attachment}"
+					.permission=${hasPermission}
 				>
-				</d2l-labs-attachment>
+				</d2l-labs-attachment-file>
 			</div>
 		`;
 	}
@@ -151,18 +166,15 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 			return;
 		}
 
-		// TODO: Go get captions
-		const captions = ['English'];
-
-		const captionsRender = this._renderCaptionsList('content.fileHasCaptions', captions);
-
 		const mediaRender = mediaFileEntity.isMediaEmbedded
 			? this._renderMedia(mediaFileEntity.fileLocationHref)
 			: this._renderAttachmentView(mediaFileEntity);
 
 		return html`
-			${captionsRender}
-			<div class="d2l-media">
+			<div class="d2l-captions-list-container d2l-skeletize">
+				${this._renderCaptionsList('content.fileHasCaptions', mediaFileEntity.mediaCaptions)}
+			</div>
+			<div class="d2l-media-container">
 				${mediaRender}
 			</div>
 		`;
@@ -173,11 +185,13 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 			return html``;
 		}
 
+		const captionsCSV = captions.map((caption) =>
+			caption.properties.langName
+		).join(', ');
+
 		return html`
-			<div class="d2l-captions-list d2l-skeletize">
-				<span class="d2l-body-small">
-					${this.localize(langterm)}: ${captions.join(', ')}
-				</span>
+			<div class="d2l-body-small d2l-caption">
+				${this.localize(langterm)}: ${captionsCSV}
 			</div>
 		`;
 	}
