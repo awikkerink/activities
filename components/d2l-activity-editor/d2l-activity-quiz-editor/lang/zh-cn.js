@@ -90,7 +90,7 @@ export default {
 	"ipRestrictionsTableDeleteRangeHdr": "删除", // text for IP restrictions table header delete
 	"ipRestrictionsTableDeleteRangeLabel": "删除", // label for IP restrictions delete button
 	"ipRestrictionsTableStartRangeLabel": "IP 范围开始 ｛ index ｝", // label for IP restrictions start range input
-	"ipRestrictionsTableEndRangeLabel": "IP 范围结束 ｛ INDEX ｝", // label for IP restrictions end range input
+	"ipRestrictionsTableEndRangeLabel": "IP 范围结束 ｛ index ｝", // label for IP restrictions end range input
 	"ipRestrictionsValidationError": "无效的 IP 地址格式。请更正所标出的字段。IP 地址示例：155.55.5.15。", // error message for invalid IP addresses
 	"ipRestrictions500Error": "出现错误。请重试。", // error message for IP restrictions 500 response
 	"ipRestrictionsHelpTxtConfirmation": "确定", // confirmation text on IP restrictions help dialog
@@ -209,7 +209,7 @@ export default {
 	"gradeVisibleCorrectQuestionsLearnersResponses": "等级可见，仅显示正确的问题和学员的回答", // summarize list of selected options in comma separated list
 	"noQuestions": "等级不可见，不显示问题", // summarize list of selected options in comma separated list
 	"gradeVisibleNoQuestions": "等级可见，不显示问题", // summarize list of selected options in comma separated list
-	"deleteViewWithTitle": "删除视图： ｛ message ｝", // aria-label for delete view button with view message/title
+	"deleteViewWithTitle": "删除视图: {message}", // aria-label for delete view button with view message/title
 	"submissionViewReleaseDateSummary": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} }{minGrade, plural, =0 {} other {, with attempt grades above {minGrade}%}}{maxGrade, plural, =0 {} other {, with attempt grades below {maxGrade}%}}{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info
 	"submissionViewReleaseDateSummaryBothMinMaxGrades": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} } with attempt grades above {minGrade}% and below {maxGrade}%{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info with both min and max grades
 	"showOutcomesForTheDisplayedQuestionsCheckbox": "Show {outcomesTerm} for the displayed questions" // text for a checkbox which when checked, will show standards/outcomes for the displayed questions

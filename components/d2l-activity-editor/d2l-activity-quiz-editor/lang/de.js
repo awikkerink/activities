@@ -89,8 +89,8 @@ export default {
 	"ipRestrictionsTableEndRangeHdr": "Ende des IP-Adressbereichs", // text for IP restrictions table header end
 	"ipRestrictionsTableDeleteRangeHdr": "Löschen", // text for IP restrictions table header delete
 	"ipRestrictionsTableDeleteRangeLabel": "Löschen", // label for IP restrictions delete button
-	"ipRestrictionsTableStartRangeLabel": "Start des IP-Bereichs {Index}", // label for IP restrictions start range input
-	"ipRestrictionsTableEndRangeLabel": "Ende des IP-Bereichs {Index}", // label for IP restrictions end range input
+	"ipRestrictionsTableStartRangeLabel": "Start des IP-Bereichs {index}", // label for IP restrictions start range input
+	"ipRestrictionsTableEndRangeLabel": "Ende des IP-Bereichs {index}", // label for IP restrictions end range input
 	"ipRestrictionsValidationError": "Ungültiges IP-Adressformat. Korrigieren Sie umrandete Felder. Beispiel-IP-Adresse: 155.55.5.15.", // error message for invalid IP addresses
 	"ipRestrictions500Error": "Etwas ist schiefgelaufen. Versuchen Sie es erneut.", // error message for IP restrictions 500 response
 	"ipRestrictionsHelpTxtConfirmation": "OK", // confirmation text on IP restrictions help dialog
