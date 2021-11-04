@@ -233,12 +233,7 @@ describe('Assignment ', function() {
 		const assignment = new Assignment('http://assignment/1', 'token');
 		await assignment.fetch();
 		assignment.setDefaultScoringRubric(2);
-		assignment.resetDefaultScoringRubricId(false);
-
-		expect(assignment.defaultScoringRubricId).to.equal('-1');
-
-		assignment.setDefaultScoringRubric(3);
-		assignment.resetDefaultScoringRubricId(true);
+		assignment.resetDefaultScoringRubricId();
 
 		expect(assignment.defaultScoringRubricId).to.equal('-1');
 	});
