@@ -218,7 +218,7 @@ class ActivityQuizSubmissionViewsDialogCard
 						d2l-activity-quiz-submission-views-dialog-card-message-header">
 							${this.localize('submissionViewDialogCardSubmissionViewMessageHeader')}
 						</div>
-						<div>${message}</div>
+						<div>${messageText}</div>
 					</div>
 					` : html``}
 				<div>
