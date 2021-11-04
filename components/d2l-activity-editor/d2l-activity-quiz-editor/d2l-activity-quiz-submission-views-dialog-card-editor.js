@@ -1,6 +1,7 @@
 import { css, html } from 'lit-element/lit-element.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { checkboxStyles } from '@brightspace-ui/core/components/inputs/input-checkbox';
+import { Classes } from 'siren-sdk/src/hypermedia-constants';
 import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
@@ -25,6 +26,9 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 			css`
 				.d2l-activity-quiz-submission-views-dialog-card-editor > div {
 					padding: 10px 0 20px;
+				}
+				.d2l-submission-views-dialog-card-editor-questions-dropdown {
+					margin-bottom: 20px;
 				}
 			`
 		];
@@ -56,6 +60,17 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 		});
 		this.dispatchEvent(event);
 		return event.detail.provider;
+	}
+
+	_onQuestionsDropdownChange(e) {
+		const view = store.get(this.href);
+
+		if (e.target.value === Classes.quizzes.submissionView.hideShowQuestions.hideQuestions) {
+			view && view.setHideQuestions();
+			return;
+		}
+
+		view && view.setShowQuestions(e.target.value);
 	}
 
 	_onShowAttemptScoreChange(e) {
@@ -175,13 +190,23 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 			showCorrectAnswers,
 			showLearnerResponses,
 			showQuestionScore,
-			showQuestionsType,
-			showQuestionsOptions
+			dialogQuestionsDropdownOptions
 		} = entity;
 
 		const lowerCaseOutcomesTerm = this._outcomesTerm && this._outcomesTerm.toLowerCase();
+		const canEditQuestionsDropdown = canUpdateHideShowQuestions && canUpdateShowQuestions;
 
 		return html`
+			<div class="d2l-submission-views-dialog-card-editor-questions-dropdown">
+				<select
+					class="d2l-input-select d2l-block-select"
+					@change="${this._onQuestionsDropdownChange}"
+					?disabled="${!canEditQuestionsDropdown}">
+					${dialogQuestionsDropdownOptions.map(option => html`
+						<option value="${option.value}" ?selected="${option.selected}">${this.localize(option.langtermTitle)}</option>
+					`)};
+				</select>
+			</div>
 			${ hideQuestions ? html`` : html`
 				<d2l-input-checkbox-spacer>
 					<d2l-input-checkbox

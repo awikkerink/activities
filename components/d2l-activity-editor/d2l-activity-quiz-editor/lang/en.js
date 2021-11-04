@@ -216,5 +216,9 @@ export default {
 	"showCorrectAnswers": "Show the correct answers to the displayed questions", //text for checkbox. questions refers to the selected type of questions to display (e.g. Questions answered incorrectly)
 	"showLearnersResponses": "Show the learner's responses to the displayed questions", //text for checkbox. questions refers to the selected type of questions to display (e.g. Questions answered incorrectly)
 	"showLearnersGrade": "Show the learner's grade for the displayed questions", //text for checkbox. questions refers to the selected type of questions to display (e.g. Questions answered incorrectly)
-	"showStandards": "Show standards for the displayed questions" //text for checkbox. questions refers to the selected type of questions to display (e.g. Questions answered incorrectly)
-};
+	"showStandards": "Show standards for the displayed questions", //text for checkbox. questions refers to the selected type of questions to display (e.g. Questions answered incorrectly)
+	"dontShowQuestions": "Don't show", // don't show any questions that were part of the submitted quiz to the learner
+	"showAllQuestions": "All questions", // show all questions that were part of the submitted quiz to the learner
+	"showIncorrectQuestionsOnly": "Incorrect questions only", // show only the incorrect questions that were part of the submitted quiz to the learner
+	"showCorrectQuestionsOnly": "Correct questions only" // show only the correctly answered questions that were part of the submitted quiz to the learner
+}
