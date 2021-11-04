@@ -132,12 +132,12 @@ export class QuizSubmissionView {
 
 	setShowCorrectAnswers(value) {
 		this.showCorrectAnswers = value;
-		return this.updateProperty(() => this._entity.setShowCorrectAnswers(value))
+		return this.updateProperty(() => this._entity.setShowCorrectAnswers(value));
 	}
 
 	setShowLearnerResponses(value) {
 		this.showLearnerResponses = value;
-		return this.updateProperty(() => this._entity.setShowLearnerResponses(value))
+		return this.updateProperty(() => this._entity.setShowLearnerResponses(value));
 	}
 
 	setShowQuestions(value) {
@@ -180,12 +180,12 @@ export class QuizSubmissionView {
 
 	setShowQuestionScore(value) {
 		this.showQuestionScore = value;
-		return this.updateProperty(() => this._entity.setShowQuestionScore(value))
+		return this.updateProperty(() => this._entity.setShowQuestionScore(value));
 	}
 
 	setShowStandards(value) {
 		this.showStandards = value;
-		return this.updateProperty(() => this._entity.setShowStandards(value))
+		return this.updateProperty(() => this._entity.setShowStandards(value));
 	}
 
 	setShowStatsClassAverage(value) {
@@ -269,7 +269,7 @@ export class QuizSubmissionView {
 
 		this.showQuestionsOptions.forEach(showQuestionsOption => {
 			let langtermTitle = '';
-			switch(showQuestionsOption.value) {
+			switch (showQuestionsOption.value) {
 				case Classes.quizzes.submissionView.showQuestions.allQuestions:
 					langtermTitle = 'showAllQuestions';
 					break;
@@ -285,7 +285,7 @@ export class QuizSubmissionView {
 				value: showQuestionsOption.value,
 				selected: !this.hideQuestions && showQuestionsOption.value === this.showQuestionsType,
 				langtermTitle: langtermTitle
-			}
+			};
 			options.push(option);
 		});
 
