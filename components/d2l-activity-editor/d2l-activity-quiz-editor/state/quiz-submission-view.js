@@ -142,6 +142,7 @@ export class QuizSubmissionView {
 
 	setShowQuestions(value) {
 		this.showQuestionsType = value;
+		this.hideQuestions = false;
 		this.updateProperty(() => this._entity.setShowQuestions(value));
 	}
 
