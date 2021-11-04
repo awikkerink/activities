@@ -155,6 +155,7 @@ export class AssociationCollection {
 	}
 
 	load(entity) {
+		this.loading = true;
 		this._entity = entity;
 
 		this.associationsMap = new Map();
@@ -175,9 +176,12 @@ export class AssociationCollection {
 		const associations = this.fetchAssociations();
 		const validDefaultScoringOption = associations.filter(association => (association.isAssociating || association.isAssociated) && !association.isDeleting);
 
+		const defaultScoringRubricOptionsAreReady = [];
 		for (const option of validDefaultScoringOption) {
-			this.addDefaultScoringRubricOption(option.rubricHref);
+			defaultScoringRubricOptionsAreReady.push(this.addDefaultScoringRubricOption(option.rubricHref));
 		}
+		Promise.all(defaultScoringRubricOptionsAreReady).then(
+			() => runInAction(() => this.loading = false));
 	}
 
 	removeDefaultScoringRubricOption(rubricHref, assignment, rubricIsAlsoIndirectlyAssociated) {
@@ -237,6 +241,7 @@ decorate(AssociationCollection, {
 	// props
 	associationsMap: observable,
 	defaultScoringRubricOptions: observable,
+	loading: observable,
 	// actions
 	load: action,
 	save: action,
