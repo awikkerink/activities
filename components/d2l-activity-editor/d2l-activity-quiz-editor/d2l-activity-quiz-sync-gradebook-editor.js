@@ -61,8 +61,9 @@ class ActivityQuizSyncGradebookEditor
 			this._setSyncGradebook(entity, false);
 		} else if (gradebookStatus !== GradebookStatus.NotInGradebook
 			&& !entity.isSyncGradebookEnabled
-			&& entity.isSyncGradebookDefault) {
-				this._setSyncGradebook(entity, true);
+			&& entity.isSyncGradebookDefault
+		) {
+			this._setSyncGradebook(entity, true);
 		}
 
 		return html`
@@ -129,7 +130,7 @@ class ActivityQuizSyncGradebookEditor
 
 	_setSyncGradebookCheck(event) {
 		const entity = store.get(this.quizHref);
-		this._setSyncGradebook(entity, event.target.checked)
+		this._setSyncGradebook(entity, event.target.checked);
 		entity.unsetSyncGradebookDefault();
 	}
 }
