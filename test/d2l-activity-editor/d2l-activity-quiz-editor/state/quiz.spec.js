@@ -195,11 +195,11 @@ describe('Quiz', function() {
 		expect(quiz.isSyncGradebookEnabled).to.equal(true);
 	});
 
-	it('setSyncGradebookDefault', async() => {
+	it('unsetSyncGradebookDefault', async() => {
 		const quiz = new Quiz('http://quiz/1', 'token');
 		await quiz.fetch();
 
-		quiz.setSyncGradebookDefault(false);
+		quiz.unsetSyncGradebookDefault();
 
 		expect(quiz.isSyncGradebookDefault).to.equal(false);
 	});
