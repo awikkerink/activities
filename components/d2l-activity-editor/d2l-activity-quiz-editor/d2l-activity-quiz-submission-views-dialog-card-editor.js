@@ -64,6 +64,30 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 		view && view.setShowAttemptScore(e.target.checked);
 	}
 
+	_onShowCorrectAnswersChange(e) {
+		const view = store.get(this.href);
+		if (!view) return html``;
+		view && view.setShowCorrectAnswers(e.target.checked);
+	}
+
+	_onShowLearnerResponsesChange(e) {
+		const view = store.get(this.href);
+		if (!view) return html``;
+		view && view.setShowLearnerResponses(e.target.checked);
+	}
+
+	_onShowQuestionScoreChange(e) {
+		const view = store.get(this.href);
+		if (!view) return html``;
+		view && view.setShowQuestionScore(e.target.checked);
+	}
+
+	_onShowStandardsChange(e) {
+		const view = store.get(this.href);
+		if (!view) return html``;
+		view && view.setShowStandards(e.target.checked);
+	}
+
 	_onShowStatsClassAverageChange(e) {
 		const view = store.get(this.href);
 		if (!view) return html``;
@@ -141,22 +165,53 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 		const {
 			canUpdateShowStandards,
 			showStandards,
-			isStandardsSupported
+			isStandardsSupported,
+			canUpdateHideShowQuestions,
+			hideQuestions,
+			canUpdateShowCorrectAnswers,
+			canUpdateShowLearnerResponses,
+			canUpdateShowQuestions,
+			canUpdateShowQuestionScore,
+			showCorrectAnswers,
+			showLearnerResponses,
+			showQuestionScore,
+			showQuestionsType,
+			showQuestionsOptions
 		} = entity;
 
 		const lowerCaseOutcomesTerm = this._outcomesTerm && this._outcomesTerm.toLowerCase();
 
 		return html`
-			<i>Modifying Question options not yet implemented! (US132398)</i>
-			${isStandardsSupported && lowerCaseOutcomesTerm ? html`
-				<d2l-input-checkbox
-					?checked=${showStandards}
-					@change="${this._onShowStatsClassAverageChange}"
-					ariaLabel="${this.localize('submissionViewsDialogEditorClassAverageCheckbox')}"
-					?disabled="${!canUpdateShowStandards}">
-					${this.localize('showOutcomesForTheDisplayedQuestionsCheckbox', 'outcomesTerm', lowerCaseOutcomesTerm)}
-				</d2l-input-checkbox>
-			` : html`` }
+			${ hideQuestions ? html`` : html`
+				<d2l-input-checkbox-spacer>
+					<d2l-input-checkbox
+						?checked=${showCorrectAnswers}
+						@change="${this._onShowCorrectAnswersChange}"
+						?disabled="${!canUpdateShowCorrectAnswers}">
+						${this.localize('showCorrectAnswers')}
+					</d2l-input-checkbox>
+					<d2l-input-checkbox
+						?checked=${showLearnerResponses}
+						@change="${this._onShowLearnerResponsesChange}"
+						?disabled="${!canUpdateShowLearnerResponses}">
+						${this.localize('showLearnersResponses')}
+					</d2l-input-checkbox>
+					<d2l-input-checkbox
+						?checked=${showQuestionScore}
+						@change="${this._onShowQuestionScoreChange}"
+						?disabled="${!canUpdateShowQuestionScore}">
+						${this.localize('showLearnersGrade')}
+					</d2l-input-checkbox>
+					${isStandardsSupported && lowerCaseOutcomesTerm ? html`
+						<d2l-input-checkbox
+							?checked=${showStandards}
+							@change="${this._onShowStandardsChange}"
+							?disabled="${!canUpdateShowStandards}">
+							${this.localize('showStandards')}
+						</d2l-input-checkbox>
+					` : html`` }
+				</d2l-input-checkbox-spacer>
+			`}
 		`;
 	}
 }

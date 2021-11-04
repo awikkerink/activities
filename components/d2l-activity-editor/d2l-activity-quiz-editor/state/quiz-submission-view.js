@@ -124,6 +124,16 @@ export class QuizSubmissionView {
 		return this.updateProperty(() => this._entity.setShowAttemptScore(value));
 	}
 
+	setShowCorrectAnswers(value) {
+		this.showCorrectAnswers = value;
+		return this.updateProperty(() => this._entity.setShowCorrectAnswers(value))
+	}
+
+	setShowLearnerResponses(value) {
+		this.showLearnerResponses = value;
+		return this.updateProperty(() => this._entity.setShowLearnerResponses(value))
+	}
+
 	setShowQuestionsAndCorrectAnswers(value) {
 		if (value === accordionDropdownValues.noQuestions) {
 			this.hideQuestions = true;
@@ -156,6 +166,16 @@ export class QuizSubmissionView {
 		this.showQuestionsType = newShowQuestionsValue;
 		this.showCorrectAnswers = newShowCorrectAnswersValue;
 		return this.updateProperty(() => this._entity.setShowQuestionsAndCorrectAnswers(newShowQuestionsValue, newShowCorrectAnswersValue));
+	}
+
+	setShowQuestionScore(value) {
+		this.showQuestionScore = value;
+		return this.updateProperty(() => this._entity.setShowQuestionScore(value))
+	}
+
+	setShowStandards(value) {
+		this.showStandards = value;
+		return this.updateProperty(() => this._entity.setShowStandards(value))
 	}
 
 	setShowStatsClassAverage(value) {
@@ -290,5 +310,9 @@ decorate(QuizSubmissionView, {
 	setTimeLimitNumber: action,
 	setAttemptRestrictionNumber: action,
 	setGradeRestrictions: action,
-	setMinMaxGrade: action
+	setMinMaxGrade: action,
+	setShowCorrectAnswers: action,
+	setShowLearnerResponses: action,
+	setShowQuestionScore: action,
+	setShowStandards: action
 });
