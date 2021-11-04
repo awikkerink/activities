@@ -97,7 +97,7 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 	_onShowStatsScoreDistributionChange(e) {
 		const view = store.get(this.href);
 		if (!view) return html``;
-		view && view.setShowStatsScoreDistributionChange(e.target.checked);
+		view && view.setShowStatsScoreDistribution(e.target.checked);
 	}
 
 	_renderEditView(entity) {
