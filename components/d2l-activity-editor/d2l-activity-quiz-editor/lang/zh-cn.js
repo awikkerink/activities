@@ -176,7 +176,7 @@ export default {
 	"submissionViewDialogCardSubmissionViewResponseHeader": "学员的回答", // Submission view dialog card, learners responses heading.
 	"submissionViewDialogCardButtonOptionEditView": "编辑视图", // Submission view dialog card, OK button text.
 	"submissionViewDialogCardButtonOptionDeleteView": "删除视图", // Submission view dialog card, Cancel button text.
-	"submissionViewsAccordionSummary" : "｛ count ， plural ， =1 ｛ 1 结果显示 ｝ 其他 ｛ ｛ count ｝ 结果显示 ｝ ｝", // number of submission views summary shown in collapsed accordion
+	"submissionViewsAccordionSummary" : "{count, plural, =1 {1 结果显示} other {{ count} 结果显示 }}", // number of submission views summary shown in collapsed accordion
 	"submissionViewsDialogEditorGradeCheckbox": "显示评估问题的尝试等级", // submission views dialog editor edit display attempt score checkbox
 	"statistics": "统计", //Label
 	"submissionViewsDialogEditorClassAverageCheckbox": "显示班级平均成绩", // submission views dialog editor edit display class average checkbox
