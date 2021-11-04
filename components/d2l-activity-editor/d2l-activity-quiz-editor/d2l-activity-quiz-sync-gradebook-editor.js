@@ -57,6 +57,14 @@ class ActivityQuizSyncGradebookEditor
 		const associateGradeEntity = associateGradeStore.get(activityEntity.associateGradeHref);
 		const gradebookStatus = associateGradeEntity.gradebookStatus;
 
+		if (gradebookStatus === GradebookStatus.NotInGradebook && entity.isSyncGradebookEnabled) {
+			this._setSyncGradebook(entity, false);
+		} else if (gradebookStatus !== GradebookStatus.NotInGradebook
+			&& !entity.isSyncGradebookEnabled
+			&& entity.isSyncGradebookDefault) {
+				this._setSyncGradebook(entity, true);
+		}
+
 		return html`
 			<d2l-input-checkbox-spacer
 				class="d2l-body-small">
@@ -66,7 +74,7 @@ class ActivityQuizSyncGradebookEditor
 				<d2l-input-checkbox
 					class="d2l-input-checkbox-help"
 					?checked="${entity.isSyncGradebookDefault || entity.isSyncGradebookEnabled}"
-					@change="${this._setSyncGradebook}"
+					@change="${this._setSyncGradebookCheck}"
 					ariaLabel="${this.localize('syncGradebookDescription')}"
 					?disabled="${!entity.canEditSyncGradebook || gradebookStatus === GradebookStatus.NotInGradebook}">
 
@@ -115,9 +123,14 @@ class ActivityQuizSyncGradebookEditor
 		`;
 	}
 
-	_setSyncGradebook(event) {
+	_setSyncGradebook(entity, isChecked) {
+		entity.setSyncGradebook(isChecked);
+	}
+
+	_setSyncGradebookCheck(event) {
 		const entity = store.get(this.quizHref);
-		entity.setSyncGradebook(event.target.checked);
+		this._setSyncGradebook(entity, event.target.checked)
+		entity.unsetSyncGradebookDefault();
 	}
 }
 

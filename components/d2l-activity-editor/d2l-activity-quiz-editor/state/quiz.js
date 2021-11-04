@@ -117,6 +117,9 @@ export class Quiz extends WorkingCopy {
 
 	setSyncGradebook(isSynced) {
 		this.isSyncGradebookEnabled = isSynced;
+	}
+
+	unsetSyncGradebookDefault() {
 		this.isSyncGradebookDefault = false;
 	}
 
@@ -193,6 +196,7 @@ decorate(Quiz, {
 	setName: action,
 	setShuffle: action,
 	setSyncGradebook: action,
+	unsetSyncGradebookDefault: action,
 	setHintsToolEnabled: action,
 	setPassword: action,
 	setDisableRightClick: action,
