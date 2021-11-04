@@ -12,7 +12,8 @@ class ContentEditorDueDate extends SkeletonMixin(LocalizeActivityEditorMixin(Rtl
 		return {
 			expanded: { type: Boolean },
 			skeleton: { type: Boolean },
-			_hasDatePermissions: { type: Boolean }
+			_hasDatePermissions: { type: Boolean },
+			href: { type: String }
 		};
 	}
 

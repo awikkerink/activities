@@ -111,7 +111,7 @@ export class WorkingCopy {
 		await this._saving;
 		this._saving = null;
 
-		await this.fetch();
+		await this.fetch(true);
 	}
 
 	_makeEntityData() { }
