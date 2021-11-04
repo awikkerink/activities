@@ -176,7 +176,7 @@ export default {
 	"submissionViewDialogCardSubmissionViewResponseHeader": "Ymatebion Dysgwr", // Submission view dialog card, learners responses heading.
 	"submissionViewDialogCardButtonOptionEditView": "Golygu’r Golwg", // Submission view dialog card, OK button text.
 	"submissionViewDialogCardButtonOptionDeleteView": "Dileu'r Golwg", // Submission view dialog card, Cancel button text.
-	"submissionViewsAccordionSummary" : "{count, plural, =1 {1 result display} arall {{count} result displays}}", // number of submission views summary shown in collapsed accordion
+	"submissionViewsAccordionSummary" : "{count, plural, =1 {1 result display} other {{count} result displays}}", // number of submission views summary shown in collapsed accordion
 	"submissionViewsDialogEditorGradeCheckbox": "Arddangos cynnig ar radd ar gyfer cwestiynau wedi’u gwerthuso", // submission views dialog editor edit display attempt score checkbox
 	"statistics": "Ystadegau", //Label
 	"submissionViewsDialogEditorClassAverageCheckbox": "Arddangos cyfartaledd dosbarth", // submission views dialog editor edit display class average checkbox
