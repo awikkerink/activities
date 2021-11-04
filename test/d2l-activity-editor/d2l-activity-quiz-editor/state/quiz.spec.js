@@ -35,6 +35,7 @@ describe('Quiz', function() {
 				isDisablePagerAndAlertsEnabled: () => false,
 				isAutoSetGradedEnabled: () => false,
 				isSyncGradebookEnabled: () => false,
+				isSyncGradebookDefault: () => true,
 				canEditAutoSetGraded: () => true,
 				canEditSyncGradebook: () => true,
 				canEditNotificationEmail: () => true,
@@ -89,6 +90,7 @@ describe('Quiz', function() {
 		expect(quiz.isPreventMovingBackwardsEnabled).to.equal(false);
 		expect(quiz.isAutoSetGradedEnabled).to.equal(false);
 		expect(quiz.isSyncGradebookEnabled).to.equal(false);
+		expect(quiz.isSyncGradebookDefault).to.equal(true);
 		expect(quiz.notificationEmail).to.equal('hello@d2l.com');
 		expect(QuizEntity.mock.calls[0][0]).to.equal(sirenEntity);
 		expect(QuizEntity.mock.calls[0][1]).to.equal('token');
@@ -191,6 +193,15 @@ describe('Quiz', function() {
 		quiz.setSyncGradebook(true);
 
 		expect(quiz.isSyncGradebookEnabled).to.equal(true);
+	});
+
+	it('setSyncGradebookDefault', async() => {
+		const quiz = new Quiz('http://quiz/1', 'token');
+		await quiz.fetch();
+
+		quiz.setSyncGradebookDefault(false);
+
+		expect(quiz.isSyncGradebookDefault).to.equal(false);
 	});
 
 	it('setDescription', async() => {
