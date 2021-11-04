@@ -83,6 +83,7 @@ export class QuizSubmissionView {
 
 		// run after rest of entity properties are loaded
 		this.accordionDropdownOptions = this._generateAccordionDropdownOptions();
+		this.dialogQuestionsDropdownOptions = this._generateDialogQuestionsDropdownOptions();
 	}
 
 	setAttemptRestrictionNumber(value) {
@@ -98,6 +99,11 @@ export class QuizSubmissionView {
 	setGradeRestrictions(value) {
 		this.attemptRestrictionNumber = value;
 		return this.updateProperty(() => this._entity.setGradeRestrictions(value));
+	}
+
+	setHideQuestions() {
+		this.hideQuestions = true;
+		return this.updateProperty(() => this._entity.setHideShowQuestions(true));
 	}
 
 	setIpRestrictions(value) {
@@ -124,10 +130,25 @@ export class QuizSubmissionView {
 		return this.updateProperty(() => this._entity.setShowAttemptScore(value));
 	}
 
+	setShowCorrectAnswers(value) {
+		this.showCorrectAnswers = value;
+		return this.updateProperty(() => this._entity.setShowCorrectAnswers(value));
+	}
+
+	setShowLearnerResponses(value) {
+		this.showLearnerResponses = value;
+		return this.updateProperty(() => this._entity.setShowLearnerResponses(value));
+	}
+
+	setShowQuestions(value) {
+		this.showQuestionsType = value;
+		this.hideQuestions = false;
+		this.updateProperty(() => this._entity.setShowQuestions(value));
+	}
+
 	setShowQuestionsAndCorrectAnswers(value) {
 		if (value === accordionDropdownValues.noQuestions) {
-			this.hideQuestions = true;
-			return this.updateProperty(() => this._entity.setHideShowQuestions(true));
+			return this.setHideQuestions();
 		}
 
 		let newShowQuestionsValue;
@@ -156,6 +177,16 @@ export class QuizSubmissionView {
 		this.showQuestionsType = newShowQuestionsValue;
 		this.showCorrectAnswers = newShowCorrectAnswersValue;
 		return this.updateProperty(() => this._entity.setShowQuestionsAndCorrectAnswers(newShowQuestionsValue, newShowCorrectAnswersValue));
+	}
+
+	setShowQuestionScore(value) {
+		this.showQuestionScore = value;
+		return this.updateProperty(() => this._entity.setShowQuestionScore(value));
+	}
+
+	setShowStandards(value) {
+		this.showStandards = value;
+		return this.updateProperty(() => this._entity.setShowStandards(value));
 	}
 
 	setShowStatsClassAverage(value) {
@@ -227,6 +258,40 @@ export class QuizSubmissionView {
 		];
 		return options;
 	}
+
+	_generateDialogQuestionsDropdownOptions() {
+		const options = [
+			{
+				value: Classes.quizzes.submissionView.hideShowQuestions.hideQuestions,
+				selected: this.hideQuestions,
+				langtermTitle: 'dontShowQuestions'
+			}
+		];
+
+		(this.showQuestionsOptions || []).forEach(showQuestionsOption => {
+			let langtermTitle = '';
+			switch (showQuestionsOption.value) {
+				case Classes.quizzes.submissionView.showQuestions.allQuestions:
+					langtermTitle = 'showAllQuestions';
+					break;
+				case Classes.quizzes.submissionView.showQuestions.incorrectQuestions:
+					langtermTitle = 'showIncorrectQuestionsOnly';
+					break;
+				case Classes.quizzes.submissionView.showQuestions.correctQuestions:
+					langtermTitle = 'showCorrectQuestionsOnly';
+					break;
+			}
+
+			const option = {
+				value: showQuestionsOption.value,
+				selected: !this.hideQuestions && showQuestionsOption.value === this.showQuestionsType,
+				langtermTitle: langtermTitle
+			};
+			options.push(option);
+		});
+
+		return options;
+	}
 }
 
 decorate(QuizSubmissionView, {
@@ -275,6 +340,7 @@ decorate(QuizSubmissionView, {
 	gradeRestrictionsMinGrade: observable,
 	gradeRestrictionsMaxGrade: observable,
 	attemptRestrictionsOptions: observable,
+	dialogQuestionsDropdownOptions: observable,
 	// actions
 	load: action,
 	setMessage: action,
@@ -290,5 +356,11 @@ decorate(QuizSubmissionView, {
 	setTimeLimitNumber: action,
 	setAttemptRestrictionNumber: action,
 	setGradeRestrictions: action,
-	setMinMaxGrade: action
+	setMinMaxGrade: action,
+	setShowCorrectAnswers: action,
+	setShowLearnerResponses: action,
+	setShowQuestionScore: action,
+	setShowStandards: action,
+	setShowQuestions: action,
+	setHideQuestions: action
 });
