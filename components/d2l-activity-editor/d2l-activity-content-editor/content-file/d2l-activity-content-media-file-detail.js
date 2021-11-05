@@ -1,4 +1,6 @@
 import '../shared-components/d2l-activity-content-external-activity-container.js';
+import '@brightspace/content-components/capture/d2l-capture-producer/d2l-capture-producer.js';
+import '@brightspace-ui/core/components/dialog/dialog-fullscreen.js';
 import '@brightspace-ui-labs/media-player/media-player.js';
 import '@d2l/d2l-attachment/components/attachment.js';
 import { css, html } from 'lit-element/lit-element.js';
@@ -103,12 +105,9 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 
 	async _openDialog() {
 		const mediaFileEntity = contentFileStore.getContentFileActivity(this.href);
-
-		// TODO: check if file is contentService, sent as a property
 		if (mediaFileEntity.isContentServiceResource && mediaFileEntity.isAdvancedEditingEnabled) {
-			// eslint-disable-next-line no-console
-			console.log('opening new dialog');
-			// TODO: Media Team will add in the new dialog here
+			const producerDialog = this.shadowRoot.querySelector('.d2l-producer-dialog');
+			producerDialog.opened = true;
 		} else {
 			const subTitlePath = `?subtitlePath=${mediaFileEntity.orgUnitPath}&subtitleFile=${mediaFileEntity.mediaFileName}`;
 			const location = `/d2l/le/content/video/subtitles/${this.orgUnitId}/OpenSubtitleDialog${subTitlePath}`;
@@ -169,6 +168,7 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 			<div class="d2l-media-container">
 				${mediaRender}
 			</div>
+			${this._renderProducer(mediaFileEntity)}
 		`;
 	}
 
@@ -194,6 +194,18 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 				src=${src}
 			>
 			</d2l-labs-media-player>
+		`;
+	}
+
+	_renderProducer(mediaFileEntity) {
+		return html`
+			<d2l-dialog-fullscreen class="d2l-producer-dialog" title-text="${this.localize('content.advancedEditing')}">
+				<d2l-capture-producer
+					endpoint="${mediaFileEntity.contentServiceEndpoint}"
+					tenant-id="${mediaFileEntity.tenantId}"
+					content-id="${mediaFileEntity.contentServiceContentId}"
+				></d2l-capture-producer>
+			</d2l-dialog-fullscreen>
 		`;
 	}
 }
