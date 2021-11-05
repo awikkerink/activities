@@ -95,16 +95,6 @@ class ActivityQuizEvaluationAndFeedbackEditor extends ActivityEditorMixin(AsyncC
 		`;
 	}
 
-	_renderSyncGradebookSummary() {
-		return html`
-			<d2l-activity-quiz-sync-gradebook-summary
-				.quizHref="${this.href}"
-				href="${this.activityUsageHref}"
-				.token="${this.token}">
-			</d2l-activity-quiz-sync-gradebook-summary>
-		`;
-	}
-
 	_renderSubmissionView() {
 		return html`
 			<d2l-activity-quiz-submission-views-container
@@ -133,6 +123,16 @@ class ActivityQuizEvaluationAndFeedbackEditor extends ActivityEditorMixin(AsyncC
 				href="${this.activityUsageHref}"
 				.token="${this.token}">
 			</d2l-activity-quiz-sync-gradebook-editor>
+		`;
+	}
+
+	_renderSyncGradebookSummary() {
+		return html`
+			<d2l-activity-quiz-sync-gradebook-summary
+				.quizHref="${this.href}"
+				href="${this.activityUsageHref}"
+				.token="${this.token}">
+			</d2l-activity-quiz-sync-gradebook-summary>
 		`;
 	}
 }
