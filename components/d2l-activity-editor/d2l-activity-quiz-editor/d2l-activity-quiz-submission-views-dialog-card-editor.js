@@ -118,7 +118,7 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 	_renderEditView(entity) {
 		const {
 			canUpdateMessage,
-			message,
+			messageHtml,
 			canUpdateShowAttemptScore,
 			showAttemptScore,
 			canUpdateShowStatsClassAverage,
@@ -133,7 +133,7 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewMessageHeader')}
 					</div>
-					<textarea ?disabled="${!canUpdateMessage}">TEMPORARY - ${message}</textarea>
+					<textarea ?disabled="${!canUpdateMessage}">TEMPORARY - ${messageHtml}</textarea>
 				</div>
 				<div>
 					<div class="d2l-label-text">

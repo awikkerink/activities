@@ -48,7 +48,8 @@ export class QuizSubmissionView {
 		this.showStatsClassAverage = entity.showStatsClassAverage();
 		this.showStatsScoreDistribution = entity.showStatsScoreDistribution();
 		this.canUpdateMessage = entity.canUpdateMessage();
-		this.message = entity.message();
+		this.messageText = entity.messageText();
+		this.messageHtml = entity.messageHtml();
 		this.isMessageRichtext = entity.isMessageRichtext();
 		this.canUpdateHideShowQuestions = entity.canUpdateHideShowQuestions();
 		this.hideQuestions = entity.hideQuestions();
@@ -307,7 +308,8 @@ decorate(QuizSubmissionView, {
 	showStatsClassAverage: observable,
 	showStatsScoreDistribution: observable,
 	canUpdateMessage: observable,
-	message: observable,
+	messageText: observable,
+	messageHtml: observable,
 	isMessageRichtext: observable,
 	canUpdateHideShowQuestions: observable,
 	hideQuestions: observable,
