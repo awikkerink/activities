@@ -55,7 +55,7 @@ class ActivityQuizSyncGradebookEditor
 		}
 
 		const associateGradeEntity = associateGradeStore.get(activityEntity.associateGradeHref);
-		const gradebookStatus = associateGradeEntity.gradebookStatus;
+		const gradebookStatus = associateGradeEntity && associateGradeEntity.gradebookStatus;
 
 		if (gradebookStatus === GradebookStatus.NotInGradebook && entity.isSyncGradebookEnabled) {
 			this._setSyncGradebook(entity, false);
