@@ -219,6 +219,7 @@ export default {
 	"syncGradebookHelpDialogConfirmationText": "OK", // copy that appears on the sync to gradebook help dialog confirmation button
 	"syncGradebookHelpDialogParagraph1": "With this feature turned on, the learner's grade will be automatically published to the gradebook once it has been evaluated.", // content for paragraph 1 of sync to gradebook help dialog
 	"syncGradebookHelpDialogParagraph2": "This requires the quiz to be connected to the gradebook.", // content for paragraph 2 of sync to gradebook help dialog
+	"syncGradebookSummary": "Sync to gradebook", // summary for sync to gradebook checkbox
 	"showCorrectAnswers": "Show the correct answers to the displayed questions", //text for checkbox. questions refers to the selected type of questions to display (e.g. Questions answered incorrectly)
 	"showLearnersResponses": "Show the learner's responses to the displayed questions", //text for checkbox. questions refers to the selected type of questions to display (e.g. Questions answered incorrectly)
 	"showLearnersGrade": "Show the learner's grade for the displayed questions", //text for checkbox. questions refers to the selected type of questions to display (e.g. Questions answered incorrectly)
