@@ -47,7 +47,7 @@ export default {
 	"disableRightClickAccessibleHelpText": "الحصول على تعليمات حول - تعطيل النقر بزر الماوس الأيمن", // accessible help text for disable right click question mark button
 	"disableRightClickHelpDialogTitle": "المعلومات: تعطيل النقر بزر الماوس الأيمن", // title that appears when the disable right click help dialog is rendered
 	"disableRightClickHelpDialogParagraph1": "تمنع هذه الميزة المتعلّمين من طباعة أسئلة الاختبار بالنقر بزر الماوس الأيمن فوق سؤال أثناء إجراء محاولة. مع ذلك، سيظل بإمكان المتعلّمين التقاط الشاشة الخاصة بالاختبار من خلال تقنيات أخرى خارج المستعرض.", // content for paragraph 1 of disable right click help dialog
-	"disableRightClickHelpDialogParagraph2": "سيتم حظر بعض مهام سير عمل إمكانية الوصول لأنه لا يمكن للمتعلّم نسخ نص السؤال ولصقه.", // content for paragraph 2 of disable right click help dialog
+	"disableRightClickHelpDialogParagraph2": "سيتم حظر مهام سير عمل معينة لإمكانية الوصول لأنه لا يمكن للمتعلّم نسخ نص السؤال ولصقه. يمكن منح المستخدمين الفرديين إمكانية النقر بزر الماوس الأيمن فوق اختبار حتى عندما تكون هذه الميزة ممكّنة لاختبار من خلال تمكين \"السماح دائمًا بالنقر بزر الماوس الأيمن\" في تسهيلات ذلك المستخدم.", // content for paragraph 2 of disable right click help dialog
 	"disableRightClickHelpDialogConfirmationText": "موافق", // copy that appears on the disable right click help dialog confirmation button
 	"manageTimingDialogConfirmationText": "موافق", // copy that appears on the Timing dialog confirmation button
 	"manageTimingDialogCancelText": "إلغاء", // copy that appears on the Timing dialog cancel button
@@ -88,6 +88,9 @@ export default {
 	"ipRestrictionsTableStartRangeHdr": "بداية نطاق IP", // text for IP restrictions table header start
 	"ipRestrictionsTableEndRangeHdr": "نهاية نطاق IP", // text for IP restrictions table header end
 	"ipRestrictionsTableDeleteRangeHdr": "حذف", // text for IP restrictions table header delete
+	"ipRestrictionsTableDeleteRangeLabel": "حذف", // label for IP restrictions delete button
+	"ipRestrictionsTableStartRangeLabel": "{index} بدء نطاق IP", // label for IP restrictions start range input
+	"ipRestrictionsTableEndRangeLabel": "{index} نهاية نطاق IP", // label for IP restrictions end range input
 	"ipRestrictionsValidationError": "تنسيق عنوان IP غير صالح. يُرجى تصحيح الحقول الموضّحة. مثال على عنوان IP:‏ 155.55.5.15.", // error message for invalid IP addresses
 	"ipRestrictions500Error": "حدث خطأ. يُرجى المحاولة مرة أخرى.", // error message for IP restrictions 500 response
 	"ipRestrictionsHelpTxtConfirmation": "موافق", // confirmation text on IP restrictions help dialog
@@ -97,8 +100,8 @@ export default {
 	"hdrIpRestrictionsHelpDialogP3": "لتضمين عنوان IP فردي مقبول، حدد قيمة بداية نطاق IP فقط.", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "ملاحظة: يجب أن تكون قيمة بداية نطاق IP أصغر من قيمة نهاية نطاق IP.", // IP restrictions help dialog paragraph 4
 	"hdrSpecialAccess": "الوصول الخاص", // special access heading,
-	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
-	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
+	"hlpSpecialAccess": "يسمح الوصول الخاص بتوفير الاختبارات لمجموعة محددة من المستخدمين فقط أو تواريخ الاستحقاق الفردية لمستخدمين معيّنين.", // special access help
+	"specialAccessRestrictedText": "يمكن فقط للمستخدمين الذين يتمتعون بإمكانية وصول خاص رؤية هذا الاختبار", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "الحصول على تعليمات حول - قيود IP", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "شروط المحاولات", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "ليتأهل المتعلّم لإجراء محاولة أخرى، يجب تعيين حد أدنى و/أو حد أقصى لقيمة النسبة المئوية بين 0 إلى 100 والتي يجب بلوغها في المحاولة السابقة.", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -138,9 +141,76 @@ export default {
 	"createNewLabel": "إنشاء عناصر جديدة", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "إضافة العناصر الموجودة", // Label for button to open menu for adding pre-existing items to the quiz.
 	"addQuestionsLabel": "سؤال جديد", // Label for button to open menu for adding new questions to the quiz.
-	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading1": "عند النشر، عرض على المتعلّمين:", // Label for checkbox in submission view container.
 	"submissionViewHeading2": "و", // Label for submission view dropdown in submission view container.
-	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
-	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
-	"gradeOutOf": "العلامة من أصل" // Label for the grade-out-of field when creating/editing an activity
+	"submissionViewCheckboxLabel": "علامة المحاولة", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "تخصيص طرق عرض نتائج الاختبار", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "العلامة من أصل", // Label for the grade-out-of field when creating/editing an activity
+	"submissionViewsHelpDialogTitle": "المعلومات: عرض نتائج الاختبار", // Title for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogParagraph1": "يحدد عرض نتائج الاختبار كيف يمكن للمتعلّمين عرض نتائج محاولة الاختبار المنشورة، فور إرسالها أو لاحقًا عند مراجعة محاولتهم.", // Paragraph 1 for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogParagraph2": "يظهر العرض الأساسي للمتعلّمين كافتراضي، وستتجاوز طرق العرض الإضافية طريقة العرض الأساسي استنادًا إلى المعلمات التي تم تعيينها.", // Paragraph 2 for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogConfirmation": "موافق", //Text for closing the information Dialog for customization in submission views.
+	"submissionViewsDialogConfirmationMain": "موافق", //Text for closing the main Dialog for customization in submission views.
+	"submissionViewsDialogCancelMain": "إلغاء", // Text for cancelling changes on the main Dialog for customization in submission views.
+	"submissionViewsAccordionDropdownNoQuestions": "ما من أسئلة", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownIncorrectQuestionsWithCorrectAnswers": "الأسئلة غير الصحيحة فقط، مع الإجابات الصحيحة", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownIncorrectQuestionsWithoutCorrectAnswers": "الأسئلة غير الصحيحة فقط، من دون الإجابات الصحيحة", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownAllQuestionsWithCorrectAnswers": "كل الأسئلة، مع الإجابات الصحيحة", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownAllQuestionsWithoutCorrectAnswers": "كل الأسئلة، من دون الإجابات الصحيحة", // Option in dropdown to decide what to display to learner.
+	"primaryView": "طريقة العرض الأساسية", // Label
+	"additionalViewComesIntoEffect": "Additional view comes into effect:", // Label
+	"submissionViewDialogCardAttemptScoreTrueText": "تم عرض علامة المحاولة للأسئلة التي تم تقييمها", // Submission view dialog card, text appearing when attempted grades are displayed.
+	"submissionViewDialogCardAttemptScoreFalseText": "لم يتم العرض", // Submission view dialog card, text appearing when attempted grades are not displayed.
+	"submissionViewDialogCardQuestionsNotDisplayed": "لم يتم العرض", // Submission view dialog card, text appearing when no questions are displayed.
+	"submissionViewDialogCardQuestionsAllDisplayed": "تم عرض كل الأسئلة", // Submission view dialog card, text appearing when all questions are displayed.
+	"submissionViewDialogCardQuestionsIncorrectOnlyDisplayed": "تم عرض الأسئلة غير الصحيحة فقط", // Submission view dialog card, text appearing when incorrect questions only are displayed.
+	"submissionViewDialogCardQuestionsCorrectOnlyDisplayed": "تم عرض الأسئلة الصحيحة فقط", // Submission view dialog card, text appearing when correct questions only are displayed.
+	"submissionViewDialogCardShowAnswersTrueText": "تم عرض كل الإجابات", // Submission view dialog card, text appearing when all answers are displayed.
+	"submissionViewDialogCardShowAnswersFalseText": "لم يتم العرض", // Submission view dialog card, text appearing when not all answers are displayed.
+	"submissionViewDialogCardShowResponsesTrueText": "تم العرض", // Submission view dialog card, text appearing when learners responses are displayed.
+	"submissionViewDialogCardShowResponsesFalseText": "لم يتم العرض", // Submission view dialog card, text appearing when learners responses are not displayed.
+	"submissionViewDialogCardSubmissionViewMessageHeader": "الرسالة", // Submission view dialog card, message heading.
+	"submissionViewDialogCardSubmissionViewGradeHeader": "العلامة", // Submission view dialog card, grade heading.
+	"submissionViewDialogCardSubmissionViewQuestionsHeader": "الأسئلة", // Submission view dialog card, questions heading.
+	"submissionViewDialogCardSubmissionViewAnswerHeader" : "الإجابات", // Submission view dialog card, answers heading.
+	"submissionViewDialogCardSubmissionViewResponseHeader": "إجابات المتعلّم", // Submission view dialog card, learners responses heading.
+	"submissionViewDialogCardButtonOptionEditView": "تحرير العرض", // Submission view dialog card, OK button text.
+	"submissionViewDialogCardButtonOptionDeleteView": "حذف العرض", // Submission view dialog card, Cancel button text.
+	"submissionViewsAccordionSummary" : "{count, plural, =1 {عرض نتيجة واحدة} other‏ {{count} من طرق عرض النتائج}}", // number of submission views summary shown in collapsed accordion
+	"submissionViewsDialogEditorGradeCheckbox": "عرض علامة المحاولة للأسئلة التي تم تقييمها", // submission views dialog editor edit display attempt score checkbox
+	"statistics": "الإحصاءات", //Label
+	"submissionViewsDialogEditorClassAverageCheckbox": "عرض متوسط الفئة", // submission views dialog editor edit display class average checkbox
+	"submissionViewsDialogEditorGradeDistributionCheckbox": "عرض توزيع العلامات", // submission views dialog editor edit display grade distribution checkbox
+	"quizSubmissionViewsDialogCardUpdate": "تحديث", // submission views dialog card Update button
+	"quizSubmissionViewsDialogCardCancel": "إلغاء", // submission views dialog card Cancel button
+	"allQuestionsWithCorrectAnswers": "العلامة غير مرئية، عرض كل الأسئلة مع الإجابات الصحيحة", // summarize list of selected options in comma separated list
+	"allQuestions": "العلامة غير مرئية، عرض كل الأسئلة", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsWithCorrectAnswers": "العلامة مرئية، عرض كل الأسئلة مع الإجابات الصحيحة", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestions": "العلامة مرئية، عرض كل الأسئلة", // summarize list of selected options in comma separated list
+	"allQuestionsWithCorrectAnswersLearnersResponses": "العلامة غير مرئية، عرض كل الأسئلة مع الإجابات الصحيحة، وإجابات المتعلّم", // summarize list of selected options in comma separated list
+	"allQuestionsLearnersResponses": "العلامة غير مرئية، عرض كل الأسئلة، وإجابات المتعلّم", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsWithCorrectAnswersLearnersResponses": "العلامة مرئية، عرض كل الأسئلة مع الإجابات الصحيحة، وإجابات المتعلّم", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsLearnersResponses": "العلامة مرئية، عرض كل الأسئلة، وإجابات المتعلّم", // summarize list of selected options in comma separated list
+	"incorrectQuestionsWithCorrectAnswers": "العلامة غير مرئية، عرض الأسئلة غير الصحيحة فقط مع الإجابات الصحيحة", // summarize list of selected options in comma separated list
+	"incorrectQuestions": "العلامة غير مرئية، عرض الأسئلة غير الصحيحة فقط", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsWithCorrectAnswers": "العلامة مرئية، عرض الأسئلة غير الصحيحة فقط مع الإجابات الصحيحة", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestions": "العلامة مرئية، عرض الأسئلة غير الصحيحة فقط", // summarize list of selected options in comma separated list
+	"incorrectQuestionsWithCorrectAnswersLearnersResponses": "العلامة غير مرئية، عرض الأسئلة غير الصحيحة فقط مع الإجابات الصحيحة، وإجابات المتعلّم", // summarize list of selected options in comma separated list
+	"incorrectQuestionsLearnersResponses": "العلامة غير مرئية، عرض الأسئلة غير الصحيحة فقط، وإجابات المتعلّم", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsWithCorrectAnswersLearnersResponses": "العلامة مرئية، عرض الأسئلة غير الصحيحة فقط مع الإجابات الصحيحة، وإجابات المتعلّم", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsLearnersResponses": "العلامة مرئية، عرض الأسئلة غير الصحيحة فقط، وإجابات المتعلّم", // summarize list of selected options in comma separated list
+	"correctQuestionsWithCorrectAnswers": "العلامة غير مرئية، عرض الأسئلة الصحيحة فقط مع الإجابات الصحيحة", // summarize list of selected options in comma separated list
+	"correctQuestions": "العلامة غير مرئية، عرض الأسئلة الصحيحة فقط", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsWithCorrectAnswers": "العلامة مرئية، عرض الأسئلة الصحيحة فقط مع الإجابات الصحيحة", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestions": "العلامة مرئية، عرض الأسئلة الصحيحة فقط", // summarize list of selected options in comma separated list
+	"correctQuestionsWithCorrectAnswersLearnersResponses": "العلامة غير مرئية، عرض الأسئلة الصحيحة فقط مع الإجابات الصحيحة، وإجابات المتعلّم", // summarize list of selected options in comma separated list
+	"correctQuestionsLearnersResponses": "العلامة غير مرئية، عرض الأسئلة الصحيحة فقط، وإجابات المتعلّم", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsWithCorrectAnswersLearnersResponses": "العلامة مرئية، عرض الأسئلة الصحيحة فقط مع الإجابات الصحيحة، وإجابات المتعلّم", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsLearnersResponses": "العلامة مرئية، عرض الأسئلة الصحيحة فقط، وإجابات المتعلّم", // summarize list of selected options in comma separated list
+	"noQuestions": "العلامة غير مرئية، عدم عرض الأسئلة", // summarize list of selected options in comma separated list
+	"gradeVisibleNoQuestions": "العلامة مرئية، عدم عرض الأسئلة", // summarize list of selected options in comma separated list
+	"deleteViewWithTitle": "حذف العرض: {message}", // aria-label for delete view button with view message/title
+	"submissionViewReleaseDateSummary": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} }{minGrade, plural, =0 {} other {, with attempt grades above {minGrade}%}}{maxGrade, plural, =0 {} other {, with attempt grades below {maxGrade}%}}{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info
+	"submissionViewReleaseDateSummaryBothMinMaxGrades": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} } with attempt grades above {minGrade}% and below {maxGrade}%{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info with both min and max grades
+	"showOutcomesForTheDisplayedQuestionsCheckbox": "Show {outcomesTerm} for the displayed questions" // text for a checkbox which when checked, will show standards/outcomes for the displayed questions
 };

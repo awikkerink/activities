@@ -47,7 +47,7 @@ export default {
 	"disableRightClickAccessibleHelpText": "Mynnwch help ar - Analluogi Clic De", // accessible help text for disable right click question mark button
 	"disableRightClickHelpDialogTitle": "Gwybodaeth: Analluogi Clic De", // title that appears when the disable right click help dialog is rendered
 	"disableRightClickHelpDialogParagraph1": "Mae’r nodwedd hon yn gwahardd dysgwyr rhag argraffu cwestiynau cwis trwy de-glicio ar gwestiwn tra bo cais ar y gweill. Ond bydd dysgwyr yn dal i allu tynnu sgrinlun o’r cwis trwy dechnolegau eraill y tu allan i’r porwr.", // content for paragraph 1 of disable right click help dialog
-	"disableRightClickHelpDialogParagraph2": "Bydd llifoedd gwaith hygyrchedd penodol yn cael eu rhwystro oherwydd ni all y dysgwr gopïo a gludo testun y cwestiwn.", // content for paragraph 2 of disable right click help dialog
+	"disableRightClickHelpDialogParagraph2": "Bydd llifoedd gwaith hygyrchedd penodol yn cael eu rhwystro oherwydd ni all y dysgwr gopïo a gludo testun y cwestiwn. Gellir rhoi'r gallu i ddefnyddwyr unigol dde-glicio ar gwis hyd yn oed pan fydd y nodwedd hon wedi’i galluogi ar gyfer cwis trwy alluogi “Caniatáu De-glicio Bob Amser” yn Narpariaethau’r defnyddiwr hwnnw.", // content for paragraph 2 of disable right click help dialog
 	"disableRightClickHelpDialogConfirmationText": "IAWN", // copy that appears on the disable right click help dialog confirmation button
 	"manageTimingDialogConfirmationText": "IAWN", // copy that appears on the Timing dialog confirmation button
 	"manageTimingDialogCancelText": "Canslo", // copy that appears on the Timing dialog cancel button
@@ -88,6 +88,9 @@ export default {
 	"ipRestrictionsTableStartRangeHdr": "Cychwyn Ystod IP", // text for IP restrictions table header start
 	"ipRestrictionsTableEndRangeHdr": "Diwedd Ystod IP", // text for IP restrictions table header end
 	"ipRestrictionsTableDeleteRangeHdr": "Dileu", // text for IP restrictions table header delete
+	"ipRestrictionsTableDeleteRangeLabel": "Dileu", // label for IP restrictions delete button
+	"ipRestrictionsTableStartRangeLabel": "Dechrau ystod Eiddo Deallusol {index}", // label for IP restrictions start range input
+	"ipRestrictionsTableEndRangeLabel": "Diwedd ystod Eiddo Deallusol {index}", // label for IP restrictions end range input
 	"ipRestrictionsValidationError": "Fformat cyfeiriad IP annilys. Cywirwch y meysydd a amlinellir. Cyfeiriad IP enghreifftiol: 155.55.5.15.", // error message for invalid IP addresses
 	"ipRestrictions500Error": "Aeth rhywbeth o’i le. Rhowch gynnig arall arni.", // error message for IP restrictions 500 response
 	"ipRestrictionsHelpTxtConfirmation": "IAWN", // confirmation text on IP restrictions help dialog
@@ -97,8 +100,8 @@ export default {
 	"hdrIpRestrictionsHelpDialogP3": "I gynnwys cyfeiriad IP a dderbynir gan unigolyn, dim ond nodi’r gwerth Cychwyn Ystod IP.", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "Sylwer: Rhaid i’r gwerth Cychwyn Ystod IP fod yn llai na’r gwerth Diwedd Ystod IP.", // IP restrictions help dialog paragraph 4
 	"hdrSpecialAccess": "Mynediad Arbennig", // special access heading,
-	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
-	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
+	"hlpSpecialAccess": "Mae Mynediad Arbennig yn caniatáu i gwisiau fod ar gael i grŵp dethol o ddefnyddwyr yn unig neu ddyddiadau dyledus unigol ar gyfer defnyddwyr penodol.", // special access help
+	"specialAccessRestrictedText": "Dim ond defnyddwyr â mynediad arbennig sy’n gallu gweld y cwis hwn", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "Mynnwch help ar - Cyfyngiadau IP", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "Amodau Ceisiadau", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "Er mwyn i ddysgwr fod yn gymwys ar gyfer cais arall, gosodwch werth canrannol lleiaf a/neu uchaf rhwng 0 a 100 y mae’n rhaid ei gyflawni ar y cais flaenorol.", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -138,9 +141,76 @@ export default {
 	"createNewLabel": "Creu Newydd", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "Ychwanegu’r Presennol", // Label for button to open menu for adding pre-existing items to the quiz.
 	"addQuestionsLabel": "Cwestiwn Newydd", // Label for button to open menu for adding new questions to the quiz.
-	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading1": "Wrth gyhoeddi, arddangos i ddysgwyr:", // Label for checkbox in submission view container.
 	"submissionViewHeading2": "a", // Label for submission view dropdown in submission view container.
-	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
-	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
-	"gradeOutOf": "Gradd Allan O" // Label for the grade-out-of field when creating/editing an activity
+	"submissionViewCheckboxLabel": "Rhoi cynnig ar radd", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "Personoleiddio arddangosiadau canlyniadau cwis", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "Gradd Allan O", // Label for the grade-out-of field when creating/editing an activity
+	"submissionViewsHelpDialogTitle": "Gwybodaeth: Arddangos canlyniadau cwis", // Title for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogParagraph1": "Mae arddangos canlyniadau cwisiau yn pennu sut gall dysgwyr weld canlyniadau eu cynnig ar gwis a gyhoeddwyd, yn syth wedi cyflwyno neu’n hwyrach wrth adolygu eu cynnig.", // Paragraph 1 for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogParagraph2": "Dengys y Prif Olwg i ddysgwyr fel yr opsiwn diofyn, a bydd Golygon Ychwanegol yn disodli’r Prif Olwg yn seiliedig ar baramedrau gosod.", // Paragraph 2 for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogConfirmation": "IAWN", //Text for closing the information Dialog for customization in submission views.
+	"submissionViewsDialogConfirmationMain": "IAWN", //Text for closing the main Dialog for customization in submission views.
+	"submissionViewsDialogCancelMain": "Canslo", // Text for cancelling changes on the main Dialog for customization in submission views.
+	"submissionViewsAccordionDropdownNoQuestions": "Dim cwestiynau", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownIncorrectQuestionsWithCorrectAnswers": "Cwestiynau anghywir yn unig, gydag atebion cywir", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownIncorrectQuestionsWithoutCorrectAnswers": "Cwestiynau anghywir yn unig, heb atebion cywir", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownAllQuestionsWithCorrectAnswers": "Pob cwestiwn, gydag atebion cywir", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownAllQuestionsWithoutCorrectAnswers": "Pob cwestiwn, heb atebion cywir", // Option in dropdown to decide what to display to learner.
+	"primaryView": "Prif Olwg", // Label
+	"additionalViewComesIntoEffect": "Additional view comes into effect:", // Label
+	"submissionViewDialogCardAttemptScoreTrueText": "Rhoi cynnig ar radd ar gyfer cwestiynau wedi’u gwerthuso", // Submission view dialog card, text appearing when attempted grades are displayed.
+	"submissionViewDialogCardAttemptScoreFalseText": "Heb ei arddangos", // Submission view dialog card, text appearing when attempted grades are not displayed.
+	"submissionViewDialogCardQuestionsNotDisplayed": "Heb ei arddangos", // Submission view dialog card, text appearing when no questions are displayed.
+	"submissionViewDialogCardQuestionsAllDisplayed": "Yr holl gwestiynau wedi’u harddangos", // Submission view dialog card, text appearing when all questions are displayed.
+	"submissionViewDialogCardQuestionsIncorrectOnlyDisplayed": "Arddangoswyd y rhai anghywir yn unig", // Submission view dialog card, text appearing when incorrect questions only are displayed.
+	"submissionViewDialogCardQuestionsCorrectOnlyDisplayed": "Arddangoswyd y rhai cywir yn unig", // Submission view dialog card, text appearing when correct questions only are displayed.
+	"submissionViewDialogCardShowAnswersTrueText": "Arddangoswyd yr holl atebion", // Submission view dialog card, text appearing when all answers are displayed.
+	"submissionViewDialogCardShowAnswersFalseText": "Heb ei arddangos", // Submission view dialog card, text appearing when not all answers are displayed.
+	"submissionViewDialogCardShowResponsesTrueText": "Wedi’i arddangos", // Submission view dialog card, text appearing when learners responses are displayed.
+	"submissionViewDialogCardShowResponsesFalseText": "Heb ei arddangos", // Submission view dialog card, text appearing when learners responses are not displayed.
+	"submissionViewDialogCardSubmissionViewMessageHeader": "Neges", // Submission view dialog card, message heading.
+	"submissionViewDialogCardSubmissionViewGradeHeader": "Gradd", // Submission view dialog card, grade heading.
+	"submissionViewDialogCardSubmissionViewQuestionsHeader": "Cwestiynau", // Submission view dialog card, questions heading.
+	"submissionViewDialogCardSubmissionViewAnswerHeader" : "Atebion", // Submission view dialog card, answers heading.
+	"submissionViewDialogCardSubmissionViewResponseHeader": "Ymatebion Dysgwr", // Submission view dialog card, learners responses heading.
+	"submissionViewDialogCardButtonOptionEditView": "Golygu’r Golwg", // Submission view dialog card, OK button text.
+	"submissionViewDialogCardButtonOptionDeleteView": "Dileu'r Golwg", // Submission view dialog card, Cancel button text.
+	"submissionViewsAccordionSummary" : "{count, plural, =1 {1 result display} other {{count} result displays}}", // number of submission views summary shown in collapsed accordion
+	"submissionViewsDialogEditorGradeCheckbox": "Arddangos cynnig ar radd ar gyfer cwestiynau wedi’u gwerthuso", // submission views dialog editor edit display attempt score checkbox
+	"statistics": "Ystadegau", //Label
+	"submissionViewsDialogEditorClassAverageCheckbox": "Arddangos cyfartaledd dosbarth", // submission views dialog editor edit display class average checkbox
+	"submissionViewsDialogEditorGradeDistributionCheckbox": "Arddangos dosbarthiad gradd", // submission views dialog editor edit display grade distribution checkbox
+	"quizSubmissionViewsDialogCardUpdate": "Diweddaru", // submission views dialog card Update button
+	"quizSubmissionViewsDialogCardCancel": "Canslo", // submission views dialog card Cancel button
+	"allQuestionsWithCorrectAnswers": "Gradd yn anweladwy, dangos yr holl gwestiynau gydag atebion cywir", // summarize list of selected options in comma separated list
+	"allQuestions": "Gradd yn anweladwy, dangos yr holl gwestiynau", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsWithCorrectAnswers": "Gradd yn weladwy, dangos yr holl gwestiynau gydag atebion cywir", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestions": "Gradd yn weladwy, dangos yr holl gwestiynau", // summarize list of selected options in comma separated list
+	"allQuestionsWithCorrectAnswersLearnersResponses": "Gradd yn anweladwy, dangos yr holl gwestiynau gydag atebion cywir ac ymatebion dysgwyr", // summarize list of selected options in comma separated list
+	"allQuestionsLearnersResponses": "Gradd yn anweladwy, dangos yr holl gwestiynau ac ymatebion dysgwyr", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsWithCorrectAnswersLearnersResponses": "Gradd yn weladwy, dangos yr holl gwestiynau gydag atebion cywir ac ymatebion dysgwyr", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsLearnersResponses": "Gradd yn weladwy, dangos yr holl gwestiynau ac ymatebion dysgwyr", // summarize list of selected options in comma separated list
+	"incorrectQuestionsWithCorrectAnswers": "Gradd yn anweladwy, dangos cwestiynau anghywir yn unig gydag atebion cywir", // summarize list of selected options in comma separated list
+	"incorrectQuestions": "Gradd yn anweladwy, dangos cwestiynau anghywir yn unig", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsWithCorrectAnswers": "Gradd yn weladwy, dangos cwestiynau anghywir yn unig gydag atebion cywir", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestions": "Gradd yn weladwy, dangos cwestiynau anghywir yn unig", // summarize list of selected options in comma separated list
+	"incorrectQuestionsWithCorrectAnswersLearnersResponses": "Gradd yn anweladwy, dangos cwestiynau anghywir yn unig gydag ymatebion cywir, ac ymatebion dysgwyr", // summarize list of selected options in comma separated list
+	"incorrectQuestionsLearnersResponses": "Gradd yn anweladwy, dangos cwestiynau anghywir yn unig ac ymatebion dysgwyr", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsWithCorrectAnswersLearnersResponses": "Gradd yn weladwy, dangos cwestiynau anghywir yn unig gydag ymatebion cywir, ac ymatebion dysgwyr", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsLearnersResponses": "Gradd yn weladwy, dangos cwestiynau anghywir yn unig ac ymatebion dysgwyr", // summarize list of selected options in comma separated list
+	"correctQuestionsWithCorrectAnswers": "Gradd yn anweladwy, dangos cwestiynau cywir yn unig gydag ymatebion cywir", // summarize list of selected options in comma separated list
+	"correctQuestions": "Gradd yn anweladwy, dangos cwestiynau cywir yn unig", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsWithCorrectAnswers": "Gradd yn weladwy, dangos cwestiynau cywir yn unig gydag ymatebion cywir", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestions": "Gradd yn weladwy, dangos cwestiynau cywir yn unig", // summarize list of selected options in comma separated list
+	"correctQuestionsWithCorrectAnswersLearnersResponses": "Gradd yn anweladwy, dangos cwestiynau cywir yn unig gydag ymatebion cywir, ac ymatebion dysgwyr", // summarize list of selected options in comma separated list
+	"correctQuestionsLearnersResponses": "Gradd yn anweladwy, dangos cwestiynau cywir yn unig ac ymatebion dysgwyr", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsWithCorrectAnswersLearnersResponses": "Gradd yn weladwy, dangos cwestiynau cywir yn unig gydag ymatebion cywir, ac ymatebion dysgwyr", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsLearnersResponses": "Gradd yn weladwy, dangos cwestiynau cywir yn unig ac ymatebion dysgwyr", // summarize list of selected options in comma separated list
+	"noQuestions": "Gradd yn anweladwy, peidiwch â dangos cwestiynau", // summarize list of selected options in comma separated list
+	"gradeVisibleNoQuestions": "Gradd yn weladwy, peidiwch â dangos cwestiynau", // summarize list of selected options in comma separated list
+	"deleteViewWithTitle": "Dileu golwg: {message}", // aria-label for delete view button with view message/title
+	"submissionViewReleaseDateSummary": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} }{minGrade, plural, =0 {} other {, with attempt grades above {minGrade}%}}{maxGrade, plural, =0 {} other {, with attempt grades below {maxGrade}%}}{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info
+	"submissionViewReleaseDateSummaryBothMinMaxGrades": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} } with attempt grades above {minGrade}% and below {maxGrade}%{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info with both min and max grades
+	"showOutcomesForTheDisplayedQuestionsCheckbox": "Show {outcomesTerm} for the displayed questions" // text for a checkbox which when checked, will show standards/outcomes for the displayed questions
 };
