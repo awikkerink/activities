@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "Gestionar asignación del tiempo", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "Intentos y progreso", //attempts/completion accordion header
 	"subHdrPagingTools": "Paginación", // Title for paging tools
-	"subHdrShuffleQuiz": "Ordenar el cuestionario de forma aleatoria",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "Ordenar el cuestionario de forma aleatoria", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "Mostrar", // Title for display tools
 	"shuffleDescription": "Ordene aleatoriamente las preguntas y secciones del cuestionario. No se aplica en cascada a las subsecciones.", // description for question shuffling behavior
 	"shuffleSummary": "Ordenar preguntas de forma aleatoria", // summary text for shuffle quiz questions

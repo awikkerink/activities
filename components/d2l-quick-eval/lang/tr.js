@@ -81,4 +81,4 @@ export default {
    "tryAgain" : "Tekrar Dene",
    "viewBy" : "Görüntüleme ölçütü:",
    "yes" : "Evet"
-}
+};

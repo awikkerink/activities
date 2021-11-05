@@ -25,4 +25,4 @@ export const val = {
   upcoming: "예정된 작업", // Indicates that the below list of activites are upcoming (have a due due or end date that is in the future)
   viewAllWork: "모든 작업 보기", // Button text displayed in 'Empty View' when user can navigate to full page view to see all work
   xWeeksClear: "{count, plural, =1 {1주} other {{count}주}} 완료!" // 'Empty state' - Header when widget has no activities to display within the next x weeks
-}
+};

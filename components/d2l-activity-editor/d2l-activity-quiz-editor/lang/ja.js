@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "タイミングの管理", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "試行と完了", //attempts/completion accordion header
 	"subHdrPagingTools": "ページング", // Title for paging tools
-	"subHdrShuffleQuiz": "クイズのシャッフル",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "クイズのシャッフル", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "表示", // Title for display tools
 	"shuffleDescription": "クイズ内の質問やセクションをシャッフルします。サブセクションにカスケードしません。", // description for question shuffling behavior
 	"shuffleSummary": "質問のシャッフル", // summary text for shuffle quiz questions

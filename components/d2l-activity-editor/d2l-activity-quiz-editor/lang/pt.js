@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "Gerenciar tempo", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "Tentativas e conclusões", //attempts/completion accordion header
 	"subHdrPagingTools": "Paginação", // Title for paging tools
-	"subHdrShuffleQuiz": "Embaralhar o questionário",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "Embaralhar o questionário", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "Exibir", // Title for display tools
 	"shuffleDescription": "Embaralhar perguntas e seções do questionário. Não é colocado em cascata nas subseções.", // description for question shuffling behavior
 	"shuffleSummary": "Embaralhar as perguntas", // summary text for shuffle quiz questions

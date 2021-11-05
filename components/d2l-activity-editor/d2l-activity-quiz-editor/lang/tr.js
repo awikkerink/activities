@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "Zamanlamayı Yönet", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "Denemeler ve Tamamlamalar", //attempts/completion accordion header
 	"subHdrPagingTools": "Sayfalama", // Title for paging tools
-	"subHdrShuffleQuiz": "Sınavı karıştır",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "Sınavı karıştır", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "Görüntüle", // Title for display tools
 	"shuffleDescription": "Sınav sorularını ve bölümlerini karıştır. Alt bölümleri basamaklandırmaz.", // description for question shuffling behavior
 	"shuffleSummary": "Soruları karıştır", // summary text for shuffle quiz questions

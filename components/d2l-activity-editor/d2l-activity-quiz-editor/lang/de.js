@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "Fristen verwalten", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "Versuche und Abschluss", //attempts/completion accordion header
 	"subHdrPagingTools": "Seitenverwaltung", // Title for paging tools
-	"subHdrShuffleQuiz": "Test zufällig anordnen",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "Test zufällig anordnen", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "Anzeige", // Title for display tools
 	"shuffleDescription": "Zufällige Anordnung von Fragen und Abschnitten des Tests. Keine kaskadierende Einteilung in Unterabschnitte.", // description for question shuffling behavior
 	"shuffleSummary": "Fragen zufällig anordnen", // summary text for shuffle quiz questions

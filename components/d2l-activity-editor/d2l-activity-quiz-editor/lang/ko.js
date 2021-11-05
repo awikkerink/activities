@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "타이밍 관리", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "시도 및 완료", //attempts/completion accordion header
 	"subHdrPagingTools": "페이지", // Title for paging tools
-	"subHdrShuffleQuiz": "퀴즈 무작위로 섞기",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "퀴즈 무작위로 섞기", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "표시", // Title for display tools
 	"shuffleDescription": "퀴즈 내의 질문 및 섹션을 무작위로 섞습니다. 하위 섹션으로 단계식 구성하지 않습니다.", // description for question shuffling behavior
 	"shuffleSummary": "질문 무작위로 섞기", // summary text for shuffle quiz questions

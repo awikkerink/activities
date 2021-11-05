@@ -3,4 +3,4 @@
 export default {
   "enroll": "Tilmeld",
   "clickToViewActivity": "Klik for at få vist aktivitet"
-}
+};

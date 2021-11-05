@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "Hantera tidmätning", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "Försök och slutföranden", //attempts/completion accordion header
 	"subHdrPagingTools": "Sidindelning", // Title for paging tools
-	"subHdrShuffleQuiz": "Blanda förhör",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "Blanda förhör", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "Visa", // Title for display tools
 	"shuffleDescription": "Blanda frågor och avsnitt i förhöret. Är inte sammanhängande med undersektioner.", // description for question shuffling behavior
 	"shuffleSummary": "Blanda frågor", // summary text for shuffle quiz questions

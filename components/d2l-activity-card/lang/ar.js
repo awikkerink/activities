@@ -3,4 +3,4 @@
 export default {
   "course" : "المقرر التعليمي",
   "learning-path" : "مسار التعلّم"
-}
+};

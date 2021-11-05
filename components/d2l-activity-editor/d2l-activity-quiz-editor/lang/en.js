@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "Manage Timing", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "Attempts & Completion", //attempts/completion accordion header
 	"subHdrPagingTools": "Paging", // Title for paging tools
-	"subHdrShuffleQuiz": "Shuffle Quiz",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "Shuffle Quiz", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "Display", // Title for display tools
 	"shuffleDescription": "Shuffle questions and sections within the quiz. Does not cascade to sub-sections.", // description for question shuffling behavior
 	"shuffleSummary": "Shuffle questions", // summary text for shuffle quiz questions

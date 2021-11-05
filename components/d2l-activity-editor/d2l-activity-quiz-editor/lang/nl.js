@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "Timing beheren", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "Pogingen & voltooiing", //attempts/completion accordion header
 	"subHdrPagingTools": "Paginering", // Title for paging tools
-	"subHdrShuffleQuiz": "Test schudden",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "Test schudden", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "Weergave", // Title for display tools
 	"shuffleDescription": "De de vragen en onderdelen binnen de test schudden. Niet trapsgewijs naar subsecties.", // description for question shuffling behavior
 	"shuffleSummary": "De vragen schudden", // summary text for shuffle quiz questions

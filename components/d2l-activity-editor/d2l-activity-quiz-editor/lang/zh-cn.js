@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "管理定时设置", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "尝试并完成", //attempts/completion accordion header
 	"subHdrPagingTools": "寻呼", // Title for paging tools
-	"subHdrShuffleQuiz": "随机打乱测验顺序",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "随机打乱测验顺序", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "显示", // Title for display tools
 	"shuffleDescription": "随机打乱测验中的各问题和各部分。请勿级联至子章节。", // description for question shuffling behavior
 	"shuffleSummary": "随机打乱问题", // summary text for shuffle quiz questions

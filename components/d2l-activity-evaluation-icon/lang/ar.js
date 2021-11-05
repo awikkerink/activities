@@ -2,4 +2,4 @@
 
 export default {
   "draftInfo" : "تم حفظ التقييم كمسودة"
-}
+};

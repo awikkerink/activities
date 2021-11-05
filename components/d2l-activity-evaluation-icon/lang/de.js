@@ -2,4 +2,4 @@
 
 export default {
   "draftInfo" : "Bewertung als Entwurf gespeichert"
-}
+};

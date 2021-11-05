@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "إدارة التوقيت", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "المحاولات والإكمال", //attempts/completion accordion header
 	"subHdrPagingTools": "ترحيل الصفحات", // Title for paging tools
-	"subHdrShuffleQuiz": "التبديل العشوائي للاختبار",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "التبديل العشوائي للاختبار", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "عرض", // Title for display tools
 	"shuffleDescription": "التبديل العشوائي للأسئلة والأقسام في الاختبار. لا يتم التسلسل إلى الأقسام الفرعية.", // description for question shuffling behavior
 	"shuffleSummary": "التبديل العشوائي للأسئلة", // summary text for shuffle quiz questions

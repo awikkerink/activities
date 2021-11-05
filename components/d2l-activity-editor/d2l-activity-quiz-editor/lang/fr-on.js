@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "Gérer le délai", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "Tentatives et achèvement", //attempts/completion accordion header
 	"subHdrPagingTools": "Pagination", // Title for paging tools
-	"subHdrShuffleQuiz": "Modifier l’ordre du questionnaire",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "Modifier l’ordre du questionnaire", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "Affichage", // Title for display tools
 	"shuffleDescription": "Modifier l’ordre des questions et des sections dans le questionnaire. Ne s’applique pas aux sous-sections.", // description for question shuffling behavior
 	"shuffleSummary": "Modifier l’ordre des questions", // summary text for shuffle quiz questions
@@ -139,11 +139,11 @@ export default {
 	"addExistingLabel": "En ajouter une existante", // Label for button to open menu for adding pre-existing items to the quiz.
 	"addQuestionsLabel": "Nouvelle question", // Label for button to open menu for adding new questions to the quiz.
 	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
-	"submissionViewHeading2": "et", // Label for submission view dropdown in submission view container. 
-	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container. 
-	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container. 
+	"submissionViewHeading2": "et", // Label for submission view dropdown in submission view container.
+	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
 	"gradeOutOf": "Note d’appréciation sur", // Label for the grade-out-of field when creating/editing an activity
-	"submissionViewsHelpDialogTitle": "Information: Quiz results display", // Title for help dialog on submission view customization screen. 
+	"submissionViewsHelpDialogTitle": "Information: Quiz results display", // Title for help dialog on submission view customization screen.
 	"submissionViewsHelpDialogParagraph1": "Quiz results display determine how learners can view their published quiz attempt results, both immediately following submission, or later when reviewing their attempt.", // Paragraph 1 for help dialog on submission view customization screen.
 	"submissionViewsHelpDialogParagraph2": "The Primary View is shown to learners as the default, and Additional Views will override the Primary View based on the set parameters.", // Paragraph 2 for help dialog on submission view customization screen.
 	"submissionViewsHelpDialogConfirmation": "OK", //Text for closing the information Dialog for customization in submission views.

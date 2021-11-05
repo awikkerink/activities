@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "管理計時", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "嘗試與完成", //attempts/completion accordion header
 	"subHdrPagingTools": "分頁", // Title for paging tools
-	"subHdrShuffleQuiz": "隨機測驗",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "隨機測驗", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "顯示", // Title for display tools
 	"shuffleDescription": "隨機呈現測驗中的問題及章節。不會沿襲至子章節。", // description for question shuffling behavior
 	"shuffleSummary": "隨機呈現問題", // summary text for shuffle quiz questions

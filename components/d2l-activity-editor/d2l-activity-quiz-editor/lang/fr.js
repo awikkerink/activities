@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "Gérer le délai", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "Tentatives et achèvement", //attempts/completion accordion header
 	"subHdrPagingTools": "Pagination", // Title for paging tools
-	"subHdrShuffleQuiz": "Modifier l’ordre du questionnaire",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "Modifier l’ordre du questionnaire", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "Affichage", // Title for display tools
 	"shuffleDescription": "Modifier l’ordre des questions et des sections dans le questionnaire. Ne s’applique pas aux sous-sections.", // description for question shuffling behavior
 	"shuffleSummary": "Modifier l’ordre des questions", // summary text for shuffle quiz questions

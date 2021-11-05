@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "Gérer la durée", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "Tentatives et achèvement", //attempts/completion accordion header
 	"subHdrPagingTools": "Mise en page", // Title for paging tools
-	"subHdrShuffleQuiz": "Mélanger le questionnaire",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "Mélanger le questionnaire", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "Afficher", // Title for display tools
 	"shuffleDescription": "Mélangez les questions et les sections dans le questionnaire. Ne s’applique pas aux sous-sections.", // description for question shuffling behavior
 	"shuffleSummary": "Mélanger les questions", // summary text for shuffle quiz questions

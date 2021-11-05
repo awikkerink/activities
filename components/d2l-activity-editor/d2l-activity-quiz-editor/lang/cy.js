@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "Rheoli Amseri", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "Ceisiadau a Chwblhad", //attempts/completion accordion header
 	"subHdrPagingTools": "tudalennau", // Title for paging tools
-	"subHdrShuffleQuiz": "Cymysgu'r Cwis",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "Cymysgu'r Cwis", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "Arddangos", // Title for display tools
 	"shuffleDescription": "Cymysgu cwestiynau ac adrannau o fewn y cwis. Nid yw’n rhaeadru i is-adrannau.", // description for question shuffling behavior
 	"shuffleSummary": "Cymysgu cwestiynau", // summary text for shuffle quiz questions

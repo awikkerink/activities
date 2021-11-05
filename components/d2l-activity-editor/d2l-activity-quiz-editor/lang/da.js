@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "Administrer timing", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "Forsøg og fuldførelse", //attempts/completion accordion header
 	"subHdrPagingTools": "Sideindstillinger", // Title for paging tools
-	"subHdrShuffleQuiz": "Bland eksaminationen",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "Bland eksaminationen", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "Visning", // Title for display tools
 	"shuffleDescription": "Bland eksaminationens spørgsmål og afsnit. Gælder ikke undersektioner.", // description for question shuffling behavior
 	"shuffleSummary": "Bland spørgsmålene", // summary text for shuffle quiz questions

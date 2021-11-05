@@ -2,4 +2,4 @@
 
 export default {
   "draftInfo" : "Değerlendirme taslak olarak kaydedildi"
-}
+};
