@@ -68,6 +68,7 @@ export class QuizSubmissionView {
 		this.canUpdateTimeLimit = entity.canUpdateTimeLimit();
 		this.attemptRestrictions = entity.attemptRestrictions();
 		this.ipRestrictions = entity.ipRestrictions();
+		this.isIpRestrictionsSupported = entity.isIpRestrictionsSupported();
 		this.timeLimit = entity.timeLimit();
 		this.canUpdateReleaseDate = entity.canUpdateReleaseDate();
 		this.releaseDate = entity.releaseDate();
@@ -329,6 +330,7 @@ decorate(QuizSubmissionView, {
 	canUpdateTimeLimit: observable,
 	attemptRestrictions: observable,
 	ipRestrictions: observable,
+	isIpRestrictionsSupported: observable,
 	timeLimit: observable,
 	canUpdateReleaseDate: observable,
 	releaseDate: observable,

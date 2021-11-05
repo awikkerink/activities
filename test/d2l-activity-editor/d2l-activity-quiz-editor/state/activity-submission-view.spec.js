@@ -54,6 +54,7 @@ describe('Activity Submission View', function() {
 			canUpdateTimeLimit: () => true,
 			attemptRestrictions: () => true,
 			ipRestrictions: () => true,
+			isIpRestrictionsSupported: () => false,
 			timeLimit: () => true,
 			canUpdateReleaseDate: () => true,
 			releaseDate: () => '2021-01-03T04:59:59.000Z',
@@ -111,6 +112,7 @@ describe('Activity Submission View', function() {
 			canUpdateTimeLimit: () => false,
 			attemptRestrictions: () => true,
 			ipRestrictions: () => true,
+			isIpRestrictionsSupported: () => false,
 			timeLimit: () => true,
 			canUpdateReleaseDate: () => false,
 			releaseDate: () => '2021-01-03T04:59:59.000Z',
@@ -180,6 +182,7 @@ describe('Activity Submission View', function() {
 			expect(submissionView.canUpdateTimeLimit).to.be.true;
 			expect(submissionView.attemptRestrictions).to.be.true;
 			expect(submissionView.ipRestrictions).to.be.true;
+			expect(submissionView.isIpRestrictionsSupported).to.be.false;
 			expect(submissionView.timeLimit).to.be.true;
 			expect(submissionView.canUpdateReleaseDate).to.be.true;
 			expect(submissionView.releaseDate).to.equal('2021-01-03T04:59:59.000Z');
@@ -242,6 +245,7 @@ describe('Activity Submission View', function() {
 			expect(submissionView.canUpdateTimeLimit).to.be.false;
 			expect(submissionView.attemptRestrictions).to.be.true;
 			expect(submissionView.ipRestrictions).to.be.true;
+			expect(submissionView.isIpRestrictionsSupported).to.be.false;
 			expect(submissionView.timeLimit).to.be.true;
 			expect(submissionView.canUpdateReleaseDate).to.be.false;
 			expect(submissionView.releaseDate).to.equal('2021-01-03T04:59:59.000Z');
