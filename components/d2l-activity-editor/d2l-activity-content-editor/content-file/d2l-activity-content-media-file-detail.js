@@ -75,7 +75,7 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
             <slot name="title"></slot>
             <slot name="due-date"></slot>
 			<d2l-activity-content-external-activity-container
-				.entityName=${this._getEntityName(mediaFileEntity)}
+				.entityName=${mediaFileEntity.mediaFileName}
 				?skeleton=${this.skeleton}
 			>
 				<d2l-button-subtle
@@ -101,14 +101,6 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 		await mediaFileEntity.saveMediaFile();
 	}
 
-	_getEntityName(mediaFileEntity) {
-		if (!mediaFileEntity) {
-			return '';
-		}
-
-		return decodeURI(mediaFileEntity.fileLocationHref.split('/').pop());
-	}
-
 	async _openDialog() {
 		const mediaFileEntity = contentFileStore.getContentFileActivity(this.href);
 
@@ -118,7 +110,7 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 			console.log('opening new dialog');
 			// TODO: Media Team will add in the new dialog here
 		} else {
-			const subTitlePath = `?subtitlePath=${mediaFileEntity.orgUnitPath}&subtitleFile=${this._getEntityName(mediaFileEntity)}`;
+			const subTitlePath = `?subtitlePath=${mediaFileEntity.orgUnitPath}&subtitleFile=${mediaFileEntity.mediaFileName}`;
 			const location = `/d2l/le/content/video/subtitles/${this.orgUnitId}/OpenSubtitleDialog${subTitlePath}`;
 
 			const dialogResult = await D2L.LP.Web.UI.Desktop.MasterPages.Dialog.Open(
@@ -139,7 +131,7 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 
 	_renderAttachmentView(mediaFileEntity) {
 		const attachment = {
-			name: this._getEntityName(mediaFileEntity),
+			name: mediaFileEntity.mediaFileName,
 			url: mediaFileEntity.fileLocationHref,
 			type: 'Document'
 		};

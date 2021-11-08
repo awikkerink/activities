@@ -32,6 +32,7 @@ export class ContentFile {
 		this.isMediaEmbedded = false;
 		this.isContentServiceResource = false;
 		this.isAdvancedEditingEnabled = false;
+		this.mediaFileName = '';
 		this.mediaCaptionsHref = null;
 		this.mediaCaptions = [];
 	}
@@ -114,6 +115,7 @@ export class ContentFile {
 			this.isMediaEmbedded = mediaFileEntity.embedMedia();
 			this.isAdvancedEditingEnabled = mediaFileEntity.isAdvancedEditingEnabled();
 			this.isContentServiceResource = mediaFileEntity.isContentServiceResource();
+			this.mediaFileName = mediaFileEntity.mediaFileName();
 			this.mediaCaptionsHref = mediaFileEntity.getMediaFileCaptionsHref();
 			await this.fetchCaptions();
 		}
