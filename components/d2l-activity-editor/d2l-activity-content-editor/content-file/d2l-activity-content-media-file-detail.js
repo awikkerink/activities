@@ -40,6 +40,9 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 				.d2l-media-not-embedded {
 					margin-top: 24px;
 				}
+				.d2l-action-button {
+					padding-right: 4%;
+				}
 			`
 		];
 	}
@@ -81,7 +84,7 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 				<d2l-button-subtle
 					slot="action-button"
 					text=${this.localize('content.advancedEditing')}
-					class="d2l-skeletize"
+					class="d2l-skeletize d2l-action-button"
 					@click=${this._openDialog}
 				>
 				</d2l-button-subtle>

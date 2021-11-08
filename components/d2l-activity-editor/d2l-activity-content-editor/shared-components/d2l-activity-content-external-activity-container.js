@@ -37,11 +37,11 @@ class ExternalActivityContainer extends SkeletonMixin(LocalizeActivityEditorMixi
 					justify-content: space-between;
 					max-height: 60px;
 					overflow: hidden;
-					padding: 0 24px;
+					width: 104%;
 				}
 				.d2l-label-overflow {
 					overflow: hidden;
-					padding-right: 6px;
+					padding-left: 6px;
 					text-overflow: ellipsis;
 					white-space: nowrap;
 				}
