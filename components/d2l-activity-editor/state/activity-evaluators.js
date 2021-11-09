@@ -8,7 +8,10 @@ configureMobx({ enforceActions: 'observed' });
 const 
 	evaluatorClass = "candidate-evaluator",
 	selectedClass = "selected",
-	userRel = "https://activities.api.brightspace.com/rels/user";
+	userRel = "https://activities.api.brightspace.com/rels/user",
+	updateAction = "update",
+	clearStateAction = "clear-state",
+	toggleSelectionAction = "toggle-selection";
 
 export class ActivityEvaluators {
 	constructor(href, token) {
@@ -16,7 +19,6 @@ export class ActivityEvaluators {
 		this.token = token;
 		this._entity = null;
 		this._candidates = new Map();
-		this.hasUpdateAction = false;	
 	}
 
 	async fetch(bypassCache) {
@@ -41,17 +43,15 @@ export class ActivityEvaluators {
 	}
 
 	async load(entity, loadCandidates = false) {
-		
-		console.log("load");
 
 		this._entity = entity;
 
 		if(loadCandidates){
-			await this.loadCandidateEvaluators();		
+			await this._loadCandidateEvaluators();		
 		}
 	}
 
-	async loadCandidateEvaluators()
+	async _loadCandidateEvaluators()
 	{
 		let candidateEntities = this._entity.getSubEntitiesByClasses([evaluatorClass]);
 
@@ -81,10 +81,8 @@ export class ActivityEvaluators {
 									? userSirenEntity.getSubEntityByRel(Rels.orgDefinedId).properties.orgDefinedId
 									: null
 				});	
-			}
-			
+			}			
 		}
-
 	}
 
     get isEnabled() {
@@ -101,15 +99,7 @@ export class ActivityEvaluators {
 	}
 
 	get countSelected() {
-		let count = 0;
-		
-		this._candidates.forEach((value) => {
-			if (value.isSelected) {
-				count++;
-			}
-		});
-
-		return count;
+		return this.getSelected.length;
 	}
 
 	get getSelected(){
@@ -138,7 +128,11 @@ export class ActivityEvaluators {
 
 		let evaluatorEntity = this._getEvaluatorEntity(userHref);
 
-		let action = evaluatorEntity.getActionByName("toggle-selection");
+		if (!evaluatorEntity.hasActionByName(toggleSelectionAction)) {
+			return;
+		}
+
+		let action = evaluatorEntity.getActionByName(toggleSelectionAction);
 
 		const resp = await performSirenAction(this.token, action, undefined, true);
 
@@ -155,22 +149,41 @@ export class ActivityEvaluators {
 			});
 	}
 
-	async save(){
+	async update(){
+
+		if (!this._entity.hasActionByName(updateAction)){
+			return;
+		}
+
+		let action = this._entity.getActionByName(updateAction);
+
+		const resp = await performSirenAction(this.token, action, undefined, true);
+
+		await this.load(resp, true);		
 
 	}
 
-	async cancel(){
+	async clear(){
 
+		if (!this._entity.hasActionByName(clearStateAction)){
+			return;
+		}
 
+		let action = this._entity.getActionByName(clearStateAction);
+
+		const resp = await performSirenAction(this.token, action, undefined, true);
+
+		await this.load(resp);		
 	}
 
 }
 decorate(ActivityEvaluators, {
 	// props
-	//_candidates: observable,
-	hasUpdateAction: observable,
+	_candidates: observable,
 	// actions
 	load: action,
+	update: action,
+	clear: action,
 	toggleSelection: action,
 	//computed
 	isEnabled: computed,

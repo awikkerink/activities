@@ -15,6 +15,8 @@ import '@brightspace-ui/core/components/list/list.js';
 import '@brightspace-ui/core/components/list/list-item.js';
 import '@brightspace-ui/core/components/selection/selection-action.js';
 
+const dialogSaveAction = "save";
+
 class ActivityEvaluatorsEditor extends ActivityEditorMixin(RtlMixin(LocalizeActivityEditorMixin(MobxLitElement))) {
 
 	static get styles() {
@@ -63,10 +65,7 @@ class ActivityEvaluatorsEditor extends ActivityEditorMixin(RtlMixin(LocalizeActi
 				width="400"
 				title-text="Evaluators">
   				<div>${this._renderDialogContent(evaluators.getAll)}</div>
-				${evaluators.hasUpdateAction
-				? html`<d2l-button slot="footer" primary data-dialog-action="done">Save</d2l-button>`
-				: html`<d2l-button slot="footer" primary data-dialog-action="done" disabled>Save</d2l-button>`
-				}	
+				<d2l-button slot="footer" primary data-dialog-action="${dialogSaveAction}">Save</d2l-button>	
   				<d2l-button slot="footer" data-dialog-action>Cancel</d2l-button>
 			</d2l-dialog>
 		`;
@@ -164,10 +163,17 @@ class ActivityEvaluatorsEditor extends ActivityEditorMixin(RtlMixin(LocalizeActi
 
  	}
 
-	 _dialogClose(){
+	async _dialogClose(e) {
 
-		console.log('_dialogClose');
-	 }
+		var evaluatorsState = store.get(this.href);
+
+		if(e.detail.action == dialogSaveAction){
+			await evaluatorsState.update();
+		}
+		else{
+			await evaluatorsState.clear();
+		}
+	}
 
 }
 
