@@ -1,4 +1,3 @@
-import '@brightspace-ui/core/components/inputs/input-number.js';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { checkboxStyles } from '@brightspace-ui/core/components/inputs/input-checkbox';
