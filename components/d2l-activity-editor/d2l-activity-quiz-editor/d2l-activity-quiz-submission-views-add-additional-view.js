@@ -1,6 +1,6 @@
 import './d2l-activity-quiz-submission-views-dialog-card-editor.js';
 import { css, html } from 'lit-element/lit-element.js';
-import { shared as quizStore, sharedSubmissionView as submissionViewStore, sharedSubmissionViews as store } from './state/quiz-store';
+import { shared as quizStore, sharedSubmissionViews as store, sharedSubmissionView as submissionViewStore } from './state/quiz-store';
 import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { ActivityEditorWorkingCopyMixin } from '../mixins/d2l-activity-editor-working-copy-mixin.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
@@ -57,7 +57,7 @@ class ActivityQuizSubmissionViewsAddAdditionalView
 
 	render() {
 		const entity = store.get(this.href);
-		if (!entity || !entity.canAddView ) return html``;
+		if(!entity || !entity.canAddView ) return html``;
 		return html`
 			${this._editHref ? this._renderAdditionalViewEditor() : html``}
 			<d2l-button-subtle
@@ -68,6 +68,31 @@ class ActivityQuizSubmissionViewsAddAdditionalView
 				h-align="text">
 			</d2l-button-subtle>
 		`;
+	}
+
+	_exitEditAdditionalView() {
+		this._editHref = '';
+		this._editViewQuizHref = '';
+
+		this.dispatchEvent(new CustomEvent('d2l-activity-quiz-submission-views-dialog-edit-end', {
+			bubbles: true,
+			composed: true
+		}));
+	}
+
+	async _initializeAdditionalViewEditor() {
+		this.dispatchEvent(new CustomEvent('d2l-activity-quiz-submission-views-dialog-edit-start', {
+			bubbles: true,
+			composed: true
+		}));
+
+		this._editViewQuizHref = await this.checkout(quizStore, this.quizHref);
+
+		const checkedOutEntity = quizStore.get(this._editViewQuizHref);
+		const submissionViewsEntity = await store.fetch(checkedOutEntity.submissionViewsHref);
+
+		const newSubmissionView = await submissionViewsEntity.addView(submissionViewStore);
+		this._editHref = newSubmissionView.href;
 	}
 
 	_renderAdditionalViewEditor() {
@@ -93,21 +118,6 @@ class ActivityQuizSubmissionViewsAddAdditionalView
 		`;
 	}
 
-	async _initializeAdditionalViewEditor() {
-		this.dispatchEvent(new CustomEvent('d2l-activity-quiz-submission-views-dialog-edit-start', {
-			bubbles: true,
-			composed: true
-		}));
-
-		this._editViewQuizHref = await this.checkout(quizStore, this.quizHref);
-
-		const checkedOutEntity = quizStore.get(this._editViewQuizHref);
-		const submissionViewsEntity = await store.fetch(checkedOutEntity.submissionViewsHref);
-
-		const newSubmissionView = await submissionViewsEntity.addView(submissionViewStore);
-		this._editHref = newSubmissionView.href;
-	}
-
 	async _saveAdditionalView() {
 		const editEntity = submissionViewStore.get(this._editHref);
 
@@ -124,16 +134,6 @@ class ActivityQuizSubmissionViewsAddAdditionalView
 			const submissionViewsEntity = store.get(submissionViewsHref);
 			await submissionViewsEntity.fetch(true);
 		}
-	}
-
-	_exitEditAdditionalView() {
-		this._editHref = '';
-		this._editViewQuizHref = '';
-
-		this.dispatchEvent(new CustomEvent('d2l-activity-quiz-submission-views-dialog-edit-end', {
-			bubbles: true,
-			composed: true
-		}));
 	}
 }
 

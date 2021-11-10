@@ -1,8 +1,8 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { fetchEntity } from '../../state/fetch-entity.js';
 import { QuizLinkedSubmissionView } from './quiz-linked-submission-view';
-import { QuizSubmissionViewsEntity } from 'siren-sdk/src/activities/quizzes/submissionViews/QuizSubmissionViewsEntity.js';
 import { QuizSubmissionView } from './quiz-submission-view.js';
+import { QuizSubmissionViewsEntity } from 'siren-sdk/src/activities/quizzes/submissionViews/QuizSubmissionViewsEntity.js';
 
 configureMobx({ enforceActions: 'observed' });
 

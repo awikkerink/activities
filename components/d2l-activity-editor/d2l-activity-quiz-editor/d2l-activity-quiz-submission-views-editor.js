@@ -60,7 +60,7 @@ class ActivityQuizSubmissionViewsEditor
 			<div class="d2l-activity-quiz-submission-views-editor">
 				${this._renderDescriptionText()}
 				${this._renderCards(entity)}
-				${this._renderAddAdditionalView(entity)}
+				${this._renderAddAdditionalView()}
 			</div>
 		`;
 	}
@@ -73,7 +73,7 @@ class ActivityQuizSubmissionViewsEditor
 		this.dialogInEditState = true;
 	}
 
-	_renderAddAdditionalView(entity) {
+	_renderAddAdditionalView() {
 		const quizEntity = quizStore.get(this.quizHref);
 		const submissionViewsHref = quizEntity.submissionViewsHref;
 
