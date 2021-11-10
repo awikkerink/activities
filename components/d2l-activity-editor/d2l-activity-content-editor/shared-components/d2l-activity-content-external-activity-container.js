@@ -56,7 +56,7 @@ class ExternalActivityContainer extends SkeletonMixin(LocalizeActivityEditorMixi
 	render() {
 		return html`
 			<div class="d2l-external-activity-title-container d2l-skeletize-container">
-				<label class="d2l-label-text d2l-heading-4 d2l-skeletize d2l-label-overflow">
+				<label class="d2l-label-text d2l-heading-4 d2l-skeletize d2l-label-overflow" tabindex="0">
 					${this.localize('content.externalFile')}: ${this.entityName}
 				</label>
 

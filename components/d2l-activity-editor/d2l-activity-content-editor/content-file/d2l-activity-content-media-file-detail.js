@@ -185,7 +185,7 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 		).join(', ');
 
 		return html`
-			<div class="d2l-body-small d2l-caption">
+			<div class="d2l-body-small d2l-caption" tabindex="0">
 				${this.localize(langterm)}: ${captionsCSV}
 			</div>
 		`;
