@@ -3,6 +3,8 @@ import { ActivityEditorMixin } from '../mixins/d2l-activity-editor-mixin.js';
 import { bodySmallStyles, labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { checkboxStyles } from '@brightspace-ui/core/components/inputs/input-checkbox';
 import { css, html } from 'lit-element/lit-element.js';
+import { Classes } from 'siren-sdk/src/hypermedia-constants';
+import { labelStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { LocalizeActivityQuizEditorMixin } from './mixins/d2l-activity-quiz-lang-mixin';
 import { MobxLitElement } from '@adobe/lit-mobx';
 import { RtlMixin } from '@brightspace-ui/core/mixins/rtl-mixin.js';
@@ -51,6 +53,9 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 
 				.d2l-body-small {
 					color: #000000;
+          
+				.d2l-submission-views-dialog-card-editor-questions-dropdown {
+					margin-bottom: 20px;
 				}
 			`
 		];
@@ -89,10 +94,45 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 		return event.detail.provider;
 	}
 
+	_onQuestionsDropdownChange(e) {
+		const view = store.get(this.href);
+
+		if (e.target.value === Classes.quizzes.submissionView.hideShowQuestions.hideQuestions) {
+			view && view.setHideQuestions();
+			return;
+		}
+
+		view && view.setShowQuestions(e.target.value);
+	}
+
 	_onShowAttemptScoreChange(e) {
 		const view = store.get(this.href);
 		if (!view) return html``;
 		view && view.setShowAttemptScore(e.target.checked);
+	}
+
+	_onShowCorrectAnswersChange(e) {
+		const view = store.get(this.href);
+		if (!view) return html``;
+		view && view.setShowCorrectAnswers(e.target.checked);
+	}
+
+	_onShowLearnerResponsesChange(e) {
+		const view = store.get(this.href);
+		if (!view) return html``;
+		view && view.setShowLearnerResponses(e.target.checked);
+	}
+
+	_onShowQuestionScoreChange(e) {
+		const view = store.get(this.href);
+		if (!view) return html``;
+		view && view.setShowQuestionScore(e.target.checked);
+	}
+
+	_onShowStandardsChange(e) {
+		const view = store.get(this.href);
+		if (!view) return html``;
+		view && view.setShowStandards(e.target.checked);
 	}
 
 	_onShowStatsClassAverageChange(e) {
@@ -104,13 +144,13 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 	_onShowStatsScoreDistributionChange(e) {
 		const view = store.get(this.href);
 		if (!view) return html``;
-		view && view.setShowStatsScoreDistributionChange(e.target.checked);
+		view && view.setShowStatsScoreDistribution(e.target.checked);
 	}
 
 	_renderEditView(entity) {
 		const {
 			canUpdateMessage,
-			message,
+			messageHtml,
 			canUpdateShowAttemptScore,
 			showAttemptScore,
 			canUpdateShowStatsClassAverage,
@@ -125,7 +165,7 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 					<div class="d2l-label-text">
 						${this.localize('submissionViewDialogCardSubmissionViewMessageHeader')}
 					</div>
-					<textarea ?disabled="${!canUpdateMessage}">TEMPORARY - ${message}</textarea>
+					<textarea ?disabled="${!canUpdateMessage}">TEMPORARY - ${messageHtml}</textarea>
 				</div>
 				<div>
 					<div class="d2l-label-text">
@@ -367,22 +407,63 @@ class ActivityQuizSubmissionViewsDialogCardEditor
 		const {
 			canUpdateShowStandards,
 			showStandards,
-			isStandardsSupported
+			isStandardsSupported,
+			canUpdateHideShowQuestions,
+			hideQuestions,
+			canUpdateShowCorrectAnswers,
+			canUpdateShowLearnerResponses,
+			canUpdateShowQuestions,
+			canUpdateShowQuestionScore,
+			showCorrectAnswers,
+			showLearnerResponses,
+			showQuestionScore,
+			dialogQuestionsDropdownOptions
 		} = entity;
 
 		const lowerCaseOutcomesTerm = this._outcomesTerm && this._outcomesTerm.toLowerCase();
+		const canEditQuestionsDropdown = canUpdateHideShowQuestions && canUpdateShowQuestions;
 
 		return html`
-			<i>Modifying Question options not yet implemented! (US132398)</i>
-			${isStandardsSupported && lowerCaseOutcomesTerm ? html`
-				<d2l-input-checkbox
-					?checked=${showStandards}
-					@change="${this._onShowStatsClassAverageChange}"
-					ariaLabel="${this.localize('submissionViewsDialogEditorClassAverageCheckbox')}"
-					?disabled="${!canUpdateShowStandards}">
-					${this.localize('showOutcomesForTheDisplayedQuestionsCheckbox', 'outcomesTerm', lowerCaseOutcomesTerm)}
-				</d2l-input-checkbox>
-			` : html`` }
+			<div class="d2l-submission-views-dialog-card-editor-questions-dropdown">
+				<select
+					class="d2l-input-select d2l-block-select"
+					@change="${this._onQuestionsDropdownChange}"
+					?disabled="${!canEditQuestionsDropdown}">
+					${dialogQuestionsDropdownOptions.map(option => html`
+						<option value="${option.value}" ?selected="${option.selected}">${this.localize(option.langtermTitle)}</option>
+					`)};
+				</select>
+			</div>
+			${ hideQuestions ? html`` : html`
+				<d2l-input-checkbox-spacer>
+					<d2l-input-checkbox
+						?checked=${showCorrectAnswers}
+						@change="${this._onShowCorrectAnswersChange}"
+						?disabled="${!canUpdateShowCorrectAnswers}">
+						${this.localize('showCorrectAnswers')}
+					</d2l-input-checkbox>
+					<d2l-input-checkbox
+						?checked=${showLearnerResponses}
+						@change="${this._onShowLearnerResponsesChange}"
+						?disabled="${!canUpdateShowLearnerResponses}">
+						${this.localize('showLearnersResponses')}
+					</d2l-input-checkbox>
+					<d2l-input-checkbox
+						?checked=${showQuestionScore}
+						@change="${this._onShowQuestionScoreChange}"
+						?disabled="${!canUpdateShowQuestionScore}">
+						${this.localize('showLearnersGrade')}
+					</d2l-input-checkbox>
+					${isStandardsSupported && lowerCaseOutcomesTerm ? html`
+						<d2l-input-checkbox
+							?checked=${showStandards}
+							@change="${this._onShowStandardsChange}"
+							?disabled="${!canUpdateShowStandards}">
+							${this.localize('showStandards')}
+						</d2l-input-checkbox>
+					` : html`` }
+				</d2l-input-checkbox-spacer>
+			`}
 		`;
 	}
 }

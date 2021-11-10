@@ -2,4 +2,4 @@
 
 export default {
   "draftInfo" : "评估已另存为草稿"
-}
+};

@@ -81,4 +81,4 @@ export default {
    "tryAgain" : "もう一度試してください",
    "viewBy" : "表示対象:",
    "yes" : "はい"
-}
+};

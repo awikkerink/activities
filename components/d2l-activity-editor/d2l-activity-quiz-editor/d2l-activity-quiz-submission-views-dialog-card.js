@@ -47,6 +47,7 @@ class ActivityQuizSubmissionViewsDialogCard
 					border: 1px solid var(--d2l-color-gypsum);
 					border-radius: 6px;
 					display: inline-block;
+					margin: 10px 0;
 					overflow: hidden;
 					width: 100%;
 				}
@@ -187,7 +188,7 @@ class ActivityQuizSubmissionViewsDialogCard
 	}
 
 	_renderReadonlyView(entity) {
-		const { message, isPrimaryView, hideQuestions, showAttemptScore, showQuestionsType, showLearnerResponses, showCorrectAnswers } = entity;
+		const { messageText, isPrimaryView, hideQuestions, showAttemptScore, showQuestionsType, showLearnerResponses, showCorrectAnswers } = entity;
 
 		const attemptText = showAttemptScore ? 'submissionViewDialogCardAttemptScoreTrueText' : 'submissionViewDialogCardAttemptScoreFalseText';
 		let questionText = 'submissionViewDialogCardQuestionsNotDisplayed';
@@ -212,13 +213,13 @@ class ActivityQuizSubmissionViewsDialogCard
 		return html`
 			${this._renderCardHeader(entity)}
 			<div class="d2l-activity-quiz-submission-views-dialog-card-contents">
-				${message ? html`
+				${messageText ? html`
 					<div>
 						<div class="d2l-label-text
 						d2l-activity-quiz-submission-views-dialog-card-message-header">
 							${this.localize('submissionViewDialogCardSubmissionViewMessageHeader')}
 						</div>
-						<div>${message}</div>
+						<div>${messageText}</div>
 					</div>
 					` : html``}
 				<div>

@@ -1,4 +1,5 @@
 import { ActivityEditorTelemetryMixin } from './d2l-activity-editor-telemetry-mixin';
+import { shared as activityStore } from '../state/activity-store.js';
 import { findComposedAncestor } from '@brightspace-ui/core/helpers/dom.js';
 import { getFirstFocusableDescendant } from '@brightspace-ui/core/helpers/focus.js';
 
@@ -18,6 +19,14 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 			 * If there is a save attempt in progress. After being enabled, it will only disable on validation or save error.
 			 */
 			isSaving: { type: Boolean },
+			/**
+			 * Whether we need to fetch a new entity
+			 */
+			shouldFetchNew: { type: Boolean },
+			/**
+			 * Href of new entity to fetch
+			 */
+			fetchNewHref: { type: String }
 		};
 	}
 
@@ -30,6 +39,22 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 		this._editors = new Set();
 		this.isError = false;
 		this.isSaving = false;
+		this.shouldFetchNew = false;
+		this.fetchNewHref = null;
+	}
+
+	connectedCallback() {
+		if (super.connectedCallback) {
+			super.connectedCallback();
+		}
+		this.addEventListener('d2l-fetch-new-entity-after-save', this._fetchNewEntity);
+	}
+
+	disconnectedCallback() {
+		this.removeEventListener('d2l-fetch-new-entity-after-save', this._fetchNewEntity);
+		if (super.disconnectedCallback) {
+			super.disconnectedCallback();
+		}
 	}
 
 	get cancelCompleteEvent() {
@@ -82,6 +107,11 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 		);
 	}
 
+	_fetchNewEntity(e) {
+		this.fetchNewHref = e.detail.fetchNewHref;
+		this.shouldFetchNew = true;
+	}
+
 	async _focusOnInvalid() {
 		const isAriaInvalid = node => node.getAttribute('aria-invalid') === 'true' && node.getClientRects().length > 0 && !this._hasSkipAlertAncestor(node);
 		for (const editor of this._editors) {
@@ -110,6 +140,17 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 	_hasSkipAlertAncestor(node) {
 		return null !== findComposedAncestor(node, elm => elm && elm.hasAttribute && elm.hasAttribute('skip-alert'));
 	}
+
+	_refetchCompleteEvent(href) {
+		return new CustomEvent('d2l-refetch-complete', {
+			detail: {
+				href: href
+			},
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+	}
 	_registerEditor(e) {
 		this._editors.add(e.detail.editor);
 		e.detail.container = this;
@@ -132,6 +173,18 @@ export const ActivityEditorContainerMixin = superclass => class extends Activity
 		await this._saveEditors(orderedEditors, saveInPlace);
 
 		this.isError = false;
+
+		if (this.shouldFetchNew) {
+			// Do the thing
+			await activityStore.fetch(this.fetchNewHref);
+
+			// Trigger the editor to reload
+			this.dispatchEvent(this._refetchCompleteEvent(this.fetchNewHref));
+
+			// Reset
+			this.shouldFetchNew = false;
+			this.fetchNewHref = null;
+		}
 
 		this.dispatchEvent(this._saveCompleteEvent(saveInPlace));
 		if (saveInPlace) {

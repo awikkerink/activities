@@ -1,4 +1,6 @@
 import '../shared-components/d2l-activity-content-external-activity-container.js';
+import '@brightspace/content-components/capture/d2l-capture-producer/d2l-capture-producer.js';
+import '@brightspace-ui/core/components/dialog/dialog-fullscreen.js';
 import '@brightspace-ui-labs/media-player/media-player.js';
 import '@d2l/d2l-attachment/components/attachment.js';
 import { css, html } from 'lit-element/lit-element.js';
@@ -27,11 +29,21 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 			super.styles,
 			bodySmallStyles,
 			css`
-				.d2l-captions-list {
-					margin-bottom: 12px;
+				.d2l-captions-list-container {
+					min-height: 28px;
+				}
+				.d2l-caption {
+					display: inline-block;
+					margin: 12px 0;
+				}
+				.d2l-media-container {
+					padding-bottom: 30px;
 				}
 				.d2l-media-not-embedded {
 					margin-top: 24px;
+				}
+				.d2l-action-button {
+					padding-right: 4%;
 				}
 			`
 		];
@@ -68,18 +80,18 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
             <slot name="title"></slot>
             <slot name="due-date"></slot>
 			<d2l-activity-content-external-activity-container
-				.entityName=${this._getEntityName(mediaFileEntity)}
+				.entityName=${mediaFileEntity.mediaFileName}
 				?skeleton=${this.skeleton}
 			>
 				<d2l-button-subtle
 					slot="action-button"
 					text=${this.localize('content.advancedEditing')}
-					class="d2l-skeletize"
+					class="d2l-skeletize d2l-action-button"
 					@click=${this._openDialog}
 				>
 				</d2l-button-subtle>
 			</d2l-activity-content-external-activity-container>
-			<div class="d2l-media-renderer d2l-skeltize">
+			<div class="d2l-media-renderer d2l-skeletize">
 				${this._renderAudioVideo(mediaFileEntity)}
 			</div>
 		`;
@@ -94,24 +106,13 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 		await mediaFileEntity.saveMediaFile();
 	}
 
-	_getEntityName(mediaFileEntity) {
-		if (!mediaFileEntity) {
-			return '';
-		}
-
-		return decodeURI(mediaFileEntity.fileLocationHref.split('/').pop());
-	}
-
 	async _openDialog() {
 		const mediaFileEntity = contentFileStore.getContentFileActivity(this.href);
-
-		// TODO: check if file is contentService, sent as a property
 		if (mediaFileEntity.isContentServiceResource && mediaFileEntity.isAdvancedEditingEnabled) {
-			// eslint-disable-next-line no-console
-			console.log('opening new dialog');
-			// TODO: Media Team will add in the new dialog here
+			const producerDialog = this.shadowRoot.querySelector('.d2l-producer-dialog');
+			producerDialog.opened = true;
 		} else {
-			const subTitlePath = `?subtitlePath=${mediaFileEntity.orgUnitPath}&subtitleFile=${this._getEntityName(mediaFileEntity)}`;
+			const subTitlePath = `?subtitlePath=${mediaFileEntity.orgUnitPath}&subtitleFile=${mediaFileEntity.mediaFileName}`;
 			const location = `/d2l/le/content/video/subtitles/${this.orgUnitId}/OpenSubtitleDialog${subTitlePath}`;
 
 			const dialogResult = await D2L.LP.Web.UI.Desktop.MasterPages.Dialog.Open(
@@ -119,17 +120,20 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 				new D2L.LP.Web.Http.UrlLocation(location),
 			);
 
-			dialogResult.AddListener(results => {
-				if (results && results.length) {
-					// TODO: this may change with design, confirming save, etc.
-				}
+			dialogResult.AddListener(() => {
+				this._refetchCaptions(mediaFileEntity);
 			});
 		}
 	}
 
+	async _refetchCaptions(mediaFileEntity) {
+		await mediaFileEntity.fetchCaptions();
+		return this.requestUpdate();
+	}
+
 	_renderAttachmentView(mediaFileEntity) {
 		const attachment = {
-			name: this._getEntityName(mediaFileEntity),
+			name: mediaFileEntity.mediaFileName,
 			url: mediaFileEntity.fileLocationHref,
 			type: 'Document'
 		};
@@ -161,10 +165,13 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 			: this._renderAttachmentView(mediaFileEntity);
 
 		return html`
-			${this._renderCaptionsList('content.fileHasCaptions', mediaFileEntity.mediaCaptions)}
-			<div class="d2l-media">
+			<div class="d2l-captions-list-container d2l-skeletize">
+				${this._renderCaptionsList('content.fileHasCaptions', mediaFileEntity.mediaCaptions)}
+			</div>
+			<div class="d2l-media-container">
 				${mediaRender}
 			</div>
+			${this._renderProducer(mediaFileEntity)}
 		`;
 	}
 
@@ -178,10 +185,8 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 		).join(', ');
 
 		return html`
-			<div class="d2l-captions-list d2l-skeletize">
-				<span class="d2l-body-small">
-					${this.localize(langterm)}: ${captionsCSV}
-				</span>
+			<div class="d2l-body-small d2l-caption" tabindex="0">
+				${this.localize(langterm)}: ${captionsCSV}
 			</div>
 		`;
 	}
@@ -192,6 +197,18 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 				src=${src}
 			>
 			</d2l-labs-media-player>
+		`;
+	}
+
+	_renderProducer(mediaFileEntity) {
+		return html`
+			<d2l-dialog-fullscreen class="d2l-producer-dialog" title-text="${this.localize('content.advancedEditing')}">
+				<d2l-capture-producer
+					endpoint="${mediaFileEntity.contentServiceEndpoint}"
+					tenant-id="${mediaFileEntity.tenantId}"
+					content-id="${mediaFileEntity.contentServiceContentId}"
+				></d2l-capture-producer>
+			</d2l-dialog-fullscreen>
 		`;
 	}
 }

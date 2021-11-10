@@ -3,4 +3,4 @@
 export default {
   "course" : "Cwrs",
   "learning-path" : "Llwybr Dysgu"
-}
+};

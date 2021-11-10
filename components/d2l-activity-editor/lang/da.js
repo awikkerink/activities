@@ -82,6 +82,16 @@ export default {
 	"editor.inGradebook": "I karakterbog", // New state of the grades field when there is a score, and an associated grade item
 	"editor.notInGradebook": "Ikke i karakterbog", // New state of the grades field when there is a score, but no associated grade item
 	"editor.addToGradebook": "Tilføj til karakterbog", // New menu item for adding grade association
+	"editor.beforeStartDate": "Før start:", //Text for before start availability date type
+	"editor.afterEndDate": "Efter afslutning:", //Text for after end availability date type
+	"editor.lblVisibleWithAccessRestricted": "Synlig med begrænset adgang", //Text for after end availability date type
+	"editor.lblVisibleWithSubmissionRestricted": "Synlig med begrænset aflevering", //Text for after end availability date type
+	"editor.lblHidden": "Skjult", //Text for after end availability date type
+	"editor.availabilityStartTitle": "Availability: Start Date", // Dialog title for editing start date type
+	"editor.availabilityEndTitle": "Availability: End Date", // Dialog title for editing start date type
+	"editor.startDescription": "The following settings determine how the {assignment} appears to learners before the start date", // Description for start date type
+	"editor.endDescription": "The following settings determine how the {assignment} appears to learners after the end date", // Description for start date type
+	"editor.assignment": "assignment", // Langterm for assignment or dropbox
 
 	"rubrics.btnAddRubric": "Tilføj rubrik", //text for add rubric button
 	"rubrics.btnCreateNew": "Opret ny", //Text for create new dropdown
@@ -105,10 +115,12 @@ export default {
 	"grades.weight": "Vægt: {weight}", // Text label for displaying weight of a grade
 	"grades.gradeItem": "Karakterelement", //ARIA label for grade-item picker when linking an activity to an existing grade item
 	"grades.gradeUnits": "point", // unit label for GradeOutOf value (e.g. 10 points)
+	"grades.gradeUnitsSingular": "point", // unit label for GradeOutOf value when value is 1
 	"grades.chooseNewGradeItemCategory": "Vælg karakterkategori", // Label for add category button
 	"grades.newGradeItemCategory": "Karakterkategori", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "Ingen kategori", // Category dropdown text for not selecting a category
 	"grades.changeNewGradeTypeAndScheme": "Skift karaktertype og -oversigt", // Label for change type and scheme button
+	"grades.chooseNewGradeScheme": "Vælg karakteroversigt", // Label for choose grade scheme button (when there is only one type)
 	"grades.newGradeType": "Karaktertype", // Label for the grade type
 	"grades.newGradeTypeNumeric": "Numerisk", // Label for numeric grade type radio option
 	"grades.newGradeTypeSelectbox": "Valgboks", // Label for selectbox grade type radio option
@@ -121,6 +133,11 @@ export default {
 	"grades.creatingNewNumericGradeItem": "Opretter nyt numerisk karakterelement {newGradeName}", // Aria text for new grade we are creating
 	"grades.creatingNewSelectboxGradeItem": "Opretter nyt karakterelement for afkrydsningsfelt {newGradeName}", // Aria text for new grade we are creating
 	"grades.linkingToGradeItem": "Linker til eksisterende karakterelement {gradeName}", // Aria text for grade item we are linking to
+	"grades.gradeOutOfMenuItem": "Hvad er Karakter ud af?", // menu item to launch gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogTitle": "Information: Karakter ud af", // title that appears when the gradeOutOf help dialog is rendered
+	"grades.gradeOutOfHelpDialogConfirmationText": "OK", // text that appears on the gradeOutOf help dialog confirmation button
+	"grades.gradeOutOfHelpDialogParagraph1": "Hvis eksaminationen er \"Ikke i karakterbog\", afspejler Karakter ud af spørgsmålets samlede point.", // content for paragraph 1 of gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogParagraph2": "Hvis eksaminationen er \"I karakterbog\", afspejler Karakter ud af det maksimale antal point eller vægt i værktøjet Karakterer.", // content for paragraph 2 of gradeOutOf help dialog
 
 	"attachments.addGoogleDriveLink": "Vedhæft fra Google Drev", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "Upload af fil", // Tooltip for a button that opens a file upload dialog
@@ -172,5 +189,8 @@ export default {
 	"content.confirmDialogCancelOption": "Annuller", // The text for the cancel action to not replace content
 	"content.useEmbeddedPlayer": "Brug integreret afspiller", // The text for using the embedded player
 	"content.scormActivity": "SCORM-pakke", // The label for the name of the SCORM package
-	"content.lastEdited": "Sidst redigeret" // The date when the entity was last edited
+	"content.lastEdited": "Sidst redigeret", // The date when the entity was last edited
+	"content.externalFile": "External file", // The text to use for labeling external files
+	"content.advancedEditing": 'Advanced Editing', // The text to use on the advanced editing button
+	"content.fileHasCaptions": "This file has captions in", // The text to use preceding the list of captions
 };

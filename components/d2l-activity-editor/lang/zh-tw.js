@@ -82,6 +82,16 @@ export default {
 	"editor.inGradebook": "在成績單中", // New state of the grades field when there is a score, and an associated grade item
 	"editor.notInGradebook": "不在成績單中", // New state of the grades field when there is a score, but no associated grade item
 	"editor.addToGradebook": "新增至成績單", // New menu item for adding grade association
+	"editor.beforeStartDate": "開始之前：", //Text for before start availability date type
+	"editor.afterEndDate": "結束之後：", //Text for after end availability date type
+	"editor.lblVisibleWithAccessRestricted": "可見 (存取受限)", //Text for after end availability date type
+	"editor.lblVisibleWithSubmissionRestricted": "可見 (提交受限)", //Text for after end availability date type
+	"editor.lblHidden": "已隱藏", //Text for after end availability date type
+	"editor.availabilityStartTitle": "Availability: Start Date", // Dialog title for editing start date type
+	"editor.availabilityEndTitle": "Availability: End Date", // Dialog title for editing start date type
+	"editor.startDescription": "The following settings determine how the {assignment} appears to learners before the start date", // Description for start date type
+	"editor.endDescription": "The following settings determine how the {assignment} appears to learners after the end date", // Description for start date type
+	"editor.assignment": "assignment", // Langterm for assignment or dropbox
 
 	"rubrics.btnAddRubric": "新增量規", //text for add rubric button
 	"rubrics.btnCreateNew": "建立新的", //Text for create new dropdown
@@ -105,10 +115,12 @@ export default {
 	"grades.weight": "加權：{weight}", // Text label for displaying weight of a grade
 	"grades.gradeItem": "成績項目", //ARIA label for grade-item picker when linking an activity to an existing grade item
 	"grades.gradeUnits": "分", // unit label for GradeOutOf value (e.g. 10 points)
+	"grades.gradeUnitsSingular": "分", // unit label for GradeOutOf value when value is 1
 	"grades.chooseNewGradeItemCategory": "選擇計分類別", // Label for add category button
 	"grades.newGradeItemCategory": "成績類別", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "無類別", // Category dropdown text for not selecting a category
 	"grades.changeNewGradeTypeAndScheme": "變更計分類型與方式", // Label for change type and scheme button
+	"grades.chooseNewGradeScheme": "選擇計分方式", // Label for choose grade scheme button (when there is only one type)
 	"grades.newGradeType": "計分類型", // Label for the grade type
 	"grades.newGradeTypeNumeric": "數字", // Label for numeric grade type radio option
 	"grades.newGradeTypeSelectbox": "分級格", // Label for selectbox grade type radio option
@@ -121,6 +133,11 @@ export default {
 	"grades.creatingNewNumericGradeItem": "建立新的數字成績項目 {newGradeName}", // Aria text for new grade we are creating
 	"grades.creatingNewSelectboxGradeItem": "建立新的分級格成績項目 {newGradeName}", // Aria text for new grade we are creating
 	"grades.linkingToGradeItem": "連結至現有成績項目 {gradeName}", // Aria text for grade item we are linking to
+	"grades.gradeOutOfMenuItem": "「成績總分」是什麼？", // menu item to launch gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogTitle": "資訊：成績總分", // title that appears when the gradeOutOf help dialog is rendered
+	"grades.gradeOutOfHelpDialogConfirmationText": "確定", // text that appears on the gradeOutOf help dialog confirmation button
+	"grades.gradeOutOfHelpDialogParagraph1": "如果測驗為「不在成績單中」，「成績總分」會反映問題的總分。", // content for paragraph 1 of gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogParagraph2": "如果測驗為「在成績單中」，「成績總分」即為成績工具中的分數或權重上限。", // content for paragraph 2 of gradeOutOf help dialog
 
 	"attachments.addGoogleDriveLink": "從 Google 雲端硬碟附加", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "檔案上傳", // Tooltip for a button that opens a file upload dialog
@@ -172,5 +189,8 @@ export default {
 	"content.confirmDialogCancelOption": "取消", // The text for the cancel action to not replace content
 	"content.useEmbeddedPlayer": "使用內嵌播放程式", // The text for using the embedded player
 	"content.scormActivity": "SCORM 套件", // The label for the name of the SCORM package
-	"content.lastEdited": "上次編輯" // The date when the entity was last edited
+	"content.lastEdited": "上次編輯", // The date when the entity was last edited
+	"content.externalFile": "External file", // The text to use for labeling external files
+	"content.advancedEditing": 'Advanced Editing', // The text to use on the advanced editing button
+	"content.fileHasCaptions": "This file has captions in", // The text to use preceding the list of captions
 };

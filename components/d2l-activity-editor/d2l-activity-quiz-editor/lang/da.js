@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "Administrer timing", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "Forsøg og fuldførelse", //attempts/completion accordion header
 	"subHdrPagingTools": "Sideindstillinger", // Title for paging tools
-	"subHdrShuffleQuiz": "Bland eksaminationen",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "Bland eksaminationen", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "Visning", // Title for display tools
 	"shuffleDescription": "Bland eksaminationens spørgsmål og afsnit. Gælder ikke undersektioner.", // description for question shuffling behavior
 	"shuffleSummary": "Bland spørgsmålene", // summary text for shuffle quiz questions
@@ -47,7 +47,7 @@ export default {
 	"disableRightClickAccessibleHelpText": "Få hjælp til – Deaktivér højreklik", // accessible help text for disable right click question mark button
 	"disableRightClickHelpDialogTitle": "Information: Deaktivér højreklik", // title that appears when the disable right click help dialog is rendered
 	"disableRightClickHelpDialogParagraph1": "Denne funktion forhindrer elever i at udskrive quizspørgsmål ved at højreklikke på et spørgsmål, mens et forsøg er i gang. Men elever vil stadig kunne tage skærmbilleder af quizzen via andre teknologier uden for browseren.", // content for paragraph 1 of disable right click help dialog
-	"disableRightClickHelpDialogParagraph2": "Visse arbejdsgange for tilgængelighed blokeres, fordi eleverne ikke kan kopiere og indsætte spørgsmålsteksten.", // content for paragraph 2 of disable right click help dialog
+	"disableRightClickHelpDialogParagraph2": "Visse arbejdsgange for tilgængelighed blokeres, fordi eleverne ikke kan kopiere og indsætte spørgsmålsteksten. Individuelle brugere kan få mulighed for at højreklikke på en eksamination, selv når denne funktion er aktiveret for en eksamination ved at aktivere \"Tillad altid højreklik\" under brugertilpasning.", // content for paragraph 2 of disable right click help dialog
 	"disableRightClickHelpDialogConfirmationText": "OK", // copy that appears on the disable right click help dialog confirmation button
 	"manageTimingDialogConfirmationText": "OK", // copy that appears on the Timing dialog confirmation button
 	"manageTimingDialogCancelText": "Annuller", // copy that appears on the Timing dialog cancel button
@@ -88,6 +88,9 @@ export default {
 	"ipRestrictionsTableStartRangeHdr": "Start af IP-interval", // text for IP restrictions table header start
 	"ipRestrictionsTableEndRangeHdr": "Slutning af IP-interval", // text for IP restrictions table header end
 	"ipRestrictionsTableDeleteRangeHdr": "Slet", // text for IP restrictions table header delete
+	"ipRestrictionsTableDeleteRangeLabel": "Slet", // label for IP restrictions delete button
+	"ipRestrictionsTableStartRangeLabel": "IP-interval start {index}", // label for IP restrictions start range input
+	"ipRestrictionsTableEndRangeLabel": "IP-interval slut {index}", // label for IP restrictions end range input
 	"ipRestrictionsValidationError": "Ugyldigt format for IP-adresse. Ret de markerede felter. Eksempel på en IP-adresse: 155.55.5.15.", // error message for invalid IP addresses
 	"ipRestrictions500Error": "Noget gik galt. Prøv igen.", // error message for IP restrictions 500 response
 	"ipRestrictionsHelpTxtConfirmation": "OK", // confirmation text on IP restrictions help dialog
@@ -97,8 +100,8 @@ export default {
 	"hdrIpRestrictionsHelpDialogP3": "Hvis du vil inkludere en individuel accepteret IP-adresse, skal du kun angive startværdien for IP-intervallet (IP Range Start).", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "Bemærk: IP-intervallets startværdi (IP Range Start) skal være mindre end IP-intervallets slutværdi (IP Range End).", // IP restrictions help dialog paragraph 4
 	"hdrSpecialAccess": "Særlig adgang", // special access heading,
-	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
-	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
+	"hlpSpecialAccess": "Særlig adgang gør, at eksaminationer kan være tilgængelige for kun en udvalgt gruppe brugere, og muliggør individualiserede forfaldsdatoer for visse brugere.", // special access help
+	"specialAccessRestrictedText": "Kun brugere med særlig adgang kan se denne eksamination", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "Få hjælp til – IP-begrænsninger", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "Forsøgsbetingelser", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "For at en elev kan kvalificere sig til endnu et forsøg, skal du angive en minimums- og/eller maksimumsprocentværdi mellem 0 og 100, der skal opnås ved det foregående forsøg.", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -138,9 +141,76 @@ export default {
 	"createNewLabel": "Opret ny", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "Tilføj eksisterende", // Label for button to open menu for adding pre-existing items to the quiz.
 	"addQuestionsLabel": "Nyt spørgsmål", // Label for button to open menu for adding new questions to the quiz.
-	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading1": "Når den udgives, skal den vises for elever:", // Label for checkbox in submission view container.
 	"submissionViewHeading2": "og", // Label for submission view dropdown in submission view container.
-	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
-	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
-	"gradeOutOf": "Karakter ud af" // Label for the grade-out-of field when creating/editing an activity
+	"submissionViewCheckboxLabel": "Besvarelseskarakter", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "Tilpas visning af eksaminationsresultater", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "Karakter ud af", // Label for the grade-out-of field when creating/editing an activity
+	"submissionViewsHelpDialogTitle": "Information: visning af eksaminationsresultater", // Title for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogParagraph1": "Visning af eksaminationsresultater bestemmer, hvordan elever kan se deres offentliggjorte resultater for eksaminationsforsøg, både umiddelbart efter indsendelse eller senere, når de gennemgår deres besvarelse.", // Paragraph 1 for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogParagraph2": "Den primære visning vises som standard for elever, og yderligere visninger tilsidesætter den primære visning baseret på de indstillede parametre.", // Paragraph 2 for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogConfirmation": "OK", //Text for closing the information Dialog for customization in submission views.
+	"submissionViewsDialogConfirmationMain": "OK", //Text for closing the main Dialog for customization in submission views.
+	"submissionViewsDialogCancelMain": "Annuller", // Text for cancelling changes on the main Dialog for customization in submission views.
+	"submissionViewsAccordionDropdownNoQuestions": "Ingen spørgsmål", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownIncorrectQuestionsWithCorrectAnswers": "Kun forkerte spørgsmål med korrekte svar", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownIncorrectQuestionsWithoutCorrectAnswers": "Kun forkerte spørgsmål uden korrekte svar", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownAllQuestionsWithCorrectAnswers": "Alle spørgsmål med korrekte svar", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownAllQuestionsWithoutCorrectAnswers": "Alle spørgsmål uden korrekte svar", // Option in dropdown to decide what to display to learner.
+	"primaryView": "Primær visning", // Label
+	"additionalViewComesIntoEffect": "Additional view comes into effect:", // Label
+	"submissionViewDialogCardAttemptScoreTrueText": "Besvarelseskarakter vist for evaluerede spørgsmål", // Submission view dialog card, text appearing when attempted grades are displayed.
+	"submissionViewDialogCardAttemptScoreFalseText": "Vises ikke", // Submission view dialog card, text appearing when attempted grades are not displayed.
+	"submissionViewDialogCardQuestionsNotDisplayed": "Vises ikke", // Submission view dialog card, text appearing when no questions are displayed.
+	"submissionViewDialogCardQuestionsAllDisplayed": "Alle spørgsmål vises", // Submission view dialog card, text appearing when all questions are displayed.
+	"submissionViewDialogCardQuestionsIncorrectOnlyDisplayed": "Kun forkerte vises", // Submission view dialog card, text appearing when incorrect questions only are displayed.
+	"submissionViewDialogCardQuestionsCorrectOnlyDisplayed": "Kun korrekte vises", // Submission view dialog card, text appearing when correct questions only are displayed.
+	"submissionViewDialogCardShowAnswersTrueText": "Alle svar vises", // Submission view dialog card, text appearing when all answers are displayed.
+	"submissionViewDialogCardShowAnswersFalseText": "Vises ikke", // Submission view dialog card, text appearing when not all answers are displayed.
+	"submissionViewDialogCardShowResponsesTrueText": "Vist", // Submission view dialog card, text appearing when learners responses are displayed.
+	"submissionViewDialogCardShowResponsesFalseText": "Vises ikke", // Submission view dialog card, text appearing when learners responses are not displayed.
+	"submissionViewDialogCardSubmissionViewMessageHeader": "Meddelelse", // Submission view dialog card, message heading.
+	"submissionViewDialogCardSubmissionViewGradeHeader": "Karakter", // Submission view dialog card, grade heading.
+	"submissionViewDialogCardSubmissionViewQuestionsHeader": "Spørgsmål", // Submission view dialog card, questions heading.
+	"submissionViewDialogCardSubmissionViewAnswerHeader" : "Svar", // Submission view dialog card, answers heading.
+	"submissionViewDialogCardSubmissionViewResponseHeader": "Elevens svar", // Submission view dialog card, learners responses heading.
+	"submissionViewDialogCardButtonOptionEditView": "Rediger visning", // Submission view dialog card, OK button text.
+	"submissionViewDialogCardButtonOptionDeleteView": "Slet visning", // Submission view dialog card, Cancel button text.
+	"submissionViewsAccordionSummary" : "{count, plural, =1 {1 resultatvisning} other {{count} resultat vises}}", // number of submission views summary shown in collapsed accordion
+	"submissionViewsDialogEditorGradeCheckbox": "Vis besvarelseskarakter for evaluerede spørgsmål", // submission views dialog editor edit display attempt score checkbox
+	"statistics": "Statistik", //Label
+	"submissionViewsDialogEditorClassAverageCheckbox": "Vis holdgennemsnit", // submission views dialog editor edit display class average checkbox
+	"submissionViewsDialogEditorGradeDistributionCheckbox": "Vis karakterfordeling", // submission views dialog editor edit display grade distribution checkbox
+	"quizSubmissionViewsDialogCardUpdate": "Opdater", // submission views dialog card Update button
+	"quizSubmissionViewsDialogCardCancel": "Annuller", // submission views dialog card Cancel button
+	"allQuestionsWithCorrectAnswers": "Usynlig karakter, vis alle spørgsmål med korrekte svar", // summarize list of selected options in comma separated list
+	"allQuestions": "Usynlig karakter, vis alle spørgsmål", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsWithCorrectAnswers": "Synlig karakter, vis alle spørgsmål med korrekte svar", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestions": "Synlig karakter, vis alle spørgsmål", // summarize list of selected options in comma separated list
+	"allQuestionsWithCorrectAnswersLearnersResponses": "Usynlig karakter, vis alle spørgsmål med korrekte svar og elevens svar", // summarize list of selected options in comma separated list
+	"allQuestionsLearnersResponses": "Usynlig karakter, vis alle spørgsmål og elevens svar", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsWithCorrectAnswersLearnersResponses": "Synlig karakter, vis alle spørgsmål med korrekte svar og elevens svar", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsLearnersResponses": "Synlig karakter, vis alle spørgsmål og elevens svar", // summarize list of selected options in comma separated list
+	"incorrectQuestionsWithCorrectAnswers": "Usynlig karakter, vis kun forkerte spørgsmål med korrekte svar", // summarize list of selected options in comma separated list
+	"incorrectQuestions": "Usynlig karakter, vis kun forkerte spørgsmål", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsWithCorrectAnswers": "Synlig karakter, vis kun forkerte spørgsmål med korrekte svar", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestions": "Synlig karakter, vis kun forkerte spørgsmål", // summarize list of selected options in comma separated list
+	"incorrectQuestionsWithCorrectAnswersLearnersResponses": "Usynlig karakter, vis kun forkerte spørgsmål med korrekte svar og elevens svar", // summarize list of selected options in comma separated list
+	"incorrectQuestionsLearnersResponses": "Usynlig karakter, vis kun forkerte spørgsmål og elevens svar", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsWithCorrectAnswersLearnersResponses": "Synlig karakter, vis kun forkerte spørgsmål med korrekte svar og elevens svar", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsLearnersResponses": "Synlig karakter, vis kun forkerte spørgsmål og elevens svar", // summarize list of selected options in comma separated list
+	"correctQuestionsWithCorrectAnswers": "Usynlig karakter, vis kun korrekte spørgsmål med korrekte svar", // summarize list of selected options in comma separated list
+	"correctQuestions": "Usynlig karakter, vis kun korrekte spørgsmål", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsWithCorrectAnswers": "Synlig karakter, vis kun korrekte spørgsmål med korrekte svar", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestions": "Synlig karakter, vis kun korrekte spørgsmål", // summarize list of selected options in comma separated list
+	"correctQuestionsWithCorrectAnswersLearnersResponses": "Usynlig karakter, vis kun korrekte spørgsmål med korrekte svar og elevsvar", // summarize list of selected options in comma separated list
+	"correctQuestionsLearnersResponses": "Usynlig karakter, vis kun korrekte spørgsmål og elevens svar", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsWithCorrectAnswersLearnersResponses": "Synlig karakter, vis kun korrekte spørgsmål med korrekte svar og elevens svar", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsLearnersResponses": "Synlig karakter, vis kun korrekte spørgsmål og elevens svar", // summarize list of selected options in comma separated list
+	"noQuestions": "Usynlig karakter, vis ikke spørgsmål", // summarize list of selected options in comma separated list
+	"gradeVisibleNoQuestions": "Synlig karakter, vis ikke spørgsmål", // summarize list of selected options in comma separated list
+	"deleteViewWithTitle": "Slet visning: {message}", // aria-label for delete view button with view message/title
+	"submissionViewReleaseDateSummary": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} }{minGrade, plural, =0 {} other {, with attempt grades above {minGrade}%}}{maxGrade, plural, =0 {} other {, with attempt grades below {maxGrade}%}}{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info
+	"submissionViewReleaseDateSummaryBothMinMaxGrades": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} } with attempt grades above {minGrade}% and below {maxGrade}%{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info with both min and max grades
+	"showOutcomesForTheDisplayedQuestionsCheckbox": "Show {outcomesTerm} for the displayed questions" // text for a checkbox which when checked, will show standards/outcomes for the displayed questions
 };

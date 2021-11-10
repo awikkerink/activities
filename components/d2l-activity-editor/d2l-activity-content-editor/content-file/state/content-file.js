@@ -32,6 +32,8 @@ export class ContentFile {
 		this.isMediaEmbedded = false;
 		this.isContentServiceResource = false;
 		this.isAdvancedEditingEnabled = false;
+		this.mediaFileName = '';
+		this.mediaCaptionsHref = null;
 		this.mediaCaptions = [];
 	}
 
@@ -86,6 +88,12 @@ export class ContentFile {
 		return this;
 	}
 
+	async fetchCaptions() {
+		const sirenResponse = await fetchEntity(this.mediaCaptionsHref, this.token, true);
+		const mediaCaptionsEntity = new ContentMediaFileCaptionsEntity(sirenResponse, this.token, { remove: () => { } });
+		this.mediaCaptions = [...mediaCaptionsEntity.getMediaFileCaptions()];
+	}
+
 	async load(contentFileEntity, fileContent, fileLocationHref) {
 		this._contentFileEntity = contentFileEntity;
 		this.href = contentFileEntity.self();
@@ -107,10 +115,12 @@ export class ContentFile {
 			this.isMediaEmbedded = mediaFileEntity.embedMedia();
 			this.isAdvancedEditingEnabled = mediaFileEntity.isAdvancedEditingEnabled();
 			this.isContentServiceResource = mediaFileEntity.isContentServiceResource();
-			const mediaCaptionsHref = mediaFileEntity.getMediaFileCaptionsHref();
-			const sirenResponse = await fetchEntity(mediaCaptionsHref, this.token);
-			const mediaCaptionsEntity = new ContentMediaFileCaptionsEntity(sirenResponse, this.token, { remove: () => { } });
-			this.mediaCaptions = [...mediaCaptionsEntity.getMediaFileCaptions()];
+			this.mediaFileName = mediaFileEntity.mediaFileName();
+			this.mediaCaptionsHref = mediaFileEntity.getMediaFileCaptionsHref();
+			this.contentServiceContentId = mediaFileEntity.contentServiceContentId();
+			this.contentServiceEndpoint = mediaFileEntity.contentServiceEndpoint();
+			this.tenantId = mediaFileEntity.tenantId();
+			await this.fetchCaptions();
 		}
 	}
 

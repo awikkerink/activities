@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "管理定时设置", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "尝试并完成", //attempts/completion accordion header
 	"subHdrPagingTools": "寻呼", // Title for paging tools
-	"subHdrShuffleQuiz": "随机打乱测验顺序",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "随机打乱测验顺序", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "显示", // Title for display tools
 	"shuffleDescription": "随机打乱测验中的各问题和各部分。请勿级联至子章节。", // description for question shuffling behavior
 	"shuffleSummary": "随机打乱问题", // summary text for shuffle quiz questions
@@ -47,7 +47,7 @@ export default {
 	"disableRightClickAccessibleHelpText": "获取此主题的帮助 - 禁用右键单击", // accessible help text for disable right click question mark button
 	"disableRightClickHelpDialogTitle": "信息：禁用右键单击", // title that appears when the disable right click help dialog is rendered
 	"disableRightClickHelpDialogParagraph1": "此功能禁止学员在尝试过程中通过右键单击问题来打印测验问题。但是，学员仍然能够通过浏览器之外的其他技术，以截屏的方式捕捉测验内容。", // content for paragraph 1 of disable right click help dialog
-	"disableRightClickHelpDialogParagraph2": "由于学员无法复制和粘贴问题文本，某些辅助功能工作流将被阻止。", // content for paragraph 2 of disable right click help dialog
+	"disableRightClickHelpDialogParagraph2": "由于学员无法复制和粘贴问题文本，某些辅助功能工作流将被阻止。通过在用户的特殊调整中启用“始终允许右键单击”，即使已为测验启用此功能，也可以授予单个用户右键单击测验的能力。", // content for paragraph 2 of disable right click help dialog
 	"disableRightClickHelpDialogConfirmationText": "确定", // copy that appears on the disable right click help dialog confirmation button
 	"manageTimingDialogConfirmationText": "确定", // copy that appears on the Timing dialog confirmation button
 	"manageTimingDialogCancelText": "取消", // copy that appears on the Timing dialog cancel button
@@ -88,6 +88,9 @@ export default {
 	"ipRestrictionsTableStartRangeHdr": "IP 范围起始", // text for IP restrictions table header start
 	"ipRestrictionsTableEndRangeHdr": "IP 范围结尾", // text for IP restrictions table header end
 	"ipRestrictionsTableDeleteRangeHdr": "删除", // text for IP restrictions table header delete
+	"ipRestrictionsTableDeleteRangeLabel": "删除", // label for IP restrictions delete button
+	"ipRestrictionsTableStartRangeLabel": "IP 范围开始 ｛ index ｝", // label for IP restrictions start range input
+	"ipRestrictionsTableEndRangeLabel": "IP 范围结束 ｛ index ｝", // label for IP restrictions end range input
 	"ipRestrictionsValidationError": "无效的 IP 地址格式。请更正所标出的字段。IP 地址示例：155.55.5.15。", // error message for invalid IP addresses
 	"ipRestrictions500Error": "出现错误。请重试。", // error message for IP restrictions 500 response
 	"ipRestrictionsHelpTxtConfirmation": "确定", // confirmation text on IP restrictions help dialog
@@ -97,8 +100,8 @@ export default {
 	"hdrIpRestrictionsHelpDialogP3": "要包括单个可接受的 IP 地址，只需指定“IP 范围起始”值即可。", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "注意：“IP 范围起始”值必须小于“IP 范围结束”值。", // IP restrictions help dialog paragraph 4
 	"hdrSpecialAccess": "特殊访问权限", // special access heading,
-	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
-	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
+	"hlpSpecialAccess": "特殊访问权限可使作业仅供选定用户组或根据特定用户的个性化截止日期进行使用。", // special access help
+	"specialAccessRestrictedText": "仅具有特殊访问权限的用户才能查看此文件夹", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "获取有关此主题的帮助 - IP 限制", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "尝试条件", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "要使学员有资格进行另一次尝试，请设置介于 0 到 100 之间的最小和/或最大百分比值，并且上一次尝试必须达到此限制条件。", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -138,9 +141,76 @@ export default {
 	"createNewLabel": "新建", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "添加现有", // Label for button to open menu for adding pre-existing items to the quiz.
 	"addQuestionsLabel": "新问题", // Label for button to open menu for adding new questions to the quiz.
-	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading1": "发布后，向学员展示：", // Label for checkbox in submission view container.
 	"submissionViewHeading2": "和", // Label for submission view dropdown in submission view container.
-	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
-	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
-	"gradeOutOf": "成绩超出" // Label for the grade-out-of field when creating/editing an activity
+	"submissionViewCheckboxLabel": "尝试评级", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "自定义测验结果显示", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "成绩超出", // Label for the grade-out-of field when creating/editing an activity
+	"submissionViewsHelpDialogTitle": "信息：显示测验结果", // Title for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogParagraph1": "测验结果显示确定学员如何查看已发布的测验结果，包括在提交后立即查看或稍后查看其尝试。", // Paragraph 1 for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogParagraph2": "主视图作为默认视图显示给学员，其他视图将根据设置的参数覆盖主视图。", // Paragraph 2 for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogConfirmation": "确定", //Text for closing the information Dialog for customization in submission views.
+	"submissionViewsDialogConfirmationMain": "确定", //Text for closing the main Dialog for customization in submission views.
+	"submissionViewsDialogCancelMain": "取消", // Text for cancelling changes on the main Dialog for customization in submission views.
+	"submissionViewsAccordionDropdownNoQuestions": "共  个问题", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownIncorrectQuestionsWithCorrectAnswers": "仅错误问题，答案正确", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownIncorrectQuestionsWithoutCorrectAnswers": "问题不正确，答案不正确", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownAllQuestionsWithCorrectAnswers": "所有问题，答案正确", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownAllQuestionsWithoutCorrectAnswers": "所有问题，没有正确答案", // Option in dropdown to decide what to display to learner.
+	"primaryView": "主视图", // Label
+	"additionalViewComesIntoEffect": "Additional view comes into effect:", // Label
+	"submissionViewDialogCardAttemptScoreTrueText": "对评估的问题显示尝试等级", // Submission view dialog card, text appearing when attempted grades are displayed.
+	"submissionViewDialogCardAttemptScoreFalseText": "未显示", // Submission view dialog card, text appearing when attempted grades are not displayed.
+	"submissionViewDialogCardQuestionsNotDisplayed": "未显示", // Submission view dialog card, text appearing when no questions are displayed.
+	"submissionViewDialogCardQuestionsAllDisplayed": "显示所有问题", // Submission view dialog card, text appearing when all questions are displayed.
+	"submissionViewDialogCardQuestionsIncorrectOnlyDisplayed": "仅显示不正确", // Submission view dialog card, text appearing when incorrect questions only are displayed.
+	"submissionViewDialogCardQuestionsCorrectOnlyDisplayed": "仅显示正确", // Submission view dialog card, text appearing when correct questions only are displayed.
+	"submissionViewDialogCardShowAnswersTrueText": "显示所有答案", // Submission view dialog card, text appearing when all answers are displayed.
+	"submissionViewDialogCardShowAnswersFalseText": "未显示", // Submission view dialog card, text appearing when not all answers are displayed.
+	"submissionViewDialogCardShowResponsesTrueText": "显示？", // Submission view dialog card, text appearing when learners responses are displayed.
+	"submissionViewDialogCardShowResponsesFalseText": "未显示", // Submission view dialog card, text appearing when learners responses are not displayed.
+	"submissionViewDialogCardSubmissionViewMessageHeader": "消息", // Submission view dialog card, message heading.
+	"submissionViewDialogCardSubmissionViewGradeHeader": "成绩", // Submission view dialog card, grade heading.
+	"submissionViewDialogCardSubmissionViewQuestionsHeader": "问题", // Submission view dialog card, questions heading.
+	"submissionViewDialogCardSubmissionViewAnswerHeader" : "答案", // Submission view dialog card, answers heading.
+	"submissionViewDialogCardSubmissionViewResponseHeader": "学员的回答", // Submission view dialog card, learners responses heading.
+	"submissionViewDialogCardButtonOptionEditView": "编辑视图", // Submission view dialog card, OK button text.
+	"submissionViewDialogCardButtonOptionDeleteView": "删除视图", // Submission view dialog card, Cancel button text.
+	"submissionViewsAccordionSummary" : "{count, plural, =1 {1 结果显示} other {{ count} 结果显示 }}", // number of submission views summary shown in collapsed accordion
+	"submissionViewsDialogEditorGradeCheckbox": "显示评估问题的尝试等级", // submission views dialog editor edit display attempt score checkbox
+	"statistics": "统计", //Label
+	"submissionViewsDialogEditorClassAverageCheckbox": "显示班级平均成绩", // submission views dialog editor edit display class average checkbox
+	"submissionViewsDialogEditorGradeDistributionCheckbox": "显示成绩分布", // submission views dialog editor edit display grade distribution checkbox
+	"quizSubmissionViewsDialogCardUpdate": "更新", // submission views dialog card Update button
+	"quizSubmissionViewsDialogCardCancel": "取消", // submission views dialog card Cancel button
+	"allQuestionsWithCorrectAnswers": "分级不可见，显示所有问题并提供正确答案", // summarize list of selected options in comma separated list
+	"allQuestions": "等级不可见，显示所有问题", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsWithCorrectAnswers": "等级可见，显示所有问题并提供正确答案", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestions": "等级可见，显示所有问题", // summarize list of selected options in comma separated list
+	"allQuestionsWithCorrectAnswersLearnersResponses": "为不可见的学员评分，用正确答案和学员的回答显示所有问题", // summarize list of selected options in comma separated list
+	"allQuestionsLearnersResponses": "对不可见的学员进行评分，显示所有问题和学员的回答", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsWithCorrectAnswersLearnersResponses": "等级可见，显示所有问题，并提供正确答案和学员的回答", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsLearnersResponses": "等级可见，显示所有问题和学员的回答", // summarize list of selected options in comma separated list
+	"incorrectQuestionsWithCorrectAnswers": "等级不可见，仅显示正确答案的错误问题", // summarize list of selected options in comma separated list
+	"incorrectQuestions": "等级不可见，仅显示错误问题", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsWithCorrectAnswers": "等级可见，仅显示正确答案的错误问题", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestions": "等级可见，仅显示不正确的问题", // summarize list of selected options in comma separated list
+	"incorrectQuestionsWithCorrectAnswersLearnersResponses": "分级不可见，仅显示正确答案和学员答案的错误问题", // summarize list of selected options in comma separated list
+	"incorrectQuestionsLearnersResponses": "分级不可见，仅显示不正确的问题和学员的回答", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsWithCorrectAnswersLearnersResponses": "等级可见，仅显示正确答案和学员答案的错误问题", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsLearnersResponses": "等级可见，仅显示错误问题和学员的回答", // summarize list of selected options in comma separated list
+	"correctQuestionsWithCorrectAnswers": "等级不可见，仅显示正确的问题，并提供正确的答案", // summarize list of selected options in comma separated list
+	"correctQuestions": "等级不可见，仅显示正确的问题", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsWithCorrectAnswers": "等级可见，仅显示正确的问题并提供正确的答案", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestions": "等级可见，仅显示正确的问题", // summarize list of selected options in comma separated list
+	"correctQuestionsWithCorrectAnswersLearnersResponses": "为不可见的学员评分，仅显示正确的问题，并提供正确的答案和学员的回答", // summarize list of selected options in comma separated list
+	"correctQuestionsLearnersResponses": "分级不可见，仅显示正确的问题和学员的回答", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsWithCorrectAnswersLearnersResponses": "等级可见，仅显示正确的问题，并提供正确的答案和学员的回答", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsLearnersResponses": "等级可见，仅显示正确的问题和学员的回答", // summarize list of selected options in comma separated list
+	"noQuestions": "等级不可见，不显示问题", // summarize list of selected options in comma separated list
+	"gradeVisibleNoQuestions": "等级可见，不显示问题", // summarize list of selected options in comma separated list
+	"deleteViewWithTitle": "删除视图: {message}", // aria-label for delete view button with view message/title
+	"submissionViewReleaseDateSummary": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} }{minGrade, plural, =0 {} other {, with attempt grades above {minGrade}%}}{maxGrade, plural, =0 {} other {, with attempt grades below {maxGrade}%}}{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info
+	"submissionViewReleaseDateSummaryBothMinMaxGrades": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} } with attempt grades above {minGrade}% and below {maxGrade}%{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info with both min and max grades
+	"showOutcomesForTheDisplayedQuestionsCheckbox": "Show {outcomesTerm} for the displayed questions" // text for a checkbox which when checked, will show standards/outcomes for the displayed questions
 };

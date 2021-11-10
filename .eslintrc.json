@@ -16,5 +16,15 @@
   },
   "globals": {
     "fastdom": false
-  }
+  },
+  "overrides": [
+    {
+      "files": ["components/**/lang/*.js"],
+      "excludedFiles": "*localiz*",
+      "rules": {
+        "indent": ["off"],
+        "quotes": ["error", "double"]
+      }
+    }
+  ]
 }

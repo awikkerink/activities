@@ -3,4 +3,4 @@
 export default {
   "enroll": "Anmelden",
   "clickToViewActivity": "Zum Anzeigen der Aktivitäten klicken"
-}
+};

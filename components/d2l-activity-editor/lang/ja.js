@@ -82,6 +82,16 @@ export default {
 	"editor.inGradebook": "グレードブック（成績表）中にあり", // New state of the grades field when there is a score, and an associated grade item
 	"editor.notInGradebook": "グレードブック（成績表）中になし", // New state of the grades field when there is a score, but no associated grade item
 	"editor.addToGradebook": "グレードブック（成績表）に追加", // New menu item for adding grade association
+	"editor.beforeStartDate": "開始前:", //Text for before start availability date type
+	"editor.afterEndDate": "終了後:", //Text for after end availability date type
+	"editor.lblVisibleWithAccessRestricted": "アクセスが制限されている状態で表示", //Text for after end availability date type
+	"editor.lblVisibleWithSubmissionRestricted": "送信が制限されている状態で表示", //Text for after end availability date type
+	"editor.lblHidden": "非表示", //Text for after end availability date type
+	"editor.availabilityStartTitle": "Availability: Start Date", // Dialog title for editing start date type
+	"editor.availabilityEndTitle": "Availability: End Date", // Dialog title for editing start date type
+	"editor.startDescription": "The following settings determine how the {assignment} appears to learners before the start date", // Description for start date type
+	"editor.endDescription": "The following settings determine how the {assignment} appears to learners after the end date", // Description for start date type
+	"editor.assignment": "assignment", // Langterm for assignment or dropbox
 
 	"rubrics.btnAddRubric": "注釈の追加", //text for add rubric button
 	"rubrics.btnCreateNew": "新規作成", //Text for create new dropdown
@@ -105,10 +115,12 @@ export default {
 	"grades.weight": "加重: {weight}", // Text label for displaying weight of a grade
 	"grades.gradeItem": "成績項目", //ARIA label for grade-item picker when linking an activity to an existing grade item
 	"grades.gradeUnits": "ポイント", // unit label for GradeOutOf value (e.g. 10 points)
+	"grades.gradeUnitsSingular": "ポイント", // unit label for GradeOutOf value when value is 1
 	"grades.chooseNewGradeItemCategory": "成績カテゴリの選択", // Label for add category button
 	"grades.newGradeItemCategory": "成績カテゴリ", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "カテゴリなし", // Category dropdown text for not selecting a category
 	"grades.changeNewGradeTypeAndScheme": "成績タイプとスキームの変更", // Label for change type and scheme button
+	"grades.chooseNewGradeScheme": "成績スキームの選択", // Label for choose grade scheme button (when there is only one type)
 	"grades.newGradeType": "成績タイプ", // Label for the grade type
 	"grades.newGradeTypeNumeric": "数値", // Label for numeric grade type radio option
 	"grades.newGradeTypeSelectbox": "選択ボックス", // Label for selectbox grade type radio option
@@ -121,6 +133,11 @@ export default {
 	"grades.creatingNewNumericGradeItem": "数値の成績項目 {newGradeName} を新規作成", // Aria text for new grade we are creating
 	"grades.creatingNewSelectboxGradeItem": "選択ボックスの成績項目 {newGradeName} を新規作成", // Aria text for new grade we are creating
 	"grades.linkingToGradeItem": "既存の成績項目 {gradeName} にリンク", // Aria text for grade item we are linking to
+	"grades.gradeOutOfMenuItem": "成績に占める割合とは", // menu item to launch gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogTitle": "情報: 成績に占める割合", // title that appears when the gradeOutOf help dialog is rendered
+	"grades.gradeOutOfHelpDialogConfirmationText": "OK", // text that appears on the gradeOutOf help dialog confirmation button
+	"grades.gradeOutOfHelpDialogParagraph1": "クイズが「グレードブック（成績表）にない」場合、［満点の成績］には質問の合計ポイントが反映されます。", // content for paragraph 1 of gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogParagraph2": "クイズが「グレードブック（成績表）にある」場合、［成績に占める割合］は最大ポイントまたは［成績］ツールの重みです。", // content for paragraph 2 of gradeOutOf help dialog
 
 	"attachments.addGoogleDriveLink": "Google ドライブから添付", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "ファイルアップロード", // Tooltip for a button that opens a file upload dialog
@@ -172,5 +189,8 @@ export default {
 	"content.confirmDialogCancelOption": "キャンセル", // The text for the cancel action to not replace content
 	"content.useEmbeddedPlayer": "埋め込まれたプレーヤーの使用", // The text for using the embedded player
 	"content.scormActivity": "SCORM パッケージ", // The label for the name of the SCORM package
-	"content.lastEdited": "最後の編集日" // The date when the entity was last edited
+	"content.lastEdited": "最後の編集日", // The date when the entity was last edited
+	"content.externalFile": "External file", // The text to use for labeling external files
+	"content.advancedEditing": 'Advanced Editing', // The text to use on the advanced editing button
+	"content.fileHasCaptions": "This file has captions in", // The text to use preceding the list of captions
 };
