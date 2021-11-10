@@ -212,5 +212,19 @@ export default {
 	"deleteViewWithTitle": "Delete view: {message}", // aria-label for delete view button with view message/title
 	"submissionViewReleaseDateSummary": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} }{minGrade, plural, =0 {} other {, with attempt grades above {minGrade}%}}{maxGrade, plural, =0 {} other {, with attempt grades below {maxGrade}%}}{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info
 	"submissionViewReleaseDateSummaryBothMinMaxGrades": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} } with attempt grades above {minGrade}% and below {maxGrade}%{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info with both min and max grades
-	"showOutcomesForTheDisplayedQuestionsCheckbox": "Show {outcomesTerm} for the displayed questions" // text for a checkbox which when checked, will show standards/outcomes for the displayed questions
+	"showOutcomesForTheDisplayedQuestionsCheckbox": "Show {outcomesTerm} for the displayed questions", // text for a checkbox which when checked, will show standards/outcomes for the displayed questions
+	"submissionViewDialogSecondaryEditorRestrictAccessLabel" : "Restrict access to this view to:", // text for submission view edit secondary view, first label (restrict access).
+	"submissionViewDialogSecondaryEditorAttemptLabel": "Attempt", // text for submission view edit secondary view, second label (attempt).
+	"submissionViewsDialogSecondaryEditorAttemptCheckbox": "A specific Attempt", // submission view secondary view edit dialog, attempt checkbox text
+	"submissionViewsDialogSecondaryEditorRangeCheckbox": "And a specific grade range achieved", // submission view secondary view edit dialog, grade range checkbox text
+	"submissionViewsDialogSecondaryEditorIPCheckbox": "The same IP restrictions as the quiz", // submission view secondary view edit dialog, IP checkbox text
+	"submissionViewsDialogSecondaryEditorTimingCheckbox": "A limited amount of time (in minutes) after submission", // submission view secondary view edit dialog, Timing checkbox text
+	"submissionViewsDialogSecondaryEditorViewVisibilityText": "View visible between", // submission view secondary view edit dialog, view visibility text 1
+	"submissionViewsDialogSecondaryEditorViewVisibilityText2": "and", // submission view secondary view edit dialog, view visibility text 2
+	"submissionViewsDialogSecondaryEditorViewVisibilityHeader1": "Min:", // submission view secondary view edit dialog, view visibility limit min test
+	"submissionViewsDialogSecondaryEditorViewVisibilityHeader1": "Max:", // submission view secondary view edit dialog, view visibility limit max test
+	"submissionViewsDialogSecondaryEditorGradeRangeText1" : "View visible between", // submission view secondary view edit dialog, grade bound text 1
+	"submissionViewsDialogSecondaryEditorGradeRangeText2" : "and", // submission view secondary view edit dialog, grade bound text 2
+	"submissionViewsDialogSecondaryEditorNumericalInputText1" : "  minute(s)", // submission view secondary view edit dialog, numerical input text 1
+	"submissionViewsDialogSecondaryEditorNumericalInputText2": "%" // submission view secondary view edit dialog, numerical input text 2
 };

@@ -89,14 +89,14 @@ export class QuizSubmissionView {
 		this.attemptRestrictionNumber = value;
 		return this.updateProperty(() => this._entity.setAttemptRestrictionNumber(value));
 	}
-
+	// patched instantly on line 94 before siren call .
 	setAttemptRestrictions(value) {
 		this.attemptRestrictions = value;
 		return this.updateProperty(() => this._entity.setAttemptRestrictions(value));
 	}
 
 	setGradeRestrictions(value) {
-		this.attemptRestrictionNumber = value;
+		this.gradeRestrictions = value;
 		return this.updateProperty(() => this._entity.setGradeRestrictions(value));
 	}
 
