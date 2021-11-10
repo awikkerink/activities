@@ -57,7 +57,7 @@ class ActivityQuizSubmissionViewsAddAdditionalView
 
 	render() {
 		const entity = store.get(this.href);
-		if(!entity || !entity.canAddView ) return html``;
+		if (!entity || !entity.canAddView) return html``;
 		return html`
 			${this._editHref ? this._renderAdditionalViewEditor() : html``}
 			<d2l-button-subtle
