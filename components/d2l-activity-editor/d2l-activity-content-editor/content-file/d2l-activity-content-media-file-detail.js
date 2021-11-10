@@ -167,7 +167,7 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 		}
 
 		const mediaRender = mediaFileEntity.isMediaEmbedded
-			? this._renderMedia(mediaFileEntity.fileLocationHref)
+			? this._renderMedia(mediaFileEntity)
 			: this._renderAttachmentView(mediaFileEntity);
 
 		return html`
@@ -185,6 +185,8 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 			return html``;
 		}
 
+		console.log({ captions });
+
 		const captionsCSV = captions.map((caption) =>
 			caption.properties.langName
 		).join(', ');
@@ -196,11 +198,34 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 		`;
 	}
 
-	_renderMedia(src) {
+	_renderCaptionsTracks(captions) {
+		console.log({ captions });
+
+		if (!captions.length) {
+			return html``;
+		}
+
+		const captionTracks = captions.map((caption) => {
+			const captionHref = caption.getLinkByRel('alternate').href;
+			const langCode = caption.properties.langCode;
+			const langName = caption.properties.langName;
+
+			console.log({ langCode, langName, captionHref });
+
+			html`
+				<track src=${captionHref} label=${langName} srcLang=${langCode} kind="captions" />
+			`;
+		});
+
+		return html`${captionTracks}`;
+	}
+
+	_renderMedia(mediaFileEntity) {
 		return html`
 			<d2l-labs-media-player
-				src=${src}
+				src=${mediaFileEntity.fileLocationHref}
 			>
+				${this._renderCaptionsTracks(mediaFileEntity.mediaCaptions)}
 			</d2l-labs-media-player>
 		`;
 	}
