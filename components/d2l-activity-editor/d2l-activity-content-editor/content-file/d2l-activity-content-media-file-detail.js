@@ -212,7 +212,7 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 
 			console.log({ langCode, langName, captionHref });
 
-			html`
+			return html`
 				<track src=${captionHref} label=${langName} srcLang=${langCode} kind="captions" />
 			`;
 		});
