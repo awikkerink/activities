@@ -40,11 +40,8 @@ class ActivityQuizSubmissionViewsAddAdditionalView
 					display: inline-block;
 					margin: 10px 0;
 					overflow: hidden;
-					width: 100%;
-				}
-
-				.d2l-activity-quiz-submission-views-add-additional-view-editor {
 					padding: 20px 30px;
+					width: 100%;
 				}
 
 				.d2l-activity-quiz-submission-views-add-additional-view-editor .d2l-activity-quiz-submission-views-add-additional-view-editor-buttons {
