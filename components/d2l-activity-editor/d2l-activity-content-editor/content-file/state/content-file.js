@@ -35,6 +35,7 @@ export class ContentFile {
 		this.mediaFileName = '';
 		this.mediaCaptionsHref = null;
 		this.mediaCaptions = [];
+		this.allowDownload = false;
 	}
 
 	async cancelCreate() {
@@ -120,6 +121,7 @@ export class ContentFile {
 			this.contentServiceContentId = mediaFileEntity.contentServiceContentId();
 			this.contentServiceEndpoint = mediaFileEntity.contentServiceEndpoint();
 			this.tenantId = mediaFileEntity.tenantId();
+			this.allowDownload = mediaFileEntity.allowDownload();
 			await this.fetchCaptions();
 		}
 	}

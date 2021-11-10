@@ -161,7 +161,7 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 		}
 
 		const mediaRender = mediaFileEntity.isMediaEmbedded
-			? this._renderMedia(mediaFileEntity.fileLocationHref)
+			? this._renderMedia(mediaFileEntity)
 			: this._renderAttachmentView(mediaFileEntity);
 
 		return html`
@@ -191,10 +191,11 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 		`;
 	}
 
-	_renderMedia(src) {
+	_renderMedia(mediaFileEntity) {
 		return html`
 			<d2l-labs-media-player
-				src=${src}
+				src=${mediaFileEntity.fileLocationHref}
+				?allow-download=${mediaFileEntity.allowDownload}
 			>
 			</d2l-labs-media-player>
 		`;
