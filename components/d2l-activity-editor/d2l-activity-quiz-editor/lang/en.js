@@ -227,5 +227,7 @@ export default {
 	"dontShowQuestions": "Don't show", // don't show any questions that were part of the submitted quiz to the learner
 	"showAllQuestions": "All questions", // show all questions that were part of the submitted quiz to the learner
 	"showIncorrectQuestionsOnly": "Incorrect questions only", // show only the incorrect questions that were part of the submitted quiz to the learner
-	"showCorrectQuestionsOnly": "Correct questions only" // show only the correctly answered questions that were part of the submitted quiz to the learner
+	"showCorrectQuestionsOnly": "Correct questions only", // show only the correctly answered questions that were part of the submitted quiz to the learner
+	"additionalView": "Additional View", // text for button where when clicked, opens editor to create a new quiz submission view
+	"quizSubmissionViewsDialogCardCreate": "Create" // text for button where when clicked, creates/saves the new quiz submission view
 };

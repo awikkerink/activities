@@ -47,6 +47,7 @@ class ActivityQuizSubmissionViewsDialogCard
 					border: 1px solid var(--d2l-color-gypsum);
 					border-radius: 6px;
 					display: inline-block;
+					margin: 10px 0;
 					overflow: hidden;
 					width: 100%;
 				}
