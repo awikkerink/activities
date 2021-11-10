@@ -49,11 +49,17 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 		super.connectedCallback();
 		this.saveTitle = this.saveTitle.bind(this);
 		this.addEventListener('d2l-loaded-file', () => {this.skeleton = false;});
+		this.onRefetchComplete = ({ detail: { href } }) => this._onRefetchComplete(href);
+
+		window.addEventListener('d2l-refetch-complete', this.onRefetchComplete);
 	}
+
 	disconnectedCallback() {
 		super.disconnectedCallback();
 		this.removeEventListener('d2l-loaded-file', () => {});
+		window.removeEventListener('d2l-refetch-complete', this.onRefetchComplete);
 	}
+
 	render() {
 		const contentFileEntity = contentFileStore.getContentFileActivity(this.href);
 
@@ -117,6 +123,7 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 		}
 		return contentFileActivity.dirty;
 	}
+
 	async save() {
 		const contentFileActivity = contentFileStore.getContentFileActivity(this.href);
 
@@ -127,7 +134,7 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 		const originalActivityUsageHref = this.activityUsageHref;
 		const updatedEntity = await contentFileActivity.saveFile();
 
-		const event = new CustomEvent('d2l-content-working-copy-committed', {
+		let event = new CustomEvent('d2l-content-working-copy-committed', {
 			detail: {
 				originalActivityUsageHref: originalActivityUsageHref,
 				updatedActivityUsageHref: updatedEntity.getActivityUsageHref()
@@ -138,13 +145,33 @@ class ContentFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActivit
 		});
 
 		await this.dispatchEvent(event);
+
+		// Tell the container it should fetch the new entity before finishing
+		// the saving animation
+		event = new CustomEvent('d2l-fetch-new-entity-after-save', {
+			detail: {
+				fetchNewHref: updatedEntity.getActivityUsageHref()
+			},
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+
+		await this.dispatchEvent(event);
 	}
+
 	saveTitle(title) {
 		const contentFileActivity = contentFileStore.getContentFileActivity(this.href);
 		if (!contentFileActivity) {
 			return;
 		}
 		contentFileActivity.setTitle(title);
+	}
+
+	_onRefetchComplete(href) {
+		if (href) {
+			this.activityUsageHref = href;
+		}
 	}
 
 	_renderDueDate() {

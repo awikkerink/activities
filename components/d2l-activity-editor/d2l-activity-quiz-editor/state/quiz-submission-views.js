@@ -1,6 +1,7 @@
 import { action, configure as configureMobx, decorate, observable } from 'mobx';
 import { fetchEntity } from '../../state/fetch-entity.js';
 import { QuizLinkedSubmissionView } from './quiz-linked-submission-view';
+import { QuizSubmissionView } from './quiz-submission-view.js';
 import { QuizSubmissionViewsEntity } from 'siren-sdk/src/activities/quizzes/submissionViews/QuizSubmissionViewsEntity.js';
 
 configureMobx({ enforceActions: 'observed' });
@@ -10,6 +11,17 @@ export class QuizSubmissionViews {
 		this.href = href;
 		this.token = token;
 		this.saving = null;
+	}
+
+	async addView(submissionViewStore) {
+		const submissionViewEntity = await this._entity.addView();
+		if (submissionViewEntity) {
+			const viewHref = submissionViewEntity.self();
+			const entity = new QuizSubmissionView(viewHref, this.token);
+			entity.load(submissionViewEntity);
+			submissionViewStore.put(viewHref, entity);
+			return entity;
+		}
 	}
 
 	async fetch(bypassCache) {
@@ -42,5 +54,6 @@ decorate(QuizSubmissionViews, {
 	linkedSubmissionViews: observable,
 	// actions
 	load: action,
-	removeView: action
+	removeView: action,
+	addView: action
 });

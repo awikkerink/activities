@@ -43,6 +43,14 @@ class ContentWebLinkDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActi
 		super.connectedCallback();
 		this.saveTitle = this.saveTitle.bind(this);
 		this.saveLink = this.saveLink.bind(this);
+		this.onRefetchComplete = ({ detail: { href } }) => this._onRefetchComplete(href);
+
+		window.addEventListener('d2l-refetch-complete', this.onRefetchComplete);
+	}
+
+	disconnectedCallback() {
+		window.removeEventListener('d2l-refetch-complete', this.onRefetchComplete);
+		super.disconnectedCallback();
 	}
 
 	render() {
@@ -106,7 +114,8 @@ class ContentWebLinkDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActi
 
 		const originalActivityUsageHref = this.activityUsageHref;
 		const updatedEntity = await webLinkEntity.save();
-		const event = new CustomEvent('d2l-content-working-copy-committed', {
+
+		let event = new CustomEvent('d2l-content-working-copy-committed', {
 			detail: {
 				originalActivityUsageHref: originalActivityUsageHref,
 				updatedActivityUsageHref: updatedEntity.getActivityUsageHref()
@@ -115,6 +124,19 @@ class ContentWebLinkDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActi
 			composed: true,
 			cancelable: true
 		});
+		await this.dispatchEvent(event);
+
+		// Tell the container it should fetch the new entity before finishing
+		// the saving animation
+		event = new CustomEvent('d2l-fetch-new-entity-after-save', {
+			detail: {
+				fetchNewHref: updatedEntity.getActivityUsageHref()
+			},
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+
 		await this.dispatchEvent(event);
 	}
 
@@ -134,6 +156,12 @@ class ContentWebLinkDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeActi
 			return;
 		}
 		webLinkEntity.setTitle(title);
+	}
+
+	_onRefetchComplete(href) {
+		if (href) {
+			this.activityUsageHref = href;
+		}
 	}
 }
 

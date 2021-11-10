@@ -82,6 +82,16 @@ export default {
 	"editor.inGradebook": "Yn y Llyfr Graddau", // New state of the grades field when there is a score, and an associated grade item
 	"editor.notInGradebook": "Ddim yn y Llyfr Graddau", // New state of the grades field when there is a score, but no associated grade item
 	"editor.addToGradebook": "Ychwanegu at y Llyfr Graddau", // New menu item for adding grade association
+	"editor.beforeStartDate": "Cyn dechrau:", //Text for before start availability date type
+	"editor.afterEndDate": "Ar ôl diwedd:", //Text for after end availability date type
+	"editor.lblVisibleWithAccessRestricted": "Yn weladwy gyda mynediad wedi'i gyfyngu", //Text for after end availability date type
+	"editor.lblVisibleWithSubmissionRestricted": "Yn weladwy gyda chyflwyniad wedi'i gyfyngu", //Text for after end availability date type
+	"editor.lblHidden": "Cudd", //Text for after end availability date type
+	"editor.availabilityStartTitle": "Availability: Start Date", // Dialog title for editing start date type
+	"editor.availabilityEndTitle": "Availability: End Date", // Dialog title for editing start date type
+	"editor.startDescription": "The following settings determine how the {assignment} appears to learners before the start date", // Description for start date type
+	"editor.endDescription": "The following settings determine how the {assignment} appears to learners after the end date", // Description for start date type
+	"editor.assignment": "assignment", // Langterm for assignment or dropbox
 
 	"rubrics.btnAddRubric": "Ychwanegu cyfeireb", //text for add rubric button
 	"rubrics.btnCreateNew": "Creu Un Newydd", //Text for create new dropdown
@@ -105,10 +115,12 @@ export default {
 	"grades.weight": "Pwysau: {weight}", // Text label for displaying weight of a grade
 	"grades.gradeItem": "Eitem Gradd", //ARIA label for grade-item picker when linking an activity to an existing grade item
 	"grades.gradeUnits": "pwyntiau", // unit label for GradeOutOf value (e.g. 10 points)
+	"grades.gradeUnitsSingular": "pwynt", // unit label for GradeOutOf value when value is 1
 	"grades.chooseNewGradeItemCategory": "Dewiswch Gategori Gradd", // Label for add category button
 	"grades.newGradeItemCategory": "Categori Gradd", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "Dim Categori", // Category dropdown text for not selecting a category
 	"grades.changeNewGradeTypeAndScheme": "Newidiwch Fath Gradd a Chynllun", // Label for change type and scheme button
+	"grades.chooseNewGradeScheme": "Dewis Cynllun Gradd", // Label for choose grade scheme button (when there is only one type)
 	"grades.newGradeType": "Math o Radd", // Label for the grade type
 	"grades.newGradeTypeNumeric": "Rhifol", // Label for numeric grade type radio option
 	"grades.newGradeTypeSelectbox": "Blwch dewis", // Label for selectbox grade type radio option
@@ -121,6 +133,11 @@ export default {
 	"grades.creatingNewNumericGradeItem": "Wrthi'n creu eitem gradd rifol newydd {newGradeName}", // Aria text for new grade we are creating
 	"grades.creatingNewSelectboxGradeItem": "Wrthi'n creu eitem gradd blwch dethol newydd {newGradeName}", // Aria text for new grade we are creating
 	"grades.linkingToGradeItem": "Wrthi’n cysylltu i eitem gradd bresennol {gradeName}", // Aria text for grade item we are linking to
+	"grades.gradeOutOfMenuItem": "Beth yw Gradd Allan O?", // menu item to launch gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogTitle": "Gwybodaeth: Gradd Allan O", // title that appears when the gradeOutOf help dialog is rendered
+	"grades.gradeOutOfHelpDialogConfirmationText": "IAWN", // text that appears on the gradeOutOf help dialog confirmation button
+	"grades.gradeOutOfHelpDialogParagraph1": "Os yw’r cwis \"Ddim yn y Llyfr Graddau\", mae’r Radd Allan O yn cyfleu cyfanswm pwyntiau’r cwestiwn.", // content for paragraph 1 of gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogParagraph2": "Os yw’r cwis \"Yn y Llyfr Graddau\", y Radd Allan O yw’r pwyntiau neu’r pwysiad uchaf yn yr offeryn Graddau.", // content for paragraph 2 of gradeOutOf help dialog
 
 	"attachments.addGoogleDriveLink": "Atodi o Google Drive", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "Lanlwytho Ffeil", // Tooltip for a button that opens a file upload dialog
@@ -172,5 +189,8 @@ export default {
 	"content.confirmDialogCancelOption": "Canslo", // The text for the cancel action to not replace content
 	"content.useEmbeddedPlayer": "Defnyddio chwaraeydd wedi’i fewnblannu", // The text for using the embedded player
 	"content.scormActivity": "Pecyn SCORM", // The label for the name of the SCORM package
-	"content.lastEdited": "Golygwyd diwethaf" // The date when the entity was last edited
+	"content.lastEdited": "Golygwyd diwethaf", // The date when the entity was last edited
+	"content.externalFile": "External file", // The text to use for labeling external files
+	"content.advancedEditing": 'Advanced Editing', // The text to use on the advanced editing button
+	"content.fileHasCaptions": "This file has captions in", // The text to use preceding the list of captions
 };

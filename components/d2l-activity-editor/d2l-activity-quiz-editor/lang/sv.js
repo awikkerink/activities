@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "Hantera tidmätning", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "Försök och slutföranden", //attempts/completion accordion header
 	"subHdrPagingTools": "Sidindelning", // Title for paging tools
-	"subHdrShuffleQuiz": "Blanda förhör",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "Blanda förhör", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "Visa", // Title for display tools
 	"shuffleDescription": "Blanda frågor och avsnitt i förhöret. Är inte sammanhängande med undersektioner.", // description for question shuffling behavior
 	"shuffleSummary": "Blanda frågor", // summary text for shuffle quiz questions
@@ -47,7 +47,7 @@ export default {
 	"disableRightClickAccessibleHelpText": "Få hjälp med – Avaktivera högerklickning", // accessible help text for disable right click question mark button
 	"disableRightClickHelpDialogTitle": "Information: Avaktivera högerklickning", // title that appears when the disable right click help dialog is rendered
 	"disableRightClickHelpDialogParagraph1": "Med den här funktionen är det inte möjligt för eleverna att skriva ut förhörsfrågorna genom att högerklicka på en fråga under pågående försök. Eleverna kan däremot fortfarande ta en skärmbild av förhöret via annan teknik utanför webbläsaren.", // content for paragraph 1 of disable right click help dialog
-	"disableRightClickHelpDialogParagraph2": "Vissa tillgänglighetsarbetsflöden blockeras eftersom eleven inte kan kopiera och klistra in frågetexten.", // content for paragraph 2 of disable right click help dialog
+	"disableRightClickHelpDialogParagraph2": "Vissa tillgänglighetsarbetsflöden blockeras eftersom eleven inte kan kopiera och klistra in frågetexten. Enskilda användare kan få möjlighet att högerklicka på ett förhör även när den här funktionen är aktiverad för ett förhör genom att aktivera ”Tillåt alltid högerklick” i användarens hjälpmedel.", // content for paragraph 2 of disable right click help dialog
 	"disableRightClickHelpDialogConfirmationText": "OK", // copy that appears on the disable right click help dialog confirmation button
 	"manageTimingDialogConfirmationText": "OK", // copy that appears on the Timing dialog confirmation button
 	"manageTimingDialogCancelText": "Avbryt", // copy that appears on the Timing dialog cancel button
@@ -88,6 +88,9 @@ export default {
 	"ipRestrictionsTableStartRangeHdr": "Start på IP-intervall", // text for IP restrictions table header start
 	"ipRestrictionsTableEndRangeHdr": "Slut på IP-intervall", // text for IP restrictions table header end
 	"ipRestrictionsTableDeleteRangeHdr": "Ta bort", // text for IP restrictions table header delete
+	"ipRestrictionsTableDeleteRangeLabel": "Ta bort", // label for IP restrictions delete button
+	"ipRestrictionsTableStartRangeLabel": "IP-adressintervallets början {index}", // label for IP restrictions start range input
+	"ipRestrictionsTableEndRangeLabel": "IP-adressintervallets slut {index}", // label for IP restrictions end range input
 	"ipRestrictionsValidationError": "Ogiltigt IP-adressformat. Korrigera markerade fält. Exempel på IP-adress: 155.55.5.15.", // error message for invalid IP addresses
 	"ipRestrictions500Error": "Något gick fel. Försök igen.", // error message for IP restrictions 500 response
 	"ipRestrictionsHelpTxtConfirmation": "OK", // confirmation text on IP restrictions help dialog
@@ -97,8 +100,8 @@ export default {
 	"hdrIpRestrictionsHelpDialogP3": "Ange bara värdet för Start på IP-intervall för att inkludera en individuellt godkänd IP-adress.", // IP restrictions help dialog paragraph 3
 	"hdrIpRestrictionsHelpDialogP4": "Obs! Värdet för Start på IP-intervall måste vara mindre än värdet för Slut på IP-intervall.", // IP restrictions help dialog paragraph 4
 	"hdrSpecialAccess": "Specialåtkomst", // special access heading,
-	"hlpSpecialAccess": "Special Access allows quizzes to be available to only a select group of users or individualized due dates for certain users.", // special access help
-	"specialAccessRestrictedText": "Only users with special access can see this quiz", // restricted special access description
+	"hlpSpecialAccess": "Med specialåtkomst kan förhör endast vara tillgängliga för en utvald grupp användare eller ha individuella förfallodatum för vissa användare.", // special access help
+	"specialAccessRestrictedText": "Endast användare med specialåtkomst kan se det här förhöret", // restricted special access description
 	"ipRestrictionsAccessibileHelpText": "Få hjälp med – IP-begränsningar", // accessible help text for IP restrictions question mark button
 	"attemptConditions": "Försöksvillkor", // Header for Attempts Conditions section in Attempts dialog
 	"attemptConditionsParagraph1": "Ange ett minsta och/eller högsta procentvärde mellan 0 och 100 som måste uppnås för att eleven ska vara berättigad till ett nytt försök.", // content for paragraph1 on the Attempts dialog Attempts Condition section
@@ -138,9 +141,76 @@ export default {
 	"createNewLabel": "Skapa ny", // Label for button to open menu for adding new items to the quiz.
 	"addExistingLabel": "Lägg till befintligt", // Label for button to open menu for adding pre-existing items to the quiz.
 	"addQuestionsLabel": "Ny fråga", // Label for button to open menu for adding new questions to the quiz.
-	"submissionViewHeading1": "When published, display to learners:", // Label for checkbox in submission view container.
+	"submissionViewHeading1": "Visa för elever vid publicering:", // Label for checkbox in submission view container.
 	"submissionViewHeading2": "och", // Label for submission view dropdown in submission view container.
-	"submissionViewCheckboxLabel": "Attempt grade", // Text next to the submission view checkbox in the container.
-	"submissionViewButtonText": "Customize quiz results display", // Text for the button at the bottom of the submission view container.
-	"gradeOutOf": "Betyg av" // Label for the grade-out-of field when creating/editing an activity
+	"submissionViewCheckboxLabel": "Försöksbetyg", // Text next to the submission view checkbox in the container.
+	"submissionViewButtonText": "Anpassa visning av förhörsresultat", // Text for the button at the bottom of the submission view container.
+	"gradeOutOf": "Betyg av", // Label for the grade-out-of field when creating/editing an activity
+	"submissionViewsHelpDialogTitle": "Information: Visning av förhörsresultat", // Title for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogParagraph1": "Visning av förhörsresultat avgör hur eleverna kan visa resultaten för sina publicerade förhörsförsök, både direkt efter inlämning och senare när de granskar sitt försök.", // Paragraph 1 for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogParagraph2": "Den primära vyn visas för elever som standard och ytterligare vyer åsidosätter den primära vyn baserat på de inställda parametrarna.", // Paragraph 2 for help dialog on submission view customization screen.
+	"submissionViewsHelpDialogConfirmation": "OK", //Text for closing the information Dialog for customization in submission views.
+	"submissionViewsDialogConfirmationMain": "OK", //Text for closing the main Dialog for customization in submission views.
+	"submissionViewsDialogCancelMain": "Avbryt", // Text for cancelling changes on the main Dialog for customization in submission views.
+	"submissionViewsAccordionDropdownNoQuestions": "Inga frågor", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownIncorrectQuestionsWithCorrectAnswers": "Endast felaktiga frågor, med rätt svar", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownIncorrectQuestionsWithoutCorrectAnswers": "Endast felaktiga frågor, utan rätt svar", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownAllQuestionsWithCorrectAnswers": "Alla frågor, med rätt svar", // Option in dropdown to decide what to display to learner.
+	"submissionViewsAccordionDropdownAllQuestionsWithoutCorrectAnswers": "Alla frågor, utan rätt svar", // Option in dropdown to decide what to display to learner.
+	"primaryView": "Primär vy", // Label
+	"additionalViewComesIntoEffect": "Additional view comes into effect:", // Label
+	"submissionViewDialogCardAttemptScoreTrueText": "Försöksbetyg visas för utvärderade frågor", // Submission view dialog card, text appearing when attempted grades are displayed.
+	"submissionViewDialogCardAttemptScoreFalseText": "Visas inte", // Submission view dialog card, text appearing when attempted grades are not displayed.
+	"submissionViewDialogCardQuestionsNotDisplayed": "Visas inte", // Submission view dialog card, text appearing when no questions are displayed.
+	"submissionViewDialogCardQuestionsAllDisplayed": "Alla frågor visas", // Submission view dialog card, text appearing when all questions are displayed.
+	"submissionViewDialogCardQuestionsIncorrectOnlyDisplayed": "Endast felaktiga visas", // Submission view dialog card, text appearing when incorrect questions only are displayed.
+	"submissionViewDialogCardQuestionsCorrectOnlyDisplayed": "Endast korrekta visas", // Submission view dialog card, text appearing when correct questions only are displayed.
+	"submissionViewDialogCardShowAnswersTrueText": "Alla svar visas", // Submission view dialog card, text appearing when all answers are displayed.
+	"submissionViewDialogCardShowAnswersFalseText": "Visas inte", // Submission view dialog card, text appearing when not all answers are displayed.
+	"submissionViewDialogCardShowResponsesTrueText": "Visas", // Submission view dialog card, text appearing when learners responses are displayed.
+	"submissionViewDialogCardShowResponsesFalseText": "Visas inte", // Submission view dialog card, text appearing when learners responses are not displayed.
+	"submissionViewDialogCardSubmissionViewMessageHeader": "Meddelande", // Submission view dialog card, message heading.
+	"submissionViewDialogCardSubmissionViewGradeHeader": "Betyg", // Submission view dialog card, grade heading.
+	"submissionViewDialogCardSubmissionViewQuestionsHeader": "Frågor", // Submission view dialog card, questions heading.
+	"submissionViewDialogCardSubmissionViewAnswerHeader" : "Svar", // Submission view dialog card, answers heading.
+	"submissionViewDialogCardSubmissionViewResponseHeader": "Elevernas svar", // Submission view dialog card, learners responses heading.
+	"submissionViewDialogCardButtonOptionEditView": "Redigera vy", // Submission view dialog card, OK button text.
+	"submissionViewDialogCardButtonOptionDeleteView": "Ta bort vy", // Submission view dialog card, Cancel button text.
+	"submissionViewsAccordionSummary" : "{count, plural, =1 {1 resultat visas} other {{count} resultat visas}}", // number of submission views summary shown in collapsed accordion
+	"submissionViewsDialogEditorGradeCheckbox": "Visa försöksbetyg för utvärderade frågor", // submission views dialog editor edit display attempt score checkbox
+	"statistics": "Statistik", //Label
+	"submissionViewsDialogEditorClassAverageCheckbox": "Visa klassens medelvärde", // submission views dialog editor edit display class average checkbox
+	"submissionViewsDialogEditorGradeDistributionCheckbox": "Visa betygsfördelning", // submission views dialog editor edit display grade distribution checkbox
+	"quizSubmissionViewsDialogCardUpdate": "Uppdatera", // submission views dialog card Update button
+	"quizSubmissionViewsDialogCardCancel": "Avbryt", // submission views dialog card Cancel button
+	"allQuestionsWithCorrectAnswers": "Betyg osynligt, visa alla frågor med rätt svar", // summarize list of selected options in comma separated list
+	"allQuestions": "Betyg osynligt, visa alla frågor", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsWithCorrectAnswers": "Betyg synligt, visa alla frågor med rätt svar", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestions": "Betyg synligt, visa alla frågor", // summarize list of selected options in comma separated list
+	"allQuestionsWithCorrectAnswersLearnersResponses": "Betyg osynligt, visa alla frågor med rätt svar och elevens svar", // summarize list of selected options in comma separated list
+	"allQuestionsLearnersResponses": "Betyg osynligt, visa alla frågor och elevens svar", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsWithCorrectAnswersLearnersResponses": "Betyg synligt, visa alla frågor med rätt svar och elevens svar", // summarize list of selected options in comma separated list
+	"gradeVisibleAllQuestionsLearnersResponses": "Betyg synligt, visa alla frågor och elevens svar", // summarize list of selected options in comma separated list
+	"incorrectQuestionsWithCorrectAnswers": "Betyg osynligt, visa endast felaktiga frågor med rätt svar", // summarize list of selected options in comma separated list
+	"incorrectQuestions": "Betyg osynligt, visa endast felaktiga frågor", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsWithCorrectAnswers": "Betyg synligt, visa endast felaktiga frågor med rätt svar", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestions": "Betyg synligt, visa endast felaktiga frågor", // summarize list of selected options in comma separated list
+	"incorrectQuestionsWithCorrectAnswersLearnersResponses": "Betyg osynligt, visa endast felaktiga frågor med rätt svar och elevens svar", // summarize list of selected options in comma separated list
+	"incorrectQuestionsLearnersResponses": "Betyg osynligt, visa endast felaktiga frågor och elevens svar", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsWithCorrectAnswersLearnersResponses": "Betyg synligt, visa endast felaktiga frågor med rätt svar och elevens svar", // summarize list of selected options in comma separated list
+	"gradeVisibleIncorrectQuestionsLearnersResponses": "Betyg synligt, visa endast felaktiga frågor och elevens svar", // summarize list of selected options in comma separated list
+	"correctQuestionsWithCorrectAnswers": "Betyg osynligt, visa endast korrekta frågor med rätt svar", // summarize list of selected options in comma separated list
+	"correctQuestions": "Betyg osynligt, visa endast korrekta frågor", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsWithCorrectAnswers": "Betyg synligt, visa endast korrekta frågor med rätt svar", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestions": "Betyg synligt, visa endast korrekta frågor", // summarize list of selected options in comma separated list
+	"correctQuestionsWithCorrectAnswersLearnersResponses": "Betyg osynligt, visa endast korrekta frågor med rätt svar och elevens svar", // summarize list of selected options in comma separated list
+	"correctQuestionsLearnersResponses": "Betyg osynligt, visa endast korrekta frågor och elevens svar", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsWithCorrectAnswersLearnersResponses": "Betyg synligt, visa endast korrekta frågor med rätt svar och elevens svar", // summarize list of selected options in comma separated list
+	"gradeVisibleCorrectQuestionsLearnersResponses": "Betyg synligt, visa endast korrekta frågor och elevens svar", // summarize list of selected options in comma separated list
+	"noQuestions": "Betyg osynligt, visa inte frågor", // summarize list of selected options in comma separated list
+	"gradeVisibleNoQuestions": "Betyg synligt, visa inte frågor", // summarize list of selected options in comma separated list
+	"deleteViewWithTitle": "Ta bort vy: {message}", // aria-label for delete view button with view message/title
+	"submissionViewReleaseDateSummary": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} }{minGrade, plural, =0 {} other {, with attempt grades above {minGrade}%}}{maxGrade, plural, =0 {} other {, with attempt grades below {maxGrade}%}}{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info
+	"submissionViewReleaseDateSummaryBothMinMaxGrades": "At { releaseDate }{ attemptRestrictionNumber, plural, =0 {} one {, on the 1st attempt} =2 {, on the 2nd attempt} =3 {, on the 3rd attempt} other {, on the {attemptRestrictionNumber}th attempt} } with attempt grades above {minGrade}% and below {maxGrade}%{ ipRestrictions, select, true {, when accessed from within the set IP range} false {} }{ timeLimitNumber, plural, =0 {} one {, until 1 minute has passed after submission} other {, until {timeLimitNumber} minutes have passed after submission}}", // summary of when a view is released with restriction info with both min and max grades
+	"showOutcomesForTheDisplayedQuestionsCheckbox": "Show {outcomesTerm} for the displayed questions" // text for a checkbox which when checked, will show standards/outcomes for the displayed questions
 };

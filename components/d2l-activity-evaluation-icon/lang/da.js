@@ -2,4 +2,4 @@
 
 export default {
   "draftInfo" : "Evaluering gemt som kladde"
-}
+};

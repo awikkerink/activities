@@ -81,4 +81,4 @@ export default {
    "tryAgain" : "请重试",
    "viewBy" : "查看人：",
    "yes" : "是"
-}
+};

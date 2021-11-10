@@ -81,4 +81,4 @@ export default {
    "tryAgain" : "Rhowch gynnig arall arni",
    "viewBy" : "Gweld yn ôl:",
    "yes" : "Ie"
-}
+};

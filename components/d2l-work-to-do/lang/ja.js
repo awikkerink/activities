@@ -25,4 +25,4 @@ export const val = {
   upcoming: "今後の学習", // Indicates that the below list of activites are upcoming (have a due due or end date that is in the future)
   viewAllWork: "すべての学習の表示", // Button text displayed in 'Empty View' when user can navigate to full page view to see all work
   xWeeksClear: "この先 {count, plural, =1 {1 週間} other {{count} 週間}}何もありません。" // 'Empty state' - Header when widget has no activities to display within the next x weeks
-}
+};

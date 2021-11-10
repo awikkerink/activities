@@ -2,4 +2,4 @@
 
 export default {
   "draftInfo" : "評価が下書きとして保存されました"
-}
+};

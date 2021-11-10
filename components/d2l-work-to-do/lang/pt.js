@@ -25,4 +25,4 @@ export const val = {
   upcoming: "Próximos trabalhos", // Indicates that the below list of activites are upcoming (have a due due or end date that is in the future)
   viewAllWork: "Exibir todos os trabalhos", // Button text displayed in 'Empty View' when user can navigate to full page view to see all work
   xWeeksClear: "{count, plural, =1 {1 semana} other {{count} semanas}} sem trabalhos a fazer!" // 'Empty state' - Header when widget has no activities to display within the next x weeks
-}
+};

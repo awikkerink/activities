@@ -125,7 +125,10 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 	}
 
 	cancelChanges() {
-		this._validateDefaultScoringRubric();
+		this._validateDefaultScoringRubric(false);
+	}
+	save() {
+		this._validateDefaultScoringRubric(false); // defer save to assignment entity
 	}
 
 	_attachRubric() {
@@ -267,14 +270,10 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 		const isReadOnly = !assignment.canEditDefaultScoringRubric;
 
 		if (this._isFirstLoad) {
-			this._isFirstLoad = !this._validateDefaultScoringRubric(); // On Assignment load, ensure a rubric ID is associated and hence a valid option
+			this._isFirstLoad = !this._validateDefaultScoringRubric(true); // On Assignment load, ensure a rubric ID is associated and hence a valid option
 		}
 		if (!defaultScoringRubricOptions || defaultScoringRubricOptions.length <= 1) {
 			return html``;
-		}
-
-		if (assignment.defaultScoringRubricId === null) {
-			assignment.resetDefaultScoringRubricId(false);
 		}
 
 		return html`
@@ -330,12 +329,12 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 			dialog.opened = toggle;
 		}
 	}
-	_validateDefaultScoringRubric() {
+	_validateDefaultScoringRubric(autoSaveIfInvalid) {
 		const entity = associationStore.get(this.href);
 		const indirectAssociations = associationStore.get(this.indirectAssociationsHref);
 		const assignment = assignmentStore.get(this.assignmentHref);
 
-		if (!entity || !assignment || !indirectAssociations) {
+		if (!entity || !assignment || !indirectAssociations || entity.loading || indirectAssociations.loading) {
 			return false;
 		}
 
@@ -348,9 +347,12 @@ class ActivityRubricsListContainer extends ActivityEditorMixin(RtlMixin(Localize
 			(opts) => String(opts.value) === assignment.defaultScoringRubricId
 		);
 
-		if (!isDefaultScoringRubricValidOption) {
+		if (!isDefaultScoringRubricValidOption && autoSaveIfInvalid) {
 			// An indirectly associated rubric can be used as an option, Assignment saved, remove it, close the page and leave `defaultScoringRubricId` is now invalid.
 			assignment.resetDefaultScoringRubricId(true);
+		}
+		if (!isDefaultScoringRubricValidOption && !autoSaveIfInvalid) {
+			assignment.resetDefaultScoringRubricId(false);
 		}
 		return isDefaultScoringRubricValidOption;
 	}

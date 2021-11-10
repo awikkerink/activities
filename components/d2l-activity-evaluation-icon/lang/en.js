@@ -2,4 +2,4 @@
 
 export default {
   "draftInfo" : "Evaluation saved as draft"
-}
+};
