@@ -185,8 +185,6 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 			return html``;
 		}
 
-		console.log({ captions });
-
 		const captionsCSV = captions.map((caption) =>
 			caption.properties.langName
 		).join(', ');
@@ -199,18 +197,13 @@ class ContentMediaFileDetail extends SkeletonMixin(ErrorHandlingMixin(LocalizeAc
 	}
 
 	_renderCaptionsTracks(captions) {
-		console.log({ captions });
-
-		if (!captions.length) {
+		if (captions.length === 0) {
 			return html``;
 		}
 
 		const captionTracks = captions.map((caption) => {
 			const captionHref = caption.getLinkByRel('alternate').href;
-			const langCode = caption.properties.langCode;
-			const langName = caption.properties.langName;
-
-			console.log({ langCode, langName, captionHref });
+			const { langName, langCode } = caption.properties;
 
 			return html`
 				<track src=${captionHref} label=${langName} srcLang=${langCode} kind="captions" />
