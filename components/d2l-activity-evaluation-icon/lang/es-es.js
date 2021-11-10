@@ -2,4 +2,4 @@
 
 export default {
   "draftInfo" : "Evaluación guardada como borrador"
-}
+};

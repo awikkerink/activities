@@ -81,4 +81,4 @@ export default {
    "tryAgain" : "المحاولة مرة أخرى",
    "viewBy" : "عرض حسب:",
    "yes" : "نعم"
-}
+};

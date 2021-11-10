@@ -3,4 +3,4 @@
 export default {
   "course" : "Curso",
   "learning-path" : "Ruta de aprendizaje"
-}
+};

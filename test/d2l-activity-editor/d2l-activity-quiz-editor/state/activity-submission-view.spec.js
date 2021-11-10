@@ -22,7 +22,8 @@ describe('Activity Submission View', function() {
 			showStatsClassAverage: () => true,
 			showStatsScoreDistribution: () => true,
 			canUpdateMessage: () => true,
-			message: () => '<p>hello</p>',
+			messageText: () => 'hello',
+			messageHtml: () => '<p>hello</p>',
 			isMessageRichtext: () => true,
 			canUpdateHideShowQuestions: () => true,
 			hideQuestions: () => true,
@@ -53,6 +54,7 @@ describe('Activity Submission View', function() {
 			canUpdateTimeLimit: () => true,
 			attemptRestrictions: () => true,
 			ipRestrictions: () => true,
+			isIpRestrictionsSupported: () => false,
 			timeLimit: () => true,
 			canUpdateReleaseDate: () => true,
 			releaseDate: () => '2021-01-03T04:59:59.000Z',
@@ -91,7 +93,8 @@ describe('Activity Submission View', function() {
 			showStatsClassAverage: () => true,
 			showStatsScoreDistribution: () => true,
 			canUpdateMessage: () => false,
-			message: () => '<p>hello</p>',
+			messageText: () => 'hello',
+			messageHtml: () => '<p>hello</p>',
 			isMessageRichtext: () => true,
 			canUpdateHideShowQuestions: () => false,
 			hideQuestions: () => true,
@@ -109,6 +112,7 @@ describe('Activity Submission View', function() {
 			canUpdateTimeLimit: () => false,
 			attemptRestrictions: () => true,
 			ipRestrictions: () => true,
+			isIpRestrictionsSupported: () => false,
 			timeLimit: () => true,
 			canUpdateReleaseDate: () => false,
 			releaseDate: () => '2021-01-03T04:59:59.000Z',
@@ -159,7 +163,8 @@ describe('Activity Submission View', function() {
 			expect(submissionView.showStatsClassAverage).to.be.true;
 			expect(submissionView.showStatsScoreDistribution).to.be.true;
 			expect(submissionView.canUpdateMessage).to.be.true;
-			expect(submissionView.message).to.equal('<p>hello</p>');
+			expect(submissionView.messageText).to.equal('hello');
+			expect(submissionView.messageHtml).to.equal('<p>hello</p>');
 			expect(submissionView.isMessageRichtext).to.be.true;
 			expect(submissionView.canUpdateHideShowQuestions).to.be.true;
 			expect(submissionView.hideQuestions).to.be.true;
@@ -177,6 +182,7 @@ describe('Activity Submission View', function() {
 			expect(submissionView.canUpdateTimeLimit).to.be.true;
 			expect(submissionView.attemptRestrictions).to.be.true;
 			expect(submissionView.ipRestrictions).to.be.true;
+			expect(submissionView.isIpRestrictionsSupported).to.be.false;
 			expect(submissionView.timeLimit).to.be.true;
 			expect(submissionView.canUpdateReleaseDate).to.be.true;
 			expect(submissionView.releaseDate).to.equal('2021-01-03T04:59:59.000Z');
@@ -220,7 +226,8 @@ describe('Activity Submission View', function() {
 			expect(submissionView.showStatsClassAverage).to.be.true;
 			expect(submissionView.showStatsScoreDistribution).to.be.true;
 			expect(submissionView.canUpdateMessage).to.be.false;
-			expect(submissionView.message).to.equal('<p>hello</p>');
+			expect(submissionView.messageText).to.equal('hello');
+			expect(submissionView.messageHtml).to.equal('<p>hello</p>');
 			expect(submissionView.isMessageRichtext).to.be.true;
 			expect(submissionView.canUpdateHideShowQuestions).to.be.false;
 			expect(submissionView.hideQuestions).to.be.true;
@@ -238,6 +245,7 @@ describe('Activity Submission View', function() {
 			expect(submissionView.canUpdateTimeLimit).to.be.false;
 			expect(submissionView.attemptRestrictions).to.be.true;
 			expect(submissionView.ipRestrictions).to.be.true;
+			expect(submissionView.isIpRestrictionsSupported).to.be.false;
 			expect(submissionView.timeLimit).to.be.true;
 			expect(submissionView.canUpdateReleaseDate).to.be.false;
 			expect(submissionView.releaseDate).to.equal('2021-01-03T04:59:59.000Z');

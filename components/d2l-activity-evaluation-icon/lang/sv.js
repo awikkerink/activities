@@ -2,4 +2,4 @@
 
 export default {
   "draftInfo" : "Utvärderingen sparades som utkast"
-}
+};

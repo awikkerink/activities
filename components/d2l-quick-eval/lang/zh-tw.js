@@ -81,4 +81,4 @@ export default {
    "tryAgain" : "再試一次",
    "viewBy" : "檢視依據：",
    "yes" : "是"
-}
+};

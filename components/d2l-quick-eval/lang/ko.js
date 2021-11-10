@@ -81,4 +81,4 @@ export default {
    "tryAgain" : "다시 시도",
    "viewBy" : "보기 기준:",
    "yes" : "예"
-}
+};

@@ -82,6 +82,16 @@ export default {
 	"editor.inGradebook": "Dans le carnet de notes", // New state of the grades field when there is a score, and an associated grade item
 	"editor.notInGradebook": "Ne figure pas dans le carnet de notes", // New state of the grades field when there is a score, but no associated grade item
 	"editor.addToGradebook": "Inclure dans le carnet de notes", // New menu item for adding grade association
+	"editor.beforeStartDate": "Avant le début :", //Text for before start availability date type
+	"editor.afterEndDate": "Après la fin :", //Text for after end availability date type
+	"editor.lblVisibleWithAccessRestricted": "Visible avec accès restreint", //Text for after end availability date type
+	"editor.lblVisibleWithSubmissionRestricted": "Visible avec soumission restreinte", //Text for after end availability date type
+	"editor.lblHidden": "Masqué(e)", //Text for after end availability date type
+	"editor.availabilityStartTitle": "Availability: Start Date", // Dialog title for editing start date type
+	"editor.availabilityEndTitle": "Availability: End Date", // Dialog title for editing start date type
+	"editor.startDescription": "The following settings determine how the {assignment} appears to learners before the start date", // Description for start date type
+	"editor.endDescription": "The following settings determine how the {assignment} appears to learners after the end date", // Description for start date type
+	"editor.assignment": "assignment", // Langterm for assignment or dropbox
 
 	"rubrics.btnAddRubric": "Ajouter une rubrique", //text for add rubric button
 	"rubrics.btnCreateNew": "Créer", //Text for create new dropdown
@@ -105,10 +115,12 @@ export default {
 	"grades.weight": "Poids : {weight}", // Text label for displaying weight of a grade
 	"grades.gradeItem": "Élément de note", //ARIA label for grade-item picker when linking an activity to an existing grade item
 	"grades.gradeUnits": "points", // unit label for GradeOutOf value (e.g. 10 points)
+	"grades.gradeUnitsSingular": "point", // unit label for GradeOutOf value when value is 1
 	"grades.chooseNewGradeItemCategory": "Choisir la catégorie de notes", // Label for add category button
 	"grades.newGradeItemCategory": "Catégorie de note d’appréciation", // Label for selecting a category dropdown
 	"grades.noGradeItemCategory": "Aucune catégorie", // Category dropdown text for not selecting a category
 	"grades.changeNewGradeTypeAndScheme": "Changer le type et le barème de notes", // Label for change type and scheme button
+	"grades.chooseNewGradeScheme": "Sélectionner le barème de notes", // Label for choose grade scheme button (when there is only one type)
 	"grades.newGradeType": "Type de la note d’appréciation", // Label for the grade type
 	"grades.newGradeTypeNumeric": "Numérique", // Label for numeric grade type radio option
 	"grades.newGradeTypeSelectbox": "Boîte de sélection", // Label for selectbox grade type radio option
@@ -121,6 +133,11 @@ export default {
 	"grades.creatingNewNumericGradeItem": "Création d’un nouvel élément de note de type Numérique {newGradeName}", // Aria text for new grade we are creating
 	"grades.creatingNewSelectboxGradeItem": "Création d’un nouvel élément de note de type Boîte de sélection {newGradeName}", // Aria text for new grade we are creating
 	"grades.linkingToGradeItem": "Lien vers l’élément de note {GradeName} existant", // Aria text for grade item we are linking to
+	"grades.gradeOutOfMenuItem": "Qu’est-ce que la note maximale?", // menu item to launch gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogTitle": "Information : note maximale", // title that appears when the gradeOutOf help dialog is rendered
+	"grades.gradeOutOfHelpDialogConfirmationText": "OK", // text that appears on the gradeOutOf help dialog confirmation button
+	"grades.gradeOutOfHelpDialogParagraph1": "Si le questionnaire n’est pas dans le carnet de notes, la note maximale correspond au total des points pour l’ensemble des questions.", // content for paragraph 1 of gradeOutOf help dialog
+	"grades.gradeOutOfHelpDialogParagraph2": "Si le questionnaire est dans le carnet de notes, la note maximale correspond au maximum de points ou à la pondération dans l’outil Notes.", // content for paragraph 2 of gradeOutOf help dialog
 
 	"attachments.addGoogleDriveLink": "Joindre à partir de Google Drive", // Tooltip for a button that adds a link to a Google Drive file
 	"attachments.addFile": "Téléversement de fichier", // Tooltip for a button that opens a file upload dialog
@@ -172,5 +189,8 @@ export default {
 	"content.confirmDialogCancelOption": "Annuler", // The text for the cancel action to not replace content
 	"content.useEmbeddedPlayer": "Utiliser le lecteur intégré", // The text for using the embedded player
 	"content.scormActivity": "Progiciel SCORM", // The label for the name of the SCORM package
-	"content.lastEdited": "Dernière modification" // The date when the entity was last edited
+	"content.lastEdited": "Dernière modification", // The date when the entity was last edited
+	"content.externalFile": "External file", // The text to use for labeling external files
+	"content.advancedEditing": 'Advanced Editing', // The text to use on the advanced editing button
+	"content.fileHasCaptions": "This file has captions in", // The text to use preceding the list of captions
 };

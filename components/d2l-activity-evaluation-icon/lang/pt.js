@@ -2,4 +2,4 @@
 
 export default {
   "draftInfo" : "Avaliação salva como rascunho"
-}
+};

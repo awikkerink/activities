@@ -2,4 +2,4 @@
 
 export default {
   "draftInfo" : "Évaluation enregistrée en tant que brouillon"
-}
+};

@@ -3,4 +3,4 @@
 export default {
   "enroll": "Kaydol",
   "clickToViewActivity": "Etkinliği görüntülemek için tıklayın"
-}
+};

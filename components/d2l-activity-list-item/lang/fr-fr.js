@@ -3,4 +3,4 @@
 export default {
   "enroll": "Inscription",
   "clickToViewActivity": "Cliquer pour afficher l’activité"
-}
+};

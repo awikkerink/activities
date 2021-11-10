@@ -9,7 +9,7 @@ export default {
 	"manageTiming": "Manage Timing", // Label for button to launch timing dialog
 	"hdrAttemptsAndCompletion": "Attempts & Completion", //attempts/completion accordion header
 	"subHdrPagingTools": "Paging", // Title for paging tools
-	"subHdrShuffleQuiz": "Shuffle Quiz",// Title for shuffle quiz tool(s)
+	"subHdrShuffleQuiz": "Shuffle Quiz", // Title for shuffle quiz tool(s)
 	"subHdrDisplayTools": "Display", // Title for display tools
 	"shuffleDescription": "Shuffle questions and sections within the quiz. Does not cascade to sub-sections.", // description for question shuffling behavior
 	"shuffleSummary": "Shuffle questions", // summary text for shuffle quiz questions
@@ -17,7 +17,7 @@ export default {
 	"hintsAllowedSummary": "Hints allowed", // summary text when hints are enabled,
 	"passwordLabel": "Password", // Label for the quiz password text input field
 	"passwordSummary": "Password protected", // summary text when quiz has a password
-	"disableRightClickDescription": "Disable right click", // description for disable right click
+	"disableRightClickDescription": "Disable right-click", // description for disable right click
 	"disableRightClickSummary": "Right clicks disabled", // summary text when right clicks are disabled
 	"preventMovingBackwardsDescription": "Prevent going back to previous pages",
 	"disablePagerAndAlertsDescription": "Disable Email, Instant Messages and Alerts within Brightspace", // description for blocking communications / disable pager and alerts during a quiz
@@ -45,9 +45,9 @@ export default {
 	"disableAlertsHelpDialogConfirmationText": "OK", // copy that appears on the disable alerts help dialog confirmation button
 	"disableAlertsAccessibleHelpText": "Get help on - Disable Email, Instant Messages and Alerts within Brightspace", // accessible help text for disable alerts question mark button
 	"disableRightClickAccessibleHelpText": "Get help on - Disable Right Click", // accessible help text for disable right click question mark button
-	"disableRightClickHelpDialogTitle": "Information: Disable Right Click", // title that appears when the disable right click help dialog is rendered
+	"disableRightClickHelpDialogTitle": "Information: Disable Right-Click", // title that appears when the disable right click help dialog is rendered
 	"disableRightClickHelpDialogParagraph1": "This feature prohibits learners from printing quiz questions by right-clicking on a question while an attempt is in progress. But learners will still be able to screen capture the quiz through other technologies outside of the browser.", // content for paragraph 1 of disable right click help dialog
-	"disableRightClickHelpDialogParagraph2": "Certain accessibility workflows will be blocked because the learner cannot copy and paste the question text. Individual users can be granted the ability to right-click on a quiz even when this feature is enabled for a quiz by enabling “Always Allow Right Click” in that user’s Accommodations.", // content for paragraph 2 of disable right click help dialog
+	"disableRightClickHelpDialogParagraph2": "Certain accessibility workflows will be blocked because the learner cannot copy and paste the question text. Individual users can be granted the ability to right-click on a quiz even when this feature is enabled for a quiz by enabling “Always Allow Right-Click” in that user’s Accommodations.", // content for paragraph 2 of disable right click help dialog
 	"disableRightClickHelpDialogConfirmationText": "OK", // copy that appears on the disable right click help dialog confirmation button
 	"manageTimingDialogConfirmationText": "OK", // copy that appears on the Timing dialog confirmation button
 	"manageTimingDialogCancelText": "Cancel", // copy that appears on the Timing dialog cancel button
@@ -218,5 +218,16 @@ export default {
 	"syncGradebookHelpDialogTitle": "Information: Synchronize to gradebook on publish", // title that appears when the sync to gradebook help dialog is rendered
 	"syncGradebookHelpDialogConfirmationText": "OK", // copy that appears on the sync to gradebook help dialog confirmation button
 	"syncGradebookHelpDialogParagraph1": "With this feature turned on, the learner's grade will be automatically published to the gradebook once it has been evaluated.", // content for paragraph 1 of sync to gradebook help dialog
-	"syncGradebookHelpDialogParagraph2": "This requires the quiz to be connected to the gradebook." // content for paragraph 2 of sync to gradebook help dialog
+	"syncGradebookHelpDialogParagraph2": "This requires the quiz to be connected to the gradebook.", // content for paragraph 2 of sync to gradebook help dialog
+	"syncGradebookSummary": "Sync to gradebook", // summary for sync to gradebook checkbox
+	"showCorrectAnswers": "Show the correct answers to the displayed questions", //text for checkbox. questions refers to the selected type of questions to display (e.g. Questions answered incorrectly)
+	"showLearnersResponses": "Show the learner's responses to the displayed questions", //text for checkbox. questions refers to the selected type of questions to display (e.g. Questions answered incorrectly)
+	"showLearnersGrade": "Show the learner's grade for the displayed questions", //text for checkbox. questions refers to the selected type of questions to display (e.g. Questions answered incorrectly)
+	"showStandards": "Show standards for the displayed questions", //text for checkbox. questions refers to the selected type of questions to display (e.g. Questions answered incorrectly)
+	"dontShowQuestions": "Don't show", // don't show any questions that were part of the submitted quiz to the learner
+	"showAllQuestions": "All questions", // show all questions that were part of the submitted quiz to the learner
+	"showIncorrectQuestionsOnly": "Incorrect questions only", // show only the incorrect questions that were part of the submitted quiz to the learner
+	"showCorrectQuestionsOnly": "Correct questions only", // show only the correctly answered questions that were part of the submitted quiz to the learner
+	"additionalView": "Additional View", // text for button where when clicked, opens editor to create a new quiz submission view
+	"quizSubmissionViewsDialogCardCreate": "Create" // text for button where when clicked, creates/saves the new quiz submission view
 };
