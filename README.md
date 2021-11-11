@@ -1,6 +1,6 @@
 # d2l-activities
 
-Web components to be used with activities entities!
+Web components to be used with activities entities! Some change
 
 ## Developing, Testing and Contributing
 
