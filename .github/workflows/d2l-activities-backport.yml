@@ -23,27 +23,33 @@ jobs:
               pull_number: pullId
             });
             return response.data;
+
       - uses: Brightspace/third-party-actions@actions/checkout
         with:
           ref: ${{ fromJSON(steps.source-pr.outputs.result).head.sha }}
 
       - id: destination-version
         uses: Brightspace/third-party-actions@actions/github-script
+        env:
+          BODY: ${{ github.event.comment.body }}
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           result-encoding: string
           script: |
-            const version = '${{ github.event.comment.body }}'.split(' ').pop();
+            const version = process.env.BODY.split(' ').pop();
             return version;
+
       - id: destination-branch
         uses: Brightspace/third-party-actions@actions/github-script
+        env:
+          DESTINATION_VERSION: ${{ steps.destination-version.outputs.result }}
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
              const response = await github.repos.getBranch({
                owner: context.repo.owner,
                repo: context.repo.repo,
-               branch: 'release/${{ steps.destination-version.outputs.result }}'
+               branch: `release/${process.env.DESTINATION_VERSION}`
              });
              return response.data;
 
@@ -53,6 +59,10 @@ jobs:
 
       - name: Acknowledge comment
         uses: Brightspace/third-party-actions@actions/github-script
+        env:
+          SOURCE_PR_HTML_URL: ${{ fromJSON(steps.source-pr.outputs.result).html_url }}
+          DESTINATION_VERSION: ${{ steps.destination-version.outputs.result }}
+          DESTINATION_BRANCH_LINK: ${{ fromJSON(steps.destination-branch.outputs.result)._links.html }}
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
@@ -60,7 +70,7 @@ jobs:
               issue_number: context.payload.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Initiating backport from ${{ fromJSON(steps.source-pr.outputs.result).html_url }} to [${{ steps.destination-version.outputs.result }}](${{ fromJSON(steps.destination-branch.outputs.result)._links.html }})'
+              body: `Initiating backport from ${process.env.SOURCE_PR_HTML_URL} to [${process.env.DESTINATION_VERSION}](${process.env.DESTINATION_BRANCH_LINK})`
             });
 
       - id: source-pr-patch
@@ -97,22 +107,32 @@ jobs:
 
       - id: backport-pr
         uses: Brightspace/third-party-actions@actions/github-script
+        env:
+          DESTINATION_VERSION: ${{ steps.destination-version.outputs.result }}
+          DESTINATION_BRANCH: ${{ fromJSON(steps.destination-branch.outputs.result).name }}
+          SOURCE_PR_TITLE: ${{ fromJSON( steps.source-pr.outputs.result).title }}
+          SOURCE_PR_HEAD: ${{ fromJSON(steps.source-pr.outputs.result).head.ref }}
+          SOURCE_PR_HTML_URL: ${{ fromJSON( steps.source-pr.outputs.result).html_url }}
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const response = await github.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: 'Backport to ${{ steps.destination-version.outputs.result }} of "${{ fromJSON( steps.source-pr.outputs.result).title }}"',
-              head: 'ghworkflow/backport-${{ steps.destination-version.outputs.result }}/${{ fromJSON(steps.source-pr.outputs.result).head.ref }}',
-              base: '${{ fromJSON(steps.destination-branch.outputs.result).name }}',
-              body: 'Backport of ${{ fromJSON( steps.source-pr.outputs.result).html_url }} to ${{ steps.destination-version.outputs.result }}',
+              title: `Backport to ${process.env.DESTINATION_VERSION} of "${process.env.SOURCE_PR_TITLE}"`,
+              head: `ghworkflow/backport-${process.env.DESTINATION_VERSION}/${process.env.SOURCE_PR_HEAD}`,
+              base: process.env.DESTINATION_BRANCH,
+              body: `Backport of ${process.env.SOURCE_PR_HTML_URL} to ${process.env.DESTINATION_VERSION}`,
               draft: true
             });
             return response.data
 
       - name: Created PR Comment
         uses: Brightspace/third-party-actions@actions/github-script
+        env:
+          DESTINATION_VERSION: ${{ steps.destination-version.outputs.result }}
+          DESTINATION_BRANCH_LINK: ${{ fromJSON(steps.destination-branch.outputs.result)._links.html }}
+          SOURCE_PR_HTML_URL: ${{ fromJSON( steps.source-pr.outputs.result).html_url }}
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
@@ -120,7 +140,7 @@ jobs:
               issue_number: context.payload.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Backport from ${{ fromJSON(steps.source-pr.outputs.result).html_url }} to [${{ steps.destination-version.outputs.result }}](${{ fromJSON(steps.destination-branch.outputs.result)._links.html }}) Ready: ${{ fromJSON(steps.backport-pr.outputs.result).html_url }}'
+              body: 'Backport from ${process.env.SOURCE_PR_HTML_URL} to [${process.env.DESTINATION_VERSION}](${process.env.DESTINATION_BRANCH_LINK}) Ready: ${process.env.SOURCE_PR_HTML_URL}'
             });
 
       - name: Failure cleanup
